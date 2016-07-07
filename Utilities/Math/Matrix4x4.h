@@ -32,29 +32,17 @@ struct UtilitiesAPI Matrix4x4
 
         /** CONSTRUCTORS **/
 		/// <summary> Constructs a new 4x4 identity matrix. </summary>
+        /// <returns>
+        ///     A new data structure representing a 4x4 matrix of single-precision floating <para/>
+        ///     point values that form an identity matrix.
+        /// </returns>
         Matrix4x4();
-        /* MATRIX4x4 - Constructs a new 4x4 matrix as a deep copy of a flattened native array.
-         *
-         *      SYNTAX:
-         *          M = Matrix4x4(other)
-         *
-         *      <OUTPUT>:
-         *          M:      Matrix4x4
-         *                  A new data structure representing a 4x4 matrix of single-precision floating point values copied
-         *                  from the inputted array 'other'.
-         *
-         *      <INPUT>:
-         *          other:  const float*
-         *                  A native C++ array of single-precision floating point values to be copied. This array should be
-         *                  flat (i.e. one-dimensional) and arranged in column-major order. It must also have at least 16
-         *                  elements (though only the first 16 will be used).
-         */
-
 		/// <summary> Constructs a new 4x4 matrix as a deep copy of a flattened native array. </summary> 
 		/// <param name="other">
-		///		A native C++ array of single - precision floating point values to be copied. <para/>
-		///		This array should be flat(i.e.one - dimensional) and arranged in column-major <para/>
-		///		order.It must also have at least 16 elements(though only the first 16 will be <para/>
+		///		A native C++ array of single-precision floating point values to be copied.
+
+		///		This array should be flat (i.e. one-dimensional) and arranged in column-major   <para/>
+		///		order. It must also have at least 16 elements(though only the first 16 will be   <para/>
 		///		used).
 		/// </param>
 		/// <returns>
@@ -62,21 +50,12 @@ struct UtilitiesAPI Matrix4x4
 		///		point values copied from the inputted array 'other'.
 		/// </returns>
         Matrix4x4(const float* other);
-        /* MATRIX4x4 - Constructs a new 4x4 matrix as a deep copy of another matrix.
-         *
-         *      SYNTAX:
-         *          M = Matrix4x4(other)
-         *
-         *      OUTPUT:
-         *          M:      Matrix4x4
-         *                  A new data structure representing a 4x4 matrix of single-precision floating point values copied
-         *                  from the inputted matrix 'other'.
-         *
-         *      INPUT:
-         *          other:  const Matrix4x4&
-         *                  An existing 4x4 matrix data structure whose elements will be copied into the newly created
-         *                  matrix 'M'.
-         */
+        /// <summary> Constructs a new 4x4 matrix as a deep copy of another matrix. </summary>
+        /// <param name="other"> An existing 4x4 matrix whose elements are to be copied. </param>
+        /// <returns> 
+        ///     A new data structure representing a 4x4 matrix of single-precision floating
+        ///     point values copied from the inputted matrix <paramref name="other"/>. 
+        /// </returns>
         Matrix4x4(const Matrix4x4& other);
 
 
@@ -85,7 +64,7 @@ struct UtilitiesAPI Matrix4x4
         float* ToArray()                                  { return Data; }
 
         const float* ToArray()                      const { return Data; }
-        /* TRANSPOSE - Rearranges the matrix elements such that rows become columns and vice versa. */
+        /// <summary> Rearranges the matrix elements such that rows become columns and vice versa. </summary>
         Matrix4x4& Transpose();
 
         string ToString() const;
@@ -94,13 +73,14 @@ struct UtilitiesAPI Matrix4x4
 
         /** INDEXING OPERATORS **/
         float& operator [](uint idx)                      { return Data[idx]; }
-
+        
+        
         float operator ()(uint idx)                 const;
         float operator ()(uint a, uint b)           const;
 
         float& operator ()(uint idx);
         float& operator ()(uint a, uint b);
-
+    
         Vector4 operator ()(char a, uint b)         const;
         Vector4 operator ()(uint a, char b)         const;
 
@@ -110,26 +90,26 @@ struct UtilitiesAPI Matrix4x4
         bool operator ==(const Matrix4x4& m)        const;
         bool operator !=(const Matrix4x4& m)        const { return !(operator ==(m)); }
 
-        /* ADDITION - Adds the inputted scalar value to each element of this matrix. */
+        /// <summary> Adds the inputted scalar value to each element of this matrix. </summary>
         Matrix4x4 operator +(float m)               const;
-        /* ADDITION - Adds each element of the inputted matrix to the corresponding element of this matrix. */
+        /// <summary> Adds each element of the inputted matrix to the corresponding element of this matrix. </summary>
         Matrix4x4 operator +(const Matrix4x4& m)    const;
 
-        /* DIVISION - Divides each element of this matrix by the inputted scalar value. */
+        /// <summary> Divides each element of this matrix by the inputted scalar value. </summary>
         Matrix4x4 operator /(float m)               const;
-        /* DIVISION - Divides each element of this matrix by the corresponding element of the inputted matrix. */
+        /// <summary> Divides each element of this matrix by the corresponding element of the inputted matrix. </summary>
         Matrix4x4 operator /(const Matrix4x4& m)    const;
 
-        /* MULTIPLICATION - Multiplies each element of this matrix by the inputted scalar value. */
+        /// <summary> Multiplies each element of this matrix by the inputted scalar value. </summary>
         Matrix4x4 operator *(float m)               const;
-        /* MULTIPLICATION - Multiplies two equivalently sized matrices. */
+        /// <summary> Multiplies two equivalently sized matrices. </summary>
         Matrix4x4 operator *(const Matrix4x4& m)    const;
 
-        /* NEGATION - Multiplies each element of this matrix by -1.0f, changing their signs. */
+        /// <summary> Multiplies each element of this matrix by -1.0f, changing their signs. </summary>
         Matrix4x4 operator -()                      const { return operator *(-1.0f); }
-        /* SUBTRACTION - Subtracts the inputted scalar value from each element of this matrix. */
+        /// <summary> Subtracts the inputted scalar value from each element of this matrix. </summary>
         Matrix4x4 operator -(float m)               const;
-        /* SUBTRACTION - Subtracts each element of the inputted matrix from the corresponding element of this matrix. */
+        /// <summary> Subtracts each element of the inputted matrix from the corresponding element of this matrix. </summary>
         Matrix4x4 operator -(const Matrix4x4& m)    const;
 
         Matrix4x4& operator +=(float m);
@@ -145,6 +125,6 @@ struct UtilitiesAPI Matrix4x4
         Matrix4x4& operator -=(const Matrix4x4& m);
 
     private:
-        /* DATA - The raw native array of values held by this matrix. */
+        /// <summary> The raw native array of values held by this matrix. </summary>
         float Data[16];
 };
