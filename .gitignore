@@ -1,0 +1,34 @@
+
+## BINARIES ##
+[Bb]in/
+[Bb]uild/
+[Dd]ebug/
+[Oo]bj/
+[Rr]elease/
+x64/
+x86/
+
+
+
+## METADATA ##
+.AUTHOR*
+AUTHOR
+CMakeLists.txt.user*
+
+
+
+## VISUAL STUDIO & MONODEVELOP ##
+*.db
+*.opendb
+*.opensdf
+*.sdf
+*.user
+*.userprefs
+.vs/
+ipch/
+UpgradeLog.htm
+
+
+
+## PROJECT COMPONENTS ##
+CoreGL/Generated

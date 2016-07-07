@@ -1,0 +1,18 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20160511
+ */
+
+#version 450 core
+
+
+layout(location = 0) in vec3 Position;
+out float Depth;
+
+uniform mat4 World;
+uniform mat4 ViewProjection;
+
+void main(void)
+{
+    gl_Position = ViewProjection * World * vec4(Position, 1.0);
+    Depth = World[3].z;
+}

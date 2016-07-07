@@ -1,0 +1,27 @@
+/* FBO - A fragment shader program used to render a single fullscreen, screen-aligned quad displaying framebuffer contents. */
+
+/* CHANGELOG
+ * Written by Josh Grooms on 20160508
+ */
+
+#version 450 core
+
+/* UV - The texture coordinate associated with the fragment to be rendered. */
+in vec2     UV;
+/* OUTPUTCOLOR - The color of this fragment as it will appear on-screen to the user. */
+out vec4    OutputColor;
+
+/* FRAMEBUFFER - The texture containing a framebuffer's color content used to determine the outputted fragment color.
+ *
+ *      Texels from this image are indexed (using the interpolated 'UV' coordinate above) during fragment processing to
+ *      determine the final outputted color of any given screen pixel displayed to the user (barring postprocessing). The
+ *      texture bound to this unit should be a framebuffer's color content.
+ */
+layout (binding = 0) uniform sampler2D FrameBuffer;
+
+
+
+void main(void)
+{
+    OutputColor = texture(FrameBuffer, UV);
+}

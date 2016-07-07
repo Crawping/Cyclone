@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Color4.cpp">
+      <Filter>Utilities\Imaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>Utilities\Imaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Array.cpp">
+      <Filter>Utilities\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Utilities\Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{f9e8b9e1-b0e9-4482-bb14-d853859c3d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Imaging">
+      <UniqueIdentifier>{21e3d29a-770e-4629-9dc2-0beda982ef93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Math">
+      <UniqueIdentifier>{bb931cc1-19c6-46a2-a920-4c5a0b2c8915}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

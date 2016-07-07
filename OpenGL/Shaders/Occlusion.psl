@@ -1,0 +1,13 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20160511
+ */
+
+#version 450 core
+
+out float       OutputColor;
+flat in float   Depth;
+
+void main(void)
+{
+    OutputColor = Depth;
+}

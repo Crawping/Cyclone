@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Console.cpp" />
+    <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="Math\Matrix4x4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Spatial\Area.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Spatial\Transform.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Spatial\Volume.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Spatial\Border.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Imaging\Bitmap.cpp">
+      <Filter>Imaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Imaging\Color4.cpp">
+      <Filter>Imaging</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Console.h" />
+    <ClInclude Include="TypeDefinitions.h" />
+    <ClInclude Include="Enumerator.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="Utilities.h" />
+    <ClInclude Include="Math\Matrix4x4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Spatial\Area.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Spatial\Geometry.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Spatial\Transform.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Spatial\Volume.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Spatial\Border.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilitiesAPI.h" />
+    <ClInclude Include="Spatial\Vertex.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Imaging\Bitmap.h">
+      <Filter>Imaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Imaging\Color4.h">
+      <Filter>Imaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Array.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Math">
+      <UniqueIdentifier>{8a94b916-3bd5-4013-9d49-4fbadecdac5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spatial">
+      <UniqueIdentifier>{61950b6c-22c3-4f0e-9c72-718f897013ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imaging">
+      <UniqueIdentifier>{c5b540af-3b59-42a4-b4dd-1ff5bd10e248}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

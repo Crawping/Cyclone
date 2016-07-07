@@ -1,0 +1,54 @@
+/* FBO - A vertex shader program used to render a single fullscreen, screen-aligned quad displaying framebuffer contents. */
+
+/* CHANGELOG
+ * Written by Josh Grooms on 20160508
+ */
+
+#version 450 core
+
+/* UV - The specific texture coordinate associated with the outputted vertex position. */
+out vec2 UV;
+
+/* VERTICES - A vertex list describing a quad in the XY plane spanning the entire clip space.
+ *
+ *      These vertices describe two triangles that form a single quad and seamlessly cover the entire visible rendering area,
+ *      regardless of any configurations made on the application side. Vertices are wound counter-clockwise and are not
+ *      shared.
+ *
+ *      The specific vertex that is outputted in 'gl_Position' is selected by the internal shader variable 'gl_VertexID',
+ *      which tracks the index of the vertex currently being processed.
+ */
+const vec4 Vertices[6] = vec4[6]
+(
+    vec4(-1.0f, -1.0f, 0.0f, 1.0f),
+    vec4( 1.0f, -1.0f, 0.0f, 1.0f),
+    vec4(-1.0f,  1.0f, 0.0f, 1.0f),
+    vec4(-1.0f,  1.0f, 0.0f, 1.0f),
+    vec4( 1.0f, -1.0f, 0.0f, 1.0f),
+    vec4( 1.0f,  1.0f, 0.0f, 1.0f)
+);
+/* UVS - A list of texture coordinates associated with the vertices above.
+ *
+ *      Each element of this array corresponds with the vertex at the same position in the 'Vertices' array above. Similarly,
+ *      the outputted texture coordinate 'UV' is selected by the 'gl_VertexID' variable.
+ *
+ *      These texture coordinates appear upside down (i.e. flipped across the x- or u-midline) because framebuffer textures
+ *      are currently being rendered that way.
+ */
+const vec2 UVs[6] = vec2[6]
+(
+    vec2(0.0f, 1.0f),
+    vec2(1.0f, 1.0f),
+    vec2(0.0f, 0.0f),
+    vec2(0.0f, 0.0f),
+    vec2(1.0f, 1.0f),
+    vec2(1.0f, 0.0f)
+);
+
+
+
+void main(void)
+{
+    UV = UVs[gl_VertexID];
+    gl_Position = Vertices[gl_VertexID];
+}
