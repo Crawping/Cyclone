@@ -71,10 +71,10 @@ struct Array
 		
 		Array<T>& operator =(Array<T>& other)
 		{
-			_count = other.Count();
 			if (Data)
 				delete[] Data;
 
+            _count = other.Count();
 			Data = new T[Count()];
 			for (int a = 0; a < Count(); a++)
 				Data[a] = other.Data[a];
@@ -124,6 +124,7 @@ struct Array
         {
             return !(operator==(other));
         }
+
 	private:
 		uint	_count;
 		T*		Data;
