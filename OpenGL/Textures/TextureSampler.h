@@ -9,34 +9,35 @@
 
 
 
-/* TEXTURESAMPLER - A data structure that holds and manages texture sampling parameters. */
+/// <summary> A data structure that holds and manages texture sampling parameters. </summary>
 struct OpenGLAPI TextureSampler
 {
-    /* BORDERCOLOR - The color of the border that surrounds the texture. */
+    /// <summary> The color of the border that surrounds the texture. </summary>
     Color4              BorderColor;
-    /* EDGEWRAP - Controls the wrapping behavior when attempting to sample textures at out-of-bounds coordinates. */
+    /// <summary> Controls the wrapping behavior when attempting to sample textures at out-of-bounds coordinates. </summary>
     WrapModes           EdgeWrap;
-    /* LOD - The base level of detail at which a texture will be sampled. */
+    /// <summary> The base level of detail at which a texture will be sampled. </summary>
     int                 LOD;
-    /* MAGNIFYFILTER - Controls how textures are filtered when they are enlarged to fit within their rendering space. */
+    /// <summary> Controls how textures are filtered when they are enlarged to fit within their rendering space. </summary>
     TextureFilters      MagnifyFilter;
-    /* MAXLOG - The maximum level of detail at which textures can be sampled. */
+    /// <summary> The maximum level of detail at which textures can be sampled. </summary>
     int                 MaxLOD;
-    /* MINIFYFILTER - Controls how textures are filtered when they are shrunk to fit within their rendering space. */
+    /// <summary> Controls how textures are filtered when they are shrunk to fit within their rendering space. </summary>
     TextureFilters      MinifyFilter;
-    /* MINLOD - The minimum level of detail at which textures can be sampled. */
+    /// <summary> The minimum level of detail at which textures can be sampled. </summary>
     int                 MinLOD;
 
 
-    /* TEXTURESAMPLER - Constructs a default, fully initialized sampler parameter data structure. */
+
+    /// <summary> Constructs a default, fully initialized sampler parameter data structure. </summary>
     TextureSampler();
 
 
-    /** UTILITIES **/
-    /* BIND - Sets the texture sampling parameters for a texture on the GPU. */
+
+    /// <summary> Sets the texture sampling parameters for a texture on the GPU. </summary>
     void Bind() const;
-    /* FILTERS - Sets both the magnification and minification filters of a texture to the same value. */
+    /// <summary> Sets both the magnification and minification filters of a texture to the same value. </summary>
     TextureSampler& Filters(TextureFilters filter) { MagnifyFilter = MinifyFilter = filter; return *this; }
-    /* REPORT - Generates a human-readable string detailing the current internal state of this data structure. */
+    /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
     string Report() const;
 };
