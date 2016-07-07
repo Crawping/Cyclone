@@ -57,6 +57,7 @@
     <ClInclude Include="Point3D.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="GPU.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2D\Entity2D.cpp">
