@@ -18,10 +18,11 @@ class GraphicsPipeline : public IBindable
     public:
 
         /** PROPERTIES **/
-        uint ID()                               const override { return _id; }
-		virtual FrameBuffer* RenderTarget()		const = 0;
 
-		virtual void RenderTarget(FrameBuffer* target) = 0;
+        uint ID()                                       const override { return _id; }
+		virtual FrameBuffer* RenderTarget()		        const = 0;
+
+		virtual void RenderTarget(FrameBuffer* target)  = 0;
 
 
 
@@ -56,6 +57,9 @@ class GraphicsPipeline : public IBindable
 
         /** CONSTRUCTOR **/
 		OpenGLAPI GraphicsPipeline();
+        
+        /// <summary> Retrieves and posts error information that was logged while attempting to link shader programs. </summary>
+        OpenGLAPI virtual string ReportShaderLog() const;
 
     private:
 

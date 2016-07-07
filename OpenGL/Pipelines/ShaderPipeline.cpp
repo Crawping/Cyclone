@@ -56,7 +56,7 @@ void ShaderPipeline::CompileShaders(const string& vsSource, const string& psSour
     if (!successful)
     {
         Console::WriteLine("Failed to link the shader pipeline programs.");
-        PostShaderProgramLog();
+        //PostShaderProgramLog();
     }
 
     glValidateProgram(ID());
@@ -64,20 +64,7 @@ void ShaderPipeline::CompileShaders(const string& vsSource, const string& psSour
     if (!successful)
     {
         Console::WriteLine("Failed to validate the shader pipeline.");
-        PostShaderProgramLog();
-    }
-}
-/// <summary> Retrieves and posts error information that was logged while attempting to link shader programs. </summary>
-void ShaderPipeline::PostShaderProgramLog()
-{
-    string msg;
-    GLint nchars = 0;
-    glGetProgramiv(ID(), GL_INFO_LOG_LENGTH, &nchars);
-    if (nchars > 0)
-    {
-        msg.reserve(nchars);
-        glGetProgramInfoLog(ID(), nchars, 0, &msg[0]);
-        Console::WriteLine(msg);
+        //PostShaderProgramLog();
     }
 }
 

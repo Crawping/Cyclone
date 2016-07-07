@@ -63,6 +63,5 @@ class ShaderPipeline : public GraphicsPipeline
 		VertexBuffer				Vertices;
 
         void CompileShaders(const string& vsSource, const string& psSource);
-        void PostShaderProgramLog();
 		void UpdateResources();
 };
