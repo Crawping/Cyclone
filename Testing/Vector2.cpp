@@ -5,6 +5,8 @@
 #include <gtest/gtest.h>
 #include "Vector2.h"
 
+using namespace Cyclone::Utilities;
+
 
 
 class _Vector2 : public ::testing::Test

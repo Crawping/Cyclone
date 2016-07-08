@@ -5,6 +5,8 @@
 #include <gtest/gtest.h>
 #include "Color4.h"
 
+using namespace Cyclone::Utilities;
+
 
 
 class _Color4 : public ::testing::Test

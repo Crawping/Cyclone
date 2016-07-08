@@ -6,6 +6,8 @@
 #include "Bitmap.h"
 #include "Color4.h"
 
+using namespace Cyclone::Utilities;
+
 
 
 class _Bitmap : public ::testing::Test

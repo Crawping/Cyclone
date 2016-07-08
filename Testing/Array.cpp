@@ -5,6 +5,8 @@
 #include <gtest/gtest.h>
 #include "Array.h"
 
+using namespace Cyclone::Utilities;
+
 
 
 class _Array : public ::testing::Test
