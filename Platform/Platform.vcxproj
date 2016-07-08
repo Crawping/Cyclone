@@ -22,7 +22,7 @@
     <ProjectGuid>{370C8556-BE34-4242-A8E1-8ED733D0A50E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Platform</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -88,6 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLATFORM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;..\Utilities;..\Utilities\Math;..\Utilities\Spatial;..\OpenGL;..\OpenGL\Buffers; ..\CoreGL\Generated;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +143,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CGL.h" />
+    <ClInclude Include="PlatformAPI.h" />
+    <ClInclude Include="Window3D.h" />
+    <ClInclude Include="Windows\WGL.h" />
+    <ClInclude Include="Windows\Window3D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Windows\WGL.c" />
+    <ClCompile Include="Windows\Window3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
