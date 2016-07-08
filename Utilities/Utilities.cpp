@@ -26,7 +26,6 @@ namespace Cyclone
         /** MATH UTILITIES **/
         namespace Math
         {
-
             float Max(float x, float y, float z)
             {
                 return  (x > y) ?

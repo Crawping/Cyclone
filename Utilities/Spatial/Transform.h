@@ -13,9 +13,7 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        using namespace Cyclone::Utilities;
         struct Volume;
-
 
 
         struct UtilitiesAPI Transform

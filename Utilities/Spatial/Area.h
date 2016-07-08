@@ -11,7 +11,7 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        /* AREA - A data structure that describes a two-dimensional rectangular region of space. */
+        /// <summary> A data structure that describes a two-dimensional rectangular region of space. </summary>
         struct UtilitiesAPI Area
         {
 
@@ -22,22 +22,20 @@ namespace Cyclone
 
 
             /** DATA **/
-            /* X - The x-axis coordinate for the lower-left corner of the rectangular area. */
+            /// <summary> The x-axis coordinate for the lower-left corner of the rectangular area. </summary>
             float X;
-            /* Y - The y-axis coordinate for the lower-left corner of the rectangular area. */
+            /// <summary> The y-axis coordinate for the lower-left corner of the rectangular area. </summary>
             float Y;
-            /* WIDTH - The extent of the area along the x-axis. */
+            /// <summary> The extent of the area along the x-axis. </summary>
             float Width;
-            /* HEIGHT - The extent of the area along the y-axis. */
+            /// <summary> The extent of the area along the y-axis. </summary>
             float Height;
 
 
 
             /** PROPERTIES **/
-            /* BOTTOM - Gets the y-axis coordinate of the area's bottom edge.
-                *
-                *      Note that this is equivalent to getting the Y coordinate of the area directly.
-                */
+            /// <summary> Gets the y-axis coordinate of the area's bottom edge. </summary>
+            /// <remarks> Note that this is equivalent to getting the Y coordinate of the area directly. </remarks>
             float Bottom()                  const { return Y; }
             /* LEFT - Gets the x-axis coordinate of the area's left edge.
                 *

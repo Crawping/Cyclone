@@ -10,12 +10,11 @@
 namespace Cyclone
 {
     namespace Utilities
-    {
-    
+    {    
         struct Color4;
 
 
-        /* BITMAP - A class that holds and manages a two-dimensional array of RGBA pixel colors. */
+        /// <summary> A class that holds and manages a two-dimensional array of RGBA pixel colors. </summary>
         class Bitmap
         {
             public:
