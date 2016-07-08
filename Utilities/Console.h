@@ -8,7 +8,7 @@
 
 
 
-namespace Console
+namespace Cyclone::Utilities::Console
 {
     UtilitiesAPI void Write(const string& msg);
     UtilitiesAPI void Write(const char* msg);

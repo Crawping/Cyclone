@@ -6,80 +6,83 @@
 
 
 
-/** CONSTRUCTOR & DESTRUCTOR **/
-Bitmap::Bitmap(Bitmap&& other) :
-    _size(other.Size()),
-    Pixels(other.Pixels)
+namespace Cyclone::Utilities
 {
-    other.Pixels = nullptr;
-}
-Bitmap::Bitmap(const Vector2& size) :
-    _size(size),
-    Pixels(nullptr)
-{
-    Allocate(size);
-}
-Bitmap::Bitmap(const Bitmap& other) :
-    _size(other.Size()),
-    Pixels(nullptr)
-{
-    Allocate(Size());
-    std::memcpy(Pixels, other.Pixels, Height() * Width() * sizeof(Color4));
-}
-Bitmap::~Bitmap()
-{
-    if (Pixels)
-        delete[] Pixels;
-}
+    /** CONSTRUCTOR & DESTRUCTOR **/
+    Bitmap::Bitmap(Bitmap&& other) :
+        _size(other.Size()),
+        Pixels(other.Pixels)
+    {
+        other.Pixels = nullptr;
+    }
+    Bitmap::Bitmap(const Vector2& size) :
+        _size(size),
+        Pixels(nullptr)
+    {
+        Allocate(size);
+    }
+    Bitmap::Bitmap(const Bitmap& other) :
+        _size(other.Size()),
+        Pixels(nullptr)
+    {
+        Allocate(Size());
+        std::memcpy(Pixels, other.Pixels, Height() * Width() * sizeof(Color4));
+    }
+    Bitmap::~Bitmap()
+    {
+        if (Pixels)
+            delete[] Pixels;
+    }
 
 
 
-/** UTILITIES **/
-Bitmap& Bitmap::Allocate(const Vector2& size)
-{
-    if (Pixels)
-        delete[] Pixels;
+    /** UTILITIES **/
+    Bitmap& Bitmap::Allocate(const Vector2& size)
+    {
+        if (Pixels)
+            delete[] Pixels;
 
-    _size = size;
-    Pixels = new Color4[Width() * Height()];
-    return *this;
-}
-Bitmap& Bitmap::Fill(const Color4& color)
-{
-    for (int a = 0; a < Length(); a++)
-        Pixels[a] = color;
-    return *this;
-}
-string Bitmap::Report() const
-{
-    std::stringstream msg;
-    msg << "Bitmap Pixel Values:\n\n";
+        _size = size;
+        Pixels = new Color4[Width() * Height()];
+        return *this;
+    }
+    Bitmap& Bitmap::Fill(const Color4& color)
+    {
+        for (int a = 0; a < Length(); a++)
+            Pixels[a] = color;
+        return *this;
+    }
+    string Bitmap::Report() const
+    {
+        std::stringstream msg;
+        msg << "Bitmap Pixel Values:\n\n";
 
-    for (int a = 0; a < Height(); a++)
-        for (int b = 0; b < Width(); b++)
-            msg << "\t(" << a << ", " << b << "): " << Pixels[sub2ind(Height(), Width(), a, b)].ToString() << "\n";
+        for (int a = 0; a < Height(); a++)
+            for (int b = 0; b < Width(); b++)
+                msg << "\t(" << a << ", " << b << "): " << Pixels[sub2ind(Height(), Width(), a, b)].ToString() << "\n";
 
-    msg << "\n";
-    return msg.str();
-}
+        msg << "\n";
+        return msg.str();
+    }
 
 
-/** OPERATORS **/
-Color4& Bitmap::operator ()(int a, int b)
-{
-    int idx = sub2ind(Height(), Width(), a, b);
-    return Pixels[idx];
-}
-Bitmap& Bitmap::operator =(Bitmap& other)
-{
-    _size = other._size;
-    Allocate(Size());
-    std::memcpy(Pixels, other.Pixels, Height() * Width() * sizeof(Color4));
-    return *this;
-}
-Bitmap& Bitmap::operator =(Bitmap&& other)
-{
-    std::swap(_size, other._size);
-    std::swap(Pixels, other.Pixels);
-    return *this;
+    /** OPERATORS **/
+    Color4& Bitmap::operator ()(int a, int b)
+    {
+        int idx = sub2ind(Height(), Width(), a, b);
+        return Pixels[idx];
+    }
+    Bitmap& Bitmap::operator =(Bitmap& other)
+    {
+        _size = other._size;
+        Allocate(Size());
+        std::memcpy(Pixels, other.Pixels, Height() * Width() * sizeof(Color4));
+        return *this;
+    }
+    Bitmap& Bitmap::operator =(Bitmap&& other)
+    {
+        std::swap(_size, other._size);
+        std::swap(Pixels, other.Pixels);
+        return *this;
+    }
 }

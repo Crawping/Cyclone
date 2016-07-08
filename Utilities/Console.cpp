@@ -6,7 +6,7 @@ using std::cout;
 
 
 
-namespace Console
+namespace Cyclone::Utilities::Console
 {
 
     void Write(const string& msg)
