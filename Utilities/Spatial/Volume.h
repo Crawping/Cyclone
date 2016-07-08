@@ -47,27 +47,27 @@ namespace Cyclone::Utilities
         constexpr float Right()                     const { return X + Width; }
         constexpr float Top()                       const { return Y + Height; }
 
-        /* ISEMPTY - Determines whether this rectangular prism has a total volume of zero. */
+        /// <summary> Determines whether this rectangular prism has a total volume of zero. </summary>
         constexpr bool IsEmpty()                    const { return !Width || !Height || !Depth; }
 
-        /* POSITION - Gets the (x, y, z) coordinates of the front-lower-left corner of this volume. */
+        /// <summary> Gets the (x, y, z) coordinates of the front-lower-left corner of this volume. </summary>
         constexpr Vector3 Position()                const { return Vector3(X, Y, Z); }
-        /* POSITION - Sets the (x, y, z) coordinates of the front-lower-left corner of this volume. */
+        /// <summary> Sets the (x, y, z) coordinates of the front-lower-left corner of this volume. </summary>
         Volume& Position(const Vector3& p)                { X = p.X; Y = p.Y; Z = p.Z; return *this; }
-        /* POSITION - Sets the (x, y, z) coordinates of the front-lower-left corder of this volume. */
+        /// <summary> Sets the (x, y, z) coordinates of the front-lower-left corder of this volume. </summary>
         Volume& Position(float x, float y, float z)       { X = x, Y = y, Z = z; return *this; }
 
-        /* SIZE - Gets the (width, height, depth) values of this volume. */
+        /// <summary> Gets the (width, height, depth) values of this volume. </summary>
         constexpr Vector3 Size()                    const { return Vector3(Width, Height, Depth); }
-        /* SIZE - Sets the (width, height, depth) values of this volume. */
+        /// <summary> Sets the (width, height, depth) values of this volume. </summary>
         Volume& Size(const Vector3& s)                    { Width = s.X; Height = s.Y; Depth = s.Z; return *this; }
-        /* SIZE - Sets the (width, height, depth) values of this volume. */
+        /// <summary> Sets the (width, height, depth) values of this volume. </summary>
         Volume& Size(float x, float y, float z)           { Width = x; Height = y; Depth = z; return *this; }
 
 
 
         /** CONSTRUCTORS **/
-        /* VOLUME - Constructs a default data structure describing a unit rectangular prism at the origin (0, 0, 0). */
+        /// <summary> Constructs a default data structure describing a unit rectangular prism at the origin (0, 0, 0). </summary>
         constexpr Volume() :
             X(0), Y(0), Z(0),
             Width(1), Height(1), Depth(1)
@@ -80,14 +80,14 @@ namespace Cyclone::Utilities
         {
 
         }
-        /* VOLUME - Constructs a data structure describing a rectangular prism with a designated position and size. */
+        /// <summary> Constructs a data structure describing a rectangular prism with a designated position and size. </summary>
         constexpr Volume(const Vector3& position, const Vector3& size) :
             X(position.X), Y(position.Y), Z(position.Z),
             Width(size.X), Height(size.Y), Depth(size.Z)
         {
 
         }
-        /* VOLUME - Constructs a data structure describing a rectangular prism with a designated position and size. */
+        /// <summary> Constructs a data structure describing a rectangular prism with a designated position and size. </summary>
         constexpr Volume(float x, float y, float z, float width, float height, float depth) :
             X(x), Y(x), Z(z),
             Width(width), Height(height), Depth(depth)

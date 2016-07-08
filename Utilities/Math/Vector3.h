@@ -28,31 +28,31 @@ namespace Cyclone::Utilities
 
 
         /** DATA **/
-        /* X - The x-coordinate of the vector. */
+        /// <summary> The x-coordinate of the vector. </summary>
         float X;
-        /* Y - The y-coordiante of the vector. */
+        /// <summary> The y-coordiante of the vector. </summary>
         float Y;
-        /* Z - The z-coordinate of the vector. */
+        /// <summary> The z-coordinate of the vector. </summary>
         float Z;
 
 
 
         /** CONSTRUCTORS **/
-        /* VECTOR3 - Constructs a 3-element vector pointing to the origin (0, 0, 0). */
+        /// <summary> Constructs a 3-element vector pointing to the origin (0, 0, 0). </summary>
         constexpr Vector3()                                     : X(0), Y(0), Z(0) { }
-        /* VECTOR3 - Constructs a 3-element vector pointing to uniform coordinates. */
+        /// <summary> Constructs a 3-element vector pointing to uniform coordinates. </summary>
         constexpr Vector3(float v)                              : X(v), Y(v), Z(v) { }
 
         constexpr Vector3(const Vector2& v, float z = 0.0f)     : X(v.X), Y(v.Y), Z(z) { }
-        /* VECTOR3 - Constructs a 3-element vector pointing to the specified coordinates. */
+        /// <summary> Constructs a 3-element vector pointing to the specified coordinates. </summary>
         constexpr Vector3(float x, float y, float z)            : X(x), Y(y), Z(z) { }
 
 
 
         /** UTILITIES **/
-        /* TRANSLATE - Moves the vector relative to its current position. */
+        /// <summary> Moves the vector relative to its current position. </summary>
         Vector3& Translate(float x, float y, float z)       { X += x; Y += y; Z += z; return *this; }
-        /* TRANSLATE - Moves the vector relative to its current position. */
+        /// <summary> Moves the vector relative to its current position. </summary>
         Vector3& Translate(const Vector3& t)                { return Translate(t.X, t.Y, t.Z); }
 
 
