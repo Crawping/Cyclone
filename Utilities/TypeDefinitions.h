@@ -7,16 +7,22 @@
 
 
 
-namespace Cyclone::Utilities
+namespace Cyclone
 {
-    /** PRIMITIVE NUMERIC TYPES **/
-    typedef int8_t      byte;
-    typedef uint8_t     ubyte;
-    typedef uint32_t    uint;
-    typedef uint64_t    ulong;
-    typedef uint16_t    ushort;
+    namespace Utilities
+    {
+        /** PRIMITIVE NUMERIC TYPES **/
+        typedef int8_t      byte;
+        typedef uint8_t     ubyte;
+        typedef uint32_t    uint;
+        typedef uint64_t    ulong;
+        typedef uint16_t    ushort;
 
-    typedef ulong       Window;
+        typedef ulong       Window;
 
-    using std::string;
+        using std::string;
+    }
 }
+
+
+

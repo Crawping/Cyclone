@@ -6,24 +6,28 @@ using std::cout;
 
 
 
-namespace Cyclone::Utilities::Console
+namespace Cyclone
 {
-
-    void Write(const string& msg)
+    namespace Utilities
     {
-        cout << msg;
+        namespace Console
+        {
+            void Write(const string& msg)
+            {
+                cout << msg;
+            }
+            void Write(const char* msg)
+            {
+                cout << msg;
+            }
+            void WriteLine(const string& msg)
+            {
+                cout << msg << std::endl;
+            }
+            void WriteLine(const char* msg)
+            {
+                cout << msg << std::endl;
+            }
+        }
     }
-    void Write(const char* msg)
-    {
-        cout << msg;
-    }
-    void WriteLine(const string& msg)
-    {
-        cout << msg << std::endl;
-    }
-    void WriteLine(const char* msg)
-    {
-        cout << msg << std::endl;
-    }
-
 }

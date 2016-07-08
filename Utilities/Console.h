@@ -8,10 +8,16 @@
 
 
 
-namespace Cyclone::Utilities::Console
+namespace Cyclone
 {
-    UtilitiesAPI void Write(const string& msg);
-    UtilitiesAPI void Write(const char* msg);
-    UtilitiesAPI void WriteLine(const string& msg);
-    UtilitiesAPI void WriteLine(const char* msg);
-};
+    namespace Utilities
+    {
+        namespace Console
+        {
+            UtilitiesAPI void Write(const string& msg);
+            UtilitiesAPI void Write(const char* msg);
+            UtilitiesAPI void WriteLine(const string& msg);
+            UtilitiesAPI void WriteLine(const char* msg);
+        }
+    }
+}

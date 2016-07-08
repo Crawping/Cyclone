@@ -90,7 +90,8 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;UTILITIES_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;.\Imaging;.\Math;.\Spatial;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>/std:c++latest</AdditionalOptions>
+      <AdditionalOptions>
+      </AdditionalOptions>
       <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
