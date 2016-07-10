@@ -17,51 +17,57 @@ struct Color4;
 struct Transform;
 
 
-
-class ShaderPipeline : public GraphicsPipeline
+namespace Cyclone
 {
+    namespace OpenGL
+    {
+        class ShaderPipeline : public GraphicsPipeline
+        {
 
-    public:
+            public:
 
-		/** PROPERTIES **/
-		FrameBuffer* RenderTarget()							const { return _renderTarget; }
-		void RenderTarget(FrameBuffer* target)					  { _renderTarget = target; }
-
-
-
-        /** CONSTRUCTOR & DESTRUCTOR **/
-        /// <summary> Constructs an OpenGL rendering pipeline consisting only vertex and fragment shading stages. </summary>
-		OpenGLAPI ShaderPipeline(const string& vsSource, const string& psSource);
-		OpenGLAPI ~ShaderPipeline();
+		        /** PROPERTIES **/
+		        FrameBuffer* RenderTarget()							const { return _renderTarget; }
+		        void RenderTarget(FrameBuffer* target)					  { _renderTarget = target; }
 
 
 
-        /** BINDING METHODS **/
-		/// <summary> Activates any stored uniform shader variables for immediate use on the GPU. </summary>
-		OpenGLAPI void BindResources()						const override;
-		/// <summary> Deactivates any resources associated with this rendering pipeline on the GPU. </summary>
-		OpenGLAPI void UnbindResources()					const override;
+                /** CONSTRUCTOR & DESTRUCTOR **/
+                /// <summary> Constructs an OpenGL rendering pipeline consisting only vertex and fragment shading stages. </summary>
+		        OpenGLAPI ShaderPipeline(const string& vsSource, const string& psSource);
+		        OpenGLAPI ~ShaderPipeline();
 
 
 
-        /** PIPELINE UTILITIES **/
-		OpenGLAPI void Execute()								override;
-		OpenGLAPI void Input(const IRenderableEntity& entity)   override;
-		OpenGLAPI void Input(const PerFrame& frameData)			override;
-		OpenGLAPI void Reset()									override;
+                /** BINDING METHODS **/
+		        /// <summary> Activates any stored uniform shader variables for immediate use on the GPU. </summary>
+		        OpenGLAPI void BindResources()						const override;
+		        /// <summary> Deactivates any resources associated with this rendering pipeline on the GPU. </summary>
+		        OpenGLAPI void UnbindResources()					const override;
+
+
+
+                /** PIPELINE UTILITIES **/
+		        OpenGLAPI void Execute()								override;
+		        OpenGLAPI void Input(const IRenderableEntity& entity)   override;
+		        OpenGLAPI void Input(const PerFrame& frameData)			override;
+		        OpenGLAPI void Reset()									override;
 
 		
 
-    private:
-		FrameBuffer*				_renderTarget;
+            private:
+		        FrameBuffer*				_renderTarget;
 
-        VertexTopologies            Topology;
+                VertexTopologies            Topology;
 
-        std::map<const void*, uint> BufferIndices;
-		UniformBuffer<PerEntity>    PerEntityBuffer;
-		UniformBuffer<PerFrame>     PerFrameBuffer;
-		VertexBuffer				Vertices;
+                std::map<const void*, uint> BufferIndices;
+		        UniformBuffer<PerEntity>    PerEntityBuffer;
+		        UniformBuffer<PerFrame>     PerFrameBuffer;
+		        VertexBuffer				Vertices;
 
-        void CompileShaders(const string& vsSource, const string& psSource);
-		void UpdateResources();
-};
+                void CompileShaders(const string& vsSource, const string& psSource);
+		        void UpdateResources();
+        };
+
+    }
+}

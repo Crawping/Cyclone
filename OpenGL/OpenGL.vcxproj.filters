@@ -5,9 +5,6 @@
     <ClInclude Include="Interfaces\IBindable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="2D\Entity2D.h">
-      <Filter>2D</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IRenderable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -57,12 +54,8 @@
     <ClInclude Include="Point3D.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="GPU.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="2D\Entity2D.cpp">
-      <Filter>2D</Filter>
-    </ClCompile>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
@@ -84,22 +77,19 @@
     <ClCompile Include="..\CoreGL\Generated\OpenGL.c">
       <Filter>Generated</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsPipeline.cpp">
-      <Filter>Pipelines</Filter>
-    </ClCompile>
     <ClCompile Include="Pipelines\Shader.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
     <ClCompile Include="3D\Entity3D.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
+    <ClCompile Include="Pipelines\GraphicsPipeline.cpp">
+      <Filter>Pipelines</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
       <UniqueIdentifier>{658f9a7d-b7a4-42ae-81de-ba59a44d4a40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="2D">
-      <UniqueIdentifier>{ddc22ee6-ca98-472b-aea0-75ae4ac13864}</UniqueIdentifier>
     </Filter>
     <Filter Include="3D">
       <UniqueIdentifier>{3a9a1be1-0d2e-4324-a317-c392275dc8fa}</UniqueIdentifier>
@@ -124,9 +114,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="2D\CMakeLists.txt">
-      <Filter>2D</Filter>
-    </Text>
     <Text Include="3D\CMakeLists.txt">
       <Filter>3D</Filter>
     </Text>

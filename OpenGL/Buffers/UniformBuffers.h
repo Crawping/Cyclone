@@ -11,31 +11,35 @@
 
 
 
-/* PERFRAME - A structure containing uniform shader data that are expected to change between every rendered frame. */
-struct PerFrame
+namespace Cyclone
 {
-    /* VIEWPROJECTION - The current combined view-projection transformation matrix. */
-    Matrix4x4   ViewProjection;
-    /* CAMERAPOSITION - The position of the camera in world coordinates. */
-    Vector3     CameraPosition;
+    namespace OpenGL
+    {
+        /* PERFRAME - A structure containing uniform shader data that are expected to change between every rendered frame. */
+        struct PerFrame
+        {
+            /* VIEWPROJECTION - The current combined view-projection transformation matrix. */
+            Matrix4x4   ViewProjection;
+            /* CAMERAPOSITION - The position of the camera in world coordinates. */
+            Vector3     CameraPosition;
 
-    uint        Time;
-};
+            uint        Time;
+        };
 
-/* PEROBJECT - A structure containing uniform shader data that are expected to change between every rendered object. */
-struct PerEntity
-{
-    /* WORLD - The world transformation matrix for an entity. */
-    Matrix4x4   World;
+        /* PEROBJECT - A structure containing uniform shader data that are expected to change between every rendered object. */
+        struct PerEntity
+        {
+            /* WORLD - The world transformation matrix for an entity. */
+            Matrix4x4   World;
 
-    Color4      Color;
+            Color4      Color;
 
-    ulong       TextureHandle;
+            ulong       TextureHandle;
 
-    Vector2     _0;
-};
-
-
+            Vector2     _0;
+        };
+    }
+}
 
 
 

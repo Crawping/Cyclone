@@ -8,47 +8,62 @@
 #include "OpenGLAPI.h"
 #include "Vertex.h"
 
-struct  Color4;
-struct  PerEntity;
-class   Texture2D;
-struct  Transform;
-struct	VertexArray;
 
 
-
-class OpenGLAPI IGeometricEntity
+namespace Cyclone
 {
-	public:
+    namespace Utilities
+    {
+        struct  Color4;
+        struct  Transform;
+    }
 
-		virtual ~IGeometricEntity() { }
+    namespace OpenGL
+    {
+        
+        struct  PerEntity;
+        class   Texture2D;        
+        struct	VertexArray;
+        
 
-		virtual const Array<Vertex>& Vertices()		const = 0;
-		virtual const Transform& World()			const = 0;
-		virtual VertexTopologies Topology()			const = 0;
-};
-
-
-
-class OpenGLAPI IMaterialEntity
-{
-	public:
-		virtual ~IMaterialEntity() { }
-
-		virtual const Texture2D* Texture()			const = 0;
-		virtual const Color4& Color()				const = 0;
-};
+        using namespace Utilities;
 
 
 
-class OpenGLAPI IRenderableEntity : 
-	public IGeometricEntity, 
-	public IMaterialEntity
-{
-	public:
-		virtual ~IRenderableEntity() { }
+        class OpenGLAPI IGeometricEntity
+        {
+	        public:
 
-		virtual bool IsVisible()					const = 0;
-};
+		        virtual ~IGeometricEntity() { }
+
+		        virtual const Array<Vertex>& Vertices()		const = 0;
+		        virtual const Transform& World()			const = 0;
+		        virtual VertexTopologies Topology()			const = 0;
+        };
 
 
+
+        class OpenGLAPI IMaterialEntity
+        {
+	        public:
+		        virtual ~IMaterialEntity() { }
+
+		        virtual const Texture2D* Texture()			const = 0;
+		        virtual const Color4& Color()				const = 0;
+        };
+
+
+
+        class OpenGLAPI IRenderableEntity : 
+	        public IGeometricEntity, 
+	        public IMaterialEntity
+        {
+	        public:
+		        virtual ~IRenderableEntity() { }
+
+		        virtual bool IsVisible()					const = 0;
+        };
+
+    }
+}
 

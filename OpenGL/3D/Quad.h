@@ -12,11 +12,17 @@
 
 
 
-class Quad : public Entity3D
+namespace Cyclone
 {
+    namespace OpenGL
+    {
+        class Quad : public Entity3D
+        {
 
-    public:
-        /** CONSTRUCTOR **/
-        Quad() : Entity3D(Geometry::Quad) { }
+            public:
+                /** CONSTRUCTOR **/
+                Quad() : Entity3D(Geometry::Quad) { }
 
-};
+        };
+    }
+}

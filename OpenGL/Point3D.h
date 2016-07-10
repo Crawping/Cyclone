@@ -8,8 +8,14 @@
 
 
 
-class Point3D : public Entity3D
+namespace Cyclone
 {
-	public:
-		Point3D() : Entity3D(Geometry::Point) { }
-};
+    namespace OpenGL
+    {
+        class Point3D : public Entity3D
+        {
+	        public:
+		        Point3D() : Entity3D(Geometry::Point) { }
+        };
+    }
+}

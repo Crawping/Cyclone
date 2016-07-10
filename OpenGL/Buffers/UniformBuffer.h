@@ -7,16 +7,20 @@
 #include "GraphicsBuffer.h"
 
 
-
-template<typename T>
-class UniformBuffer : public GraphicsBuffer<T>
+namespace Cyclone
 {
+    namespace OpenGL
+    {
+        template<typename T>
+        class UniformBuffer : public GraphicsBuffer<T>
+        {
 
-    public:
+            public:
 
-        /** CONSTRUCTOR & DESTRUCTOR **/
-        UniformBuffer() : GraphicsBuffer<T>(BufferTypes::Uniform) { }
-        ~UniformBuffer() { }
+                /** CONSTRUCTOR & DESTRUCTOR **/
+                UniformBuffer() : GraphicsBuffer<T>(BufferTypes::Uniform) { }
+                ~UniformBuffer() { }
 
-};
-
+        };
+    }
+}

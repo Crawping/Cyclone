@@ -7,7 +7,7 @@
 #include "Enumerator.h"
 #include "OpenGL.h"
 #include "OpenGLAPI.h"
-
+using namespace Cyclone::Utilities;
 
 
 struct AccessIntents : public Enumerator

@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\CoreGL\Generated\OpenGL.h" />
-    <ClInclude Include="2D\Entity2D.h" />
     <ClInclude Include="3D\Entity3D.h" />
     <ClInclude Include="3D\Quad.h" />
     <ClInclude Include="Buffers\FrameBuffer.h" />
@@ -157,7 +156,6 @@
     <ClInclude Include="Buffers\UniformBuffers.h" />
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="EnumerationsGL.h" />
-    <ClInclude Include="GPU.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="OpenGLAPI.h" />
@@ -171,11 +169,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CoreGL\Generated\OpenGL.c" />
-    <ClCompile Include="2D\Entity2D.cpp" />
     <ClCompile Include="3D\Entity3D.cpp" />
     <ClCompile Include="Buffers\FrameBuffer.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
-    <ClCompile Include="GraphicsPipeline.cpp" />
+    <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />
     <ClCompile Include="Pipelines\ShaderPipeline.cpp" />
     <ClCompile Include="Textures\Texture.cpp" />
@@ -183,7 +180,6 @@
     <ClCompile Include="Textures\TextureSampler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="2D\CMakeLists.txt" />
     <Text Include="3D\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
