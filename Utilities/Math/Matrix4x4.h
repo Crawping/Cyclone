@@ -44,7 +44,7 @@ namespace Cyclone
 		        /// <summary> Constructs a new 4x4 matrix as a deep copy of a flattened native array. </summary> 
 		        /// <param name="other">
 		        ///		A native C++ array of single-precision floating point values to be copied.
-
+                ///     <para> </para>
 		        ///		This array should be flat (i.e. one-dimensional) and arranged in column-major   <para/>
 		        ///		order. It must also have at least 16 elements(though only the first 16 will be   <para/>
 		        ///		used).
@@ -65,12 +65,21 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                /// <summary> Gets the pointer to the native data array stored by this object. </summary>
+                /// <returns> A pointer to the first single-precision float value in this matrix. </returns>
+                /// <remarks> 
+                ///     This method retrieves the backing data store for a matrix, without making a deep copy of it. Thus, any modifications 
+                ///     made to the array referenced by the outputted pointer will also affect the original matrix, warranting some caution 
+                ///     with its use. It is provided as a convenience for dealing with other libraries and code (e.g. OpenGL) that also use 
+                ///     matrices.
+                /// </remarks>
                 float* ToArray()                                  { return Data; }
-
+                /// <summary> Gets the pointer to the native data array stored by this object. </summary>
+                /// <returns> A constant pointer to the first single-precision float value in this matrix. </returns>
                 const float* ToArray()                      const { return Data; }
                 /// <summary> Rearranges the matrix elements such that rows become columns and vice versa. </summary>
                 Matrix4x4& Transpose();
-
+                /// <summary> Converts this matrix into a formatted, human-readable string containing all element values. </summary>
                 string ToString() const;
 
 
