@@ -4,7 +4,7 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "IBindable.h"
+#include "Interfaces/IBindable.h"
 #include "OpenGLAPI.h"
 #include "TypeDefinitions.h"
 

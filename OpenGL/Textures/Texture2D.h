@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Area.h"
-#include "Color4.h"
+#include "Imaging/Color4.h"
 #include "EnumerationsGL.h"
 #include "Texture.h"
 #include "TextureSampler.h"
