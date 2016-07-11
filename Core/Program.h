@@ -8,7 +8,7 @@
 
 class Program
 {
-    //public:
+    public:
     //    /** PROPERTIES **/
     //    /* DEBUG - Gets whether or not this program is being executed with debugging functionality enabled.
     //    *
@@ -27,15 +27,15 @@ class Program
 
 
 
-    //    /** CONSTRUCTOR & DESTRUCTOR **/
-    //    Program(int nargs, char** args);
-    //    ~Program();
+        /** CONSTRUCTOR & DESTRUCTOR **/
+        Program(int nargs, char** args);
+        ~Program();
 
 
 
-    //    /** UTILITIES **/
-    //    /* EXECUTE - Runs the main event loop for the program. */
-    //    void Execute();
+        /** UTILITIES **/
+        /* EXECUTE - Runs the main event loop for the program. */
+        void Execute();
 
 
 
@@ -100,5 +100,5 @@ class Program
 
 /** GLOBAL VARIABLES **/
 /* APPLICATION - A pointer to the running program instance. */
-extern Program* Application;
+//extern Program* Application;
 
