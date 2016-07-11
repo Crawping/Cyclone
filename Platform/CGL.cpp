@@ -11,31 +11,34 @@ using namespace Cyclone::Utilities;
 
 
 
-namespace Cyclone
-{
-    namespace Platform
-    {
-        
-        int cglLoadAPI()
-        {
-            if (!wglLoadFunctions())
-            {
-                Console::WriteLine("Failed to load the WGL library functions.");
-                return 0;
-            }
-
-            if (!glLoadFunctions())
-            {
-                Console::WriteLine("Failed to load the OpenGL library functions.");
-                return 0;
-            }
-
-            return 1;
-        }
-
-        void cglClearAPI()
-        {
-            wglDestroyResources();
-        }
+#ifdef __linux__
+    int Cyclone::Platform::cglLoadAPI()
+    {        
+        return 1;
     }
-}
+    void Cyclone::Platform::cglClearAPI()
+    {
+
+    }
+#else
+    int Cyclone::Platform::cglLoadAPI()
+    {
+        if (!wglLoadFunctions())
+        {
+            Console::WriteLine("Failed to load the WGL library functions.");
+            return 0;
+        }
+
+        if (!glLoadFunctions())
+        {
+            Console::WriteLine("Failed to load the OpenGL library functions.");
+            return 0;
+        }
+
+        return 1;
+    }
+    void Cyclone::Platform::cglClearAPI()
+    {
+        wglDestroyResources();
+    }
+#endif

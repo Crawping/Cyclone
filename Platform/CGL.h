@@ -4,13 +4,6 @@
 
 #pragma once
 #include "PlatformAPI.h"
-#include "GL/OpenGL.h"
-
-
-
-
-/** FUNCTION POINTERS **/
-
 
 
 
