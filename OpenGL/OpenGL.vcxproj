@@ -180,9 +180,6 @@
     <ClCompile Include="Textures\TextureSampler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="3D\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Shaders\Default.hsl" />
     <None Include="Shaders\Default.psl" />
     <None Include="Shaders\Default.vsl" />

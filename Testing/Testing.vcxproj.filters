@@ -17,6 +17,9 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>Utilities\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Matrix4x4.cpp">
+      <Filter>Utilities\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">

@@ -91,9 +91,6 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{658f9a7d-b7a4-42ae-81de-ba59a44d4a40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3D">
-      <UniqueIdentifier>{3a9a1be1-0d2e-4324-a317-c392275dc8fa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shaders">
       <UniqueIdentifier>{1d4fe94f-631a-44ef-a5ce-d9b7256aae2e}</UniqueIdentifier>
     </Filter>
@@ -112,11 +109,6 @@
     <Filter Include="Primitives">
       <UniqueIdentifier>{2d05a31c-b066-46f0-9eac-9aa4b599bb67}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="3D\CMakeLists.txt">
-      <Filter>3D</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Default.hsl">
