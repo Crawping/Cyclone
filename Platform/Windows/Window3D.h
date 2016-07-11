@@ -4,40 +4,36 @@
 
 #pragma once
 #include "Area.h"
-#include "Window3D.h"
+#include "PlatformAPI.h"
 #include "TypeDefinitions.h"
 #include "Vector2.h"
 
-namespace 
+
+
+namespace Cyclone
 {
-    struct  HDC_;
-    struct  HWND_;
-    struct  Vector2;
-
-    typedef int* HWND;
-    typedef int* HDC;
-}
-
-
-namespace Cyclone::Platform
-{
-    using namespace Cyclone::Utilities;
-
-
-    class Window3D
+    namespace Platform
     {
-        public:
-
-            Window3D(const Area& displayArea, const string& title);
-            ~Window3D();
+        using namespace Cyclone::Utilities;
+        
 
 
-        private:
-            Area        _displayArea;
-            HWND        _id;
-            string      _title;
+        class Window3D
+        {
+            public:
 
-            HDC         DeviceContext;
+                PlatformAPI Window3D(const Area& displayArea, const string& title);
+                PlatformAPI ~Window3D();
 
-    };
+
+            private:
+                struct _window3D;
+
+                _window3D*      _internal;
+                //HWND            _id;
+                //Area            _displayArea;
+                //string          _title;
+
+        };
+    }
 }
