@@ -7,6 +7,8 @@
 
 using namespace Cyclone::Utilities;
 
+
+
 /** INTERNAL DATA **/
 const static float EYE[16] =
 {
