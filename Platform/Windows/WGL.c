@@ -5,16 +5,18 @@
 
 
 /** WGL FUNCTION POINTERS **/
-PFNWGLGETEXTENSIONSSTRINGARBPROC     wglGetExtensionsString = NULL;
-PFNWGLCREATECONTEXTATTRIBSARBPROC    wglCreateContextAttribs = NULL;
-PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval = NULL;
-PFNWGLGETPIXELFORMATATTRIBIVARBPROC  wglGetPixelFormatAttribiv = NULL;
+PFNWGLGETEXTENSIONSSTRINGARBPROC     wglGetExtensionsString     = NULL;
+PFNWGLCREATECONTEXTATTRIBSARBPROC    wglCreateContextAttribs    = NULL;
+PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval            = NULL;
+PFNWGLGETPIXELFORMATATTRIBIVARBPROC  wglGetPixelFormatAttribiv  = NULL;
 
 
-HDC LoadingContext = NULL;
-HWND LoadingWindow = NULL;
-static HINSTANCE LibraryHandle = NULL;
-static RenderContext TemporaryContext = NULL;
+
+/** WGL RESOURCES **/
+HDC LoadingContext                      = NULL;
+HWND LoadingWindow                      = NULL;
+static HINSTANCE LibraryHandle          = NULL;
+static RenderContext TemporaryContext   = NULL;
 
 
 

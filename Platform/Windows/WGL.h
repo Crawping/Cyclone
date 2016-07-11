@@ -7,6 +7,7 @@
 
     #include "GL/OpenGL.h"
     #include "GL/wglext.h"
+    #include "PlatformAPI.h"
 
     typedef HGLRC RenderContext;
 
@@ -16,14 +17,14 @@
     #endif
 
             /** WGL FUNCTION POINTERS **/
-            extern PFNWGLCREATECONTEXTATTRIBSARBPROC    wglCreateContextAttribs;
-            extern PFNWGLGETEXTENSIONSSTRINGARBPROC     wglGetExtensionsString;
-            extern PFNWGLGETPIXELFORMATATTRIBIVARBPROC  wglGetPixelFormatAttribiv;
-            extern PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval;
+            PlatformAPI extern PFNWGLCREATECONTEXTATTRIBSARBPROC    wglCreateContextAttribs;
+            PlatformAPI extern PFNWGLGETEXTENSIONSSTRINGARBPROC     wglGetExtensionsString;
+            PlatformAPI extern PFNWGLGETPIXELFORMATATTRIBIVARBPROC  wglGetPixelFormatAttribiv;
+            PlatformAPI extern PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval;
 
 
-            extern HDC  LoadingContext;
-            extern HWND LoadingWindow;
+            PlatformAPI extern HDC  LoadingContext;
+            PlatformAPI extern HWND LoadingWindow;
 
 
 
