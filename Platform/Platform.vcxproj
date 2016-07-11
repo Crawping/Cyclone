@@ -94,7 +94,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenGL.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Configuration)\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -145,15 +146,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\CoreGL\GL\OpenGL.h" />
     <ClInclude Include="CGL.h" />
     <ClInclude Include="PlatformAPI.h" />
+    <ClInclude Include="RenderContext.h" />
     <ClInclude Include="Window3D.h" />
     <ClInclude Include="Windows\WGL.h" />
     <ClInclude Include="Windows\Window3D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CoreGL\GL\OpenGL.c" />
     <ClCompile Include="CGL.cpp" />
     <ClCompile Include="Windows\WGL.c" />
     <ClCompile Include="Windows\Window3D.cpp" />

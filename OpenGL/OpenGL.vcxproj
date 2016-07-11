@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CoreGL;..\CoreGL\Generated;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\2D;.\3D;.\Buffers;.\Interfaces;.\Pipelines;.\Textures</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CoreGL;..\CoreGL\GL;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\Buffers;.\Interfaces;.\Pipelines;.\Textures</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\CoreGL\Generated\OpenGL.h" />
+    <ClInclude Include="..\CoreGL\GL\OpenGL.h" />
     <ClInclude Include="3D\Entity3D.h" />
     <ClInclude Include="3D\Quad.h" />
     <ClInclude Include="Buffers\FrameBuffer.h" />
@@ -168,7 +168,7 @@
     <ClInclude Include="Textures\TextureSampler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\CoreGL\Generated\OpenGL.c" />
+    <ClCompile Include="..\CoreGL\GL\OpenGL.c" />
     <ClCompile Include="3D\Entity3D.cpp" />
     <ClCompile Include="Buffers\FrameBuffer.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />

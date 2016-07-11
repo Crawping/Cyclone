@@ -10,16 +10,11 @@
     </ClInclude>
     <ClInclude Include="PlatformAPI.h" />
     <ClInclude Include="CGL.h" />
-    <ClInclude Include="..\CoreGL\GL\OpenGL.h">
-      <Filter>GL</Filter>
-    </ClInclude>
+    <ClInclude Include="RenderContext.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
       <UniqueIdentifier>{051d679b-c49b-4460-80be-9ccd990be058}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GL">
-      <UniqueIdentifier>{74b2c82d-1f97-4fba-bb52-d5cf3ba616d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,8 +25,5 @@
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="CGL.cpp" />
-    <ClCompile Include="..\CoreGL\GL\OpenGL.c">
-      <Filter>GL</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

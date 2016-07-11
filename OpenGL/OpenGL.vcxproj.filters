@@ -39,9 +39,6 @@
       <Filter>Pipelines</Filter>
     </ClInclude>
     <ClInclude Include="OpenGLAPI.h" />
-    <ClInclude Include="..\CoreGL\Generated\OpenGL.h">
-      <Filter>Generated</Filter>
-    </ClInclude>
     <ClInclude Include="Pipelines\Shader.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
@@ -53,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="Point3D.h">
       <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CoreGL\GL\OpenGL.h">
+      <Filter>GL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +74,6 @@
     <ClCompile Include="Pipelines\ShaderPipeline.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
-    <ClCompile Include="..\CoreGL\Generated\OpenGL.c">
-      <Filter>Generated</Filter>
-    </ClCompile>
     <ClCompile Include="Pipelines\Shader.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
@@ -85,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp">
       <Filter>Pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="..\CoreGL\GL\OpenGL.c">
+      <Filter>GL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,11 +103,11 @@
     <Filter Include="Textures">
       <UniqueIdentifier>{821948ac-5b1a-428e-aa82-665cba1ed961}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Generated">
-      <UniqueIdentifier>{bf592755-55dc-48cb-89ea-548f8fe6bf6b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Primitives">
       <UniqueIdentifier>{2d05a31c-b066-46f0-9eac-9aa4b599bb67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GL">
+      <UniqueIdentifier>{b7499290-a0e5-4b8b-abf4-ed711f7c13ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
