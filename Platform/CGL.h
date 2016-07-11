@@ -3,18 +3,23 @@
  */
 
 #pragma once
-#include "OpenGL.h"
+#include "PlatformAPI.h"
+#include "GL/OpenGL.h"
+
 
 
 
 /** FUNCTION POINTERS **/
-#ifdef __linux__
-    #include "Linux/GLX.h"
-#else
-    #include "Windows/WGL.h"
-#endif
 
 
 
-/** PUBLIC API FUNCTIONS **/
-int cglLoadFunctions();
+
+namespace Cyclone
+{
+    namespace Platform
+    {
+        /** PUBLIC API FUNCTIONS **/
+        PlatformAPI int cglLoadAPI();
+        PlatformAPI void cglClearAPI();
+    }
+}
