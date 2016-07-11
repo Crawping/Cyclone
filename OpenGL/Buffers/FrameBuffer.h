@@ -3,9 +3,9 @@
  */
 
 #pragma once
-#include "Area.h"
+#include "Spatial/Area.h"
 #include "Textures/Texture2D.h"
-#include "Vector2.h"
+#include "Math/Vector2.h"
 
 
 
@@ -13,7 +13,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class OpenGLAPI FrameBuffer
+        class FrameBuffer
         {
 
             public:
@@ -42,7 +42,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /* FRAMEBUFFER - Constructs an empty framebuffer object. */
-                FrameBuffer();
+                OpenGLAPI FrameBuffer();
                 /* FRAMEBUFFER - Constructs a new framebuffer object that can be used to render images.
                  *
                  *      Framebuffers constructed via this method contain both a color buffer and a depth buffer, enabling render-to-
@@ -70,9 +70,9 @@ namespace Cyclone
                  *                          The desired format of the depth texture attachment.
                  *                          DEFAULT: TextureFormats::DepthFloat
                  */
-                FrameBuffer(const Vector2& size, TextureFormats colorFormat = TextureFormats::Byte4, TextureFormats depthFormat = TextureFormats::DepthFloat);
+                OpenGLAPI FrameBuffer(const Vector2& size, TextureFormats colorFormat = TextureFormats::Byte4, TextureFormats depthFormat = TextureFormats::DepthFloat);
                 /* ~FRAMEBUFFER - Unbinds the framebuffer and destroys all resources that are held by it. */
-                ~FrameBuffer();
+                OpenGLAPI ~FrameBuffer();
 
 
 
@@ -106,7 +106,7 @@ namespace Cyclone
                  *                      memory per color channel.
                  *                      DEFAULT: TextureFormats::Byte4
                  */
-                static FrameBuffer* ColorBuffer(const Vector2& size, TextureFormats format = TextureFormats::Byte4);
+                static OpenGLAPI FrameBuffer* ColorBuffer(const Vector2& size, TextureFormats format = TextureFormats::Byte4);
                 /* DEPTHBUFFER - Constructs a framebuffer object containing only a single depth buffer attachment.
                  *
                  *      Framebuffers constructed via this method contain only a depth buffer attachment; the color buffer is left as
@@ -135,19 +135,19 @@ namespace Cyclone
                  *                      default, depth buffers are created with a fixed-point 32-bit float format.
                  *                      DEFAULT: TextureFormats::DepthFloat
                  */
-                static FrameBuffer* DepthBuffer(const Vector2& size, TextureFormats format = TextureFormats::DepthFloat);
+                static OpenGLAPI FrameBuffer* DepthBuffer(const Vector2& size, TextureFormats format = TextureFormats::DepthFloat);
 
 
 
                 /** UTILITIES **/
                 /* BIND - Attaches this framebuffer and its associated resources to the GPU. */
-                void Bind();
+                OpenGLAPI void Bind();
                 /* CLEAR - Overwrites all data within each of the textures attached to this framebuffer. */
-                void Clear();
+                OpenGLAPI void Clear();
                 /* REPORT - Generates a human-readable string detailing the current internal state of this object. */
-                string Report() const;
+                OpenGLAPI string Report() const;
                 /* UNBIND - Detaches this framebuffer and its associated resources from the GPU. */
-                void Unbind();
+                OpenGLAPI void Unbind();
 
             private:
 
