@@ -5,6 +5,20 @@
 
 
 
+static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    switch (msg)
+    {
+        case WM_SIZE:       break;
+        case WM_CLOSE:      PostQuitMessage(0); return 0;
+        default:            break;
+    }
+
+    return DefWindowProc(win, msg, wparam, lparam);
+}
+
+
+
 namespace Cyclone
 {
     namespace Platform
@@ -13,28 +27,16 @@ namespace Cyclone
         struct Window3D::_window3D
         {
             HWND    ID;
-            Area    DisplayArea;
-            string  Title;
+            HGLRC   RenderContext;
         };
 
 
 
-        static LRESULT CALLBACK WindowMessageLoop(HWND win, uint msg, WPARAM wparam, LPARAM lparam)
-        {
-            switch (msg)
-            {
-                case WM_SIZE:       break;
-                case WM_CLOSE:      PostQuitMessage(0); return 0;
-                default:            break;
-            }
-
-            return DefWindowProc(win, msg, wparam, lparam);
-        }
-
-
-
+        /** CONSTRUCTOR & DESTRUCTOR **/
         Window3D::Window3D(const Area& displayArea, const string& title) : 
-            _internal(new _window3D{ NULL, displayArea, title })
+            Internals(new _window3D{ NULL }),
+            _displayArea(displayArea),
+            _title(title)
         {
             MSG message;
             WNDCLASS winClass;
@@ -48,7 +50,7 @@ namespace Cyclone
 
             RegisterClass(&winClass);
 
-            _internal->ID = CreateWindowEx
+            Internals->ID = CreateWindowEx
             (
                 WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
                 TEXT("OpenGL"),
@@ -65,10 +67,10 @@ namespace Cyclone
 
         Window3D::~Window3D()
         {
-            if (_internal->ID) { DestroyWindow(_internal->ID); }
+            if (Internals->ID) { DestroyWindow(Internals->ID); }
             UnregisterClass(TEXT("OpenGL"), GetModuleHandle(NULL));
-            if (_internal)
-                delete _internal;
+            if (Internals)
+                delete Internals;
         }
 
     }

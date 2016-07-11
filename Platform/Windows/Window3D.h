@@ -6,7 +6,6 @@
 #include "Area.h"
 #include "PlatformAPI.h"
 #include "TypeDefinitions.h"
-#include "Vector2.h"
 
 
 
@@ -21,18 +20,20 @@ namespace Cyclone
         class Window3D
         {
             public:
+                const Area& DisplayArea()   const { return _displayArea; }
+                bool IsBordered()           const { return _isBordered; }
 
                 PlatformAPI Window3D(const Area& displayArea, const string& title);
                 PlatformAPI ~Window3D();
 
 
             private:
-                struct _window3D;
+                struct          _window3D;
+                _window3D*      Internals;
 
-                _window3D*      _internal;
-                //HWND            _id;
-                //Area            _displayArea;
-                //string          _title;
+                Area            _displayArea;
+                bool            _isBordered;
+                string          _title;
 
         };
     }
