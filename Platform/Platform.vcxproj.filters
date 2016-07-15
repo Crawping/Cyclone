@@ -2,15 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Window3D.h" />
-    <ClInclude Include="Windows\Window3D.h">
-      <Filter>Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Windows\WGL.h">
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="PlatformAPI.h" />
     <ClInclude Include="CGL.h" />
-    <ClInclude Include="RenderContext.h" />
+    <ClInclude Include="GPU.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -25,5 +22,8 @@
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="CGL.cpp" />
+    <ClCompile Include="Windows\GPU.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
