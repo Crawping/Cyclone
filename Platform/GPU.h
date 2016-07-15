@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "PlatformAPI.h"
 
 
 
@@ -24,8 +25,8 @@ namespace Cyclone
             //const RenderContext Context() const { return _context; }
 
 
-            GPU();
-            ~GPU();
+            PlatformAPI GPU();
+            PlatformAPI ~GPU();
 
 
         private:
