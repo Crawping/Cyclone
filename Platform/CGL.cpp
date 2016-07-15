@@ -12,6 +12,7 @@ using namespace Cyclone::Utilities;
 
 
 #ifdef __linux__
+
     int Cyclone::Platform::cglLoadAPI()
     {        
         return 1;
@@ -20,7 +21,9 @@ using namespace Cyclone::Utilities;
     {
 
     }
+
 #else
+
     int Cyclone::Platform::cglLoadAPI()
     {
         if (!wglLoadFunctions())
@@ -41,4 +44,5 @@ using namespace Cyclone::Utilities;
     {
         wglDestroyResources();
     }
+
 #endif
