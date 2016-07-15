@@ -6,6 +6,7 @@
 #else
     #include "Windows/WGL.h"
 #endif
+
 #include "Buffers/FrameBuffer.h"
 
 using namespace Cyclone::Utilities;
