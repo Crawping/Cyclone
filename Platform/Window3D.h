@@ -20,9 +20,14 @@ namespace Cyclone
         class Window3D
         {
             public:
+
+                /** PROPERTIES **/
                 const Area& DisplayArea()   const { return _displayArea; }
                 bool IsBordered()           const { return _isBordered; }
 
+
+
+                /** CONSTRUCTOR & DESTRUCTOR **/
                 PlatformAPI Window3D(const Area& displayArea, const string& title);
                 PlatformAPI ~Window3D();
 
@@ -31,6 +36,9 @@ namespace Cyclone
                 struct          _window3D;
                 _window3D*      Internals;
 
+
+
+                /** PROPERTY DATA **/
                 Area            _displayArea;
                 bool            _isBordered;
                 string          _title;

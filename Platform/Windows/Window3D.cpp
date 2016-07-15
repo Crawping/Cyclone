@@ -36,6 +36,7 @@ namespace Cyclone
         Window3D::Window3D(const Area& displayArea, const string& title) : 
             Internals(new _window3D{ NULL }),
             _displayArea(displayArea),
+            _isBordered(true),
             _title(title)
         {
             MSG message;
@@ -67,10 +68,9 @@ namespace Cyclone
 
         Window3D::~Window3D()
         {
-            if (Internals->ID) { DestroyWindow(Internals->ID); }
+            if (Internals->ID)  { DestroyWindow(Internals->ID); }
             UnregisterClass(TEXT("OpenGL"), GetModuleHandle(NULL));
-            if (Internals)
-                delete Internals;
+            if (Internals)      { delete Internals; }
         }
 
     }
