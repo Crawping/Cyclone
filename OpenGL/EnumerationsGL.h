@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Enumerator.h"
-#include "OpenGL.h"
+#include "GL/OpenGL.h"
 #include "OpenGLAPI.h"
 using namespace Cyclone::Utilities;
 
