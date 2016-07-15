@@ -1,3 +1,4 @@
+#include "Buffers/FrameBuffer.h"
 #include "Console.h"
 #include "GPU.h"
 
@@ -6,8 +7,6 @@
 #else
     #include "Windows/WGL.h"
 #endif
-
-#include "Buffers/FrameBuffer.h"
 
 using namespace Cyclone::Utilities;
 
@@ -78,12 +77,26 @@ namespace Cyclone
     {
         if (Internals->Context)
             wglDeleteContext(Internals->Context);
-        delete Internals;
+        if (Internals) { delete Internals; }
     }
 
 
 
+    /** RENDERING UTILITIES **/
+    void GPU::Clear()
+    {
+        RestoreRenderingDefaults();
+        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
 
+    void GPU::Present()
+    {
+        
+    }
+
+
+    /** PRIVATE UTILITIES **/
     void GPU::CreateRenderContext()
     {
         int idxPixelFormat = ChoosePixelFormat(LoadingContext, &DefaultPixelFormat);
@@ -92,5 +105,10 @@ namespace Cyclone
         Internals->Context = wglCreateContextAttribs(LoadingContext, NULL, DefaultContextSettings);
         if (!Internals->Context)
             Console::WriteLine("Failed to load the advanced rendering context.");
+    }
+
+    void GPU::RestoreRenderingDefaults()
+    {
+
     }
 }

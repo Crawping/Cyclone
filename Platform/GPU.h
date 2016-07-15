@@ -9,13 +9,15 @@
 
 namespace Cyclone
 {
-    namespace Utilities
+    namespace OpenGL
     {
         class FrameBuffer;
         class ShaderPipeline;
     }
-        
-    using namespace Utilities;
+    
+    using namespace OpenGL;
+
+
 
     class GPU
     {
@@ -25,12 +27,20 @@ namespace Cyclone
             //const RenderContext Context() const { return _context; }
 
 
+            /** CONSTRUCTOR **/
             PlatformAPI GPU();
             PlatformAPI ~GPU();
 
 
+
+            /** RENDERING UTILITIES **/
+            void Clear();
+            void Present();
+
+
+
         private:
-                
+                       
             struct              _gpu;
             _gpu*               Internals;
 
@@ -41,6 +51,7 @@ namespace Cyclone
 
             /** PRIVATE UTILITIES **/
             void CreateRenderContext();
-            
+
+            void RestoreRenderingDefaults();
     };
 }
