@@ -11,25 +11,42 @@
 
 namespace Cyclone
 {
+    using namespace Utilities;
+
     namespace Platform
     {
-        using namespace Cyclone::Utilities;
-        
-
-
         class Window3D
         {
             public:
 
                 /** PROPERTIES **/
                 const Area& DisplayArea()   const { return _displayArea; }
+                uint Height()               const { return (uint)_displayArea.Height; }
                 bool IsBordered()           const { return _isBordered; }
+                Vector2 Size()              const { return _displayArea.Scale(); }
+                uint Width()                const { return (uint)_displayArea.Width; }
 
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 PlatformAPI Window3D(const Area& displayArea, const string& title);
                 PlatformAPI ~Window3D();
+
+
+
+                PlatformAPI bool ProcessEvents();
+
+
+                InternalAPI void* GetDeviceContext()    const;
+                InternalAPI void* GetRenderContext()    const;
+                InternalAPI void* GetWindowHandle()     const;
+
+
+                InternalAPI void Bind()                 const;
+
+                InternalAPI void Present()              const;
+
+                InternalAPI void Unbind()               const;
 
 
             private:
