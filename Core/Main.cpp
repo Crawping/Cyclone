@@ -4,6 +4,7 @@
 #include "Array.h"
 #include "CGL.h"
 #include "Console.h"
+#include "Program.h"
 #include "Utilities.h"
 #include "Window3D.h"
 
@@ -13,19 +14,16 @@
 
 using namespace Cyclone::Utilities;
 using namespace Cyclone::Platform;
-
+using namespace Cyclone;
 
 
 int main(int nargs, char** args)
 {
     Console::WriteLine("Testing this out.");
     
-    if (cglLoadAPI())
-    {
-        Window3D t(Area(0, 0, 1024, 512), "Test Window");
-        char temp; std::cin >> temp;
-    }
+    Program app(nargs, args);
+    app.Execute();
+    //char temp; std::cin >> temp;
 
-    cglClearAPI();
     return 0;
 }
