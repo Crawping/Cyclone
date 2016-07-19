@@ -13,6 +13,7 @@ const static string Help = "            \n\
     CYCLONE - A cross-platform 3D rendering engine. \n\n";
 
 
+
 namespace Cyclone
 {
     using namespace OpenGL;
@@ -24,7 +25,7 @@ namespace Cyclone
         _display(0),
         _showHelp(false),
         Renderer(nullptr),
-        RenderingWindow(nullptr),
+        RenderWindow(nullptr),
         RenderPipeline(nullptr)
     {
         ParseInputArguments(nargs, args);
@@ -33,16 +34,16 @@ namespace Cyclone
             Console::WriteLine("Failed to load the OpenGL function pointers.");
 
         Renderer        = new GPU();
-        RenderingWindow = new Window3D(Area(0, 0, 1024, 512), "Test Window");
         RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
+        RenderWindow    = new Window3D(Area(0, 0, 1024, 512), "Test Window");
 
-        Renderer->RenderWindow(RenderingWindow);
+        Renderer->RenderWindow(RenderWindow);
         Renderer->RenderPipeline(RenderPipeline);
     }
 
     Program::~Program()
     {
-        if (RenderingWindow)    { delete RenderingWindow; }
+        if (RenderWindow)       { delete RenderWindow; }
         if (RenderPipeline)     { delete RenderPipeline; }
         if (Renderer)           { delete Renderer; }
 
@@ -56,7 +57,7 @@ namespace Cyclone
     {        
         while (true)
         {
-            if (!RenderingWindow->ProcessEvents())
+            if (!RenderWindow->ProcessEvents())
                 break;
 
             Renderer->Clear();

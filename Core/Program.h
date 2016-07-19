@@ -42,10 +42,10 @@ namespace Cyclone
             int     _display;
             bool    _showHelp;
 
-            GPU*        Renderer;
-            Window3D*   RenderingWindow;
-
+            GPU*            Renderer;
             ShaderPipeline* RenderPipeline;
+            Window3D*       RenderWindow;
+            
         
 
 
