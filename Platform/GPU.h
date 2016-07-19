@@ -14,44 +14,59 @@ namespace Cyclone
         class FrameBuffer;
         class ShaderPipeline;
     }
-    
+
     using namespace OpenGL;
 
 
-
-    class GPU
+    namespace Platform
     {
-        public:
 
-            /** PROPERTIES **/
-            //const RenderContext Context() const { return _context; }
+        class Window3D;
 
+        class GPU
+        {
+            public:
 
-            /** CONSTRUCTOR **/
-            PlatformAPI GPU();
-            PlatformAPI ~GPU();
+                /** PROPERTIES **/
+                const ShaderPipeline* RenderPipeline() const { return _renderPipeline; }
+                const FrameBuffer* RenderTarget() const { return _renderTarget; }
+                const Window3D* RenderWindow() const { return _renderWindow; }
 
-
-
-            /** RENDERING UTILITIES **/
-            void Clear();
-            void Present();
-
-
-
-        private:
-                       
-            struct              _gpu;
-            _gpu*               Internals;
-
-            ShaderPipeline*     _renderPipeline;
-            FrameBuffer*        _renderTarget;
-                
+                PlatformAPI void RenderPipeline(const ShaderPipeline* pipeline);
+                PlatformAPI void RenderTarget(const FrameBuffer* framebuffer);
+                PlatformAPI void RenderWindow(const Window3D* window);
 
 
-            /** PRIVATE UTILITIES **/
-            void CreateRenderContext();
 
-            void RestoreRenderingDefaults();
-    };
+                /** CONSTRUCTOR **/
+                PlatformAPI GPU();
+                PlatformAPI ~GPU();
+
+
+
+                /** RENDERING UTILITIES **/
+                PlatformAPI void Clear();
+                PlatformAPI void Present();
+
+
+
+            private:
+
+                struct              _gpu;
+                _gpu*               Internals;
+
+
+
+                /** PROPERTY DATA **/
+                float                   _fov;
+                const ShaderPipeline*   _renderPipeline;
+                FrameBuffer*            _renderTarget;
+                const Window3D*         _renderWindow;
+
+
+
+                /** PRIVATE UTILITIES **/
+                void RestoreRenderingDefaults();
+        };
+    }
 }
