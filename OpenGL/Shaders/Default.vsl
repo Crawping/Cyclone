@@ -19,5 +19,4 @@ void main(void)
     EntityIndex = gl_InstanceID;
     TexUV = UV;
     gl_Position = ViewProjection * PerEntityData[gl_InstanceID].World * vec4(Position, 1.0);
-    Depth = PerEntityData[gl_InstanceID].World[3].z;
 }
