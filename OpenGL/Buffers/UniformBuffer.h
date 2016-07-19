@@ -4,7 +4,7 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "GraphicsBuffer.h"
+#include "Buffers/GraphicsBuffer.h"
 
 
 namespace Cyclone
