@@ -13,10 +13,10 @@ PFNWGLGETPIXELFORMATATTRIBIVARBPROC  wglGetPixelFormatAttribiv  = NULL;
 
 
 /** WGL RESOURCES **/
-HDC LoadingContext                      = NULL;
+HDC LoadingDeviceContext                      = NULL;
+HGLRC LoadingRenderContext              = NULL;
 HWND LoadingWindow                      = NULL;
 static HINSTANCE LibraryHandle          = NULL;
-static RenderContext TemporaryContext   = NULL;
 
 
 
@@ -35,7 +35,7 @@ static LRESULT CALLBACK WindowMessageHandler(HWND win, UINT msg, WPARAM wparam, 
 
 static int InitializeLoadingContext()
 {
-    LoadingContext = GetDC(LoadingWindow);
+    LoadingDeviceContext = GetDC(LoadingWindow);
 
     PIXELFORMATDESCRIPTOR pixelFormat;
     ZeroMemory(&pixelFormat, sizeof(pixelFormat));
@@ -46,14 +46,14 @@ static int InitializeLoadingContext()
     pixelFormat.iPixelType      = PFD_TYPE_RGBA;
     pixelFormat.cColorBits      = 24;
 
-    if (!SetPixelFormat(LoadingContext, ChoosePixelFormat(LoadingContext, &pixelFormat), &pixelFormat))
+    if (!SetPixelFormat(LoadingDeviceContext, ChoosePixelFormat(LoadingDeviceContext, &pixelFormat), &pixelFormat))
     {
         fprintf(stderr, "Failed to set the pixel format for the loading context.\n");
         return 0;
     }
 
-    TemporaryContext = wglCreateContext(LoadingContext);
-    if (!wglMakeCurrent(LoadingContext, TemporaryContext))
+    LoadingRenderContext = wglCreateContext(LoadingDeviceContext);
+    if (!wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext))
     {
         fprintf(stderr, "Failed to initialize the temporary rendering context.\n");
         return 0;
@@ -123,8 +123,6 @@ int wglLoadFunctions()
 
     FreeLibrary(LibraryHandle);
     LibraryHandle = NULL;
-    wglDeleteContext(TemporaryContext);
-    TemporaryContext = NULL;
 
     return 1;
 }
@@ -132,11 +130,13 @@ int wglLoadFunctions()
 
 void wglDestroyResources()
 {
-    if (LoadingContext) { ReleaseDC(LoadingWindow, LoadingContext); }
-    if (LoadingWindow)  { DestroyWindow(LoadingWindow); }
+    if (LoadingRenderContext)   { wglDeleteContext(LoadingRenderContext); }
+    if (LoadingDeviceContext)   { ReleaseDC(LoadingWindow, LoadingDeviceContext); }
+    if (LoadingWindow)          { DestroyWindow(LoadingWindow); }
 
-    LoadingContext = NULL;
-    LoadingWindow = NULL;
+    LoadingDeviceContext    = NULL;
+    LoadingRenderContext    = NULL;
+    LoadingWindow           = NULL;
 
     UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
 }

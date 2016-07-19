@@ -23,8 +23,9 @@
             PlatformAPI extern PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval;
 
 
-            PlatformAPI extern HDC  LoadingContext;
-            PlatformAPI extern HWND LoadingWindow;
+            extern HDC      LoadingDeviceContext;
+            extern HGLRC    LoadingRenderContext;
+            extern HWND     LoadingWindow;
 
 
 
