@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "OpenGLAPI.h"
+#include "GL/OpenGLAPI.h"
 
 
 namespace Cyclone
