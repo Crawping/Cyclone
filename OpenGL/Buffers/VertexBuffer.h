@@ -3,11 +3,11 @@
  */
 
 #pragma once
-#include "Array.h"
-#include "GraphicsBuffer.h"
-#include "OpenGLAPI.h"
 #include "TypeDefinitions.h"
-#include "Vertex.h"
+#include "Buffers/GraphicsBuffer.h"
+#include "GL/OpenGLAPI.h"
+#include "Math/Array.h"
+#include "Spatial/Vertex.h"
 
 
 
