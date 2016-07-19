@@ -18,18 +18,18 @@ namespace Cyclone
         /* PERFRAME - A structure containing uniform shader data that are expected to change between every rendered frame. */
         struct PerFrame
         {
-            /* VIEWPROJECTION - The current combined view-projection transformation matrix. */
+            /// <summary> The current combined view-projection transformation matrix. </summary>
             Matrix4x4   ViewProjection;
-            /* CAMERAPOSITION - The position of the camera in world coordinates. */
+            /// <summary> The position of the camera in world coordinates. </summary>
             Vector3     CameraPosition;
 
             uint        Time;
         };
 
-        /* PEROBJECT - A structure containing uniform shader data that are expected to change between every rendered object. */
+        /// <summary> A structure containing uniform shader data that are expected to change between every rendered object. </summary>
         struct PerEntity
         {
-            /* WORLD - The world transformation matrix for an entity. */
+            /// <summary> The world transformation matrix for an entity. </summary>
             Matrix4x4   World;
 
             Color4      Color;
