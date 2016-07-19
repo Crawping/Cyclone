@@ -5,7 +5,7 @@
 #pragma once
 #include "Console.h"
 #include "EnumerationsGL.h"
-#include "IBindable.h"
+#include "Interfaces/IBindable.h"
 #include "TypeDefinitions.h"
 #include <vector>
 
