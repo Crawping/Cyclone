@@ -6,8 +6,13 @@
 
 #include "Enumerator.h"
 #include "GL/OpenGL.h"
-#include "OpenGLAPI.h"
-using namespace Cyclone::Utilities;
+#include "GL/OpenGLAPI.h"
+
+namespace
+{
+    using namespace Cyclone::Utilities;
+}
+
 
 
 struct AccessIntents : public Enumerator
