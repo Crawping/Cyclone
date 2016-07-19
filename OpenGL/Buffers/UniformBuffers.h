@@ -3,11 +3,11 @@
  */
 
 #pragma once
-#include "Color4.h"
+#include "Imaging/Color4.h"
 #include "TypeDefinitions.h"
-#include "Matrix4x4.h"
-#include "Vector2.h"
-#include "Vector3.h"
+#include "Math/Matrix4x4.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
 
 
 
