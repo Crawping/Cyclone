@@ -3,13 +3,15 @@
  */
 
 #pragma once
-#include "Area.h"
-#include "Imaging/Color4.h"
 #include "EnumerationsGL.h"
-#include "Texture.h"
-#include "TextureSampler.h"
 #include "TypeDefinitions.h"
-#include "Vector2.h"
+
+#include "Imaging/Color4.h"
+#include "Math/Vector2.h"
+#include "Spatial/Area.h"
+#include "Textures/Texture.h"
+#include "Textures/TextureSampler.h"
+
 #include <string>
 
 

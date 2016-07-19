@@ -4,8 +4,8 @@
 
 #pragma once
 #include "EnumerationsGL.h"
+#include "GL/OpenGLAPI.h"
 #include "Imaging/Color4.h"
-#include "OpenGLAPI.h"
 
 
 

@@ -4,16 +4,18 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "Interfaces/IBindable.h"
-#include "OpenGLAPI.h"
 #include "TypeDefinitions.h"
+
+#include "GL/OpenGLAPI.h"
+#include "Interfaces/IBindable.h"
+
 
 
 namespace Cyclone
 {
     namespace OpenGL
     {
-        class OpenGLAPI Texture : public IBindable
+        class Texture : public IBindable
         {
             public:
 
@@ -29,36 +31,36 @@ namespace Cyclone
 
 
                 /** DESTRUCTOR **/
-                virtual ~Texture();
+                OpenGLAPI virtual ~Texture();
 
 
 
                 /** BINDING UTILITIES **/
-                void Bind(int slot = 0)         const override { BindEntity(slot); BindResources(); }
-                void BindEntity(int slot = 0)   const override;
-                void BindResources()            const override { }
-                void Unbind()                   const override { UnbindResources(); UnbindEntity(); }
-                void UnbindEntity()             const override;
-                void UnbindResources()          const override { }
+                void Bind(int slot = 0)                 const override { BindEntity(slot); BindResources(); }
+                OpenGLAPI void BindEntity(int slot = 0) const override;
+                void BindResources()                    const override { }
+                void Unbind()                           const override { UnbindResources(); UnbindEntity(); }
+                OpenGLAPI void UnbindEntity()           const override;
+                void UnbindResources()                  const override { }
 
 
 
                 /** TEXTURE UTILITIES **/
-                virtual void GenerateMipmap();
-                virtual void MakeNonresident();
-                virtual void MakeResident();
+                OpenGLAPI virtual void GenerateMipmap();
+                OpenGLAPI virtual void MakeNonresident();
+                OpenGLAPI virtual void MakeResident();
 
             protected:
 
                 /** CONSTRUCTOR **/
-                Texture(TextureFormats format, TextureTargets target);
+                OpenGLAPI Texture(TextureFormats format, TextureTargets target);
 
 
 
                 /** GPU RESOURCE UTILITIES **/
                 virtual void Allocate()         = 0;
-                virtual void Create();
-                virtual void Destroy();
+                OpenGLAPI virtual void Create();
+                OpenGLAPI virtual void Destroy();
                 virtual void Reallocate()       { Destroy(); Create(); Allocate(); }
 
             private:
