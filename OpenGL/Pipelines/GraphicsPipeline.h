@@ -4,10 +4,10 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "IBindable.h"
-#include "IRenderable.h"
-#include "UniformBuffer.h"
-#include "UniformBuffers.h"
+#include "Interfaces/IBindable.h"
+#include "Interfaces/IRenderable.h"
+#include "Buffers/UniformBuffer.h"
+#include "Buffers/UniformBuffers.h"
 
 
 
