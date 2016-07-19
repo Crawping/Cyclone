@@ -5,9 +5,11 @@
 #ifndef LoadOpenGLXHeaderGuard
     #define LoadOpenGLXHeaderGuard
 
-    #include "OpenGL.h"
+    #include "GL/OpenGL.h"
     #include <GL/glx.h>
     #include <GL/glxext.h>
+
+    typedef GLXContext RenderContext;
 
     #ifdef __cplusplus
         extern "C"
