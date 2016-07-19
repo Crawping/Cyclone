@@ -15,6 +15,7 @@ namespace Cyclone
     {
         namespace Geometry
         {
+            /// <summary> A single point in three dimensional space at the coordinates (0, 0, 0). </summary>
 	        const Array<Vertex> Point = { Vertex() };
 	        /// <summary> A unit quad in the XY plane spanning the coordinates (0, 0, 0) to (1, 1, 0). </summary>
 	        /// <remarks> The vertices of this quad are not shared and are wound counter-clockwise. </remarks>
