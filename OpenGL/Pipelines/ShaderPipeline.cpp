@@ -2,16 +2,17 @@
  * Written by Josh Grooms on 20150918
  */
 
-#include "Color4.h"
+#include "Imaging/Color4.h"
 #include "Console.h"
-#include "Geometry.h"
 #include "EnumerationsGL.h"
-#include "FrameBuffer.h"
-#include "Shader.h"
-#include "ShaderPipeline.h"
-#include "Transform.h"
 #include "Utilities.h"
-#include "VertexBuffer.h"
+
+#include "Buffers/FrameBuffer.h"
+#include "Buffers/VertexBuffer.h"
+#include "Pipelines/Shader.h"
+#include "Pipelines/ShaderPipeline.h"
+#include "Spatial/Geometry.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -35,8 +36,7 @@ namespace Cyclone
         }
         ShaderPipeline::~ShaderPipeline()
         {
-            /*if (Vertices)
-                delete Vertices;*/
+            
         }
 
 

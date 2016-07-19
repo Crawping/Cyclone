@@ -5,7 +5,7 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "OpenGLAPI.h"
+#include "GL/OpenGLAPI.h"
 #include "TypeDefinitions.h"
 
 

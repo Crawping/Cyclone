@@ -4,13 +4,11 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "GraphicsPipeline.h"
-#include "IBindable.h"
-#include "IRenderable.h"
-#include "Texture2D.h"
-#include "UniformBuffer.h"
-#include "UniformBuffers.h"
-#include "VertexBuffer.h"
+#include "Pipelines/GraphicsPipeline.h"
+#include "Textures/Texture2D.h"
+#include "Buffers/UniformBuffer.h"
+#include "Buffers/UniformBuffers.h"
+#include "Buffers/VertexBuffer.h"
 #include <map>
 
 struct Color4;
