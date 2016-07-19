@@ -1,66 +1,97 @@
 #include "CGL.h"
 #include "Console.h"
 #include "Program.h"
+#include "GPU.h"
+#include "Window3D.h"
+
+#include "Pipelines/ShaderPipeline.h"
 
 using namespace Cyclone::Platform;
 using namespace Cyclone::Utilities;
 
 const static string Help = "            \n\
-    CYCLONE - A cross - platform 3D rendering engine. \n\n";
+    CYCLONE - A cross-platform 3D rendering engine. \n\n";
 
 
-
-/** CONSTRUCTOR & DESTRUCTOR **/
-Program::Program(int nargs, char** args) : 
-    _debug(false),
-    _display(0),
-    _showHelp(false)
+namespace Cyclone
 {
-    ParseInputArguments(nargs, args);
-    
-    if (!cglLoadAPI())
-        Console::WriteLine("Failed to load the OpenGL function pointers.");
-}
-
-Program::~Program()
-{
-    cglClearAPI();
-}
+    using namespace OpenGL;
 
 
-
-/** UTILITIES **/
-void Program::Execute()
-{
-
-}
-
-void Program::ParseInputArguments(int nargs, char** args)
-{
-    if (nargs == 1)
-        return;
-
-    string ctArg, ntArg;
-    for (int a = 1; a < nargs; a++)
+    /** CONSTRUCTOR & DESTRUCTOR **/
+    Program::Program(int nargs, char** args) : 
+        _debug(false),
+        _display(0),
+        _showHelp(false),
+        Renderer(nullptr),
+        RenderingWindow(nullptr),
+        RenderPipeline(nullptr)
     {
-        ctArg = args[a];
-        if (ctArg == "-h" || ctArg == "--help")
-            _showHelp = true;
-        else if (ctArg == "--debug")
-            _debug = true;
-        else if (ctArg == "--display")
+        ParseInputArguments(nargs, args);
+    
+        if (!cglLoadAPI())
+            Console::WriteLine("Failed to load the OpenGL function pointers.");
+
+        Renderer        = new GPU();
+        RenderingWindow = new Window3D(Area(0, 0, 1024, 512), "Test Window");
+        RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
+
+        Renderer->RenderWindow(RenderingWindow);
+        Renderer->RenderPipeline(RenderPipeline);
+    }
+
+    Program::~Program()
+    {
+        if (RenderingWindow)    { delete RenderingWindow; }
+        if (RenderPipeline)     { delete RenderPipeline; }
+        if (Renderer)           { delete Renderer; }
+
+        cglClearAPI();
+    }
+
+
+
+    /** UTILITIES **/
+    void Program::Execute()
+    {        
+        while (true)
         {
-            if (a < nargs - 1)
+            if (!RenderingWindow->ProcessEvents())
+                break;
+
+            Renderer->Clear();
+            Renderer->Present();
+        }
+
+    }
+
+    void Program::ParseInputArguments(int nargs, char** args)
+    {
+        if (nargs == 1)
+            return;
+
+        string ctArg, ntArg;
+        for (int a = 1; a < nargs; a++)
+        {
+            ctArg = args[a];
+            if (ctArg == "-h" || ctArg == "--help")
+                _showHelp = true;
+            else if (ctArg == "--debug")
+                _debug = true;
+            else if (ctArg == "--display")
             {
-                ntArg = args[++a];
-                if (ntArg[0] == ':')
-                    ntArg.erase(ntArg.begin());
-                _display = std::stoi(ntArg);
+                if (a < nargs - 1)
+                {
+                    ntArg = args[++a];
+                    if (ntArg[0] == ':')
+                        ntArg.erase(ntArg.begin());
+                    _display = std::stoi(ntArg);
+                }
+                else
+                    Console::WriteLine("The display option was invoked at the command line, but no display index was provided.");
             }
             else
-                Console::WriteLine("The display option was invoked at the command line, but no display index was provided.");
+                Console::WriteLine("Unrecognized command line input argument: " + ctArg);
         }
-        else
-            Console::WriteLine("Unrecognized command line input argument: " + ctArg);
     }
 }
