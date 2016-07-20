@@ -9,8 +9,6 @@
     #include "GL/wglext.h"
     #include "PlatformAPI.h"
 
-    typedef HGLRC RenderContext;
-
     #ifdef __cplusplus
         extern "C"
         {

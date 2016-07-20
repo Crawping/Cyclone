@@ -9,13 +9,11 @@
     #include <GL/glx.h>
     #include <GL/glxext.h>
 
-    typedef GLXContext RenderContext;
-
     #ifdef __cplusplus
         extern "C"
         {
     #endif
-            
+
             /** GLX FUNCTION POINTERS **/
             extern PFNGLXCREATECONTEXTATTRIBSARBPROC    glXCreateContextAttribs;
             extern PFNGLXBINDTEXIMAGEEXTPROC            glXBindTexImage;
