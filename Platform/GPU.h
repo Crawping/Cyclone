@@ -20,8 +20,9 @@ namespace Cyclone
 
     namespace Platform
     {
-
         class Window3D;
+
+
 
         class GPU
         {
@@ -60,7 +61,7 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 float                   _fov;
                 const ShaderPipeline*   _renderPipeline;
-                FrameBuffer*            _renderTarget;
+                const FrameBuffer*      _renderTarget;
                 const Window3D*         _renderWindow;
 
 

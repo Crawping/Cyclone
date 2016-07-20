@@ -20,6 +20,11 @@ namespace Cyclone
             _renderPipeline = pipeline;
             _renderPipeline->Bind();
         }
+        void GPU::RenderTarget(const FrameBuffer* framebuffer)
+        {
+            _renderTarget = framebuffer;
+            //_renderTarget->Bind();
+        }
         void GPU::RenderWindow(const Window3D* window)
         {
             _renderWindow = window;
