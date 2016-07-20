@@ -12,7 +12,7 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
-        class ShaderPipeline;
+        class GraphicsPipeline;
     }
 
     using namespace OpenGL;
@@ -29,11 +29,14 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                const ShaderPipeline* RenderPipeline() const { return _renderPipeline; }
+                /// <summary> Gets a pointer to the shader pipeline currently bound to the GPU. </summary>
+                const GraphicsPipeline* RenderPipeline() const { return _renderPipeline; }
+                /// <summary> Gets a pointer to the framebuffer currently bound to the GPU. </summary>
                 const FrameBuffer* RenderTarget() const { return _renderTarget; }
+                /// <summary> Gets a pointer to the window currently being used as the rendering surface. </summary>
                 const Window3D* RenderWindow() const { return _renderWindow; }
 
-                PlatformAPI void RenderPipeline(const ShaderPipeline* pipeline);
+                PlatformAPI void RenderPipeline(const GraphicsPipeline* pipeline);
                 PlatformAPI void RenderTarget(const FrameBuffer* framebuffer);
                 PlatformAPI void RenderWindow(const Window3D* window);
 
@@ -53,14 +56,9 @@ namespace Cyclone
 
             private:
 
-                struct              _gpu;
-                _gpu*               Internals;
-
-
-
                 /** PROPERTY DATA **/
                 float                   _fov;
-                const ShaderPipeline*   _renderPipeline;
+                const GraphicsPipeline* _renderPipeline;
                 const FrameBuffer*      _renderTarget;
                 const Window3D*         _renderWindow;
 

@@ -3,7 +3,7 @@
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
-#include "Pipelines/ShaderPipeline.h"
+#include "Pipelines/GraphicsPipeline.h"
 #include "Windows/WGL.h"
 
 
@@ -15,26 +15,29 @@ namespace Cyclone
     namespace Platform
     {
         /** PROPERTIES **/
-        void GPU::RenderPipeline(const ShaderPipeline* pipeline)
+        void GPU::RenderPipeline(const GraphicsPipeline* pipeline)
         {
             _renderPipeline = pipeline;
-            _renderPipeline->Bind();
+            if (_renderPipeline)
+                _renderPipeline->Bind();
         }
         void GPU::RenderTarget(const FrameBuffer* framebuffer)
         {
             _renderTarget = framebuffer;
-            //_renderTarget->Bind();
+            if (_renderTarget)
+                _renderTarget->Bind();
         }
         void GPU::RenderWindow(const Window3D* window)
         {
             _renderWindow = window;
-            if (window)
-                window->Bind();
+            if (_renderWindow)
+                _renderWindow->Bind();
         }
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
         GPU::GPU() : 
+            _fov(90),
             _renderPipeline(nullptr),
             _renderTarget(nullptr),
             _renderWindow(nullptr)
