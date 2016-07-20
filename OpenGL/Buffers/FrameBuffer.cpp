@@ -57,7 +57,7 @@ namespace Cyclone
 
 
         /** PUBLIC UTILITIES **/
-        void FrameBuffer::Bind()
+        void FrameBuffer::Bind() const
         {
             glBindFramebuffer(GL_FRAMEBUFFER, _id);
             glViewport(0, 0, Width(), Height());
@@ -87,7 +87,7 @@ namespace Cyclone
             return msg.str();
         }
 
-        void FrameBuffer::Unbind()
+        void FrameBuffer::Unbind() const
         {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
@@ -108,7 +108,7 @@ namespace Cyclone
             DepthTexture = new Texture2D(format, Size());
             glNamedFramebufferTexture(_id, GL_DEPTH_ATTACHMENT, DepthTexture->ID(), 0);
         }
-        /* REPORTCOMPLETIONSTATUS - Returns a human-readable string describing the completion state of this framebuffer. */
+        /// <summary> Returns a human-readable string describing the completion state of this framebuffer. </summary>
         string FrameBuffer::ReportCompletionStatus() const
         {
             GLenum fboStatus = glCheckNamedFramebufferStatus(_id, GL_FRAMEBUFFER);
