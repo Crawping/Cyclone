@@ -48,6 +48,13 @@ const static int DefaultContextSettings[] =
 
 
 
+/** INTERNAL FUNCTIONS **/
+/// <summary> Handles any events posted to a specific window on the Windows platform. </summary>
+/// <param name="win"> The handle of the window to which the event is being posted. </param>
+/// <param name="msg"> The type of event that is being posted. </param>
+/// <param name="wparam"> An argument of unknown significance. </param>
+/// <param name="lparam"> An argument of unknown significance. </param>
+/// <returns> An argument of unknown significance. </returns>
 static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPARAM lparam)
 {
     switch (msg)
@@ -150,11 +157,15 @@ namespace Cyclone
         }
 
 
+
+        /** INTERNAL UTILITIES **/
         void* Window3D::GetDeviceContext()  const { return Internals->DeviceContext; }
         void* Window3D::GetRenderContext()  const { return Internals->RenderContext; }
         void* Window3D::GetWindowHandle()   const { return Internals->ID; }
 
 
+
+        /** RENDERING UTILITIES **/
         void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, Internals->RenderContext); }
         void Window3D::Present()            const { SwapBuffers(Internals->DeviceContext); }
         void Window3D::Unbind()             const { wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext); }
