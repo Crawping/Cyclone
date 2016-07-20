@@ -23,7 +23,6 @@ int main(int nargs, char** args)
     
     Program app(nargs, args);
     app.Execute();
-    //char temp; std::cin >> temp;
 
     return 0;
 }
