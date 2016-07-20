@@ -18,7 +18,7 @@ namespace Cyclone
         }
         Texture::~Texture()
         {
-            MakeNonresident();
+            //MakeNonresident();
             if (_id)
                 glDeleteTextures(1, &_id);
         }
