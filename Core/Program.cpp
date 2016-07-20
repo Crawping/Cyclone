@@ -1,13 +1,13 @@
 #include "CGL.h"
 #include "Console.h"
+#include "Buffers/FrameBuffer.h"
 #include "Program.h"
 #include "GPU.h"
 #include "Window3D.h"
 
 #include "Pipelines/ShaderPipeline.h"
 
-using namespace Cyclone::Platform;
-using namespace Cyclone::Utilities;
+
 
 const static string Help = "            \n\
     CYCLONE - A cross-platform 3D rendering engine. \n\n";
@@ -17,6 +17,9 @@ const static string Help = "            \n\
 namespace Cyclone
 {
     using namespace OpenGL;
+    using namespace Platform;
+    using namespace Utilities;
+
 
 
     /** CONSTRUCTOR & DESTRUCTOR **/
@@ -25,6 +28,7 @@ namespace Cyclone
         _display(0),
         _showHelp(false),
         Renderer(nullptr),
+        RenderTarget(nullptr),
         RenderWindow(nullptr),
         RenderPipeline(nullptr)
     {
@@ -35,14 +39,16 @@ namespace Cyclone
 
         Renderer        = new GPU();
         RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
-        RenderWindow    = new Window3D(Area(0, 0, 1024, 512), "Test Window");
+        RenderWindow    = new Window3D(Area(0, 0, 960, 540), "Test Window");
+        RenderTarget    = new FrameBuffer(RenderWindow->Size());
 
         Renderer->RenderWindow(RenderWindow);
         Renderer->RenderPipeline(RenderPipeline);
+        Renderer->RenderTarget(RenderTarget);
     }
-
     Program::~Program()
     {
+        if (RenderTarget)       { delete RenderTarget; }
         if (RenderWindow)       { delete RenderWindow; }
         if (RenderPipeline)     { delete RenderPipeline; }
         if (Renderer)           { delete Renderer; }
@@ -63,9 +69,11 @@ namespace Cyclone
             Renderer->Clear();
             Renderer->Present();
         }
-
     }
 
+
+
+    /** PRIVATE UTILITIES **/
     void Program::ParseInputArguments(int nargs, char** args)
     {
         if (nargs == 1)

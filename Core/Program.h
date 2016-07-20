@@ -9,6 +9,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        class FrameBuffer;
         class ShaderPipeline;
     }
     namespace Platform
@@ -38,14 +39,14 @@ namespace Cyclone
 
         private:
 
-            bool    _debug;
-            int     _display;
-            bool    _showHelp;
+            bool            _debug;
+            int             _display;
+            bool            _showHelp;
 
             GPU*            Renderer;
             ShaderPipeline* RenderPipeline;
-            Window3D*       RenderWindow;
-            
+            FrameBuffer*    RenderTarget;
+            Window3D*       RenderWindow;            
         
 
 
