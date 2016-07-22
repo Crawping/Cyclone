@@ -24,14 +24,8 @@ namespace Cyclone
 
             public:
 
-		        /** PROPERTIES **/
-		        FrameBuffer* RenderTarget()							const { return _renderTarget; }
-		        void RenderTarget(FrameBuffer* target)					  { _renderTarget = target; }
-
-
-
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                /// <summary> Constructs an OpenGL rendering pipeline consisting only vertex and fragment shading stages. </summary>
+                /// <summary> Constructs an OpenGL rendering pipeline consisting of only vertex and fragment shading stages. </summary>
 		        OpenGLAPI ShaderPipeline(const string& vsSource, const string& psSource);
 		        OpenGLAPI ~ShaderPipeline();
 
@@ -46,7 +40,7 @@ namespace Cyclone
 
 
                 /** PIPELINE UTILITIES **/
-		        OpenGLAPI void Execute()								override;
+		        OpenGLAPI void Execute()						        override;
 		        OpenGLAPI void Input(const IRenderableEntity& entity)   override;
 		        OpenGLAPI void Input(const PerFrame& frameData)			override;
 		        OpenGLAPI void Reset()									override;
@@ -54,7 +48,6 @@ namespace Cyclone
 		
 
             private:
-		        FrameBuffer*				_renderTarget;
 
                 VertexTopologies            Topology;
 

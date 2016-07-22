@@ -22,7 +22,6 @@ namespace Cyclone
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
         ShaderPipeline::ShaderPipeline(const string& vsSource, const string& psSource) :
-	        _renderTarget(nullptr),
             Topology(VertexTopologies::Triangles),
             Vertices(Geometry::Quad)
         {
@@ -60,7 +59,7 @@ namespace Cyclone
             if (!successful)
             {
                 Console::WriteLine("Failed to link the shader pipeline programs.");
-                //PostShaderProgramLog();
+                Console::WriteLine(ReportShaderLog());
             }
 
             glValidateProgram(ID());
@@ -68,7 +67,7 @@ namespace Cyclone
             if (!successful)
             {
                 Console::WriteLine("Failed to validate the shader pipeline.");
-                //PostShaderProgramLog();
+                Console::WriteLine(ReportShaderLog());
             }
         }
 
@@ -81,8 +80,6 @@ namespace Cyclone
         /** BINDING METHODS **/
         void ShaderPipeline::BindResources()        const
         {
-	        if (_renderTarget)
-		        _renderTarget->Bind();
 	        Vertices.Bind();
             GraphicsPipeline::BindResources();
         }
@@ -90,8 +87,6 @@ namespace Cyclone
         {
             GraphicsPipeline::UnbindResources();
             Vertices.Unbind();
-	        if (_renderTarget)
-		        _renderTarget->Unbind();
         }
 
 
@@ -129,7 +124,6 @@ namespace Cyclone
 
         void ShaderPipeline::Reset()
         {
-	        _renderTarget = nullptr;
 	        Topology = VertexTopologies::Triangles;
 	
             BufferIndices.clear();
