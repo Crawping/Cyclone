@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20150903
  */
 
-#version 450 core
+#version 440 core
 #include "Default.hsl"
 
 in vec2         TexUV;

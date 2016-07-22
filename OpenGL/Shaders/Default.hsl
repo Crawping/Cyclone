@@ -2,14 +2,19 @@
  * Written by Josh Grooms on 20160531
  */
 
-#extension GL_ARB_bindless_texture : require
+
 
 struct PerEntity
 {
     mat4        World;
     vec4        Color;
-    sampler2D   Texture;
-    vec2        _0;
+};
+
+struct PerFrame
+{
+    mat4        ViewProjection;
+    vec3        CameraPosition;
+    uint        Time;
 };
 
 layout(binding = 0, std140) uniform PerEntityBuffer
