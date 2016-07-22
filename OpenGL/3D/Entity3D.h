@@ -68,15 +68,27 @@ namespace Cyclone
 
 
 		        /** RENDERABLE INTERFACE METHODS **/
+                /// <summary> Gets a reference to the base color of the entity. </summary>
                 virtual const Color4& Color()                               const override { return _color; }
-		        virtual const Texture2D* Texture()                          const override { return nullptr; }
+                /// <summary> Gets a pointer to the texture associated with an entity. </summary>
+		        virtual const Texture2D* Texture()                          const override { return _texture; }
+                /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
+                virtual VertexTopologies Topology()                         const { return _topology; }
+                /// <summary> Gets a reference to the vertex array defining the geometry of an entity. </summary>
 		        virtual const Array<Vertex>& Vertices()						const override { return _vertices; }
+                /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
+                /// <remarks>
+                ///     The world transformation matrix defines the position, scale, and orientation of an entity in 3D space.
+                /// </remarks>
                 virtual const Transform& World()                            const override { return _world; }
+                /// <summary> Gets whether this entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                    const override { return true; }
 
 
 
                 /** DESTRUCTOR **/
+                /// <summary> Destroys any special resources held by this entity. </summary>
+                /// <remarks> The destructor for this base class actually performs no actions whatsoever. </summary>
                 virtual ~Entity3D() { }
 
 
@@ -87,33 +99,37 @@ namespace Cyclone
 
             protected:
 
-                /** DATA **/
+                /** PROPERTY DATA **/
                 Color4              _color;
-
 		        Texture2D*			_texture;
-		        /// <summary> The type of primitive that the vertices in the vertex buffer construct. </summary>
                 VertexTopologies    _topology;
-
 		        Array<Vertex>		_vertices;
-		        /// <summary> The matrix containing the position and any affine transformations of the entity in 3D space. </summary>
                 Transform           _world;
 
 
 
                 /** CONSTRUCTOR **/
-
+                /// <summary> Constructs a new 3D renderable entity composed of white triangles. </summary>
+                /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
 		        Entity3D(const Array<Vertex>& vertices) :
+                    _color(Color4::White),
+                    _texture(nullptr),
+                    _topology(VertexTopologies::Triangles),
 			        _vertices(vertices)
 		        {
-		
+
 		        }
-		        /// <summary> Constructs an empty 3D entity that must be completely initialized by a derived class. </summary>
-                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex>& vertices) : 
+		        /// <summary> Constructs a new 3D renderable entity. </summary>
+                /// <param name="color"> The base color of this entity's geometry. </param>
+                /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
+                /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
+                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex>& vertices) :
 			        _color(color),
+                    _texture(nullptr),
 			        _topology(topology),
 			        _vertices(vertices)
-		        { 
-		
+		        {
+
 		        }
 
         };
