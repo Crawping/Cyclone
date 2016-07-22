@@ -12,11 +12,11 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        /* COLOR4 - A data structure representing a 32-bit RGBA color value.
-         *
-         *      Color4 is a tightly packed data structure laid out in RGBA format. Individual channel values should take on
-         *      single-precision (i.e. float) values within the closed interval [0.0f, 1.0f].
-         */
+        /// <summary> A data structure representing a 32-bit RGBA color value. </summary>
+        /// <remarks>
+        ///     Color4 is a tightly packed data structure laid out in RGBA format. Individual channel values should take on
+        ///     single-precision (i.e. float) values within the closed interval [0.0f, 1.0f].
+        /// </remarks>
         struct UtilitiesAPI Color4
         {
 
