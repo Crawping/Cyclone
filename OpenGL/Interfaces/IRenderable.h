@@ -3,10 +3,10 @@
  */
 
 #pragma once
-#include "Array.h"
 #include "EnumerationsGL.h"
 #include "OpenGLAPI.h"
-#include "Vertex.h"
+#include "Math/Array.h"
+#include "Spatial/Vertex.h"
 
 
 
