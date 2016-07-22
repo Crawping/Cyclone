@@ -148,8 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\CoreGL\GL\OpenGL.h" />
-    <ClInclude Include="3D\Entity3D.h" />
-    <ClInclude Include="3D\Quad.h" />
     <ClInclude Include="Buffers\FrameBuffer.h" />
     <ClInclude Include="Buffers\GraphicsBuffer.h" />
     <ClInclude Include="Buffers\UniformBuffer.h" />
@@ -162,14 +160,15 @@
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
     <ClInclude Include="Pipelines\Shader.h" />
     <ClInclude Include="Pipelines\ShaderPipeline.h" />
-    <ClInclude Include="Point3D.h" />
+    <ClInclude Include="Primitives\Entity3D.h" />
+    <ClInclude Include="Primitives\Point3D.h" />
+    <ClInclude Include="Primitives\Quad.h" />
     <ClInclude Include="Textures\Texture.h" />
     <ClInclude Include="Textures\Texture2D.h" />
     <ClInclude Include="Textures\TextureSampler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\CoreGL\GL\OpenGL.c" />
-    <ClCompile Include="3D\Entity3D.cpp" />
     <ClCompile Include="Buffers\FrameBuffer.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />

@@ -42,17 +42,17 @@
     <ClInclude Include="Pipelines\Shader.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
-    <ClInclude Include="3D\Quad.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="3D\Entity3D.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="Point3D.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
     <ClInclude Include="..\CoreGL\GL\OpenGL.h">
       <Filter>GL</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Entity3D.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Point3D.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Quad.h">
+      <Filter>Primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -76,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="Pipelines\Shader.cpp">
       <Filter>Pipelines</Filter>
-    </ClCompile>
-    <ClCompile Include="3D\Entity3D.cpp">
-      <Filter>Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp">
       <Filter>Pipelines</Filter>
