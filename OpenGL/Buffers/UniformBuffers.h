@@ -15,14 +15,14 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        /* PERFRAME - A structure containing uniform shader data that are expected to change between every rendered frame. */
+        /// <summary> A structure containing uniform shader data that are expected to change between every rendered frame. </summary>
         struct PerFrame
         {
             /// <summary> The current combined view-projection transformation matrix. </summary>
             Matrix4x4   ViewProjection;
             /// <summary> The position of the camera in world coordinates. </summary>
             Vector3     CameraPosition;
-
+            /// <summary> A time measurement provided by the application for use on the GPU. </summary>
             uint        Time;
         };
 
@@ -31,15 +31,8 @@ namespace Cyclone
         {
             /// <summary> The world transformation matrix for an entity. </summary>
             Matrix4x4   World;
-
+            /// <summary> The base color of an entity. </summary>
             Color4      Color;
-
-            ulong       TextureHandle;
-
-            Vector2     _0;
         };
     }
 }
-
-
-
