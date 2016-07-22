@@ -3,8 +3,8 @@
  */
 
 #pragma once
-#include "Entity3D.h"
-#include "Geometry.h"
+#include "Primitives/Entity3D.h"
+#include "Spatial/Geometry.h"
 
 
 

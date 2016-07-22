@@ -7,8 +7,8 @@
  * Written by Josh Grooms on 20160706
  */
 
-#include "Entity3D.h"
-#include "Geometry.h"
+#include "Primitives/Entity3D.h"
+#include "Spatial/Geometry.h"
 
 
 
