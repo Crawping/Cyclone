@@ -22,15 +22,13 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-
-                uint ID()                                       const override { return _id; }
-		        virtual FrameBuffer* RenderTarget()		        const = 0;
-
-		        virtual void RenderTarget(FrameBuffer* target)  = 0;
+                /// <summary> Gets the unique numeric identifier (or 'Name' in OpenGL jargon) associated with this shader pipeline. </summary>
+                uint ID()                               const override { return _id; }
 
 
 
                 /** DESTRUCTOR **/
+                /// <summary> Destroys the OpenGL shader pipeline program. </summary>
 		        OpenGLAPI virtual ~GraphicsPipeline();
 
 
@@ -60,6 +58,7 @@ namespace Cyclone
             protected:
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs a new OpenGL shader pipeline to which individual shader programs can be attached. </summary>
 		        OpenGLAPI GraphicsPipeline();
         
                 /// <summary> Retrieves and posts error information that was logged while attempting to link shader programs. </summary>
