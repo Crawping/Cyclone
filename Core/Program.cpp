@@ -67,6 +67,7 @@ namespace Cyclone
                 break;
 
             Renderer->Clear();
+            Renderer->Render();
             Renderer->Present();
         }
     }
