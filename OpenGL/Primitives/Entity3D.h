@@ -73,7 +73,7 @@ namespace Cyclone
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture2D* Texture()                          const override { return _texture; }
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
-                virtual VertexTopologies Topology()                         const { return _topology; }
+                virtual VertexTopologies Topology()                         const override { return _topology; }
                 /// <summary> Gets a reference to the vertex array defining the geometry of an entity. </summary>
 		        virtual const Array<Vertex>& Vertices()						const override { return _vertices; }
                 /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
