@@ -15,19 +15,19 @@ namespace Cyclone
     namespace Platform
     {
         /** PROPERTIES **/
-        void GPU::RenderPipeline(const GraphicsPipeline* pipeline)
+        void GPU::RenderPipeline(GraphicsPipeline* pipeline)
         {
             _renderPipeline = pipeline;
             if (_renderPipeline)
                 _renderPipeline->Bind();
         }
-        void GPU::RenderTarget(const FrameBuffer* framebuffer)
+        void GPU::RenderTarget(FrameBuffer* framebuffer)
         {
             _renderTarget = framebuffer;
             if (_renderTarget)
                 _renderTarget->Bind();
         }
-        void GPU::RenderWindow(const Window3D* window)
+        void GPU::RenderWindow(Window3D* window)
         {
             _renderWindow = window;
             if (_renderWindow)
@@ -63,6 +63,12 @@ namespace Cyclone
         {
             if (_renderWindow)
                 _renderWindow->Present();
+        }
+
+        void GPU::Render()
+        {
+            if (_renderPipeline)
+                _renderPipeline->Execute();
         }
 
 
