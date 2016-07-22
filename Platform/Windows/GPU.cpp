@@ -35,6 +35,7 @@ namespace Cyclone
         }
 
 
+
         /** CONSTRUCTOR & DESTRUCTOR **/
         GPU::GPU() : 
             _fov(90),
@@ -73,7 +74,6 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-
         void GPU::RestoreRenderingDefaults()
         {            
             if (_renderWindow)

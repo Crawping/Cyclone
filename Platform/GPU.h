@@ -4,6 +4,8 @@
 
 #pragma once
 #include "PlatformAPI.h"
+#include "Buffers/UniformBuffer.h"
+#include "Buffers/UniformBuffers.h"
 
 
 
@@ -55,6 +57,12 @@ namespace Cyclone
                 /// <summary> Clears the depth-stencil and render target buffers in preparation for a new render loop iteration. </summary>
                 /// <remarks> This method should be among the first called within the rendering loop. </remarks>
                 PlatformAPI void Clear();
+
+                PlatformAPI void Input(const IRenderableEntity& entity);
+
+                PlatformAPI void Input(const PerFrame& frameData);
+
+
                 /// <summary> Swaps the front and back rendering buffers, displaying the contents of the backbuffer to the user. </summary>
                 /// <remarks>
                 ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often 
@@ -89,6 +97,10 @@ namespace Cyclone
                 GraphicsPipeline*   _renderPipeline;
                 FrameBuffer*        _renderTarget;
                 Window3D*           _renderWindow;
+
+                UniformBuffer<PerEntity>    PerEntityBuffer;
+                UniformBuffer<PerFrame>     PerFrameBuffer;
+
 
 
 
