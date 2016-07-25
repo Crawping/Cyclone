@@ -180,8 +180,11 @@ namespace Cyclone
             if (this == (const Transform*) &other)
                 return true;
 
+            const float* leftState = ToArray();
+            const float* rightState = other.ToArray();
+
             for (int a = 0; a < 16; a++)
-                if (State[a] != other.State[a])
+                if (leftState[a] != rightState[a])
                     return false;
 
             return true;
