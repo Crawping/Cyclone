@@ -88,7 +88,7 @@ namespace Cyclone
 
                 /** DESTRUCTOR **/
                 /// <summary> Destroys any special resources held by this entity. </summary>
-                /// <remarks> The destructor for this base class actually performs no actions whatsoever. </summary>
+                /// <remarks> The destructor for this base class actually performs no actions whatsoever. </remarks>
                 virtual ~Entity3D() { }
 
 
