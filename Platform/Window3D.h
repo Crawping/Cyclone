@@ -71,7 +71,7 @@ namespace Cyclone
                 ///     When rendering on the Windows platform, there are two separate contexts to keep track of. One is 
                 ///     the device context, discussed in the remarks section of <see cref="GetDeviceContext"/>. The other 
                 ///     is called the rendering context, and it represents a configuration structure that details specific 
-                ///     drawing parameters for rendering on a device contex. For example, this structure may dictate the 
+                ///     drawing parameters for rendering on a device context. For example, this structure may dictate the 
                 ///     number of color channels available for rendering, how many bits of memory are required per color 
                 ///     channel, and the configuration of the system-level framebuffer used to present images on-screen to 
                 ///     the user.
