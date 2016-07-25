@@ -53,7 +53,22 @@ namespace Cyclone
                     _reallocateFlag = true;
                     _updateFlag = true;
                 }
-		        /// <summary> Writes the contents of a single data element to the application-side memory held by this buffer. </summary>
+
+                virtual void Add(const T& data)
+                {
+                    Data.push_back(data);
+
+                    _reallocateFlag = true;
+                    _updateFlag = true;
+                }    
+                virtual void Remove(uint index)
+                {
+                    Data.erase(Data.begin + index);
+
+                    _reallocateFlag = true;
+                    _updateFlag = true;
+                }
+                /// <summary> Writes the contents of a single data element to the application-side memory held by this buffer. </summary>
 		        /// <param name="index">
 		        ///		An integer index indicating where the element in <paramref name="data"/> will be inserted into the buffer.
 		        ///		<para> </para>
@@ -64,8 +79,7 @@ namespace Cyclone
 		        ///		scheduled when invoking this function.
 		        /// </param>
 		        /// <param name="data">
-		        ///		A reference to the data element that will be copied into the buffer on both the application and
-		        ///		GPU sides.
+		        ///		A reference to the data element that will be copied into the buffer on both the application and GPU sides.
 		        /// </param>
 		        /// <remarks>
 		        ///		This method is used to either insert or modify data within this buffer, but only on the application (i.e. system
@@ -75,10 +89,11 @@ namespace Cyclone
 		        virtual void Set(uint index, const T& data)
                 {
                     if (index == Count())
-                    {
-                        Data.push_back(data);
-                        _reallocateFlag = true;
-                    }
+                        return Add(data);
+                    //{
+                    //    Data.push_back(data);
+                    //    _reallocateFlag = true;
+                    //}
                     else
                         Data[index] = data;
 
