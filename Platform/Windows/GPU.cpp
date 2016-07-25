@@ -3,6 +3,7 @@
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
+#include "Interfaces/IRenderable.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Windows/WGL.h"
 
@@ -54,10 +55,29 @@ namespace Cyclone
 
 
         /** RENDERING UTILITIES **/
-        void GPU::Clear()
+        void GPU::Clear(const Color4& color)
         {
             RestoreRenderingDefaults();
-            glClearBufferfv(GL_COLOR, 0, Color4::Red.ToArray());
+            glClearBufferfv(GL_COLOR, 0, color.ToArray());
+        }
+
+        void GPU::Input(const IRenderableEntity& entity)
+        {
+            //uint idx;
+            //PerEntity data;
+            //const void* entKey = (const void*)&entity;
+
+            //if (BufferIndices.count(entKey))
+            //{
+            //    idx = BufferIndices[entKey];
+            //    data = PerEntityBuffer[idx];
+            //}
+            //else
+            //    idx = PerEntityBuffer.Count();
+
+            //BufferIndices[entKey] = idx;
+            ////if (entity.GetEntityData(data))
+            ////    PerEntityBuffer.Set(idx, data);
         }
 
         void GPU::Present()

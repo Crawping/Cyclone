@@ -15,6 +15,7 @@ namespace Cyclone
     {
         class FrameBuffer;
         class GraphicsPipeline;
+        class IRenderableEntity;
     }
 
     using namespace OpenGL;
@@ -56,7 +57,7 @@ namespace Cyclone
                 /** RENDERING UTILITIES **/
                 /// <summary> Clears the depth-stencil and render target buffers in preparation for a new render loop iteration. </summary>
                 /// <remarks> This method should be among the first called within the rendering loop. </remarks>
-                PlatformAPI void Clear();
+                PlatformAPI void Clear(const Color4& color);
 
                 PlatformAPI void Input(const IRenderableEntity& entity);
 
@@ -65,23 +66,23 @@ namespace Cyclone
 
                 /// <summary> Swaps the front and back rendering buffers, displaying the contents of the backbuffer to the user. </summary>
                 /// <remarks>
-                ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often 
-                ///     called a 'swap-chain'. The same construct exists OpenGL, although the term 'swap-chain' is somewhat 
-                ///     less common in that domain. It represents two separate framebuffers on which rendering occurs that are 
+                ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often
+                ///     called a 'swap-chain'. The same construct exists OpenGL, although the term 'swap-chain' is somewhat
+                ///     less common in that domain. It represents two separate framebuffers on which rendering occurs that are
                 ///     constantly being cycled or swapped with one another in order to present drawings on-screen to the user.
                 ///     One of these framebuffers is called a 'front' buffer, while the other is called the 'back' buffer.
-                /// 
-                ///     The front-buffer contains image data from a previous iteration of the rendering loop. In other words, 
-                ///     it holds rendering outputs that are currently on the computer monitor being displayed for the user. 
-                ///     Typically, whichever framebuffer is currently the front-buffer is immutable. The back-buffer, however, 
-                ///     is modifiable and is usually where any new rendering occurs. Thus, as a program proceeds through its 
-                ///     rendering loop and a shader pipeline produces new outputs, the back-buffer is where they are stored. 
-                ///     On completion of a rendering loop iteration, the front- and back-buffers swap positions, and what was 
-                ///     originally the front-buffer now becomes the back-buffer and vice versa. Its contents are also usually 
+                ///
+                ///     The front-buffer contains image data from a previous iteration of the rendering loop. In other words,
+                ///     it holds rendering outputs that are currently on the computer monitor being displayed for the user.
+                ///     Typically, whichever framebuffer is currently the front-buffer is immutable. The back-buffer, however,
+                ///     is modifiable and is usually where any new rendering occurs. Thus, as a program proceeds through its
+                ///     rendering loop and a shader pipeline produces new outputs, the back-buffer is where they are stored.
+                ///     On completion of a rendering loop iteration, the front- and back-buffers swap positions, and what was
+                ///     originally the front-buffer now becomes the back-buffer and vice versa. Its contents are also usually
                 ///     cleared at this point, providing a fresh blank surface on which the next iteration can draw.
-                /// 
-                ///     Such a scheme is usually referred to as 'double-buffering' and is the typical mode of operation for 
-                ///     rendering on most popular platforms. Other schemes, such as triple-buffering, are also sometimes used, 
+                ///
+                ///     Such a scheme is usually referred to as 'double-buffering' and is the typical mode of operation for
+                ///     rendering on most popular platforms. Other schemes, such as triple-buffering, are also sometimes used,
                 ///     but are not discussed here.
                 /// </remarks>
                 PlatformAPI void Present();
@@ -93,10 +94,10 @@ namespace Cyclone
             private:
 
                 /** PROPERTY DATA **/
-                float               _fov;
-                GraphicsPipeline*   _renderPipeline;
-                FrameBuffer*        _renderTarget;
-                Window3D*           _renderWindow;
+                float                       _fov;
+                GraphicsPipeline*           _renderPipeline;
+                FrameBuffer*                _renderTarget;
+                Window3D*                   _renderWindow;
 
                 UniformBuffer<PerEntity>    PerEntityBuffer;
                 UniformBuffer<PerFrame>     PerFrameBuffer;
