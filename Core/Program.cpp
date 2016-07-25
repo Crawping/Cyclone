@@ -66,7 +66,7 @@ namespace Cyclone
             if (!RenderWindow->ProcessEvents())
                 break;
 
-            Renderer->Clear();
+            Renderer->Clear(Color4::Blue);
             Renderer->Render();
             Renderer->Present();
         }
