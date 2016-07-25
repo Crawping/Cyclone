@@ -54,6 +54,9 @@
     <ClInclude Include="Primitives\Quad.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="Primitives\Scene3D.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">

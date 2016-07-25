@@ -163,6 +163,7 @@
     <ClInclude Include="Primitives\Entity3D.h" />
     <ClInclude Include="Primitives\Point3D.h" />
     <ClInclude Include="Primitives\Quad.h" />
+    <ClInclude Include="Primitives\Scene3D.h" />
     <ClInclude Include="Textures\Texture.h" />
     <ClInclude Include="Textures\Texture2D.h" />
     <ClInclude Include="Textures\TextureSampler.h" />
