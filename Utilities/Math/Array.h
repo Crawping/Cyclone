@@ -23,7 +23,9 @@ namespace Cyclone
 		
 
 		        /** CONSTRUCTORS & DESTRUCTOR **/
-		        Array(uint n) :
+		        /// <summary> Constructs a new one-dimensional array object with a designated number of elements. </summary>
+                /// <param name="n"> The desired number of elements to be stored within the new array. </param>
+                Array(uint n) :
 			        _count(n),
 			        Data(new T[n])
 		        {
@@ -60,6 +62,7 @@ namespace Cyclone
 		        }
 
 
+
                 /** UTILITIES **/
                 Array& Fill(const T& value)
                 {
@@ -67,6 +70,7 @@ namespace Cyclone
                         Data[a] = value;
                     return *this;
                 }
+
 
 
 		        /** OPERATORS **/
@@ -131,6 +135,7 @@ namespace Cyclone
                 }
 
 	        private:
+
 		        uint	_count;
 		        T*		Data;
 
