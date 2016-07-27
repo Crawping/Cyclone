@@ -3,14 +3,12 @@
  */
 
 #pragma once
-
-#include "Color4.h"
-#include "IRenderable.h"
 #include "EnumerationsGL.h"
 #include "OpenGLAPI.h"
-#include "Transform.h"
+#include "Imaging/Color4.h"
+#include "Interfaces/IRenderable.h"
+#include "Spatial/Transform.h"
 
-class ShaderPipeline;
 
 
 namespace Cyclone
