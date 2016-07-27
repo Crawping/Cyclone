@@ -4,7 +4,7 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "Buffers/GraphicsBuffer.h"
+#include "Buffers/GraphicsArray.h"
 
 
 namespace Cyclone
@@ -12,13 +12,13 @@ namespace Cyclone
     namespace OpenGL
     {
         template<typename T>
-        class UniformBuffer : public GraphicsBuffer<T>
+        class UniformBuffer : public GraphicsArray<T>
         {
 
             public:
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                UniformBuffer() : GraphicsBuffer<T>(BufferTypes::Uniform) { }
+                UniformBuffer() : GraphicsArray<T>(BufferTypes::Uniform) { }
                 ~UniformBuffer() { }
 
         };
