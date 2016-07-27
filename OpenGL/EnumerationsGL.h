@@ -254,13 +254,13 @@ struct TextureTargets : public Enumerator
     TextureTargets(enum Targets t = Texture2D) : Enumerator((int)t) { }
 };
 
-/* VERTEXTOPOLOGIES - A list of supported topologies that indicate the primitive geometry to be rendered.
- *
- *      Topologies describe how collections of vertices should be parsed and rendered on-screen. The enumerators provided here are
- *      intended for use in all 'glDraw' API functions as a replacement for clumsier 'GLenum mode' arguments.
- *
- *      Uninitalized instances of these enumerators default to the value of 'Triangles'.
- */
+/// <summary> A list of supported topologies that indicate the primitive geometry to be rendered. </summary>
+/// <remarks>
+///     Topologies describe how collections of vertices should be parsed and rendered on-screen. The enumerators provided here are
+///     intended for use in all 'glDraw' API functions as a replacement for clumsier 'GLenum mode' arguments.
+///     
+///     Uninitalized instances of these enumerators default to the value of 'Triangles'.
+/// </remarks>
 struct VertexTopologies : public Enumerator
 {
     enum Topologies
