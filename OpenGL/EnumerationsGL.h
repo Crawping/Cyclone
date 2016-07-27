@@ -15,6 +15,12 @@ namespace
 
 
 
+/// <summary> A list of possible ways in which interaction with various entities can occur. </summary>
+/// <remarks>
+///     Note that the values of this enumeration are not equivalent to those found in <see cref="BufferAccessIntents"/> 
+///     and therefore cannot be used interchangeably with them. When interacting with GPU buffers, you must 
+///     specify access intents using the other enumerators.
+/// </remarks>
 struct AccessIntents : public Enumerator
 {
     enum Intents
@@ -27,6 +33,17 @@ struct AccessIntents : public Enumerator
 	AccessIntents(enum Intents i = Read) : Enumerator((int)i) { }
 };
 
+/// <summary> A list of possible ways in which interaction with GPU buffers can occur. </summary>
+/// <remarks>
+///     OpenGL requires that many interactions with existing GPU buffers be qualified with the user's 
+///     access intentions. For example, when mapping GPU buffers to system- or application-side memory, 
+///     OpenGL wants to know if you intend to only read data out of the buffer or if you will want to 
+///     write new data to it, because this may influence how and where in the GPU's memory the buffer 
+///     is ultimately stored.
+/// 
+///     The values of this enumeration are also flags that can be combined together through the usual 
+///     bitwise and/or operators. 
+/// </remarks>
 struct BufferAccessIntents : public Flag
 {
     enum Intents
@@ -36,16 +53,26 @@ struct BufferAccessIntents : public Flag
         Dynamic                     = GL_DYNAMIC_STORAGE_BIT,
         Invalidate                  = GL_MAP_INVALIDATE_BUFFER_BIT,
         InvalidateRange             = GL_MAP_INVALIDATE_RANGE_BIT,
+        /// <summary> Indicates that the buffer will be mapped over a long period of time. </summary>
         Persistent                  = GL_MAP_PERSISTENT_BIT,
+        /// <summary> Indicates that data reading operations will be performed on the buffer. </summary>
         Read                        = GL_MAP_READ_BIT,
+        /// <summary> Indicates that data writing operations will be performed on the buffer. </summary>
         Write                       = GL_MAP_WRITE_BIT,
     };
 };
 
+/// <summary> A list of possible types of buffers that can be created on the GPU. </summary>
+/// <remarks>
+///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which 
+///     refers to the location in GPU memory where binding occurs. However, for most applications, 
+///     calling them 'types' proffers an easier understanding of the function that they serve.
+/// </remarks>
 struct BufferTypes : public Enumerator
 {
     enum Buffers
     {
+        /// <summary> A buffer that is meant to hold vertex attributes. </summary>
         Array                       = GL_ARRAY_BUFFER,
         AtomicCounter               = GL_ATOMIC_COUNTER_BUFFER,
         CopyRead                    = GL_COPY_READ_BUFFER,
@@ -56,9 +83,12 @@ struct BufferTypes : public Enumerator
         PixelPack                   = GL_PIXEL_PACK_BUFFER,
         PixelUnpack                 = GL_PIXEL_UNPACK_BUFFER,
         Query                       = GL_QUERY_BUFFER,
+        /// <summary> A buffer containing data that is meant for reading and writing operations within shader programs. </summary>
         ShaderStorage               = GL_SHADER_STORAGE_BUFFER,
+        /// <summary> A buffer that is meant to hold texture data. </summary>
         Texture                     = GL_TEXTURE_BUFFER,
         TransformFeedback           = GL_TRANSFORM_FEEDBACK_BUFFER,
+        /// <summary> A buffer that holds uniform variables for usse in shader programs. </summary>
         Uniform                     = GL_UNIFORM_BUFFER,
     };
 
@@ -66,7 +96,7 @@ struct BufferTypes : public Enumerator
 };
 
 /// <summary>
-/// A list of possible errors indicating issues that can arise within an OpenGL rendering pipeline.
+///     A list of possible errors indicating issues that can arise within an OpenGL rendering pipeline.
 /// </summary>
 struct RenderErrors : public Enumerator
 {
