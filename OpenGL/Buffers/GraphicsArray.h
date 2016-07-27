@@ -7,6 +7,7 @@
 #include <vector>
 
 
+
 namespace Cyclone
 {
     namespace OpenGL
@@ -41,7 +42,7 @@ namespace Cyclone
                 virtual void Remove(uint index)
                 {
                     if (index >= Count()) { return; }
-                    Data.erase(Data.begin + index);
+                    Data.erase(Data.begin() + index);
                     NeedsUpdate(true);
                 }
                 /// <summary> Writes the contents of a single data element to the application-side memory held by this buffer. </summary>
@@ -62,7 +63,7 @@ namespace Cyclone
 		        ///		memory) side. Transferring these modifications over to the corresponding GPU memory for use within shader
 		        ///		programs requires a subsequent call to the 'Update' method of this class.
 		        /// </remarks>
-		        virtual void Set(uint index, const T& data) override
+		        virtual void Set(uint index, const T& data) 
                 {
                     if (index == Count())
                         return Add(data);
