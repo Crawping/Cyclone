@@ -26,7 +26,7 @@ namespace Cyclone
 
 
         /** BINDING METHODS **/
-        void GraphicsBuffer::BindEntity(int slot = 0)   const
+        void GraphicsBuffer::BindEntity(int slot)       const
         {
             glBindBufferBase(Type(), slot, ID());
         }
