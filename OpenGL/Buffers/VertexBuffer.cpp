@@ -8,14 +8,14 @@ namespace Cyclone
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
         VertexBuffer::VertexBuffer(const Array<Vertex>& vertices) : 
-	        GraphicsBuffer<Vertex>(BufferTypes::Uniform, vertices.Count()),
+	        GraphicsArray<Vertex>(BufferTypes::Uniform, vertices.Count()),
 	        VAOID(0)
         {
 	        for (int a = 0; a < Count(); a++)
 		        Set(a, vertices(a));
         }
         VertexBuffer::VertexBuffer(uint n, const Vertex* vertices) :
-            GraphicsBuffer<Vertex>(BufferTypes::Uniform, n),
+            GraphicsArray<Vertex>(BufferTypes::Uniform, n),
             VAOID(0)
         {
 	        for (uint a = 0; a < n; a++)

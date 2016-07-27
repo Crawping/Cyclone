@@ -4,7 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Buffers/GraphicsBuffer.h"
+#include "Buffers/GraphicsArray.h"
 #include "GL/OpenGLAPI.h"
 #include "Math/Array.h"
 #include "Spatial/Vertex.h"
@@ -15,14 +15,18 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class VertexBuffer : public GraphicsBuffer<Vertex>
+        class VertexBuffer : public GraphicsArray<Vertex>
         {
 
             public:
 
                 /** CONSTRUCTORS & DESTRUCTOR **/
+                /// <summary> Constructs a buffer that is initialized by an array of vertex data. </summary>
+                /// <param name="vertices"> A reference to an array of vertex data. </param>
 		        OpenGLAPI VertexBuffer(const Array<Vertex>& vertices);
                 /// <summary> Constructs a buffer that is initialized by an array of vertex data. </summary>
+                /// <param name="n"> The number of vertices present in the inputted vertex array. </param>
+                /// <param name="vertices"> A pointer to the beginning of an n-length vertex array. </param>
 		        OpenGLAPI VertexBuffer(uint n, const Vertex* vertices);
 		        OpenGLAPI ~VertexBuffer();
 
