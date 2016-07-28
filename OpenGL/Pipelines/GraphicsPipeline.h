@@ -7,7 +7,7 @@
 #include "Interfaces/IBindable.h"
 #include "Interfaces/IRenderable.h"
 #include "Buffers/UniformBuffer.h"
-#include "Buffers/UniformBuffers.h"
+#include "Buffers/UniformData.h"
 
 
 

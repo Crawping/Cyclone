@@ -34,5 +34,6 @@ namespace Cyclone
             /// <summary> The base color of an entity. </summary>
             Color4      Color;
         };
+
     }
 }

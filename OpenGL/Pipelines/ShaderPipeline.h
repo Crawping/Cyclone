@@ -7,7 +7,7 @@
 #include "Pipelines/GraphicsPipeline.h"
 #include "Textures/Texture2D.h"
 #include "Buffers/UniformBuffer.h"
-#include "Buffers/UniformBuffers.h"
+#include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
 #include <map>
 
@@ -45,7 +45,7 @@ namespace Cyclone
 		        OpenGLAPI void Input(const PerFrame& frameData)			override;
 		        OpenGLAPI void Reset()									override;
 
-		
+
 
             private:
 
