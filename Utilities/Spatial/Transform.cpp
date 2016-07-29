@@ -192,16 +192,16 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        /* UPDATESTATE - Calculates the values of each element of the state matrix.
-         *
-         *      This method effectively performs matrix multiplication to concatenate different affine transformations and does so in
-         *      a single pass, without actually generating and multiplying the component matrices. However, under that model, the
-         *      calculations performed here would correspond with multiplying transformation matrices in the following order:
-         *
-         *          Translation * Roll * Pitch * Yaw * Scale
-         *
-         *      The equations used in this method were derived using MATLAB.
-         */
+        /// <summary> Calculates the values of each element of the state matrix. </summary>
+        /// <remarks>
+        ///     This method effectively performs matrix multiplication to concatenate different affine transformations and does so in
+        ///     a single pass, without actually generating and multiplying the component matrices. However, under that model, the
+        ///     calculations performed here would correspond with multiplying transformation matrices in the following order:
+        ///     
+        ///         Translation * Roll * Pitch * Yaw * Scale
+        ///     
+        ///     The equations used in this method were derived using MATLAB.
+        /// </remarks>
         void Transform::UpdateState() const
         {
             if (!_updateFlag) { return; }

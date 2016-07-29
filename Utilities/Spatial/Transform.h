@@ -89,54 +89,30 @@ namespace Cyclone
 
 
 
-                /** STATIC CONSTRUCTORS **/
-                /* PERSPECTIVEPROJECTION - Constructs a right-handed perspective projection transformation matrix.
-                 *
-                 *      SYNTAX:
-                 *          T = Transform::PerspectiveProjection(displayVolume)
-                 *
-                 *      OUTPUT:
-                 *          T:                  Transform
-                 *                              A new transformation matrix that can be used to convert camera or view space
-                 *                              coordinates into clip space. This transform assumes that the view-space follows a
-                 *                              right-handed coordinate system.
-                 *
-                 *      INPUT:
-                 *           displayVolume:     const Volume&
-                 *                              The rectangular prism defining the volume of camera space that is visible on the
-                 *                              screen.
-                 */
-                
+                /** STATIC CONSTRUCTORS **/               
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
+                /// <param name="displayVolume"> The rectangular prism defining the volume of camera space that is visible on the screen. </param>
+                /// <returns>
+                ///     A new transformation matrix that can be used to convert camera or view space coordinates into clip space. 
+                ///     This transform assumes that the view-space follows a right-handed coordinate system.
+                /// </returns>
                 UtilitiesAPI static Transform PerspectiveProjection(const Volume& displayVolume);
-                /* PERSPECTIVEPROJECTION - Constructs a right-handed perspective projection transformation matrix.
-                 *
-                 *      SYNTAX:
-                 *          T = Transform::PerspectiveProjection(fov, aspect, znear, zfar);
-                 *
-                 *      OUTPUT:
-                 *          T:          Tranform
-                 *                      A new transformation matrix that can be used to convert camera- or view-space coordinates
-                 *                      into clip space. This transform assumes that the view-space follows a right-handed coordinate
-                 *                      system.
-                 *
-                 *      INPUTS:
-                 *          fov:        float
-                 *                      The vertical field of view, which is the angle (in degrees, not radians, here) subtended by
-                 *                      the height of the visible rendering space.
-                 *
-                 *          aspect:     float
-                 *                      The aspect ratio of the visible rendering space. This should be the value (WIDTH / HEIGHT),
-                 *                      where WIDTH is the horizontal size of the space and HEIGHT is its vertical size. Units are
-                 *                      irrelevant as long as they're consistent.
-                 *
-                 *          znear:      float
-                 *                      The desired position of the clipping plane closest to the camera in view-space.
-                 *
-                 *          zfar:       float
-                 *                      The desired position of the clipping plane furthest from the camera in view-space.
-                 */
-                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
+                /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
+                /// <param name="fov">
+                ///     The vertical field of view, which is the angle (in degrees, not radians, here) subtended by the height of 
+                ///     the visible rendering space.
+                /// </param>
+                /// <param name="aspect">
+                ///     The aspect ratio of the visible rendering space. This should be the value (WIDTH / HEIGHT), where WIDTH is 
+                ///     the horizontal size of the space and HEIGHT is its vertical size. Units are irrelevant as long as they're 
+                ///     consistent.
+                /// </param>
+                /// <param name="znear"> The desired position of the clipping plane closest to the camera in view-space. </param>
+                /// <param name="zfar"> The desired position of the clipping plane furthest from the camera in view-space. </param>
+                /// <returns>
+                ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space. 
+                ///     This transform assumes that the view-space follows a right-handed coordinate system.
+                /// </returns>
                 UtilitiesAPI static Transform PerspectiveProjection(float fov, float aspect, float znear, float zfar);
                 UtilitiesAPI static Transform Rotation(const Vector3& angles);
                 UtilitiesAPI static Transform Rotation(float roll, float pitch, float yaw);
@@ -188,6 +164,12 @@ namespace Cyclone
                  *      linear transformation. It is meant to be interpretted as a typical 4x4 transformation matrix, but is actually
                  *      stored and addressed as a flattened vector of values (in column-major format).
                  */
+                /// <summary> A 4x4 affine transformation matrix representing translation and scaling operations. </summary>
+                /// <remarks>
+                ///     This matrix is a combination of translation and scaling parameters that represents the current state of a
+                ///     linear transformation. It is meant to be interpretted as a typical 4x4 transformation matrix, but is actually
+                ///     stored and addressed as a flattened vector of values (in column-major format).
+                /// </remarks>
                 mutable Matrix4x4 State;
 
 
