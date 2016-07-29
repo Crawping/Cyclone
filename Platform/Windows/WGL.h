@@ -21,17 +21,23 @@
             PlatformAPI extern PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval;
 
 
-            extern HDC      LoadingDeviceContext;
-            extern HGLRC    LoadingRenderContext;
-            extern HWND     LoadingWindow;
+
+            /// <summary> A handle for the GDI device context bound to the loading window. </summary>
+            InternalAPI extern HDC      LoadingDeviceContext;
+            /// <summary> A handle for the OpenGL rendering context bound to the loading window and device context. </summary>
+            InternalAPI extern HGLRC    LoadingRenderContext;
+            /// <summary> A handle for the Windows Forms window that is created in order to load OpenGL function pointers. </summary>
+            /// <remarks>
+            ///     Loading the OpenGL API on the Windows platform is a complicated procedure.
+            /// </remarks>
+            InternalAPI extern HWND     LoadingWindow;
 
 
 
             /** PUBLIC API FUNCTIONS **/
-            int wglLoadFunctions();
+            InternalAPI int wglLoadFunctions();
 
-            void wglDestroyResources();
-
+            InternalAPI void wglDestroyResources();
             
     #ifdef __cplusplus
         }
