@@ -3,6 +3,8 @@
  */
 
 #pragma once
+#include "Buffers/VertexBuffer.h"
+
 
 
 namespace Cyclone
@@ -10,6 +12,8 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
+        class Quad;
+        class Scene3D;
         class ShaderPipeline;
     }
     namespace Platform
@@ -45,9 +49,13 @@ namespace Cyclone
 
             GPU*            Renderer;
             ShaderPipeline* RenderPipeline;
+            Scene3D*        RenderScene;
             FrameBuffer*    RenderTarget;
             Window3D*       RenderWindow;            
         
+            VertexBuffer*   Vertices;
+
+            Quad*           TestQuad;
 
 
             /** UTILITIES **/

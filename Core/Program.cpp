@@ -1,11 +1,13 @@
 #include "CGL.h"
 #include "Console.h"
-#include "Buffers/FrameBuffer.h"
 #include "Program.h"
 #include "GPU.h"
 #include "Window3D.h"
 
+#include "Buffers/FrameBuffer.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Primitives/Quad.h"
+#include "Primitives/Scene3D.h"
 
 
 
@@ -28,26 +30,43 @@ namespace Cyclone
         _display(0),
         _showHelp(false),
         Renderer(nullptr),
+        RenderScene(nullptr),
         RenderTarget(nullptr),
         RenderWindow(nullptr),
-        RenderPipeline(nullptr)
+        RenderPipeline(nullptr),
+        TestQuad(nullptr),
+        Vertices(nullptr)
     {
         ParseInputArguments(nargs, args);
     
         if (!cglLoadAPI())
-            Console::WriteLine("Failed to load the OpenGL function pointers.");
+            Console::WriteLine("Failed to initialize the OpenGL library.");
 
         Renderer        = new GPU();
         RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
         RenderWindow    = new Window3D(Area(0, 0, 960, 540), "Test Window");
+        RenderScene     = new Scene3D();
         RenderTarget    = new FrameBuffer(RenderWindow->Size());
+        Vertices        = new VertexBuffer(Geometry::Quad);
+
+        //TestQuad = new Quad();
+        
+        //TestQuad->Z(-1.0f);
+
+        //RenderScene->Add(TestQuad);
 
         Renderer->RenderWindow(RenderWindow);
         Renderer->RenderPipeline(RenderPipeline);
         Renderer->RenderTarget(RenderTarget);
+        Renderer->Vertices(Vertices);
+        //Renderer->Input(*RenderScene);
     }
     Program::~Program()
     {
+        if (TestQuad)           { delete TestQuad; }
+        if (Vertices)           { delete Vertices; }
+        if (RenderScene)        { delete RenderScene; }
+
         if (RenderTarget)       { delete RenderTarget; }
         if (RenderWindow)       { delete RenderWindow; }
         if (RenderPipeline)     { delete RenderPipeline; }
@@ -67,8 +86,13 @@ namespace Cyclone
                 break;
 
             Renderer->Clear(Color4::Blue);
+            //Console::WriteLine("1. " + Renderer->ReportRendererStatus());
             Renderer->Render();
+            //Console::WriteLine("2. " + Renderer->ReportRendererStatus());
             Renderer->Present();
+            //Console::WriteLine("3. " + Renderer->ReportRendererStatus());
+
+            
         }
     }
 
