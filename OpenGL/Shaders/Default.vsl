@@ -2,21 +2,26 @@
  * Written by Josh Grooms on 20150903
  */
 
-#version 440 core
+#version 430 core
 #include "Default.hsl"
 
 layout(location = 0) in vec3 Position;
 layout(location = 1) in vec2 UV;
 
 out vec2    TexUV;
-out float   Depth;
-out int     EntityIndex;
+//out float   Depth;
+//out int     EntityIndex;
 
 uniform mat4 ViewProjection;
+
+
 
 void main(void)
 {
     EntityIndex = gl_InstanceID;
     TexUV = UV;
+    
+
+
     gl_Position = ViewProjection * PerEntityData[gl_InstanceID].World * vec4(Position, 1.0);
 }

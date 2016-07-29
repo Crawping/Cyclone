@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20150903
  */
 
-#version 440 core
+#version 430 core
 #include "Default.hsl"
 
 in vec2         TexUV;
@@ -18,6 +18,7 @@ uniform vec4 BaseColor;
 
 void main(void)
 {
-    OutputColor = texture(PerEntityData[EntityIndex].Texture, TexUV);
-    OutputColor.a = 1.0;
+    //OutputColor = texture(PerEntityData[EntityIndex].Texture, TexUV);
+    //OutputColor.a = 1.0;
+    OutputColor = vec4(0, 0.75, 1.0, 1.0);
 }

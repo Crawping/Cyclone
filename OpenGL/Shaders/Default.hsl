@@ -10,14 +10,19 @@ struct PerEntity
     vec4        Color;
 };
 
-struct PerFrame
-{
-    mat4        ViewProjection;
-    vec3        CameraPosition;
-    uint        Time;
-};
+//struct PerFrame
+//{
+//    mat4        ViewProjection;
+//    vec3        CameraPosition;
+//    uint        Time;
+//};
 
 layout(binding = 0, std140) uniform PerEntityBuffer
 {
     PerEntity PerEntityData[128];
 };
+
+//layout(binding = 1, std140) uniform PerFrameBuffer
+//{
+//    PerFrame PerFrameData[128];
+//};
