@@ -1,5 +1,6 @@
-#include "GraphicsPipeline.h"
-
+#include "Pipelines/GraphicsPipeline.h"
+#include "Pipelines/Shader.h"
+#include "Utilities.h"
 
 
 namespace Cyclone
@@ -8,14 +9,19 @@ namespace Cyclone
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
         GraphicsPipeline::GraphicsPipeline() :
-            _id(glCreateProgram())
+            _id(0),
+            VertexShader(nullptr),
+            FragmentShader(nullptr)
         {
-
+            _id = glCreateProgram();
+            if (!_id)
+                Console::WriteLine("Failed to create the shader pipeline object.");
         }
         GraphicsPipeline::~GraphicsPipeline()
         {
-            if (_id)
-                glDeleteProgram(_id);
+            if (VertexShader)   { delete VertexShader; }
+            if (FragmentShader) { delete FragmentShader; }
+            if (_id) { glDeleteProgram(_id); }
         }
 
 

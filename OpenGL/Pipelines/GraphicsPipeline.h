@@ -16,6 +16,7 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
+        class Shader;
 
         class GraphicsPipeline : public IBindable
         {
@@ -51,17 +52,19 @@ namespace Cyclone
 
                 /** RENDERING UTILITIES **/
                 virtual void Execute()                              = 0;
-                virtual void Input(const IRenderableEntity& entity) = 0;
-                virtual void Input(const PerFrame& frameData)       = 0;
                 virtual void Reset()                                = 0;
 		
             protected:
+
+                Shader*     VertexShader;
+                Shader*     FragmentShader;
+
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new OpenGL shader pipeline to which individual shader programs can be attached. </summary>
 		        OpenGLAPI GraphicsPipeline();
         
-                /// <summary> Retrieves and posts error information that was logged while attempting to link shader programs. </summary>
+                /// <summary> Retrieves error information that was logged while attempting to link shader programs. </summary>
                 OpenGLAPI virtual string ReportShaderLog() const;
 
             private:
