@@ -5,7 +5,7 @@
 #pragma once
 #include "PlatformAPI.h"
 #include "Buffers/UniformBuffer.h"
-#include "Buffers/UniformBuffers.h"
+#include "Buffers/UniformData.h"
 
 
 
@@ -16,6 +16,8 @@ namespace Cyclone
         class FrameBuffer;
         class GraphicsPipeline;
         class IRenderableEntity;
+        class Scene3D;
+        class VertexBuffer;
     }
 
     using namespace OpenGL;
@@ -46,6 +48,7 @@ namespace Cyclone
                 /// <summary> Sets the window that will be used to display the images in the render target. </summary>
                 PlatformAPI void RenderWindow(Window3D* window);
 
+                PlatformAPI void Vertices(VertexBuffer* vertices);
 
 
                 /** CONSTRUCTOR **/
@@ -59,11 +62,7 @@ namespace Cyclone
                 /// <remarks> This method should be among the first called within the rendering loop. </remarks>
                 PlatformAPI void Clear(const Color4& color);
 
-                PlatformAPI void Input(const IRenderableEntity& entity);
-
-                PlatformAPI void Input(const PerFrame& frameData);
-
-
+                PlatformAPI void Input(const Scene3D& scene);
                 /// <summary> Swaps the front and back rendering buffers, displaying the contents of the backbuffer to the user. </summary>
                 /// <remarks>
                 ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often
@@ -89,7 +88,7 @@ namespace Cyclone
                 /// <summary> Executes the shader pipeline programs currently bound to the GPU. </summary>
                 PlatformAPI void Render();
 
-
+                PlatformAPI string ReportRendererStatus() const;
 
             private:
 
@@ -98,6 +97,7 @@ namespace Cyclone
                 GraphicsPipeline*           _renderPipeline;
                 FrameBuffer*                _renderTarget;
                 Window3D*                   _renderWindow;
+                VertexBuffer*               _vertices;
 
                 UniformBuffer<PerEntity>    PerEntityBuffer;
                 UniformBuffer<PerFrame>     PerFrameBuffer;
@@ -107,6 +107,8 @@ namespace Cyclone
 
                 /** PRIVATE UTILITIES **/
                 void RestoreRenderingDefaults();
+                
+                
         };
     }
 }
