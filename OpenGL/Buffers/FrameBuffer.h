@@ -120,7 +120,7 @@ namespace Cyclone
                 /// <summary> Attaches this framebuffer and its associated resources to the GPU. </summary>
                 OpenGLAPI void Bind()       const;
                 /// <summary> Overwrites all data within each of the textures attached to this framebuffer. </summary>
-                OpenGLAPI void Clear();
+                OpenGLAPI void Clear(const Color4& color = Color4::White);
                 /// <summary> Generates a human-readable string detailing the current internal state of this object. </summary>
                 OpenGLAPI string Report()   const;
                 /// <summary> Detaches this framebuffer and its associated resources from the GPU. </summary>
