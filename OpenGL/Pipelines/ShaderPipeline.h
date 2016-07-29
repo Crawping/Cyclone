@@ -41,8 +41,6 @@ namespace Cyclone
 
                 /** PIPELINE UTILITIES **/
 		        OpenGLAPI void Execute()						        override;
-		        OpenGLAPI void Input(const IRenderableEntity& entity)   override;
-		        OpenGLAPI void Input(const PerFrame& frameData)			override;
 		        OpenGLAPI void Reset()									override;
 
 
@@ -50,10 +48,6 @@ namespace Cyclone
             private:
 
                 VertexTopologies            Topology;
-
-                std::map<const void*, uint> BufferIndices;
-		        UniformBuffer<PerEntity>    PerEntityBuffer;
-		        UniformBuffer<PerFrame>     PerFrameBuffer;
 		        VertexBuffer				Vertices;
 
                 void CompileShaders(const string& vsSource, const string& psSource);

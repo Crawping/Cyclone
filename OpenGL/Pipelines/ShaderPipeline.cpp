@@ -25,17 +25,11 @@ namespace Cyclone
             Topology(VertexTopologies::Triangles),
             Vertices(Geometry::Quad)
         {
-            if (!ID())
-            {
-                Console::WriteLine("Failed to initialize the OpenGL shader program.");
-                return;
-            }
-
             CompileShaders(vsSource, psSource);
         }
         ShaderPipeline::~ShaderPipeline()
         {
-            
+
         }
 
 
@@ -45,12 +39,12 @@ namespace Cyclone
         void ShaderPipeline::CompileShaders(const string& vsSource, const string& psSource)
         {
             // Compile the individual shader programs
-            Shader vs(vsSource, ShaderTypes::VertexShader);
-            Shader ps(psSource, ShaderTypes::PixelShader);
+            VertexShader = new Shader(vsSource, ShaderTypes::VertexShader);
+            FragmentShader = new Shader(psSource, ShaderTypes::PixelShader);
 
             // Link the shader programs
-            glAttachShader(ID(), vs.ID());
-            glAttachShader(ID(), ps.ID());
+            glAttachShader(ID(), VertexShader->ID());
+            glAttachShader(ID(), FragmentShader->ID());
 
             // Check for errors during shader compilation & linking
             GLint successful = 0;
@@ -77,6 +71,7 @@ namespace Cyclone
         }
 
 
+
         /** BINDING METHODS **/
         void ShaderPipeline::BindResources()        const
         {
@@ -95,40 +90,12 @@ namespace Cyclone
         void ShaderPipeline::Execute()
         {
             UpdateResources();
-            glDrawArraysInstanced(Topology, 0, Vertices.Count(), PerEntityBuffer.Count());
+            //glDrawArraysInstanced(Topology, 0, Vertices.Count(), PerEntityBuffer.Count());
+            glDrawArraysInstanced(Topology, 0, Vertices.Count(), 1);
         }
-
-        void ShaderPipeline::Input(const IRenderableEntity& entity)
-        {
-            uint idx;
-            PerEntity data;
-            const void* entKey = (const void*)&entity;
-
-            if (BufferIndices.count(entKey))
-            {
-                idx = BufferIndices[entKey];
-                data = PerEntityBuffer[idx];
-            }
-            else
-                idx = PerEntityBuffer.Count();
-
-            BufferIndices[entKey] = idx;
-            //if (entity.GetEntityData(data))
-            //    PerEntityBuffer.Set(idx, data);
-        }
-
-        void ShaderPipeline::Input(const PerFrame& frameData)
-        {
-            PerFrameBuffer.Set(0, frameData);
-        }
-
         void ShaderPipeline::Reset()
         {
 	        Topology = VertexTopologies::Triangles;
-	
-            BufferIndices.clear();
-            PerEntityBuffer.Clear();
-            PerFrameBuffer.Clear();
 	        Vertices.Clear();
         }
     }
