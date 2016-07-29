@@ -40,8 +40,8 @@ const static PIXELFORMATDESCRIPTOR DefaultPixelFormat =
 const static int DefaultContextSettings[] =
 {
     WGL_CONTEXT_FLAGS_ARB,          WGL_CONTEXT_DEBUG_BIT_ARB,
-    WGL_CONTEXT_MAJOR_VERSION_ARB,  3,
-    WGL_CONTEXT_MINOR_VERSION_ARB,  2,
+    WGL_CONTEXT_MAJOR_VERSION_ARB,  4,
+    WGL_CONTEXT_MINOR_VERSION_ARB,  4,
     WGL_CONTEXT_PROFILE_MASK_ARB,   WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
     NULL,
 };
@@ -85,7 +85,7 @@ namespace Cyclone
 
         /** CONSTRUCTOR & DESTRUCTOR **/
         Window3D::Window3D(const Area& displayArea, const string& title) : 
-            Internals(new _window3D{ NULL }),
+            Internals(new _window3D{ NULL, NULL, NULL }),
             _displayArea(displayArea),
             _isBordered(true),
             _title(title)
@@ -118,11 +118,11 @@ namespace Cyclone
             Internals->DeviceContext = GetDC(Internals->ID);
 
             int idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);
-            SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat);
-
-            Internals->RenderContext = wglCreateContextAttribs(Internals->DeviceContext, NULL, DefaultContextSettings);
-            if (!Internals->RenderContext)
-                Console::WriteLine("Failed to load the advanced rendering context.");
+            if (!SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
+            {
+                Console::WriteLine("Failed to set the pixel format for the 3D rendering window.");
+                return;
+            }
 
             ShowWindow(Internals->ID, SW_SHOW);
         }
@@ -166,7 +166,13 @@ namespace Cyclone
 
 
         /** RENDERING UTILITIES **/
-        void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, Internals->RenderContext); }
+        //void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, Internals->RenderContext); }
+        //void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext); }
+        void Window3D::Bind()               const 
+        { 
+            if (!wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext))
+                Console::WriteLine("Failed to bind the advanced rendering context to this 3D rendering window.");
+        }
         void Window3D::Present()            const { SwapBuffers(Internals->DeviceContext); }
         void Window3D::Unbind()             const { wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext); }
     }
