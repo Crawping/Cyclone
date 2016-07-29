@@ -3,10 +3,12 @@
  */
 
 #pragma once
-#include "Interfaces/IRenderable.h"
 #include "Buffers/UniformBuffer.h"
-#include "Buffers/UniformBuffers.h"
+#include "Buffers/UniformData.h"
+#include "Buffers/UniformMap.h"
+#include "GL/OpenGLAPI.h"
 #include "Primitives/Entity3D.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -14,24 +16,32 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        class IRenderableEntity;
 
 
-        class Scene3D
+        class Scene3D : public UniformMap<const IRenderableEntity*, PerEntity>
         {
             public:
 
-                // Camera
+                const Transform& _viewProjection() const { return ViewProjection; }
 
 
-                virtual void Add(const IRenderableEntity* entity);
+                OpenGLAPI Scene3D();
 
 
-                virtual void Remove(const IRenderableEntity* entity);
+                OpenGLAPI virtual void Add(const IRenderableEntity* entity);
 
+
+                OpenGLAPI void BindResources() const override;
 
             private:
 
-                UniformBuffer<PerEntity>    PerEntityBuffer;
+                Transform Camera;
+                Transform ViewProjection;
+
+
+                UniformBuffer<PerFrame> PerSceneBuffer;
+                
 
         };
     }
