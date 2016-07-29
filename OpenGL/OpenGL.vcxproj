@@ -149,12 +149,16 @@
   <ItemGroup>
     <ClInclude Include="..\CoreGL\GL\OpenGL.h" />
     <ClInclude Include="Buffers\FrameBuffer.h" />
+    <ClInclude Include="Buffers\GraphicsArray.h" />
     <ClInclude Include="Buffers\GraphicsBuffer.h" />
+    <ClInclude Include="Buffers\GraphicsMap.h" />
     <ClInclude Include="Buffers\UniformBuffer.h" />
-    <ClInclude Include="Buffers\UniformBuffers.h" />
+    <ClInclude Include="Buffers\UniformData.h" />
+    <ClInclude Include="Buffers\UniformMap.h" />
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="EnumerationsGL.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
+    <ClInclude Include="Interfaces\IGraphicsBuffer.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="OpenGLAPI.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
@@ -171,10 +175,12 @@
   <ItemGroup>
     <ClCompile Include="..\CoreGL\GL\OpenGL.c" />
     <ClCompile Include="Buffers\FrameBuffer.cpp" />
+    <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />
     <ClCompile Include="Pipelines\ShaderPipeline.cpp" />
+    <ClCompile Include="Primitives\Scene3D.cpp" />
     <ClCompile Include="Textures\Texture.cpp" />
     <ClCompile Include="Textures\Texture2D.cpp" />
     <ClCompile Include="Textures\TextureSampler.cpp" />

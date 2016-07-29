@@ -17,9 +17,6 @@
     <ClInclude Include="Buffers\UniformBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Buffers\UniformBuffers.h">
-      <Filter>Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\VertexBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
@@ -57,6 +54,21 @@
     <ClInclude Include="Primitives\Scene3D.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IGraphicsBuffer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\GraphicsMap.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\GraphicsArray.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\UniformMap.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\UniformData.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -85,6 +97,12 @@
     </ClCompile>
     <ClCompile Include="..\CoreGL\GL\OpenGL.c">
       <Filter>GL</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffers\GraphicsBuffer.cpp">
+      <Filter>Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives\Scene3D.cpp">
+      <Filter>Primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
