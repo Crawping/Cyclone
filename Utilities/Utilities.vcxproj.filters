@@ -83,6 +83,7 @@
     <ClInclude Include="Math\Constants.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="Property.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
