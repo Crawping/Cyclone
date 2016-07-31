@@ -71,6 +71,8 @@ namespace Cyclone
                     return *this;
                 }
 
+                const T* ToArray() const { return Data; }
+
 
 
 		        /** OPERATORS **/
