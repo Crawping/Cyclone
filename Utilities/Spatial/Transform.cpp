@@ -146,6 +146,7 @@ namespace Cyclone
         /** UTILITIES **/
         string Transform::Report() const
         {
+            UpdateState();
             std::stringstream msg;
             msg << "Transformation Matrix Details:\n" << State.ToString();
             return msg.str();
