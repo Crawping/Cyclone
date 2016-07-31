@@ -15,13 +15,14 @@ namespace Cyclone
     {
         /// <summary> A class that creates and manages one individual GPU shader program. </summary>
         /// <remarks>
-        ///		The shader class is responsible for creating compiled binaries from OpenGL Shading Language(GLSL) source code.
+        ///		The shader class is responsible for creating compiled binaries from OpenGL Shading Language (GLSL) source code.
         ///		Multiple instances of these binaries, each representing a discrete stage of the programmable GPU rendering pipeline,
-        ///		can then be linked together to form a complete program useful for rendering geometry.Typically, this process is
+        ///		can then be linked together to form a complete program useful for rendering geometry. Typically, this process is
         ///	    handled automatically within the 'ShaderPipeline' class.
         /// </remarks>
         class Shader
         {
+
             public:
 
                 /** PROPERTIES **/
@@ -38,11 +39,17 @@ namespace Cyclone
                 /// <summary> Constructs a new shader program that can be plugged into the programmable GPU rendering stages. </summary>
                 /// <param name="fileName"> A string containing the name or path of the shader program source code file to be compiled. </param>
                 /// <param name="type">
-                ///     One of the shader type enumerators. This argument dictates where in the GPU pipeline the compiled
-                ///     shader program will be.
+                ///     One of the shader type enumerators. This argument dictates where in the GPU pipeline the compiled shader program will be.
                 /// </param>
 		        OpenGLAPI Shader(string fileName, ShaderTypes type);
+                /// <summary> Destroys the shader program on the GPU. </summary>
 		        OpenGLAPI ~Shader();
+
+
+
+                /** UTILITIES **/
+                /// <summary> Generates a human-readable string detailing the current internal state of this shader program. </summary>
+                OpenGLAPI string Report() const;
 
 
 
@@ -58,7 +65,7 @@ namespace Cyclone
                 /** PRIVATE UTILITIES **/
                 void Compile(string src);
                 string Preprocess(string src);
-                string ReportShaderLog();
+                string ReportShaderLog() const;
 
         };
 

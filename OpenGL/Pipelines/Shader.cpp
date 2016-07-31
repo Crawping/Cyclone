@@ -34,6 +34,21 @@ namespace Cyclone
                 glDeleteShader(_id);
         }
 
+      
+
+        /** PUBLIC UTILITIES **/
+        string Shader::Report() const
+        {
+            std::stringstream msg;
+            msg << "Shader Description: "                   << "\n" <<
+                   "\tID:           " << ID()               << "\n" <<
+                   "\tSource Path:  " << SourcePath()       << "\n" <<
+                   "\tShader Type:  " << Type()             << "\n" <<
+                   "\tError Log:    " << ReportShaderLog()  << "\n";
+                    
+            return msg.str();
+        }
+
 
 
         /** PRIVATE UTILITIES **/
@@ -88,7 +103,7 @@ namespace Cyclone
         }
 
         /// <summary> Retrieves and posts error information that was logged while attempting to compile this shader program. </summary>
-        string Shader::ReportShaderLog()
+        string Shader::ReportShaderLog() const
         {
             GLint nchars = 0;
             glGetShaderiv(ID(), GL_INFO_LOG_LENGTH, &nchars);
