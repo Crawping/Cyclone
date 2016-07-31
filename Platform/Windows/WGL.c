@@ -83,7 +83,7 @@ static int FinalizeLoadingContext()
         return 0;
     }
 
-    wglMakeCurrent(NULL, NULL);
+    wglMakeCurrent(LoadingDeviceContext, NULL);
     wglDeleteContext(TemporaryRenderContext);
     TemporaryRenderContext = NULL;
 
