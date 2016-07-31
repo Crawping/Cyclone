@@ -23,6 +23,7 @@ namespace Cyclone
                 const Area& DisplayArea()   const { return _displayArea; }
                 uint Height()               const { return (uint)_displayArea.Height; }
                 bool IsBordered()           const { return _isBordered; }
+                const Area& RenderArea()    const { return _renderArea; }
                 Vector2 Size()              const { return _displayArea.Scale(); }
                 uint Width()                const { return (uint)_displayArea.Width; }
 
@@ -139,6 +140,7 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 Area            _displayArea;
                 bool            _isBordered;
+                Area            _renderArea;
                 string          _title;
 
         };

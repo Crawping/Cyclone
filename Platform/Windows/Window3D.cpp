@@ -107,7 +107,7 @@ namespace Cyclone
                 TEXT("OpenGL"),
                 TEXT("OpenGL Window"),
                 WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-                (int)displayArea.X, (int)displayArea.Y,
+                (int)displayArea.X,     (int)displayArea.Y,
                 (int)displayArea.Width, (int)displayArea.Height,
                 NULL,
                 NULL,
@@ -125,6 +125,10 @@ namespace Cyclone
             }
 
             ShowWindow(Internals->ID, SW_SHOW);
+
+            RECT renderArea;
+            GetClientRect(Internals->ID, &renderArea);
+            _renderArea = Area(renderArea.left, renderArea.top, renderArea.right, renderArea.bottom);
         }
 
         Window3D::~Window3D()
