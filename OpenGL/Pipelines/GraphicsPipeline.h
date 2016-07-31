@@ -51,8 +51,8 @@ namespace Cyclone
 
 
                 /** RENDERING UTILITIES **/
-                virtual void Execute()                              = 0;
-                virtual void Reset()                                = 0;
+                OpenGLAPI virtual void Execute()                              = 0;
+                OpenGLAPI virtual void Reset()                                = 0;
 		
             protected:
 
