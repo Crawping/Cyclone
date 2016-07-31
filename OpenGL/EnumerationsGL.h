@@ -64,9 +64,9 @@ struct BufferAccessIntents : public Flag
 
 /// <summary> A list of possible types of buffers that can be created on the GPU. </summary>
 /// <remarks>
-///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which 
-///     refers to the location in GPU memory where binding occurs. However, for most applications, 
-///     calling them 'types' proffers an easier understanding of the function that they serve.
+///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which  refers to the 
+///     location in GPU memory where binding occurs. However, for most applications, calling them 'types' proffers 
+///     an easier understanding of the function that they serve.
 /// </remarks>
 struct BufferTypes : public Enumerator
 {
@@ -95,9 +95,7 @@ struct BufferTypes : public Enumerator
     BufferTypes(enum Buffers b = Uniform) : Enumerator((int)b) { }
 };
 
-/// <summary>
-///     A list of possible errors indicating issues that can arise within an OpenGL rendering pipeline.
-/// </summary>
+/// <summary> A list of possible errors indicating issues that can arise within an OpenGL rendering pipeline. </summary>
 struct RenderErrors : public Enumerator
 {
     enum Errors
@@ -193,10 +191,10 @@ struct TextureFormats : public Enumerator
 
 	/// <summary> Converts specific OpenGL internal format enumerators into their equivalent base format values. </summary>
 	/// <remarks>
-	/// OpenGL possesses several functions that distinguish between the simpler, base format values such as GL_RGBA and
-	/// more specific ones such as GL_RGBA8(i.e. 8 - bits per channel RGBA).However, if the specific internal format is
-	/// known, then the base format can also be determined.This method performs that conversion and makes it a bit
-	/// easier to automate certain aspects of texture usage.
+	///     OpenGL possesses several functions that distinguish between the simpler, base format values such as GL_RGBA and
+	///     more specific ones such as GL_RGBA8 (i.e. 8-bits per channel RGBA). However, if the specific internal format is
+	///     known, then the base format can also be determined. This method performs that conversion and makes it a bit
+	///     easier to automate certain aspects of texture usage.
 	/// </remarks>
     GLenum ToBaseFormat() const
     {
@@ -289,7 +287,7 @@ struct WrapModes : public Enumerator
         ClampToBorder               = GL_CLAMP_TO_BORDER,
         /// <summary> Constrains out-of-bounds sampling coordinates to the edge of a texture. </summary>
         ClampToEdge                 = GL_CLAMP_TO_EDGE,
-        /* MIRRORCLAMPTOEDGE - */
+        
         MirrorClampToEdge           = GL_MIRROR_CLAMP_TO_EDGE,
         /// <summary> Wraps out-of-bounds sampling coordinates back across the texture. </summary>
         MirrorRepeat                = GL_MIRRORED_REPEAT,
