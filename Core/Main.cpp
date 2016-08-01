@@ -18,9 +18,7 @@ using namespace Cyclone;
 
 
 int main(int nargs, char** args)
-{
-    Console::WriteLine("Testing this out.");
-    
+{    
     Program app(nargs, args);
     app.Execute();
 
