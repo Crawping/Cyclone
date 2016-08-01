@@ -67,8 +67,10 @@ namespace Cyclone
         void GPU::Clear(const Color4& color)
         {
             RestoreRenderingDefaults();
-            _renderTarget->Clear(color);
-            glClearBufferfv(GL_COLOR, 0, color.ToArray());
+            if (_renderTarget)
+                _renderTarget->Clear(color);
+            else
+                glClearBufferfv(GL_COLOR, 0, color.ToArray());
         }
 
         void GPU::Input(const Scene3D& scene)
@@ -77,13 +79,12 @@ namespace Cyclone
 
             if (_renderPipeline)
             {
-
-            const char* vpstr = "ViewProjection";
-            int id = glGetUniformLocation(_renderPipeline->ID(), vpstr);
-            if (id == -1)
-                Console::WriteLine("Failed to find the ViewProjection uniform ID.");
-            else
-                glUniformMatrix4fv(id, 1, GL_FALSE, scene._viewProjection().ToArray());
+                const char* vpstr = "ViewProjection";
+                int id = glGetUniformLocation(_renderPipeline->ID(), vpstr);
+                if (id == -1)
+                    Console::WriteLine("Failed to find the ViewProjection uniform ID.");
+                else
+                    glUniformMatrix4fv(id, 1, GL_FALSE, scene._viewProjection().ToArray());
             }
             //uint idx;
             //PerEntity data;
@@ -104,6 +105,11 @@ namespace Cyclone
 
         void GPU::Present()
         {
+            if (!_renderWindow) { return; }
+
+            if (_renderTarget)
+                glBlitNamedFramebuffer(_renderTarget->ID(), 0, 0, 0, _renderTarget->Width(), _renderTarget->Height(), 0, 0, _renderTarget->Width(), _renderTarget->Height(), GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
             if (_renderWindow)
                 _renderWindow->Present();
         }
@@ -112,6 +118,10 @@ namespace Cyclone
         {
             if (_renderPipeline)
                 _renderPipeline->Execute();
+
+            //glDrawArraysInstanced(VertexTopologies::Triangles, 0, _vertices->Count(), 1);
+            //glDrawArraysInstanced(VertexTopologies::Triangles, 0, 3, 1);
+            glDrawArrays(VertexTopologies::Triangles, 0, 3);
         }
 
 
