@@ -25,7 +25,6 @@ namespace Cyclone
             else
             {
                 src = Preprocess(src);
-                Console::WriteLine(src);
                 Compile(src);
             }
         }
@@ -100,8 +99,11 @@ namespace Cyclone
 
             prepsrc << src;
             string prepstr = prepsrc.str();
-            std::regex_replace(prepstr, std::regex("\0"), " ");
-            return prepsrc.str();
+            for (char& c : prepstr)
+                if (c == '\0')
+                    c = ' ';
+
+            return prepstr;
         }
 
         /// <summary> Retrieves and posts error information that was logged while attempting to compile this shader program. </summary>
