@@ -81,8 +81,6 @@ namespace Cyclone
                 OpenGLAPI bool NeedsReallocation()      const { return _gpuCount != Count(); }
                 /// <summary> Gets whether this buffer needs any kind of update on the GPU side. </summary>
                 OpenGLAPI bool NeedsUpdate()            const { return _updateFlag || NeedsReallocation(); }
-		        OpenGLAPI bool ReallocateFlag()         const { return _reallocateFlag; }
-		        OpenGLAPI bool UpdateFlag()             const { return _updateFlag; }
                 /// <summary> Sets whether this buffer needs any kind of update on the GPU side. </summary>
                 /// <remarks>
                 /// 
