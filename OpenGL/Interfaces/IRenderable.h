@@ -22,8 +22,7 @@ namespace Cyclone
     {
         
         struct  PerEntity;
-        class   Texture2D;        
-        struct	VertexArray;
+        class   Texture2D;
         
 
         using namespace Utilities;
