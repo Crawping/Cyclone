@@ -158,12 +158,6 @@ namespace Cyclone
 
 
                 /** PRIVATE DATA **/
-                /* STATE - A 4x4 affine transformation matrix representing translation and scaling operations.
-                 *
-                 *      This matrix is a combination of translation and scaling parameters that represents the current state of a
-                 *      linear transformation. It is meant to be interpretted as a typical 4x4 transformation matrix, but is actually
-                 *      stored and addressed as a flattened vector of values (in column-major format).
-                 */
                 /// <summary> A 4x4 affine transformation matrix representing translation and scaling operations. </summary>
                 /// <remarks>
                 ///     This matrix is a combination of translation and scaling parameters that represents the current state of a
