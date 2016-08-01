@@ -38,7 +38,7 @@ namespace Cyclone
 
         void Scene3D::BindResources() const
         {
-            PerSceneBuffer.Bind(1);
+            //PerSceneBuffer.Bind(1);
         }
     }
 }
