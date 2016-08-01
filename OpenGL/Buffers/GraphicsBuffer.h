@@ -54,6 +54,9 @@ namespace Cyclone
 		        /// <remarks> Currently, binding is aborted if this buffer object is empty. </remarks>
 		        void Bind(int slot = 0)                 const override
                 {
+                    if (NeedsUpdate())
+                        Console::WriteLine("WARNING: The buffer being bound has updates queued but not yet applied.");
+
                     if (IsEmpty()) { return; }
                     BindResources();
                     BindEntity(slot);
