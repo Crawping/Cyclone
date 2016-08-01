@@ -18,6 +18,10 @@ namespace Cyclone
     namespace Platform
     {
         /** PROPERTIES **/
+        void GPU::Projection(const Transform& projection)
+        {
+            _projection = projection;
+        }
         void GPU::RenderPipeline(GraphicsPipeline* pipeline)
         {
             _renderPipeline = pipeline;
@@ -42,18 +46,21 @@ namespace Cyclone
             if (_vertices)
                 _vertices->Bind();
         }
-
+        void GPU::View(const Transform& view)
+        {
+            _view = view;
+        }
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        GPU::GPU() : 
+        GPU::GPU() :
             _fov(90),
             _renderPipeline(nullptr),
             _renderTarget(nullptr),
             _renderWindow(nullptr),
             _vertices(nullptr)
         {
-            
+
         }
 
         GPU::~GPU()
@@ -77,15 +84,6 @@ namespace Cyclone
         {
             scene.Bind();
 
-            if (_renderPipeline)
-            {
-                const char* vpstr = "ViewProjection";
-                int id = glGetUniformLocation(_renderPipeline->ID(), vpstr);
-                if (id == -1)
-                    Console::WriteLine("Failed to find the ViewProjection uniform ID.");
-                else
-                    glUniformMatrix4fv(id, 1, GL_FALSE, scene._viewProjection().ToArray());
-            }
             //uint idx;
             //PerEntity data;
             //const void* entKey = (const void*)&entity;
@@ -110,26 +108,34 @@ namespace Cyclone
             if (_renderTarget)
                 glBlitNamedFramebuffer(_renderTarget->ID(), 0, 0, 0, _renderTarget->Width(), _renderTarget->Height(), 0, 0, _renderTarget->Width(), _renderTarget->Height(), GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-            if (_renderWindow)
-                _renderWindow->Present();
+            _renderWindow->Present();
         }
 
         void GPU::Render()
         {
             if (_renderPipeline)
+            {
                 _renderPipeline->Execute();
 
-            //glDrawArraysInstanced(VertexTopologies::Triangles, 0, _vertices->Count(), 1);
+                const char* vpstr = "ViewProjection";
+                int id = glGetUniformLocation(_renderPipeline->ID(), vpstr);
+                if (id == -1)
+                    Console::WriteLine("Failed to find the ViewProjection uniform ID.");
+                else
+                    glUniformMatrix4fv(id, 1, GL_FALSE, (_projection * _view).ToArray());
+            }
+
+            glDrawArraysInstanced(VertexTopologies::Triangles, 0, _vertices->Count(), 1);
             //glDrawArraysInstanced(VertexTopologies::Triangles, 0, 3, 1);
-            glDrawArrays(VertexTopologies::Triangles, 0, 3);
+            //glDrawArrays(VertexTopologies::Triangles, 0, 3);
         }
 
 
         /** PRIVATE UTILITIES **/
         void GPU::RestoreRenderingDefaults()
-        {            
+        {
             if (_renderWindow)
-                glViewport(0, 0, _renderWindow->Width(), _renderWindow->Height());
+                glViewport(0, 0, _renderWindow->RenderArea().Width, _renderWindow->RenderArea().Height);
             glActiveTexture(GL_TEXTURE0);
         }
         string GPU::ReportRendererStatus() const

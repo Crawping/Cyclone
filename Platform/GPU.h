@@ -6,6 +6,7 @@
 #include "PlatformAPI.h"
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -41,6 +42,7 @@ namespace Cyclone
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* RenderWindow() const { return _renderWindow; }
 
+                PlatformAPI void Projection(const Transform& projection);
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
                 PlatformAPI void RenderPipeline(GraphicsPipeline* pipeline);
                 /// <summary> Sets the framebuffer to which all subsequent rendering will occur. </summary>
@@ -49,6 +51,9 @@ namespace Cyclone
                 PlatformAPI void RenderWindow(Window3D* window);
 
                 PlatformAPI void Vertices(VertexBuffer* vertices);
+
+                PlatformAPI void View(const Transform& view);
+
 
 
                 /** CONSTRUCTOR **/
@@ -94,10 +99,12 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 float                       _fov;
+                Transform                   _projection;
                 GraphicsPipeline*           _renderPipeline;
                 FrameBuffer*                _renderTarget;
                 Window3D*                   _renderWindow;
                 VertexBuffer*               _vertices;
+                Transform                   _view;
 
                 UniformBuffer<PerEntity>    PerEntityBuffer;
                 UniformBuffer<PerFrame>     PerFrameBuffer;
