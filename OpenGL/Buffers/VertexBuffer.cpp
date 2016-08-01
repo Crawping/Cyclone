@@ -13,16 +13,14 @@ namespace Cyclone
 	        
         }
         VertexBuffer::VertexBuffer(uint n, const Vertex* vertices) :
-            GraphicsArray<Vertex>(BufferTypes::Uniform, n),
+            GraphicsArray<Vertex>(BufferTypes::Array, n),
             VAOID(0)
         {
 	        for (uint a = 0; a < n; a++)
 		        Set(a, vertices[a]);
 
-            glCreateVertexArrays(1, &VAOID);    
+            glCreateVertexArrays(1, &VAOID);
             BindEntity();
-                //glNamedBufferStorage(ID(), Count() * Stride(), &Data[0], 0);
-
                 glVertexArrayAttribBinding(VAOID, 0, 0);
                 glVertexArrayAttribFormat(VAOID, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Position));
                 glEnableVertexArrayAttrib(VAOID, 0);
@@ -33,6 +31,8 @@ namespace Cyclone
 
                 glVertexArrayVertexBuffer(VAOID, 0, ID(), 0, Stride());
             UnbindEntity();
+
+            Update();
         }
         VertexBuffer::~VertexBuffer()
         {
@@ -43,31 +43,31 @@ namespace Cyclone
 
 
         /** BINDING UTILITIES **/
-        void VertexBuffer::Bind(int slot) const
+        void VertexBuffer::Bind(int slot)       const
         {
             if (IsEmpty()) { return; }
             BindEntity(slot);
             BindResources();
         }
         void VertexBuffer::BindEntity(int slot) const
-        {
+        {            
             glBindVertexArray(VAOID);
         }
-        void VertexBuffer::BindResources() const
+        void VertexBuffer::BindResources()      const
         {
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
         }
-        void VertexBuffer::Unbind() const
+        void VertexBuffer::Unbind()             const
         {
             UnbindResources();
             UnbindEntity();
         }
-        void VertexBuffer::UnbindEntity() const
+        void VertexBuffer::UnbindEntity()       const
         {
             glBindVertexArray(0);
         }
-        void VertexBuffer::UnbindResources() const
+        void VertexBuffer::UnbindResources()    const
         {
             glDisableVertexAttribArray(0);
             glDisableVertexAttribArray(1);
