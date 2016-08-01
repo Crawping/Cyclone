@@ -75,13 +75,13 @@ namespace Cyclone
         /** BINDING METHODS **/
         void ShaderPipeline::BindResources()        const
         {
-	        Vertices.Bind();
+	        //Vertices.Bind();
             GraphicsPipeline::BindResources();
         }
         void ShaderPipeline::UnbindResources()      const
         {
             GraphicsPipeline::UnbindResources();
-            Vertices.Unbind();
+            //Vertices.Unbind();
         }
 
 
@@ -91,12 +91,13 @@ namespace Cyclone
         {
             UpdateResources();
             //glDrawArraysInstanced(Topology, 0, Vertices.Count(), PerEntityBuffer.Count());
-            glDrawArraysInstanced(Topology, 0, Vertices.Count(), 1);
+            //glDrawArraysInstanced(Topology, 0, Vertices.Count(), 1);
+            //glDrawArrays(Topology, 0, Vertices.Count());
         }
         void ShaderPipeline::Reset()
         {
-	        Topology = VertexTopologies::Triangles;
-	        Vertices.Clear();
+	        //Topology = VertexTopologies::Triangles;
+	        //Vertices.Clear();
         }
     }
 }
