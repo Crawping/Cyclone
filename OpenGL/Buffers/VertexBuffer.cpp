@@ -8,11 +8,9 @@ namespace Cyclone
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
         VertexBuffer::VertexBuffer(const Array<Vertex>& vertices) : 
-	        GraphicsArray<Vertex>(BufferTypes::Uniform, vertices.Count()),
-	        VAOID(0)
+            VertexBuffer(vertices.Count(), vertices.ToArray())	        
         {
-	        for (int a = 0; a < Count(); a++)
-		        Set(a, vertices(a));
+	        
         }
         VertexBuffer::VertexBuffer(uint n, const Vertex* vertices) :
             GraphicsArray<Vertex>(BufferTypes::Uniform, n),
@@ -21,8 +19,7 @@ namespace Cyclone
 	        for (uint a = 0; a < n; a++)
 		        Set(a, vertices[a]);
 
-            glCreateVertexArrays(1, &VAOID);
-    
+            glCreateVertexArrays(1, &VAOID);    
             BindEntity();
                 //glNamedBufferStorage(ID(), Count() * Stride(), &Data[0], 0);
 
