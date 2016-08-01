@@ -46,14 +46,12 @@ namespace Cyclone
         RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
         RenderWindow    = new Window3D(Area(0, 0, 960, 540), "Test Window");
         RenderScene     = new Scene3D();
-        RenderTarget    = new FrameBuffer(RenderWindow->Size());
+        RenderTarget    = new FrameBuffer(RenderWindow->RenderArea().Scale());
         Vertices        = new VertexBuffer(Geometry::Quad);
 
-        //TestQuad = new Quad();
-        
-        //TestQuad->Z(-1.0f);
-
-        //RenderScene->Add(TestQuad);
+        TestQuad = new Quad();        
+        TestQuad->Z(-10.0f);
+        RenderScene->Add(TestQuad);
 
         Renderer->RenderWindow(RenderWindow);
         Renderer->RenderPipeline(RenderPipeline);
@@ -85,14 +83,12 @@ namespace Cyclone
             if (!RenderWindow->ProcessEvents())
                 break;
 
-            Renderer->Clear(Color4::Blue);
+            Renderer->Clear(Color4(0.5f));
             //Console::WriteLine("1. " + Renderer->ReportRendererStatus());
             Renderer->Render();
             //Console::WriteLine("2. " + Renderer->ReportRendererStatus());
             Renderer->Present();
             //Console::WriteLine("3. " + Renderer->ReportRendererStatus());
-
-            
         }
     }
 
