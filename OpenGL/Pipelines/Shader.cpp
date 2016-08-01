@@ -25,6 +25,7 @@ namespace Cyclone
             else
             {
                 src = Preprocess(src);
+                Console::WriteLine(src);
                 Compile(src);
             }
         }
@@ -78,7 +79,7 @@ namespace Cyclone
         /// </remarks>
         string Shader::Preprocess(string src)
         {
-            const static std::regex incPattern("\\s*#\\s*include\\s+\"(.*)\"");
+            const static std::regex incPattern("^\\s*#\\s*include\\s+\"(.*)\"");
             const string path(SourcePath().substr(0, SourcePath().find_last_of("/")));
 
             std::smatch incMatches;
@@ -86,7 +87,6 @@ namespace Cyclone
             while (std::regex_search(src, incMatches, incPattern))
             {
                 prepsrc << incMatches.prefix().str();
-
                 string filestr = readfile(path + "/" + incMatches[1].str());
                 if (filestr.size() == 0)
                 {
@@ -99,6 +99,8 @@ namespace Cyclone
             }
 
             prepsrc << src;
+            string prepstr = prepsrc.str();
+            std::regex_replace(prepstr, std::regex("\0"), " ");
             return prepsrc.str();
         }
 
