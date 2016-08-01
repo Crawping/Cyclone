@@ -62,6 +62,19 @@ namespace Cyclone
             glBindFramebuffer(GL_FRAMEBUFFER, _id);
             glViewport(0, 0, Width(), Height());
         }
+        void FrameBuffer::Blit(FrameBuffer* target, const Area& srcArea, const Area& dstArea) const
+        {
+            glBlitNamedFramebuffer
+            (
+                ID(),
+                target ? target->ID() : 0,
+                srcArea.X, srcArea.Y, srcArea.Width, srcArea.Height,
+                dstArea.X, dstArea.Y, dstArea.Width, dstArea.Height,
+                GL_COLOR_BUFFER_BIT,
+                GL_LINEAR
+            );
+        }
+
         void FrameBuffer::Clear(const Color4& color)
         {
             if (ColorTexture)
