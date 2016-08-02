@@ -60,7 +60,6 @@ namespace Cyclone
         void FrameBuffer::Bind() const
         {
             glBindFramebuffer(GL_FRAMEBUFFER, _id);
-            glViewport(0, 0, Width(), Height());
         }
         void FrameBuffer::Blit(FrameBuffer* target, const Area& srcArea, const Area& dstArea) const
         {
@@ -74,14 +73,13 @@ namespace Cyclone
                 GL_LINEAR
             );
         }
-
         void FrameBuffer::Clear(const Color4& color)
         {
             if (ColorTexture)
                 glClearNamedFramebufferfv(ID(), GL_COLOR, 0, color.ToArray());
 
             if (DepthTexture)
-                glClearNamedFramebufferfv(ID(), GL_COLOR, 0, color.ToArray());
+                glClearNamedFramebufferfv(ID(), GL_DEPTH, 0, color.ToArray());
         }
         string FrameBuffer::Report() const
         {
