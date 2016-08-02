@@ -42,6 +42,7 @@ namespace Cyclone
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* RenderWindow() const { return _renderWindow; }
 
+                /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
                 PlatformAPI void Projection(const Transform& projection);
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
                 PlatformAPI void RenderPipeline(GraphicsPipeline* pipeline);
@@ -49,9 +50,9 @@ namespace Cyclone
                 PlatformAPI void RenderTarget(FrameBuffer* framebuffer);
                 /// <summary> Sets the window that will be used to display the images in the render target. </summary>
                 PlatformAPI void RenderWindow(Window3D* window);
-
+                /// <summary> Sets the vertex buffer that will be used by the GPU shader pipeline to render geometry. </summary>
                 PlatformAPI void Vertices(VertexBuffer* vertices);
-
+                /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
                 PlatformAPI void View(const Transform& view);
 
 
@@ -90,10 +91,17 @@ namespace Cyclone
                 ///     but are not discussed here.
                 /// </remarks>
                 PlatformAPI void Present();
-                /// <summary> Executes the shader pipeline programs currently bound to the GPU. </summary>
+                /// <summary> Executes the shader pipeline currently bound to the GPU. </summary>
                 PlatformAPI void Render();
 
-                PlatformAPI string ReportRendererStatus() const;
+                PlatformAPI void Update();
+
+                
+
+                /** GENERAL UTILITIES **/
+                PlatformAPI string Report() const;
+
+
 
             private:
 
@@ -106,15 +114,16 @@ namespace Cyclone
                 VertexBuffer*               _vertices;
                 Transform                   _view;
 
-                UniformBuffer<PerEntity>    PerEntityBuffer;
+
+
+                /** PRIVATE DATA **/
                 UniformBuffer<PerFrame>     PerFrameBuffer;
-
-
+                
 
 
                 /** PRIVATE UTILITIES **/
                 void RestoreRenderingDefaults();
-                
+                string ReportErrors() const;
                 
         };
     }

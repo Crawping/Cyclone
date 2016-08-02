@@ -83,22 +83,6 @@ namespace Cyclone
         void GPU::Input(const Scene3D& scene)
         {
             scene.Bind();
-
-            //uint idx;
-            //PerEntity data;
-            //const void* entKey = (const void*)&entity;
-
-            //if (BufferIndices.count(entKey))
-            //{
-            //    idx = BufferIndices[entKey];
-            //    data = PerEntityBuffer[idx];
-            //}
-            //else
-            //    idx = PerEntityBuffer.Count();
-
-            //BufferIndices[entKey] = idx;
-            ////if (entity.GetEntityData(data))
-            ////    PerEntityBuffer.Set(idx, data);
         }
 
         void GPU::Present()
@@ -106,7 +90,7 @@ namespace Cyclone
             if (!_renderWindow) { return; }
 
             if (_renderTarget)
-                glBlitNamedFramebuffer(_renderTarget->ID(), 0, 0, 0, _renderTarget->Width(), _renderTarget->Height(), 0, 0, _renderTarget->Width(), _renderTarget->Height(), GL_COLOR_BUFFER_BIT, GL_LINEAR);
+                _renderTarget->Blit(0, _renderTarget->DisplayArea(), _renderWindow->RenderArea());
 
             _renderWindow->Present();
         }
@@ -115,30 +99,45 @@ namespace Cyclone
         {
             if (_renderPipeline)
             {
-                _renderPipeline->Execute();
-
-                const char* vpstr = "ViewProjection";
-                int id = glGetUniformLocation(_renderPipeline->ID(), vpstr);
-                if (id == -1)
-                    Console::WriteLine("Failed to find the ViewProjection uniform ID.");
-                else
-                    glUniformMatrix4fv(id, 1, GL_FALSE, (_projection * _view).ToArray());
+                PerFrameBuffer.Bind(1);
             }
 
             glDrawArraysInstanced(VertexTopologies::Triangles, 0, _vertices->Count(), 1);
-            //glDrawArraysInstanced(VertexTopologies::Triangles, 0, 3, 1);
-            //glDrawArrays(VertexTopologies::Triangles, 0, 3);
         }
+
+        void GPU::Update()
+        {
+            PerFrameBuffer.Update();
+        }
+
+
+
+        /** GENERAL UTILITIES **/
+        string GPU::Report() const
+        {
+            return ReportErrors();
+        }
+
 
 
         /** PRIVATE UTILITIES **/
         void GPU::RestoreRenderingDefaults()
         {
+            PerFrame data =
+            {
+                (_projection * _view).ToArray(),
+                Vector3::One,
+                0,
+            };
+
+            PerFrameBuffer.Set(0, data);
+
             if (_renderWindow)
                 glViewport(0, 0, _renderWindow->RenderArea().Width, _renderWindow->RenderArea().Height);
+
             glActiveTexture(GL_TEXTURE0);
         }
-        string GPU::ReportRendererStatus() const
+        string GPU::ReportErrors() const
         {
             glFinish();
             GLenum status = glGetError();
