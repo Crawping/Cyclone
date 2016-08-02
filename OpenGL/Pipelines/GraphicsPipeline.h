@@ -36,8 +36,10 @@ namespace Cyclone
 
                 /** BINDING METHODS **/
                 /// <summary> Activates this rendering pipeline and any stored uniform variables for immediate use on the GPU. </summary>
+                /// <param name="slot"> A parameter of the <see cref="IBindable"/> interface that has no effects here. </param>
 		        OpenGLAPI void Bind(int slot = 0)       const override;
 		        /// <summary> Activates this rendering pipeline for immediate use on the GPU. </summary>
+                /// <param name="slot"> A parameter of the <see cref="IBindable"/> interface that has no effects here. </param>
 		        OpenGLAPI void BindEntity(int slot = 0) const override;
 		        /// <summary> Activates any stored uniform shader variables for immediate use on the GPU. </summary>
                 void BindResources()                    const override { }
@@ -50,19 +52,8 @@ namespace Cyclone
 
 
 
-                /** RENDERING UTILITIES **/
-                OpenGLAPI virtual void Execute()        = 0;
-                OpenGLAPI virtual void Reset()          = 0;
-
             protected:
-
-                Shader*     FragmentShader;
-                Shader*     GeometryShader;
-                Shader*     TessellationShader;
-                Shader*     VertexShader;
-
-
-
+            
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new OpenGL shader pipeline to which individual shader programs can be attached. </summary>
 		        OpenGLAPI GraphicsPipeline();
@@ -70,6 +61,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                /// <summary> Combines separate shader programs into a single executable pipeline and validates the results. </summary>
+                /// <returns> A Boolean <c>true</c> if linking is successful, or <c>false</c> otherwise. </returns>
+                OpenGLAPI virtual bool Link();
                 /// <summary> Retrieves error information that was logged while attempting to link shader programs. </summary>
                 OpenGLAPI virtual string ReportShaderLog() const;
 

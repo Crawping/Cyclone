@@ -22,82 +22,33 @@ namespace Cyclone
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
         ShaderPipeline::ShaderPipeline(const string& vsSource, const string& psSource) :
-            Topology(VertexTopologies::Triangles),
-            Vertices(Geometry::Quad)
+            FragmentShader(new Shader(psSource, ShaderTypes::PixelShader)),
+            GeometryShader(nullptr),
+            TessellationShader(nullptr),
+            VertexShader(new Shader(vsSource, ShaderTypes::VertexShader))
         {
-            CompileShaders(vsSource, psSource);
+            Link();
         }
         ShaderPipeline::~ShaderPipeline()
         {
-
+            if (VertexShader)       { delete VertexShader; }
+            if (TessellationShader) { delete TessellationShader; }
+            if (GeometryShader)     { delete GeometryShader; }
+            if (FragmentShader)     { delete FragmentShader; }
         }
 
 
 
-        /** PRIVATE UTILITIES **/
-        /// <summary> Compiles individual shader programs and links them together to form a rendering pipeline. </summary>
-        void ShaderPipeline::CompileShaders(const string& vsSource, const string& psSource)
+        /** PROTECTED UTILITIES **/
+        bool ShaderPipeline::Link()
         {
-            // Compile the individual shader programs
-            VertexShader = new Shader(vsSource, ShaderTypes::VertexShader);
-            FragmentShader = new Shader(psSource, ShaderTypes::PixelShader);
+            if (FragmentShader)         { glAttachShader(ID(), FragmentShader->ID()); }
+            if (GeometryShader)         { glAttachShader(ID(), GeometryShader->ID()); }
+            if (TessellationShader)     { glAttachShader(ID(), TessellationShader->ID()); }
+            if (VertexShader)           { glAttachShader(ID(), VertexShader->ID()); }
 
-            // Link the shader programs
-            glAttachShader(ID(), VertexShader->ID());
-            glAttachShader(ID(), FragmentShader->ID());
-
-            // Check for errors during shader compilation & linking
-            GLint successful = 0;
-            glLinkProgram(ID());
-            glGetProgramiv(ID(), GL_LINK_STATUS, &successful);
-            if (!successful)
-            {
-                Console::WriteLine("Failed to link the shader pipeline programs.");
-                Console::WriteLine(ReportShaderLog());
-            }
-
-            glValidateProgram(ID());
-            glGetProgramiv(ID(), GL_VALIDATE_STATUS, &successful);
-            if (!successful)
-            {
-                Console::WriteLine("Failed to validate the shader pipeline.");
-                Console::WriteLine(ReportShaderLog());
-            }
+            return GraphicsPipeline::Link();
         }
-
-        void ShaderPipeline::UpdateResources()
-        {
-
-        }
-
-
-
-        /** BINDING METHODS **/
-        void ShaderPipeline::BindResources()        const
-        {
-	        //Vertices.Bind();
-            GraphicsPipeline::BindResources();
-        }
-        void ShaderPipeline::UnbindResources()      const
-        {
-            GraphicsPipeline::UnbindResources();
-            //Vertices.Unbind();
-        }
-
-
-
-        /** PIPELINE UTILITIES **/
-        void ShaderPipeline::Execute()
-        {
-            UpdateResources();
-            //glDrawArraysInstanced(Topology, 0, Vertices.Count(), PerEntityBuffer.Count());
-            //glDrawArraysInstanced(Topology, 0, Vertices.Count(), 1);
-            //glDrawArrays(Topology, 0, Vertices.Count());
-        }
-        void ShaderPipeline::Reset()
-        {
-	        //Topology = VertexTopologies::Triangles;
-	        //Vertices.Clear();
-        }
+        
     }
 }

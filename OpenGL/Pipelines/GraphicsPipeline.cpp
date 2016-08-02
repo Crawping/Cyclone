@@ -9,11 +9,7 @@ namespace Cyclone
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
         GraphicsPipeline::GraphicsPipeline() :
-            _id(0),
-            FragmentShader(nullptr),
-            GeometryShader(nullptr),
-            TessellationShader(nullptr),
-            VertexShader(nullptr)
+            _id(0)
         {
             _id = glCreateProgram();
             if (!_id)
@@ -21,10 +17,7 @@ namespace Cyclone
         }
         GraphicsPipeline::~GraphicsPipeline()
         {
-            if (VertexShader)       { delete VertexShader; }
-            if (TessellationShader) { delete TessellationShader; }
-            if (GeometryShader)     { delete GeometryShader; }
-            if (FragmentShader)     { delete FragmentShader; }
+
             if (_id) { glDeleteProgram(_id); }
         }
 
@@ -54,6 +47,30 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
+        bool GraphicsPipeline::Link()
+        {
+            // Link the shader programs
+            glLinkProgram(ID());
+
+            // Check for errors during shader compilation & linking
+            int successful = 0;
+            glGetProgramiv(ID(), GL_LINK_STATUS, &successful);
+            if (!successful)
+            {
+                Console::WriteLine("Failed to link the shader pipeline programs.");
+                Console::WriteLine(ReportShaderLog());
+            }
+
+            glValidateProgram(ID());
+            glGetProgramiv(ID(), GL_VALIDATE_STATUS, &successful);
+            if (!successful)
+            {
+                Console::WriteLine("Failed to validate the shader pipeline.");
+                Console::WriteLine(ReportShaderLog());
+            }
+
+            return successful;
+        }
         string GraphicsPipeline::ReportShaderLog()  const
         {
             string msg;
@@ -67,5 +84,6 @@ namespace Cyclone
 
             return msg;
         }
+        
     }
 }
