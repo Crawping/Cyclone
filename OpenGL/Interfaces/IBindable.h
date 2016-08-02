@@ -11,14 +11,14 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        /* IBINDABLE - An interface used to specify the behavior of any entity that is bindable to a GPU rendering pipeline. */
+        /// <summary> An interface used to specify the behavior of any entity that is bindable as a GPU resource. </summary>
         class OpenGLAPI IBindable
         {
             public:
                 using uint = unsigned int;
 
                 /** PROPERTIES **/
-                /* ID - Gets the unique numeric identifier for this entity on the GPU. */
+                /// <summary> Gets the unique numeric identifier for this entity on the GPU. </summary>
                 virtual uint ID()                       const = 0;
 
 
@@ -29,18 +29,18 @@ namespace Cyclone
 
 
                 /** BINDING UTILITIES **/
-                /* BIND - Summarily attaches this entity and its associated resources to the rendering pipeline. */
+                /// <summary> Summarily attaches this entity and its associated resources to the rendering pipeline. </summary>
                 virtual void Bind(int slot = 0)         const = 0;
-                /* BINDENTITY - Attaches this entity to the rendering pipeline. */
+                /// <summary> Attaches this entity to the rendering pipeline. </summary>
                 virtual void BindEntity(int slot = 0)   const = 0;
-                /* BINDRESOURCES - Attaches any resources associated with this entity to the rendering pipeline. */
+                /// <summary> Attaches any resources associated with this entity to the rendering pipeline. </summary>
                 virtual void BindResources()            const = 0;
 
-                /* UNBIND - Summarily detaches this entity and its associated resources from the rendering pipeline. */
+                /// <summary> Summarily detaches this entity and its associated resources from the rendering pipeline. </summary>
                 virtual void Unbind()                   const = 0;
-                /* UNBINDENTITY - Detaches this entity from the rendering pipeline. */
+                /// <summary> Detaches this entity from the rendering pipeline. </summary>
                 virtual void UnbindEntity()             const = 0;
-                /* UNBINDRESOURCES - Detaches any resources associated with this entity from the rendering pipeline. */
+                /// <summary> Detaches any resources associated with this entity from the rendering pipeline. </summary>
                 virtual void UnbindResources()          const = 0;
 
         };
