@@ -51,19 +51,25 @@ namespace Cyclone
 
 
                 /** RENDERING UTILITIES **/
-                OpenGLAPI virtual void Execute()                              = 0;
-                OpenGLAPI virtual void Reset()                                = 0;
-		
+                OpenGLAPI virtual void Execute()        = 0;
+                OpenGLAPI virtual void Reset()          = 0;
+
             protected:
 
-                Shader*     VertexShader;
                 Shader*     FragmentShader;
+                Shader*     GeometryShader;
+                Shader*     TessellationShader;
+                Shader*     VertexShader;
+
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new OpenGL shader pipeline to which individual shader programs can be attached. </summary>
 		        OpenGLAPI GraphicsPipeline();
-        
+
+
+
+                /** UTILITIES **/
                 /// <summary> Retrieves error information that was logged while attempting to link shader programs. </summary>
                 OpenGLAPI virtual string ReportShaderLog() const;
 

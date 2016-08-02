@@ -10,8 +10,10 @@ namespace Cyclone
         /** CONSTRUCTORS & DESTRUCTOR **/
         GraphicsPipeline::GraphicsPipeline() :
             _id(0),
-            VertexShader(nullptr),
-            FragmentShader(nullptr)
+            FragmentShader(nullptr),
+            GeometryShader(nullptr),
+            TessellationShader(nullptr),
+            VertexShader(nullptr)
         {
             _id = glCreateProgram();
             if (!_id)
@@ -19,8 +21,10 @@ namespace Cyclone
         }
         GraphicsPipeline::~GraphicsPipeline()
         {
-            if (VertexShader)   { delete VertexShader; }
-            if (FragmentShader) { delete FragmentShader; }
+            if (VertexShader)       { delete VertexShader; }
+            if (TessellationShader) { delete TessellationShader; }
+            if (GeometryShader)     { delete GeometryShader; }
+            if (FragmentShader)     { delete FragmentShader; }
             if (_id) { glDeleteProgram(_id); }
         }
 
