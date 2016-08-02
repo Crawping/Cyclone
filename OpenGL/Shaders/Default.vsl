@@ -3,31 +3,22 @@
  */
 
 #version 450 core
-//#include "Default.hsl"
-
-
+#include "Default.hsl"
 
 layout(location = 0) in vec3 Position;
 layout(location = 1) in vec2 UV;
-//out vec2    TexUV;
 
-uniform mat4 ViewProjection;
-
-const vec4 vertices[] = vec4[]
-(
-    vec4( 0.25, -0.25, 0.125, 1.0),
-    vec4(-0.25, -0.25, 0.125, 1.0),
-    vec4( 0.25,  0.25, 0.125, 1.0)
-);
+out int     EntityIndex;
+out vec2    TexUV;
+out vec3    VertexPosition;
 
 
 
 void main(void)
 {
-    //EntityIndex = gl_InstanceID;
-    //TexUV = UV;
+    EntityIndex = gl_InstanceID;
+    TexUV = UV;
+    VertexPosition = Position;
 
-    gl_Position = vertices[gl_VertexID];
-
-    //gl_Position = ViewProjection * PerEntityData[gl_InstanceID].World * vec4(Position, 1.0);
+    gl_Position = PerFrameData[0].ViewProjection * PerEntityData[gl_InstanceID].World * vec4(Position, 1.0);
 }
