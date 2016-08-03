@@ -45,5 +45,11 @@ namespace Cyclone
 
         };
 
+
+        struct OpenGLAPI GraphicsBinding
+        {
+            const IBindable&    Entity;
+            int                 Index;
+        };
     }
 }
