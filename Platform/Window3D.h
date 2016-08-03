@@ -20,11 +20,17 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the pixel size and position of this window (including borders) on the display. </summary>
                 const Area& DisplayArea()   const { return _displayArea; }
+                /// <summary> Gets the height of this window (including borders) in pixels. </summary>
                 uint Height()               const { return (uint)_displayArea.Height; }
+                /// <summary> Gets whether this window has any borders or decorations surrounding it. </summary>
                 bool IsBordered()           const { return _isBordered; }
+                /// <summary> Gets the pixel size and position of this window (excluding borders) on the display. </summary>
                 const Area& RenderArea()    const { return _renderArea; }
+                /// <summary> Gets the size of this window (including borders) in pixels. </summary>
                 Vector2 Size()              const { return _displayArea.Scale(); }
+                /// <summary> Gets the width of this window (including borders) in pixels. </summary>
                 uint Width()                const { return (uint)_displayArea.Width; }
 
 
