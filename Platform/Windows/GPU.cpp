@@ -4,6 +4,7 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Buffers/VertexBuffer.h"
+#include "Interfaces/IBindable.h"
 #include "Interfaces/IRenderable.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Primitives/Scene3D.h"
@@ -17,6 +18,7 @@ namespace Cyclone
 
     namespace Platform
     {
+
         /** PROPERTIES **/
         void GPU::Projection(const Transform& projection)
         {
@@ -28,11 +30,11 @@ namespace Cyclone
             if (_renderPipeline)
                 _renderPipeline->Bind();
         }
-        void GPU::RenderTarget(FrameBuffer* framebuffer)
+        void GPU::RenderTarget(FrameBuffer* framebuffer, int slot)
         {
             _renderTarget = framebuffer;
             if (_renderTarget)
-                _renderTarget->Bind();
+                _renderTarget->Bind(slot);
         }
         void GPU::RenderWindow(Window3D* window)
         {
@@ -40,16 +42,17 @@ namespace Cyclone
             if (_renderWindow)
                 _renderWindow->Bind();
         }
-        void GPU::Vertices(VertexBuffer* vertices)
+        void GPU::Vertices(VertexBuffer* vertices, int slot)
         {
             _vertices = vertices;
             if (_vertices)
-                _vertices->Bind();
+                _vertices->Bind(slot);
         }
         void GPU::View(const Transform& view)
         {
             _view = view;
         }
+
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
@@ -62,7 +65,6 @@ namespace Cyclone
         {
 
         }
-
         GPU::~GPU()
         {
 
@@ -79,12 +81,10 @@ namespace Cyclone
             else
                 glClearBufferfv(GL_COLOR, 0, color.ToArray());
         }
-
-        void GPU::Input(const Scene3D& scene)
+        void GPU::Input(const Scene3D& scene, int slot)
         {
-            scene.Bind();
+            scene.Bind(slot);
         }
-
         void GPU::Present()
         {
             if (!_renderWindow) { return; }
@@ -94,7 +94,6 @@ namespace Cyclone
 
             _renderWindow->Present();
         }
-
         void GPU::Render()
         {
             if (_renderPipeline)
@@ -104,7 +103,6 @@ namespace Cyclone
 
             glDrawArraysInstanced(VertexTopologies::Triangles, 0, _vertices->Count(), 1);
         }
-
         void GPU::Update()
         {
             PerFrameBuffer.Update();
