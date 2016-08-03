@@ -42,7 +42,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                /// <summary> Constructs an empty framebuffer object. </summary>
+                /// <summary> Constructs an empty framebuffer object with no attachments. </summary>
                 OpenGLAPI FrameBuffer();
                 /// <summary> Constructs a new framebuffer object that can be used to render images. </summary>
                 /// <param name="size">
@@ -118,22 +118,34 @@ namespace Cyclone
 
 
                 /** BINDING UTILITIES **/
-                /// <summary> Attaches this framebuffer and its associated resources to the GPU. </summary>
+                /// <summary> Summarily attaches this framebuffer and its associated resources to the GPU. </summary>
+                /// <param name="slot"> A parameter of the <see cref="IBindable"/> interface that has no effects here. </param>
                 OpenGLAPI void Bind(int slot = 0)       const override;
-
+                /// <summary> Attaches this framebuffer object to the GPU. </summary>
+                /// <param name="slot"> A parameter of the <see cref="IBindable"/> interface that has no effects here. </param>
                 OpenGLAPI void BindEntity(int slot = 0) const override;
-
+                /// <summary> Attaches any secondary resources associated with this framebuffer to the GPU. </summary>
+                /// <remarks> This method is part of the <see cref="IBindable"/> interface but has no effects here. </remarks>
                 OpenGLAPI void BindResources()          const override { }
-                /// <summary> Detaches this framebuffer and its associated resources from the GPU. </summary>
+                /// <summary> Summarily detaches this framebuffer and its associated resources from the GPU. </summary>
                 OpenGLAPI void Unbind()                 const override;
-
+                /// <summary> Detaches this framebuffer object from the GPU. </summary>
                 OpenGLAPI void UnbindEntity()           const override;
-
+                /// <summary> Detaches any secondary resources associated with this framebuffer from the GPU. </summary>
+                /// <remarks> This method is part of the <see cref="IBindable"/> interface but has no effects here. </remarks>
                 OpenGLAPI void UnbindResources()        const override { }
 
 
 
                 /** UTILITIES **/
+                /// <summary> Copies a data subset from this framebuffer to another one. </summary>
+                /// <param name="target">
+                ///     A pointer to the target or destination framebuffer of the copy operation. If this value is <c>NULL</c> or 
+                ///     a <c>nullptr</c>, then the target will be the default framebuffer of the rendering window (i.e. the one 
+                ///     provided by the operating system).
+                /// </param>
+                /// <param name="srcArea"> The rectangular region of this framebuffer to be copied. </param>
+                /// <param name="dstArea"> The rectangular region of the target framebuffer where data will be written. </param>
                 OpenGLAPI void Blit(FrameBuffer* target, const Area& srcArea, const Area& dstArea) const;
                 /// <summary> Overwrites all data within each of the textures attached to this framebuffer. </summary>
                 OpenGLAPI void Clear(const Color4& color = Color4::White);

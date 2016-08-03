@@ -100,7 +100,6 @@ namespace Cyclone
 
             return msg.str();
         }
-
         void FrameBuffer::Unbind() const
         {
             UnbindEntity();
@@ -109,6 +108,7 @@ namespace Cyclone
         {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
+
 
 
         /** PRIVATE UTILITIES **/
