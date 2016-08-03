@@ -18,8 +18,10 @@ namespace Cyclone
         class FrameBuffer;
         class Shader;
 
+        /// <summary> An abstract base class that represents the rendering or compute pipelines used by GPUs. </summary>
         class GraphicsPipeline : public IBindable
         {
+
             public:
 
                 /** PROPERTIES **/
@@ -42,16 +44,14 @@ namespace Cyclone
                 /// <param name="slot"> A parameter of the <see cref="IBindable"/> interface that has no effects here. </param>
 		        OpenGLAPI void BindEntity(int slot = 0) const override;
 		        /// <summary> Activates any stored uniform shader variables for immediate use on the GPU. </summary>
-                void BindResources()                    const override { }
+                OpenGLAPI void BindResources()          const override { }
 		        /// <summary> Deactivates this rendering pipeline and any associated resources on the GPU. </summary>
                 OpenGLAPI void Unbind()                 const override;
 		        /// <summary> Deactivates this rendering pipeline on the GPU. </summary>
 		        OpenGLAPI void UnbindEntity()           const override;
 		        /// <summary> Deactivates any resources associated with this rendering pipeline on the GPU. </summary>
-                void UnbindResources()                  const override { }
-
-
-
+                OpenGLAPI void UnbindResources()        const override { }
+                
             protected:
             
                 /** CONSTRUCTOR **/
