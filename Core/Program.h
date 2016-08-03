@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Buffers/VertexBuffer.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -47,14 +48,14 @@ namespace Cyclone
             int             _display;
             bool            _showHelp;
 
+            Transform       Projection;
             GPU*            Renderer;
             ShaderPipeline* RenderPipeline;
             Scene3D*        RenderScene;
             FrameBuffer*    RenderTarget;
-            Window3D*       RenderWindow;            
-        
+            Window3D*       RenderWindow;
             VertexBuffer*   Vertices;
-
+            Transform       View;
             Quad*           TestQuad;
 
 

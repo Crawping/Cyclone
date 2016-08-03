@@ -11,7 +11,7 @@
 
 
 
-const static string Help = "            \n\
+const static string Help = "                        \n\
     CYCLONE - A cross-platform 3D rendering engine. \n\n";
 
 
@@ -43,31 +43,45 @@ namespace Cyclone
             Console::WriteLine("Failed to initialize the OpenGL library.");
 
         Renderer        = new GPU();
-        RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
         RenderWindow    = new Window3D(Area(0, 0, 960, 540), "Test Window");
+        RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
         RenderScene     = new Scene3D();
         RenderTarget    = new FrameBuffer(RenderWindow->RenderArea().Scale());
         Vertices        = new VertexBuffer(Geometry::Quad);
 
-        TestQuad = new Quad();        
-        TestQuad->Z(-10.0f);
-        RenderScene->Add(TestQuad);
+        Area clientArea = RenderWindow->RenderArea();
+        Projection = Transform::PerspectiveProjection
+        (
+            90,
+            clientArea.Width / clientArea.Height,
+            (clientArea.Height - 100.0f) / 2.0f,
+            (clientArea.Height + 100.0f) / 2.0f
+        );
+        View = Transform::Translation(Vector3(-clientArea.Scale() / 2.0f, -clientArea.Height / 2.0f));
+        //View.Translate(0, 0, -10);
 
+        TestQuad = new Quad();
+        TestQuad->Scale(Vector3(500, 500, 1));
+        RenderScene->Add(*TestQuad);
+        RenderScene->Update();
+
+        Renderer->Projection(Projection);
         Renderer->RenderWindow(RenderWindow);
         Renderer->RenderPipeline(RenderPipeline);
         Renderer->RenderTarget(RenderTarget);
         Renderer->Vertices(Vertices);
-        //Renderer->Input(*RenderScene);
+        Renderer->View(View);
+        Renderer->Input(*RenderScene);
     }
     Program::~Program()
     {
         if (TestQuad)           { delete TestQuad; }
         if (Vertices)           { delete Vertices; }
-        if (RenderScene)        { delete RenderScene; }
 
         if (RenderTarget)       { delete RenderTarget; }
-        if (RenderWindow)       { delete RenderWindow; }
+        if (RenderScene)        { delete RenderScene; }
         if (RenderPipeline)     { delete RenderPipeline; }
+        if (RenderWindow)       { delete RenderWindow; }
         if (Renderer)           { delete Renderer; }
 
         cglClearAPI();
@@ -84,11 +98,9 @@ namespace Cyclone
                 break;
 
             Renderer->Clear(Color4(0.5f));
-            //Console::WriteLine("1. " + Renderer->ReportRendererStatus());
+            Renderer->Update();
             Renderer->Render();
-            //Console::WriteLine("2. " + Renderer->ReportRendererStatus());
             Renderer->Present();
-            //Console::WriteLine("3. " + Renderer->ReportRendererStatus());
         }
     }
 
