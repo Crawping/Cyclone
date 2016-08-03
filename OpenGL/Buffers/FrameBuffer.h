@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Interfaces/IBindable.h"
 #include "Spatial/Area.h"
 #include "Textures/Texture2D.h"
 #include "Math/Vector2.h"
@@ -13,7 +14,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class FrameBuffer
+        class FrameBuffer : public IBindable
         {
 
             public:
@@ -116,17 +117,30 @@ namespace Cyclone
 
 
 
-                /** UTILITIES **/
+                /** BINDING UTILITIES **/
                 /// <summary> Attaches this framebuffer and its associated resources to the GPU. </summary>
-                OpenGLAPI void Bind()       const;
+                OpenGLAPI void Bind(int slot = 0)       const override;
 
+                OpenGLAPI void BindEntity(int slot = 0) const override;
+
+                OpenGLAPI void BindResources()          const override { }
+                /// <summary> Detaches this framebuffer and its associated resources from the GPU. </summary>
+                OpenGLAPI void Unbind()                 const override;
+
+                OpenGLAPI void UnbindEntity()           const override;
+
+                OpenGLAPI void UnbindResources()        const override { }
+
+
+
+                /** UTILITIES **/
                 OpenGLAPI void Blit(FrameBuffer* target, const Area& srcArea, const Area& dstArea) const;
                 /// <summary> Overwrites all data within each of the textures attached to this framebuffer. </summary>
                 OpenGLAPI void Clear(const Color4& color = Color4::White);
                 /// <summary> Generates a human-readable string detailing the current internal state of this object. </summary>
                 OpenGLAPI string Report()   const;
-                /// <summary> Detaches this framebuffer and its associated resources from the GPU. </summary>
-                OpenGLAPI void Unbind()     const;
+                
+                
 
             private:
 

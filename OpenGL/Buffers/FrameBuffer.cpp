@@ -57,7 +57,11 @@ namespace Cyclone
 
 
         /** PUBLIC UTILITIES **/
-        void FrameBuffer::Bind() const
+        void FrameBuffer::Bind(int slot) const
+        {
+            BindEntity(slot);
+        }
+        void FrameBuffer::BindEntity(int slot) const
         {
             glBindFramebuffer(GL_FRAMEBUFFER, _id);
         }
@@ -99,9 +103,12 @@ namespace Cyclone
 
         void FrameBuffer::Unbind() const
         {
+            UnbindEntity();
+        }
+        void FrameBuffer::UnbindEntity() const
+        {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
-
 
 
         /** PRIVATE UTILITIES **/
