@@ -3,12 +3,9 @@
  */
 
 #pragma once
-#include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/UniformMap.h"
 #include "GL/OpenGLAPI.h"
-#include "Primitives/Entity3D.h"
-#include "Spatial/Transform.h"
 
 
 
@@ -18,30 +15,27 @@ namespace Cyclone
     {
         class IRenderableEntity;
 
-
+        /// <summary> A 3D scene representing a collection of renderable objects. </summary>
         class Scene3D : public UniformMap<const IRenderableEntity*, PerEntity>
         {
+
             public:
-
-                const Transform& _viewProjection() const { return ViewProjection; }
-
-
+                            
+                /** CONSTRUCTOR **/
+                /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
                 OpenGLAPI Scene3D();
 
 
-                OpenGLAPI virtual void Add(const IRenderableEntity* entity);
 
-
-                OpenGLAPI void BindResources() const override;
-
-            private:
-
-                Transform Camera;
-                Transform ViewProjection;
-
-
-                UniformBuffer<PerFrame> PerSceneBuffer;
-                
+                /** UTILITIES **/
+                /// <summary> Adds a renderable entity to this scene. </summary>
+                /// <param name="entity"> 
+                ///     A reference to the renderable entity that will be added to the scene. If this entity already exists 
+                ///     within this collection (i.e. it has been added previously), then its corresponding data store will 
+                ///     be updated. Otherwise, this method generates a new entry in the scene's data collection to hold the 
+                ///     necessary rendering information for the entity.
+                /// </param>
+                OpenGLAPI virtual void Add(const IRenderableEntity& entity);
 
         };
     }
