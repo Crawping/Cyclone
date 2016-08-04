@@ -94,7 +94,7 @@ namespace Cyclone
     {        
         while (true)
         {
-            if (!RenderWindow->ProcessEvents())
+            if (!RenderWindow->ProcessEvent())
                 break;
 
             Renderer->Clear(Color4(0.5f));
