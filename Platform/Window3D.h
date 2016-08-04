@@ -15,6 +15,7 @@ namespace Cyclone
 
     namespace Platform
     {
+        /// <summary> A class that represents a native operating system window and whose client area can be used for 3D rendering. </summary>
         class Window3D
         {
             public:
@@ -36,13 +37,22 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
+                /// <summary> Constructs a new 3D rendering window occupying a specified area of the computer display. </summary>
+                /// <param name="displayArea"> The desired pixel position and size of the window on the desktop. </param>
+                /// <param name="title"> The desired title of the window to be displayed on the border. </param>
                 PlatformAPI Window3D(const Area& displayArea, const string& title);
                 PlatformAPI ~Window3D();
 
 
 
                 /** PUBLIC UTILITIES **/
-                PlatformAPI bool ProcessEvents();
+                /// <summary> Pulls the next event from the window's event queue and processes it. </summary>
+                /// <returns> A Boolean <c>true</c> if event processing can continue, or <c>false</c> otherwise. </returns>
+                /// <remarks>
+                ///     This method essentially performs a single iteration of an event loop (or, as it's referred to on the Windows 
+                ///     platform, a 'message pump'). 
+                /// </remarks>
+                PlatformAPI bool ProcessEvent();
 
 
 
@@ -135,7 +145,6 @@ namespace Cyclone
                 ///     another rendering window means that any further drawing outputs will be lost and not shown on-screen.
                 /// </remarks>
                 InternalAPI void Unbind()               const;
-
 
             private:
                 struct          _window3D;

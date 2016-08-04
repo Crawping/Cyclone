@@ -145,7 +145,7 @@ namespace Cyclone
 
 
 
-        bool Window3D::ProcessEvents()
+        bool Window3D::ProcessEvent()
         {
             MSG msg;
             if (PeekMessage(&msg, Internals->ID, 0, 0, PM_REMOVE))
