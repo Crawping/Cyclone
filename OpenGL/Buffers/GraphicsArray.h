@@ -32,13 +32,17 @@ namespace Cyclone
                 {
                     if (IsEmpty()) { return; }
                     Data.clear();
-                    NeedsUpdate(true);
+                    GraphicsBuffer::Clear();
                 }
+                /// <summary> Appends a data element to the end of the buffer array. </summary>
+                /// <param name="data"> A reference to the data element that will be added to the buffer. </param>
                 virtual void Add(const T& data)
                 {
                     Data.push_back(data);
                     NeedsUpdate(true);
-                }    
+                }
+                /// <summary> Removes the data element at a specific array index from the GPU buffer. </summary>
+                /// <param name="index"> The array index of the data element to be removed from the buffer. </param>
                 virtual void Remove(uint index)
                 {
                     if (index >= Count()) { return; }
@@ -102,8 +106,12 @@ namespace Cyclone
             protected:
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs an empty one-dimensional data buffer whose data can be accessed on the GPU. </summary>
+                /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
 		        GraphicsArray(BufferTypes type) : GraphicsBuffer(type) { }
-                
+                /// <summary> Constructs a one-dimensional data buffer of a specified size whose data can accessed on the GPU. </summary>
+                /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
+                /// <param name="length"> The desired number of data elements to stored within the buffer. </param>
 		        GraphicsArray(BufferTypes type, uint length) : 
                     GraphicsBuffer(type),
                     Data(length)

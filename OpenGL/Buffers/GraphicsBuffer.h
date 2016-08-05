@@ -96,9 +96,9 @@ namespace Cyclone
                 /// <summary> Constructs a new data buffer on the GPU for use in shader pipelines. </summary>
                 /// <param name="type"> A type enumerator defining the purpose of this buffer. </param>
                 OpenGLAPI GraphicsBuffer(BufferTypes type) :
+                    _gpuCount(0),
                     _id(0),
                     _type(type),
-                    _reallocateFlag(false),
                     _updateFlag(false)
                 {
                     Create();
@@ -138,7 +138,6 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 uint        _gpuCount;
                 uint        _id;
-                bool        _reallocateFlag;
                 BufferTypes _type;
                 bool        _updateFlag;
                 
