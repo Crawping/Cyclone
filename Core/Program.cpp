@@ -61,7 +61,7 @@ namespace Cyclone
         //View.Translate(0, 0, -10);
 
         TestQuad = new Quad();
-        TestQuad->Scale(Vector3(500, 500, 1));
+        TestQuad->Scale(Vector3(500, 500, 1)).Color(Color4::Cyan);
         RenderScene->Add(*TestQuad);
         RenderScene->Update();
 

@@ -10,6 +10,7 @@
 
 namespace Cyclone
 {
+    /** FORWARD DECLARATIONS **/
     namespace OpenGL
     {
         class FrameBuffer;
