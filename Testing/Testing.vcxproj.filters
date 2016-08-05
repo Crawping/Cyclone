@@ -20,6 +20,9 @@
     <ClCompile Include="Matrix4x4.cpp">
       <Filter>Utilities\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
@@ -30,6 +33,9 @@
     </Filter>
     <Filter Include="Utilities\Math">
       <UniqueIdentifier>{bb931cc1-19c6-46a2-a920-4c5a0b2c8915}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{8682127e-f8e2-430f-86ef-37a4cc9d99f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
