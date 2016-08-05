@@ -7,21 +7,13 @@
 
 in vec2         TexUV;
 in vec3         VertexPosition;
-//flat in float   Depth;
 flat in int     EntityIndex;
 
 out vec4 OutputColor;
-
-//uniform bool HasTexture;
-//uniform vec4 BaseColor;
 
 
 
 void main(void)
 {
-    //OutputColor = texture(PerEntityData[EntityIndex].Texture, TexUV);
-    //OutputColor.a = 1.0;
-    //OutputColor = vec4(0, 0.75, 1.0, 1.0);
-    OutputColor = vec4(VertexPosition, 1.0);
-    //OutputColor = PerEntityData[EntityIndex].Color;
+    OutputColor = PerEntityData[EntityIndex].Color;
 }
