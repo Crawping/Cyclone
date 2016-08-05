@@ -50,14 +50,14 @@ namespace Cyclone
                 virtual Entity3D& Width(float x)                                  { _world.ScaleX(x); return *this; }
 
 		        /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
-                virtual Vector3 Position()                                  const { return _world.Position(); }
+                virtual const Vector3& Position()                           const { return _world.Position(); }
 		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
                 virtual Entity3D& Position(const Vector3& p)                      { _world.Position(p); return *this; }
 		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
                 virtual Entity3D& Position(float x, float y, float z = 0.0f)      { _world.Position(x, y, z); return *this; }
 
 		        /// <summary> Gets the size of the entity in 3D space. </summary>
-                virtual Vector3 Scale() const                                     { return _world.Scale(); }
+                virtual const Vector3& Scale() const                              { return _world.Scale(); }
 		        /// <summary> Sets the size of the entity in 3D space. </summary>
                 virtual Entity3D& Scale(const Vector3& s)                         { _world.Scale(s); return *this; }
 		        /// <summary> Sets the size of the entity in 3D space. </summary>
