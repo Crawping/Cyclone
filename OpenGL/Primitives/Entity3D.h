@@ -82,6 +82,9 @@ namespace Cyclone
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                    const override { return true; }
 
+                /// <summary> Sets the base color of the entity. </summary>
+                virtual Entity3D& Color(const Color4& color)                { _color = color; return *this; }
+
 
 
                 /** DESTRUCTOR **/
