@@ -22,7 +22,7 @@ namespace Cyclone
             _updateFlag(false)
         {
 
-        }
+        }        
         Transform::Transform(const Transform& other) :
             _position(other._position),
             _rotation(other._rotation),

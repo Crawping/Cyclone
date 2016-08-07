@@ -15,7 +15,7 @@ namespace Cyclone
     {
         struct Volume;
 
-
+        /// <summary> A data structure representing a 4x4 transformation matrix used to translate, scale, and rotate entities in 3D space. </summary>
         struct Transform
         {
             public:
@@ -68,17 +68,18 @@ namespace Cyclone
                 /// <summary> Constructs a default transformation data structure representing a 4x4 identity matrix. </summary>
                 UtilitiesAPI Transform();
                 /// <summary> Constructs a new transformation data structure that is a deep copy of another one. </summary>
+                /// <param name="other"> An existing transformation object whose contents are to be copied. </param>
                 UtilitiesAPI Transform(const Transform& other);
                 /// <summary> Constructs a transformation data structure by copying an existing 4x4 transformation matrix. </summary>
                 UtilitiesAPI Transform(const float* m);
                 /// <summary> Constructs a transformation matrix representing translation, rotation, and scaling in 3D space. </summary>
-                /// <param name="position"> A three-element vector containing the desired translations along the X, Y, and Z axes. </param>
+                /// <param name="position"> A three-element vector containing the desired translations along the (x, y, z) axes. </param>
                 /// <param name="size">
-                ///     A three-element vector containing the desired scaling along the X, Y, and Z axes.
+                ///     A three-element vector containing the desired scaling along the (x, y, z) axes.
                 ///     DEFAULT: Vector3(1.0f, 1.0f, 1.0f)
                 /// </param>
                 /// <param name="rotation">
-                ///     A three-element vector containing the desired rotations about the X, Y, and Z axes.
+                ///     A three-element vector containing the desired rotations about the (x, y, z) axes.
                 ///     DEFAULT: Vector3(0.0f, 0.0f, 0.0f)
                 /// </param>
                 /// <returns>
@@ -89,7 +90,7 @@ namespace Cyclone
 
 
 
-                /** STATIC CONSTRUCTORS **/               
+                /** STATIC CONSTRUCTORS **/
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
                 /// <param name="displayVolume"> The rectangular prism defining the volume of camera space that is visible on the screen. </param>
                 /// <returns>
@@ -114,7 +115,13 @@ namespace Cyclone
                 ///     This transform assumes that the view-space follows a right-handed coordinate system.
                 /// </returns>
                 UtilitiesAPI static Transform PerspectiveProjection(float fov, float aspect, float znear, float zfar);
+                /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
+                /// <param name="angles"> A three-element vector representing the desired (pitch, yaw, roll) rotations of the transform in degrees. </param>
                 UtilitiesAPI static Transform Rotation(const Vector3& angles);
+                /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
+                /// <param name="roll"> The desired amount of roll (i.e. rotation about the z-axis) in units of degrees. </param>
+                /// <param name="yaw"> The desired amount of yaw (i.e. rotation about the y-axis) in units of degrees. </param>
+                /// <param name="pitch"> The desired amount of pitch (i.e. rotation about the x-axis) in units of degrees. </param>
                 UtilitiesAPI static Transform Rotation(float roll, float pitch, float yaw);
                 UtilitiesAPI static Transform Scaling(const Vector3& size);
                 UtilitiesAPI static Transform Scaling(float x, float y, float z);
@@ -136,7 +143,11 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                /// <summary> Determines whether one transformation is equivalent to another. </summary>
+                /// <returns> A Boolean <c>true</c> if the both transformations are identical, or <c>false</c> otherwise. </returns>
                 UtilitiesAPI bool operator ==(const Transform& other)        const;
+                /// <summary> Determines whether one transformation is not equivalent to another. </summary>
+                /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
                 UtilitiesAPI bool operator !=(const Transform& other)        const { return !(*this == other); }
 
 
@@ -158,10 +169,10 @@ namespace Cyclone
 
 
                 /** PRIVATE DATA **/
-                /// <summary> A 4x4 affine transformation matrix representing translation and scaling operations. </summary>
+                /// <summary> A 4x4 affine transformation matrix representing translation, scaling, and rotation operations. </summary>
                 /// <remarks>
-                ///     This matrix is a combination of translation and scaling parameters that represents the current state of a
-                ///     linear transformation. It is meant to be interpretted as a typical 4x4 transformation matrix, but is actually
+                ///     This matrix is a combination of translation, scaling, and rotation parameters that represents the current state 
+                ///     of a linear transformation. It is meant to be interpretted as a typical 4x4 transformation matrix, but is actually
                 ///     stored and addressed as a flattened vector of values (in column-major format).
                 /// </remarks>
                 mutable Matrix4x4 State;
