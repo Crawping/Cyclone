@@ -3,6 +3,7 @@
  */
 
 #version 450 core
+#extension GL_ARB_shader_draw_parameters : require
 #include "Default.hsl"
 
 layout(location = 0) in vec3 Position;
@@ -20,5 +21,5 @@ void main(void)
     TexUV = UV;
     VertexPosition = Position;
 
-    gl_Position = PerFrameData[0].ViewProjection * PerEntityData[gl_InstanceID].World * vec4(Position, 1.0);
+    gl_Position = PerFrameData[0].ViewProjection * PerEntityData[gl_DrawIDARB].World * vec4(Position, 1.0);
 }
