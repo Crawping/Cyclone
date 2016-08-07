@@ -101,7 +101,7 @@ namespace Cyclone
                 PerFrameBuffer.Bind(1);
             }
 
-            glDrawArraysInstanced(VertexTopologies::Triangles, 0, _vertices->Count(), 1);
+            glMultiDrawArraysIndirect(VertexTopologies::Triangles, 0, 1, 0);
         }
         void GPU::Update()
         {
