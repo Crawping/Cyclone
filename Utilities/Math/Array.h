@@ -31,21 +31,21 @@ namespace Cyclone
 		        {
 
 		        }
-
+                /// <summary> Constructs an array by copying the contents of another array object. </summary>
 		        Array(const Array<T>& other) :
 			        _count(other.Count()),
 			        Data(new T[other.Count()])
 		        {
 			        std::memcpy(Data, other.Data, Count() * sizeof(T));
 		        }
-
+                /// <summary> Constructs an array by transferring the contents of another array object. </summary>
 		        Array(Array<T>&& other) :
 			        _count(other.Count()),
 			        Data(other.Data)
 		        {
 			        other.Data = nullptr;
 		        }
-
+                /// <summary> Constructs an array by copying values contained in an initializer list. </summary>
 		        Array(std::initializer_list<T> values) :
 			        _count(values.size()),
 			        Data(new T[values.size()])
@@ -54,7 +54,7 @@ namespace Cyclone
 			        for (const T& v : values)
 				        Data[idx++] = v;
 		        }
-
+                /// <summary> Destroys the underlying native storage for this array. </summary>
 		        ~Array() 
 		        { 
 			        if (Data) 
@@ -64,13 +64,16 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                /// <summary> Sets each element of the array to a single uniform value. </summary>
+                /// <returns> A reference to the modified array for chaining together operations. </returns>
+                /// <param name="value"> The value to which each element of the array should be set. </param>
                 Array& Fill(const T& value)
                 {
                     for (int a = 0; a < Count(); a++)
                         Data[a] = value;
                     return *this;
                 }
-
+                /// <summary> Gets a pointer to the underlying native storage for the array. </summary>
                 const T* ToArray() const { return Data; }
 
 
