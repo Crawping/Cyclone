@@ -3,9 +3,12 @@
  */
 
 #pragma once
+#include "Buffers/CommandBuffer.h"
+#include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
-#include "Buffers/UniformMap.h"
+#include "Buffers/VertexBuffer.h"
 #include "GL/OpenGLAPI.h"
+#include <map>
 
 
 
@@ -16,7 +19,7 @@ namespace Cyclone
         class IRenderableEntity;
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
-        class Scene3D : public UniformMap<const IRenderableEntity*, PerEntity>
+        class Scene3D
         {
 
             public:
@@ -35,8 +38,18 @@ namespace Cyclone
                 ///     be updated. Otherwise, this method generates a new entry in the scene's data collection to hold the 
                 ///     necessary rendering information for the entity.
                 /// </param>
-                OpenGLAPI virtual void Add(const IRenderableEntity& entity);
+                OpenGLAPI void Add(const IRenderableEntity& entity);
 
+                OpenGLAPI void Update();
+
+                OpenGLAPI void Bind(int slot = 0) const;
+
+            private:
+                CommandBuffer               Commands;
+                UniformBuffer<PerEntity>    Entities;
+                VertexBuffer                Vertices;
+                
+                std::map<const IRenderableEntity*, uint> EntityIndices;
         };
     }
 }

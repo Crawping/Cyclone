@@ -1,6 +1,6 @@
 #include "Interfaces/IRenderable.h"
-#include "Primitives/Entity3D.h"
 #include "Primitives/Scene3D.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -26,7 +26,33 @@ namespace Cyclone
                 entity.Color(),
             };
 
-            Set(&entity, data);
+            Array<Vertex> vertices = entity.Vertices();
+            DrawCommand command =
+            {
+                vertices.Count(),
+                1,
+                Vertices.Count(),
+                Commands.Count(),
+            };
+
+            EntityIndices[&entity] = Entities.Count();
+            Entities.Add(data);
+            Commands.Add(command);
+            
+            for (uint a = 0; a < vertices.Count(); a++)
+                Vertices.Add(vertices(a));
+        }
+        void Scene3D::Bind(int slot) const
+        {
+            Vertices.Bind();
+            Commands.Bind();
+            Entities.Bind();
+        }
+        void Scene3D::Update()
+        {
+            Commands.Update();
+            Entities.Update();
+            Vertices.Update();
         }
 
     }
