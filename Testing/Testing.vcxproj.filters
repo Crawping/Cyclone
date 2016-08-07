@@ -23,6 +23,9 @@
     <ClCompile Include="Event.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Utilities\Spatial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
@@ -36,6 +39,9 @@
     </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{8682127e-f8e2-430f-86ef-37a4cc9d99f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Spatial">
+      <UniqueIdentifier>{f7bce296-ebd2-40ab-b384-cd57384330fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
