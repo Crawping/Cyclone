@@ -33,13 +33,6 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-		        /// <summary> Attaches this buffer and its resources to the active vertex shader on the GPU. </summary>
-		        /// <remarks>
-		        ///     This method is an efficient shortcut that calls both <see cref="BindEntity"/> and <see cref="BindResources"/> in 
-		        ///     order to fully attach a vertex buffer to the GPU shader program. This is usually what should be called when dealing 
-		        ///     with vertex buffers.
-		        /// </remarks>
-		        OpenGLAPI void Bind(int slot = 0)         const override;
 		        /// <summary> Attaches this buffer to the active vertex shader on the GPU. </summary>
 		        /// <remarks>
 		        ///	    This method binds the vertex array object (VAO) to the GPU, but does not enable any of the vertex attributes
@@ -54,8 +47,6 @@ namespace Cyclone
                 ///     <see cref="Bind"/> method.
                 /// </remarks>
 		        OpenGLAPI void BindResources()            const override;
-		        /// <summary> Detaches this buffer and its resources from the GPU rendering pipeline. </summary>
-		        OpenGLAPI void Unbind()                   const override;
                 /// <summary> Detaches this buffer from the active vertex shader on the GPU. </summary>
 		        OpenGLAPI void UnbindEntity()             const override;
                 /// <summary> Detaches any secondary resources associated with this buffer from the GPU. </summary>

@@ -43,12 +43,6 @@ namespace Cyclone
 
 
         /** BINDING UTILITIES **/
-        void VertexBuffer::Bind(int slot)       const
-        {
-            if (IsEmpty()) { return; }
-            BindEntity(slot);
-            BindResources();
-        }
         void VertexBuffer::BindEntity(int slot) const
         {            
             glBindVertexArray(VAOID);
@@ -57,11 +51,6 @@ namespace Cyclone
         {
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
-        }
-        void VertexBuffer::Unbind()             const
-        {
-            UnbindResources();
-            UnbindEntity();
         }
         void VertexBuffer::UnbindEntity()       const
         {
