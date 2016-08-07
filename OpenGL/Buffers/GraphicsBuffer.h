@@ -58,15 +58,15 @@ namespace Cyclone
                         Console::WriteLine("WARNING: The buffer being bound has updates queued but not yet applied.");
 
                     if (IsEmpty()) { return; }
-                    BindResources();
                     BindEntity(slot);
+                    BindResources();
                 }
 		        /// <summary> Attaches this buffer to the rendering pipeline at the designated resource slot. </summary>
                 OpenGLAPI void BindEntity(int slot = 0) const override;
 		        /// <summary> Attaches any resources associated with this buffer to the rendering pipeline. </summary>
 		        void BindResources()                    const override { }
 		        /// <summary> Summarily detaches this buffer and any associated resources from the rendering pipeline. </summary>
-                OpenGLAPI void Unbind()                 const override { UnbindEntity(); UnbindResources(); }
+                OpenGLAPI void Unbind()                 const override { UnbindResources(); UnbindEntity(); }
 		        /// <summary> Detaches this buffer from the rendering pipeline. */
                 OpenGLAPI void UnbindEntity()           const override;
 		        /// <summary> Detaches any resources associated with this buffer from the rendering pipeline. </summary>
