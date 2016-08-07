@@ -1,4 +1,4 @@
-#include "VertexBuffer.h"
+#include "Buffers/VertexBuffer.h"
 
 
 
@@ -7,6 +7,11 @@ namespace Cyclone
     namespace OpenGL
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
+        VertexBuffer::VertexBuffer() :
+            VertexBuffer(0, nullptr)
+        {
+
+        }
         VertexBuffer::VertexBuffer(const Array<Vertex>& vertices) : 
             VertexBuffer(vertices.Count(), vertices.ToArray())	        
         {
@@ -18,20 +23,6 @@ namespace Cyclone
         {
 	        for (uint a = 0; a < n; a++)
 		        Set(a, vertices[a]);
-
-            glCreateVertexArrays(1, &VAOID);
-            BindEntity();
-                glVertexArrayAttribBinding(VAOID, 0, 0);
-                glVertexArrayAttribFormat(VAOID, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Position));
-                glEnableVertexArrayAttrib(VAOID, 0);
-
-                glVertexArrayAttribBinding(VAOID, 1, 0);
-                glVertexArrayAttribFormat(VAOID, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, UV));
-                glEnableVertexArrayAttrib(VAOID, 1);
-
-                glVertexArrayVertexBuffer(VAOID, 0, ID(), 0, Stride());
-            UnbindEntity();
-
             Update();
         }
         VertexBuffer::~VertexBuffer()
@@ -60,6 +51,36 @@ namespace Cyclone
         {
             glDisableVertexAttribArray(0);
             glDisableVertexAttribArray(1);
+        }
+
+
+
+        /** PROTECTED UTILITIES **/
+        void VertexBuffer::Create()
+        {
+            GraphicsArray<Vertex>::Create();
+            glCreateVertexArrays(1, &VAOID);
+
+            BindEntity();
+                glVertexArrayAttribBinding(VAOID, 0, 0);
+                glVertexArrayAttribFormat(VAOID, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Position));
+                glEnableVertexArrayAttrib(VAOID, 0);
+
+                glVertexArrayAttribBinding(VAOID, 1, 0);
+                glVertexArrayAttribFormat(VAOID, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, UV));
+                glEnableVertexArrayAttrib(VAOID, 1);
+
+                glVertexArrayVertexBuffer(VAOID, 0, ID(), 0, Stride());
+            UnbindEntity();
+        }
+        void VertexBuffer::Destroy()
+        {
+            if (VAOID)
+            {
+                glDeleteVertexArrays(1, &VAOID);
+                VAOID = 0;
+            }
+            GraphicsArray<Vertex>::Destroy();
         }
     }
 }
