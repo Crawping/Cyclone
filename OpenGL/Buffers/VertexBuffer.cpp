@@ -61,17 +61,15 @@ namespace Cyclone
             GraphicsArray<Vertex>::Create();
             glCreateVertexArrays(1, &VAOID);
 
-            BindEntity();
-                glVertexArrayAttribBinding(VAOID, 0, 0);
-                glVertexArrayAttribFormat(VAOID, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Position));
-                glEnableVertexArrayAttrib(VAOID, 0);
+            glVertexArrayAttribBinding(VAOID, 0, 0);
+            glVertexArrayAttribFormat(VAOID, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Position));
+            glEnableVertexArrayAttrib(VAOID, 0);
 
-                glVertexArrayAttribBinding(VAOID, 1, 0);
-                glVertexArrayAttribFormat(VAOID, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, UV));
-                glEnableVertexArrayAttrib(VAOID, 1);
+            glVertexArrayAttribBinding(VAOID, 1, 0);
+            glVertexArrayAttribFormat(VAOID, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, UV));
+            glEnableVertexArrayAttrib(VAOID, 1);
 
-                glVertexArrayVertexBuffer(VAOID, 0, ID(), 0, Stride());
-            UnbindEntity();
+            glVertexArrayVertexBuffer(VAOID, 0, ID(), 0, Stride());
         }
         void VertexBuffer::Destroy()
         {
