@@ -50,6 +50,8 @@ namespace Cyclone
                 PlatformAPI void RenderTarget(FrameBuffer* framebuffer, int slot = 0);
                 /// <summary> Sets the window that will be used to display the images in the render target. </summary>
                 PlatformAPI void RenderWindow(Window3D* window);
+
+                PlatformAPI void Scene(Scene3D* scene, int slot = 0);
                 /// <summary> Sets the vertex buffer that will be used by the GPU shader pipeline to render geometry. </summary>
                 PlatformAPI void Vertices(VertexBuffer* vertices, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
@@ -68,7 +70,6 @@ namespace Cyclone
                 /// <remarks> This method should be among the first called within the rendering loop. </remarks>
                 PlatformAPI void Clear(const Color4& color);
 
-                PlatformAPI void Input(const Scene3D& scene, int slot = 0);
                 /// <summary> Swaps the front and back rendering buffers, displaying the contents of the backbuffer to the user. </summary>
                 /// <remarks>
                 ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often
@@ -111,6 +112,7 @@ namespace Cyclone
                 GraphicsPipeline*           _renderPipeline;
                 FrameBuffer*                _renderTarget;
                 Window3D*                   _renderWindow;
+                Scene3D*                    _renderScene;
                 VertexBuffer*               _vertices;
                 Transform                   _view;
 

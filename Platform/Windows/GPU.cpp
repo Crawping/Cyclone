@@ -42,6 +42,12 @@ namespace Cyclone
             if (_renderWindow)
                 _renderWindow->Bind();
         }
+        void GPU::Scene(Scene3D* scene, int slot)
+        {
+            _renderScene = scene;
+            if (_renderScene)
+                _renderScene->Bind(slot);
+        }
         void GPU::Vertices(VertexBuffer* vertices, int slot)
         {
             _vertices = vertices;
@@ -61,6 +67,7 @@ namespace Cyclone
             _renderPipeline(nullptr),
             _renderTarget(nullptr),
             _renderWindow(nullptr),
+            _renderScene(nullptr),
             _vertices(nullptr)
         {
 
@@ -81,10 +88,6 @@ namespace Cyclone
             else
                 glClearBufferfv(GL_COLOR, 0, color.ToArray());
         }
-        void GPU::Input(const Scene3D& scene, int slot)
-        {
-            scene.Bind(slot);
-        }
         void GPU::Present()
         {
             if (!_renderWindow) { return; }
@@ -96,16 +99,19 @@ namespace Cyclone
         }
         void GPU::Render()
         {
-            if (_renderPipeline)
-            {
-                PerFrameBuffer.Bind(1);
-            }
+            uint numDraws = 1;
+            if (_renderScene)
+                numDraws = _renderScene->Count();
 
-            glMultiDrawArraysIndirect(VertexTopologies::Triangles, 0, 1, 0);
+            glMultiDrawArraysIndirect(VertexTopologies::Triangles, 0, numDraws, 0);
         }
         void GPU::Update()
         {
             PerFrameBuffer.Update();
+            PerFrameBuffer.Bind(1);
+
+            if (_renderScene)
+                _renderScene->Update();
         }
 
 
