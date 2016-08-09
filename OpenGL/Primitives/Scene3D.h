@@ -9,6 +9,7 @@
 #include "Buffers/VertexBuffer.h"
 #include "GL/OpenGLAPI.h"
 #include <map>
+#include <set>
 
 
 
@@ -23,6 +24,9 @@ namespace Cyclone
         {
 
             public:
+
+                uint Count() const { return Entities.Count(); }
+
                             
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
@@ -41,15 +45,24 @@ namespace Cyclone
                 OpenGLAPI void Add(const IRenderableEntity& entity);
 
                 OpenGLAPI void Update();
-
+                OpenGLAPI void Remove(const IRenderableEntity& entity);
                 OpenGLAPI void Bind(int slot = 0) const;
 
             private:
+                bool                        NeedsUpdate;
+
                 CommandBuffer               Commands;
                 UniformBuffer<PerEntity>    Entities;
                 VertexBuffer                Vertices;
                 
-                std::map<const IRenderableEntity*, uint> EntityIndices;
+                std::set<const IRenderableEntity*> EntitySet;
+                
+
+
+                /** PRIVATE UTILITIES **/
+                void AddCommand(const IRenderableEntity& entity);
+                void AddEntity(const IRenderableEntity& entity);
+                void AddVertices(const IRenderableEntity& entity);
         };
     }
 }
