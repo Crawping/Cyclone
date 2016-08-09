@@ -34,8 +34,7 @@ namespace Cyclone
         RenderTarget(nullptr),
         RenderWindow(nullptr),
         RenderPipeline(nullptr),
-        TestQuad(nullptr),
-        Vertices(nullptr)
+        TestQuad(nullptr)
     {
         ParseInputArguments(nargs, args);
     
@@ -47,7 +46,6 @@ namespace Cyclone
         RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
         RenderScene     = new Scene3D();
         RenderTarget    = new FrameBuffer(RenderWindow->RenderArea().Scale());
-        Vertices        = new VertexBuffer(Geometry::Quad);
 
         Area clientArea = RenderWindow->RenderArea();
         Projection = Transform::PerspectiveProjection
@@ -69,14 +67,12 @@ namespace Cyclone
         Renderer->RenderWindow(RenderWindow);
         Renderer->RenderPipeline(RenderPipeline);
         Renderer->RenderTarget(RenderTarget);
-        Renderer->Vertices(Vertices);
+        Renderer->Scene(RenderScene);
         Renderer->View(View);
-        Renderer->Input(*RenderScene);
     }
     Program::~Program()
     {
         if (TestQuad)           { delete TestQuad; }
-        if (Vertices)           { delete Vertices; }
 
         if (RenderTarget)       { delete RenderTarget; }
         if (RenderScene)        { delete RenderScene; }

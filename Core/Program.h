@@ -55,7 +55,6 @@ namespace Cyclone
             Scene3D*        RenderScene;
             FrameBuffer*    RenderTarget;
             Window3D*       RenderWindow;
-            VertexBuffer*   Vertices;
             Transform       View;
             Quad*           TestQuad;
 
