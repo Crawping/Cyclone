@@ -20,7 +20,7 @@ namespace Cyclone
 
             public:
 
-                /** PROPERTIES **/
+                /** POSITION PROPERTIES **/
                 /// <summary> Gets the position of the entity along the world x-axis. </summary>
                 virtual float X()                                           const { return _world.X(); }
 		        /// <summary> Gets the position of the entity along the world y-axis. </summary>
@@ -35,6 +35,19 @@ namespace Cyclone
 		        /// <summary> Sets the position of the entity along the world z-axis. </summary>
                 virtual Entity3D& Z(float z)                                      { _world.Z(z); return *this; }
 
+
+
+                /** ROTATION PROPERTIES **/
+
+                virtual float Pitch()                                       const { return _world.Pitch(); }
+                virtual float Roll()                                        const { return _world.Roll(); }
+                virtual float Yaw()                                         const { return _world.Yaw(); }
+
+                virtual Entity3D& Pitch(float p)                                  { _world.Pitch(p); return *this; }
+                virtual Entity3D& Roll(float r)                                   { _world.Roll(r); return *this; }
+                virtual Entity3D& Yaw(float y)                                    { _world.Yaw(y); return *this; }
+
+                /** SCALING PROPERTIES **/
 		        /// <summary> Gets the size of the entity along the z-axis. </summary>
                 virtual float Depth()                                       const { return _world.ScaleZ(); }
 		        /// <summary> Gets the size of the entity along the y-axis. </summary>
