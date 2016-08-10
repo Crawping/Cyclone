@@ -107,7 +107,7 @@ namespace Cyclone
 
             return r;
         }
-        Transform Transform::Rotation(float roll, float pitch, float yaw)
+        Transform Transform::Rotation(float pitch, float yaw, float roll)
         {
             return Rotation(Vector3(pitch, yaw, roll));
         }

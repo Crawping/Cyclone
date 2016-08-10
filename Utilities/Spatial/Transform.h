@@ -128,10 +128,10 @@ namespace Cyclone
                 /// <param name="angles"> A three-element vector representing the desired (pitch, yaw, roll) rotations of the transform in degrees. </param>
                 UtilitiesAPI static Transform Rotation(const Vector3& angles);
                 /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
-                /// <param name="roll"> The desired amount of roll (i.e. rotation about the z-axis) in units of degrees. </param>
-                /// <param name="yaw"> The desired amount of yaw (i.e. rotation about the y-axis) in units of degrees. </param>
                 /// <param name="pitch"> The desired amount of pitch (i.e. rotation about the x-axis) in units of degrees. </param>
-                UtilitiesAPI static Transform Rotation(float roll, float pitch, float yaw);
+                /// <param name="yaw"> The desired amount of yaw (i.e. rotation about the y-axis) in units of degrees. </param>
+                /// <param name="roll"> The desired amount of roll (i.e. rotation about the z-axis) in units of degrees. </param>
+                UtilitiesAPI static Transform Rotation(float pitch, float yaw, float roll);
                 UtilitiesAPI static Transform Scaling(const Vector3& size);
                 UtilitiesAPI static Transform Scaling(float x, float y, float z);
                 UtilitiesAPI static Transform Translation(const Vector3& position);
