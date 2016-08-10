@@ -14,6 +14,7 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
+        class Mesh3D;
         class Quad;
         class Scene3D;
         class ShaderPipeline;
@@ -57,6 +58,9 @@ namespace Cyclone
             Window3D*       RenderWindow;
             Transform       View;
             Quad*           TestQuad;
+
+            Mesh3D*         TestShape;
+
 
 
             /** UTILITIES **/

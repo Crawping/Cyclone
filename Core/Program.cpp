@@ -6,7 +6,8 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Pipelines/ShaderPipeline.h"
-#include "Primitives/Quad.h"
+#include "Primitives/Mesh3D.h"
+#include "Primitives/Quad3D.h"
 #include "Primitives/Scene3D.h"
 
 
@@ -34,7 +35,8 @@ namespace Cyclone
         RenderTarget(nullptr),
         RenderWindow(nullptr),
         RenderPipeline(nullptr),
-        TestQuad(nullptr)
+        TestQuad(nullptr),
+        TestShape(nullptr)
     {
         ParseInputArguments(nargs, args);
     
@@ -58,9 +60,12 @@ namespace Cyclone
         View = Transform::Translation(Vector3(-clientArea.Scale() / 2.0f, -clientArea.Height / 2.0f));
         //View.Translate(0, 0, -10);
 
-        TestQuad = new Quad();
-        TestQuad->Scale(Vector3(500, 500, 1)).Color(Color4::Cyan);
-        RenderScene->Add(*TestQuad);
+        //TestQuad = new Quad();
+        //TestQuad->Scale(Vector3(500, 500, 1)).Color(Color4::Cyan);
+        //RenderScene->Add(*TestQuad);
+        TestShape = new Mesh3D(Geometry::Cube);
+        TestShape->Scale(Vector3(25, 25, 25)).Translate(250, 250, -10);
+        RenderScene->Add(*TestShape);
         RenderScene->Update();
 
         Renderer->Projection(Projection);
@@ -72,6 +77,7 @@ namespace Cyclone
     }
     Program::~Program()
     {
+        if (TestShape)          { delete TestShape; }
         if (TestQuad)           { delete TestQuad; }
 
         if (RenderTarget)       { delete RenderTarget; }
@@ -87,16 +93,22 @@ namespace Cyclone
 
     /** UTILITIES **/
     void Program::Execute()
-    {        
+    {  
+        float yaw = 0;
         while (true)
         {
             if (!RenderWindow->ProcessEvent())
                 break;
 
+            TestShape->Pitch(yaw);
+            RenderScene->Add(*TestShape);
+
             Renderer->Clear(Color4(0.5f));
             Renderer->Update();
             Renderer->Render();
             Renderer->Present();
+
+            yaw += 0.01f;
         }
     }
 
