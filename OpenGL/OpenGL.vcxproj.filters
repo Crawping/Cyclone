@@ -48,9 +48,6 @@
     <ClInclude Include="Primitives\Point3D.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives\Quad.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
     <ClInclude Include="Primitives\Scene3D.h">
       <Filter>Primitives</Filter>
     </ClInclude>
@@ -71,6 +68,15 @@
     </ClInclude>
     <ClInclude Include="Buffers\CommandBuffer.h">
       <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Mesh3D.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Line3D.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Quad3D.h">
+      <Filter>Primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
