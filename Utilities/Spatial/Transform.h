@@ -63,6 +63,15 @@ namespace Cyclone
                 Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
 
 
+                float Pitch()                                   const { return _rotation.X; }
+                float Roll()                                    const { return _rotation.Z; }
+                float Yaw()                                     const { return _rotation.Y; }
+
+                Transform& Pitch(float p)                             { UpdateFlag(_rotation.X != p); _rotation.X = p; return *this; }
+                Transform& Roll(float r)                              { UpdateFlag(_rotation.Z != r); _rotation.Z = r; return *this; }
+                Transform& Yaw(float y)                               { UpdateFlag(_rotation.Y != y); _rotation.Y = y; return *this; }
+
+
 
                 /** CONSTRUCTORS **/
                 /// <summary> Constructs a default transformation data structure representing a 4x4 identity matrix. </summary>
@@ -94,24 +103,24 @@ namespace Cyclone
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
                 /// <param name="displayVolume"> The rectangular prism defining the volume of camera space that is visible on the screen. </param>
                 /// <returns>
-                ///     A new transformation matrix that can be used to convert camera or view space coordinates into clip space. 
+                ///     A new transformation matrix that can be used to convert camera or view space coordinates into clip space.
                 ///     This transform assumes that the view-space follows a right-handed coordinate system.
                 /// </returns>
                 UtilitiesAPI static Transform PerspectiveProjection(const Volume& displayVolume);
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
                 /// <param name="fov">
-                ///     The vertical field of view, which is the angle (in degrees, not radians, here) subtended by the height of 
+                ///     The vertical field of view, which is the angle (in degrees, not radians, here) subtended by the height of
                 ///     the visible rendering space.
                 /// </param>
                 /// <param name="aspect">
-                ///     The aspect ratio of the visible rendering space. This should be the value (WIDTH / HEIGHT), where WIDTH is 
-                ///     the horizontal size of the space and HEIGHT is its vertical size. Units are irrelevant as long as they're 
+                ///     The aspect ratio of the visible rendering space. This should be the value (WIDTH / HEIGHT), where WIDTH is
+                ///     the horizontal size of the space and HEIGHT is its vertical size. Units are irrelevant as long as they're
                 ///     consistent.
                 /// </param>
                 /// <param name="znear"> The desired position of the clipping plane closest to the camera in view-space. </param>
                 /// <param name="zfar"> The desired position of the clipping plane furthest from the camera in view-space. </param>
                 /// <returns>
-                ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space. 
+                ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
                 ///     This transform assumes that the view-space follows a right-handed coordinate system.
                 /// </returns>
                 UtilitiesAPI static Transform PerspectiveProjection(float fov, float aspect, float znear, float zfar);
@@ -171,7 +180,7 @@ namespace Cyclone
                 /** PRIVATE DATA **/
                 /// <summary> A 4x4 affine transformation matrix representing translation, scaling, and rotation operations. </summary>
                 /// <remarks>
-                ///     This matrix is a combination of translation, scaling, and rotation parameters that represents the current state 
+                ///     This matrix is a combination of translation, scaling, and rotation parameters that represents the current state
                 ///     of a linear transformation. It is meant to be interpretted as a typical 4x4 transformation matrix, but is actually
                 ///     stored and addressed as a flattened vector of values (in column-major format).
                 /// </remarks>
