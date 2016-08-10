@@ -3,10 +3,6 @@
  */
 
 #pragma once
-/* CHANGELOG
- * Written by Josh Grooms on 20160706
- */
-
 #include "Primitives/Entity3D.h"
 #include "Spatial/Geometry.h"
 
@@ -16,12 +12,12 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Quad : public Entity3D
+        class Quad3D : public Entity3D
         {
 
             public:
                 /** CONSTRUCTOR **/
-                Quad() : Entity3D(Geometry::Quad) { }
+                Quad3D() : Entity3D(Geometry::Quad) { }
 
         };
     }
