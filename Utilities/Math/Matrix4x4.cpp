@@ -50,6 +50,12 @@ namespace Cyclone
         {
             memcpy(Data, other, sizeof(Data));
         }
+        Matrix4x4::Matrix4x4(std::initializer_list<float> values)
+        {
+            int idx = 0;
+            for (float v : values)
+                Data[idx++] = v;
+        }
 
 
 

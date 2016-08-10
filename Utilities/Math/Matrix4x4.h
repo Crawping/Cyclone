@@ -61,7 +61,9 @@ namespace Cyclone
                 ///     point values copied from the inputted matrix <paramref name="other"/>. 
                 /// </returns>
                 Matrix4x4(const Matrix4x4& other);
-
+                /// <summary> Constructs a new 4x4 matrix by copying the elements of an initializer list. </summary>
+                /// <param name="values"> A flattened list of numbers in column-major ordering. </param>
+                Matrix4x4(std::initializer_list<float> values);
 
 
                 /** UTILITIES **/
