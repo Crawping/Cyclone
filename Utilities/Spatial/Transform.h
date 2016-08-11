@@ -142,6 +142,8 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI string Report() const;
+
+                Transform& Rotate(const Vector3& angles)                           { _rotation += angles; return *this; }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
                 UtilitiesAPI const float* ToArray()                          const { UpdateState(); return State.ToArray(); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
