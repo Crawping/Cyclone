@@ -55,6 +55,7 @@ class _Matrix4x4 : public ::testing::Test
 
 
 
+/** CONSTRUCTOR TESTS **/
 TEST_F(_Matrix4x4, DefaultConstruction)
 {
     ASSERT_EQ(_m0.Count(), 16);
@@ -74,6 +75,9 @@ TEST_F(_Matrix4x4, CopyConstruction)
     ASSERT_NE(_m2, _m2Copy + 5.0f);
 }
 
+
+
+/** OPERATOR TESTS **/
 TEST_F(_Matrix4x4, EqualityOperators)
 {
     ASSERT_EQ(_m0, _m1);
