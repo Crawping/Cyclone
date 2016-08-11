@@ -36,21 +36,21 @@ namespace Cyclone
             /** PROPERTIES **/
             /// <summary> Gets the y-axis coordinate of the area's bottom edge. </summary>
             /// <remarks> Note that this is equivalent to getting the Y coordinate of the area directly. </remarks>
-            float Bottom()                  const { return Y; }
+            constexpr float Bottom()        const { return Y; }
             /// <summary> Gets the x-axis coordinate of the area's left edge. </summary>
             /// <remarks> Note that this is equivalent to getting the X coordinate of the area directly. </remarks>
-            float Left()                    const { return X; }
+            constexpr float Left()          const { return X; }
             /// <summary> Gets the x-axis coordinate of the area's right edge. </summary>
             /// <remarks> The right edge of the area is calculated by adding the width of the area to its left edge coordinate. </remarks>
-            float Right()                   const { return X + Width; }
+            constexpr float Right()         const { return X + Width; }
             /// <summary> Gets the y-axis coordinate of the area's top edge. </summary>
             /// <remarks> The top edge of the area is calculated by adding the height of the area to its bottom edge coordinate. </remarks>
-            float Top()                     const { return Y + Height; }
+            constexpr float Top()           const { return Y + Height; }
 
             /// <summary> Gets the (x, y) coordinates for the lower-left corner of the rectangular area. </summary>
-            Vector2 Position()              const { return Vector2(X, Y); }
+            constexpr Vector2 Position()    const { return Vector2(X, Y); }
             /// <summary> Gets the width and height of the rectangular area. </summary>
-            Vector2 Scale()                 const { return Vector2(Width, Height); }
+            constexpr Vector2 Scale()       const { return Vector2(Width, Height); }
 
             /// <summary> Sets the y-axis coordinate of the area's bottom edge. </summary>
             /// <remarks>
@@ -94,20 +94,20 @@ namespace Cyclone
 
             /** CONSTRUCTORS **/
             /// <summary> Constructs a default data structure describing a rectangle located at the origin and with zero area. </summary>
-            Area();
+            constexpr Area();
             /// <summary> Constructs an area data structure with a designated position and size. </summary>
-            Area(float x, float y, float width, float height);
+            constexpr Area(float x, float y, float width, float height);
 
 
 
             /** UTILITIES **/
-            /// <summary> Determines whether or not another area fits inside of this one. </summary>
+            /// <summary> Determines whether another area fits inside of this one. </summary>
             /// <param name="other">
             ///     A reference to the Area structure whose region will be tested to fit within an area 'A'.
             /// </param>
             /// <returns>
-            ///     A Boolean indicating whether or not the area in 'A' contains the area in 'other'. 
-            ///     <para> </para>
+            ///     A Boolean indicating whether or not the area in 'A' contains the area in 'other'.
+            ///     <para>ï¿½</para>
             ///     If 'other' lies within a larger area 'A', then a Boolean true is returned. Otherwise, <para/>
             ///     this method returns false. Edge coordinates that are equal to one another across the <para/>
             ///     two area structures are considered contained.
@@ -118,13 +118,15 @@ namespace Cyclone
             ///     contains a smaller or equivalently sized area(the input argument 'other').In contrast to the related method
             ///     'Surrounds', two equivalent areas here are considered contained and thus pass the inspection.
             /// </remarks>
-            bool Contains(const Area& other) const;
-
-            bool Contains(const Vector2& point) const;
+            constexpr bool Contains(const Area& other)      const;
+            /// <summary> Determines whether a particular point lies within this area. </summary>
+            /// <param name="point"> A two-element vector containing the (x, y) coordinates of the point to be tested. </param>
+            /// <returns> A Boolean <c>true</c> if the point lies within or on the border of the area, or <c>false</c> otherwise. </returns>
+            constexpr bool Contains(const Vector2& point)   const;
             /// <summary> Contrains an area such that its edge coordinates lie on or within another area. </summary>
             /// <param name="keep">
-            ///     A reference to the smaller area that will be used to resize the larger 'A' one. 
-            ///     <para> </para>
+            ///     A reference to the smaller area that will be used to resize the larger 'A' one.
+            ///     <para>ï¿½</para>
             ///     As a typical example, this could be a small rectangular area within 'A' that should <para/>
             ///     be kept, while the rest of the surrounding region in 'A' should be cropped away, rather <para/>
             ///     like the cropping of an image.
@@ -142,8 +144,8 @@ namespace Cyclone
             Area& Crop(const Area& keep);
             /// <summary> Flips the rectangular area about one of its two dimensions. </summary>
             /// <param name="dim">
-            ///     An unsigned integer specifying the dimension across which the rectangle will be flipped. 
-            ///     <para> </para>
+            ///     An unsigned integer specifying the dimension across which the rectangle will be flipped.
+            ///     <para>ï¿½</para>
             ///     By default, areas are flipped across the first dimension(i.e.the x - axis), resulting in the left and right edge
             ///     coordinates being swapped with one another.
             ///     DEFAULT: 1
@@ -158,20 +160,20 @@ namespace Cyclone
             ///     flipped is controlled by the 'dim' argument that defaults to flipping the area vertically(i.e.the top and
             ///     bottom edge coordinates are swapped).Flipping always occurs x - or y - axis - aligned midlines within the rectangular
             ///     area; performing flips across arbitrary axes is not supported.
-            /// </remarks>            
+            /// </remarks>
             Area& Flip(uint dim);
             /// <summary> Determines whether or not two separate areas share any overlapping regions. </summary>
-            bool Intersects(Area other) const;
+            bool Intersects(Area other)                     const;
             /// <summary> Determines whether or not this region has a total area of zero. </summary>
-            bool IsEmpty() const                { return (Width == 0) || (Height == 0); }
+            constexpr bool IsEmpty()                        const { return (Width == 0) || (Height == 0); }
             /// <summary> Determines whether or not this region represents a positive, non-zero area. </summary>
-            bool IsPositive() const             { return (Width > 0) && (Height > 0); }
+            constexpr bool IsPositive()                     const { return (Width > 0) && (Height > 0); }
 
             Area& Normalize();
             /// <summary> Corrects the area position to reflect the true lower-left corner of the rectangle. </summary>
             Area& Rectify();
             /// <summary> Returns a formatted string that describes the boundaries of this rectangular area. </summary>
-            string Report() const;
+            string Report()                                 const;
             /// <summary>
             ///     Determines whether or not another area fits inside of this one without overlapping their edges.
             /// </summary>
@@ -187,19 +189,19 @@ namespace Cyclone
             ///     surrounds a smaller area(the input argument 'other').Unlike the related method 'Contains', two equivalent areas
             ///     are not considered to surround one another and thus fail the inspection.
             /// </remarks>
-            bool Surrounds(const Area& other) const;
+            constexpr bool Surrounds(const Area& other)     const;
             /// <summary> Sets the position of the lower left area corner relative to its current location. </summary>
-            Area& Translate(Vector2 t)          { X += t.X; Y += t.Y; return *this; }
+            Area& Translate(Vector2 t)                            { X += t.X; Y += t.Y; return *this; }
             /// <summary> Sets the position of the lower left area corner relative to its current location. </summary>
-            Area& Translate(float x, float y)   { X += x; Y += y; return *this; }
+            Area& Translate(float x, float y)                     { X += x; Y += y; return *this; }
             /// <summary> Combines two separate areas into a single one that fully contains both of them. </summary>
             Area& Union(const Area& other);
 
 
 
             /** OPERATORS **/
-            bool operator ==(const Area& other) const;
-            bool operator !=(const Area& other) const { return !(*this == other); }
+            constexpr bool operator ==(const Area& other)   const;
+            constexpr bool operator !=(const Area& other)   const { return !(*this == other); }
 
         };
     }

@@ -16,13 +16,13 @@ namespace Cyclone
     namespace Utilities
     {
         /** CONSTANT DATA **/
-        const Area Area::Empty = Area();
-        const Area Area::Unit = Area(0.0f, 0.0f, 1.0f, 1.0f);
+        const Area Area::Empty  = Area(0.0f, 0.0f, 0.0f, 0.0f);
+        const Area Area::Unit   = Area(0.0f, 0.0f, 1.0f, 1.0f);
 
 
 
         /** CONSTRUCTORS **/
-        Area::Area() :
+        constexpr Area::Area() :
             X(0),
             Y(0),
             Width(0),
@@ -30,7 +30,7 @@ namespace Cyclone
         {
 
         }
-        Area::Area(float x, float y, float width, float height) :
+        constexpr Area::Area(float x, float y, float width, float height) :
             X(x),
             Y(y),
             Width(width),
@@ -42,12 +42,12 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        bool Area::Contains(const Area& other) const
+        constexpr bool Area::Contains(const Area& other) const
         {
             return ( Left() <= other.Left() && Right() >= other.Right() ) &&
                    ( Bottom() <= other.Bottom() && Top() >= other.Top() );
         }
-        bool Area::Contains(const Vector2& point) const
+        constexpr bool Area::Contains(const Vector2& point) const
         {
             return ( Left() <= point.X && Right() >= point.X ) &&
                    ( Bottom() <= point.Y && Top() >= point.Y );
@@ -126,7 +126,7 @@ namespace Cyclone
             }
             return *this;
         }
-        bool Area::Surrounds(const Area &other) const
+        constexpr bool Area::Surrounds(const Area &other) const
         {
             return ( Left() < other.Left() && Right() > other.Right() ) &&
                    ( Bottom() < other.Bottom() && Top() > other.Top() );
@@ -145,7 +145,7 @@ namespace Cyclone
 
 
         /** OPERATORS **/
-        bool Area::operator ==(const Area& other) const
+        constexpr bool Area::operator ==(const Area& other) const
         {
             return X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
         }
