@@ -26,6 +26,9 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Utilities\Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="Area.cpp">
+      <Filter>Utilities\Spatial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
