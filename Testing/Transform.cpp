@@ -110,11 +110,6 @@ TEST_F(_Transform, DefaultConstruction)
         ASSERT_EQ(data[a], EYE[a]);
 }
 
-//TEST_F(_Transform, CopyConstruction)
-//{
-//
-//}
-
 TEST_F(_Transform, PerspectiveProjectionConstructor)
 {
 
@@ -147,6 +142,27 @@ TEST_F(_Transform, VectorConstruction)
 {
     ASSERT_EQ(_t2.Position(), Vector3::One);
     ASSERT_EQ(_t2.Scale(), Vector3::One);
+}
+
+
+
+/** UTILITIES TESTS **/
+TEST_F(_Transform, RelativeRotation)
+{
+    Transform _t2Copy(_t2);
+    _t2Copy.Rotate(_v1).Rotate(_v1).Rotate(_v1);
+    ASSERT_FLOAT_EQ(_t2Copy.Pitch(), 3 * _v1.X + _t2.Pitch());
+    ASSERT_FLOAT_EQ(_t2Copy.Yaw(),   3 * _v1.Y + _t2.Yaw());
+    ASSERT_FLOAT_EQ(_t2Copy.Roll(),  3 * _v1.Z + _t2.Roll());
+}
+
+TEST_F(_Transform, RelativeTranslation)
+{
+    Transform _t2Copy(_t2);
+    _t2Copy.Translate(_v2).Translate(_v2).Translate(_v2);
+    ASSERT_FLOAT_EQ(_t2Copy.X(), 3 * _v2.X + _t2.X());
+    ASSERT_FLOAT_EQ(_t2Copy.Y(), 3 * _v2.Y + _t2.Y());
+    ASSERT_FLOAT_EQ(_t2Copy.Z(), 3 * _v2.Z + _t2.Z());
 }
 
 
