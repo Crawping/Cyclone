@@ -3,9 +3,11 @@
  */
 
 #pragma once
-#include <gtest/gtest.h>
+#include "Utilities.h"
 #include "Math/Vector4.h"
 #include "Spatial/Area.h"
+#include <gtest/gtest.h>
+#include <cmath>
 
 using namespace Cyclone::Utilities;
 
@@ -57,6 +59,17 @@ TEST_F(_Area, ObjectConstruction)
 
 
 
+/** PROPERTY TESTS **/
+TEST_F(_Area, Properties)
+{
+    ASSERT_EQ(_a2.Bottom(), _v1.Y);
+    ASSERT_EQ(_a2.Left(),   _v1.X);
+    ASSERT_EQ(_a2.Right(),  _v1.X + _v1.Z);
+    ASSERT_EQ(_a2.Top(),    _v1.Y + _v1.W);
+}
+
+
+
 /** UTILITY TESTS **/
 TEST_F(_Area, AreaContainment)
 {
@@ -76,6 +89,27 @@ TEST_F(_Area, PointContainment)
     ASSERT_FALSE(_a3.Contains(_p1));
 }
 
+TEST_F(_Area, Cropping)
+{
+    _a2.Crop(_a3);
+    ASSERT_EQ(_a2.Left(),   fmaxf(_a2.Left(), _a3.Left()));
+    ASSERT_EQ(_a2.Bottom(), fmaxf(_a2.Bottom(), _a3.Bottom()));
+    ASSERT_EQ(_a2.Right(),  fminf(_a2.Right(), _a3.Right()));
+    ASSERT_EQ(_a2.Top(),    fminf(_a2.Top(), _a3.Top()));
+}
+
+TEST_F(_Area, Flipping)
+{
+    Area _a2Copy = Area(_a2).Flip(1);
+    ASSERT_FLOAT_EQ(_a2Copy.Left(),     _a2.Right());
+    ASSERT_FLOAT_EQ(_a2Copy.Right(),    _a2.Left());
+    ASSERT_FLOAT_EQ(_a2Copy.Width,     -_a2.Width);
+
+    _a2Copy = Area(_a2).Flip(2);
+    ASSERT_FLOAT_EQ(_a2Copy.Bottom(),   _a2.Top());
+    ASSERT_FLOAT_EQ(_a2Copy.Top(),      _a2.Bottom());
+    ASSERT_FLOAT_EQ(_a2Copy.Height,    -_a2.Height);
+}
 
 
 /** OPERATOR TESTS **/
