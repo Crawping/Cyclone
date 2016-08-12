@@ -98,7 +98,15 @@ namespace Cyclone
             /// <summary> Constructs a default data structure describing a rectangle located at the origin and with zero area. </summary>
             constexpr Area();
             /// <summary> Constructs an area data structure with a designated position and size. </summary>
+            /// <param name="x"> The desired x-coordinate of the region's lower-left corner. </param>
+            /// <param name="y"> The desired y-coordinate of the region's lower-left corner. </param>
+            /// <param name="width"> The desired width of the region. </param>
+            /// <param name="height"> The desired height of the region. </param>
             constexpr Area(float x, float y, float width, float height);
+            /// <summary> Constructs an area data structure with a designated position and size. </summary>
+            /// <param name="position"> A two-element vector containing the (x, y) coordinates of the region's lower-left corner. </param>
+            /// <param name="size"> A two-element vector containing the (x, y) sizes of the region. </param>
+            constexpr Area(const Vector2& position, const Vector2& size);
 
 
 
@@ -148,7 +156,7 @@ namespace Cyclone
             /// <param name="dim">
             ///     An unsigned integer specifying the dimension across which the rectangle will be flipped.
             ///     <para>�</para>
-            ///     By default, areas are flipped across the first dimension(i.e.the x - axis), resulting in the left and right edge
+            ///     By default, areas are flipped across the first dimension(i.e. the x-axis), resulting in the left and right edge
             ///     coordinates being swapped with one another.
             ///     DEFAULT: 1
             ///     OPTIONS: 1 or 2
@@ -158,9 +166,9 @@ namespace Cyclone
             ///     multiple methods together in a single line of code operating on an Area structure.
             /// </returns>
             /// <remarks>
-            ///     This method effectively swaps the values of two opposing edges on the rectangular area.Which set of edges are
-            ///     flipped is controlled by the 'dim' argument that defaults to flipping the area vertically(i.e.the top and
-            ///     bottom edge coordinates are swapped).Flipping always occurs x - or y - axis - aligned midlines within the rectangular
+            ///     This method effectively swaps the values of two opposing edges on the rectangular area. Which set of edges are
+            ///     flipped is controlled by the 'dim' argument that defaults to flipping the area vertically (i.e. the top and
+            ///     bottom edge coordinates are swapped). Flipping always occurs x- or y-axis-aligned midlines within the rectangular
             ///     area; performing flips across arbitrary axes is not supported.
             /// </remarks>
             Area& Flip(uint dim);

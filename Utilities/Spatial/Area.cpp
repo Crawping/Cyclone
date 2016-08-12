@@ -30,6 +30,14 @@ namespace Cyclone
         {
 
         }
+        constexpr Area::Area(const Vector2& position, const Vector2& size) :
+            X(position.X),
+            Y(position.Y),
+            Width(size.X),
+            Height(size.Y)
+        {
+        
+        }
         constexpr Area::Area(float x, float y, float width, float height) :
             X(x),
             Y(y),
