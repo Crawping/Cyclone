@@ -60,10 +60,7 @@ namespace Cyclone
         View = Transform::Translation(Vector3(-clientArea.Scale() / 2.0f, -clientArea.Height / 2.0f));
         //View.Translate(0, 0, -10);
 
-        //TestQuad = new Quad();
-        //TestQuad->Scale(Vector3(500, 500, 1)).Color(Color4::Cyan);
-        //RenderScene->Add(*TestQuad);
-        TestShape = new Mesh3D(Geometry::Cube);
+        TestShape = new Mesh3D(Geometry::Cube());
         TestShape->Scale(Vector3(25, 25, 25)).Translate(250, 250, -10);
         RenderScene->Add(*TestShape);
         RenderScene->Update();
@@ -94,21 +91,18 @@ namespace Cyclone
     /** UTILITIES **/
     void Program::Execute()
     {  
-        float yaw = 0;
         while (true)
         {
             if (!RenderWindow->ProcessEvent())
                 break;
 
-            TestShape->Pitch(yaw);
+            TestShape->Rotate(Vector3(0.01f, 0.01f, 0.01f));
             RenderScene->Add(*TestShape);
 
             Renderer->Clear(Color4(0.5f));
             Renderer->Update();
             Renderer->Render();
             Renderer->Present();
-
-            yaw += 0.01f;
         }
     }
 
