@@ -17,7 +17,6 @@ namespace Cyclone
 
                 Mesh3D(const Array<Vertex> vertices) : Entity3D(vertices) { }
 
-
         };
     }
 }

@@ -17,7 +17,7 @@ namespace Cyclone
 
             public:
                 /** CONSTRUCTOR **/
-                Quad3D() : Entity3D(Geometry::Quad) { }
+                Quad3D() : Entity3D(Geometry::Quad()) { }
 
         };
     }
