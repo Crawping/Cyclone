@@ -69,6 +69,8 @@ namespace Cyclone
 		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
                 virtual Entity3D& Position(float x, float y, float z = 0.0f)      { _world.Position(x, y, z); return *this; }
 
+                virtual Entity3D& Rotate(const Vector3& r)                        { _world.Rotate(r); return *this; }
+
 		        /// <summary> Gets the size of the entity in 3D space. </summary>
                 virtual const Vector3& Scale() const                              { return _world.Scale(); }
 		        /// <summary> Sets the size of the entity in 3D space. </summary>
