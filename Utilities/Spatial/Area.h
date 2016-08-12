@@ -16,7 +16,9 @@ namespace Cyclone
         {
 
             /** CONSTANT DATA **/
+            /// <summary> A region with zero width and height at the origin (0, 0). </summary>
             const static Area Empty;
+            /// <summary> A region with unit width and height whose lower-left corner is at the origin (0, 0). </summary>
             const static Area Unit;
 
 
