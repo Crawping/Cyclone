@@ -64,7 +64,7 @@ struct BufferAccessIntents : public Flag
 
 /// <summary> A list of possible types of buffers that can be created on the GPU. </summary>
 /// <remarks>
-///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which  refers to the 
+///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which refers to the 
 ///     location in GPU memory where binding occurs. However, for most applications, calling them 'types' proffers 
 ///     an easier understanding of the function that they serve.
 /// </remarks>
@@ -77,7 +77,9 @@ struct BufferTypes : public Enumerator
         AtomicCounter               = GL_ATOMIC_COUNTER_BUFFER,
         CopyRead                    = GL_COPY_READ_BUFFER,
         CopyWrite                   = GL_COPY_WRITE_BUFFER,
+        /// <summary> A buffer that holds the commands and parameters used for indirect GPU computing. </summary>
         DispatchIndirect            = GL_DISPATCH_INDIRECT_BUFFER,
+        /// <summary> A buffer that holds the commands and parameters used for indirect rendering. </summary>
         DrawIndirect                = GL_DRAW_INDIRECT_BUFFER,
         ElementArray                = GL_ELEMENT_ARRAY_BUFFER,
         PixelPack                   = GL_PIXEL_PACK_BUFFER,
@@ -88,7 +90,7 @@ struct BufferTypes : public Enumerator
         /// <summary> A buffer that is meant to hold texture data. </summary>
         Texture                     = GL_TEXTURE_BUFFER,
         TransformFeedback           = GL_TRANSFORM_FEEDBACK_BUFFER,
-        /// <summary> A buffer that holds uniform variables for usse in shader programs. </summary>
+        /// <summary> A buffer that holds uniform variables for use in shader programs. </summary>
         Uniform                     = GL_UNIFORM_BUFFER,
     };
 
@@ -144,21 +146,28 @@ struct TextureFilters : public Enumerator
     TextureFilters(enum Filters f = Linear) : Enumerator((int)f) { }
 };
 
-/// <summary> A list of supported formats in which textures can be stored on the GPU. </summary>
+/// <summary> A list of supported formats in which color buffers and textures can be stored on the GPU. </summary>
 struct TextureFormats : public Enumerator
 {
     enum Formats
     {
+        /// <summary> An 8-bit format for color buffers and textures containing one byte channel. </summary>
         Byte1                       = GL_R8,
+        /// <summary> A 16-bit RG format for color buffers and textures containing two byte channels. </summary>
         Byte2                       = GL_RG8,
+        /// <summary> A 24-bit RGB format for color buffers and textures containing three byte channels. </summary>
         Byte3                       = GL_RGB8,
+        /// <summary> A 32-bit RGBA format for color buffers and textures containing four byte channels. </summary>
         Byte4                       = GL_RGBA8,
 
+        /// <summary> A 32-bit format for depth buffers containing single-precision floating point values. </summary>
         DepthFloat                  = GL_DEPTH_COMPONENT32F,
+        /// <summary> A 32-bit format for depth buffers containing integer values. </summary>
         DepthInt                    = GL_DEPTH_COMPONENT32,
+        /// <summary> A 16-bit format for depth buffers containing half-precision floating point values. </summary>
         DepthShort                  = GL_DEPTH_COMPONENT16,
 
-        /// <summary> A 32-bit format containing one single-precision floating point channel. </summary>
+        /// <summary> A 32-bit format for color buffers and textures containing one single-precision floating point channel. </summary>
         Float1                      = GL_R32F,
         /// <summary> A 64-bit RG format containing two single-precision floating point channels. </summary>
         Float2                      = GL_RG32F,
@@ -167,9 +176,13 @@ struct TextureFormats : public Enumerator
         /// <summary> A 128-bit RGBA format containing four single-precision floating point channels. </summary>
         Float4                      = GL_RGBA32F,
 
+        /// <summary> A 32-bit format for color buffers and textures containing one signed integer channel. </summary>
         Int1                        = GL_R32I,
+        /// <summary> A 64-bit RG format for color buffers and textures containing two signed integer channels. </summary>
         Int2                        = GL_RG32I,
+        /// <summary> A 96-bit RGB format for color buffers and textures containing three signed integer channels. </summary>
         Int3                        = GL_RGB32I,
+        /// <summary> A 128-bit RGBA format for color buffers and textures containing four signed integer channels. </summary>
         Int4                        = GL_RGBA32I,
 
         Short1                      = GL_R16,
@@ -177,13 +190,13 @@ struct TextureFormats : public Enumerator
         Short3                      = GL_RGB16,
         Short4                      = GL_RGBA16,
 
-        /// <summary> A 32-bit format containing one unsigned integer channel. </summary>
+        /// <summary> A 32-bit format for color buffers and textures containing one unsigned integer channel. </summary>
         UInt1                       = GL_R32UI,
-        /// <summary> A 64-bit RG format containing two unsigned integer channels. </summary>
+        /// <summary> A 64-bit RG format for color buffers and textures containing two unsigned integer channels. </summary>
         UInt2                       = GL_RG32UI,
-        /// <summary> A 96-bit RGB format containing three unsigned integer channels. </summary>
+        /// <summary> A 96-bit RGB format for color buffers and textures containing three unsigned integer channels. </summary>
         UInt3                       = GL_RGB32UI,
-        /// <summary> A 128-bit RGBA format containing four unsigned integer channels. </summary>
+        /// <summary> A 128-bit RGBA format for color buffers and textures containing four unsigned integer channels. </summary>
         UInt4                       = GL_RGBA32UI,
     };
 
@@ -244,8 +257,11 @@ struct TextureTargets : public Enumerator
 {
     enum Targets
     {
+        /// <summary> A one-dimensional texture storage format. </summary>
         Texture1D                   = GL_TEXTURE_1D,
+        /// <summary> A two-dimensional texture storage format. </summary>
         Texture2D                   = GL_TEXTURE_2D,
+        /// <summary> A three-dimensional texture storage format. </summary>
         Texture3D                   = GL_TEXTURE_3D,
     };
 
