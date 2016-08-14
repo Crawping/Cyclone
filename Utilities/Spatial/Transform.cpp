@@ -24,8 +24,8 @@ namespace Cyclone
 
         }        
         Transform::Transform(const Transform& other) :
+            _orientation(other._orientation),
             _position(other._position),
-            _rotation(other._rotation),
             _size(other._size),
             _updateFlag(false),
             State(other.ToArray())
@@ -41,8 +41,8 @@ namespace Cyclone
 
         }
         Transform::Transform(const Vector3& position, const Vector3& size, const Vector3& angles) :
+            _orientation(angles),
             _position(position),
-            _rotation(angles),
             _size(size),
             _updateFlag(true)
         {
@@ -91,7 +91,7 @@ namespace Cyclone
             cr = (float)cos(angles.Z); cp = (float)cos(angles.X); cy = (float)cos(angles.Y);
             sr = (float)sin(angles.Z); sp = (float)sin(angles.X); sy = (float)sin(angles.Y);
 
-            r._rotation = angles;
+            r._orientation = angles;
 
             r.State[0]  = (cr * cy) + (sp * sr * sy);
             r.State[1]  = (cp * sr);
@@ -210,8 +210,8 @@ namespace Cyclone
             float cosr, cosp, cosy, sinr, sinp, siny, sx, sy, sz, x, y, z;
             sx = _size.X; sy = _size.Y; sz = _size.Z;
             x = _position.X; y = _position.Y; z = _position.Z;
-            cosr = (float)cos(_rotation.Z); cosp = (float)cos(_rotation.X); cosy = (float)cos(_rotation.Y);
-            sinr = (float)sin(_rotation.Z); sinp = (float)sin(_rotation.X); siny = (float)sin(_rotation.Y);
+            cosr = (float)cos(_orientation.Z); cosp = (float)cos(_orientation.X); cosy = (float)cos(_orientation.Y);
+            sinr = (float)sin(_orientation.Z); sinp = (float)sin(_orientation.X); siny = (float)sin(_orientation.Y);
 
             State[0]  = sx * (cosr * cosy - sinp * sinr * siny);
             State[4]  = (-cosp * sinr * sy);

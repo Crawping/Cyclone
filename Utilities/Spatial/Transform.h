@@ -19,7 +19,7 @@ namespace Cyclone
         struct Transform
         {
             public:
-                /** PROPERTIES **/
+                /** POSITIONAL PROPERTIES **/
                 /// <summary> Gets the translation along the x-axis. </summary>
                 float X()                                       const { return _position.X; }
                 /// <summary> Gets the translation along the y-axis. </summary>
@@ -41,6 +41,33 @@ namespace Cyclone
                 /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
                 Transform& Position(float x, float y, float z)        { return Position(Vector3(x, y, z)); }
 
+
+
+                /** ROTATIONAL PROPERTIES **/
+                /// <summary> Gets the angle of rotation about the x-axis in degrees. </summary>
+                float Pitch()                                   const { return _orientation.X; }
+                /// <summary> Gets the angle of rotation about the y-axis in degrees. </summary>
+                float Roll()                                    const { return _orientation.Z; }
+                /// <summary> Gets the angle of rotation about the z-axis in degrees. </summary>
+                float Yaw()                                     const { return _orientation.Y; }
+
+                /// <summary> Sets the angle of rotation about the x-axis in degrees. </summary>
+                Transform& Pitch(float p)                             { UpdateFlag(_orientation.X != p); _orientation.X = p; return *this; }
+                /// <summary> Sets the angle of rotation about the y-axis in degrees. </summary>
+                Transform& Roll(float r)                              { UpdateFlag(_orientation.Z != r); _orientation.Z = r; return *this; }
+                /// <summary> Sets the angle of rotation about the z-axis in degrees. </summary>
+                Transform& Yaw(float y)                               { UpdateFlag(_orientation.Y != y); _orientation.Y = y; return *this; }
+
+                /// <summary> Gets the angles of rotation about the (x, y, z) axes in degrees. </summary>
+                const Vector3& Orientation()                    const { return _orientation; }
+                /// <summary> Sets the angles of rotation about the (x, y, z) axes in degrees. </summary>
+                Transform& Orientation(const Vector3& o)              { UpdateFlag(_orientation != o); _orientation = o; return *this; }
+                /// <summary> Sets the angles of rotation about the (x, y, z) axes in degrees. </summary>
+                Transform& Orientation(float p, float y, float r)     { return Orientation(Vector3(p, y, r)); }
+
+
+
+                /** SCALING PROPERTIES **/
                 /// <summary> Gets the scaling factor along the x-axis. </summary>
                 float ScaleX()                                  const { return _size.X; }
                 /// <summary> Gets the scaling factor along the y-axis. </summary>
@@ -63,14 +90,7 @@ namespace Cyclone
                 Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
 
 
-                float Pitch()                                   const { return _rotation.X; }
-                float Roll()                                    const { return _rotation.Z; }
-                float Yaw()                                     const { return _rotation.Y; }
-
-                Transform& Pitch(float p)                             { UpdateFlag(_rotation.X != p); _rotation.X = p; return *this; }
-                Transform& Roll(float r)                              { UpdateFlag(_rotation.Z != r); _rotation.Z = r; return *this; }
-                Transform& Yaw(float y)                               { UpdateFlag(_rotation.Y != y); _rotation.Y = y; return *this; }
-
+                
 
 
                 /** CONSTRUCTORS **/
@@ -142,8 +162,10 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI string Report() const;
-
-                Transform& Rotate(const Vector3& angles)                           { UpdateFlag(_rotation != angles); _rotation += angles; return *this; }
+                /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
+                Transform& Rotate(const Vector3& angles)                           { return Orientation(_orientation + angles); }
+                /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
+                Transform& Rotate(float p, float y, float r)                       { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
                 UtilitiesAPI const float* ToArray()                          const { UpdateState(); return State.ToArray(); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
@@ -172,8 +194,8 @@ namespace Cyclone
 
 
                 /** PROPERTY DATA **/
+                Vector3         _orientation;
                 Vector3         _position;
-                Vector3         _rotation;
                 Vector3         _size;
                 mutable bool    _updateFlag;
 
