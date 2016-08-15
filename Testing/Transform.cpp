@@ -166,7 +166,7 @@ TEST_F(_Transform, VectorConstruction)
     ASSERT_EQ(_t2.Scale(),          Canon.Scale);
 
     Matrix4x4 _t2Copy(_t2.ToArray());
-    ASSERT_EQ(_t2Copy, Canon.Transformation) << _t2Copy.ToString() << "\n" << Canon.Transformation.ToString() << "\n";
+    ASSERT_EQ(_t2Copy, Canon.Transformation);
 }
 
 
