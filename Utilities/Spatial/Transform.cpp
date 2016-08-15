@@ -93,17 +93,17 @@ namespace Cyclone
 
             r._orientation = angles;
 
-            r.State[0]  = (cr * cy) + (sp * sr * sy);
-            r.State[1]  = (cp * sr);
-            r.State[2]  = (cy * sp * sr) - (cr * sy);
-
-            r.State[4]  = (cr * sp * sy) - (cy * sr);
-            r.State[5]  = (cp * cr);
-            r.State[6]  = (sr * sy) + (cr * cy * sp);
-
-            r.State[8]  = (cp * sy);
-            r.State[9]  = (-sp);
-            r.State[10] = (cp * cy);
+            r.State(0)  = (cr * cy);
+            r.State(1)  = (cy * sr);
+            r.State(2)  = (-sy);
+                        
+            r.State(4)  = (cr * sp * sy) - (cp * sr);
+            r.State(5)  = (cp * cr) + (sp * sr * sy);
+            r.State(6)  = (cy * sp);
+                        
+            r.State(8)  = (sp * sr) + (cp * cr * sy);
+            r.State(9)  = (cp * sr * sy) - (cr * sp);
+            r.State(10) = (cp * cy);
 
             return r;
         }
@@ -199,7 +199,7 @@ namespace Cyclone
         ///     a single pass, without actually generating and multiplying the component matrices. However, under that model, the
         ///     calculations performed here would correspond with multiplying transformation matrices in the following order:
         ///     
-        ///         Translation * Roll * Pitch * Yaw * Scale
+        ///         Translation * Roll * Yaw * Pitch * Scale
         ///     
         ///     The equations used in this method were derived using MATLAB.
         /// </remarks>
@@ -207,31 +207,27 @@ namespace Cyclone
         {
             if (!_updateFlag) { return; }
 
-            float cosr, cosp, cosy, sinr, sinp, siny, sx, sy, sz, x, y, z;
-            sx = _size.X; sy = _size.Y; sz = _size.Z;
+            float cr, cp, cy, sr, sp, sy, w, h, d, x, y, z;
+            w = _size.X; h = _size.Y; d = _size.Z;
             x = _position.X; y = _position.Y; z = _position.Z;
-            cosr = (float)cos(_orientation.Z); cosp = (float)cos(_orientation.X); cosy = (float)cos(_orientation.Y);
-            sinr = (float)sin(_orientation.Z); sinp = (float)sin(_orientation.X); siny = (float)sin(_orientation.Y);
+            cr = (float)cos(_orientation.Z); cp = (float)cos(_orientation.X); cy = (float)cos(_orientation.Y);
+            sr = (float)sin(_orientation.Z); sp = (float)sin(_orientation.X); sy = (float)sin(_orientation.Y);
 
-            State[0]  = sx * (cosr * cosy - sinp * sinr * siny);
-            State[4]  = (-cosp * sinr * sy);
-            State[8]  = sz * (cosr * siny + cosy * sinp * sinr);
-            State[12] = x;
+            State(0)  = (cr * cy * w);
+            State(1)  = (cy * sr * w);
+            State(2)  = (-sy * w);
 
-            State[1]  = sx * (cosy * sinr + cosr * sinp * siny);
-            State[5]  = cosp * cosr * sy;
-            State[9]  = sz * (sinr * siny - cosr * cosy * sinp);
-            State[13] = y;
+            State(4) = -h * ((cp * sr) - (cr * sp * sy));
+            State(5) = h * ((cp * cr) + (sp * sr * sy));
+            State(6) = (h * cy * sp);
 
-            State[2]  = -cosp * siny * sx;
-            State[6]  = sinp * sy;
-            State[10] = cosp * cosy * sz;
-            State[14] = z;
+            State(8) = d * ((sp * sr) + (cp * cr * sy));
+            State(9) = -d * ((cr * sp) - (cp * sr * sy));
+            State(10) = (cp * cy * d);
 
-            State[3]  = 0;
-            State[7]  = 0;
-            State[11] = 0;
-            State[15] = 1;
+            State(12) = x;
+            State(13) = y;
+            State(14) = z;
 
             _updateFlag = false;
         }

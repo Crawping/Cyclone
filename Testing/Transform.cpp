@@ -146,9 +146,7 @@ TEST_F(_Transform, RotationConstructor)
     ASSERT_EQ(Matrix4x4(_t4.ToArray()), Canon.Pitch);
     ASSERT_EQ(Matrix4x4(_t5.ToArray()), Canon.Yaw);
     ASSERT_EQ(Matrix4x4(_t6.ToArray()), Canon.Roll);
-
-    //ASSERT_EQ(Matrix4x4(_t7.ToArray()), Canon.Rotation);
-
+    ASSERT_EQ(Matrix4x4(_t7.ToArray()), Canon.Rotation);
 }
 
 TEST_F(_Transform, ScalingConstructor)
@@ -206,11 +204,5 @@ TEST_F(_Transform, MultiplicationOperators)
 {
     Transform _catRotation = _t6 * _t5 * _t4;    
     ASSERT_EQ(Matrix4x4(_catRotation.ToArray()), Canon.Rotation);
-
-    // TODO: This test fails, presumably because of roundoff errors, but I need to double check...
-    //ASSERT_EQ(_t7, _catRotation);
-
-    Matrix4x4 _t7Copy = _t7.ToArray();
-    for (uint a = 0; a < _t7Copy.Count(); a++)
-        ASSERT_NEAR(_t7Copy(a), Canon.Rotation(a), 1e-6);
+    ASSERT_EQ(_t7, _catRotation);
 }
