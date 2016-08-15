@@ -49,8 +49,18 @@ namespace Cyclone
 
 
             /** CONSTRUCTORS **/
+            /// <summary> Constructs a default vertex positioned at the origin (0, 0, 0) with texture coordinates (0, 0). </summary>
             constexpr Vertex()                                                          : Position(0), UV(0) { }
+            /// <summary> Constructs a vertex with a designated position and texture coordinates. </summary>
+            /// <param name="position"> A three-element vector specifying the (x, y, z) coordinates of the vertex. </param>
+            /// <param name="uv"> A two-element vector specifying the (u, v) coordinates of an associated texture. </param>
             constexpr Vertex(const Vector3& position, const Vector2& uv)                : Position(position), UV(uv) { }
+            /// <summary> Constructs a vertex with a designated position and texture coordinates. </summary>
+            /// <param name="x"> The desired x-coordinate of the vertex. </param>
+            /// <param name="y"> The desired y-coordinate of the vertex. </param>
+            /// <param name="z"> The desired z-coordinate of the vertex. </param>
+            /// <param name="u"> The desired u-coordinate of the texture associated with the vertex. </param>
+            /// <param name="v"> The desired v-coordinate of the texture associated with the vertex. </param>
             constexpr Vertex(float x, float y, float z, float u = 0.0f, float v = 0.0f) : Position(x, y, z), UV(u, v) { }
 
         };
