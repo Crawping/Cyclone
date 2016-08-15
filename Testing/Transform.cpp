@@ -13,89 +13,116 @@ using namespace Cyclone::Utilities;
 
 
 /** INTERNAL DATA **/
-const static float EYE[16] =
+struct Canonical
 {
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f,
-};
-const static float ONE[16] =
-{
-    1.0f, 1.0f, 1.0f, 1.0f,
-    1.0f, 1.0f, 1.0f, 1.0f,
-    1.0f, 1.0f, 1.0f, 1.0f,
-    1.0f, 1.0f, 1.0f, 1.0f,
-};
-const static float ZERO[16] =
-{
-    0.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 0.0f,
+    Vector3     Orientation;
+    Vector3     Position;
+    Vector3     Scale;
+
+    Matrix4x4   Pitch;
+    Matrix4x4   Yaw;
+    Matrix4x4   Roll;
+
+    Matrix4x4   Rotation;
+    Matrix4x4   Scaling;
+    Matrix4x4   Translation;
+    
+    Matrix4x4   Transformation;
+    
+
+
+    Canonical() : 
+        Orientation(Constants::QuarterPi, -Constants::ThirdPi, Constants::TwoPi),
+        Position(-128.0f, 256.0f, -512.0f),
+        Scale(4.0f, 8.0f, 16.0f)
+    {
+
+        // Rotation
+        float cr, cp, cy, sr, sp, sy;
+        cr = (float)cos(Orientation.Z); cp = (float)cos(Orientation.X); cy = (float)cos(Orientation.Y);
+        sr = (float)sin(Orientation.Z); sp = (float)sin(Orientation.X); sy = (float)sin(Orientation.Y);
+
+        Pitch = 
+        {
+            1.0f,   0.0f,   0.0f,   0.0f,
+            0.0f,     cp,     sp,   0.0f,
+            0.0f,    -sp,     cp,   0.0f,
+            0.0f,   0.0f,   0.0f,   1.0f,
+        };
+        Roll =
+        {
+              cr,     sr,   0.0f,   0.0f,
+             -sr,     cr,   0.0f,   0.0f,
+            0.0f,   0.0f,   1.0f,   0.0f,
+            0.0f,   0.0f,   0.0f,   1.0f,
+        };
+        Yaw = 
+        {
+              cy,   0.0f,    -sy,   0.0f,
+            0.0f,   1.0f,   0.0f,   0.0f,
+              sy,   0.0f,     cy,   0.0f,
+            0.0f,   0.0f,   0.0f,   1.0f,
+        };
+
+        Rotation = Roll * Yaw * Pitch;
+
+        // Scaling
+        float w = Scale.X; float h = Scale.Y; float d = Scale.Z;
+        Scaling =
+        {
+               w,   0.0f,   0.0f,   0.0f,
+            0.0f,      h,   0.0f,   0.0f,
+            0.0f,   0.0f,      d,   0.0f,
+            0.0f,   0.0f,   0.0f,   1.0f,
+        };
+
+        // Translation
+        float x = Position.X; float y = Position.Y; float z = Position.Z;
+        Translation = 
+        {
+            1.0f,   0.0f,   0.0f,   0.0f,
+            0.0f,   1.0f,   0.0f,   0.0f,
+            0.0f,   0.0f,   1.0f,   0.0f,
+               x,      y,      z,   1.0f,
+        };
+               
+        // All together
+        Transformation = Translation * Roll * Yaw * Pitch * Scaling;
+    }
 };
 
 
 
+/** FIXTURE DEFINITION **/
 class _Transform : public testing::Test
 {
     protected:
-        const Vector3   _v1 = Vector3(Constants::QuarterPi, -Constants::ThirdPi, Constants::TwoPi);
-        const Vector3   _v2 = Vector3(-128.0f, 256.0f, -512.0f);
+        Canonical Canon;
 
-        Matrix4x4       _pitch;
-        Matrix4x4       _yaw;
-        Matrix4x4       _roll;
-
-        Transform       _t0;
-        Transform       _t1;
-        Transform       _t2;
-        Transform       _t3;
-        Transform       _t4;
-        Transform       _t5;
-        Transform       _t6;
-        Transform       _t7;
-        Transform       _t8;
-        Transform       _t9;
-        Transform       _t10;
+        Transform _t0;
+        Transform _t1;
+        Transform _t2;
+        Transform _t3;
+        Transform _t4;
+        Transform _t5;
+        Transform _t6;
+        Transform _t7;
+        Transform _t8;
+        Transform _t9;
+        Transform _t10;
         
 
         _Transform() :
-            _t2(Vector3::One, Vector3::One, Vector3::One),
-            _t4(Transform::Rotation(_v1.X, 0.0f, 0.0f)),
-            _t5(Transform::Rotation(0.0f, _v1.Y, 0.0f)),
-            _t6(Transform::Rotation(0.0f, 0.0f, _v1.Z)),
-            _t7(Transform::Rotation(_v1)),
-            _t8(Transform::Scaling(_v2)),
-            _t9(Transform::Translation(_v2))
+            Canon(),
+            _t2(Canon.Position, Canon.Scale, Canon.Orientation),
+            _t4(Transform::Rotation(Canon.Orientation.X, 0.0f, 0.0f)),
+            _t5(Transform::Rotation(0.0f, Canon.Orientation.Y, 0.0f)),
+            _t6(Transform::Rotation(0.0f, 0.0f, Canon.Orientation.Z)),
+            _t7(Transform::Rotation(Canon.Orientation)),
+            _t8(Transform::Scaling(Canon.Scale)),
+            _t9(Transform::Translation(Canon.Position))
         {
             _t3 = _t2;
-
-            float cr, cp, cy, sr, sp, sy;
-            cr = (float)cos(_v1.Z); cp = (float)cos(_v1.X); cy = (float)cos(_v1.Y);
-            sr = (float)sin(_v1.Z); sp = (float)sin(_v1.X); sy = (float)sin(_v1.Y);
-
-            _pitch = 
-            {
-                1.0f,   0.0f,   0.0f,   0.0f,
-                0.0f,     cp,     sp,   0.0f,
-                0.0f,    -sp,     cp,   0.0f,
-                0.0f,   0.0f,   0.0f,   1.0f,
-            };
-            _roll =
-            {
-                  cr,     sr,   0.0f,   0.0f,
-                 -sr,     cr,   0.0f,   0.0f,
-                0.0f,   0.0f,   1.0f,   0.0f,
-                0.0f,   0.0f,   0.0f,   1.0f,
-            };
-            _yaw = 
-            {
-                  cy,   0.0f,    -sy,   0.0f,
-                0.0f,   1.0f,   0.0f,   0.0f,
-                  sy,   0.0f,     cy,   0.0f,
-                0.0f,   0.0f,   0.0f,   1.0f,
-            };
         }
 
 };
@@ -105,9 +132,8 @@ class _Transform : public testing::Test
 /** CONSTRUCTION TESTS **/
 TEST_F(_Transform, DefaultConstruction)
 {
-    const float* data = _t0.ToArray();
-    for (int a = 0; a < 16; a++)
-        ASSERT_EQ(data[a], EYE[a]);
+    Matrix4x4 _t0Copy = _t0.ToArray();
+    ASSERT_EQ(_t0Copy, Matrix4x4::Identity);
 }
 
 TEST_F(_Transform, PerspectiveProjectionConstructor)
@@ -117,31 +143,32 @@ TEST_F(_Transform, PerspectiveProjectionConstructor)
 
 TEST_F(_Transform, RotationConstructor)
 {
-    ASSERT_EQ(Matrix4x4(_t4.ToArray()), _pitch);
-    ASSERT_EQ(Matrix4x4(_t5.ToArray()), _yaw);
-    ASSERT_EQ(Matrix4x4(_t6.ToArray()), _roll);
+    ASSERT_EQ(Matrix4x4(_t4.ToArray()), Canon.Pitch);
+    ASSERT_EQ(Matrix4x4(_t5.ToArray()), Canon.Yaw);
+    ASSERT_EQ(Matrix4x4(_t6.ToArray()), Canon.Roll);
+
+    //ASSERT_EQ(Matrix4x4(_t7.ToArray()), Canon.Rotation);
+
 }
 
 TEST_F(_Transform, ScalingConstructor)
 {
-    Matrix4x4 _t8Copy = _t8.ToArray();
-    ASSERT_EQ(_t8Copy(0, 0), _v2.X);
-    ASSERT_EQ(_t8Copy(1, 1), _v2.Y);
-    ASSERT_EQ(_t8Copy(2, 2), _v2.Z);
+    ASSERT_EQ(Matrix4x4(_t8.ToArray()), Canon.Scaling);
 }
 
 TEST_F(_Transform, TranslationConstructor)
 {
-    Matrix4x4 _t9Copy = _t9.ToArray();
-    ASSERT_EQ(_t9Copy(0, 3), _v2.X);
-    ASSERT_EQ(_t9Copy(1, 3), _v2.Y);
-    ASSERT_EQ(_t9Copy(2, 3), _v2.Z);
+    ASSERT_EQ(Matrix4x4(_t9.ToArray()), Canon.Translation);
 }
 
 TEST_F(_Transform, VectorConstruction)
 {
-    ASSERT_EQ(_t2.Position(), Vector3::One);
-    ASSERT_EQ(_t2.Scale(), Vector3::One);
+    ASSERT_EQ(_t2.Orientation(),    Canon.Orientation);
+    ASSERT_EQ(_t2.Position(),       Canon.Position);
+    ASSERT_EQ(_t2.Scale(),          Canon.Scale);
+
+    Matrix4x4 _t2Copy(_t2.ToArray());
+    ASSERT_EQ(_t2Copy, Canon.Transformation) << _t2Copy.ToString() << "\n" << Canon.Transformation.ToString() << "\n";
 }
 
 
@@ -150,19 +177,19 @@ TEST_F(_Transform, VectorConstruction)
 TEST_F(_Transform, RelativeRotation)
 {
     Transform _t2Copy(_t2);
-    _t2Copy.Rotate(_v1).Rotate(_v1).Rotate(_v1);
-    ASSERT_FLOAT_EQ(_t2Copy.Pitch(), 3 * _v1.X + _t2.Pitch());
-    ASSERT_FLOAT_EQ(_t2Copy.Yaw(),   3 * _v1.Y + _t2.Yaw());
-    ASSERT_FLOAT_EQ(_t2Copy.Roll(),  3 * _v1.Z + _t2.Roll());
+    _t2Copy.Rotate(Canon.Orientation).Rotate(Canon.Orientation).Rotate(Canon.Orientation);
+    ASSERT_FLOAT_EQ(_t2Copy.Pitch(), 3 * Canon.Orientation.X + _t2.Pitch());
+    ASSERT_FLOAT_EQ(_t2Copy.Yaw(),   3 * Canon.Orientation.Y + _t2.Yaw());
+    ASSERT_FLOAT_EQ(_t2Copy.Roll(),  3 * Canon.Orientation.Z + _t2.Roll());
 }
 
 TEST_F(_Transform, RelativeTranslation)
 {
     Transform _t2Copy(_t2);
-    _t2Copy.Translate(_v2).Translate(_v2).Translate(_v2);
-    ASSERT_FLOAT_EQ(_t2Copy.X(), 3 * _v2.X + _t2.X());
-    ASSERT_FLOAT_EQ(_t2Copy.Y(), 3 * _v2.Y + _t2.Y());
-    ASSERT_FLOAT_EQ(_t2Copy.Z(), 3 * _v2.Z + _t2.Z());
+    _t2Copy.Translate(Canon.Position).Translate(Canon.Position).Translate(Canon.Position);
+    ASSERT_FLOAT_EQ(_t2Copy.X(), 3 * Canon.Position.X + _t2.X());
+    ASSERT_FLOAT_EQ(_t2Copy.Y(), 3 * Canon.Position.Y + _t2.Y());
+    ASSERT_FLOAT_EQ(_t2Copy.Z(), 3 * Canon.Position.Z + _t2.Z());
 }
 
 
@@ -177,15 +204,13 @@ TEST_F(_Transform, EqualityOperators)
 
 TEST_F(_Transform, MultiplicationOperators)
 {
-    Transform _catRotation = _t6 * _t5 * _t4;
-    Matrix4x4 test = _roll * _yaw * _pitch;
-    
-    ASSERT_EQ(Matrix4x4(_catRotation.ToArray()), test);
+    Transform _catRotation = _t6 * _t5 * _t4;    
+    ASSERT_EQ(Matrix4x4(_catRotation.ToArray()), Canon.Rotation);
 
     // TODO: This test fails, presumably because of roundoff errors, but I need to double check...
     //ASSERT_EQ(_t7, _catRotation);
 
     Matrix4x4 _t7Copy = _t7.ToArray();
     for (uint a = 0; a < _t7Copy.Count(); a++)
-        ASSERT_NEAR(_t7Copy(a), test(a), 1e-6);
+        ASSERT_NEAR(_t7Copy(a), Canon.Rotation(a), 1e-6);
 }
