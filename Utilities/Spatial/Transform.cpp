@@ -27,8 +27,8 @@ namespace Cyclone
             _orientation(other._orientation),
             _position(other._position),
             _size(other._size),
-            _updateFlag(false),
-            State(other.ToArray())
+            _updateFlag(other._updateFlag),
+            State(other.State)
         {
 
         }
@@ -81,7 +81,7 @@ namespace Cyclone
             Vector3 position(-hWidth, -hHeight, znear);
             Vector3 size(2.0f * hWidth, 2.0f * hHeight, zfar - znear);
 
-            const Cyclone::Utilities::Volume boundingVolume(position, size);
+            const Volume boundingVolume(position, size);
             return PerspectiveProjection(boundingVolume);
         }
         Transform Transform::Rotation(const Vector3& angles)

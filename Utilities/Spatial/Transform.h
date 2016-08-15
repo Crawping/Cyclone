@@ -3,9 +3,8 @@
  */
 
 #pragma once
-
-#include "Matrix4x4.h"
-#include "Vector3.h"
+#include "Math/Matrix4x4.h"
+#include "Math/Vector3.h"
 
 
 
@@ -163,25 +162,25 @@ namespace Cyclone
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI string Report() const;
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                Transform& Rotate(const Vector3& angles)                           { return Orientation(_orientation + angles); }
+                Transform& Rotate(const Vector3& angles)                          { return Orientation(_orientation + angles); }
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                Transform& Rotate(float p, float y, float r)                       { return Rotate(Vector3(p, y, r)); }
+                Transform& Rotate(float p, float y, float r)                      { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
-                UtilitiesAPI const float* ToArray()                          const { UpdateState(); return State.ToArray(); }
+                UtilitiesAPI const float* ToArray()                         const { UpdateState(); return State.ToArray(); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                UtilitiesAPI Transform& Translate(const Vector3& t)                { return Position(_position + t); }
+                Transform& Translate(const Vector3& t)                            { return Position(_position + t); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                UtilitiesAPI Transform& Translate(float x, float y, float z)       { return Translate(Vector3(x, y, z)); }
+                Transform& Translate(float x, float y, float z)                   { return Translate(Vector3(x, y, z)); }
 
 
 
                 /** OPERATORS **/
                 /// <summary> Determines whether one transformation is equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the both transformations are identical, or <c>false</c> otherwise. </returns>
-                UtilitiesAPI bool operator ==(const Transform& other)        const;
+                UtilitiesAPI bool operator ==(const Transform& other)       const;
                 /// <summary> Determines whether one transformation is not equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
-                UtilitiesAPI bool operator !=(const Transform& other)        const { return !(*this == other); }
+                UtilitiesAPI bool operator !=(const Transform& other)       const { return !(*this == other); }
 
 
 
@@ -189,7 +188,7 @@ namespace Cyclone
 
                 /** PRIVATE PROPERTIES **/
                 /// <summary> Protects the update flag from being changed to 'false' in the time between matrix recalculations. </summary>
-                void UpdateFlag(bool condition)                 const { _updateFlag = _updateFlag ? true : condition; }
+                void UpdateFlag(bool condition)                             const { _updateFlag = _updateFlag ? true : condition; }
 
 
 
