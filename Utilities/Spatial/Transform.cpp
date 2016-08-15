@@ -217,12 +217,12 @@ namespace Cyclone
             State(1)  = (cy * sr * w);
             State(2)  = (-sy * w);
 
-            State(4) = -h * ((cp * sr) - (cr * sp * sy));
-            State(5) = h * ((cp * cr) + (sp * sr * sy));
-            State(6) = (h * cy * sp);
-
-            State(8) = d * ((sp * sr) + (cp * cr * sy));
-            State(9) = -d * ((cr * sp) - (cp * sr * sy));
+            State(4)  = -h * ((cp * sr) - (cr * sp * sy));
+            State(5)  = h * ((cp * cr) + (sp * sr * sy));
+            State(6)  = (h * cy * sp);
+                      
+            State(8)  = d * ((sp * sr) + (cp * cr * sy));
+            State(9)  = -d * ((cr * sp) - (cp * sr * sy));
             State(10) = (cp * cy * d);
 
             State(12) = x;
