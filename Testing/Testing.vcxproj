@@ -91,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>GLFW_INCLUDE_COREARB;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\OpenGL;..\OpenGL\Buffers;..\OpenGL\Buffers;..\OpenGL\Interfaces;..\OpenGL\Pipelines;..\OpenGL\Primitives;..\OpenGL\Textures;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +150,7 @@
     <ClCompile Include="Area.cpp" />
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="Color4.cpp" />
