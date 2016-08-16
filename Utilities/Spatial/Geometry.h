@@ -20,6 +20,14 @@ namespace Cyclone
             /// <summary> A cube with unit dimensions spanning the coordinates (0, 0, 0) to (1, 1, 1). </summary>
             /// <remarks> The vertices of this cube are not shared and are wound counter-clockwise. </remarks>
             UtilitiesAPI Array<Vertex> Cube();
+            /// <summary> A cube with unit dimensions spanning the coordinates (0, 0, 0) to (1, 1, 1). </summary>
+            /// <param name="indices"> 
+            ///     A reference to an array of 36 unsigned integers representing the order in which vertices will be rendered.
+            ///     <para> </para>
+            ///     This array must contain space for 36 elements, all of which will be overwritten during a call to this function.
+            /// </param>
+            /// <remarks> The vertices of this cube are shared according </remarks>
+            UtilitiesAPI Array<Vertex> Cube(Array<uint>& indices);
             /// <summary> A regular icosahedron with a unit radius centered on the origin (0, 0, 0). </summary>
             /// <remarks> The vertices of this icosahedron are not shared and are wound counter-clockwise. </remarks>
             UtilitiesAPI Array<Vertex> Icosahedron();
