@@ -31,8 +31,13 @@ namespace Cyclone
                 const Area& RenderArea()    const { return _renderArea; }
                 /// <summary> Gets the size of this window (including borders) in pixels. </summary>
                 Vector2 Size()              const { return _displayArea.Scale(); }
+                /// <summary> Gets the title string that is displayed on the upper window border. </summary>
+                const string& Title()       const { return _title; }
                 /// <summary> Gets the width of this window (including borders) in pixels. </summary>
                 uint Width()                const { return (uint)_displayArea.Width; }
+
+                /// <summary> Sets the title string that is displayed on the upper window border. </summary>
+                PlatformAPI Window3D& Title(const string& title);
 
 
 

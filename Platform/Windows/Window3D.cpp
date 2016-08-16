@@ -66,6 +66,24 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 
     return DefWindowProc(win, msg, wparam, lparam);
 }
+/// <summary> Converts a standard text string into an equivalent wide-character one. </summary>
+/// <param name="text"> A string of text. </param>
+/// <returns> A string that is identical to the inputted one except composed of wide-characters. </returns>
+static std::wstring str2wstr(const std::string& text)
+{
+    int length = MultiByteToWideChar(CP_UTF8, 0, text.c_str(), -1, NULL, 0);
+    if (!length)
+        return L"Failed to convert the inputted text";
+
+    WCHAR* wtext = (WCHAR*)calloc(length + 1, sizeof(WCHAR));
+    if (!MultiByteToWideChar(CP_UTF8, 0, text.c_str(), -1, wtext, length + 1))
+    {
+        free(wtext);
+        return L"Failed to convert the inputted text";
+    }
+
+    return std::wstring(wtext);        
+}
 
 
 
@@ -77,9 +95,20 @@ namespace Cyclone
         struct Window3D::_window3D
         {
             HDC     DeviceContext;
+            /// <summary> The native handle of the window. </summary>
             HWND    ID;
             HGLRC   RenderContext;
         };
+
+
+
+        /** PROPERTIES **/
+        Window3D& Window3D::Title(const string& title)
+        {
+            _title = title;
+            SetWindowText(Internals->ID, str2wstr(title).c_str());
+            return *this;
+        }
 
 
 
@@ -99,13 +128,13 @@ namespace Cyclone
             winClass.hInstance      = GetModuleHandle(NULL);
             winClass.lpszClassName  = TEXT("OpenGL");
 
-            RegisterClass(&winClass);
+            RegisterClass(&winClass); 
 
             Internals->ID = CreateWindowEx
             (
                 WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
                 TEXT("OpenGL"),
-                TEXT("OpenGL Window"),
+                str2wstr(title).c_str(),
                 WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
                 (int)displayArea.X,     (int)displayArea.Y,
                 (int)displayArea.Width, (int)displayArea.Height,
@@ -170,13 +199,7 @@ namespace Cyclone
 
 
         /** RENDERING UTILITIES **/
-        //void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, Internals->RenderContext); }
-        //void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext); }
-        void Window3D::Bind()               const 
-        { 
-            if (!wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext))
-                Console::WriteLine("Failed to bind the advanced rendering context to this 3D rendering window.");
-        }
+        void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext); }
         void Window3D::Present()            const { SwapBuffers(Internals->DeviceContext); }
         void Window3D::Unbind()             const { wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext); }
     }
