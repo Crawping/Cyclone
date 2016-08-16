@@ -7,4 +7,7 @@
   <ItemGroup>
     <ClInclude Include="Program.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Notes.txt" />
+  </ItemGroup>
 </Project>
