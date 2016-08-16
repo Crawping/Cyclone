@@ -13,7 +13,7 @@ using namespace Cyclone::Utilities;
 
 
 /** INTERNAL DATA **/
-struct Canonical
+struct CanonicalTransforms
 {
     Vector3     Orientation;
     Vector3     Position;
@@ -31,7 +31,7 @@ struct Canonical
     
 
 
-    Canonical() : 
+    CanonicalTransforms() : 
         Orientation(Constants::QuarterPi, -Constants::ThirdPi, Constants::TwoPi),
         Position(-128.0f, 256.0f, -512.0f),
         Scale(4.0f, 8.0f, 16.0f)
@@ -97,7 +97,7 @@ struct Canonical
 class _Transform : public testing::Test
 {
     protected:
-        Canonical Canon;
+        CanonicalTransforms Canon;
 
         Transform _t0;
         Transform _t1;
