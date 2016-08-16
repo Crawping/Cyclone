@@ -9,6 +9,7 @@ TODOS:
 - 2D Rendering
 	-- Fonts & text
 	-- SVG images
+        > For both of the above, look into the 'NV_path_rendering' NVIDIA extension
 
 - 3D Rendering
 	-- Entity instancing
