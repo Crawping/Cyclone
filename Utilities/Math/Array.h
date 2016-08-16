@@ -83,7 +83,7 @@ namespace Cyclone
 
 		        const T& operator ()(uint idx)	const { return Data[idx]; }
 		
-		        Array<T>& operator =(Array<T>& other)
+		        Array<T>& operator =(const Array<T>& other)
 		        {
 			        if (Data)
 				        delete[] Data;
