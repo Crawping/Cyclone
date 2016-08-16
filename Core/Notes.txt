@@ -1,0 +1,22 @@
+TODOS:
+- Fix event structures
+	-- Implement them in Window3D
+		> OnExit
+		> OnFocus/OnDefocus
+		> OnMinimize
+		> OnResize
+		
+- 2D Rendering
+	-- Fonts & text
+	-- SVG images
+
+- 3D Rendering
+	-- Entity instancing
+	-- Indexed rendering
+	-- Patch entities
+	-- Varying vertex topologies
+
+- Primitive Types
+	-- Arbitrary precision numbers
+	-- Clock
+	-- Random Number Generator (RNG)
