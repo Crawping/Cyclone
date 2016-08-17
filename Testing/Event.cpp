@@ -14,7 +14,7 @@ class _Event : public ::testing::Test
     protected:
         int			_number;
         Action      _a1;
-        //Event<int>  _e1;
+        Event<int>  _e1;
 
 
         _Event() : 
@@ -106,8 +106,36 @@ TEST_F(_Event, MethodPointerInvocation)
 
 TEST_F(_Event, ActionFunctionCallback)
 {
-    _a1 += NumberFunction;
-	
-	//_a1();
-	ASSERT_EQ(Number, 0);
+    _a1.Register(NumberFunction);
+
+	_a1(); _a1();
+	ASSERT_EQ(Number, 2);
+}
+
+TEST_F(_Event, ActionMethodCallback)
+{
+    NumberClass _c1 = NumberClass();
+    _a1.Register(&_c1, &NumberClass::NumberMethod);
+
+    _a1(); _a1();
+    ASSERT_EQ(_c1.Number, 2);
+}
+
+
+TEST_F(_Event, EventFunctionCallback)
+{
+    Number = 0;
+    _e1.Register(NumberFunction);
+
+    _e1(10); _e1(20); _e1(-50);
+    ASSERT_EQ(Number, -20);
+}
+
+TEST_F(_Event, EventMethodCallback)
+{
+    NumberClass _c1 = NumberClass();
+    _e1.Register(&_c1, &NumberClass::NumberMethod);
+
+    _e1(10); _e1(20); _e1(-50);
+    ASSERT_EQ(_c1.Number, -20);
 }

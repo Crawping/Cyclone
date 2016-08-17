@@ -16,14 +16,14 @@ namespace Cyclone
 
 		 /// <summary> An abstract interface meant for use in event callback functions. </summary>
 		template<typename ... T>
-		struct Callback
+		struct ICallback
 		{   
 			virtual void Invoke(T ... arguments) const = 0;
 		};
 
 		/// <summary> A structure representing an ordinary function pointer that takes a single argument. </summary>
 		template<typename ... T>
-		struct FunctionPointer : public Callback<T...>
+		struct FunctionPointer : public ICallback<T...>
 		{
 			private:
 				using Function = void (*)(T ... arguments);
@@ -40,15 +40,15 @@ namespace Cyclone
 
 		/// <summary> A structure representing a pointer to an object method. </summary>
 		template<typename T, typename ... U>
-		struct MethodPointer : public Callback<U...>
+		struct MethodPointer : public ICallback<U...>
 		{
 			private:
 				using Method = void (T::*)(U ... arguments);
         
 				/// <summary> A pointer to the object instance needed to succesfully call a class method. </summary>
-				T* _object;
+				T*      _object;
 				/// <summary> A pointer to the method function that will eventually be called. </summary>
-				Method _method;
+				Method  _method;
                
 			public:
         
@@ -64,126 +64,78 @@ namespace Cyclone
 
 
 
-		/* ACTION - A class that enables simple events in C++ with callback functions that have no input or output arguments. 
-		 * 
-		 *      This class is designed to behave nearly identically to C# 'Action' type events. 
-		 */
-		class Action
-		{
-			private:
-				std::vector<Callback<>*> Subscriptions;
-
-
-			public:
-				/** PROPERTIES **/
-				///* COUNT - Gets the number of callback functions that are currently registered for this event. */
-				uint Count()    const { return Subscriptions.size(); }
-				/* ISEMPTY - Determines whether or not this event has any registered callback functions. */
-				bool IsEmpty()  const { return Subscriptions.empty(); }
-
-
-
-				/** CONSTRUCTOR **/
-				/* ACTION - Constructs a new 'Action' instance with an empty event queue. */
-				Action() : Subscriptions() { }
-        
-
-
-				/** UTILITIES **/
-				/* CLEAR - Removes all callback functions that are currently registered for this event. */
-				void Clear() { Subscriptions.clear(); }
-				/* REGISTER - Subscribes a new callback function to be executed when this event is triggered.
-				 *
-				 *      OUTPUT:
-				 *          evt:        Event&
-				 *
-				 *      INPUT:
-				 *          callback:   FunctionPointer
-				 */
-				void Register(Callback<>* callback) { Subscriptions.push_back(callback); }
-				/* UNREGISTER - Unsubscribes a callback function, preventing its future execution when this event is triggered. */
-				void Unregister(Callback<>* callback)
-				{
-					Subscriptions.erase( std::remove(Subscriptions.begin(), Subscriptions.end(), callback), Subscriptions.end() );
-				}
-
-
-
-				/** OPERATORS **/
-				/* += - A shortcut operator that registers new callback functions for the event. */
-				Action& operator +=(FunctionPointer<> callback) { Register(&callback); return *this; }
-				/* -= - A shortcut operator that unregisters callback functions from the event. */
-				Action& operator -=(FunctionPointer<> callback) { Unregister(&callback); return *this; }
-				/* () - Serially executes each of the callback functions within the event queue. */
-				void operator ()()
-				{
-					for (auto callback : Subscriptions)
-						callback->Invoke();
-				}
-		};
-
-
-
-		template<typename T>
+		template<typename ... T>
 		class Event
 		{
 			private:
-				typedef void (*FunctionPointer)(T x);
-				std::vector<Callback<T>*> Subscriptions;
-    
-        
+                using Function = void(*)(T ... arguments);
 
+                template<typename S>
+                using Method = void (S::*)(T ... arguments);
+
+				std::vector<ICallback<T...>*> Subscriptions;
+    
 			public:
 				/** PROPERTIES **/
-				/* COUNT - Gets the number of callback functions that are currently registered for this event. */
+                /// <summary> Gets the number of callback functions that are currently registered for this event. </summary>
 				uint Count()        const { return Subscriptions.size(); }
-				/* ISEMPTY - Determines whether or not this event has any registered callback functions. */
+                /// <summary> Determines whether this event has any registered callback functions. </summary>
 				bool IsEmpty()      const { return Subscriptions.empty(); }
 
 
 
 				/** CONSTRUCTOR **/
 				Event() : Subscriptions() { }
+                ~Event()
+                {
+                    for (auto callback : Subscriptions)
+                        delete callback;
+                }
 
 
+				/** UTILITIES **/
+                /// <summary> Removes all callback functions that are currently registered for this event. </summary>
+				void Clear()              
+                { 
+                    for (auto callback : Subscriptions)
+                        delete callback;
+                    Subscriptions.clear(); 
+                }
+                /// <summary> Subscribes a new callback function to be executed when this event is triggered. </summary>
+                /// <param name="callback"></param>
+                void Register(Function callback)
+                {
+                    Subscriptions.push_back(new FunctionPointer<T...>(callback));
+                }
+                
+                template<typename S>
+                void Register(S* object, Method<S> callback)
+                {
+                    Subscriptions.push_back(new MethodPointer<S, T...>(object, callback));
+                }
 
-				/** UTILITIEIS **/
-				/* CLEAR - Removes all callback functions that are currently registered for this event. */
-				void Clear()              { Subscriptions.clear(); }
-				/* REGISTER - Subscribes a new callback function to be executed when this event is triggered.
-				 *
-				 *      OUTPUT:
-				 *          evt:        Event&
-				 *
-				 *      INPUT:
-				 *          callback:   Callback<T>*
-				 */
-				Event& Register(Callback<T>* callback)
-				{
-					Subscriptions.push_back(callback);
-					return *this;
-				}        
-				/* UNREGISTER - Unsubscribes a callback function, preventing its future execution when this event is triggered. */
-				Event& Unregister(Callback<T>* callback)
+                /// <summary> Unsubscribes a callback function, preventing its future execution when this event is triggered. </summary>
+				/*Event& Unregister(ICallback<T>* callback)
 				{
 					Subscriptions.erase( std::remove(Subscriptions.begin(), Subscriptions.end(), callback), Subscriptions.end() );
 					return *this;
-				}
+				}*/
 
 
 
 				/** OPERATORS **/
-				/* += - A shortcut operator that registers new function callbacks for an event. */
-				Event& operator +=(Callback<T> callback) { Register(&callback); return *this; }
-				//void operator +=(PlainFunctionPointer<T> callback) { Register((Callback<T>*)&callback); }
-				void operator -=(Callback<T>* callback) { Unregister(callback); }
-				/* () - Serially executes each of the function callbacks within the event queue. */
-				void operator ()(T x)
+                /// <summary> Serially executes each of the callback functions within the event queue. </summary>
+				void operator ()(T ... arguments)
 				{
 					for (auto callback : Subscriptions)
-						callback->Invoke(x);
+						callback->Invoke(arguments...);
 				}
 
 		};
+
+        /// <summary> A class that enables simple events in C++ with callback functions that have no input or output arguments. </summary>
+        /// <remarks> This class is designed to behave similarly to C# 'Action' type events. </remarks>
+        using Action = Event<>;
+
 	}
 }
