@@ -12,9 +12,11 @@ using namespace Cyclone::Utilities;
 class _Event : public ::testing::Test
 {
     protected:
-        int			_number;
-        Action      _a1;
-        Event<int>  _e1;
+        double  	                _number;
+
+        Action                      _a1;
+        Event<int>                  _e1;
+        Event<int, float, double>   _e2;
 
 
         _Event() : 
@@ -30,7 +32,7 @@ class _Event : public ::testing::Test
 
 
 /** INTERNAL FUNCTIONS **/
-static int Number = 0;
+static double Number = 0;
 void NumberFunction()
 {
     Number += 1;
@@ -47,7 +49,7 @@ void NumberFunction(int num1, float num2, double num3)
 class NumberClass
 {
     public:
-        int Number;
+        double Number;
 
         NumberClass() : Number(0) { }
 
@@ -126,16 +128,26 @@ TEST_F(_Event, EventFunctionCallback)
 {
     Number = 0;
     _e1.Register(NumberFunction);
+    _e2.Register(NumberFunction);
 
     _e1(10); _e1(20); _e1(-50);
-    ASSERT_EQ(Number, -20);
+    ASSERT_DOUBLE_EQ(Number, -20.0);
+
+    Number = 0;
+    _e2(2, -4.8f, 3.14159);
+    ASSERT_DOUBLE_EQ(Number, 2 - 4.8f + 3.14159);
 }
 
 TEST_F(_Event, EventMethodCallback)
 {
     NumberClass _c1 = NumberClass();
     _e1.Register(&_c1, &NumberClass::NumberMethod);
+    _e2.Register(&_c1, &NumberClass::NumberMethod);
 
     _e1(10); _e1(20); _e1(-50);
     ASSERT_EQ(_c1.Number, -20);
+
+    _c1.Number = 0;
+    _e2(8, -16.32f, 64.128);
+    ASSERT_DOUBLE_EQ(_c1.Number, 8 - 16.32f + 64.128);
 }
