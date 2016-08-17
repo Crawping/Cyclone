@@ -1,6 +1,7 @@
+#include "Console.h"
+#include "Utilities.h"
 #include <iostream>
 #include <string>
-#include "Console.h"
 
 using std::cout;
 
@@ -12,6 +13,11 @@ namespace Cyclone
     {
         namespace Console
         {
+            void PostGeneralInfo(const string& file, int line, const string& msg)
+            {
+                string fileName = file.substr(file.find_last_of("\\/") + 1);
+                WriteLine("INFO (" + fileName + " " + num2str(line) + "): " + msg);
+            }
             void Write(const string& msg)
             {
                 cout << msg;
