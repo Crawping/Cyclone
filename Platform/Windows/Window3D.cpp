@@ -4,6 +4,8 @@
 #include "Windows/WGL.h"
 #include <Windows.h>
 
+using namespace Cyclone::Utilities;
+
 
 
 /** INTERNAL DATA **/
@@ -67,19 +69,23 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
     return DefWindowProc(win, msg, wparam, lparam);
 }
 /// <summary> Converts a standard text string into an equivalent wide-character one. </summary>
-/// <param name="text"> A string of text. </param>
+/// <param name="text"> A standard string of text. </param>
 /// <returns> A string that is identical to the inputted one except composed of wide-characters. </returns>
 static std::wstring str2wstr(const std::string& text)
 {
     int length = MultiByteToWideChar(CP_UTF8, 0, text.c_str(), -1, NULL, 0);
     if (!length)
-        return L"Failed to convert the inputted text";
+    {
+        PostInfo("Failed to convert the inputted text.");
+        return L"";
+    }
 
     WCHAR* wtext = (WCHAR*)calloc(length + 1, sizeof(WCHAR));
     if (!MultiByteToWideChar(CP_UTF8, 0, text.c_str(), -1, wtext, length + 1))
     {
         free(wtext);
-        return L"Failed to convert the inputted text";
+        PostInfo("Failed to convert the inputted text.");
+        return L"";
     }
 
     return std::wstring(wtext);        
