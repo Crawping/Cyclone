@@ -33,7 +33,7 @@ namespace Cyclone
                 /// <summary> Gets the height of this framebuffer in pixels. </summary>
                 uint Height()           const { return (uint)_size.Y; }
                 /// <summary> Gets the numeric handle (or 'Name' in OpenGL jargon) associated with this framebuffer. </summary>
-                uint ID()               const { return _id; }
+                uint ID()               const override { return _id; }
                 /// <summary> Gets the width and height of this framebuffer in pixels. </summary>
                 const Vector2& Size()   const { return _size; }
                 /// <summary> Gets the width of this framebuffer in pixels. </summary>
