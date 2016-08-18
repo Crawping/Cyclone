@@ -25,7 +25,7 @@ namespace Cyclone
 		        /// <summary> Gets the number of individual elements stored within this buffer. </summary>
                 virtual uint Count()            const = 0;
 		        /// <summary> Gets the unique numeric identifier for this buffer object on the GPU. </summary>
-		        virtual uint ID()               const { return _id; }
+		        virtual uint ID()               const override { return _id; }
 		        /// <summary> Determines whether this buffer contains any data. </summary>
 		        virtual bool IsEmpty()          const { return Count() == 0; }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
