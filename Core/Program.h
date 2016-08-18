@@ -15,7 +15,6 @@ namespace Cyclone
     {
         class FrameBuffer;
         class Mesh3D;
-        class Quad;
         class Scene3D;
         class ShaderPipeline;
     }
@@ -57,13 +56,13 @@ namespace Cyclone
             FrameBuffer*    RenderTarget;
             Window3D*       RenderWindow;
             Transform       View;
-            Quad*           TestQuad;
-
             Mesh3D*         TestShape;
 
 
 
             /** UTILITIES **/
+            void CreateRenderTarget();
             void ParseInputArguments(int nargs, char** args);
+
     };
 }
