@@ -4,6 +4,7 @@
 #include "Windows/WGL.h"
 #include <Windows.h>
 
+using namespace Cyclone::Platform;
 using namespace Cyclone::Utilities;
 
 
@@ -59,9 +60,28 @@ const static int DefaultContextSettings[] =
 /// <returns> An argument of unknown significance. </returns>
 static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+    Window3D* win3D = nullptr;
     switch (msg)
     {
-        case WM_SIZE:       break;
+        case WM_SIZE:       
+            
+            win3D = (Window3D*)GetWindowLong(win, GWLP_USERDATA);
+            if (win3D)
+            {
+                RECT winArea;
+                GetWindowRect(win, &winArea);
+                win3D->Fill(Area
+                (
+                    winArea.left, winArea.top,
+                    winArea.right - winArea.left,
+                    winArea.bottom - winArea.top
+                ));
+
+                win3D->OnSizeChanged();
+            }
+
+            break;
+
         case WM_CLOSE:      PostQuitMessage(0); return 0;
         default:            break;
     }
@@ -150,6 +170,7 @@ namespace Cyclone
                 NULL
             );
 
+            SetWindowLong(Internals->ID, GWLP_USERDATA, (long)this);
             Internals->DeviceContext = GetDC(Internals->ID);
 
             int idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);
@@ -159,11 +180,8 @@ namespace Cyclone
                 return;
             }
 
+            Fill(displayArea);
             ShowWindow(Internals->ID, SW_SHOW);
-
-            RECT renderArea;
-            GetClientRect(Internals->ID, &renderArea);
-            _renderArea = Area(renderArea.left, renderArea.top, renderArea.right, renderArea.bottom);
         }
 
         Window3D::~Window3D()
@@ -179,7 +197,8 @@ namespace Cyclone
         }
 
 
-
+        
+        /** PUBLIC UTILITIES **/
         bool Window3D::ProcessEvent()
         {
             MSG msg;
@@ -198,10 +217,20 @@ namespace Cyclone
 
 
         /** INTERNAL UTILITIES **/
-        void* Window3D::GetDeviceContext()  const { return Internals->DeviceContext; }
-        void* Window3D::GetRenderContext()  const { return Internals->RenderContext; }
-        void* Window3D::GetWindowHandle()   const { return Internals->ID; }
+        void Window3D::Fill(const Area& displayArea)
+        {
+            _displayArea = displayArea;
 
+            RECT renderArea;
+            GetClientRect(Internals->ID, &renderArea);
+            _renderArea = Area
+            (
+                renderArea.left, renderArea.top,
+                renderArea.right - renderArea.left,
+                renderArea.bottom - renderArea.top
+            );
+        }
+        
 
 
         /** RENDERING UTILITIES **/

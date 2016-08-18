@@ -3,9 +3,10 @@
  */
 
 #pragma once
-#include "Area.h"
+#include "Event.h"
 #include "PlatformAPI.h"
 #include "TypeDefinitions.h"
+#include "Spatial/Area.h"
 
 
 
@@ -41,6 +42,14 @@ namespace Cyclone
 
 
 
+                /** EVENTS **/
+
+                Action OnClose;
+
+                Action OnSizeChanged;
+
+
+
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs a new 3D rendering window occupying a specified area of the computer display. </summary>
                 /// <param name="displayArea"> The desired pixel position and size of the window on the desktop. </param>
@@ -62,54 +71,8 @@ namespace Cyclone
 
 
                 /** INTERNAL UTILITIES **/
-                /// <summary> Gets the device context associated with this window on the Windows platform only. </summary>
-                /// <returns>
-                ///     A pointer-to-void that may be freely cast to a Windows-specific device context.
-                ///     <para> </para>
-                ///     When executing this method on the Windows platform, this method returns a <see cref="HDC"/> 
-                ///     instance. On Linux, however, this method will always return a <c>nullptr</c>.
-                /// </returns>
-                /// <remarks>
-                ///     On Windows (and, by extension, DirectX), there are two separate contexts to keep track of. 
-                ///     One is the device context, which represents a configuration structure that details a specific 
-                ///     surface or output on which rendering occurs. For example, this structure may dictate whether 
-                ///     drawing occurs through GDI or through a device driver such as the GPU. The second context is 
-                ///     called the rendering context and is discussed in more detail within the <see cref="GetRenderContext"/>
-                ///     method.
-                /// 
-                ///     Linux also utilitizes device contexts. However, unlike on Windows, direct interaction with 
-                ///     them is not required to set up a rendering context, and therefore they are not discussed 
-                ///     here. This is why execution of this method from a Linux platform will always return a <c>nullptr</c>.
-                /// </remarks>
-                InternalAPI void* GetDeviceContext()    const;
-                /// <summary> Gets the rendering context associated with this window. </summary>
-                /// <returns>
-                ///     A pointer-to-void that may be freely cast to a platform-specific rendering context.
-                ///     <para> </para>
-                ///     When executing this method on the Windows platform, the return value may be cast to a <see cref="HGLRC"/>
-                ///     instance. On Linux, this value may be cast to a <see cref="GLXContext"/>.
-                /// </returns>
-                /// <remarks>
-                ///     When rendering on the Windows platform, there are two separate contexts to keep track of. One is 
-                ///     the device context, discussed in the remarks section of <see cref="GetDeviceContext"/>. The other 
-                ///     is called the rendering context, and it represents a configuration structure that details specific 
-                ///     drawing parameters for rendering on a device context. For example, this structure may dictate the 
-                ///     number of color channels available for rendering, how many bits of memory are required per color 
-                ///     channel, and the configuration of the system-level framebuffer used to present images on-screen to 
-                ///     the user.
-                /// 
-                ///     Linux also utilizes rendering contexts in more or less the same way. However, the format of its 
-                ///     contexts are different and incompatible with those used on Windows. 
-                /// </remarks>
-                InternalAPI void* GetRenderContext()    const;
-                /// <summary> Gets the system-level handle used to address this particular window. </summary>
-                /// <returns>
-                ///     A pointer-to-void that may be freely cast to a platform-specific window handle.
-                /// </returns>
-                /// <remarks>
-                /// 
-                /// </remarks>
-                InternalAPI void* GetWindowHandle()     const;
+
+                InternalAPI void Fill(const Area& displayArea);
 
 
 
