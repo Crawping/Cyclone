@@ -1,11 +1,11 @@
 TODOS:
 - Fix event structures
 	-- Implement them in Window3D
-		> OnExit
+		> OnClose 						(DONE)
 		> OnFocus/OnDefocus
 		> OnMinimize
-		> OnResize
-		
+		> OnResize                      (DONE)
+
 - 2D Rendering
 	-- Fonts & text
 	-- SVG images
