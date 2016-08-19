@@ -32,6 +32,9 @@
     <ClCompile Include="Geometry.cpp">
       <Filter>Utilities\Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="Enumerator.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
