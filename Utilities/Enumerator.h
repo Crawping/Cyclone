@@ -67,27 +67,18 @@ namespace Cyclone
         struct Flag : public Enumerator
         {
 			public:
-				Flag& operator =(const Flag<T>& other) { Value = int(other); return *this; }
+				Flag& operator =(T other)           { Value = int(other); return *this; }
 
-				Flag operator |(int other) = delete;
-				//T operator |(T other) { return (T)(Value | (int)other); }
-				//Flag operator |(Flag<T> other) { Flag<T> copy(*this); copy |= other;  return copy; }
-				Flag operator |(Flag<T> other) { return (Value | (int)other); }
+                T operator &(T other)               { T copy(other); copy &= *this; return copy; }
+                T operator |(T other)               { T copy(other); copy |= *this; return copy; }
 
-				//T& operator |=(T other) { Value |= int(other); return *this }
-				Flag& operator |=(Flag<T> other) { Value |= int(other); return *this; }
+                Flag& operator &=(Flag<T> other)    { Value &= (int)other; return *this; }
+				Flag& operator |=(Flag<T> other)    { Value |= (int)other; return *this; }
 
 
             protected:
                 /// <summary> Constructs a basic integer storage structure for a derived enumerator flag value. </summary>
 		        Flag(int value) : Enumerator(value) { }
-
-
-			//private:
-				operator T() const { return static_cast<T>(this->Value); }
-
-
-
 
         };
     }

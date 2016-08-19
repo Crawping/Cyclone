@@ -112,7 +112,7 @@ TEST_F(_Enumerator, FlagConstruction)
 	ASSERT_NE(_f1, _f2);
 }
 
-TEST_F(_Enumerator, FlagOperators)
+TEST_F(_Enumerator, FlagOrOperators)
 {
 	TestFlag _f1Copy = TestFlag(_f1);
 	_f1Copy |= _f3;
@@ -132,10 +132,9 @@ TEST_F(_Enumerator, FlagOperators)
 	//_f1Copy |= _a1;
 	//_f1Copy = TestFlag::Value1 | AltFlag::Value1;
 
-	AltFlag _a3 = AltFlag(_a1);
-	//_a3 = _a0 | _a2;
-	//ASSERT_EQ(_a3, AltFlag::Value1 | AltFlag::Value2 | AltFlag::Value3);
-	
+	AltFlag _a3 = _a0 | _a1;
+	ASSERT_EQ(_a3, AltFlag::Value1 | AltFlag::Value2);
 
-
+    _a3 |= _a0 | _a1 | _a2;
+    ASSERT_EQ(_a3, AltFlag::Value1 | AltFlag::Value2 | AltFlag::Value3);
 }
