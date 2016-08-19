@@ -44,7 +44,7 @@ struct AccessIntents : public Enumerator
 ///     The values of this enumeration are also flags that can be combined together through the usual 
 ///     bitwise and/or operators. 
 /// </remarks>
-struct BufferAccessIntents : public Flag
+struct BufferAccessIntents : public Flag<BufferAccessIntents>
 {
     enum Intents
     {
