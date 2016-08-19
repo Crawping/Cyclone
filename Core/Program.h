@@ -45,6 +45,7 @@ namespace Cyclone
 
         private:
 
+            bool            _canContinue;
             bool            _debug;
             int             _display;
             bool            _showHelp;
@@ -63,6 +64,8 @@ namespace Cyclone
             /** UTILITIES **/
             void CreateRenderTarget();
             void ParseInputArguments(int nargs, char** args);
+
+            void BreakEventLoop();
 
     };
 }

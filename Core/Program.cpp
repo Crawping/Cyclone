@@ -28,6 +28,7 @@ namespace Cyclone
 
     /** CONSTRUCTOR & DESTRUCTOR **/
     Program::Program(int nargs, char** args) : 
+        _canContinue(true),
         _debug(false),
         _display(0),
         _showHelp(false),
@@ -59,7 +60,8 @@ namespace Cyclone
         Renderer->RenderPipeline(RenderPipeline);
         Renderer->Scene(RenderScene);
 
-        RenderWindow->OnSizeChanged.Register(this, &Program::CreateRenderTarget);
+        RenderWindow->OnResize.Register(this, &Program::CreateRenderTarget);
+        RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
     }
     Program::~Program()
     {
@@ -78,7 +80,7 @@ namespace Cyclone
     /** UTILITIES **/
     void Program::Execute()
     {  
-        while (true)
+        while (_canContinue)
         {
             if (!RenderWindow->ProcessEvent())
                 break;
@@ -96,6 +98,10 @@ namespace Cyclone
 
 
     /** PRIVATE UTILITIES **/
+    void Program::BreakEventLoop()
+    {
+        _canContinue = false;
+    }
     void Program::CreateRenderTarget()
     {
         if (RenderTarget)
