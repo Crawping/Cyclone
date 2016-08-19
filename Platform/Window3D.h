@@ -46,7 +46,7 @@ namespace Cyclone
 
                 Action OnClose;
 
-                Action OnSizeChanged;
+                Action OnResize;
 
 
 
@@ -60,6 +60,8 @@ namespace Cyclone
 
 
                 /** PUBLIC UTILITIES **/
+                PlatformAPI void Close();
+                PlatformAPI void Fill(const Area& displayArea);
                 /// <summary> Pulls the next event from the window's event queue and processes it. </summary>
                 /// <returns> A Boolean <c>true</c> if event processing can continue, or <c>false</c> otherwise. </returns>
                 /// <remarks>
@@ -72,7 +74,7 @@ namespace Cyclone
 
                 /** INTERNAL UTILITIES **/
 
-                InternalAPI void Fill(const Area& displayArea);
+                InternalAPI void UpdateSize();
 
 
 

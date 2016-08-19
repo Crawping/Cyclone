@@ -60,29 +60,21 @@ const static int DefaultContextSettings[] =
 /// <returns> An argument of unknown significance. </returns>
 static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-    Window3D* win3D = nullptr;
+    Window3D* win3D = (Window3D*)GetWindowLong(win, GWLP_USERDATA);
+
     switch (msg)
     {
-        case WM_SIZE:       
-            
-            win3D = (Window3D*)GetWindowLong(win, GWLP_USERDATA);
-            if (win3D)
-            {
-                RECT winArea;
-                GetWindowRect(win, &winArea);
-                win3D->Fill(Area
-                (
-                    winArea.left, winArea.top,
-                    winArea.right - winArea.left,
-                    winArea.bottom - winArea.top
-                ));
-
-                win3D->OnSizeChanged();
-            }
-
+        case WM_CLOSE:      
+            PostInfo("WM_CLOSE message received.");
+            if (win3D) { win3D->Close(); }
+            break;
+        case WM_DESTROY:
+            PostInfo("WM_DESTROY message received.");
+            break;
+        case WM_SIZE:            
+            if (win3D) { win3D->UpdateSize(); }
             break;
 
-        case WM_CLOSE:      PostQuitMessage(0); return 0;
         default:            break;
     }
 
@@ -180,7 +172,7 @@ namespace Cyclone
                 return;
             }
 
-            Fill(displayArea);
+            UpdateSize();
             ShowWindow(Internals->ID, SW_SHOW);
         }
 
@@ -199,6 +191,15 @@ namespace Cyclone
 
         
         /** PUBLIC UTILITIES **/
+        void Window3D::Close()
+        {
+            PostQuitMessage(0);
+            OnClose();
+        }
+        void Window3D::Fill(const Area& displayArea)
+        {
+            SetWindowPos(Internals->ID, 0, displayArea.X, displayArea.Y, displayArea.Width, displayArea.Height, SWP_NOZORDER);
+        }
         bool Window3D::ProcessEvent()
         {
             MSG msg;
@@ -212,14 +213,21 @@ namespace Cyclone
             }
 
             return true;
-        }
+        }        
 
 
 
         /** INTERNAL UTILITIES **/
-        void Window3D::Fill(const Area& displayArea)
+        void Window3D::UpdateSize()
         {
-            _displayArea = displayArea;
+            RECT displayArea;
+            GetWindowRect(Internals->ID, &displayArea);
+            _displayArea = Area
+            (
+                displayArea.left, displayArea.top,
+                displayArea.right - displayArea.left,
+                displayArea.bottom - displayArea.top
+            );
 
             RECT renderArea;
             GetClientRect(Internals->ID, &renderArea);
@@ -229,8 +237,9 @@ namespace Cyclone
                 renderArea.right - renderArea.left,
                 renderArea.bottom - renderArea.top
             );
+
+            OnResize();
         }
-        
 
 
         /** RENDERING UTILITIES **/
