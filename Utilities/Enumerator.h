@@ -4,6 +4,7 @@
 
 /* TODO:
  *  - Find a more elegant way to deal with this issue in C++
+ *  - Update documentation, particularly for the 'Flag' structure
  */
 
 #pragma once
