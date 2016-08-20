@@ -22,14 +22,14 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the pixel size and position of this window (excluding borders) on the display. </summary>
+                const Area& ClientArea()    const { return _clientArea; }
                 /// <summary> Gets the pixel size and position of this window (including borders) on the display. </summary>
                 const Area& DisplayArea()   const { return _displayArea; }
                 /// <summary> Gets the height of this window (including borders) in pixels. </summary>
                 uint Height()               const { return (uint)_displayArea.Height; }
                 /// <summary> Gets whether this window has any borders or decorations surrounding it. </summary>
                 bool IsBordered()           const { return _isBordered; }
-                /// <summary> Gets the pixel size and position of this window (excluding borders) on the display. </summary>
-                const Area& RenderArea()    const { return _renderArea; }
                 /// <summary> Gets the size of this window (including borders) in pixels. </summary>
                 Vector2 Size()              const { return _displayArea.Scale(); }
                 /// <summary> Gets the title string that is displayed on the upper window border. </summary>
@@ -43,9 +43,9 @@ namespace Cyclone
 
 
                 /** EVENTS **/
-
+                /// <summary> An event triggered when the window is about to close. </summary>
                 Action OnClose;
-
+                /// <summary> An event triggered whenever the size of the window changes. </summary>
                 Action OnResize;
 
 
@@ -60,7 +60,10 @@ namespace Cyclone
 
 
                 /** PUBLIC UTILITIES **/
+                /// <summary> Tells the operating to close the window. </summary>
                 PlatformAPI void Close();
+                /// <summary> Modifies the size and position of this window so that it fills a specified rectangle of display space. </summary>
+                /// <param name="displayArea"> A rectangular area specifying the new pixel position and size of the window. </param>
                 PlatformAPI void Fill(const Area& displayArea);
                 /// <summary> Pulls the next event from the window's event queue and processes it. </summary>
                 /// <returns> A Boolean <c>true</c> if event processing can continue, or <c>false</c> otherwise. </returns>
@@ -73,7 +76,11 @@ namespace Cyclone
 
 
                 /** INTERNAL UTILITIES **/
-
+                /// <summary> Updates the cached window position and size data. </summary>
+                /// <remarks>
+                ///     This method is for internal use only and is a necessary means of communication between the window's event loop 
+                ///     and the 'Window3D' object itself.
+                /// </remarks>
                 InternalAPI void UpdateSize();
 
 
@@ -123,9 +130,9 @@ namespace Cyclone
 
 
                 /** PROPERTY DATA **/
+                Area            _clientArea;
                 Area            _displayArea;
                 bool            _isBordered;
-                Area            _renderArea;
                 string          _title;
 
         };

@@ -65,11 +65,9 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
     switch (msg)
     {
         case WM_CLOSE:      
-            PostInfo("WM_CLOSE message received.");
             if (win3D) { win3D->Close(); }
             break;
         case WM_DESTROY:
-            PostInfo("WM_DESTROY message received.");
             break;
         case WM_SIZE:            
             if (win3D) { win3D->UpdateSize(); }
@@ -133,7 +131,6 @@ namespace Cyclone
         /** CONSTRUCTOR & DESTRUCTOR **/
         Window3D::Window3D(const Area& displayArea, const string& title) : 
             Internals(new _window3D{ NULL, NULL, NULL }),
-            _displayArea(displayArea),
             _isBordered(true),
             _title(title)
         {
@@ -184,8 +181,9 @@ namespace Cyclone
                 ReleaseDC(Internals->ID, Internals->DeviceContext);
 
             if (Internals->ID)  { DestroyWindow(Internals->ID); }
-            UnregisterClass(TEXT("OpenGL"), GetModuleHandle(NULL));
             if (Internals)      { delete Internals; }
+
+            UnregisterClass(TEXT("OpenGL"), GetModuleHandle(NULL));
         }
 
 
@@ -220,22 +218,27 @@ namespace Cyclone
         /** INTERNAL UTILITIES **/
         void Window3D::UpdateSize()
         {
-            RECT displayArea;
-            GetWindowRect(Internals->ID, &displayArea);
-            _displayArea = Area
+            RECT displayRect;
+            GetWindowRect(Internals->ID, &displayRect);
+
+            Area displayArea = Area
             (
-                displayArea.left, displayArea.top,
-                displayArea.right - displayArea.left,
-                displayArea.bottom - displayArea.top
+                displayRect.left, displayRect.top,
+                displayRect.right - displayRect.left,
+                displayRect.bottom - displayRect.top
             );
 
-            RECT renderArea;
-            GetClientRect(Internals->ID, &renderArea);
-            _renderArea = Area
+            if (_displayArea == displayArea) { return; }
+            
+            RECT renderRect;
+            GetClientRect(Internals->ID, &renderRect);
+
+            _displayArea = displayArea;
+            _clientArea = Area
             (
-                renderArea.left, renderArea.top,
-                renderArea.right - renderArea.left,
-                renderArea.bottom - renderArea.top
+                renderRect.left, renderRect.top,
+                renderRect.right - renderRect.left,
+                renderRect.bottom - renderRect.top
             );
 
             OnResize();
