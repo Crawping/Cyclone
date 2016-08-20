@@ -93,7 +93,7 @@ namespace Cyclone
             if (!_renderWindow) { return; }
 
             if (_renderTarget)
-                _renderTarget->Blit(0, _renderTarget->DisplayArea(), _renderWindow->RenderArea());
+                _renderTarget->Blit(0, _renderTarget->DisplayArea(), _renderWindow->ClientArea());
 
             _renderWindow->Present();
         }
@@ -137,7 +137,7 @@ namespace Cyclone
             PerFrameBuffer.Set(0, data);
 
             if (_renderWindow)
-                glViewport(0, 0, _renderWindow->RenderArea().Width, _renderWindow->RenderArea().Height);
+                glViewport(0, 0, _renderWindow->ClientArea().Width, _renderWindow->ClientArea().Height);
 
             glActiveTexture(GL_TEXTURE0);
         }

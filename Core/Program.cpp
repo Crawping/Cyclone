@@ -107,7 +107,7 @@ namespace Cyclone
         if (RenderTarget)
             delete RenderTarget;
 
-        Area clientArea = RenderWindow->RenderArea();
+        Area clientArea = RenderWindow->ClientArea();
         View = Transform::Translation(Vector3(-clientArea.Scale() / 2.0f, -clientArea.Height / 2.0f));
         Projection = Transform::PerspectiveProjection
         (
