@@ -49,7 +49,7 @@ namespace Cyclone
         RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
         RenderScene     = new Scene3D();
 
-        CreateRenderTarget();
+        CreateSizedResources();
 
         TestShape = new Mesh3D(Geometry::Cube());
         TestShape->Scale(Vector3(25, 25, 25)).Translate(250, 250, -10);
@@ -60,7 +60,7 @@ namespace Cyclone
         Renderer->RenderPipeline(RenderPipeline);
         Renderer->Scene(RenderScene);
 
-        RenderWindow->OnResize.Register(this, &Program::CreateRenderTarget);
+        RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
         RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
     }
     Program::~Program()
@@ -102,7 +102,7 @@ namespace Cyclone
     {
         _canContinue = false;
     }
-    void Program::CreateRenderTarget()
+    void Program::CreateSizedResources()
     {
         if (RenderTarget)
             delete RenderTarget;
