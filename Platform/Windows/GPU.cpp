@@ -116,10 +116,22 @@ namespace Cyclone
 
 
 
-        /** GENERAL UTILITIES **/
+        /** GENERAL UTILITIES **/        
         string GPU::Report() const
         {
             return ReportErrors();
+        }
+        bool GPU::SupportsExtension(const string& extension) const
+        {
+            int numExtensions = 0;
+            glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
+            for (int a = 0; a < numExtensions; a++)
+            {
+                const char* ext = (const char*)glGetStringi(GL_EXTENSIONS, a);
+                if (string(ext) == extension)
+                    return true;
+            }
+            return false;
         }
 
 

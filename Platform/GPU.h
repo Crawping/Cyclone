@@ -100,7 +100,16 @@ namespace Cyclone
                 
 
                 /** GENERAL UTILITIES **/
+                /// <summary> Generates a human-readable string detailing the internal state of the GPU object and any OpenGL errors encountered. </summary>
+                /// <remarks>
+                ///     Calls to this method impose a significant performance penalty and therefore should only be made sparingly, if 
+                ///     at all. Prefer invoking this functionality only while debugging.
+                /// </remarks>
                 PlatformAPI string Report() const;
+                /// <summary> Determines whether a specific OpenGL extension is available on the current system. </summary>
+                /// <returns> A Boolean <c>true</c> if the given extension is supported, or <c>false</c> otherwise. </returns>
+                /// <param name="extension"> A string containing the name of extension for which support is being queried. </param>
+                PlatformAPI bool SupportsExtension(const string& extension) const;
 
 
 
