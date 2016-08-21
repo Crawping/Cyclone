@@ -88,7 +88,7 @@ namespace Cyclone
         string FrameBuffer::Report() const
         {
             std::stringstream msg;
-            msg << "Framebuffer Description:\n" <<
+            msg << "Framebuffer Description:"                               << "\n" <<
                    "\tID:                 " << _id                          << "\n" <<
                    "\tStatus:             " << ReportCompletionStatus()     << "\n\n";
 
