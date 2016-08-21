@@ -3,14 +3,14 @@ TODOS:
 	-- Implement them in Window3D
 		> OnClickPress
 		> OnClickRelease
-		> OnClose 						(DONE)
+		> OnClose 								(DONE)
 		> OnDefocus
 		> OnFocus
 		> OnKeyPress
 		> OnKeyRelease
 		> OnMinimize
 		> OnPointerMotion
-		> OnResize                      (DONE)
+		> OnResize								(DONE)
 
 - 2D Rendering
 	-- Fonts & text
@@ -22,12 +22,18 @@ TODOS:
 	-- Indexed rendering
 	-- Patch entities
 	-- Varying vertex topologies
+	-- Add 'Update' method to 'IBindable'
 
 - Primitive Types
 	-- Arbitrary precision numbers
 	-- Clock
 	-- Random Number Generator (RNG)
 	
-- Rename Buffers
-	-- GraphicsArray	-> ArrayBuffer
-	-- GraphicsMap		-> MapBuffer	(DONE)
+- Rename
+	-- GraphicsArray		-> ArrayBuffer
+	-- GraphicsMap			-> MapBuffer		(DONE)
+	-- Primitives Folder	-> Geometry
+
+- General
+	-- Integrate exception throws
+	-- Implement GPU buffer element updates
