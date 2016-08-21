@@ -30,4 +30,4 @@ TODOS:
 	
 - Rename Buffers
 	-- GraphicsArray	-> ArrayBuffer
-	-- GraphicsMap		-> MapBuffer
+	-- GraphicsMap		-> MapBuffer	(DONE)

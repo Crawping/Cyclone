@@ -14,7 +14,7 @@ namespace Cyclone
     {
         /// <summary> A class that holds and maintains a map object associated with a data buffer on the GPU. </summary>
         template<typename T, typename U>
-        class GraphicsMap : public GraphicsBuffer
+        class MapBuffer : public GraphicsBuffer
         {
             public:
 
@@ -73,7 +73,7 @@ namespace Cyclone
             protected:
 
                 /** CONSTRUCTOR **/
-                GraphicsMap(BufferTypes type) : GraphicsBuffer(type) { }
+                MapBuffer(BufferTypes type) : GraphicsBuffer(type) { }
 
 
 

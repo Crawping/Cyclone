@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Buffers/GraphicsMap.h"
+#include "Buffers/MapBuffer.h"
 
 
 
@@ -13,10 +13,10 @@ namespace Cyclone
     {
         /// <summary> A class that holds and maintains a map object associated with a uniform buffer on the GPU. </summary>
         template<typename T, typename U>
-        class UniformMap : public GraphicsMap<T, U>
+        class UniformMap : public MapBuffer<T, U>
         {
             public:
-                UniformMap() : GraphicsMap<T, U>(BufferTypes::Uniform) { }
+                UniformMap() : MapBuffer<T, U>(BufferTypes::Uniform) { }
                 ~UniformMap() { }
         };
     }
