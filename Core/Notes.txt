@@ -27,3 +27,7 @@ TODOS:
 	-- Arbitrary precision numbers
 	-- Clock
 	-- Random Number Generator (RNG)
+	
+- Rename Buffers
+	-- GraphicsArray	-> ArrayBuffer
+	-- GraphicsMap		-> MapBuffer
