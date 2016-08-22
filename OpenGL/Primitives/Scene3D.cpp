@@ -24,11 +24,18 @@ namespace Cyclone
             EntitySet.insert(&entity);
             NeedsUpdate = true;
         }
-        void Scene3D::Bind(int slot) const
+        void Scene3D::Bind(VertexTopologies topology) const
         {
-            Vertices.Bind();
-            Commands.Bind();
-            Entities.Bind();
+            if (!Buffers.count(topology)) { return; }
+
+            Buffers.at(topology).Bind();
+        }
+        uint Scene3D::PerTopologyCount(VertexTopologies topology) const
+        {
+            if (!Buffers.count(topology))
+                return 0;
+            
+            return Buffers.at(topology).Count();
         }
         void Scene3D::Remove(const IRenderableEntity& entity)
         {
@@ -40,52 +47,24 @@ namespace Cyclone
         {
             if (!NeedsUpdate) { return; }
             
-            Commands.Clear();
-            Entities.Clear();
-            Vertices.Clear();
+            for (auto topology : _topologies)
+                Buffers[topology].Clear();
+
+            _topologies.clear();
 
             for (auto* entity : EntitySet)
             {
-                AddCommand(*entity);
-                AddEntity(*entity);
-                AddVertices(*entity);
+                Buffers[entity->Topology()].Add(*entity);
+                _topologies.insert(entity->Topology());
             }
 
-            Commands.Update();
-            Entities.Update();
-            Vertices.Update();
+            for (auto topology : _topologies)
+            {
+                Buffers[topology].Update();
+            }
 
             NeedsUpdate = false;
         }
 
-
-
-        /** PRIVATE UTILITIES **/
-        void Scene3D::AddCommand(const IRenderableEntity& entity)
-        {
-            DrawCommand cmd =
-            {
-                entity.Vertices().Count(),
-                1,
-                Vertices.Count(),
-                Commands.Count(),
-            };
-            Commands.Add(cmd);
-        }
-        void Scene3D::AddEntity(const IRenderableEntity& entity)
-        {
-            PerEntity data = 
-            {
-                entity.World().ToArray(),
-                entity.Color(),
-            };
-            Entities.Add(data);
-        }
-        void Scene3D::AddVertices(const IRenderableEntity& entity)
-        {
-            const Array<Vertex>& vertices = entity.Vertices();
-            for (uint a = 0; a < vertices.Count(); a++)
-                Vertices.Add(vertices(a));
-        }
     }
 }

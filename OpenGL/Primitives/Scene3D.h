@@ -3,10 +3,8 @@
  */
 
 #pragma once
-#include "Buffers/CommandBuffer.h"
-#include "Buffers/UniformBuffer.h"
+#include "Buffers/DrawBuffer.h"
 #include "Buffers/UniformData.h"
-#include "Buffers/VertexBuffer.h"
 #include "GL/OpenGLAPI.h"
 #include <map>
 #include <set>
@@ -19,15 +17,20 @@ namespace Cyclone
     {
         class IRenderableEntity;
 
+
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
         class Scene3D
         {
 
             public:
 
-                uint Count() const { return Entities.Count(); }
+                uint Count()            const { return EntitySet.size(); }
+                uint TopologyCount()    const { return Buffers.size(); }
 
-                            
+                const std::set<VertexTopologies>& Topologies() const { return _topologies; }
+                
+
+
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
                 OpenGLAPI Scene3D();
@@ -43,26 +46,19 @@ namespace Cyclone
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderableEntity& entity);
-
+                OpenGLAPI uint PerTopologyCount(VertexTopologies topology) const;
                 OpenGLAPI void Update();
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
-                OpenGLAPI void Bind(int slot = 0) const;
+
+                OpenGLAPI void Bind(VertexTopologies topology) const;
 
             private:
                 bool                        NeedsUpdate;
-
-                CommandBuffer               Commands;
-                UniformBuffer<PerEntity>    Entities;
-                VertexBuffer                Vertices;
                 
-                std::set<const IRenderableEntity*> EntitySet;
-                
+                std::map<VertexTopologies, DrawBuffer>      Buffers;
+                std::set<const IRenderableEntity*>          EntitySet;
+                std::set<VertexTopologies>                  _topologies;
 
-
-                /** PRIVATE UTILITIES **/
-                void AddCommand(const IRenderableEntity& entity);
-                void AddEntity(const IRenderableEntity& entity);
-                void AddVertices(const IRenderableEntity& entity);
         };
     }
 }
