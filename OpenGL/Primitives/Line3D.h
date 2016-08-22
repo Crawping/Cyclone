@@ -15,7 +15,7 @@ namespace Cyclone
         class Line3D : public Entity3D
         {
             public: 
-                Line3D() : Entity3D(Geometry::Quad) { }
+                Line3D() : Entity3D(Geometry::Quad()) { }
         };
     }
 }
