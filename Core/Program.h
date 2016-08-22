@@ -15,6 +15,7 @@ namespace Cyclone
     {
         class FrameBuffer;
         class Mesh3D;
+        class Quad3D;
         class Scene3D;
         class ShaderPipeline;
     }
@@ -58,6 +59,8 @@ namespace Cyclone
             Window3D*       RenderWindow;
             Transform       View;
             Mesh3D*         TestShape;
+
+            Quad3D*         PlaneXZ;
 
 
 
