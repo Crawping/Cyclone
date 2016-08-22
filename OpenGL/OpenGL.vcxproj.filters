@@ -43,19 +43,13 @@
       <Filter>GL</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\Entity3D.h">
-      <Filter>Primitives</Filter>
+      <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\Point3D.h">
-      <Filter>Primitives</Filter>
+      <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\Scene3D.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="Interfaces\IGraphicsBuffer.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Buffers\GraphicsMap.h">
-      <Filter>Buffers</Filter>
+      <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Buffers\GraphicsArray.h">
       <Filter>Buffers</Filter>
@@ -70,13 +64,22 @@
       <Filter>Buffers</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\Mesh3D.h">
-      <Filter>Primitives</Filter>
+      <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\Line3D.h">
-      <Filter>Primitives</Filter>
+      <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Primitives\Quad3D.h">
-      <Filter>Primitives</Filter>
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\MapBuffer.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\DrawBuffer.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IUpdatable.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +114,12 @@
       <Filter>Buffers</Filter>
     </ClCompile>
     <ClCompile Include="Primitives\Scene3D.cpp">
-      <Filter>Primitives</Filter>
+      <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Buffers\CommandBuffer.cpp">
+      <Filter>Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffers\DrawBuffer.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -133,11 +139,11 @@
     <Filter Include="Textures">
       <UniqueIdentifier>{821948ac-5b1a-428e-aa82-665cba1ed961}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Primitives">
-      <UniqueIdentifier>{2d05a31c-b066-46f0-9eac-9aa4b599bb67}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GL">
       <UniqueIdentifier>{b7499290-a0e5-4b8b-abf4-ed711f7c13ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{2d05a31c-b066-46f0-9eac-9aa4b599bb67}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
