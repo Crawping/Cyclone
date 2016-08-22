@@ -6,10 +6,10 @@
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
+#include "Geometry/Mesh3D.h"
+#include "Geometry/Quad3D.h"
+#include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
-#include "Primitives/Mesh3D.h"
-#include "Primitives/Quad3D.h"
-#include "Primitives/Scene3D.h"
 #include "Spatial/Geometry.h"
 
 

@@ -42,15 +42,6 @@
     <ClInclude Include="..\CoreGL\GL\OpenGL.h">
       <Filter>GL</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives\Entity3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Primitives\Point3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Primitives\Scene3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\GraphicsArray.h">
       <Filter>Buffers</Filter>
     </ClInclude>
@@ -63,15 +54,6 @@
     <ClInclude Include="Buffers\CommandBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives\Mesh3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Primitives\Line3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Primitives\Quad3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\MapBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
@@ -80,6 +62,24 @@
     </ClInclude>
     <ClInclude Include="Interfaces\IUpdatable.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Entity3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Line3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Mesh3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Point3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Quad3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Scene3D.h">
+      <Filter>Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,14 +113,14 @@
     <ClCompile Include="Buffers\GraphicsBuffer.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Primitives\Scene3D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Buffers\CommandBuffer.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
     <ClCompile Include="Buffers\DrawBuffer.cpp">
       <Filter>Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Scene3D.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

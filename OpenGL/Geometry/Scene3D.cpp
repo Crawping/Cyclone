@@ -1,5 +1,5 @@
 #include "Interfaces/IRenderable.h"
-#include "Primitives/Scene3D.h"
+#include "Geometry/Scene3D.h"
 #include "Spatial/Transform.h"
 
 

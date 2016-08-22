@@ -5,10 +5,10 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Buffers/VertexBuffer.h"
+#include "Geometry/Scene3D.h"
 #include "Interfaces/IBindable.h"
 #include "Interfaces/IRenderable.h"
 #include "Pipelines/GraphicsPipeline.h"
-#include "Primitives/Scene3D.h"
 #include "Windows/WGL.h"
 
 

@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Imaging/Color4.h"
-#include "Primitives/Entity3D.h"
+#include "Geometry/Entity3D.h"
 #include "Spatial/Geometry.h"
 
 

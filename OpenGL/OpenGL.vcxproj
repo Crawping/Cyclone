@@ -159,6 +159,12 @@
     <ClInclude Include="Buffers\UniformMap.h" />
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="EnumerationsGL.h" />
+    <ClInclude Include="Geometry\Entity3D.h" />
+    <ClInclude Include="Geometry\Line3D.h" />
+    <ClInclude Include="Geometry\Mesh3D.h" />
+    <ClInclude Include="Geometry\Point3D.h" />
+    <ClInclude Include="Geometry\Quad3D.h" />
+    <ClInclude Include="Geometry\Scene3D.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
@@ -166,12 +172,6 @@
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
     <ClInclude Include="Pipelines\Shader.h" />
     <ClInclude Include="Pipelines\ShaderPipeline.h" />
-    <ClInclude Include="Primitives\Entity3D.h" />
-    <ClInclude Include="Primitives\Line3D.h" />
-    <ClInclude Include="Primitives\Mesh3D.h" />
-    <ClInclude Include="Primitives\Point3D.h" />
-    <ClInclude Include="Primitives\Quad3D.h" />
-    <ClInclude Include="Primitives\Scene3D.h" />
     <ClInclude Include="Textures\Texture.h" />
     <ClInclude Include="Textures\Texture2D.h" />
     <ClInclude Include="Textures\TextureSampler.h" />
@@ -183,10 +183,10 @@
     <ClCompile Include="Buffers\FrameBuffer.cpp" />
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
+    <ClCompile Include="Geometry\Scene3D.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />
     <ClCompile Include="Pipelines\ShaderPipeline.cpp" />
-    <ClCompile Include="Primitives\Scene3D.cpp" />
     <ClCompile Include="Textures\Texture.cpp" />
     <ClCompile Include="Textures\Texture2D.cpp" />
     <ClCompile Include="Textures\TextureSampler.cpp" />
