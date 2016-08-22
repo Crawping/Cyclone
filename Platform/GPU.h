@@ -52,8 +52,6 @@ namespace Cyclone
                 PlatformAPI void RenderWindow(Window3D* window);
 
                 PlatformAPI void Scene(Scene3D* scene, int slot = 0);
-                /// <summary> Sets the vertex buffer that will be used by the GPU shader pipeline to render geometry. </summary>
-                PlatformAPI void Vertices(VertexBuffer* vertices, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
                 PlatformAPI void View(const Transform& view);
 
@@ -93,7 +91,7 @@ namespace Cyclone
                 /// </remarks>
                 PlatformAPI void Present();
                 /// <summary> Executes the shader pipeline currently bound to the GPU. </summary>
-                PlatformAPI void Render();
+                PlatformAPI void Execute();
 
                 PlatformAPI void Update();
 

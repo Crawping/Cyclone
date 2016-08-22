@@ -1,3 +1,4 @@
+#include "CGL.h"
 #include "Console.h"
 #include "GPU.h"
 #include "Window3D.h"
@@ -45,14 +46,6 @@ namespace Cyclone
         void GPU::Scene(Scene3D* scene, int slot)
         {
             _renderScene = scene;
-            if (_renderScene)
-                _renderScene->Bind(slot);
-        }
-        void GPU::Vertices(VertexBuffer* vertices, int slot)
-        {
-            _vertices = vertices;
-            if (_vertices)
-                _vertices->Bind(slot);
         }
         void GPU::View(const Transform& view)
         {
@@ -97,13 +90,19 @@ namespace Cyclone
 
             _renderWindow->Present();
         }
-        void GPU::Render()
+        void GPU::Execute()
         {
             uint numDraws = 1;
             if (_renderScene)
-                numDraws = _renderScene->Count();
-
-            glMultiDrawArraysIndirect(VertexTopologies::Triangles, 0, numDraws, 0);
+            {
+                for (VertexTopologies topology : _renderScene->Topologies())
+                {
+                    _renderScene->Bind(topology);
+                    glMultiDrawArraysIndirect(topology, 0, _renderScene->PerTopologyCount(topology), 0);
+                }
+            }
+            
+            //glMultiDrawArraysIndirect(VertexTopologies::Triangles, 0, numDraws, 0);
         }
         void GPU::Update()
         {
