@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Imaging/Color4.h"
 #include "Primitives/Entity3D.h"
 #include "Spatial/Geometry.h"
 
@@ -15,7 +16,7 @@ namespace Cyclone
         class Point3D : public Entity3D
         {
 	        public:
-		        Point3D() : Entity3D(Geometry::Point) { }
+		        Point3D() : Entity3D(Color4::White, VertexTopologies::Points, Geometry::Point()) { }
         };
     }
 }
