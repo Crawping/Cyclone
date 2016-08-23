@@ -16,11 +16,11 @@ namespace Cyclone
 
             public:
                 
-                virtual bool NeedsUpdate() const = 0;
+                virtual bool NeedsUpdate()  const = 0;
                 
-                virtual ~IUpdatable() { }
+                virtual ~IUpdatable()       { }
 
-                virtual void Update() = 0;
+                virtual void Update()       = 0;
                 
         };
     }
