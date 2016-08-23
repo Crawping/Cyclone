@@ -7,7 +7,7 @@
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
-#include "Interfaces/IUpdatable.h"
+#include "Interfaces/IGraphicsBuffer.h"
 #include <set>
 
 
@@ -18,15 +18,14 @@ namespace Cyclone
     {
         class IRenderableEntity;
 
-        class DrawBuffer : public IBindable, public IUpdatable
+        class DrawBuffer : public IGraphicsBuffer
         {
             public:
                 
                 /** PROPERTIES **/
-                uint Count()                    const { return Commands.Count(); }
+                uint Count()                    const override { return Commands.Count(); }
                 uint ID()                       const override { return 0; }
                 bool NeedsUpdate()              const override { return _needsUpdate; }
-                VertexTopologies Topology()     const { return _topology; }
 
 
 
@@ -37,8 +36,9 @@ namespace Cyclone
 
                 /** BUFFER UTILITIES **/
                 OpenGLAPI void Add(const IRenderableEntity& entity);
-                OpenGLAPI void Clear();
+                OpenGLAPI void Clear()                        override;
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
+                OpenGLAPI void Update()                       override;
 
 
 
@@ -50,14 +50,11 @@ namespace Cyclone
                 OpenGLAPI void Unbind()                       const override;
                 OpenGLAPI void UnbindEntity()                 const override;
                 OpenGLAPI void UnbindResources()              const override;
-
-                OpenGLAPI void Update()                       override;
-
+                
 
 
             private:
                 bool                                _needsUpdate;
-                VertexTopologies                    _topology;
 
                 CommandBuffer                       Commands;
                 UniformBuffer<PerEntity>            Entities;
