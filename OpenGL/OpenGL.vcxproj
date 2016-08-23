@@ -151,7 +151,7 @@
     <ClInclude Include="Buffers\CommandBuffer.h" />
     <ClInclude Include="Buffers\DrawBuffer.h" />
     <ClInclude Include="Buffers\FrameBuffer.h" />
-    <ClInclude Include="Buffers\GraphicsArray.h" />
+    <ClInclude Include="Buffers\ArrayBuffer.h" />
     <ClInclude Include="Buffers\GraphicsBuffer.h" />
     <ClInclude Include="Buffers\MapBuffer.h" />
     <ClInclude Include="Buffers\UniformBuffer.h" />

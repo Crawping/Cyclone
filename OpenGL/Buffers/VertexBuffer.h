@@ -4,7 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Buffers/GraphicsArray.h"
+#include "Buffers/ArrayBuffer.h"
 #include "GL/OpenGLAPI.h"
 #include "Math/Array.h"
 #include "Spatial/Vertex.h"
@@ -15,7 +15,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class VertexBuffer : public GraphicsArray<Vertex>
+        class VertexBuffer : public ArrayBuffer<Vertex>
         {
 
             public:

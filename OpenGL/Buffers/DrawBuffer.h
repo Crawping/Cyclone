@@ -41,6 +41,7 @@ namespace Cyclone
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
 
 
+
                 /** BINDING UTILITIES **/
                 OpenGLAPI void Bind(int slot = 0)             const override;
                 OpenGLAPI void BindEntity(int slot = 0)       const override;
@@ -55,14 +56,14 @@ namespace Cyclone
 
 
             private:
-                bool                        _needsUpdate;
-                VertexTopologies            _topology;
+                bool                                _needsUpdate;
+                VertexTopologies                    _topology;
 
-                CommandBuffer               Commands;
-                UniformBuffer<PerEntity>    Entities;
-                VertexBuffer                Vertices;
+                CommandBuffer                       Commands;
+                UniformBuffer<PerEntity>            Entities;
+                VertexBuffer                        Vertices;
 
-                std::set<const IRenderableEntity*> ExistingEntities;
+                std::set<const IRenderableEntity*>  ExistingEntities;
 
 
                 void AddCommand(const IRenderableEntity* entity);

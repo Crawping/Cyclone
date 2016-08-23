@@ -4,8 +4,10 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Buffers/GraphicsArray.h"
+#include "Buffers/ArrayBuffer.h"
 #include "GL/OpenGLAPI.h"
+
+
 
 namespace Cyclone
 {
@@ -21,17 +23,14 @@ namespace Cyclone
         };
 
 
-        class CommandBuffer : public GraphicsArray<DrawCommand>
+        class CommandBuffer : public ArrayBuffer<DrawCommand>
         {
             public:
                 CommandBuffer();
 
-
                 void BindEntity(int slot = 0) const override;
                 
         };
-
-
 
     }
 }

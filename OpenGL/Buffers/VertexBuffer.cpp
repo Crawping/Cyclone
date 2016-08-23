@@ -18,7 +18,7 @@ namespace Cyclone
 	        
         }
         VertexBuffer::VertexBuffer(uint n, const Vertex* vertices) :
-            GraphicsArray<Vertex>(BufferTypes::Array, n),
+            ArrayBuffer<Vertex>(BufferTypes::Array, n),
             VAOID(0)
         {
 	        for (uint a = 0; a < n; a++)
@@ -58,7 +58,7 @@ namespace Cyclone
         /** PROTECTED UTILITIES **/
         void VertexBuffer::Create()
         {
-            GraphicsArray<Vertex>::Create();
+            ArrayBuffer<Vertex>::Create();
             glCreateVertexArrays(1, &VAOID);
 
             glVertexArrayAttribBinding(VAOID, 0, 0);
@@ -78,7 +78,7 @@ namespace Cyclone
                 glDeleteVertexArrays(1, &VAOID);
                 VAOID = 0;
             }
-            GraphicsArray<Vertex>::Destroy();
+            ArrayBuffer<Vertex>::Destroy();
         }
     }
 }

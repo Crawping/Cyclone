@@ -8,7 +8,7 @@ namespace Cyclone
     {
 
         CommandBuffer::CommandBuffer() : 
-            GraphicsArray<DrawCommand>(BufferTypes::DrawIndirect)
+            ArrayBuffer<DrawCommand>(BufferTypes::DrawIndirect)
         {
 
         }

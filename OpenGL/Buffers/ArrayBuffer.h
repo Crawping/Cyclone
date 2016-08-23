@@ -14,7 +14,7 @@ namespace Cyclone
     {
 
         template<typename T>
-        class GraphicsArray : public GraphicsBuffer
+        class ArrayBuffer : public GraphicsBuffer
         {
             public:
 
@@ -108,11 +108,11 @@ namespace Cyclone
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty one-dimensional data buffer whose data can be accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
-		        GraphicsArray(BufferTypes type) : GraphicsBuffer(type) { }
+		        ArrayBuffer(BufferTypes type) : GraphicsBuffer(type) { }
                 /// <summary> Constructs a one-dimensional data buffer of a specified size whose data can accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
                 /// <param name="length"> The desired number of data elements to stored within the buffer. </param>
-		        GraphicsArray(BufferTypes type, uint length) : 
+		        ArrayBuffer(BufferTypes type, uint length) : 
                     GraphicsBuffer(type),
                     Data(length)
                 {
