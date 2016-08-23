@@ -21,7 +21,6 @@ TODOS:
 	-- Entity instancing
 	-- Indexed rendering
 	-- Patch entities
-	-- Varying vertex topologies
 	-- Add 'Update' method to 'IBindable'
 
 - Primitive Types
@@ -30,10 +29,32 @@ TODOS:
 	-- Random Number Generator (RNG)
 	
 - Rename
-	-- GraphicsArray		-> ArrayBuffer
+	-- GraphicsArray		-> ArrayBuffer      (DONE)
 	-- GraphicsMap			-> MapBuffer		(DONE)
-	-- Primitives Folder	-> Geometry
+	-- Primitives Folder	-> Geometry         (DONE)
 
 - General
 	-- Integrate exception throws
 	-- Implement GPU buffer element updates
+
+- Scenes
+    -- Varying vertex topologies
+    -- Varying shader pipelines
+        > Compute
+        > Deferred
+        > Forward
+        > Indirect
+    
+
+
+SCENE ORGANIZATION
+- Per-pipeline buffers
+    -- Per-topology draw buffers
+    -- Secondary resources
+
+- Execution
+    -- Iterate through each pipeline object
+        > Iterate through each draw buffer
+            >> Bind the draw buffer
+            >> Bind secondary resources for the draw buffer
+            >> Execute the pipeline
