@@ -2,17 +2,10 @@
  * Written by Josh Grooms on 20150918
  */
 
-#include "Imaging/Color4.h"
 #include "Console.h"
 #include "EnumerationsGL.h"
-#include "Utilities.h"
-
-#include "Buffers/FrameBuffer.h"
-#include "Buffers/VertexBuffer.h"
 #include "Pipelines/Shader.h"
 #include "Pipelines/ShaderPipeline.h"
-#include "Spatial/Geometry.h"
-#include "Spatial/Transform.h"
 
 
 

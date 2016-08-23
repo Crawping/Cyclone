@@ -3,13 +3,7 @@
  */
 
 #pragma once
-#include "EnumerationsGL.h"
 #include "Pipelines/GraphicsPipeline.h"
-#include "Textures/Texture2D.h"
-#include "Buffers/UniformBuffer.h"
-#include "Buffers/UniformData.h"
-#include "Buffers/VertexBuffer.h"
-#include <map>
 
 
 
