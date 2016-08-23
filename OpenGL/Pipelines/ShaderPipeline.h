@@ -11,8 +11,6 @@
 #include "Buffers/VertexBuffer.h"
 #include <map>
 
-struct Color4;
-struct Transform;
 
 
 namespace Cyclone
