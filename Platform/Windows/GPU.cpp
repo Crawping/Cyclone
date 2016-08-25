@@ -101,8 +101,6 @@ namespace Cyclone
                     glMultiDrawArraysIndirect(topology, 0, _renderScene->PerTopologyCount(topology), 0);
                 }
             }
-            
-            //glMultiDrawArraysIndirect(VertexTopologies::Triangles, 0, numDraws, 0);
         }
         void GPU::Update()
         {
