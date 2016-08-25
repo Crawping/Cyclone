@@ -21,7 +21,7 @@ TODOS:
 	-- Entity instancing
 	-- Indexed rendering
 	-- Patch entities
-	-- Add 'Update' method to 'IBindable'
+	-- Implement IUpdatable Interface           (DONE)
 
 - Primitive Types
 	-- Arbitrary precision numbers
@@ -44,8 +44,8 @@ TODOS:
         > Deferred
         > Forward
         > Indirect
-    
 
+===============================================================================================================================
 
 SCENE ORGANIZATION
 - Per-pipeline buffers
@@ -58,3 +58,54 @@ SCENE ORGANIZATION
             >> Bind the draw buffer
             >> Bind secondary resources for the draw buffer
             >> Execute the pipeline
+
+
+
+RENDERABLE ENTITIES
+- Appearance
+    -- Material
+    -- Illuminance, specularity, lighting parameters
+    -- Texture
+    -- Base Color
+
+- Component Entities
+
+- Geometry
+    -- Vertices & indices
+    -- World transformation
+    -- Vertex topology
+    
+
+
+GPU PIPELINES
+- Blend Settings
+
+- Base/Clear Color
+
+- Shader Stages
+
+
+
+EXAMPLE SCENE RENDERING TASK
+- Make a bunch of geometric primitives
+    > Points
+    > Triangles
+    > Patches
+
+- Make associated appearances for primitives
+    > Single color
+    > Textured
+    > Translucent and textured and colored
+
+- Bind a shader pipeline
+    > Points
+        > Subroutines of another pipeline?
+        > Altogether separate pipeline
+    > Triangles
+        > Another pipeline
+    > Patches
+        > Yet another pipeline with geometry and tessellation shaders
+
+- Bind buffers containing entity information
+
+- Render a set of related geometry
