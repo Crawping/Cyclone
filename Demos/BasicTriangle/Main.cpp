@@ -15,24 +15,19 @@ class Program : public BasicRenderer
     public:
         Program() : 
             BasicRenderer("Basic Triangle Rendering"),
-            Triangle(nullptr)
+            Triangle(Geometry::Triangle())
         { 
             CreateSizedResources();
             CreateSceneResources();
         }
-        ~Program()
-        {
-            if (Triangle) { delete Triangle; }
-        }
 
     protected:
-        Mesh3D*  Triangle;
+        Mesh3D  Triangle;
 
         void CreateSceneResources() override
         {
-            Triangle = new Mesh3D(Geometry::Triangle());
-            Triangle->Scale(100, 100).Translate(512 - 50, 480 - 50);
-            RenderScene->Add(*Triangle);
+            Triangle.Scale(100, 100).Translate(512 - 50, 480 - 50);
+            RenderScene->Add(Triangle);
         }
 };
 
@@ -40,9 +35,7 @@ class Program : public BasicRenderer
 
 int main(int nargs, char** args)
 {
-    Program* app = new Program();
-    app->Execute();
-
-    delete app;
+    Program app;
+    app.Execute();
     return 0;
 }
