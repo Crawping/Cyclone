@@ -15,7 +15,8 @@ namespace Renderers
 
     /** CONSTRUCTOR & DESTRUCTOR **/
     BasicRenderer::BasicRenderer(const string& title) : 
-        CanContinue(true),
+        _canContinue(true),
+        ClearColor(Color4::Gray),
         Renderer(nullptr),
         RenderScene(nullptr),
         RenderPipeline(nullptr),
@@ -23,7 +24,7 @@ namespace Renderers
     {
         if (!cglLoadAPI())
         {
-            CanContinue = false;
+            _canContinue = false;
             return;
         }
 
@@ -55,10 +56,10 @@ namespace Renderers
     /** EVENT LOOP **/
     void BasicRenderer::Execute()
     {
-        while (CanContinue)
+        while (CanContinue())
         {
             RenderWindow->ProcessEvent();
-            Renderer->Clear(Color4::Blue);
+            Renderer->Clear(ClearColor);
 
             Renderer->Update();
             Renderer->Execute();
