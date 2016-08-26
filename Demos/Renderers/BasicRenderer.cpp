@@ -69,10 +69,6 @@ namespace Renderers
 
 
     /** UTILITIES **/
-    //void BasicRenderer::CreateSceneResources()
-    //{
-
-    //}
     void BasicRenderer::CreateSizedResources()
     {
         Area clientArea = RenderWindow->ClientArea();
