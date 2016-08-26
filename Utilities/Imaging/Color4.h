@@ -24,6 +24,7 @@ namespace Cyclone
             const static Color4 Black;
             const static Color4 Blue;
             const static Color4 Cyan;
+            const static Color4 Gray;
             const static Color4 Green;
             const static Color4 Magenta;
             const static Color4 Red;
