@@ -28,11 +28,6 @@ class Program : public BasicRenderer
     protected:
         Mesh3D*  Triangle;
 
-        void CreateSizedResources() override
-        {
-            PostInfo("Sized Resources Called.");
-            BasicRenderer::CreateSizedResources();
-        }
         void CreateSceneResources() override
         {
             Triangle = new Mesh3D(Geometry::Triangle());
