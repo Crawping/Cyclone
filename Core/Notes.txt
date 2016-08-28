@@ -22,6 +22,7 @@ TODOS:
 	-- Indexed rendering
 	-- Patch entities
 	-- Implement IUpdatable Interface           (DONE)
+	-- Customizable vertex layouts
 
 - Primitive Types
 	-- Arbitrary precision numbers
@@ -39,7 +40,7 @@ TODOS:
     -- Implement HID control interface
 
 - Scenes
-    -- Varying vertex topologies
+    -- Varying vertex topologies				(DONE)
     -- Varying shader pipelines
         > Compute
         > Deferred
@@ -64,7 +65,7 @@ SCENE ORGANIZATION
             >> Bind secondary resources for the draw buffer
             >> Execute the pipeline
 
-
+===============================================================================================================================
 
 RENDERABLE ENTITIES
 - Appearance
@@ -80,7 +81,7 @@ RENDERABLE ENTITIES
     -- World transformation
     -- Vertex topology
     
-
+===============================================================================================================================
 
 GPU PIPELINES
 - Blend Settings
@@ -89,7 +90,7 @@ GPU PIPELINES
 
 - Shader Stages
 
-
+===============================================================================================================================
 
 EXAMPLE SCENE RENDERING TASK
 - Make a bunch of geometric primitives
