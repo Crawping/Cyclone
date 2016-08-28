@@ -1,5 +1,9 @@
+/* CHANGELOG 
+ * Written by Josh Grooms on 20160825
+ */
 
 #include "BasicRenderer.h"
+#include "Window3D.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
 #include "Spatial/Geometry.h"
@@ -17,8 +21,7 @@ class Program : public BasicRenderer
             BasicRenderer("Basic Triangle Rendering"),
             Triangle(Geometry::Triangle())
         { 
-            CreateSizedResources();
-            CreateSceneResources();
+            Initialize();
         }
 
     protected:
@@ -26,7 +29,8 @@ class Program : public BasicRenderer
 
         void CreateSceneResources() override
         {
-            Triangle.Scale(100, 100).Translate(512 - 50, 480 - 50);
+            BasicRenderer::CreateSceneResources();
+            Triangle.Scale(100, 100).Position(RenderWindow->ClientArea().Center());
             RenderScene->Add(Triangle);
         }
 };
