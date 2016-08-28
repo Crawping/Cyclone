@@ -49,6 +49,8 @@ namespace Cyclone
             /// <remarks> The top edge of the area is calculated by adding the height of the area to its bottom edge coordinate. </remarks>
             constexpr float Top()           const { return Y + Height; }
 
+            /// <summary> Gets the (x, y) coordinates for the center of the rectangular area. </summary>
+            constexpr Vector2 Center()      const { return Vector2((Right() - Left()) / 2.0f, (Top() - Bottom()) / 2.0f); }
             /// <summary> Gets the (x, y) coordinates for the lower-left corner of the rectangular area. </summary>
             constexpr Vector2 Position()    const { return Vector2(X, Y); }
             /// <summary> Gets the width and height of the rectangular area. </summary>
