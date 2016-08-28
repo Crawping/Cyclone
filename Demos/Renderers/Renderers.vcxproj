@@ -132,6 +132,11 @@
   <ItemGroup>
     <ClCompile Include="BasicRenderer.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Default.hsl" />
+    <None Include="Shaders\Default.psl" />
+    <None Include="Shaders\Default.vsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

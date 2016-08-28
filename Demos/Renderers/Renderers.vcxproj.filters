@@ -7,4 +7,20 @@
   <ItemGroup>
     <ClCompile Include="BasicRenderer.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{4bfbc03e-2ca5-472b-85b1-a545ec788ec9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Default.hsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Default.psl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Default.vsl">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
 </Project>
