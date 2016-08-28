@@ -65,6 +65,7 @@ namespace Renderers
             ShaderPipeline*     RenderPipeline;
             Scene3D*            RenderScene;
             Window3D*           RenderWindow;
+            string              Title;
 
 
 
@@ -75,25 +76,37 @@ namespace Renderers
             
 
 
-            /** UTILITIES **/
-            /// <summary> Sets a flag that prevents the rendering engine's main event loop from executing. </summary>
-            RendererAPI virtual void BreakEventLoop()           { _canContinue = false; }
+
+            /** INITIALIZATION UTILITIES **/
+
+            RendererAPI virtual void CreateRenderingWindow();
             /// <summary> Initializes any resources related to rendering 3D scenes of geometric primitives. </summary>
             /// <remarks>
             ///     This base implementation performs no actions and should be overridden by any subclass that wishes 
             ///     to add new geometry to the stored scene.
             /// </remarks>
-            RendererAPI virtual void CreateSceneResources()     { }
+            RendererAPI virtual void CreateSceneResources();
+
+            RendererAPI virtual void CreateShaderPipeline();
             /// <summary> Initializes any resources that depend on the size of the size of the rendering window. </summary>
             /// <remarks>
             ///     This base implementation initializes both the view and projection transformation matrices.
             /// </remarks>
             RendererAPI virtual void CreateSizedResources();
 
+            RendererAPI virtual void Initialize();
+
+
+
+            /** PROTECTED UTILITIES **/
+            /// <summary> Sets a flag that prevents the rendering engine's main event loop from executing. </summary>
+            RendererAPI virtual void BreakEventLoop() { _canContinue = false; }
+
 
 
         private:
             bool    _canContinue;
+
 
     };
 

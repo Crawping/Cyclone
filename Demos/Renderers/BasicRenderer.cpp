@@ -20,7 +20,8 @@ namespace Renderers
         Renderer(nullptr),
         RenderScene(nullptr),
         RenderPipeline(nullptr),
-        RenderWindow(nullptr)
+        RenderWindow(nullptr),
+        Title(title)
     {
         if (!cglLoadAPI())
         {
@@ -28,17 +29,7 @@ namespace Renderers
             return;
         }
 
-        Renderer = new GPU();
-        RenderWindow = new Window3D(Area(0, 0, 1024, 960), title);
-        RenderPipeline = new ShaderPipeline("../../OpenGL/Shaders/Default.vsl", "../../OpenGL/Shaders/Default.psl");
-        RenderScene = new Scene3D();
-
-        Renderer->RenderPipeline(RenderPipeline);
-        Renderer->RenderWindow(RenderWindow);
-        Renderer->Scene(RenderScene);
-
-        RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
-        RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
+        Renderer = new GPU();        
     }
 
     BasicRenderer::~BasicRenderer()
@@ -69,7 +60,25 @@ namespace Renderers
 
 
 
-    /** UTILITIES **/
+    /** INITIALIZATION UTILITIES **/
+    void BasicRenderer::CreateRenderingWindow()
+    {
+        RenderWindow = new Window3D(Area(0, 0, 1024, 960), Title);
+        Renderer->RenderWindow(RenderWindow);
+
+        RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
+        RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
+    }
+    void BasicRenderer::CreateSceneResources()
+    {
+        RenderScene = new Scene3D();
+        Renderer->Scene(RenderScene);
+    }
+    void BasicRenderer::CreateShaderPipeline()
+    {
+        RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Default.psl");
+        Renderer->RenderPipeline(RenderPipeline);
+    }
     void BasicRenderer::CreateSizedResources()
     {
         Area clientArea = RenderWindow->ClientArea();
@@ -85,6 +94,12 @@ namespace Renderers
         Renderer->Projection(projection);
         Renderer->View(view);
     }
-
+    void BasicRenderer::Initialize()
+    {
+        CreateRenderingWindow();
+        CreateShaderPipeline();
+        CreateSizedResources();
+        CreateSceneResources();
+    }
 
 }
