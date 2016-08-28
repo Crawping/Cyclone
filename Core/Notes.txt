@@ -46,6 +46,10 @@ TODOS:
         > Forward
         > Indirect
 
+- Shaders
+	-- Make 'include' directive more robust
+	-- Implement a 'define' directive
+
 ===============================================================================================================================
 
 SCENE ORGANIZATION
