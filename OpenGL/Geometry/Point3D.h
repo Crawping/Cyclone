@@ -16,6 +16,22 @@ namespace Cyclone
         class Point3D : public Entity3D
         {
 	        public:
+                using Entity3D::Depth;
+                using Entity3D::Height;
+                using Entity3D::Width;
+
+
+
+                /** PROPERTIES **/
+                OpenGLAPI Point3D& Depth(float z)                             override;
+                OpenGLAPI Point3D& Height(float y)                            override;
+                OpenGLAPI Point3D& Width(float x)                             override;
+
+                OpenGLAPI Point3D& Scale(const Vector3& value)                override;
+                OpenGLAPI Point3D& Scale(float x, float y, float z = 1.0f)    override;
+
+
+
 		        Point3D() : Entity3D(Color4::White, VertexTopologies::Points, Geometry::Point()) { }
         };
     }
