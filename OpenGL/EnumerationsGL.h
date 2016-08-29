@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Enumerator.h"
+#include "TypeDefinitions.h"
 #include "GL/OpenGL.h"
 #include "GL/OpenGLAPI.h"
 
@@ -95,6 +96,54 @@ struct BufferTypes : public Enumerator
     };
 
     BufferTypes(enum Buffers b = Uniform) : Enumerator((int)b) { }
+};
+
+
+struct NumericFormats : public Enumerator
+{
+    enum Formats
+    {
+        Byte                        = GL_BYTE,
+        Double                      = GL_DOUBLE,
+        Fixed                       = GL_FIXED,
+        Float                       = GL_FLOAT,
+        Int                         = GL_INT,
+        PackedInt                   = GL_INT_2_10_10_10_REV,
+        PackedFloat                 = GL_UNSIGNED_INT_10F_11F_11F_REV,
+        PackedUint                  = GL_UNSIGNED_INT_2_10_10_10_REV,
+        Short                       = GL_SHORT,
+        ShortFloat                  = GL_HALF_FLOAT,
+        UByte                       = GL_UNSIGNED_BYTE,
+        UInt                        = GL_UNSIGNED_INT,
+        UShort                      = GL_UNSIGNED_SHORT,
+    };
+
+    NumericFormats(enum Formats f = UByte) : Enumerator((int)f) { }
+
+    uint ByteSize() const
+    {
+        switch (Value)
+        {
+            case Byte:          
+            case UByte:         return 8;
+
+            case Short:
+            case ShortFloat:
+            case UShort:        return 16;
+
+            case Fixed:         
+            case Float:         
+            case Int:           
+            case PackedInt:
+            case PackedFloat:
+            case PackedUint:
+            case UInt:          return 32;
+
+            case Double:        return 64;
+
+            default:            return 0;            
+        }
+    }
 };
 
 /// <summary> A list of possible errors indicating issues that can arise within an OpenGL rendering pipeline. </summary>
