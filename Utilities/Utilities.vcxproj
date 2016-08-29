@@ -162,7 +162,6 @@
     <ClCompile Include="Math\Vector4.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
     <ClCompile Include="Spatial\Border.cpp" />
-    <ClCompile Include="Spatial\Geometry.cpp" />
     <ClCompile Include="Spatial\Transform.cpp" />
     <ClCompile Include="Spatial\Volume.cpp" />
     <ClCompile Include="Utilities.cpp" />
@@ -182,7 +181,6 @@
     <ClInclude Include="Property.h" />
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
-    <ClInclude Include="Spatial\Geometry.h" />
     <ClInclude Include="Spatial\Transform.h" />
     <ClInclude Include="Spatial\Vertex.h" />
     <ClInclude Include="Spatial\Volume.h" />

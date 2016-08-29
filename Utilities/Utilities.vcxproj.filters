@@ -33,9 +33,6 @@
     <ClCompile Include="Imaging\Color4.cpp">
       <Filter>Imaging</Filter>
     </ClCompile>
-    <ClCompile Include="Spatial\Geometry.cpp">
-      <Filter>Spatial</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
@@ -56,9 +53,6 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Spatial\Area.h">
-      <Filter>Spatial</Filter>
-    </ClInclude>
-    <ClInclude Include="Spatial\Geometry.h">
       <Filter>Spatial</Filter>
     </ClInclude>
     <ClInclude Include="Spatial\Transform.h">
