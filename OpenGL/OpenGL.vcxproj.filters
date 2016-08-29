@@ -81,6 +81,12 @@
     <ClInclude Include="Buffers\ArrayBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\Vertices.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Geometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -123,6 +129,9 @@
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Geometry\Point3D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Geometry.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>

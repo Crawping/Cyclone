@@ -89,7 +89,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CoreGL;..\CoreGL\GL;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\Buffers;.\Interfaces;.\Pipelines;.\Textures</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CoreGL;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\Buffers;.\Interfaces;.\Pipelines;.\Textures</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -160,11 +160,13 @@
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="EnumerationsGL.h" />
     <ClInclude Include="Geometry\Entity3D.h" />
+    <ClInclude Include="Geometry\Geometry.h" />
     <ClInclude Include="Geometry\Line3D.h" />
     <ClInclude Include="Geometry\Mesh3D.h" />
     <ClInclude Include="Geometry\Point3D.h" />
     <ClInclude Include="Geometry\Quad3D.h" />
     <ClInclude Include="Geometry\Scene3D.h" />
+    <ClInclude Include="Geometry\Vertices.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
@@ -183,6 +185,7 @@
     <ClCompile Include="Buffers\FrameBuffer.cpp" />
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexBuffer.cpp" />
+    <ClCompile Include="Geometry\Geometry.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Geometry\Scene3D.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
