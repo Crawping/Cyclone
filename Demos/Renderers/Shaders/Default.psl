@@ -6,7 +6,6 @@
 #include "Default.hsl"
 
 in vec2         TexUV;
-in vec3         VertexPosition;
 flat in int     EntityIndex;
 
 out vec4 OutputColor;
