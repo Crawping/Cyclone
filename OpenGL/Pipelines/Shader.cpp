@@ -1,6 +1,6 @@
 #include "Console.h"
 #include "EnumerationsGL.h"
-#include "OpenGL.h"
+#include "GL/OpenGL.h"
 #include "Shader.h"
 #include "Utilities.h"
 #include <regex>

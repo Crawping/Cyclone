@@ -1,7 +1,7 @@
 #include "EnumerationsGL.h"
-#include "FrameBuffer.h"
-#include "OpenGL.h"
-#include "Texture2D.h"
+#include "Buffers/FrameBuffer.h"
+#include "GL/OpenGL.h"
+#include "Textures/Texture2D.h"
 #include "Utilities.h"
 #include <sstream>
 
