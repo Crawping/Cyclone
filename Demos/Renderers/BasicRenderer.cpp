@@ -6,7 +6,8 @@
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
-#include "Spatial/Geometry.h"
+//#include "Spatial/Geometry.h"
+//#include "Geometry/Geometry.h"
 
 
 
@@ -52,7 +53,7 @@ namespace Renderers
             RenderWindow->ProcessEvent();
             Renderer->Clear(ClearColor);
 
-            Renderer->Update();
+            UpdateScene();
             Renderer->Execute();
             Renderer->Present();
         }
@@ -87,8 +88,8 @@ namespace Renderers
         (
             90,
             clientArea.Width / clientArea.Height,
-            (clientArea.Height - 100.0f) / 2.0f,
-            (clientArea.Height + 100.0f) / 2.0f
+            (clientArea.Height - 500.0f) / 2.0f,
+            (clientArea.Height + 1000.0f) / 2.0f
         );
 
         Renderer->Projection(projection);
@@ -100,6 +101,14 @@ namespace Renderers
         CreateShaderPipeline();
         CreateSizedResources();
         CreateSceneResources();
+    }
+
+
+
+    /** PROTECTED UTILITIES **/
+    void BasicRenderer::UpdateScene()
+    {
+        Renderer->Update();
     }
 
 }

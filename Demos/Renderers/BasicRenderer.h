@@ -102,6 +102,9 @@ namespace Renderers
             /// <summary> Sets a flag that prevents the rendering engine's main event loop from executing. </summary>
             RendererAPI virtual void BreakEventLoop() { _canContinue = false; }
 
+            RendererAPI virtual void UpdateScene();
+
+
 
 
         private:
