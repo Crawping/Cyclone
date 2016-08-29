@@ -11,13 +11,13 @@ namespace Cyclone
             return
             {
                 // Front
-                Vertex::Standard(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
-                Vertex::Standard(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
+                Vertex::Standard(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+                Vertex::Standard(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
 
-                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
-                Vertex::Standard(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f),
-                Vertex::Standard(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f),
+                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+                Vertex::Standard(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+                Vertex::Standard(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
 
                 // Top
                 Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
@@ -56,13 +56,13 @@ namespace Cyclone
                 Vertex::Standard(1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
 
                 // Back
-                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
-                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
-                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
+                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f),
+                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
 
-                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
-                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
+                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f),
             };
         }
 
@@ -81,40 +81,40 @@ namespace Cyclone
             return
             {
                 // Front
-                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                Vertex::Standard(1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-                Vertex::Standard(1.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+                Vertex::Standard(0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+                Vertex::Standard(1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+                Vertex::Standard(1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
 
                 // Top
-                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
-                Vertex::Standard(1.0f, 1.0f, 0.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 1.0f),
-                Vertex::Standard(1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
+                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
+                Vertex::Standard(1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f),
                       
                 // Bottom
-                Vertex::Standard(0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
-                Vertex::Standard(1.0f, 0.0f, 1.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 1.0f),
-                Vertex::Standard(1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f),
+                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f),
+                Vertex::Standard(1.0f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f),
                       
                 // Left
-                Vertex::Standard(0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
-                Vertex::Standard(0.0f, 0.0f, 0.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 1.0f, 1.0f, 0.0f, 1.0f),
-                Vertex::Standard(0.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+                Vertex::Standard(0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                Vertex::Standard(0.0f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+                Vertex::Standard(0.0f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
                       
                 // Right
-                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                Vertex::Standard(1.0f, 0.0f, 1.0f, 1.0f, 0.0f),
-                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-                Vertex::Standard(1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
+                Vertex::Standard(1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+                Vertex::Standard(1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
+                Vertex::Standard(1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+                Vertex::Standard(1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
                       
                 // Back
-                Vertex::Standard(1.0f, 0.0f, 1.0f, 0.0f, 0.0f),
-                Vertex::Standard(0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
-                Vertex::Standard(1.0f, 1.0f, 1.0f, 0.0f, 1.0f),
-                Vertex::Standard(0.0f, 1.0f, 1.0f, 1.0f, 1.0f),
+                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
+                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f),
+                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
+                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f),
             };
         }
 
@@ -213,12 +213,12 @@ namespace Cyclone
         {
             return
             {
-                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                Vertex::Standard(1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
-                Vertex::Standard(1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
-                Vertex::Standard(1.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+                Vertex::Standard(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
             };
         }
 
@@ -226,9 +226,9 @@ namespace Cyclone
         {
             return
             {
-                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-                Vertex::Standard(1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
-                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+                Vertex::Standard(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+                Vertex::Standard(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+                Vertex::Standard(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
             };
         }
 
