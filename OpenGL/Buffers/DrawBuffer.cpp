@@ -118,7 +118,7 @@ namespace Cyclone
         }
         void DrawBuffer::AddVertices(const IRenderableEntity* entity)
         {
-            const Array<Vertex>& vertices = entity->Vertices();
+            const Array<Vertex::Standard>& vertices = entity->Vertices();
             for (uint a = 0; a < vertices.Count(); a++)
                 Vertices.Add(vertices(a));
         }

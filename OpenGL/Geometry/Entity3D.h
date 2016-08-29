@@ -8,6 +8,7 @@
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
 #include "Spatial/Transform.h"
+#include "Geometry/Vertices.h"
 
 
 
@@ -46,6 +47,8 @@ namespace Cyclone
                 virtual Entity3D& Pitch(float p)                                  { _world.Pitch(p); return *this; }
                 virtual Entity3D& Roll(float r)                                   { _world.Roll(r); return *this; }
                 virtual Entity3D& Yaw(float y)                                    { _world.Yaw(y); return *this; }
+
+
 
                 /** SCALING PROPERTIES **/
 		        /// <summary> Gets the size of the entity along the z-axis. </summary>
@@ -88,7 +91,7 @@ namespace Cyclone
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                         const override { return _topology; }
                 /// <summary> Gets a reference to the vertex array defining the geometry of an entity. </summary>
-		        virtual const Array<Vertex>& Vertices()						const override { return _vertices; }
+		        virtual const Array<Vertex::Standard>& Vertices()			const override { return _vertices; }
                 /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
                 /// <remarks>
                 ///     The world transformation matrix defines the position, scale, and orientation of an entity in 3D space.
@@ -116,18 +119,18 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
-                Color4              _color;
-		        Texture2D*			_texture;
-                VertexTopologies    _topology;
-		        Array<Vertex>		_vertices;
-                Transform           _world;
+                Color4                      _color;
+		        Texture2D*			        _texture;
+                VertexTopologies            _topology;
+		        Array<Vertex::Standard>		_vertices;
+                Transform                   _world;
 
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new 3D renderable entity composed of white triangles. </summary>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-		        Entity3D(const Array<Vertex>& vertices) :
+		        Entity3D(const Array<Vertex::Standard>& vertices) :
                     _color(Color4::White),
                     _texture(nullptr),
                     _topology(VertexTopologies::Triangles),
@@ -139,7 +142,7 @@ namespace Cyclone
                 /// <param name="color"> The base color of this entity's geometry. </param>
                 /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex>& vertices) :
+                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex::Standard>& vertices) :
 			        _color(color),
                     _texture(nullptr),
 			        _topology(topology),

@@ -12,14 +12,15 @@ namespace Cyclone
         {
 
         }
-        VertexBuffer::VertexBuffer(const Array<Vertex>& vertices) : 
+        VertexBuffer::VertexBuffer(const Array<Vertex::Standard>& vertices) : 
             VertexBuffer(vertices.Count(), vertices.ToArray())	        
         {
 	        
         }
-        VertexBuffer::VertexBuffer(uint n, const Vertex* vertices) :
-            ArrayBuffer<Vertex>(BufferTypes::Array, n),
-            VAOID(0)
+        VertexBuffer::VertexBuffer(uint n, const Vertex::Standard* vertices) :
+            ArrayBuffer<Vertex::Standard>(BufferTypes::Array, n),
+            VAOID(0),
+            Layout(Vertex::Standard().Layout())
         {
 	        for (uint a = 0; a < n; a++)
 		        Set(a, vertices[a]);
@@ -40,8 +41,8 @@ namespace Cyclone
         }
         void VertexBuffer::BindResources()      const
         {
-            glEnableVertexAttribArray(0);
-            glEnableVertexAttribArray(1);
+            for (uint a = 0; a < Layout.Count(); a++)
+                glEnableVertexAttribArray(a);
         }
         void VertexBuffer::UnbindEntity()       const
         {
@@ -49,8 +50,8 @@ namespace Cyclone
         }
         void VertexBuffer::UnbindResources()    const
         {
-            glDisableVertexAttribArray(0);
-            glDisableVertexAttribArray(1);
+            for (uint a = 0; a < Layout.Count(); a++)
+                glDisableVertexAttribArray(a);
         }
 
 
@@ -58,16 +59,15 @@ namespace Cyclone
         /** PROTECTED UTILITIES **/
         void VertexBuffer::Create()
         {
-            ArrayBuffer<Vertex>::Create();
+            ArrayBuffer<Vertex::Standard>::Create();
             glCreateVertexArrays(1, &VAOID);
 
-            glVertexArrayAttribBinding(VAOID, 0, 0);
-            glVertexArrayAttribFormat(VAOID, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Position));
-            glEnableVertexArrayAttrib(VAOID, 0);
-
-            glVertexArrayAttribBinding(VAOID, 1, 0);
-            glVertexArrayAttribFormat(VAOID, 1, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, UV));
-            glEnableVertexArrayAttrib(VAOID, 1);
+            for (uint a = 0; a < Layout.Count(); a++)
+            {
+                glVertexArrayAttribBinding(VAOID, a, 0);
+                glVertexArrayAttribFormat(VAOID, a, Layout(a).Count, Layout(a).Format, GL_FALSE, Layout(a).Offset);
+                glEnableVertexArrayAttrib(VAOID, a);
+            }
 
             glVertexArrayVertexBuffer(VAOID, 0, ID(), 0, Stride());
         }
@@ -78,7 +78,7 @@ namespace Cyclone
                 glDeleteVertexArrays(1, &VAOID);
                 VAOID = 0;
             }
-            ArrayBuffer<Vertex>::Destroy();
+            ArrayBuffer<Vertex::Standard>::Destroy();
         }
     }
 }

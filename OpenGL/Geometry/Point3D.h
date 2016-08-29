@@ -1,11 +1,11 @@
 /* CHANGELOG
- * Written by Josh Grooms on 20160706 
+ * Written by Josh Grooms on 20160706
  */
 
 #pragma once
 #include "Imaging/Color4.h"
 #include "Geometry/Entity3D.h"
-#include "Spatial/Geometry.h"
+#include "Geometry/Geometry.h"
 
 
 
@@ -32,6 +32,7 @@ namespace Cyclone
 
 
 
+                /** CONSTRUCTOR **/
 		        Point3D() : Entity3D(Color4::White, VertexTopologies::Points, Geometry::Point()) { }
         };
     }

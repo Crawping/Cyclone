@@ -6,7 +6,7 @@
 #include "EnumerationsGL.h"
 #include "OpenGLAPI.h"
 #include "Math/Array.h"
-#include "Spatial/Vertex.h"
+#include "Geometry/Vertices.h"
 
 
 
@@ -20,10 +20,10 @@ namespace Cyclone
 
     namespace OpenGL
     {
-        
+
         struct  PerEntity;
         class   Texture2D;
-        
+
 
         using namespace Utilities;
 
@@ -35,7 +35,7 @@ namespace Cyclone
 
 		        virtual ~IGeometricEntity() { }
 
-		        virtual const Array<Vertex>& Vertices()		const = 0;
+		        virtual const Array<Vertex::Standard>& Vertices()		const = 0;
 		        virtual const Transform& World()			const = 0;
 		        virtual VertexTopologies Topology()			const = 0;
         };
@@ -53,8 +53,8 @@ namespace Cyclone
 
 
 
-        class OpenGLAPI IRenderableEntity : 
-	        public IGeometricEntity, 
+        class OpenGLAPI IRenderableEntity :
+	        public IGeometricEntity,
 	        public IMaterialEntity
         {
 	        public:
@@ -65,4 +65,3 @@ namespace Cyclone
 
     }
 }
-

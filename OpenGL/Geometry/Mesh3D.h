@@ -14,7 +14,7 @@ namespace Cyclone
         class Mesh3D : public Entity3D
         {
             public:
-                Mesh3D(const Array<Vertex> vertices) : Entity3D(vertices) { }
+                Mesh3D(const Array<Vertex::Standard> vertices) : Entity3D(vertices) { }
         };
     }
 }
