@@ -75,10 +75,9 @@ namespace Renderers
             RendererAPI BasicRenderer(const string& title);
             
 
-
-
+            
             /** INITIALIZATION UTILITIES **/
-
+            /// <summary> Initializes the 3D rendering window that holds all rendered content on the desktop. </summary>
             RendererAPI virtual void CreateRenderingWindow();
             /// <summary> Initializes any resources related to rendering 3D scenes of geometric primitives. </summary>
             /// <remarks>
@@ -93,7 +92,11 @@ namespace Renderers
             ///     This base implementation initializes both the view and projection transformation matrices.
             /// </remarks>
             RendererAPI virtual void CreateSizedResources();
-
+            /// <summary> Initializes all rendering resources. </summary>
+            /// <remarks>
+            ///     This method summarily calls all other initialization methods. In order, this includes: rendering window, 
+            ///     shader pipeline, sized resource, and scene resource initialization.
+            /// </remarks>
             RendererAPI virtual void Initialize();
 
 
@@ -101,12 +104,12 @@ namespace Renderers
             /** PROTECTED UTILITIES **/
             /// <summary> Sets a flag that prevents the rendering engine's main event loop from executing. </summary>
             RendererAPI virtual void BreakEventLoop() { _canContinue = false; }
-
+            /// <summary> Updates any geometry or scene-related resources while rendering. </summary>
+            /// <remarks> This method gets called once near the beginning of each event loop iteration. </remarks>
             RendererAPI virtual void UpdateScene();
 
 
-
-
+            
         private:
             bool    _canContinue;
 
