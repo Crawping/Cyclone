@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Geometry/Vertices.h"
+#include "Geometry/Vertex.h"
 #include "GL/OpenGLAPI.h"
 #include "Math/Array.h"
 

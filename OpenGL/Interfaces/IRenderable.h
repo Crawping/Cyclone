@@ -6,7 +6,6 @@
 #include "EnumerationsGL.h"
 #include "OpenGLAPI.h"
 #include "Math/Array.h"
-#include "Geometry/Vertices.h"
 
 
 
@@ -23,8 +22,7 @@ namespace Cyclone
 
         struct  PerEntity;
         class   Texture2D;
-
-
+        namespace Vertex { struct Standard; }
         using namespace Utilities;
 
 

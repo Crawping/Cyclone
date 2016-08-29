@@ -166,7 +166,7 @@
     <ClInclude Include="Geometry\Point3D.h" />
     <ClInclude Include="Geometry\Quad3D.h" />
     <ClInclude Include="Geometry\Scene3D.h" />
-    <ClInclude Include="Geometry\Vertices.h" />
+    <ClInclude Include="Geometry\Vertex.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />

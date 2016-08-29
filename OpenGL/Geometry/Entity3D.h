@@ -8,7 +8,6 @@
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
 #include "Spatial/Transform.h"
-#include "Geometry/Vertices.h"
 
 
 
@@ -16,6 +15,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        namespace Vertex { struct Standard; }
+
         class Entity3D : public IRenderableEntity
         {
 

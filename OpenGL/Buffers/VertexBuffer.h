@@ -7,8 +7,7 @@
 #include "Buffers/ArrayBuffer.h"
 #include "GL/OpenGLAPI.h"
 #include "Math/Array.h"
-//#include "Spatial/Vertex.h"
-#include "Geometry/Vertices.h"
+#include "Geometry/Vertex.h"
 
 
 
