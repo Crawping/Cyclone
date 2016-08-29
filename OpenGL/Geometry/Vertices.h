@@ -5,10 +5,9 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "TypeDefinitions.h"
+#include "Interfaces/IVertex.h"
 #include "Math/Array.h"
 #include "Math/Vector3.h"
-#include <string>
-
 
 
 
@@ -16,15 +15,22 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+
         using namespace Cyclone::Utilities;
 
+        /// <summary> A data structure that defines a single component of a vertex. </summary>
         struct VertexAttribute
         {
+            /// <summary> The number of elements present in the attribute. </summary>
             uint            Count;
+            /// <summary> The numeric type of each element present in the attribute. </summary>
             NumericFormats  Format;
+            /// <summary> The name of the attribute. </summary>
             string          Name;
+            /// <summary> The byte offset into the vertex structure at which data for the attribute can be found. </summary>
             uint            Offset;
 
+            /// <summary> Constructs an empty vertex attribute with no elements, no name, and no offset. </summary>
             VertexAttribute() :
                 Count(0),
                 Name(""),
@@ -32,7 +38,11 @@ namespace Cyclone
             {
 
             }
-
+            /// <summary> Constructs a new vertex attribute used to define a vertex layout. </summary>
+            /// <param name="count"> The number of elements present in the attribute. </param>
+            /// <param name="format"> The numeric type of each element present in the attribute. </param>
+            /// <param name="name"> The name of this attribute. </param>
+            /// <param name="offset"> The byte offset into the vertex structure at which the data for the attribute can be found. </param>
             VertexAttribute(uint count, NumericFormats format, const string& name, uint offset) :
                 Count(count),
                 Format(format),
@@ -43,22 +53,18 @@ namespace Cyclone
             }
         };
 
-        struct IVertex
-        {
-
-            virtual Array<VertexAttribute> Layout() const = 0;
-
-            virtual ~IVertex() { }
-
-        };
-
-
+        
+        /// <summary> A collection of standardized vertex definitions. </summary>
         namespace Vertex
         {
+            /// <summary> A structure defining a vertex with positional and texture data only. </summary>
             struct Simple : public IVertex
             {   
 
+                /** DATA **/
+                /// <summary> The (x, y, z) position of the vertex in model space. </summary>
                 Vector3 Position;
+                /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
                 Vector2 UV;
                 
                 Array<VertexAttribute> Layout() const override
@@ -76,10 +82,15 @@ namespace Cyclone
 
             };
 
+            /// <summary> A structure that defines a vertex consisting of positional, normal, and texture data. </summary>
             struct Standard : public IVertex
             {
+                /** DATA **/
+                /// <summary> The (x, y, z) position of the vertex in model space. </summary>
                 Vector3 Position;
+                /// <summary> The (x, y, z) direction of a vector that is perpendicular to the surface surrounding the vertex. </summary>
                 Vector3 Normal;
+                /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
                 Vector2 UV;
 
                 Array<VertexAttribute> Layout() const override
