@@ -65,9 +65,6 @@
       <Filter>Spatial</Filter>
     </ClInclude>
     <ClInclude Include="UtilitiesAPI.h" />
-    <ClInclude Include="Spatial\Vertex.h">
-      <Filter>Spatial</Filter>
-    </ClInclude>
     <ClInclude Include="Imaging\Bitmap.h">
       <Filter>Imaging</Filter>
     </ClInclude>

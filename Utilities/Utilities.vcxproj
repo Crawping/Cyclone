@@ -182,7 +182,6 @@
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
     <ClInclude Include="Spatial\Transform.h" />
-    <ClInclude Include="Spatial\Vertex.h" />
     <ClInclude Include="Spatial\Volume.h" />
     <ClInclude Include="TypeDefinitions.h" />
     <ClInclude Include="Utilities.h" />
