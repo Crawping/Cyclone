@@ -10,7 +10,7 @@
 #include "Geometry/Quad3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
-#include "Spatial/Geometry.h"
+#include "Geometry/Geometry.h"
 
 
 
@@ -28,7 +28,7 @@ namespace Cyclone
 
 
     /** CONSTRUCTOR & DESTRUCTOR **/
-    Program::Program(int nargs, char** args) : 
+    Program::Program(int nargs, char** args) :
         _canContinue(true),
         _debug(false),
         _display(0),
@@ -42,7 +42,7 @@ namespace Cyclone
         TestShape(nullptr)
     {
         ParseInputArguments(nargs, args);
-    
+
         if (!cglLoadAPI())
         {
             PostInfo("Failed to initialize the OpenGL library.");
@@ -90,7 +90,7 @@ namespace Cyclone
 
     /** UTILITIES **/
     void Program::Execute()
-    {  
+    {
         while (_canContinue)
         {
             if (!RenderWindow->ProcessEvent())
