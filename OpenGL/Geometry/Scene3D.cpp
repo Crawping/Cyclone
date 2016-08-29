@@ -59,9 +59,7 @@ namespace Cyclone
             }
 
             for (auto topology : _topologies)
-            {
                 Buffers[topology].Update();
-            }
 
             NeedsUpdate = false;
         }
