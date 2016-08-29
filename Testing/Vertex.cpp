@@ -1,12 +1,12 @@
 
-#include "Geometry/Vertices.h"
+#include "Geometry/Vertex.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::OpenGL;
 using namespace Cyclone::Utilities;
 
 
-class _Vertices : public testing::Test
+class _Vertex : public testing::Test
 {
     protected:
         
@@ -14,7 +14,7 @@ class _Vertices : public testing::Test
 
 
 
-        _Vertices()
+        _Vertex()
         {
 
         }
@@ -22,7 +22,7 @@ class _Vertices : public testing::Test
 
 
 
-TEST_F(_Vertices, DefaultConstruction)
+TEST_F(_Vertex, DefaultConstruction)
 {
     ASSERT_EQ(_v0.Position, Vector3::Zero);
     ASSERT_EQ(_v0.UV, Vector2::Zero);
@@ -30,7 +30,7 @@ TEST_F(_Vertices, DefaultConstruction)
     ASSERT_EQ(sizeof(Vertex::Simple), sizeof(Vector3) + sizeof(Vector2) + sizeof(IVertex));
 }
 
-TEST_F(_Vertices, VertexLayouts)
+TEST_F(_Vertex, VertexLayouts)
 {
     auto layout = _v0.Layout();
     ASSERT_EQ(layout.Count(), 2);
