@@ -24,7 +24,7 @@ TODOS:
 	-- Indexed rendering
 	-- Patch entities
 	-- Implement IUpdatable Interface           (DONE)
-	-- Customizable vertex layouts
+	-- Customizable vertex layouts              (DONE)
 
 - Primitive Types
 	-- Arbitrary precision numbers
@@ -35,6 +35,7 @@ TODOS:
 	-- GraphicsArray		-> ArrayBuffer      (DONE)
 	-- GraphicsMap			-> MapBuffer		(DONE)
 	-- Primitives Folder	-> Geometry         (DONE)
+    -- Vertices             -> Vertex           (DONE)
 
 - General
 	-- Integrate exception throws
@@ -43,6 +44,7 @@ TODOS:
 
 - Scenes
     -- Varying vertex topologies				(DONE)
+    -- Varying vertex layouts
     -- Varying shader pipelines
         > Compute
         > Deferred
