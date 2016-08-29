@@ -2,9 +2,11 @@
  * Written by Josh Grooms on 20160816
  */
 
-#include "Spatial/Geometry.h"
+//#include "Spatial/Geometry.h"
+#include "Geometry/Geometry.h"
 #include <gtest/gtest.h>
 
+using namespace Cyclone::OpenGL;
 using namespace Cyclone::Utilities;
 
 
@@ -40,8 +42,8 @@ class _Geometry : public testing::Test
     protected:
         CanonicalGeometry   Canon;
 
-        Array<uint>         CubeIndices;
-        Array<Vertex>       CubeVertices;
+        Array<uint>             CubeIndices;
+        Array<Vertex::Standard> CubeVertices;
 
         _Geometry() :
             Canon(),
