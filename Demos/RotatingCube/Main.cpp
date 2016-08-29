@@ -37,6 +37,13 @@ class Program : public BasicRenderer
                 .Roll(90);
             RenderScene->Add(Cube);
         }
+
+        void CreateSizedResources() override
+        {
+            BasicRenderer::CreateSizedResources();
+            Cube.Position(Vector3(RenderWindow->ClientArea().Center(), 50));
+        }
+
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
@@ -46,7 +53,6 @@ class Program : public BasicRenderer
         void UpdateScene() override
         {
             Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
-            //Cube.Rotate(0.01f);
             RenderScene->Add(Cube);
             BasicRenderer::UpdateScene();
         }

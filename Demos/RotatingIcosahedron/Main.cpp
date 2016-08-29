@@ -19,7 +19,6 @@ class Program : public BasicRenderer
             Icosahedron(Geometry::Icosahedron())
         {
             Initialize();
-            //glEnable(GL_MULTISAMPLE);
             glEnable(GL_CULL_FACE);
         }
 
@@ -36,6 +35,12 @@ class Program : public BasicRenderer
                 .Roll(90);
 
             RenderScene->Add(Icosahedron);
+        }
+
+        void CreateSizedResources() override
+        {
+            BasicRenderer::CreateSizedResources();
+            Icosahedron.Position(Vector3(RenderWindow->ClientArea().Center(), 50));
         }
 
         void CreateShaderPipeline() override
