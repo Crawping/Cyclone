@@ -35,6 +35,9 @@
     <ClCompile Include="Enumerator.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Vertices.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
@@ -51,6 +54,9 @@
     </Filter>
     <Filter Include="Utilities\Spatial">
       <UniqueIdentifier>{f7bce296-ebd2-40ab-b384-cd57384330fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{904bfe6f-3b64-4138-8c4e-420beb601ef3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
