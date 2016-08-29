@@ -6,7 +6,8 @@
 #include "Window3D.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
-#include "Spatial/Geometry.h"
+//#include "Spatial/Geometry.h"
+#include "Geometry/Geometry.h"
 
 using namespace Renderers;
 using namespace Cyclone::OpenGL;
