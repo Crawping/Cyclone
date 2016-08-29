@@ -22,5 +22,8 @@
     <None Include="Shaders\Default.vsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\Depth.psl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
