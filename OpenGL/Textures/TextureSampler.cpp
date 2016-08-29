@@ -1,5 +1,5 @@
-#include "OpenGL.h"
-#include "TextureSampler.h"
+#include "GL/OpenGL.h"
+#include "Textures/TextureSampler.h"
 #include <sstream>
 
 
