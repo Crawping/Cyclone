@@ -1,0 +1,18 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20160828
+ */
+
+#version 450 core
+#include "Default.hsl"
+
+in vec2     TexUV;
+flat in int EntityIndex;
+
+out vec4 OutputColor;
+
+
+
+void main(void)
+{
+    OutputColor = normalize(PerEntityData[EntityIndex].Color - (gl_FragCoord.z * vec4(1.0, 1.0, 1.0, 0.0)));
+}
