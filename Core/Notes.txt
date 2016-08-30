@@ -41,6 +41,7 @@ TODOS:
 	-- Integrate exception throws
 	-- Implement GPU buffer element updates
     -- Implement HID control interface
+    -- MSAA
 
 - Scenes
     -- Varying vertex topologies				(DONE)
