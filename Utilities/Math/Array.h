@@ -20,7 +20,7 @@ namespace Cyclone
                 /// <summary> Gets the total number of elements present in this array. </summary>
 		        uint Count()		const { return _count; }
 
-		
+
 
 		        /** CONSTRUCTORS & DESTRUCTOR **/
 		        /// <summary> Constructs a new one-dimensional array object with a designated number of elements. </summary>
@@ -30,13 +30,14 @@ namespace Cyclone
 			        Data(new T[n])
 		        {
 
-		        }
+                }
                 /// <summary> Constructs an array by copying the contents of another array object. </summary>
 		        Array(const Array<T>& other) :
 			        _count(other.Count()),
 			        Data(new T[other.Count()])
 		        {
-			        std::memcpy(Data, other.Data, Count() * sizeof(T));
+                    for (uint a = 0; a < Count(); a++)
+                        Data[a] = other.Data[a];
 		        }
                 /// <summary> Constructs an array by transferring the contents of another array object. </summary>
 		        Array(Array<T>&& other) :
@@ -55,9 +56,9 @@ namespace Cyclone
 				        Data[idx++] = v;
 		        }
                 /// <summary> Destroys the underlying native storage for this array. </summary>
-		        ~Array() 
-		        { 
-			        if (Data) 
+		        ~Array()
+		        {
+			        if (Data)
 				        delete[] Data;
 		        }
 
@@ -82,7 +83,7 @@ namespace Cyclone
 		        T& operator ()(uint idx)			  { return Data[idx]; }
 
 		        const T& operator ()(uint idx)	const { return Data[idx]; }
-		
+
 		        Array<T>& operator =(const Array<T>& other)
 		        {
 			        if (Data)
@@ -90,9 +91,9 @@ namespace Cyclone
 
                     _count = other.Count();
 			        Data = new T[Count()];
-			        for (int a = 0; a < Count(); a++)
+			        for (uint a = 0; a < Count(); a++)
 				        Data[a] = other.Data[a];
-			
+
 			        return *this;
 		        }
 
@@ -127,7 +128,7 @@ namespace Cyclone
                         return true;
                     else if (other.Count() != Count())
                         return false;
-            
+
                     for (int a = 0; a < Count(); a++)
                         if (Data[a] != other(a))
                             return false;
