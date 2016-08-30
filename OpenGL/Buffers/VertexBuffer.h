@@ -16,7 +16,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        template<typename T>
+        template<typename T = Vertex::Standard>
         class VertexBuffer : public VertexArray
         {
 
