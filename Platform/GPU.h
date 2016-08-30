@@ -21,7 +21,6 @@ namespace Cyclone
         class GraphicsPipeline;
         class IRenderableEntity;
         class Scene3D;
-        class VertexBuffer;
     }
 
 
@@ -122,7 +121,6 @@ namespace Cyclone
                 FrameBuffer*                _renderTarget;
                 Window3D*                   _renderWindow;
                 Scene3D*                    _renderScene;
-                VertexBuffer*               _vertices;
                 Transform                   _view;
 
 
