@@ -1,4 +1,6 @@
-#include "Buffers/VertexBuffer.h"
+#include "Buffers/VertexArray.h"
+#include "Geometry/Vertex.h"
+#include "GL/OpenGL.h"
 
 
 
@@ -6,27 +8,16 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        /** CONSTRUCTORS & DESTRUCTOR **/
-        VertexBuffer::VertexBuffer() :
-            VertexBuffer(0, nullptr)
-        {
 
-        }
-        VertexBuffer::VertexBuffer(const Array<Vertex::Standard>& vertices) : 
-            VertexBuffer(vertices.Count(), vertices.ToArray())	        
+        /** CONSTRUCTOR **/
+        VertexArray::VertexArray(const Array<VertexAttribute>& layout) :
+            GraphicsBuffer(BufferTypes::Array),
+            Layout(layout),
+            VAOID(0)
         {
-	        
+            //Layout = layout;
         }
-        VertexBuffer::VertexBuffer(uint n, const Vertex::Standard* vertices) :
-            ArrayBuffer<Vertex::Standard>(BufferTypes::Array, n),
-            VAOID(0),
-            Layout(Vertex::Standard().Layout())
-        {
-	        for (uint a = 0; a < n; a++)
-		        Set(a, vertices[a]);
-            Update();
-        }
-        VertexBuffer::~VertexBuffer()
+        VertexArray::~VertexArray()
         {
             if (VAOID)
                 glDeleteVertexArrays(1, &VAOID);
@@ -35,20 +26,20 @@ namespace Cyclone
 
 
         /** BINDING UTILITIES **/
-        void VertexBuffer::BindEntity(int slot) const
-        {            
+        void VertexArray::BindEntity(int slot)  const
+        {
             glBindVertexArray(VAOID);
         }
-        void VertexBuffer::BindResources()      const
+        void VertexArray::BindResources()       const
         {
             for (uint a = 0; a < Layout.Count(); a++)
                 glEnableVertexAttribArray(a);
         }
-        void VertexBuffer::UnbindEntity()       const
+        void VertexArray::UnbindEntity()        const
         {
             glBindVertexArray(0);
         }
-        void VertexBuffer::UnbindResources()    const
+        void VertexArray::UnbindResources()     const
         {
             for (uint a = 0; a < Layout.Count(); a++)
                 glDisableVertexAttribArray(a);
@@ -57,9 +48,9 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void VertexBuffer::Create()
+        void VertexArray::Create()
         {
-            ArrayBuffer<Vertex::Standard>::Create();
+            GraphicsBuffer::Create();
             glCreateVertexArrays(1, &VAOID);
 
             for (uint a = 0; a < Layout.Count(); a++)
@@ -71,14 +62,15 @@ namespace Cyclone
 
             glVertexArrayVertexBuffer(VAOID, 0, ID(), 0, Stride());
         }
-        void VertexBuffer::Destroy()
+        void VertexArray::Destroy()
         {
             if (VAOID)
             {
                 glDeleteVertexArrays(1, &VAOID);
                 VAOID = 0;
             }
-            ArrayBuffer<Vertex::Standard>::Destroy();
+            GraphicsBuffer::Destroy();
         }
+
     }
 }
