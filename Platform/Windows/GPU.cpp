@@ -60,8 +60,7 @@ namespace Cyclone
             _renderPipeline(nullptr),
             _renderTarget(nullptr),
             _renderWindow(nullptr),
-            _renderScene(nullptr),
-            _vertices(nullptr)
+            _renderScene(nullptr)
         {
 
         }
