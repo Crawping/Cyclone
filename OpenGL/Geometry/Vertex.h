@@ -33,6 +33,7 @@ namespace Cyclone
             /// <summary> Constructs an empty vertex attribute with no elements, no name, and no offset. </summary>
             VertexAttribute() :
                 Count(0),
+                Format(NumericFormats::Float),
                 Name(""),
                 Offset(0)
             {
