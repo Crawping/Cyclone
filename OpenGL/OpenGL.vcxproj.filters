@@ -90,6 +90,9 @@
     <ClInclude Include="Geometry\Vertex.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IGraphicsBuffer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
