@@ -7,7 +7,7 @@
 #include "EnumerationsGL.h"
 #include "GL/OpenGLAPI.h"
 #include "TypeDefinitions.h"
-#include "Interfaces/IBindable.h"
+#include "Interfaces/IGraphicsBuffer.h"
 
 
 
@@ -15,7 +15,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class GraphicsBuffer : public IBindable
+        class GraphicsBuffer : public IGraphicsBuffer
         {
             public:
 
@@ -28,6 +28,8 @@ namespace Cyclone
 		        virtual uint ID()               const override { return _id; }
 		        /// <summary> Determines whether this buffer contains any data. </summary>
 		        virtual bool IsEmpty()          const { return Count() == 0; }
+                /// <summary> Gets whether this buffer needs any kind of update on the GPU side. </summary>
+                virtual bool NeedsUpdate()      const override { return _updateFlag || NeedsReallocation(); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
                 virtual ulong Stride()          const = 0;
 		        /// <summary> Gets an enumerator identifying how this buffer behaves on the GPU. </summary>
@@ -79,11 +81,10 @@ namespace Cyclone
                 /** PROTECTED PROPERTIES **/
                 /// <summary> Gets whether this buffer needs to be reallocated on the GPU. </summary>
                 OpenGLAPI bool NeedsReallocation()      const { return _gpuCount != Count(); }
-                /// <summary> Gets whether this buffer needs any kind of update on the GPU side. </summary>
-                OpenGLAPI bool NeedsUpdate()            const { return _updateFlag || NeedsReallocation(); }
+
                 /// <summary> Sets whether this buffer needs any kind of update on the GPU side. </summary>
                 /// <remarks>
-                /// 
+                ///
                 /// </remarks>
                 OpenGLAPI void NeedsUpdate(bool value)
                 {
@@ -105,7 +106,7 @@ namespace Cyclone
                 }
 
 
-		
+
                 /** PROTECTED UTILITIES **/
 		        /// <summary> Reserves memory on the GPU for storing all of the data found within this buffer. </summary>
                 OpenGLAPI virtual void Allocate();
@@ -132,7 +133,7 @@ namespace Cyclone
                 /// </remarks>
                 OpenGLAPI virtual void Unmap();
 
-		
+
             private:
 
                 /** PROPERTY DATA **/
@@ -140,7 +141,7 @@ namespace Cyclone
                 uint        _id;
                 BufferTypes _type;
                 bool        _updateFlag;
-                
+
         };
     }
 }
