@@ -58,7 +58,7 @@ namespace Cyclone
 
                 CommandBuffer                       Commands;
                 UniformBuffer<PerEntity>            Entities;
-                VertexBuffer                        Vertices;
+                VertexBuffer<>                      Vertices;
 
                 std::set<const IRenderableEntity*>  ExistingEntities;
 
