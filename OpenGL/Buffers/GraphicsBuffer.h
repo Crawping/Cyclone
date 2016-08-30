@@ -102,7 +102,7 @@ namespace Cyclone
                     _type(type),
                     _updateFlag(false)
                 {
-                    Create();
+                    
                 }
 
 
