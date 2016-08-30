@@ -93,12 +93,12 @@
     <ClInclude Include="Interfaces\IGraphicsBuffer.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Buffers\VertexArray.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
-      <Filter>Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Buffers\VertexBuffer.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
     <ClCompile Include="Textures\Texture.cpp">
@@ -139,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="Geometry\Geometry.cpp">
       <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffers\VertexArray.cpp">
+      <Filter>Buffers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
