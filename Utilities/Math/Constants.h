@@ -32,7 +32,7 @@ namespace Cyclone
             const double ThirdPi    = Pi / 3.0;
             /// <summary> The double-precision mathematical constant pi * 2.0. </summary>
             /// <remarks> When considered as an angle in radians, 2*pi is equivalent to 360 degrees. </remarks>
-            const double TwoPi      = 2 * Pi;
+            const double TwoPi      = 2.0 * Pi;
         }
     }
 }
