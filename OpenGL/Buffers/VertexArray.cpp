@@ -15,7 +15,7 @@ namespace Cyclone
             Layout(layout),
             VAOID(0)
         {
-            //Layout = layout;
+
         }
         VertexArray::~VertexArray()
         {
