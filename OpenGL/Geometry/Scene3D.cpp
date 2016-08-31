@@ -11,7 +11,7 @@ namespace Cyclone
 
         /** CONSTRUCTOR **/
         Scene3D::Scene3D() : 
-            NeedsUpdate(false)
+            _needsUpdate(false)
         {
 
         }
@@ -22,7 +22,7 @@ namespace Cyclone
         void Scene3D::Add(const IRenderableEntity& entity)
         {
             EntitySet.insert(&entity);
-            NeedsUpdate = true;
+            _needsUpdate = true;
         }
         void Scene3D::Bind(VertexTopologies topology) const
         {
@@ -41,11 +41,11 @@ namespace Cyclone
         {
             if (!EntitySet.count(&entity)) { return; }
             EntitySet.erase(&entity);
-            NeedsUpdate = true;
+            _needsUpdate = true;
         }
         void Scene3D::Update()
         {
-            if (!NeedsUpdate) { return; }
+            if (!_needsUpdate) { return; }
             
             for (auto topology : _topologies)
                 Buffers[topology].Clear();
@@ -61,7 +61,7 @@ namespace Cyclone
             for (auto topology : _topologies)
                 Buffers[topology].Update();
 
-            NeedsUpdate = false;
+            _needsUpdate = false;
         }
 
     }

@@ -6,6 +6,7 @@
 #include "Buffers/DrawBuffer.h"
 #include "Buffers/UniformData.h"
 #include "GL/OpenGLAPI.h"
+#include "Interfaces/IUpdatable.h"
 #include <map>
 #include <set>
 
@@ -19,15 +20,16 @@ namespace Cyclone
 
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
-        class Scene3D
+        class Scene3D : public IUpdatable
         {
 
             public:
 
-                uint Count()            const { return EntitySet.size(); }
-                uint TopologyCount()    const { return Buffers.size(); }
+                uint Count()                                    const { return EntitySet.size(); }
+                bool NeedsUpdate()                              const override { return _needsUpdate; }
+                uint TopologyCount()                            const { return Buffers.size(); }
 
-                const std::set<VertexTopologies>& Topologies() const { return _topologies; }
+                const std::set<VertexTopologies>& Topologies()  const { return _topologies; }
                 
 
 
@@ -46,18 +48,20 @@ namespace Cyclone
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderableEntity& entity);
-                OpenGLAPI uint PerTopologyCount(VertexTopologies topology) const;
-                OpenGLAPI void Update();
+                OpenGLAPI uint PerTopologyCount(VertexTopologies topology)  const;
+                OpenGLAPI void Update()                                     override;
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
 
-                OpenGLAPI void Bind(VertexTopologies topology) const;
+                OpenGLAPI void Bind(VertexTopologies topology)              const;
 
             private:
-                bool                        NeedsUpdate;
-                
-                std::map<VertexTopologies, DrawBuffer<>>      Buffers;
-                std::set<const IRenderableEntity*>          EntitySet;
+
+                /** PROPERTY DATA **/
+                bool                                        _needsUpdate;
                 std::set<VertexTopologies>                  _topologies;
+                
+                std::map<VertexTopologies, DrawBuffer<>>    Buffers;
+                std::set<const IRenderableEntity*>          EntitySet;
 
         };
     }
