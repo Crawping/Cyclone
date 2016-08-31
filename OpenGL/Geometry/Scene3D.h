@@ -55,7 +55,7 @@ namespace Cyclone
             private:
                 bool                        NeedsUpdate;
                 
-                std::map<VertexTopologies, DrawBuffer>      Buffers;
+                std::map<VertexTopologies, DrawBuffer<>>      Buffers;
                 std::set<const IRenderableEntity*>          EntitySet;
                 std::set<VertexTopologies>                  _topologies;
 
