@@ -28,7 +28,7 @@ namespace Cyclone
 		        virtual uint ID()               const override { return _id; }
 		        /// <summary> Determines whether this buffer contains any data. </summary>
 		        virtual bool IsEmpty()          const { return Count() == 0; }
-                /// <summary> Gets whether this buffer needs any kind of update on the GPU side. </summary>
+                /// <summary> Gets whether this buffer has data updates queued for transfer to the GPU. </summary>
                 virtual bool NeedsUpdate()      const override { return _updateFlag || NeedsReallocation(); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
                 virtual ulong Stride()          const = 0;
