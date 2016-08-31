@@ -50,7 +50,7 @@ namespace Cyclone
                     ExistingEntities.insert(&entity);
                     _needsUpdate = true;
                 }
-                void Clear()                                    override
+                void Clear()                    override
                 {
                     Commands.Clear();
                     Entities.Clear();
@@ -62,7 +62,7 @@ namespace Cyclone
                     ExistingEntities.erase(&entity);
                     _needsUpdate = true;
                 }
-                void Update()                                   override
+                void Update()                   override
                 {
                     if (!NeedsUpdate()) { return; }
 
@@ -85,31 +85,31 @@ namespace Cyclone
 
 
                 /** BINDING UTILITIES **/
-                void Bind(int slot = 0)                         const override
+                void Bind(int slot = 0)         const override
                 {
                     BindEntity(slot);
                     BindResources();
                 }
-                void BindEntity(int slot = 0)                   const override
+                void BindEntity(int slot = 0)   const override
                 {
                     Commands.Bind(slot);
                     Entities.Bind(slot);
                     Vertices.Bind(slot);
                 }
-                void BindResources()                            const override { }
+                void BindResources()            const override { }
 
-                void Unbind()                                   const override
+                void Unbind()                   const override
                 {
                     UnbindEntity();
                     UnbindResources();
                 }
-                void UnbindEntity()                             const override
+                void UnbindEntity()             const override
                 {
                     Commands.Unbind();
                     Entities.Unbind();
                     Vertices.Unbind();
                 }
-                void UnbindResources()                          const override { }
+                void UnbindResources()          const override { }
                 
 
 

@@ -93,6 +93,7 @@ namespace Cyclone
                 }
 
 
+
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new data buffer on the GPU for use in shader pipelines. </summary>
                 /// <param name="type"> A type enumerator defining the purpose of this buffer. </param>
