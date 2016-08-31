@@ -110,7 +110,11 @@ TEST_F(_Area, Flipping)
     ASSERT_FLOAT_EQ(_a2Copy.Top(),      _a2.Bottom());
     ASSERT_FLOAT_EQ(_a2Copy.Height,    -_a2.Height);
 }
-
+TEST_F(_Area, Intersection)
+{
+	ASSERT_FALSE(_a1.Intersects(_a2));
+	ASSERT_TRUE(_a2.Intersects(_a2));
+}
 
 /** OPERATOR TESTS **/
 TEST_F(_Area, EqualityOperators)
