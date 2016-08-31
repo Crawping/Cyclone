@@ -90,8 +90,8 @@ namespace Cyclone
             /// <returns> A new 2-element vector containing the (x, y) coordinates from the original 3-element one. </returns>
             constexpr explicit operator Vector2()               const { return Vector2(X, Y); }
 
-            float& operator [](int index)                             { return index ? (index == 1 ? Y : Z) : X; }
-            constexpr float operator [](int index)              const { return index ? (index == 1 ? Y : Z) : X; }
+            float& operator ()(int index)                             { return index ? (index == 1 ? Y : Z) : X; }
+            constexpr float operator ()(int index)              const { return index ? (index == 1 ? Y : Z) : X; }
 
             /// <summary> Determines whether one vector's elements are equivalent to another's. </summary>
             /// <param name="v"> Another vector against which equality testing will occur. </param>
