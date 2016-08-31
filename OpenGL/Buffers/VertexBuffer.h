@@ -23,11 +23,12 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint Count() const override { return Data.size(); }
-                ulong Stride() const override { return sizeof(T); }
+                uint Count()    const override { return Data.size(); }
+                ulong Stride()  const override { return sizeof(T); }
 
 
-                /** CONSTRUCTORS & DESTRUCTOR **/
+
+                /** CONSTRUCTORS **/
 
                 VertexBuffer() : 
                     VertexBuffer(0, nullptr)
@@ -51,10 +52,6 @@ namespace Cyclone
                     for (uint a = 0; a < n; a++)
                         Set(a, vertices[a]);
                     Update();
-                }
-                ~VertexBuffer()
-                {
-
                 }
 
 
