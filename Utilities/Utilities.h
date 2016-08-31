@@ -12,6 +12,8 @@ namespace Cyclone
 {
     namespace Utilities
     {
+		struct Vector3;
+
         /** ARRAY UTILITIES **/
         /// <summary> Converts 2D matrix subscripts into an equivalent 1D linear index for column-major arrays. </summary>
         UtilitiesAPI int sub2ind(int nrows, int ncols, int a, int b);
@@ -21,6 +23,7 @@ namespace Cyclone
         /** MATH UTILITIES **/
         namespace Math
         {
+			UtilitiesAPI constexpr Vector3 Cross(const Vector3& x, const Vector3& y);
 
             /// <summary> Returns the maximum of three values. </summary>
             UtilitiesAPI float Max(float x, float y, float z);
