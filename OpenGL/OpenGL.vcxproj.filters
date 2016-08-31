@@ -128,9 +128,6 @@
     <ClCompile Include="Buffers\CommandBuffer.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Buffers\DrawBuffer.cpp">
-      <Filter>Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\Scene3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
