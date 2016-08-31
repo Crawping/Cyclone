@@ -18,6 +18,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        /// <summary> A class that holds and manages a collection of buffers related to drawing a single type of primitive geometry. </summary>
+        /// <typeparam name = "T"> The type name of the vertex data structure used by the buffer. </typeparam>
         template<typename T = Vertex::Standard>
         class DrawBuffer : public IGraphicsBuffer
         {
