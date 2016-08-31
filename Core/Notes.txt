@@ -42,6 +42,7 @@ TODOS:
 	-- Implement GPU buffer element updates
     -- Implement HID control interface
     -- MSAA
+    -- Display3D class for monitor info
 
 - Scenes
     -- Varying vertex topologies				(DONE)
@@ -60,7 +61,8 @@ TODOS:
 
 SCENE ORGANIZATION
 - Per-pipeline buffers
-    -- Per-topology draw buffers
+    -- Per-topology geometry buffers
+        > Per-vertex-layout draw buffers
     -- Secondary resources
 
 - Execution
@@ -120,3 +122,13 @@ EXAMPLE SCENE RENDERING TASK
 - Bind buffers containing entity information
 
 - Render a set of related geometry
+
+===============================================================================================================================
+
+GEOMETRY ORGANIZATION
+- Per shader pipeline
+    -- Per topology
+        > Per vertex layout
+
+- Need to find out which resource type is the most expensive to switch out on the GPU
+    -- My initial belief is that shader pipelines are the most expensive type of switch
