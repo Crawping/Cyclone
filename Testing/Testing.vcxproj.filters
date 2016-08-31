@@ -38,6 +38,9 @@
     <ClCompile Include="Vertex.cpp">
       <Filter>OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
