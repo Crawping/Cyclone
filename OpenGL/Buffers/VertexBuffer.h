@@ -16,6 +16,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        /// <summary> A class that represents a GPU buffer containing a list of vertices that make up geometric primitives. </summary>
+        /// <typeparam name="T"> The type name of the vertex data structure used by the buffer. </typeparam>
         template<typename T = Vertex::Standard>
         class VertexBuffer : public VertexArray
         {
@@ -23,26 +25,28 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the number of vertices present in the buffer. </summary>
                 uint Count()    const override { return Data.size(); }
+                /// <summary> Gets the number of bytes occupied by one individual vertex element of this buffer. </summary>
                 ulong Stride()  const override { return sizeof(T); }
 
 
 
                 /** CONSTRUCTORS **/
-
+                /// <summary> Constructs an empty GPU buffer object that can be populated with geometric vertices. </summary>
                 VertexBuffer() : 
                     VertexBuffer(0, nullptr)
                 {
 
                 }
-                /// <summary> Constructs a buffer that is initialized by an array of vertex data. </summary>
+                /// <summary> Constructs a GPU buffer object that is initialized by an array of vertex data. </summary>
                 /// <param name="vertices"> A reference to an array of vertex data. </param>
                 VertexBuffer(const Array<T>& vertices) :
                     VertexBuffer(vertices.Count(), vertices.ToArray())
                 {
                     
                 }
-                /// <summary> Constructs a buffer that is initialized by an array of vertex data. </summary>
+                /// <summary> Constructs a GPU buffer object that is initialized by an array of vertex data. </summary>
                 /// <param name="n"> The number of vertices present in the inputted vertex array. </param>
                 /// <param name="vertices"> A pointer to the beginning of an n-length vertex array. </param>
                 VertexBuffer(uint n, const T* vertices) :
