@@ -26,6 +26,11 @@ TODOS:
 	-- Implement IUpdatable Interface           (DONE)
 	-- Customizable vertex layouts              (DONE)
 
+- Buffers
+    -- Vertex index buffer                      (DONE)
+    -- Reorganize with template specialization
+    -- Element subset updates
+
 - Primitive Types
 	-- Arbitrary precision numbers
 	-- Clock
@@ -39,7 +44,6 @@ TODOS:
 
 - General
 	-- Integrate exception throws
-	-- Implement GPU buffer element updates
     -- Implement HID control interface
     -- MSAA
     -- Display3D class for monitor info
