@@ -45,16 +45,16 @@ namespace Cyclone
                 /** ROTATIONAL PROPERTIES **/
                 /// <summary> Gets the angle of rotation about the x-axis in degrees. </summary>
                 float Pitch()                                   const { return _orientation.X; }
-                /// <summary> Gets the angle of rotation about the y-axis in degrees. </summary>
-                float Roll()                                    const { return _orientation.Z; }
                 /// <summary> Gets the angle of rotation about the z-axis in degrees. </summary>
+                float Roll()                                    const { return _orientation.Z; }
+                /// <summary> Gets the angle of rotation about the y-axis in degrees. </summary>
                 float Yaw()                                     const { return _orientation.Y; }
 
                 /// <summary> Sets the angle of rotation about the x-axis in degrees. </summary>
                 Transform& Pitch(float p)                             { UpdateFlag(_orientation.X != p); _orientation.X = p; return *this; }
-                /// <summary> Sets the angle of rotation about the y-axis in degrees. </summary>
-                Transform& Roll(float r)                              { UpdateFlag(_orientation.Z != r); _orientation.Z = r; return *this; }
                 /// <summary> Sets the angle of rotation about the z-axis in degrees. </summary>
+                Transform& Roll(float r)                              { UpdateFlag(_orientation.Z != r); _orientation.Z = r; return *this; }
+                /// <summary> Sets the angle of rotation about the y-axis in degrees. </summary>
                 Transform& Yaw(float y)                               { UpdateFlag(_orientation.Y != y); _orientation.Y = y; return *this; }
 
                 /// <summary> Gets the angles of rotation about the (x, y, z) axes in degrees. </summary>
