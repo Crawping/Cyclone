@@ -16,5 +16,15 @@ namespace Cyclone
         {
             glBindBuffer(Type(), ID());
         }
+
+        IndexedCommandBuffer::IndexedCommandBuffer() :
+            ArrayBuffer<IndexedDrawCommand>(BufferTypes::DrawIndirect)
+        {
+
+        }
+        void IndexedCommandBuffer::BindEntity(int slot) const
+        {
+            glBindBuffer(Type(), ID());
+        }
     }
 }

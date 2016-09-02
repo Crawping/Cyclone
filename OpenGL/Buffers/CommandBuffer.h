@@ -22,6 +22,15 @@ namespace Cyclone
             uint FirstInstance;
         };
 
+        struct IndexedDrawCommand
+        {
+            uint VertexCount;
+            uint InstanceCount;
+            uint FirstIndex;
+            uint FirstVertex;
+            uint FirstInstance;
+        };
+
 
         class CommandBuffer : public ArrayBuffer<DrawCommand>
         {
@@ -37,5 +46,15 @@ namespace Cyclone
                 
         };
 
+        class IndexedCommandBuffer : public ArrayBuffer<IndexedDrawCommand>
+        {
+            public:
+
+                OpenGLAPI IndexedCommandBuffer();
+
+
+
+                OpenGLAPI void BindEntity(int slot = 0) const override;
+        };
     }
 }
