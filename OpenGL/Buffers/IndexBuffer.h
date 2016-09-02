@@ -37,13 +37,8 @@ namespace Cyclone
                 IndexBuffer(uint n, const uint* indices) : 
                     ArrayBuffer<uint>(BufferTypes::ElementArray)
                 {
-                    Create();
-                    if (n)
-                    {
-                        for (uint a = 0; a < n; a++)
-                            Set(a, indices[a]);
-                        Update();
-                    }
+                    for (uint a = 0; a < n; a++)
+                        Set(a, indices[a]);
                 }
 
         };
