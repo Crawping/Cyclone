@@ -52,10 +52,8 @@ namespace Cyclone
                 VertexBuffer(uint n, const T* vertices) :
                     VertexArray(T().Layout())
                 {
-                    Create();
                     for (uint a = 0; a < n; a++)
                         Set(a, vertices[a]);
-                    Update();
                 }
 
 
