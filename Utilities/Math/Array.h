@@ -19,17 +19,26 @@ namespace Cyclone
 		        /** PROPERTIES **/
                 /// <summary> Gets the total number of elements present in this array. </summary>
 		        uint Count()		const { return _count; }
+                /// <summary> Gets whether the array has any elements stored. </summary>
+                bool IsEmpty()      const { return Count() == 0; }
 
 
 
 		        /** CONSTRUCTORS & DESTRUCTOR **/
 		        /// <summary> Constructs a new one-dimensional array object with a designated number of elements. </summary>
                 /// <param name="n"> The desired number of elements to be stored within the new array. </param>
-                Array(uint n) :
+                Array(uint n = 0) :
 			        _count(n),
 			        Data(new T[n])
 		        {
 
+                }
+                /// <summary> Constructs an array by transferring the contents of another array object. </summary>
+                Array(Array<T>&& other) :
+                    _count(other.Count()),
+                    Data(other.Data)
+                {
+                    other.Data = nullptr;
                 }
                 /// <summary> Constructs an array by copying the contents of another array object. </summary>
 		        Array(const Array<T>& other) :
@@ -38,13 +47,6 @@ namespace Cyclone
 		        {
                     for (uint a = 0; a < Count(); a++)
                         Data[a] = other.Data[a];
-		        }
-                /// <summary> Constructs an array by transferring the contents of another array object. </summary>
-		        Array(Array<T>&& other) :
-			        _count(other.Count()),
-			        Data(other.Data)
-		        {
-			        other.Data = nullptr;
 		        }
                 /// <summary> Constructs an array by copying values contained in an initializer list. </summary>
 		        Array(std::initializer_list<T> values) :
