@@ -40,13 +40,18 @@ namespace Cyclone
 
 
                 /** ROTATION PROPERTIES **/
-
+                /// <summary> Gets the angle of rotation about the x-axis in degrees. </summary>
                 virtual float Pitch()                                       const { return _world.Pitch(); }
+                /// <summary> Gets the angle of rotation about the z-axis in degrees. </summary>
                 virtual float Roll()                                        const { return _world.Roll(); }
+                /// <summary> Gets the angle of rotation about the y-axis in degrees. </summary>
                 virtual float Yaw()                                         const { return _world.Yaw(); }
 
+                /// <summary> Sets the angle of rotation about the x-axis in degrees. </summary>
                 virtual Entity3D& Pitch(float p)                                  { _world.Pitch(p); return *this; }
+                /// <summary> Sets the angle of rotation about the z-axis in degrees. </summary>
                 virtual Entity3D& Roll(float r)                                   { _world.Roll(r); return *this; }
+                /// <summary> Sets the angle of rotation about the y-axis in degrees. </summary>
                 virtual Entity3D& Yaw(float y)                                    { _world.Yaw(y); return *this; }
 
 
