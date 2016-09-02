@@ -87,6 +87,8 @@ namespace Cyclone
 		        /** RENDERABLE INTERFACE METHODS **/
                 /// <summary> Gets a reference to the base color of the entity. </summary>
                 virtual const Color4& Color()                               const override { return _color; }
+
+                virtual const Array<uint>& Indices()                        const override { return _indices; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture2D* Texture()                          const override { return _texture; }
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
@@ -121,6 +123,7 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 Color4                      _color;
+                Array<uint>                 _indices;
 		        Texture2D*			        _texture;
                 VertexTopologies            _topology;
 		        Array<Vertex::Standard>		_vertices;
@@ -132,19 +135,28 @@ namespace Cyclone
                 /// <summary> Constructs a new 3D renderable entity composed of white triangles. </summary>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
 		        Entity3D(const Array<Vertex::Standard>& vertices) :
-                    _color(Color4::White),
-                    _texture(nullptr),
-                    _topology(VertexTopologies::Triangles),
-			        _vertices(vertices)
+                    Entity3D(vertices, Array<uint>(0))
 		        {
 
 		        }
+
+                Entity3D(const Array<Vertex::Standard>& vertices, const Array<uint>& indices) : 
+                    Entity3D(Color4::White, VertexTopologies::Triangles, vertices, indices)
+                {
+
+                }
+                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex::Standard>& vertices) :
+                    Entity3D(color, topology, vertices, Array<uint>())
+                {
+
+                }
 		        /// <summary> Constructs a new 3D renderable entity. </summary>
                 /// <param name="color"> The base color of this entity's geometry. </param>
                 /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex::Standard>& vertices) :
+                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex::Standard>& vertices, const Array<uint>& indices) :
 			        _color(color),
+                    _indices(indices),
                     _texture(nullptr),
 			        _topology(topology),
 			        _vertices(vertices)

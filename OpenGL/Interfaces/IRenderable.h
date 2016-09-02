@@ -33,9 +33,10 @@ namespace Cyclone
 
 		        virtual ~IGeometricEntity() { }
 
-		        virtual const Array<Vertex::Standard>& Vertices()		const = 0;
-		        virtual const Transform& World()			const = 0;
-		        virtual VertexTopologies Topology()			const = 0;
+                virtual const Array<uint>& Indices()                const = 0;
+		        virtual const Array<Vertex::Standard>& Vertices()	const = 0;
+		        virtual const Transform& World()			        const = 0;
+		        virtual VertexTopologies Topology()			        const = 0;
         };
 
 
