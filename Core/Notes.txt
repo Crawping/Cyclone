@@ -21,7 +21,7 @@ TODOS:
 
 - 3D Rendering
 	-- Entity instancing
-	-- Indexed rendering
+	-- Indexed rendering                        (PRELIMINARY)
 	-- Patch entities
 	-- Implement IUpdatable Interface           (DONE)
 	-- Customizable vertex layouts              (DONE)
@@ -35,7 +35,7 @@ TODOS:
 	-- Arbitrary precision numbers
 	-- Clock
 	-- Random Number Generator (RNG)
-	
+
 - Rename
 	-- GraphicsArray		-> ArrayBuffer      (DONE)
 	-- GraphicsMap			-> MapBuffer		(DONE)
@@ -50,7 +50,7 @@ TODOS:
 
 - Scenes
     -- Varying vertex topologies				(DONE)
-    -- Varying vertex layouts
+    -- Varying vertex layouts                   (IN PROGRESS)
     -- Varying shader pipelines
         > Compute
         > Deferred
@@ -91,7 +91,7 @@ RENDERABLE ENTITIES
     -- Vertices & indices
     -- World transformation
     -- Vertex topology
-    
+
 ===============================================================================================================================
 
 GPU PIPELINES
