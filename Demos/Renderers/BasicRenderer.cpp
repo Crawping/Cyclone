@@ -6,8 +6,6 @@
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
-//#include "Spatial/Geometry.h"
-//#include "Geometry/Geometry.h"
 
 
 
