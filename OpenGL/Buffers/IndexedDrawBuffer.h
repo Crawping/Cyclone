@@ -30,9 +30,9 @@ namespace Cyclone
                 uint Count()                    const override { return Commands.Count(); }
                 /// <summary> A method implemented for <see cref="IBindable"/> compatibility that has no purpose here. </summary>
                 /// <returns> This method always returns zero. </returns>
-                /// <remarks> 
-                ///     Instances of this class are a collection of buffer objects that do not have one single identifier. Thus, 
-                ///     while this property is necessary for inheritting from <see cref="IBindable"/>, it performs no actions and 
+                /// <remarks>
+                ///     Instances of this class are a collection of buffer objects that do not have one single identifier. Thus,
+                ///     while this property is necessary for inheritting from <see cref="IBindable"/>, it performs no actions and
                 ///     should never be used.
                 /// </remarks>
                 uint ID()                       const override { return 0; }
@@ -98,8 +98,8 @@ namespace Cyclone
                 {
                     Commands.Bind(slot);
                     Entities.Bind(slot);
-                    Indices.Bind(slot);
                     Vertices.Bind(slot);
+                    Indices.Bind(slot);
                 }
                 void BindResources()            const override { }
 
@@ -110,10 +110,10 @@ namespace Cyclone
                 }
                 void UnbindEntity()             const override
                 {
-                    Commands.Unbind();
-                    Entities.Unbind();
                     Indices.Unbind();
                     Vertices.Unbind();
+                    Entities.Unbind();
+                    Commands.Unbind();
                 }
                 void UnbindResources()          const override { }
 
