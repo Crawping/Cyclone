@@ -151,3 +151,16 @@ TEST_F(_Event, EventMethodCallback)
     _e2(8, -16.32f, 64.128);
     ASSERT_DOUBLE_EQ(_c1.Number, 8 - 16.32f + 64.128);
 }
+
+TEST_F(_Event, MixedFunctionMethodCallbacks)
+{
+    Number = 0;
+
+    NumberClass _c1 = NumberClass();
+    _e1.Register(&_c1, &NumberClass::NumberMethod);
+    _e1.Register(NumberFunction);
+
+    _e1(10); _e1(20); _e1(-50);
+    ASSERT_EQ(_c1.Number, -20);
+    ASSERT_EQ(Number, -20);
+}
