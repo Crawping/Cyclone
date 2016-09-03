@@ -41,6 +41,12 @@ namespace Cyclone
                         Set(a, indices[a]);
                 }
 
+
+                void BindEntity(int slot = 0) const override
+                {
+                    glBindBuffer(Type(), ID());
+                }
+
         };
     }
 }
