@@ -91,15 +91,8 @@ namespace Cyclone
         }
         void GPU::Execute()
         {
-            uint numDraws = 1;
             if (_renderScene)
-            {
-                for (VertexTopologies topology : _renderScene->Topologies())
-                {
-                    _renderScene->Bind(topology);
-                    glMultiDrawArraysIndirect(topology, 0, _renderScene->PerTopologyCount(topology), 0);
-                }
-            }
+                _renderScene->Render();
         }
         void GPU::Update()
         {

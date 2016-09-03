@@ -24,42 +24,50 @@ namespace Cyclone
             EntitySet.insert(&entity);
             _needsUpdate = true;
         }
-        void Scene3D::Bind(VertexTopologies topology) const
-        {
-            if (!Buffers.count(topology)) { return; }
-
-            Buffers.at(topology).Bind();
-        }
-        uint Scene3D::PerTopologyCount(VertexTopologies topology) const
-        {
-            if (!Buffers.count(topology))
-                return 0;
-            
-            return Buffers.at(topology).Count();
-        }
         void Scene3D::Remove(const IRenderableEntity& entity)
         {
             if (!EntitySet.count(&entity)) { return; }
             EntitySet.erase(&entity);
             _needsUpdate = true;
         }
+        void Scene3D::Render() const
+        {
+            for (const auto& kvp : Buffers)
+            {
+                kvp.second.Bind();
+                glMultiDrawArraysIndirect(kvp.first, 0, kvp.second.Count(), 0);
+            }
+
+            for (const auto& kvp : IndexedBuffers)
+            {
+                kvp.second.Bind();
+                glMultiDrawElementsIndirect(kvp.first, GL_UNSIGNED_INT, 0, kvp.second.Count(), 0);
+            }
+        }
         void Scene3D::Update()
         {
-            if (!_needsUpdate) { return; }
-            
-            for (auto topology : _topologies)
-                Buffers[topology].Clear();
+            if (!_needsUpdate) { return; }            
+
+            for (auto& kvp : Buffers)
+                kvp.second.Clear();
+            for (auto& kvp : IndexedBuffers)
+                kvp.second.Clear();
 
             _topologies.clear();
 
             for (auto* entity : EntitySet)
             {
-                Buffers[entity->Topology()].Add(*entity);
                 _topologies.insert(entity->Topology());
+                if (entity->Indices().IsEmpty())
+                    Buffers[entity->Topology()].Add(*entity);
+                else
+                    IndexedBuffers[entity->Topology()].Add(*entity);
             }
 
-            for (auto topology : _topologies)
-                Buffers[topology].Update();
+            for (auto& kvp : Buffers)
+                kvp.second.Update();
+            for (auto& kvp : IndexedBuffers)
+                kvp.second.Update();
 
             _needsUpdate = false;
         }

@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Buffers/DrawBuffer.h"
+#include "Buffers/IndexedDrawBuffer.h"
 #include "Buffers/UniformData.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IUpdatable.h"
@@ -25,11 +26,9 @@ namespace Cyclone
 
             public:
 
+                /** PROPERTIES **/
                 uint Count()                                    const { return EntitySet.size(); }
                 bool NeedsUpdate()                              const override { return _needsUpdate; }
-                uint TopologyCount()                            const { return Buffers.size(); }
-
-                const std::set<VertexTopologies>& Topologies()  const { return _topologies; }
                 
 
 
@@ -48,20 +47,19 @@ namespace Cyclone
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderableEntity& entity);
-                OpenGLAPI uint PerTopologyCount(VertexTopologies topology)  const;
                 OpenGLAPI void Update()                                     override;
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
-
-                OpenGLAPI void Bind(VertexTopologies topology)              const;
+                OpenGLAPI void Render()                                     const;
 
             private:
 
                 /** PROPERTY DATA **/
-                bool                                        _needsUpdate;
-                std::set<VertexTopologies>                  _topologies;
+                bool                                                _needsUpdate;
+                std::set<VertexTopologies>                          _topologies;
                 
-                std::map<VertexTopologies, DrawBuffer<>>    Buffers;
-                std::set<const IRenderableEntity*>          EntitySet;
+                std::map<VertexTopologies, DrawBuffer<>>            Buffers;
+                std::map<VertexTopologies, IndexedDrawBuffer<>>     IndexedBuffers;
+                std::set<const IRenderableEntity*>                  EntitySet;
 
         };
     }
