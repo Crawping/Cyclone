@@ -13,7 +13,7 @@
 #include "Spatial/Transform.h"
 #include <set>
 
-
+#include "Utilities.h"
 
 namespace Cyclone
 {
@@ -145,7 +145,7 @@ namespace Cyclone
                 {
                     IndexedDrawCommand cmd =
                     {
-                        entity->Vertices().Count(),
+                        entity->Indices().Count(),
                         1,
                         Indices.Count(),
                         Vertices.Count(),
