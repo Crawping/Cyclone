@@ -132,6 +132,8 @@ namespace Cyclone
 
             Vector3& operator -=(float v)                             { return Translate(-v, -v, -v); }
             Vector3& operator -=(const Vector3& v)                    { return Translate(-v); }
+
+            Vector3& operator *=(const Vector3& v)                    { X *= v.X; Y *= v.Y; Z *= v.Z; return *this; }
         };
     }
 }
