@@ -99,6 +99,9 @@
     <ClInclude Include="Buffers\IndexBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="Buffers\IndexedDrawBuffer.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
