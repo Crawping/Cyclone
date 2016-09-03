@@ -47,6 +47,7 @@ TODOS:
     -- Implement HID control interface
     -- MSAA
     -- Display3D class for monitor info
+	-- Copy prevention for critical resources
 
 - Scenes
     -- Varying vertex topologies				(DONE)
