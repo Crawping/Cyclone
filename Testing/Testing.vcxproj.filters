@@ -29,17 +29,17 @@
     <ClCompile Include="Area.cpp">
       <Filter>Utilities\Spatial</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry.cpp">
-      <Filter>Utilities\Spatial</Filter>
-    </ClCompile>
     <ClCompile Include="Enumerator.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="Vertex.cpp">
-      <Filter>OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Utilities.cpp">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>OpenGL\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry.cpp">
+      <Filter>OpenGL\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +60,9 @@
     </Filter>
     <Filter Include="OpenGL">
       <UniqueIdentifier>{904bfe6f-3b64-4138-8c4e-420beb601ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Geometry">
+      <UniqueIdentifier>{b7637202-8841-4397-9165-5d534bbcba71}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
