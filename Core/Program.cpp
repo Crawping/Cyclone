@@ -62,8 +62,10 @@ namespace Cyclone
         PlaneXZ = new Quad3D();
         PlaneXZ->Pitch(-90).Scale(5000, 5000).Translate(0, 50);
 
-        TestShape = new Mesh3D(Geometry::Cube());
-        TestShape->Scale(Vector3(25, 25, 25)).Translate(250, 250, -10);
+        Array<uint> indices;
+        Array<Vertex::Standard> vertices = Geometry::Cube(indices);
+        TestShape = new Mesh3D(vertices, indices);
+        TestShape->Scale(Vector3(50, 50, 50)).Translate(250, 250, -10);
 
         RenderScene->Add(*TestShape);
         RenderScene->Add(*PlaneXZ);
@@ -101,8 +103,11 @@ namespace Cyclone
 
             Renderer->Clear(Color4(0.5f));
             Renderer->Update();
+
             Renderer->Execute();
             Renderer->Present();
+            
+            Console::WriteLine("1. " + Renderer->Report());
         }
     }
 
