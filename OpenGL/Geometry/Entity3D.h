@@ -123,6 +123,8 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
                 virtual void Translate(float x, float y, float z = 0.0f)    { _world.Translate(x, y, z); }
+                /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
+                virtual void Translate(const Vector3& t)                    { _world.Translate(t); }
 
             protected:
 
@@ -145,7 +147,7 @@ namespace Cyclone
 
 		        }
 
-                Entity3D(const Array<Vertex::Standard>& vertices, const Array<uint>& indices) : 
+                Entity3D(const Array<Vertex::Standard>& vertices, const Array<uint>& indices) :
                     Entity3D(Color4::White, VertexTopologies::Triangles, vertices, indices)
                 {
 
