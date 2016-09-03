@@ -183,6 +183,9 @@ namespace Cyclone
                 UtilitiesAPI bool operator !=(const Transform& other)       const { return !(*this == other); }
 
 
+                UtilitiesAPI Vector4 operator *(const Vector4& right)       const;
+
+
 
             private:
 
