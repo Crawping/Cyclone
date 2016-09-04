@@ -127,6 +127,8 @@ namespace Cyclone
         }
         Array<Vertex::Standard> Geometry::Cylinder(uint nfaces)
         {
+            nfaces = max(3, nfaces);
+
             Array<Vertex::Standard> vertices = Array<Vertex::Standard>(6 * nfaces);
             float angleStep = Constants::TwoPi / nfaces;
             float hAngleStep = angleStep / 2.0f;
