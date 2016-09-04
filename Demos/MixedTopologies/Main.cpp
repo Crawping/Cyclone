@@ -1,4 +1,4 @@
-/* CHANGELOG 
+/* CHANGELOG
  * Written by Josh Grooms on 20160902
  */
 
@@ -18,24 +18,21 @@ class Program : public BasicRenderer
 {
     public:
 
-        Program() : 
-            BasicRenderer("Mixed Topology Rendering"),
+        Program() :
+            BasicRenderer("Mixed Primitive Rendering"),
             Cube(nullptr),
             Cylinder(nullptr),
-            IndexedCube(nullptr),
+            Icosahedron(nullptr),
             Point()
         {
-            Array<Vertex::Standard> vertices = Geometry::Cube();
-            Geometry::Translate(vertices, Vector3(-0.5f));
-            Cube = new Mesh3D(vertices);
-
             Array<uint> indices;
-            vertices = Geometry::Cube(indices);
-            Geometry::Translate(vertices, Vector3(-0.5f));
-            IndexedCube = new Mesh3D(vertices, indices);
+            Array<Vertex::Standard> vertices = Geometry::Cube(indices);
+            Cube = new Mesh3D(vertices, indices);
+
+            vertices = Geometry::Icosahedron();
+            Icosahedron = new Mesh3D(vertices);
 
             vertices = Geometry::Cylinder(64);
-            Geometry::Translate(vertices, Vector3(0.0f, -0.5f, 0.0f));
             Cylinder = new Mesh3D(vertices);
 
             Initialize();
@@ -45,15 +42,15 @@ class Program : public BasicRenderer
         ~Program()
         {
             if (Cylinder) { delete Cylinder; }
-            if (IndexedCube) { delete IndexedCube; }
+            if (Icosahedron) { delete Icosahedron; }
             if (Cube) { delete Cube; }
         }
 
     protected:
-        
+
         Mesh3D* Cube;
         Mesh3D* Cylinder;
-        Mesh3D* IndexedCube;
+        Mesh3D* Icosahedron;
         Point3D Point;
 
 
@@ -68,11 +65,11 @@ class Program : public BasicRenderer
                 .Color(Color4::Yellow)
                 .Translate(Vector3(ctrWin - (szWin / 8.0f), 50));
 
-            Cylinder->Color(Color4::Cyan)
+            Cylinder->Color(Color4(0.0f, 0.75f, 1.0f))
                 .Scale(50, 125, 50)
                 .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50));
 
-            IndexedCube->Scale(100, 100, 100)
+            Icosahedron->Scale(100, 100, 100)
                 .Color(Color4::Magenta)
                 .Translate(Vector3(ctrWin + (szWin / 8.0f), 50));
 
@@ -82,14 +79,14 @@ class Program : public BasicRenderer
 
             RenderScene->Add(*Cube);
             RenderScene->Add(*Cylinder);
-            RenderScene->Add(*IndexedCube);
+            RenderScene->Add(*Icosahedron);
             RenderScene->Add(Point);
         }
-        
+
 
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
             Renderer->RenderPipeline(RenderPipeline);
         }
 
@@ -97,12 +94,12 @@ class Program : public BasicRenderer
         {
             Cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
             Cylinder->Rotate(Vector3(0.0f, 0.0f, 0.01f));
-            IndexedCube->Rotate(Vector3(0.01f, 0.0f, 0.0f));
-            Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated.
+            Icosahedron->Rotate(Vector3(0.01f, 0.0f, 0.0f));
+            Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated, so this has no effect.
 
             RenderScene->Add(*Cube);
             RenderScene->Add(*Cylinder);
-            RenderScene->Add(*IndexedCube);
+            RenderScene->Add(*Icosahedron);
             RenderScene->Add(Point);
 
             BasicRenderer::UpdateScene();
