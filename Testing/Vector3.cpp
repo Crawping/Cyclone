@@ -61,3 +61,18 @@ TEST_F(_Vector3, VectorTranslation)
     ASSERT_EQ(_v3Copy -= 1.0f, _v3);
     ASSERT_EQ(_v3Copy += Vector3::One, result);
 }
+
+TEST_F(_Vector3, LengthProperty)
+{
+    ASSERT_EQ(_v1.Length(), 0.0f);
+    ASSERT_EQ(_v2.Length(), sqrt(3.0f));
+    ASSERT_EQ(_v3.Length(), sqrtf( (_v3.X * _v3.X) + (_v3.Y * _v3.Y) + (_v3.Z * _v3.Z) ));
+}
+
+TEST_F(_Vector3, VectorNormalization)
+{
+    Vector3 _v3Copy(_v3);
+    _v3Copy.Normalize();
+
+    ASSERT_EQ(_v3Copy.Length(), 1.0f);
+}

@@ -7,8 +7,6 @@
 
 
 
-//namespace Cyclone::Utilities
-//{
 namespace Cyclone
 {
     namespace Utilities
@@ -37,6 +35,11 @@ namespace Cyclone
             float Y;
             /// <summary> The z-coordinate of the vector. </summary>
             float Z;
+
+
+
+            /** PROPERTIES **/
+            float Length()                                          const { return sqrtf( (X * X) + (Y * Y) + (Z * Z) );}
 
 
 
@@ -83,6 +86,7 @@ namespace Cyclone
             /// </remarks>
             Vector3& Translate(const Vector3& t)                { return Translate(t.X, t.Y, t.Z); }
 
+            Vector3& Normalize()                                { return operator /=(Length()); }
 
 
             /** OPERATORS **/
@@ -130,10 +134,15 @@ namespace Cyclone
             /// </remarks>
             Vector3& operator +=(const Vector3& v)                    { return Translate(v); }
 
+            Vector3& operator /=(float v)                             { X /= v; Y /= v; Z /= v; return *this; }
+            Vector3& operator /=(const Vector3& v)                    { X /= v.X; Y /= v.Y; Z /= v.Z; return *this; }
+
+            Vector3& operator *=(float v)                             { X *= v; Y *= v; Z *= v; return *this; }
+            Vector3& operator *=(const Vector3& v)                    { X *= v.X; Y *= v.Y; Z *= v.Z; return *this; }
+
             Vector3& operator -=(float v)                             { return Translate(-v, -v, -v); }
             Vector3& operator -=(const Vector3& v)                    { return Translate(-v); }
 
-            Vector3& operator *=(const Vector3& v)                    { X *= v.X; Y *= v.Y; Z *= v.Z; return *this; }
         };
     }
 }
