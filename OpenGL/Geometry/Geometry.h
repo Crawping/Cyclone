@@ -17,10 +17,10 @@ namespace Cyclone
         {
 
             /** PRIMITIVE GENERATORS **/
-            /// <summary> A cube with unit dimensions spanning the coordinates (0, 0, 0) to (1, 1, 1). </summary>
+            /// <summary> A cube with unit dimensions spanning the coordinates (-0.5f, -0.5f, -0.5f) to (0.5f, 0.5f, 0.5f). </summary>
             /// <remarks> The vertices of this cube are not shared and are wound counter-clockwise. </remarks>
             OpenGLAPI Array<Vertex::Standard> Cube();
-            /// <summary> A cube with unit dimensions spanning the coordinates (0, 0, 0) to (1, 1, 1). </summary>
+            /// <summary> A cube with unit dimensions spanning the coordinates (-0.5f, -0.5f, -0.5f) to (0.5f, 0.5f, 0.5f). </summary>
             /// <param name="indices">
             ///     A reference to an array of 36 unsigned integers representing the order in which vertices will be rendered.
             ///     <para> </para>
@@ -37,7 +37,7 @@ namespace Cyclone
             OpenGLAPI Array<Vertex::Standard> Line();
             /// <summary> A single point in three dimensional space at the coordinates (0, 0, 0). </summary>
             OpenGLAPI Array<Vertex::Standard> Point();
-	        /// <summary> A unit quad in the XY plane spanning the coordinates (0, 0, 0) to (1, 1, 0). </summary>
+	        /// <summary> A unit quad in the XY plane spanning the coordinates (-0.5f, -0.5f, -0.5f) to (0.5f, 0.5f, 0.5f). </summary>
 	        /// <remarks> The vertices of this quad are not shared and are wound counter-clockwise. </remarks>
             OpenGLAPI Array<Vertex::Standard> Quad();
 
