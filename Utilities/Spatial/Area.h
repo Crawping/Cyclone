@@ -58,30 +58,30 @@ namespace Cyclone
 
             /// <summary> Sets the y-axis coordinate of the area's bottom edge. </summary>
             /// <remarks>
-            ///     Although getting this value is the same as reading the y - coordinate directly, note that setting the bottom edge
-            ///     is not equivalent to setting the Y member of this structure.Instead, this setter method controls edge position
-            ///     independently of all other edges by also modifying the height of the area.This allows the bottom edge to move
+            ///     Although getting this value is the same as reading the y-coordinate directly, note that setting the bottom edge
+            ///     is not equivalent to setting the Y member of this structure. Instead, this setter method controls edge position
+            ///     independently of all other edges by also modifying the height of the area. This allows the bottom edge to move
             ///     freely in space while the top edge position remains unchanged.
             /// </remarks>
             void Bottom(float y)                  { Height = Top() - y; Y = y; }
             /// <summary> Sets the x-axis coordinate of the area's left edge. </summary>
             /// <remarks>
-            ///     Although getting this value is the same as reading the x - coordinate directly, note that setting the left edge is
-            ///     not equivalent to setting the X member of this structure.Instead, this setter method controls edge position
-            ///     independently of all other edges by also modifying the height of the area.This allows the left edge to move
+            ///     Although getting this value is the same as reading the x-coordinate directly, note that setting the left edge 
+            ///     is not equivalent to setting the X member of this structure. Instead, this setter method controls edge position
+            ///     independently of all other edges by also modifying the height of the area. This allows the left edge to move
             ///     freely in space while the right edge position remains unchanged.
             /// </remarks>
             void Left(float x)                    { Width = Right() - x; X = x; }
             /// <summary> Sets the x-axis coordinate of the area's right edge. </summary>
             /// <remarks>
-            ///     Setting this value modifies the width of the area so that the x - axis location of the left edge does not change.
+            ///     Setting this value modifies the width of the area so that the x-axis location of the left edge does not change. 
             ///     This allows all four edges of the rectangular area to be manipulated independently of one another.
             /// </remarks>
             void Right(float x)                   { Width = x - X; }
             /// <summary> Sets the y-axis coordinate of the area's top edge. </summary>
             /// <remarks>
-            ///     Setting this value modifies the height of the area so that the y - axis location of the bottom edge does not
-            ///     change.This allows all four edges of the rectangular area to be manipulated independently of one another.
+            ///     Setting this value modifies the height of the area so that the y-axis location of the bottom edge does not
+            ///     change. This allows all four edges of the rectangular area to be manipulated independently of one another.
             /// </remarks>
             void Top(float y)                     { Height = y - Y; }
 
@@ -119,10 +119,9 @@ namespace Cyclone
             /// </param>
             /// <returns>
             ///     A Boolean indicating whether or not the area in 'A' contains the area in 'other'.
-            ///     <para>�</para>
-            ///     If 'other' lies within a larger area 'A', then a Boolean true is returned. Otherwise, <para/>
-            ///     this method returns false. Edge coordinates that are equal to one another across the <para/>
-            ///     two area structures are considered contained.
+            ///     <para> </para>
+            ///     If 'other' lies within a larger area 'A', then a Boolean true is returned. Otherwise, this method returns false.    <para/>
+            ///     Edge coordinates that are equal to one another across the two area structures are considered contained.
             /// </returns>
             /// <remarks>
             ///     This method tests the edge locations of two area descriptions to determine if one fits within the other. Passing
@@ -136,17 +135,18 @@ namespace Cyclone
             /// <returns> A Boolean <c>true</c> if the point lies within or on the border of the area, or <c>false</c> otherwise. </returns>
             constexpr bool Contains(const Vector2& point)   const;
             /// <summary> Contrains an area such that its edge coordinates lie on or within another area. </summary>
+            /// <returns>
+            ///     A reference to the cropped (and the larger original) area. 
+            ///     <para> </para>
+            ///     This output is provided to facilitate the chaining of multiple methods together in a single line of code operating  <para/>
+            ///     on an Area structure.
+            /// </returns>
             /// <param name="keep">
             ///     A reference to the smaller area that will be used to resize the larger 'A' one.
-            ///     <para>�</para>
-            ///     As a typical example, this could be a small rectangular area within 'A' that should <para/>
-            ///     be kept, while the rest of the surrounding region in 'A' should be cropped away, rather <para/>
-            ///     like the cropping of an image.
+            ///     <para> </para>
+            ///     As a typical example, this could be a small rectangular area within 'A' that should be kept, while the rest of the  <para/>
+            ///     surrounding region in 'A' should be cropped away, rather like the cropping of an image.
             /// </param>
-            /// <returns>
-            ///     A reference to the cropped(and the larger original) area.This output is provided to facilitate the
-            ///     chaining of multiple methods together in a single line of code operating on an Area structure.
-            /// </returns>
             /// <remarks>
             ///     This method resizes a large area(the one on which this method is called) to fit within an inputted smaller area.
             ///     It accomplishes this by comparing the edge coordinates of the two data structures, keeping the largest left and
@@ -155,18 +155,20 @@ namespace Cyclone
             /// </remarks>
             Area& Crop(const Area& keep);
             /// <summary> Flips the rectangular area about one of its two dimensions. </summary>
+            /// <returns>
+            ///     A reference to the flipped (and original) area. 
+            ///     <para> </para>
+            ///     This output is provided to facilitate the chaining of multiple methods together in a single line of code operating  <para/>
+            ///     on an Area structure.
+            /// </returns>
             /// <param name="dim">
             ///     An unsigned integer specifying the dimension across which the rectangle will be flipped.
-            ///     <para>�</para>
-            ///     By default, areas are flipped across the first dimension(i.e. the x-axis), resulting in the left and right edge
-            ///     coordinates being swapped with one another.
-            ///     DEFAULT: 1
-            ///     OPTIONS: 1 or 2
+            ///     <para> </para>
+            ///     By default, areas are flipped across the first dimension (i.e. the x-axis), resulting in the left and right edge    <para/>
+            ///     coordinates being swapped with one another.                                                                         <para/>
+            ///     DEFAULT: 1                                                                                                          <para/>
+            ///     OPTIONS: 1 or 2 
             /// </param>
-            /// <returns>
-            ///     A reference to the flipped(and original) area.This output is provided to facilitate the chaining of
-            ///     multiple methods together in a single line of code operating on an Area structure.
-            /// </returns>
             /// <remarks>
             ///     This method effectively swaps the values of two opposing edges on the rectangular area. Which set of edges are
             ///     flipped is controlled by the 'dim' argument that defaults to flipping the area vertically (i.e. the top and
