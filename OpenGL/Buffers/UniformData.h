@@ -18,8 +18,10 @@ namespace Cyclone
         /// <summary> A structure containing uniform shader data that are expected to change between every rendered frame. </summary>
         struct PerFrame
         {
-            /// <summary> The current combined view-projection transformation matrix. </summary>
-            Matrix4x4   ViewProjection;
+            /// <summary> The current projection transformation matrix. </summary>
+            Matrix4x4   Projection;
+            /// </summary> The current view transformation matrix. </summary>
+            Matrix4x4   View;
             /// <summary> The position of the camera in world coordinates. </summary>
             Vector3     CameraPosition;
             /// <summary> A time measurement provided by the application for use on the GPU. </summary>

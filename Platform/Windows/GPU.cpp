@@ -130,7 +130,9 @@ namespace Cyclone
         {
             PerFrame data =
             {
-                (_projection * _view).ToArray(),
+                _projection.ToArray(),
+                _view.ToArray(),
+                //(_projection * _view).ToArray(),
                 Vector3::One,
                 0,
             };

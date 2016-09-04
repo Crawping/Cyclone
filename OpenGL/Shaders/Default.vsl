@@ -17,9 +17,9 @@ out vec3    VertexPosition;
 
 void main(void)
 {
-    EntityIndex = gl_InstanceID;
+    EntityIndex = gl_DrawIDARB;
     TexUV = UV;
     VertexPosition = Position;
 
-    gl_Position = PerFrameData[0].ViewProjection * PerEntityData[gl_DrawIDARB].World * vec4(Position, 1.0);
+    gl_Position = PerFrameData[0].Projection * PerFrameData[0].View * PerEntityData[gl_DrawIDARB].World * vec4(Position, 1.0);
 }
