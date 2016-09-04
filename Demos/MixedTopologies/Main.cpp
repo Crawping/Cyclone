@@ -20,22 +20,39 @@ class Program : public BasicRenderer
 
         Program() : 
             BasicRenderer("Mixed Topology Rendering"),
-            Cube(Geometry::Cube()),
+            Cube(nullptr),
+            Cylinder(nullptr),
             IndexedCube(nullptr),
             Point()
         {
+            Array<Vertex::Standard> vertices = Geometry::Cube();
+            Geometry::Translate(vertices, Vector3(-0.5f));
+            Cube = new Mesh3D(vertices);
+
             Array<uint> indices;
-            Array<Vertex::Standard> vertices = Geometry::Cube(indices);
+            vertices = Geometry::Cube(indices);
+            Geometry::Translate(vertices, Vector3(-0.5f));
             IndexedCube = new Mesh3D(vertices, indices);
+
+            vertices = Geometry::Cylinder(64);
+            Geometry::Translate(vertices, Vector3(0.0f, -0.5f, 0.0f));
+            Cylinder = new Mesh3D(vertices);
 
             Initialize();
 
             glEnable(GL_CULL_FACE);
         }
+        ~Program()
+        {
+            if (Cylinder) { delete Cylinder; }
+            if (IndexedCube) { delete IndexedCube; }
+            if (Cube) { delete Cube; }
+        }
 
     protected:
         
-        Mesh3D  Cube;
+        Mesh3D* Cube;
+        Mesh3D* Cylinder;
         Mesh3D* IndexedCube;
         Point3D Point;
 
@@ -47,9 +64,13 @@ class Program : public BasicRenderer
             Vector2 ctrWin = RenderWindow->ClientArea().Center();
             Vector2 szWin = RenderWindow->Size();
 
-            Cube.Scale(100, 100, 100)
+            Cube->Scale(100, 100, 100)
                 .Color(Color4::Yellow)
                 .Translate(Vector3(ctrWin - (szWin / 8.0f), 50));
+
+            Cylinder->Color(Color4::Cyan)
+                .Scale(50, 125, 50)
+                .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50));
 
             IndexedCube->Scale(100, 100, 100)
                 .Color(Color4::Magenta)
@@ -59,7 +80,8 @@ class Program : public BasicRenderer
                 .Color(Color4::Cyan)
                 .Translate(Vector3(ctrWin + (szWin / Vector2(-8.0f, 8.0f))));
 
-            RenderScene->Add(Cube);
+            RenderScene->Add(*Cube);
+            RenderScene->Add(*Cylinder);
             RenderScene->Add(*IndexedCube);
             RenderScene->Add(Point);
         }
@@ -73,11 +95,13 @@ class Program : public BasicRenderer
 
         void UpdateScene() override
         {
-            Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
+            Cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
+            Cylinder->Rotate(Vector3(0.0f, 0.0f, 0.01f));
             IndexedCube->Rotate(Vector3(0.01f, 0.0f, 0.0f));
             Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated.
 
-            RenderScene->Add(Cube);
+            RenderScene->Add(*Cube);
+            RenderScene->Add(*Cylinder);
             RenderScene->Add(*IndexedCube);
             RenderScene->Add(Point);
 
