@@ -12,7 +12,8 @@ struct PerEntity
 
 struct PerFrame
 {
-    mat4        ViewProjection;
+    mat4        Projection;
+    mat4        View;
     vec3        CameraPosition;
     uint        Time;
 };
