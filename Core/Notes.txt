@@ -61,6 +61,7 @@ TODOS:
 - Shaders
 	-- Make 'include' directive more robust
 	-- Implement a 'define' directive
+	-- Blinn-Phong lighting						(DONE)
 
 ===============================================================================================================================
 
