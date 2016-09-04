@@ -1,0 +1,30 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20160903
+ */
+
+
+
+struct Illuminance
+{
+    vec4 Ambient;
+    vec4 Diffuse;
+    vec4 Emissive;
+    vec4 Specular;
+};
+
+
+
+float Lambert(vec3 normal, vec3 toLight)
+{
+    return max(dot(normal, toLight), 1.0);
+}
+float SpecularPhong(vec3 normal, vec3 toLight, vec3 toEye, float power)
+{
+    vec3 reflection = reflect(-toLight, normal);
+    return pow(max( dot(reflection, toEye), 0.0 ), power);
+}
+float SpecularBlinnPhong(vec3 normal, vec3 toLight, vec3 toEye, float power)
+{
+    vec3 halfway = normalize(toLight + toEye);
+    return pow(max( dot(normal, halfway), 0.0 ), power);
+}

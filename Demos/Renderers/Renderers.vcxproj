@@ -137,10 +137,13 @@
     <ClCompile Include="BasicRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Shaders\BlinnPhong.psl" />
+    <None Include="Shaders\BlinnPhong.vsl" />
     <None Include="Shaders\Default.hsl" />
     <None Include="Shaders\Default.psl" />
     <None Include="Shaders\Default.vsl" />
     <None Include="Shaders\Depth.psl" />
+    <None Include="Shaders\Lighting.hsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

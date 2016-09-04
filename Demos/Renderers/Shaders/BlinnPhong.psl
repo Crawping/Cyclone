@@ -1,0 +1,32 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20160903
+ */
+
+#version 450 core
+#include "Default.hsl"
+#include "Lighting.hsl"
+
+out vec4 OutputColor;
+
+in PixelShaderInput
+{
+    flat int    EntityIndex;
+    vec2        TexUV;
+    vec3        ToEye;
+    vec3        ToLight;
+    vec3        WorldNormal;
+} Input;
+
+
+void main(void)
+{
+    vec3 normal     = normalize(Input.WorldNormal);
+    vec3 toEye      = normalize(Input.ToEye);
+    vec3 toLight    = normalize(Input.ToLight);
+
+    vec3 halfway    = normalize(toLight + toEye);
+    vec3 diffuse    = max(dot(normal, toLight), 0.25) * PerEntityData[Input.EntityIndex].Color.rgb;
+    vec3 specular   = SpecularBlinnPhong(normal, toLight, toEye, 200) * vec3(0.25);
+
+    OutputColor = vec4(diffuse + specular, 1.0);
+}

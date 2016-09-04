@@ -25,5 +25,12 @@
     <None Include="Shaders\Depth.psl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\BlinnPhong.psl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\Lighting.hsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\BlinnPhong.vsl" />
   </ItemGroup>
 </Project>

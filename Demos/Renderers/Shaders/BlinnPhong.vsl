@@ -1,0 +1,40 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20160903
+ */
+
+#version 450 core
+#extension GL_ARB_shader_draw_parameters : require
+#include "Default.hsl"
+
+layout(location = 0) in vec3 Position;
+layout(location = 1) in vec3 Normal;
+layout(location = 2) in vec2 UV;
+
+
+out PixelShaderInput
+{
+    int     EntityIndex;
+    vec2    TexUV;
+    vec3    ToEye;
+    vec3    ToLight;
+    vec3    WorldNormal;
+} Output;
+
+
+uniform vec3 LightPosition = vec3(-10000, 10000, 20000);
+
+
+void main(void)
+{
+    mat4 worldViewTransform = PerFrameData[0].View * PerEntityData[gl_DrawIDARB].World;
+    vec4 viewPosition = worldViewTransform * vec4(Position, 1.0);
+    
+    Output.EntityIndex  = gl_DrawIDARB;
+    Output.ToEye        = -viewPosition.xyz;
+    Output.ToLight      = LightPosition - viewPosition.xyz;
+    Output.TexUV        = UV;
+    Output.WorldNormal  = mat3(worldViewTransform) * Normal;
+
+    gl_Position = PerFrameData[0].Projection * viewPosition;
+}
+
