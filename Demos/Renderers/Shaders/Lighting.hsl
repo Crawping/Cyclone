@@ -4,6 +4,14 @@
 
 
 
+/** DATA **/
+struct Luminance
+{
+    vec4 Ambient;
+    vec4 Diffuse;
+    vec4 Specular;
+};
+
 struct Illuminance
 {
     vec4 Ambient;
@@ -14,6 +22,7 @@ struct Illuminance
 
 
 
+/** UTILITIES **/
 float Lambert(vec3 normal, vec3 toLight)
 {
     return max(dot(normal, toLight), 1.0);

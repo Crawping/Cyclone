@@ -4,6 +4,7 @@
 
 
 
+/** DATA **/
 struct PerEntity
 {
     mat4        World;
@@ -25,5 +26,5 @@ layout(binding = 0, std140) uniform PerEntityBuffer
 
 layout(binding = 1, std140) uniform PerFrameBuffer
 {
-    PerFrame PerFrameData[128];
+    PerFrame PerFrameData[1];
 };
