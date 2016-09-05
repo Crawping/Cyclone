@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Buffers/CommandBuffer.h"
+#include "Buffers/IndexBuffer.h"
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
@@ -20,7 +21,7 @@ namespace Cyclone
     {
         /// <summary> A class that holds and manages a collection of buffers related to drawing a single type of primitive geometry. </summary>
         /// <typeparam name="T"> The type name of the vertex data structure used by the buffer. </typeparam>
-        template<typename T = Vertex::Standard>
+        template<typename T, typename U = PerEntity, typename V = Vertex::Standard>
         class DrawBuffer : public IGraphicsBuffer
         {
             public:
@@ -57,6 +58,7 @@ namespace Cyclone
                     Commands.Clear();
                     Entities.Clear();
                     Vertices.Clear();
+                    Indices.Clear();
                     _needsUpdate = true;
                 }
                 void Remove(const IRenderableEntity& entity)
@@ -80,6 +82,7 @@ namespace Cyclone
                     Commands.Update();
                     Entities.Update();
                     Vertices.Update();
+                    Indices.Update();
 
                     _needsUpdate = false;
                 }
@@ -97,6 +100,9 @@ namespace Cyclone
                     Commands.Bind(slot);
                     Entities.Bind(slot);
                     Vertices.Bind(slot);
+
+                    if (!Indices.IsEmpty())
+                        Indices.Bind(slot);
                 }
                 void BindResources()            const override { }
 
@@ -107,15 +113,16 @@ namespace Cyclone
                 }
                 void UnbindEntity()             const override
                 {
-                    Commands.Unbind();
-                    Entities.Unbind();
+                    Indices.Unbind();
                     Vertices.Unbind();
+                    Entities.Unbind();
+                    Commands.Unbind();
                 }
                 void UnbindResources()          const override { }
                 
 
 
-            private:
+            protected:
 
                 /** PROPERTY DATA **/
                 bool                                _needsUpdate;
@@ -124,11 +131,13 @@ namespace Cyclone
 
                 /** DATA COLLECTIONS **/
                 /// <summary> A collection of indirect drawing commands used to render geometry on the GPU. </summary>
-                CommandBuffer                       Commands;
+                CommandBuffer<T>                    Commands;
                 /// <summary> A collection of uniform data that describes the appearance of rendered geometry on the GPU. </summary>
-                UniformBuffer<PerEntity>            Entities;
+                UniformBuffer<U>                    Entities;
                 /// <summary> A collection of vertices used to build geometry on the GPU. </summary>
-                VertexBuffer<T>                     Vertices;
+                VertexBuffer<V>                     Vertices;
+
+                IndexBuffer                         Indices;
 
                 std::set<const IRenderableEntity*>  ExistingEntities;
 
@@ -137,18 +146,12 @@ namespace Cyclone
                 /** UTILITIES **/
                 void AddCommand(const IRenderableEntity* entity)
                 {
-                    DrawCommand cmd =
-                    {
-                        entity->Vertices().Count(),
-                        1,
-                        Vertices.Count(),
-                        Commands.Count(),
-                    };
-                    Commands.Add(cmd);
+                    uint nVertices = entity->Indices().IsEmpty() ? entity->Vertices().Count() : entity->Indices().Count();
+                    Commands.Add(T(nVertices, 1, Indices.Count(), Vertices.Count(), Commands.Count()));                        
                 }
                 void AddEntity(const IRenderableEntity* entity)
                 {
-                    PerEntity data =
+                    U data =
                     {
                         entity->World().ToArray(),
                         entity->Color(),
@@ -157,11 +160,19 @@ namespace Cyclone
                 }
                 void AddVertices(const IRenderableEntity* entity)
                 {
-                    const Array<Vertex::Standard>& vertices = entity->Vertices();
+                    const Array<V>& vertices = entity->Vertices();
                     for (uint a = 0; a < vertices.Count(); a++)
                         Vertices.Add(vertices(a));
+
+                    const Array<uint>& indices = entity->Indices();
+                    for (uint a = 0; a < indices.Count(); a++)
+                        Indices.Add(indices(a));
                 }
 
         };
+
+
+
+
     }
 }
