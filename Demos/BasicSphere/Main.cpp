@@ -16,31 +16,30 @@ class Program : public BasicRenderer
     public:
         Program() :
             BasicRenderer("Rotating Sphere"),
-            Icosahedron(Geometry::Sphere(2))
+            Sphere(Geometry::Sphere(2))
         {
             Initialize();
-            glEnable(GL_CULL_FACE);
         }
 
     protected:
-        Mesh3D Icosahedron;
+        Mesh3D Sphere;
 
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Icosahedron.Scale(100, 100, 100)
+            Sphere.Scale(100, 100, 100)
                 .Color(Color4(0.0f, 0.75f, 1.0f))
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
                 .Roll(90);
 
-            RenderScene->Add(Icosahedron);
+            RenderScene->Add(Sphere);
         }
 
         void CreateSizedResources() override
         {
             BasicRenderer::CreateSizedResources();
-            Icosahedron.Position(Vector3(RenderWindow->ClientArea().Center(), 50));
+            Sphere.Position(Vector3(RenderWindow->ClientArea().Center(), 50));
         }
 
         void CreateShaderPipeline() override
@@ -51,8 +50,15 @@ class Program : public BasicRenderer
 
         void UpdateScene() override
         {
-            Icosahedron.Rotate(0.01f);
-            RenderScene->Add(Icosahedron);
+            Color4 color
+            (
+                0.5f * sinf(Sphere.Pitch()) + 0.5f,
+                0.25f * cosf(Sphere.Yaw()) + 0.75f,
+                0.125f * sinf(Sphere.Roll()) + 0.875
+            );
+
+            Sphere.Color(color).Rotate(0.01f);
+            RenderScene->Add(Sphere);
             BasicRenderer::UpdateScene();
         }
 };
