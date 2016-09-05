@@ -50,11 +50,13 @@ namespace Cyclone
                 int Value;
 
 				/// <summary> Constructs a basic integer storage structure for a derived enumerator value. </summary>
-		        Enumerator(int value) : Value(value) { }
+                constexpr Enumerator(int value = 0) : Value(value) { }
+
+                constexpr Enumerator(const Enumerator& other) : Value(other.Value) { }
 
             public:
                 /// <summary> Implicitly converted an Enumerator value into an integer. </summary>
-		        operator int() const { return Value; }
+		        constexpr operator int() const { return Value; }
         };
                 
         /// <summary> The base structure for all custom-written flag enumerations found within this project. </summary>
@@ -79,7 +81,9 @@ namespace Cyclone
 
             protected:
                 /// <summary> Constructs a basic integer storage structure for a derived enumerator flag value. </summary>
-		        Flag(int value) : Enumerator(value) { }
+		        constexpr Flag(int value) : Enumerator(value) { }
+
+                //constexpr Flag(const Flag& other) : Enumerator(other.Value) { }
 
         };
     }
