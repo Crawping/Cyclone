@@ -82,6 +82,7 @@ struct BufferTypes : public Enumerator
         DispatchIndirect            = GL_DISPATCH_INDIRECT_BUFFER,
         /// <summary> A buffer that holds the commands and parameters used for indirect rendering. </summary>
         DrawIndirect                = GL_DRAW_INDIRECT_BUFFER,
+        /// <summary> A buffer that holds an ordered list of indices that guide vertex rendering. </summary>
         ElementArray                = GL_ELEMENT_ARRAY_BUFFER,
         PixelPack                   = GL_PIXEL_PACK_BUFFER,
         PixelUnpack                 = GL_PIXEL_UNPACK_BUFFER,
@@ -95,7 +96,7 @@ struct BufferTypes : public Enumerator
         Uniform                     = GL_UNIFORM_BUFFER,
     };
 
-    BufferTypes(enum Buffers b = Uniform) : Enumerator((int)b) { }
+    constexpr BufferTypes(enum Buffers b = Uniform) : Enumerator((int)b) { }
 };
 
 
@@ -118,7 +119,7 @@ struct NumericFormats : public Enumerator
         UShort                      = GL_UNSIGNED_SHORT,
     };
 
-    NumericFormats(enum Formats f = UByte) : Enumerator((int)f) { }
+    constexpr NumericFormats(enum Formats f = UByte) : Enumerator((int)f) { }
 
     uint ByteSize() const
     {
@@ -162,7 +163,7 @@ struct RenderErrors : public Enumerator
         StackUnderflow              = GL_STACK_UNDERFLOW,
     };
 
-    RenderErrors(enum Errors e = Nothing) : Enumerator((int)e) { }
+    constexpr RenderErrors(enum Errors e = Nothing) : Enumerator((int)e) { }
 };
 
 /// <summary> A list of the programmable GPU rendering stages. </summary>
@@ -176,7 +177,7 @@ struct ShaderTypes : public Enumerator
         VertexShader                = GL_VERTEX_SHADER,
     };
 
-    ShaderTypes(enum Shaders s) : Enumerator((int)s) { }
+    constexpr ShaderTypes(enum Shaders s) : Enumerator((int)s) { }
 };
 
 /// <summary> A list of supported filters that can be applied to texture samplers. </summary>
@@ -192,7 +193,7 @@ struct TextureFilters : public Enumerator
         NearestMipmapNearest        = GL_NEAREST_MIPMAP_NEAREST,
     };
 
-    TextureFilters(enum Filters f = Linear) : Enumerator((int)f) { }
+    constexpr TextureFilters(enum Filters f = Linear) : Enumerator((int)f) { }
 };
 
 /// <summary> A list of supported formats in which color buffers and textures can be stored on the GPU. </summary>
@@ -249,7 +250,7 @@ struct TextureFormats : public Enumerator
         UInt4                       = GL_RGBA32UI,
     };
 
-    TextureFormats(enum Formats f = Byte4) : Enumerator((int)f) { }
+    constexpr TextureFormats(enum Formats f = Byte4) : Enumerator((int)f) { }
 
 	/// <summary> Converts specific OpenGL internal format enumerators into their equivalent base format values. </summary>
 	/// <remarks>
@@ -314,7 +315,7 @@ struct TextureTargets : public Enumerator
         Texture3D                   = GL_TEXTURE_3D,
     };
 
-    TextureTargets(enum Targets t = Texture2D) : Enumerator((int)t) { }
+    constexpr TextureTargets(enum Targets t = Texture2D) : Enumerator((int)t) { }
 };
 
 /// <summary> A list of supported topologies that indicate the primitive geometry to be rendered. </summary>
@@ -340,7 +341,7 @@ struct VertexTopologies : public Enumerator
         TriangleStrip               = GL_TRIANGLE_STRIP,
     };
 
-    VertexTopologies(enum Topologies t = Triangles) : Enumerator((int)t) { }
+    constexpr VertexTopologies(enum Topologies t = Triangles) : Enumerator((int)t) { }
 };
 
 /// <summary> A list of supported wrapping modes that control behavior when attempting to sample outside texture boundaries. </summary>
@@ -360,5 +361,5 @@ struct WrapModes : public Enumerator
         Repeat                      = GL_REPEAT,
     };
 
-    WrapModes(enum Modes m = Repeat) : Enumerator((int)m) { }
+    constexpr WrapModes(enum Modes m = Repeat) : Enumerator((int)m) { }
 };
