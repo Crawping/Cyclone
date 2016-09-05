@@ -36,8 +36,6 @@ class Program : public BasicRenderer
             Cylinder = new Mesh3D(vertices);
 
             Initialize();
-
-            glEnable(GL_CULL_FACE);
         }
         ~Program()
         {
