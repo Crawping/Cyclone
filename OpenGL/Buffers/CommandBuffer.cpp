@@ -2,29 +2,27 @@
 #include "GL/OpenGL.h"
 
 
+
 namespace Cyclone
 {
     namespace OpenGL
     {
-
-        CommandBuffer::CommandBuffer() : 
-            ArrayBuffer<DrawCommand>(BufferTypes::DrawIndirect)
+        template<typename U>
+        CommandBuffer<U>::CommandBuffer() :
+            ArrayBuffer<U>(BufferTypes::DrawIndirect)
         {
 
         }
-        void CommandBuffer::BindEntity(int slot) const
-        {
-            glBindBuffer(Type(), ID());
-        }
-
-        IndexedCommandBuffer::IndexedCommandBuffer() :
-            ArrayBuffer<IndexedDrawCommand>(BufferTypes::DrawIndirect)
-        {
-
-        }
-        void IndexedCommandBuffer::BindEntity(int slot) const
+        template<typename U>
+        void CommandBuffer<U>::BindEntity(int slot) const
         {
             glBindBuffer(Type(), ID());
         }
+
+
+
+        /** EXPLICIT TEMPLATE INSTANTIATIONS **/
+        template class CommandBuffer<DrawCommand>;
+        template class CommandBuffer<IndexedDrawCommand>;
     }
 }

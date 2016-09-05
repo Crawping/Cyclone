@@ -20,6 +20,15 @@ namespace Cyclone
             uint InstanceCount;
             uint FirstVertex;
             uint FirstInstance;
+
+            constexpr DrawCommand(uint nVertices, uint nInstances, uint firstIndex, uint firstVertex, uint firstInstance) :
+                VertexCount(nVertices),
+                InstanceCount(nInstances),
+                FirstVertex(firstVertex),
+                FirstInstance(firstInstance)
+            {
+
+            }
         };
 
         struct IndexedDrawCommand
@@ -29,10 +38,21 @@ namespace Cyclone
             uint FirstIndex;
             uint FirstVertex;
             uint FirstInstance;
+
+            constexpr IndexedDrawCommand(uint nVertices, uint nInstances, uint firstIndex, uint firstVertex, uint firstInstance) :
+                VertexCount(nVertices),
+                InstanceCount(nInstances),
+                FirstIndex(firstIndex),
+                FirstVertex(firstVertex),
+                FirstInstance(firstInstance)
+            {
+
+            }
         };
 
 
-        class CommandBuffer : public ArrayBuffer<DrawCommand>
+        template<typename U>
+        class CommandBuffer : public ArrayBuffer<U>
         {
             public:
 
@@ -46,15 +66,5 @@ namespace Cyclone
                 
         };
 
-        class IndexedCommandBuffer : public ArrayBuffer<IndexedDrawCommand>
-        {
-            public:
-
-                OpenGLAPI IndexedCommandBuffer();
-
-
-
-                OpenGLAPI void BindEntity(int slot = 0) const override;
-        };
     }
 }
