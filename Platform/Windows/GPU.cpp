@@ -132,7 +132,6 @@ namespace Cyclone
             {
                 _projection.ToArray(),
                 _view.ToArray(),
-                //(_projection * _view).ToArray(),
                 Vector3::One,
                 0,
             };
@@ -143,6 +142,7 @@ namespace Cyclone
                 glViewport(0, 0, _renderWindow->ClientArea().Width, _renderWindow->ClientArea().Height);
 
             glActiveTexture(GL_TEXTURE0);
+            glEnable(GL_CULL_FACE);
         }
         string GPU::ReportErrors() const
         {
