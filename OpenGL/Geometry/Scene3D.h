@@ -4,7 +4,6 @@
 
 #pragma once
 #include "Buffers/DrawBuffer.h"
-#include "Buffers/IndexedDrawBuffer.h"
 #include "Buffers/UniformData.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IUpdatable.h"
@@ -29,7 +28,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 uint Count()                                    const { return EntitySet.size(); }
                 bool NeedsUpdate()                              const override { return _needsUpdate; }
-                
+
 
 
                 /** CONSTRUCTOR **/
@@ -40,10 +39,10 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 /// <summary> Adds a renderable entity to this scene. </summary>
-                /// <param name="entity"> 
-                ///     A reference to the renderable entity that will be added to the scene. If this entity already exists 
-                ///     within this collection (i.e. it has been added previously), then its corresponding data store will 
-                ///     be updated. Otherwise, this method generates a new entry in the scene's data collection to hold the 
+                /// <param name="entity">
+                ///     A reference to the renderable entity that will be added to the scene. If this entity already exists
+                ///     within this collection (i.e. it has been added previously), then its corresponding data store will
+                ///     be updated. Otherwise, this method generates a new entry in the scene's data collection to hold the
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderableEntity& entity);
@@ -56,9 +55,9 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 bool                                                _needsUpdate;
                 std::set<VertexTopologies>                          _topologies;
-                
-                std::map<VertexTopologies, DrawBuffer<>>            Buffers;
-                std::map<VertexTopologies, IndexedDrawBuffer<>>     IndexedBuffers;
+
+                std::map<VertexTopologies, DrawBuffer<DrawCommand>>            Buffers;
+                std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>     IndexedBuffers;
                 std::set<const IRenderableEntity*>                  EntitySet;
 
         };
