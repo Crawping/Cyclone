@@ -191,16 +191,6 @@ namespace Cyclone
             return true;
         }
 
-        Vector4 Transform::operator *(const Vector4& right) const
-        {
-            return Vector4
-            (
-                (State(0) * right.X) + (State(4) * right.Y) + (State( 8) * right.Z) + (State(12) * right.W),
-                (State(1) * right.X) + (State(5) * right.Y) + (State( 9) * right.Z) + (State(13) * right.W),
-                (State(2) * right.X) + (State(6) * right.Y) + (State(10) * right.Z) + (State(14) * right.W),
-                (State(3) * right.X) + (State(7) * right.Y) + (State(11) * right.Z) + (State(15) * right.W)
-            );
-        }
 
 
         /** PRIVATE UTILITIES **/
@@ -242,5 +232,6 @@ namespace Cyclone
 
             _updateFlag = false;
         }
+
     }
 }

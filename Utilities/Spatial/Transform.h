@@ -167,6 +167,8 @@ namespace Cyclone
                 Transform& Rotate(float p, float y, float r)                      { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
                 UtilitiesAPI const float* ToArray()                         const { UpdateState(); return State.ToArray(); }
+
+                UtilitiesAPI const Matrix4x4& ToMatrix4x4()                 const { UpdateState(); return State; }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
                 Transform& Translate(const Vector3& t)                            { return Position(_position + t); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
@@ -180,10 +182,9 @@ namespace Cyclone
                 UtilitiesAPI bool operator ==(const Transform& other)       const;
                 /// <summary> Determines whether one transformation is not equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
-                UtilitiesAPI bool operator !=(const Transform& other)       const { return !(*this == other); }
-
-
-                UtilitiesAPI Vector4 operator *(const Vector4& right)       const;
+                bool operator !=(const Transform& other)                    const { return !(*this == other); }
+                
+                Vector4 operator *(const Vector4& right)                    const { return ToMatrix4x4() * right; }
 
 
 
