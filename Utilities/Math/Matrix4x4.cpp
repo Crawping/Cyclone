@@ -189,6 +189,16 @@ namespace Cyclone
 
             return result;
         }
+        Vector4 Matrix4x4::operator *(const Vector4& v)        const
+        {
+            return Vector4
+            (
+                (Data[0] * v.X) + (Data[4] * v.Y) + (Data[ 8] * v.Z) + (Data[12] * v.W),
+                (Data[1] * v.X) + (Data[5] * v.Y) + (Data[ 9] * v.Z) + (Data[13] * v.W),
+                (Data[2] * v.X) + (Data[6] * v.Y) + (Data[10] * v.Z) + (Data[14] * v.W),
+                (Data[3] * v.X) + (Data[7] * v.Y) + (Data[11] * v.Z) + (Data[15] * v.W)
+            );
+        }
 
         Matrix4x4 Matrix4x4::operator -(float m)               const
         {

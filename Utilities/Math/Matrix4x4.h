@@ -119,6 +119,8 @@ namespace Cyclone
                 Matrix4x4 operator *(float m)               const;
                 /// <summary> Multiplies two equivalently sized matrices. </summary>
                 Matrix4x4 operator *(const Matrix4x4& m)    const;
+                /// <summary> Multiplies the matrix by a four-element vector. </summary>
+                Vector4 operator *(const Vector4& v)        const;
 
                 /// <summary> Multiplies each element of this matrix by -1.0f, changing their signs. </summary>
                 Matrix4x4 operator -()                      const { return operator *(-1.0f); }
