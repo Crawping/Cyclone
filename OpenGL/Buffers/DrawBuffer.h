@@ -11,6 +11,7 @@
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IRenderable.h"
 #include "Spatial/Transform.h"
+#include <map>
 #include <set>
 
 
@@ -19,8 +20,9 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+
         /// <summary> A class that holds and manages a collection of buffers related to drawing a single type of primitive geometry. </summary>
-        /// <typeparam name="T"> The type name of the vertex data structure used by the buffer. </typeparam>
+        /// <typeparam name="V"> The type name of the vertex data structure used by the buffer. </typeparam>
         template<typename T, typename U = PerEntity, typename V = Vertex::Standard>
         class DrawBuffer : public IGraphicsBuffer
         {
@@ -38,19 +40,26 @@ namespace Cyclone
                 /// </remarks>
                 uint ID()                       const override { return 0; }
                 /// <summary> Gets whether this buffer has data updates queued for transfer to the GPU. </summary>
-                bool NeedsUpdate()              const override { return _needsUpdate; }
+                bool NeedsUpdate()              const override { return _needsUpdate || _needsReallocation; }
 
 
 
                 /** CONSTRUCTOR **/
-                DrawBuffer() : _needsUpdate(false) { }
+                DrawBuffer() :
+                    _needsReallocation(false),
+                    _needsUpdate(false)
+                {
+
+                }
 
 
 
                 /** BUFFER UTILITIES **/
                 void Add(const IRenderableEntity& entity)
                 {
-                    ExistingEntities.insert(&entity);
+                    if (EntityIndices.count(&entity)) { return; }
+
+                    _needsReallocation = true;
                     _needsUpdate = true;
                 }
                 void Clear()                    override
@@ -59,6 +68,8 @@ namespace Cyclone
                     Entities.Clear();
                     Vertices.Clear();
                     Indices.Clear();
+
+                    _needsReallocation = true;
                     _needsUpdate = true;
                 }
                 void Remove(const IRenderableEntity& entity)
@@ -70,21 +81,62 @@ namespace Cyclone
                 {
                     if (!NeedsUpdate()) { return; }
 
-                    Clear();
-
-                    for (auto* entity : ExistingEntities)
+                    Unbind();
+                    if (_needsReallocation)
                     {
-                        AddCommand(entity);
-                        AddEntity(entity);
-                        AddVertices(entity);
+                        Clear();
+
+                        for (const auto& kvp : EntityIndices)
+                        {
+                            AddCommand(kvp.first);
+                            AddEntity(kvp.first);
+                            AddVertices(kvp.first);
+                        }
+
+                        Commands.Update();
+                        Entities.Update();
+                        Vertices.Update();
+                        Indices.Update();
                     }
+                    else
+                    {
+                        for (const auto* entity : ToUpdate)
+                        {
+                            uint idx = EntityIndices[entity];
+                            const T& cmd = Commands[idx];
 
-                    Commands.Update();
-                    Entities.Update();
-                    Vertices.Update();
-                    Indices.Update();
+                            U data =
+                            {
+                                entity->World().ToMatrix4x4(),
+                                entity->Color(),
+                            };
+                            Entities.Set(cmd.FirstInstance, data);
+                        }
 
+                        Entities.Update();
+                    }
+                    
+                    ToUpdate.clear();
+                    _needsReallocation = false;
                     _needsUpdate = false;
+                }
+                void Update(const IRenderableEntity& entity)
+                {
+                    if (!EntityIndices.count(&entity)) { return; }
+
+                    ToUpdate.insert(&entity);
+
+                    _needsUpdate = true;
+
+                    //uint idx = EntityIndices[&entity];
+                    //const T& cmd = Commands[idx];
+
+                    //U data =
+                    //{
+                    //    entity.World().ToMatrix4x4(),
+                    //    entity.Color(),
+                    //};
+                    //Entities.Set(cmd.FirstInstance, data);
                 }
 
 
@@ -125,6 +177,7 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
+                bool                                _needsReallocation;
                 bool                                _needsUpdate;
 
 
@@ -139,21 +192,27 @@ namespace Cyclone
 
                 IndexBuffer                         Indices;
 
-                std::set<const IRenderableEntity*>  ExistingEntities;
+                std::set<const IRenderableEntity*>          ExistingEntities;
+
+                std::map<const IRenderableEntity*, uint>    EntityIndices;
+
+                std::set<const IRenderableEntity*>          ToUpdate;
 
 
 
                 /** UTILITIES **/
                 void AddCommand(const IRenderableEntity* entity)
                 {
+                    EntityIndices[entity] = Commands.Count();
+
                     uint nVertices = entity->Indices().IsEmpty() ? entity->Vertices().Count() : entity->Indices().Count();
-                    Commands.Add(T(nVertices, 1, Indices.Count(), Vertices.Count(), Commands.Count()));                        
+                    Commands.Add(T(nVertices, 1, Indices.Count(), Vertices.Count(), Commands.Count()));
                 }
                 void AddEntity(const IRenderableEntity* entity)
                 {
                     U data =
                     {
-                        entity->World().ToArray(),
+                        entity->World().ToMatrix4x4(),
                         entity->Color(),
                     };
                     Entities.Add(data);

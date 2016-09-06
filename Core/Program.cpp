@@ -69,7 +69,7 @@ namespace Cyclone
 
         RenderScene->Add(*TestShape);
         RenderScene->Add(*PlaneXZ);
-        RenderScene->Update();
+        //RenderScene->Update();
 
         Renderer->Scene(RenderScene);
 
@@ -99,15 +99,18 @@ namespace Cyclone
                 break;
 
             TestShape->Rotate(Vector3(0.01f, 0.01f, 0.01f));
-            RenderScene->Add(*TestShape);
+            RenderScene->Update(*TestShape);
 
+            Console::WriteLine("1. " + Renderer->Report());
             Renderer->Clear(Color4(0.5f));
+            Console::WriteLine("2. " + Renderer->Report());
             Renderer->Update();
-
+            Console::WriteLine("3. " + Renderer->Report());
             Renderer->Execute();
+            Console::WriteLine("4. " + Renderer->Report());
             Renderer->Present();
             
-            Console::WriteLine("1. " + Renderer->Report());
+            Console::WriteLine("5. " + Renderer->Report());
         }
     }
 

@@ -46,23 +46,20 @@ namespace Cyclone
         }
         void Scene3D::Update()
         {
-            if (!_needsUpdate) { return; }            
+            //if (!_needsUpdate) { return; }            
 
-            for (auto& kvp : Buffers)
-                kvp.second.Clear();
-            for (auto& kvp : IndexedBuffers)
-                kvp.second.Clear();
+            //for (auto& kvp : Buffers)
+            //    kvp.second.Clear();
+            //for (auto& kvp : IndexedBuffers)
+            //    kvp.second.Clear();
 
-            _topologies.clear();
-
-            for (auto* entity : EntitySet)
-            {
-                _topologies.insert(entity->Topology());
-                if (entity->Indices().IsEmpty())
-                    Buffers[entity->Topology()].Add(*entity);
-                else
-                    IndexedBuffers[entity->Topology()].Add(*entity);
-            }
+            //for (auto* entity : EntitySet)
+            //{
+            //    if (entity->Indices().IsEmpty())
+            //        Buffers[entity->Topology()].Add(*entity);
+            //    else
+            //        IndexedBuffers[entity->Topology()].Add(*entity);
+            //}
 
             for (auto& kvp : Buffers)
                 kvp.second.Update();
@@ -70,6 +67,16 @@ namespace Cyclone
                 kvp.second.Update();
 
             _needsUpdate = false;
+        }
+
+        void Scene3D::Update(const IRenderableEntity& entity)
+        {
+            if (!EntitySet.count(&entity)) { return; }
+            if (entity.Indices().IsEmpty())
+                Buffers[entity.Topology()].Update(entity);
+            else
+                IndexedBuffers[entity.Topology()].Update(entity);
+
         }
 
     }

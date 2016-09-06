@@ -42,15 +42,14 @@ namespace Cyclone
 
 
 
-                /** UTILITIES **/
+                /** BUFFER UTILITIES **/
 		        /// <summary> Removes all of the data currently stored within this buffer. </summary>
                 OpenGLAPI virtual void Clear();
 		        /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
                 OpenGLAPI virtual void Update();
 
 
-
-
+                
                 /** IBINDABLE OVERRIDES **/
 		        /// <summary> Summarily attaches this buffer and any associated resources to the rendering pipeline. </summary>
 		        /// <remarks> Currently, binding is aborted if this buffer object is empty. </remarks>

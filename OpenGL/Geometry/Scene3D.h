@@ -46,19 +46,21 @@ namespace Cyclone
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderableEntity& entity);
-                OpenGLAPI void Update()                                     override;
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
                 OpenGLAPI void Render()                                     const;
+                OpenGLAPI void Update()                                     override;
+                OpenGLAPI void Update(const IRenderableEntity& entity);
 
             private:
 
                 /** PROPERTY DATA **/
-                bool                                                _needsUpdate;
-                std::set<VertexTopologies>                          _topologies;
+                bool _needsUpdate;
 
-                std::map<VertexTopologies, DrawBuffer<DrawCommand>>            Buffers;
-                std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>     IndexedBuffers;
-                std::set<const IRenderableEntity*>                  EntitySet;
+                std::map<VertexTopologies, DrawBuffer<DrawCommand>>             Buffers;
+                std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>      IndexedBuffers;
+                std::set<const IRenderableEntity*>                              EntitySet;
+
+                std::set<const IRenderableEntity*>                              ToUpdate;
 
         };
     }
