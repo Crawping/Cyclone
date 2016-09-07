@@ -18,8 +18,8 @@ namespace
 
 /// <summary> A list of possible ways in which interaction with various entities can occur. </summary>
 /// <remarks>
-///     Note that the values of this enumeration are not equivalent to those found in <see cref="BufferAccessIntents"/> 
-///     and therefore cannot be used interchangeably with them. When interacting with GPU buffers, you must 
+///     Note that the values of this enumeration are not equivalent to those found in <see cref="BufferAccessIntents"/>
+///     and therefore cannot be used interchangeably with them. When interacting with GPU buffers, you must
 ///     specify access intents using the other enumerators.
 /// </remarks>
 struct AccessIntents : public Enumerator
@@ -31,42 +31,46 @@ struct AccessIntents : public Enumerator
         Write                       = GL_WRITE_ONLY,
     };
 
-	AccessIntents(enum Intents i = Read) : Enumerator((int)i) { }
+	constexpr AccessIntents(enum Intents i = Read) : Enumerator((int)i) { }
 };
 
 /// <summary> A list of possible ways in which interaction with GPU buffers can occur. </summary>
 /// <remarks>
-///     OpenGL requires that many interactions with existing GPU buffers be qualified with the user's 
-///     access intentions. For example, when mapping GPU buffers to system- or application-side memory, 
-///     OpenGL wants to know if you intend to only read data out of the buffer or if you will want to 
-///     write new data to it, because this may influence how and where in the GPU's memory the buffer 
+///     OpenGL requires that many interactions with existing GPU buffers be qualified with the user's
+///     access intentions. For example, when mapping GPU buffers to system- or application-side memory,
+///     OpenGL wants to know if you intend to only read data out of the buffer or if you will want to
+///     write new data to it, because this may influence how and where in the GPU's memory the buffer
 ///     is ultimately stored.
-/// 
-///     The values of this enumeration are also flags that can be combined together through the usual 
-///     bitwise and/or operators. 
+///
+///     The values of this enumeration are also flags that can be combined together through the usual
+///     bitwise and/or operators.
 /// </remarks>
 struct BufferAccessIntents : public Flag<BufferAccessIntents>
 {
     enum Intents
     {
+        /// <summary> Indicates that buffer storage should be allocated on the application side rather than on the GPU. </summary>
         Client                      = GL_CLIENT_STORAGE_BIT,
         Coherent                    = GL_MAP_COHERENT_BIT,
+        /// <summary> Indicates that the buffer will frequently undergo data updates. </summary>
         Dynamic                     = GL_DYNAMIC_STORAGE_BIT,
         Invalidate                  = GL_MAP_INVALIDATE_BUFFER_BIT,
         InvalidateRange             = GL_MAP_INVALIDATE_RANGE_BIT,
-        /// <summary> Indicates that the buffer will be mapped over a long period of time. </summary>
+        /// <summary> Indicates that the buffer will remain mapped over a long period of time. </summary>
         Persistent                  = GL_MAP_PERSISTENT_BIT,
         /// <summary> Indicates that data reading operations will be performed on the buffer. </summary>
         Read                        = GL_MAP_READ_BIT,
         /// <summary> Indicates that data writing operations will be performed on the buffer. </summary>
         Write                       = GL_MAP_WRITE_BIT,
     };
+
+    constexpr BufferAccessIntents(enum Intents i = Read) : Flag<BufferAccessIntents>((int)i) { }
 };
 
 /// <summary> A list of possible types of buffers that can be created on the GPU. </summary>
 /// <remarks>
-///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which refers to the 
-///     location in GPU memory where binding occurs. However, for most applications, calling them 'types' proffers 
+///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which refers to the
+///     location in GPU memory where binding occurs. However, for most applications, calling them 'types' proffers
 ///     an easier understanding of the function that they serve.
 /// </remarks>
 struct BufferTypes : public Enumerator
@@ -125,16 +129,16 @@ struct NumericFormats : public Enumerator
     {
         switch (Value)
         {
-            case Byte:          
+            case Byte:
             case UByte:         return 8;
 
             case Short:
             case ShortFloat:
             case UShort:        return 16;
 
-            case Fixed:         
-            case Float:         
-            case Int:           
+            case Fixed:
+            case Float:
+            case Int:
             case PackedInt:
             case PackedFloat:
             case PackedUint:
@@ -142,7 +146,7 @@ struct NumericFormats : public Enumerator
 
             case Double:        return 64;
 
-            default:            return 0;            
+            default:            return 0;
         }
     }
 };
@@ -322,7 +326,7 @@ struct TextureTargets : public Enumerator
 /// <remarks>
 ///     Topologies describe how collections of vertices should be parsed and rendered on-screen. The enumerators provided here are
 ///     intended for use in all 'glDraw' API functions as a replacement for clumsier 'GLenum mode' arguments.
-///     
+///
 ///     Uninitalized instances of these enumerators default to the value of 'Triangles'.
 /// </remarks>
 struct VertexTopologies : public Enumerator
@@ -353,7 +357,7 @@ struct WrapModes : public Enumerator
         ClampToBorder               = GL_CLAMP_TO_BORDER,
         /// <summary> Constrains out-of-bounds sampling coordinates to the edge of a texture. </summary>
         ClampToEdge                 = GL_CLAMP_TO_EDGE,
-        
+
         MirrorClampToEdge           = GL_MIRROR_CLAMP_TO_EDGE,
         /// <summary> Wraps out-of-bounds sampling coordinates back across the texture. </summary>
         MirrorRepeat                = GL_MIRRORED_REPEAT,
