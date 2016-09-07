@@ -107,8 +107,7 @@ namespace Cyclone
             Console::WriteLine("3. " + Renderer->Report());
             Renderer->Execute();
             Console::WriteLine("4. " + Renderer->Report());
-            Renderer->Present();
-            
+            Renderer->Present();           
             Console::WriteLine("5. " + Renderer->Report());
         }
     }
