@@ -28,8 +28,11 @@ TODOS:
 
 - Buffers
     -- Vertex index buffer                      (DONE)
-    -- Reorganize with template specialization
+    -- Reorganize with template specialization  (NOT FEASIBLE)
     -- Element subset updates                   (PRELIMINARY)
+    -- Persistently mapped buffers
+    -- Customizable access intents
+    -- Direct storage access & manipulation
 
 - Primitive Types
 	-- Arbitrary precision numbers
