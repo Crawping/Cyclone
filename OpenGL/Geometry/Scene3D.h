@@ -20,16 +20,10 @@ namespace Cyclone
 
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
-        class Scene3D : public IUpdatable
+        class Scene3D
         {
 
             public:
-
-                /** PROPERTIES **/
-                uint Count()                                    const { return EntitySet.size(); }
-                bool NeedsUpdate()                              const override { return _needsUpdate; }
-
-
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
@@ -48,19 +42,13 @@ namespace Cyclone
                 OpenGLAPI void Add(const IRenderableEntity& entity);
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
                 OpenGLAPI void Render()                                     const;
-                OpenGLAPI void Update()                                     override;
+                OpenGLAPI void Update();
                 OpenGLAPI void Update(const IRenderableEntity& entity);
 
             private:
 
-                /** PROPERTY DATA **/
-                bool _needsUpdate;
-
                 std::map<VertexTopologies, DrawBuffer<DrawCommand>>             Buffers;
                 std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>      IndexedBuffers;
-                std::set<const IRenderableEntity*>                              EntitySet;
-
-                std::set<const IRenderableEntity*>                              ToUpdate;
 
         };
     }

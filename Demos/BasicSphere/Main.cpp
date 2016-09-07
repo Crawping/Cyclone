@@ -16,7 +16,7 @@ class Program : public BasicRenderer
     public:
         Program() :
             BasicRenderer("Rotating Sphere"),
-            Sphere(Geometry::Sphere(2))
+            Sphere(Geometry::Sphere(3))
         {
             Initialize();
         }
@@ -58,7 +58,7 @@ class Program : public BasicRenderer
             );
 
             Sphere.Color(color).Rotate(0.01f);
-            RenderScene->Add(Sphere);
+            RenderScene->Update(Sphere);
             BasicRenderer::UpdateScene();
         }
 };

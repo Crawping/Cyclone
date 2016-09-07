@@ -53,7 +53,7 @@ class Program : public BasicRenderer
         void UpdateScene() override
         {
             Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
-            RenderScene->Add(Cube);
+            RenderScene->Update(Cube);
             BasicRenderer::UpdateScene();
         }
 };

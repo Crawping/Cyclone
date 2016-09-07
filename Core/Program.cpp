@@ -69,7 +69,6 @@ namespace Cyclone
 
         RenderScene->Add(*TestShape);
         RenderScene->Add(*PlaneXZ);
-        //RenderScene->Update();
 
         Renderer->Scene(RenderScene);
 

@@ -95,10 +95,10 @@ class Program : public BasicRenderer
             Icosahedron->Rotate(Vector3(0.01f, 0.0f, 0.0f));
             Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated, so this has no effect.
 
-            RenderScene->Add(*Cube);
-            RenderScene->Add(*Cylinder);
-            RenderScene->Add(*Icosahedron);
-            RenderScene->Add(Point);
+            RenderScene->Update(*Cube);
+            RenderScene->Update(*Cylinder);
+            RenderScene->Update(*Icosahedron);
+            RenderScene->Update(Point);
 
             BasicRenderer::UpdateScene();
         }

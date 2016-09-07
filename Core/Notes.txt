@@ -29,7 +29,7 @@ TODOS:
 - Buffers
     -- Vertex index buffer                      (DONE)
     -- Reorganize with template specialization
-    -- Element subset updates
+    -- Element subset updates                   (PRELIMINARY)
 
 - Primitive Types
 	-- Arbitrary precision numbers

@@ -52,7 +52,7 @@ class Program : public BasicRenderer
         void UpdateScene() override
         {
             Icosahedron.Rotate(0.01f);
-            RenderScene->Add(Icosahedron);
+            RenderScene->Update(Icosahedron);
             BasicRenderer::UpdateScene();
         }
 };

@@ -59,6 +59,7 @@ namespace Cyclone
                 {
                     if (EntityIndices.count(&entity)) { return; }
 
+                    EntityIndices[&entity] = Commands.Count();
                     _needsReallocation = true;
                     _needsUpdate = true;
                 }
@@ -74,20 +75,24 @@ namespace Cyclone
                 }
                 void Remove(const IRenderableEntity& entity)
                 {
-                    ExistingEntities.erase(&entity);
+                    if (!EntityIndices.count(&entity)) { return; }
+
+                    EntityIndices.erase(&entity);
+                    _needsReallocation = true;
                     _needsUpdate = true;
                 }
                 void Update()                   override
                 {
                     if (!NeedsUpdate()) { return; }
 
-                    Unbind();
                     if (_needsReallocation)
                     {
                         Clear();
 
                         for (const auto& kvp : EntityIndices)
                         {
+                            EntityIndices[kvp.first] = Commands.Count();
+
                             AddCommand(kvp.first);
                             AddEntity(kvp.first);
                             AddVertices(kvp.first);
@@ -100,6 +105,7 @@ namespace Cyclone
                     }
                     else
                     {
+                        //Unbind();
                         for (const auto* entity : ToUpdate)
                         {
                             uint idx = EntityIndices[entity];
@@ -125,18 +131,7 @@ namespace Cyclone
                     if (!EntityIndices.count(&entity)) { return; }
 
                     ToUpdate.insert(&entity);
-
                     _needsUpdate = true;
-
-                    //uint idx = EntityIndices[&entity];
-                    //const T& cmd = Commands[idx];
-
-                    //U data =
-                    //{
-                    //    entity.World().ToMatrix4x4(),
-                    //    entity.Color(),
-                    //};
-                    //Entities.Set(cmd.FirstInstance, data);
                 }
 
 
@@ -177,22 +172,20 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
-                bool                                _needsReallocation;
-                bool                                _needsUpdate;
+                bool                                        _needsReallocation;
+                bool                                        _needsUpdate;
 
 
 
                 /** DATA COLLECTIONS **/
                 /// <summary> A collection of indirect drawing commands used to render geometry on the GPU. </summary>
-                CommandBuffer<T>                    Commands;
+                CommandBuffer<T>                            Commands;
                 /// <summary> A collection of uniform data that describes the appearance of rendered geometry on the GPU. </summary>
-                UniformBuffer<U>                    Entities;
+                UniformBuffer<U>                            Entities;
                 /// <summary> A collection of vertices used to build geometry on the GPU. </summary>
-                VertexBuffer<V>                     Vertices;
+                VertexBuffer<V>                             Vertices;
 
-                IndexBuffer                         Indices;
-
-                std::set<const IRenderableEntity*>          ExistingEntities;
+                IndexBuffer                                 Indices;
 
                 std::map<const IRenderableEntity*, uint>    EntityIndices;
 
@@ -203,8 +196,6 @@ namespace Cyclone
                 /** UTILITIES **/
                 void AddCommand(const IRenderableEntity* entity)
                 {
-                    EntityIndices[entity] = Commands.Count();
-
                     uint nVertices = entity->Indices().IsEmpty() ? entity->Vertices().Count() : entity->Indices().Count();
                     Commands.Add(T(nVertices, 1, Indices.Count(), Vertices.Count(), Commands.Count()));
                 }

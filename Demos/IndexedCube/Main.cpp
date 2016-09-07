@@ -68,7 +68,7 @@ class Program : public BasicRenderer
 
             Cube->Rotate(Vector3(0.01f, 0.05f, 0.01f))
                 .Color(color);
-            RenderScene->Add(*Cube);
+            RenderScene->Update(*Cube);
             BasicRenderer::UpdateScene();
         }
 };
