@@ -105,7 +105,6 @@ namespace Cyclone
                     }
                     else
                     {
-                        //Unbind();
                         for (const auto* entity : ToUpdate)
                         {
                             uint idx = EntityIndices[entity];
