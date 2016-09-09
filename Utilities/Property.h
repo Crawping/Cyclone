@@ -6,8 +6,8 @@ template<typename T>
 struct Property
 {
     private:
-        typedef T (*GetAccessor)(void);
-        typedef void (*SetAccessor)(T& value);
+        using GetAccessor = T (*)(void);
+        using SetAccessor = void (*)(T& value);
 
         GetAccessor _get;
         SetAccessor _set;
