@@ -3,9 +3,7 @@
  */
 
 #pragma once
-#include "Console.h"
 #include "EnumerationsGL.h"
-#include "GL/OpenGLAPI.h"
 #include "TypeDefinitions.h"
 #include "Interfaces/IGraphicsBuffer.h"
 
@@ -22,12 +20,10 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of bytes occupied by all data current found in this buffer. </summary>
 		        virtual ulong ByteSize()        const { return Count() * Stride(); }
-		        /// <summary> Gets the number of individual elements stored within this buffer. </summary>
-                virtual uint Count()            const = 0;
 		        /// <summary> Gets the unique numeric identifier for this buffer object on the GPU. </summary>
 		        virtual uint ID()               const override { return _id; }
 		        /// <summary> Determines whether this buffer contains any data. </summary>
-		        virtual bool IsEmpty()          const { return Count() == 0; }
+		        virtual bool IsEmpty()          const override { return Count() == 0; }
                 /// <summary> Gets whether this buffer has data updates queued for transfer to the GPU. </summary>
                 virtual bool NeedsUpdate()      const override { return _updateFlag || NeedsReallocation(); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
@@ -53,21 +49,13 @@ namespace Cyclone
                 /** IBINDABLE OVERRIDES **/
 		        /// <summary> Summarily attaches this buffer and any associated resources to the rendering pipeline. </summary>
 		        /// <remarks> Currently, binding is aborted if this buffer object is empty. </remarks>
-		        void Bind(int slot = 0)                 const override
-                {
-                    if (NeedsUpdate())
-                        Console::WriteLine("WARNING: The buffer being bound has updates queued but not yet applied.");
-
-                    if (IsEmpty()) { return; }
-                    BindEntity(slot);
-                    BindResources();
-                }
+                OpenGLAPI void Bind(int slot = 0)       const override;
 		        /// <summary> Attaches this buffer to the rendering pipeline at the designated resource slot. </summary>
                 OpenGLAPI void BindEntity(int slot = 0) const override;
 		        /// <summary> Attaches any resources associated with this buffer to the rendering pipeline. </summary>
 		        void BindResources()                    const override { }
 		        /// <summary> Summarily detaches this buffer and any associated resources from the rendering pipeline. </summary>
-                OpenGLAPI void Unbind()                 const override { UnbindResources(); UnbindEntity(); }
+                OpenGLAPI void Unbind()                 const override;
 		        /// <summary> Detaches this buffer from the rendering pipeline. */
                 OpenGLAPI void UnbindEntity()           const override;
 		        /// <summary> Detaches any resources associated with this buffer from the rendering pipeline. </summary>
@@ -82,9 +70,6 @@ namespace Cyclone
                 OpenGLAPI bool NeedsReallocation()      const { return _gpuCount != Count(); }
 
                 /// <summary> Sets whether this buffer needs any kind of update on the GPU side. </summary>
-                /// <remarks>
-                ///
-                /// </remarks>
                 OpenGLAPI void NeedsUpdate(bool value)
                 {
                     if (NeedsUpdate()) { return; }

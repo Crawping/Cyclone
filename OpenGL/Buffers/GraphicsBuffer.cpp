@@ -1,3 +1,4 @@
+#include "Console.h"
 #include "GL/OpenGL.h"
 #include "Buffers/GraphicsBuffer.h"
 
@@ -26,9 +27,23 @@ namespace Cyclone
 
 
         /** BINDING METHODS **/
+        void GraphicsBuffer::Bind(int slot)             const
+        {
+            if (NeedsUpdate())
+                Console::WriteLine("WARNING: The buffer being bound has updates queued but not yet applied.");
+
+            if (IsEmpty()) { return; }
+            BindEntity(slot);
+            BindResources();
+        }
         void GraphicsBuffer::BindEntity(int slot)       const
         {
             glBindBufferBase(Type(), slot, ID());
+        }
+        void GraphicsBuffer::Unbind()                   const
+        {
+            UnbindResources(); 
+            UnbindEntity();
         }
         void GraphicsBuffer::UnbindEntity()             const
         {
