@@ -83,13 +83,7 @@ namespace Cyclone
 
                     GraphicsBuffer::Update();
                     
-                    T* handles = (T*)GraphicsBuffer::Map();
-                    if (!handles)
-                    {
-                        Console::WriteLine("Failed to map and update the graphics buffer GPU-side storage.");
-                        return;
-                    }
-                    
+                    T* handles = (T*)GraphicsBuffer::Map();                    
                     for (uint a = 0; a < Count(); a++)
                         handles[a] = Data[a];
 
