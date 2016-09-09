@@ -33,6 +33,8 @@ namespace Cyclone
         
 			public:
         
+                /// <summary> Constructs a new function object referring to a specific function pointer. </summary>
+                /// <param name="fun"></param>
 				FunctionPointer(Function fun) : _function(fun) { }
         
 				void Invoke(T ... arguments) const override { _function(arguments...); }
