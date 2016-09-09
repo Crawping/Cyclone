@@ -18,7 +18,7 @@ namespace Cyclone
         {
 
             public:
-                /// <summary> Gets the number of elements that are present in the buffer. </summary>
+                /// <summary> Gets the number of individual elements that are stored within the buffer. </summary>
                 virtual uint Count()        const = 0;
                 /// <summary> Gets whether the buffer object is currently empty. </summary>
                 /// <remarks> By default, this method determines whether the returned <see cref="Count"/> value is zero. </remarks>
