@@ -1,3 +1,4 @@
+#include "Console.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Pipelines/Shader.h"
 #include "Utilities.h"
