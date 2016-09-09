@@ -22,6 +22,8 @@ namespace Cyclone
     {
 
         /// <summary> A class that holds and manages a collection of buffers related to drawing a single type of primitive geometry. </summary>
+        /// <typeparam name="T"> The type name of the command data structure used by the buffer. </typeparam>
+        /// <typeparam name="U"> The type name of the per-entity data structure used by the buffer. </typeparam>
         /// <typeparam name="V"> The type name of the vertex data structure used by the buffer. </typeparam>
         template<typename T, typename U = PerEntity, typename V = Vertex::Standard>
         class DrawBuffer : public IGraphicsBuffer
@@ -45,6 +47,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs an empty new drawing buffer for use in rendering geometry on the GPU. </summary>
                 DrawBuffer() :
                     _needsReallocation(false),
                     _needsUpdate(false)
