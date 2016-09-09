@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "EnumerationsGL.h"
 #include "Buffers/GraphicsBuffer.h"
 #include <vector>
 
@@ -83,7 +84,7 @@ namespace Cyclone
 
                     GraphicsBuffer::Update();
                     
-                    T* handles = (T*)GraphicsBuffer::Map();                    
+                    T* handles = (T*)GraphicsBuffer::Map();
                     for (uint a = 0; a < Count(); a++)
                         handles[a] = Data[a];
 
