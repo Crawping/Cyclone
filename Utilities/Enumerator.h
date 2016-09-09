@@ -70,13 +70,13 @@ namespace Cyclone
         struct Flag : public Enumerator
         {
 			public:
-				Flag& operator =(T other)           { Value = int(other); return *this; }
+				Flag& operator =(T other)           { Value = other.Value; return *this; }
 
                 T operator &(T other)               { T copy(other); copy &= *this; return copy; }
                 T operator |(T other)               { T copy(other); copy |= *this; return copy; }
 
-                Flag& operator &=(Flag<T> other)    { Value &= (int)other; return *this; }
-				Flag& operator |=(Flag<T> other)    { Value |= (int)other; return *this; }
+                Flag& operator &=(Flag<T> other)    { Value &= other.Value; return *this; }
+				Flag& operator |=(Flag<T> other)    { Value |= other.Value; return *this; }
 
 
             protected:
