@@ -10,6 +10,14 @@ namespace Cyclone
     {
 
         /** DESTRUCTOR **/
+        GraphicsBuffer::GraphicsBuffer(BufferTypes type) : 
+            _gpuCount(0),
+            _id(0),
+            _type(type),
+            _updateFlag(false)
+        {
+
+        }
         GraphicsBuffer::~GraphicsBuffer()
         {
             if (_id)
