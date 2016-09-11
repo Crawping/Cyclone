@@ -17,10 +17,10 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint Count()    const { return _count; }
-                bool IsEmpty()  const { return Count() == 0; }
-                T& First()            { return _first->Value; }
-                T& Last()             { return _last->Value; }
+                uint Count()                const { return _count; }
+                bool IsEmpty()              const { return Count() == 0; }
+                T& First()                        { return _first->Value; }
+                T& Last()                         { return _last->Value; }
 
 
 
@@ -42,6 +42,7 @@ namespace Cyclone
                     other._first = nullptr;
                     other._last = nullptr;
                 }
+
                 List(const List<T>& other) : 
                     List()
                 {
@@ -164,17 +165,9 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                T& operator ()(uint index)                                { return Index(index)->Value; }
                 const T& operator ()(uint index)                    const { return Index(index)->Value; }
-                T& operator ()(uint index)                          { return Index(index)->Value; }
-
-                List& operator =(std::initializer_list<T> values)
-                {
-                    Clear();
-                    for (const T& v : values)
-                        Append(v);
-                    return *this;
-                }
-
+                
                 List& operator =(List<T>&& other)
                 {
                     Clear();
@@ -191,6 +184,13 @@ namespace Cyclone
                     Clear();
                     for (uint a = 0; a < values.Count(); a++)
                         Append(values(a));
+                    return *this;
+                }
+                List& operator =(std::initializer_list<T> values)
+                {
+                    Clear();
+                    for (const T& v : values)
+                        Append(v);
                     return *this;
                 }
 
