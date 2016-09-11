@@ -19,8 +19,9 @@ namespace Cyclone
                 /** PROPERTIES **/
                 uint Count()    const { return _count; }
                 bool IsEmpty()  const { return Count() == 0; }
-                T& First()            { return _first.Value; }
-                T& Last()             { return _last.Value; }
+                T& First()            { return _first->Value; }
+                T& Last()             { return _last->Value; }
+
 
 
                 /** CONSTRUCTORS & DESTRUCTOR **/
@@ -32,25 +33,46 @@ namespace Cyclone
                     
                 }
 
+                List(List<T>&& other) :
+                    _count(other._count),
+                    _first(other._first),
+                    _last(other._last)
+                {
+                    other._count = 0;
+                    other._first = nullptr;
+                    other._last = nullptr;
+                }
+                List(const List<T>& other) : 
+                    List()
+                {
+                    for (uint a = 0; a < other.Count(); a++)
+                        Append(other(a));
+                }
+
+                List(std::initializer_list<T> values) :
+                    List()
+                {
+                    for (const T& v : values)
+                        Append(v);
+                }
+
                 ~List()
                 {
                     Clear();
                 }
 
 
+
+                /** UTILITIES **/
                 void Append(const T& value)
                 {
-                    Node<T>* newNode = new Node<T>(value, _last, nullptr);
+                    Insert(Count(), value);
+                }
 
-                    if (IsEmpty())
-                        _first = newNode;
-                    else
-                    {
-                        _last->Next = newNode;
-                        _last = newNode;
-                    }
-
-                    _count++;
+                void Append(const List<T>& values)
+                {
+                    for (uint a = 0; a < values.Count(); a++)
+                        Append(values(a));
                 }
 
                 void Clear()
@@ -70,44 +92,61 @@ namespace Cyclone
 
                 void Insert(uint index, const T& value)
                 {
-                    index = index > Count() ? Count() : index;
+                    index = (index > Count()) ? Count() : index;
 
-                    Node<T>* toShift = _first;
-                    for (uint a = 0; a < index; a++)
-                        toShift = toShift->Next;
+                    Node<T>* toShift = Index(index);
+                    Node<T>* newNode = new Node<T>(value);
 
-                    Node<T>* newNode = new Node<T>(value, toShift->Previous, toShift);
-                    if (toShift->Previous)
-                        toShift->Previous->Next = newNode;
-                    else
+                    if (toShift)
+                    {
+                        if (toShift->Previous)
+                        {
+                            toShift->Previous->Next = newNode;
+                            newNode->Previous = toShift->Previous;
+                        }
+                        else
+                            _first = newNode;
+                        
+                        newNode->Next = toShift;
+                        toShift->Previous = newNode;
+                    }
+                    else if (IsEmpty())
+                    {
                         _first = newNode;
+                        _last = newNode;
+                    }
+                    else
+                    {
+                        _last->Next = newNode;
+                        newNode->Previous = _last;
+                        _last = newNode;
+                    }
 
-                    toShift->Previous = newNode;
+                    _count++;
+                }
+
+                void Insert(uint index, const List<T>& values)
+                {
+                    for (uint a = values.Count() - 1; a >= 0; a--)
+                        Insert(index, values(a));
                 }
 
                 void Prepend(const T& value)
                 {
-                    Node<T>* newNode = new Node<T>(value, nullptr, _first);
+                    Insert(0, value);
+                }
 
-                    if (IsEmpty())
-                        _first = newNode;
-                    else
-                    {
-                        _first->Previous = newNode;
-                        _first = newNode;
-                    }
-
-                    _count++;
+                void Prepend(const List<T>& values)
+                {
+                    for (uint a = values.Count() - 1; a >= 0; a--)
+                        Prepend(values(a));
                 }
 
                 void Remove(uint index)
                 {
                     if (index >= Count()) { return; }
 
-                    Node<T>* toRemove = _first;
-                    for (uint a = 0; a < index; a++)
-                        toRemove = toRemove->Next;
-
+                    Node<T>* toRemove = Index(index);
                     if (toRemove->Previous)
                         toRemove->Previous->Next = toRemove->Next;
                     else
@@ -124,12 +163,42 @@ namespace Cyclone
                 
 
 
+                /** OPERATORS **/
+                const T& operator ()(uint index)                    const { return Index(index)->Value; }
+                T& operator ()(uint index)                          { return Index(index)->Value; }
+
+                List& operator =(std::initializer_list<T> values)
+                {
+                    Clear();
+                    for (const T& v : values)
+                        Append(v);
+                    return *this;
+                }
+
+                List& operator =(List<T>&& other)
+                {
+                    Clear();
+                    _count = other._count;
+                    _first = other._first;
+                    _last = other._last;
+
+                    other._count = 0;
+                    other._first = nullptr;
+                    other._last = nullptr;
+                }
+                List& operator =(const List<T> values)
+                {
+                    Clear();
+                    for (uint a = 0; a < values.Count(); a++)
+                        Append(values(a));
+                    return *this;
+                }
+
 
 
             private:
 
-                template<typename T>
-                struct Node
+                template<typename T> struct Node
                 {
                     Node<T>*    Next;
                     Node<T>*    Previous;
@@ -152,6 +221,19 @@ namespace Cyclone
                     }
 
                 };
+
+
+                Node<T>* Index(uint index) const
+                {                    
+                    if (index >= Count())
+                        return nullptr;
+
+                    Node<T>* node = _first;
+                    for (uint a = 0; a < index; a++)
+                        node = node->Next;
+
+                    return node;
+                }
 
 
                 uint        _count;
