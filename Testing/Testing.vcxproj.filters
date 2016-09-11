@@ -41,6 +41,9 @@
     <ClCompile Include="Geometry.cpp">
       <Filter>OpenGL\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="List.cpp">
+      <Filter>Utilities\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
@@ -63,6 +66,9 @@
     </Filter>
     <Filter Include="OpenGL\Geometry">
       <UniqueIdentifier>{b7637202-8841-4397-9165-5d534bbcba71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\Collections">
+      <UniqueIdentifier>{2e60fbcf-a7e3-4136-ab5a-7db035dc9caa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
