@@ -32,6 +32,7 @@ struct TestFlag : public Flag<TestFlag>
 	};
 
 	TestFlag(enum FlagValues value = Value1) : Flag<TestFlag>(value) { }
+    TestFlag(int value) : TestFlag((FlagValues)value) { }
 };
 
 struct AltFlag : public Flag<AltFlag>
@@ -132,9 +133,13 @@ TEST_F(_Enumerator, FlagOrOperators)
 	//_f1Copy |= _a1;
 	//_f1Copy = TestFlag::Value1 | AltFlag::Value1;
 
+    TestFlag f1 = TestFlag::Value1 | TestFlag::Value3;
+
 	AltFlag _a3 = _a0 | _a1;
 	ASSERT_EQ(_a3, AltFlag::Value1 | AltFlag::Value2);
 
     _a3 |= _a0 | _a1 | _a2;
     ASSERT_EQ(_a3, AltFlag::Value1 | AltFlag::Value2 | AltFlag::Value3);
+
+
 }
