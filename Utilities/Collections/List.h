@@ -4,6 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
+#include "Interfaces/IArray.h"
 
 
 
@@ -12,16 +13,15 @@ namespace Cyclone
     namespace Utilities
     {
         template<typename T>
-        class List
+        class List : public IArray<T>
         {
             public:
 
                 /** PROPERTIES **/
-                uint Count()                const { return _count; }
-                bool IsEmpty()              const { return Count() == 0; }
-                T& First()                        { return _first->Value; }
-                T& Last()                         { return _last->Value; }
-
+                virtual uint Count()        const override { return _count; }
+                virtual T& First()                         { return _first->Value; }
+                virtual T& Last()                          { return _last->Value; }
+                virtual uint Rank()         const override { return 1; }
 
 
                 /** CONSTRUCTORS & DESTRUCTOR **/
@@ -44,6 +44,12 @@ namespace Cyclone
                 }
 
                 List(const List<T>& other) : 
+                    List((const IArray&)other)
+                {
+                    
+                }
+
+                List(const IArray<T>& other) :
                     List()
                 {
                     for (uint a = 0; a < other.Count(); a++)
@@ -70,7 +76,7 @@ namespace Cyclone
                     Insert(Count(), value);
                 }
 
-                void Append(const List<T>& values)
+                void Append(const IArray<T>& values)
                 {
                     for (uint a = 0; a < values.Count(); a++)
                         Append(values(a));
@@ -126,7 +132,7 @@ namespace Cyclone
                     _count++;
                 }
 
-                void Insert(uint index, const List<T>& values)
+                void Insert(uint index, const IArray<T>& values)
                 {
                     for (uint a = values.Count() - 1; a >= 0; a--)
                         Insert(index, values(a));
@@ -165,8 +171,8 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                T& operator ()(uint index)                                { return Index(index)->Value; }
-                const T& operator ()(uint index)                    const { return Index(index)->Value; }
+                T& operator ()(uint index)                                         { return Index(index)->Value; }
+                const T& operator ()(uint index)                    const override { return Index(index)->Value; }
                 
                 List& operator =(List<T>&& other)
                 {
@@ -179,7 +185,7 @@ namespace Cyclone
                     other._first = nullptr;
                     other._last = nullptr;
                 }
-                List& operator =(const List<T> values)
+                List& operator =(const IArray<T>& values)
                 {
                     Clear();
                     for (uint a = 0; a < values.Count(); a++)
