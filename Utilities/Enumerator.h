@@ -45,7 +45,8 @@ namespace Cyclone
         /// </remarks>
         struct Enumerator
         {
-            protected:                
+            protected:
+
                 /// <summary> The equivalent integer value of this enumerator. </summary>
                 int Value;
 
@@ -55,6 +56,7 @@ namespace Cyclone
                 constexpr Enumerator(const Enumerator& other) : Value(other.Value) { }
 
             public:
+
                 /// <summary> Implicitly converted an Enumerator value into an integer. </summary>
 		        constexpr operator int() const { return Value; }
         };
@@ -70,21 +72,18 @@ namespace Cyclone
         struct Flag : public Enumerator
         {
 			public:
-				Flag& operator =(T other)           { Value = other.Value; return *this; }
 
-                T operator &(T other)               { T copy(other); copy &= *this; return copy; }
-                T operator |(T other)               { T copy(other); copy |= *this; return copy; }
+                T operator &(T other)               { T copy(other); copy.Value &= Value; return copy; }
+                T operator |(T other)               { T copy(other); copy.Value |= Value; return copy; }
 
-                Flag& operator &=(Flag<T> other)    { Value &= other.Value; return *this; }
-				Flag& operator |=(Flag<T> other)    { Value |= other.Value; return *this; }
+                void operator &=(T other)           { Value &= other.Value; }
+				void operator |=(T other)           { Value |= other.Value; }
 
 
             protected:
                 /// <summary> Constructs a basic integer storage structure for a derived enumerator flag value. </summary>
 		        constexpr Flag(int value) : Enumerator(value) { }
-
-                //constexpr Flag(const Flag& other) : Enumerator(other.Value) { }
-
+                
         };
     }
 }
