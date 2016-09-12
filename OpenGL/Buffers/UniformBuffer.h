@@ -21,6 +21,15 @@ namespace Cyclone
                 UniformBuffer() : ArrayBuffer<T>(BufferTypes::Uniform) { }
                 ~UniformBuffer() { }
 
+
+            protected:
+                void Reallocate() override
+                {
+                    Destroy();
+                    Create();
+                    Allocate(BufferAccessIntents::Write | BufferAccessIntents::Dynamic);
+                }
+
         };
     }
 }

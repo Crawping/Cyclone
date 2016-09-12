@@ -87,7 +87,7 @@ namespace Cyclone
 
                 /** PROTECTED UTILITIES **/
 		        /// <summary> Reserves memory on the GPU for storing all of the data found within this buffer. </summary>
-                OpenGLAPI virtual void Allocate();
+                OpenGLAPI virtual void Allocate(BufferAccessIntents intent);
 		        /// <summary> Generates a new buffer object on the GPU that can be used to store data. </summary>
                 OpenGLAPI virtual void Create();
 		        /// <summary> Deletes the buffer object on the GPU. </summary>
@@ -97,13 +97,13 @@ namespace Cyclone
                 /// <remarks>
                 ///     Always call <see cref="Unmap"/> immediately after finishing work with GPU resources.
                 /// </remarks>
-                OpenGLAPI virtual void* Map();
+                OpenGLAPI virtual void* Map(BufferAccessIntents intent);
 		        /// <summary> Summarily destroys, recreates, and reallocates this buffer on the GPU. </summary>
                 OpenGLAPI virtual void Reallocate()
                 {
                     Destroy();
                     Create();
-                    Allocate();
+                    Allocate(BufferAccessIntents::Write);
                 }
                 /// <summary> Destroys the array of handles that were created by <see cref="Map"/>. </summary>
                 /// <remarks>

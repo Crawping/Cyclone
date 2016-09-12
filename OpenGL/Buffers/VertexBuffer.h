@@ -90,7 +90,7 @@ namespace Cyclone
                     if (!NeedsUpdate()) { return; }
 
                     GraphicsBuffer::Update();
-                    T* handles = (T*)GraphicsBuffer::Map();
+                    T* handles = (T*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
                     for (uint a = 0; a < Count(); a++)
                         handles[a] = Data[a];
 

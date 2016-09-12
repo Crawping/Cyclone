@@ -66,10 +66,10 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void GraphicsBuffer::Allocate()
+        void GraphicsBuffer::Allocate(BufferAccessIntents intent)
         {
             if (!IsEmpty())
-                glNamedBufferStorage(ID(), ByteSize(), NULL, BufferAccessIntents::Write);
+                glNamedBufferStorage(ID(), ByteSize(), NULL, intent);
             _gpuCount = Count();
         }
         void GraphicsBuffer::Create()
@@ -90,9 +90,9 @@ namespace Cyclone
                 _gpuCount = 0;
             }
         }
-        void* GraphicsBuffer::Map()
+        void* GraphicsBuffer::Map(BufferAccessIntents intent)
         {
-            return glMapNamedBufferRange(ID(), 0, ByteSize(), BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
+            return glMapNamedBufferRange(ID(), 0, ByteSize(), intent);
         }
         void GraphicsBuffer::Unmap()
         {
