@@ -64,7 +64,7 @@ struct BufferAccessIntents : public Flag<BufferAccessIntents>
         Write                       = GL_MAP_WRITE_BIT,
     };
 
-    constexpr BufferAccessIntents(enum Intents i = Read) : Flag<BufferAccessIntents>((int)i) { }
+    constexpr BufferAccessIntents(int i = Read) : Flag<BufferAccessIntents>(i) { }
 };
 
 /// <summary> A list of possible types of buffers that can be created on the GPU. </summary>
