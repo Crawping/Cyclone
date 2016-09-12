@@ -28,16 +28,17 @@ TODOS:
 
 - Buffers
     -- Vertex index buffer                      (DONE)
-    -- Reorganize with template specialization  (NOT FEASIBLE)
     -- Element subset updates                   (PRELIMINARY)
-    -- Persistently mapped buffers
-    -- Customizable access intents
+    -- Persistently mapped buffers				(PRELIMINARY)
+    -- Customizable access intents				(DONE)
     -- Direct storage access & manipulation
 
 - Primitive Types
 	-- Arbitrary precision numbers
 	-- Clock
 	-- Random Number Generator (RNG)
+	-- Generalized Multidimensional Arrays
+	-- Lists									(DONE)
 
 - Rename
 	-- GraphicsArray		-> ArrayBuffer      (DONE)
@@ -51,6 +52,7 @@ TODOS:
     -- MSAA
     -- Display3D class for monitor info
 	-- Copy prevention for critical resources
+	-- Fix multithreaded compilation
 
 - Scenes
     -- Varying vertex topologies				(DONE)
