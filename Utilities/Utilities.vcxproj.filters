@@ -78,6 +78,12 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Property.h" />
+    <ClInclude Include="Collections\List.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IArray.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -88,6 +94,12 @@
     </Filter>
     <Filter Include="Imaging">
       <UniqueIdentifier>{c5b540af-3b59-42a4-b4dd-1ff5bd10e248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collections">
+      <UniqueIdentifier>{4baf36b5-4277-4b9f-9c29-59a848c1ed40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{8a4aedec-f288-455c-b549-f4f4a2c89b28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
