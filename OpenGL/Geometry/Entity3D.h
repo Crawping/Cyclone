@@ -92,7 +92,7 @@ namespace Cyclone
 		        /** RENDERABLE INTERFACE METHODS **/
                 /// <summary> Gets a reference to the base color of the entity. </summary>
                 virtual const Color4& Color()                               const override { return _color; }
-
+                /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
                 virtual const Array<uint>& Indices()                        const override { return _indices; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture2D* Texture()                          const override { return _texture; }
@@ -106,11 +106,12 @@ namespace Cyclone
                 /// </remarks>
                 virtual const Transform& World()                            const override { return _world; }
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
-                virtual bool IsVisible()                                    const override { return true; }
+                virtual bool IsVisible()                                    const override { return _isVisible; }
 
                 /// <summary> Sets the base color of the entity. </summary>
                 virtual Entity3D& Color(const Color4& color)                { _color = color; return *this; }
-
+                /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
+                virtual Entity3D& IsVisible(bool value)                     { _isVisible = value; return *this; }
 
 
                 /** DESTRUCTOR **/
@@ -131,6 +132,7 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 Color4                      _color;
                 Array<uint>                 _indices;
+                bool                        _isVisible;
 		        Texture2D*			        _texture;
                 VertexTopologies            _topology;
 		        Array<Vertex::Standard>		_vertices;
@@ -164,6 +166,7 @@ namespace Cyclone
                 Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex::Standard>& vertices, const Array<uint>& indices) :
 			        _color(color),
                     _indices(indices),
+                    _isVisible(true),
                     _texture(nullptr),
 			        _topology(topology),
 			        _vertices(vertices)
