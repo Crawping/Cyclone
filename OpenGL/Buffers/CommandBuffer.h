@@ -55,15 +55,7 @@ namespace Cyclone
         class CommandBuffer : public ArrayBuffer<U>
         {
             public:
-
-                /** CONSTRUCTOR **/
-                OpenGLAPI CommandBuffer();
-
-
-
-                /** BINDING UTILITIES **/
-                OpenGLAPI void BindEntity(int slot = 0) const override;
-                
+                OpenGLAPI CommandBuffer();                
         };
 
     }

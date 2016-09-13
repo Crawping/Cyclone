@@ -15,6 +15,7 @@ namespace Cyclone
         /// <summary> A class that represents a GPU buffer containing a list of indices that dictate vertex rendering order. </summary>
         class IndexBuffer : public ArrayBuffer<uint>
         {
+
             public:
 
                 /** CONSTRUCTORS **/
@@ -39,12 +40,6 @@ namespace Cyclone
                 {
                     for (uint a = 0; a < n; a++)
                         Set(a, indices[a]);
-                }
-
-
-                void BindEntity(int slot = 0) const override
-                {
-                    glBindBuffer(Type(), ID());
                 }
 
         };

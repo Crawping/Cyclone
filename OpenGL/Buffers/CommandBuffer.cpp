@@ -13,11 +13,6 @@ namespace Cyclone
         {
 
         }
-        template<typename U>
-        void CommandBuffer<U>::BindEntity(int slot) const
-        {
-            glBindBuffer(Type(), ID());
-        }
 
 
 

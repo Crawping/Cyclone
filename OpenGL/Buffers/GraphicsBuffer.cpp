@@ -46,7 +46,17 @@ namespace Cyclone
         }
         void GraphicsBuffer::BindEntity(int slot)       const
         {
-            glBindBufferBase(Type(), slot, ID());
+            switch (Type())
+            {
+                case BufferTypes::DrawIndirect:
+                case BufferTypes::ElementArray:
+                    glBindBuffer(Type(), ID());
+                    break;
+
+                default:
+                    glBindBufferBase(Type(), slot, ID());
+                    break;
+            }
         }
         void GraphicsBuffer::Unbind()                   const
         {
