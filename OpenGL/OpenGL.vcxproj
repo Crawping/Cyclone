@@ -174,7 +174,6 @@
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
-    <ClInclude Include="OpenGLAPI.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
     <ClInclude Include="Pipelines\Shader.h" />
     <ClInclude Include="Pipelines\ShaderPipeline.h" />

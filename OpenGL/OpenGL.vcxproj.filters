@@ -35,7 +35,6 @@
     <ClInclude Include="Pipelines\ShaderPipeline.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGLAPI.h" />
     <ClInclude Include="Pipelines\Shader.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
