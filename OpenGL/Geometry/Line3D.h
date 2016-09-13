@@ -14,7 +14,8 @@ namespace Cyclone
     {
         class Line3D : public Entity3D
         {
-            public: 
+            public:
+                /// <summary> Constructs a new white-colored horizontal line spanning the coordinates (-0.5, 0, 0) to (0.5, 0, 0). </summary>
                 Line3D() : Entity3D(Color4::White, VertexTopologies::Lines, Geometry::Line()) { }
         };
     }
