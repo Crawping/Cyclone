@@ -19,6 +19,7 @@ class Program : public BasicRenderer
         {
             Initialize();
             glEnable(GL_LINE_SMOOTH);
+            glLineWidth(32);
         }
 
     protected:
@@ -27,7 +28,7 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Line.Scale(100, 100, 100)
+            Line.Scale(256)
                 .Color(Color4(0.0f, 0.75f, 1.0f))
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
@@ -44,7 +45,7 @@ class Program : public BasicRenderer
 
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
             Renderer->RenderPipeline(RenderPipeline);
         }
 
