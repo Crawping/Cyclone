@@ -2,6 +2,7 @@ TODOS:
 
 - Events
 	-- Fix event structures						(DONE)
+    -- Implement support for return variables
 	-- Implement events in Window3D
 		> OnClickPress
 		> OnClickRelease
@@ -21,7 +22,7 @@ TODOS:
 
 - 3D Rendering
 	-- Entity instancing
-	-- Indexed rendering                        (PRELIMINARY)
+	-- Indexed rendering                        (DONE)
 	-- Patch entities
 	-- Implement IUpdatable Interface           (DONE)
 	-- Customizable vertex layouts              (DONE)
@@ -39,6 +40,11 @@ TODOS:
 	-- Random Number Generator (RNG)
 	-- Generalized Multidimensional Arrays
 	-- Lists									(DONE)
+    -- Vectors
+    -- Trees
+        > BST
+        > Quadtree
+        > Octree
 
 - Rename
 	-- GraphicsArray		-> ArrayBuffer      (DONE)
@@ -52,11 +58,11 @@ TODOS:
     -- MSAA
     -- Display3D class for monitor info
 	-- Copy prevention for critical resources
-	-- Fix multithreaded compilation
+	-- Fix multithreaded compilation            (DONE)
 
 - Scenes
     -- Varying vertex topologies				(DONE)
-    -- Varying vertex layouts                   (IN PROGRESS)
+    -- Varying vertex layouts                   (PRELIMINARY)
     -- Varying shader pipelines
         > Compute
         > Deferred
