@@ -123,6 +123,18 @@ namespace Cyclone
             return false;
         }
 
+        List<string> GPU::QueryExtensions() const
+        {
+            List<string> extensions;
+
+            int numExtensions = 0;
+            glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
+            for (int a = 0; a < numExtensions; a++)
+                extensions.Append(string((const char*)glGetStringi(GL_EXTENSIONS, a)));
+
+            return extensions;
+        }
+
 
 
         /** PRIVATE UTILITIES **/

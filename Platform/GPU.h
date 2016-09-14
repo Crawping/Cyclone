@@ -6,6 +6,7 @@
 #include "PlatformAPI.h"
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
+#include "Collections/List.h"
 #include "Spatial/Transform.h"
 
 
@@ -110,6 +111,7 @@ namespace Cyclone
                 /// <param name="extension"> A string containing the name of extension for which support is being queried. </param>
                 PlatformAPI bool SupportsExtension(const string& extension) const;
 
+                PlatformAPI List<string> QueryExtensions() const;
 
 
             private:
