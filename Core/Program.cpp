@@ -78,6 +78,7 @@ namespace Cyclone
     Program::~Program()
     {
         if (TestShape)          { delete TestShape; }
+        if (PlaneXZ)            { delete PlaneXZ; }
         if (RenderTarget)       { delete RenderTarget; }
         if (RenderScene)        { delete RenderScene; }
         if (RenderPipeline)     { delete RenderPipeline; }
