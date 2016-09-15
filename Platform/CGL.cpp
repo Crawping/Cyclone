@@ -1,5 +1,6 @@
 #include "Console.h"
 #include "CGL.h"
+#include "NVPR.h"
 
 #ifdef __linux__
     #include "Linux/GLX.h"
@@ -35,6 +36,12 @@ using namespace Cyclone::Utilities;
         if (!glLoadFunctions())
         {
             Console::WriteLine("Failed to load the OpenGL library functions.");
+            return 0;
+        }
+
+        if (!nvLoadFunctions())
+        {
+            Console::WriteLine("Failed to load the NVIDIA path rendering functions.\n");
             return 0;
         }
 
