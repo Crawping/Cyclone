@@ -1,4 +1,4 @@
-#include "WGL.h"
+#include "Windows/WGL.h"
 #include <stdio.h>
 #include <Windows.h>
 
