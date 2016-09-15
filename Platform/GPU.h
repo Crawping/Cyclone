@@ -52,7 +52,7 @@ namespace Cyclone
                 PlatformAPI void RenderTarget(FrameBuffer* framebuffer, int slot = 0);
                 /// <summary> Sets the window that will be used to display the images in the render target. </summary>
                 PlatformAPI void RenderWindow(Window3D* window);
-
+                /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>
                 PlatformAPI void Scene(Scene3D* scene, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
                 PlatformAPI void View(const Transform& view);
@@ -67,9 +67,9 @@ namespace Cyclone
 
                 /** RENDERING UTILITIES **/
                 /// <summary> Clears the depth-stencil and render target buffers in preparation for a new render loop iteration. </summary>
+                /// <param name="color"> The color value that will be used to nullify or replace all contents of the render target. </param>
                 /// <remarks> This method should be among the first called within the rendering loop. </remarks>
                 PlatformAPI void Clear(const Color4& color);
-
                 /// <summary> Swaps the front and back rendering buffers, displaying the contents of the backbuffer to the user. </summary>
                 /// <remarks>
                 ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often
@@ -94,7 +94,7 @@ namespace Cyclone
                 PlatformAPI void Present();
                 /// <summary> Executes the shader pipeline currently bound to the GPU. </summary>
                 PlatformAPI void Execute();
-
+                /// <summary> Performs any necessary updates to buffer objects currently bound to the GPU. </summary>
                 PlatformAPI void Update();
 
                 
