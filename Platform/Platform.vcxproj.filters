@@ -8,6 +8,8 @@
     <ClInclude Include="PlatformAPI.h" />
     <ClInclude Include="CGL.h" />
     <ClInclude Include="GPU.h" />
+    <ClInclude Include="GraphicsSettings.h" />
+    <ClInclude Include="NVPR.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -25,5 +27,6 @@
     <ClCompile Include="Windows\GPU.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
+    <ClCompile Include="NVPR.c" />
   </ItemGroup>
 </Project>
