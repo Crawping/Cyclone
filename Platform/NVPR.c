@@ -33,18 +33,21 @@ int nvLoadFunctions()
         return 0;
     }
 
-    nvPathCommands      = (PFNGLPATHCOMMANDSNVPROC)      glGetFunctionPointer("glPathCommandsNV");
-    nvPathString        = (PFNGLPATHSTRINGNVPROC)        glGetFunctionPointer("glPathStringNV");
-    nvPathParameteri    = (PFNGLPATHPARAMETERINVPROC)    glGetFunctionPointer("glPathParameteriNV");
-    nvPathParameterf    = (PFNGLPATHPARAMETERFNVPROC)    glGetFunctionPointer("glPathParameterfNV");
-    nvCoverFillPath     = (PFNGLCOVERFILLPATHNVPROC)     glGetFunctionPointer("glCoverFillPathNV");
-    nvCoverStrokePath   = (PFNGLCOVERSTROKEPATHNVPROC)   glGetFunctionPointer("glCoverStrokePathNV");
-    nvStencilFillPath   = (PFNGLSTENCILFILLPATHNVPROC)   glGetFunctionPointer("glStencilFillPathNV");
-    nvStencilStrokePath = (PFNGLSTENCILSTROKEPATHNVPROC) glGetFunctionPointer("glStencilStrokePathNV");
+    nvPathCommands      = (PFNGLPATHCOMMANDSNVPROC)         glGetFunctionPointer("glPathCommandsNV");
+    nvPathString        = (PFNGLPATHSTRINGNVPROC)           glGetFunctionPointer("glPathStringNV");
+    nvPathParameteri    = (PFNGLPATHPARAMETERINVPROC)       glGetFunctionPointer("glPathParameteriNV");
+    nvPathParameterf    = (PFNGLPATHPARAMETERFNVPROC)       glGetFunctionPointer("glPathParameterfNV");
+    nvCoverFillPath     = (PFNGLCOVERFILLPATHNVPROC)        glGetFunctionPointer("glCoverFillPathNV");
+    nvCoverStrokePath   = (PFNGLCOVERSTROKEPATHNVPROC)      glGetFunctionPointer("glCoverStrokePathNV");
+    nvStencilFillPath   = (PFNGLSTENCILFILLPATHNVPROC)      glGetFunctionPointer("glStencilFillPathNV");
+    nvStencilStrokePath = (PFNGLSTENCILSTROKEPATHNVPROC)    glGetFunctionPointer("glStencilStrokePathNV");
+
+    nvIdentityMatrix    = (PFNGLMATRIXLOADIDENTITYEXTPROC)  glGetFunctionPointer("glMatrixLoadIdentityEXT");
+    nvOrthoMatrix       = (PFNGLMATRIXORTHOEXTPROC)         glGetFunctionPointer("glMatrixOrthoEXT");
 
     FreeLibrary(libHandle);
     
-    if (!nvPathCommands || !nvPathString || !nvPathParameteri)
+    if (!nvPathCommands || !nvPathString || !nvPathParameteri || !nvIdentityMatrix || !nvOrthoMatrix)
         return 0;
     else
         return 1;
