@@ -17,6 +17,8 @@ namespace Cyclone
             public:
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
+
+                OpenGLAPI ShaderPipeline(const string& psSource);
                 /// <summary> Constructs an OpenGL rendering pipeline consisting of only vertex and fragment shading stages. </summary>
 		        OpenGLAPI ShaderPipeline(const string& vsSource, const string& psSource);
                 /// <summary> Destroys any active shader programs and the pipeline object linking them together. </summary>

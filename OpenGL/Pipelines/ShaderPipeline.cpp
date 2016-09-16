@@ -14,6 +14,15 @@ namespace Cyclone
     namespace OpenGL
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
+
+        ShaderPipeline::ShaderPipeline(const string& psSource) :
+            FragmentShader(new Shader(psSource, ShaderTypes::PixelShader)),
+            GeometryShader(nullptr),
+            TessellationShader(nullptr),
+            VertexShader(nullptr)
+        {
+            Link();
+        }
         ShaderPipeline::ShaderPipeline(const string& vsSource, const string& psSource) :
             FragmentShader(new Shader(psSource, ShaderTypes::PixelShader)),
             GeometryShader(nullptr),
