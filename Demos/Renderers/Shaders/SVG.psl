@@ -1,0 +1,15 @@
+/* CHANGELOG 
+ * Written by Josh Grooms on 20160916
+ */
+
+#version 440 core
+
+out vec4 OutputColor;
+
+
+
+
+void main(void)
+{
+    OutputColor = vec4(0, 0.75, 1.0, 1.0);
+}
