@@ -23,6 +23,8 @@ using namespace Renderers;
 #define GL_COUNT_UP_NV                                      0x9088
 #define GL_CONVEX_HULL_NV                                   0x908B
 #define GL_BOUNDING_BOX_NV                                  0x908D
+#define GL_MODELVIEW                      0x1700
+#define GL_PROJECTION                     0x1701
 
 
 
@@ -32,7 +34,7 @@ class Program : public BasicRenderer
 
         Program() : BasicRenderer("NVIDIA Path Rendering")
         {
-            ClearColor = Color4::Black;
+            ClearColor = Color4::Gray;
 
             Initialize();
         }
@@ -46,8 +48,9 @@ class Program : public BasicRenderer
 
                 glClearStencil(0);
                 glStencilMask(~0);
-                glClear(GL_STENCIL_BUFFER_BIT);
+                glClear(GL_STENCIL_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
+                UpdateScene();
                 Renderer->Execute();
                 Renderer->Present();
             }
@@ -62,6 +65,30 @@ class Program : public BasicRenderer
 
             nvPathParameteri(42, GL_PATH_JOIN_STYLE_NV, GL_ROUND_NV);
             nvPathParameterf(42, GL_PATH_STROKE_WIDTH_NV, 6.5f);
+        }
+        void CreateShaderPipeline() override { }
+        void CreateSizedResources() override { }
+
+        void UpdateScene() override
+        {
+            nvIdentityMatrix(GL_PROJECTION);
+            nvIdentityMatrix(GL_MODELVIEW);
+            nvOrthoMatrix(GL_MODELVIEW, 0, 500, 0, 400, -1, 1);
+
+            nvStencilFillPath(42, GL_COUNT_UP_NV, 0x1F);
+
+            glEnable(GL_STENCIL_TEST);
+            glStencilOp(GL_NOTEQUAL, 0, 0x1);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
+
+            nvCoverFillPath(42, GL_BOUNDING_BOX_NV);
+
+            BasicRenderer::UpdateScene();
+        }
+
+        void Initialize() override
+        {
+            CreateRenderingWindow();
         }
 
         
