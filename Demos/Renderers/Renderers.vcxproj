@@ -145,7 +145,6 @@
     <None Include="Shaders\Depth.psl" />
     <None Include="Shaders\Lighting.hsl" />
     <None Include="Shaders\SVG.psl" />
-    <None Include="Shaders\SVG.vsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

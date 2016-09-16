@@ -3,9 +3,12 @@
  */
 
 #include "BasicRenderer.h"
+#include "Console.h"
 #include "GPU.h"
 #include "NVPR.h"
 #include "Window3D.h"
+#include "Buffers/FrameBuffer.h"
+#include "Pipelines/ShaderPipeline.h"
 
 using namespace Cyclone::Platform;
 using namespace Cyclone::Utilities;
@@ -32,11 +35,16 @@ class Program : public BasicRenderer
 {
     public:
 
-        Program() : BasicRenderer("NVIDIA Path Rendering")
+        Program() : BasicRenderer("NVIDIA Path Rendering"),
+            FBO(nullptr)
         {
             ClearColor = Color4::Gray;
 
             Initialize();
+        }
+        ~Program()
+        {
+            if (FBO) { delete FBO; }
         }
 
         void Execute() override
@@ -46,10 +54,6 @@ class Program : public BasicRenderer
                 RenderWindow->ProcessEvent();
                 Renderer->Clear(ClearColor);
 
-                glClearStencil(0);
-                glStencilMask(~0);
-                glClear(GL_STENCIL_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
                 UpdateScene();
                 Renderer->Execute();
                 Renderer->Present();
@@ -58,27 +62,41 @@ class Program : public BasicRenderer
 
     protected:
 
+        FrameBuffer* FBO;
+
         void CreateSceneResources() override
         {
-            string svgString = "M100,180 L40,10 L190,120 L10,120 L160,10 z";
+            string svgString = "M100, 180 L40, 10 L190, 120 L10, 120 L160, 10 z";
             nvPathString(42, GL_PATH_FORMAT_SVG_NV, svgString.size(), svgString.c_str());
 
             nvPathParameteri(42, GL_PATH_JOIN_STYLE_NV, GL_ROUND_NV);
             nvPathParameterf(42, GL_PATH_STROKE_WIDTH_NV, 6.5f);
         }
-        void CreateShaderPipeline() override { }
-        void CreateSizedResources() override { }
+        void CreateShaderPipeline() override
+        {
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
+            Renderer->RenderPipeline(RenderPipeline);
+        }
+        void CreateSizedResources() override
+        {
+            FBO = new FrameBuffer(RenderWindow->ClientArea().Scale());
+            Renderer->RenderTarget(FBO);
+        }
 
         void UpdateScene() override
         {
+            glClearStencil(0);
+            glStencilMask(~0);
+            glClear(GL_STENCIL_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+            glEnable(GL_STENCIL_TEST);
+
             nvIdentityMatrix(GL_PROJECTION);
             nvIdentityMatrix(GL_MODELVIEW);
-            nvOrthoMatrix(GL_MODELVIEW, 0, 500, 0, 400, -1, 1);
+            nvOrthoMatrix(GL_MODELVIEW, 0, 1024, 0, 960, -1, 1);
 
             nvStencilFillPath(42, GL_COUNT_UP_NV, 0x1F);
-
-            glEnable(GL_STENCIL_TEST);
-            glStencilOp(GL_NOTEQUAL, 0, 0x1);
+            
+            glStencilFunc(GL_NOTEQUAL, 0, 0x1F);
             glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 
             nvCoverFillPath(42, GL_BOUNDING_BOX_NV);
@@ -89,6 +107,9 @@ class Program : public BasicRenderer
         void Initialize() override
         {
             CreateRenderingWindow();
+            CreateShaderPipeline();
+            //CreateSizedResources();
+            CreateSceneResources();
         }
 
         

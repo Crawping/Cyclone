@@ -32,9 +32,6 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\BlinnPhong.vsl" />
-    <None Include="Shaders\SVG.vsl">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Shaders\SVG.psl">
       <Filter>Shaders</Filter>
     </None>
