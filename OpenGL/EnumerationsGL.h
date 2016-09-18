@@ -220,6 +220,10 @@ struct TextureFormats : public Enumerator
         DepthInt                    = GL_DEPTH_COMPONENT32,
         /// <summary> A 16-bit format for depth buffers containing half-precision floating point values. </summary>
         DepthShort                  = GL_DEPTH_COMPONENT16,
+        /// <summary> A 32-bit format for combined depth and stencil buffers (24-bit int depth, 8-bit int stencil). </summary>
+        DepthStencil                = GL_DEPTH24_STENCIL8,
+        /// <summary> A 40-bit format for combined depth and stencil buffers (32-bit float depth, 8-bit int stencil). </summary>
+        DepthStencilFloat           = GL_DEPTH32F_STENCIL8,
 
         /// <summary> A 32-bit format for color buffers and textures containing one single-precision floating point channel. </summary>
         Float1                      = GL_R32F,
