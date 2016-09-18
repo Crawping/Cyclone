@@ -31,6 +31,7 @@ namespace Cyclone
                 /** OPERATORS**/
                 /// <summary> Performs linear indexing of the elements of an array-like collection. </summary>
                 /// <returns> A constant reference to the data element that resides at the inputted array index. </returns>
+                /// <param name="idx"> The numeric index of the desired element within the collection. </param>
                 virtual const T& operator ()(uint idx) const = 0;
         };
 
