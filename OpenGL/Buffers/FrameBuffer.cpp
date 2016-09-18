@@ -77,13 +77,18 @@ namespace Cyclone
                 GL_LINEAR
             );
         }
-        void FrameBuffer::Clear(const Color4& color)
+        void FrameBuffer::Clear(const Color4& color, float depth, int stencil)
         {
             if (ColorTexture)
                 glClearNamedFramebufferfv(ID(), GL_COLOR, 0, color.ToArray());
 
             if (DepthTexture)
-                glClearNamedFramebufferfv(ID(), GL_DEPTH, 0, color.ToArray());
+            {
+                if (HasStencilBuffer())
+                    glClearNamedFramebufferfi(ID(), GL_DEPTH_STENCIL, 0, depth, stencil);
+                else
+                    glClearNamedFramebufferfv(ID(), GL_DEPTH, 0, &depth);
+            }
         }
         string FrameBuffer::Report() const
         {
@@ -123,7 +128,18 @@ namespace Cyclone
         void FrameBuffer::CreateDepthAttachment(TextureFormats format)
         {
             DepthTexture = new Texture2D(format, Size());
-            glNamedFramebufferTexture(_id, GL_DEPTH_ATTACHMENT, DepthTexture->ID(), 0);
+            if (HasStencilBuffer())
+                glNamedFramebufferTexture(ID(), GL_DEPTH_STENCIL_ATTACHMENT, DepthTexture->ID(), 0);
+            else
+                glNamedFramebufferTexture(ID(), GL_DEPTH_ATTACHMENT, DepthTexture->ID(), 0);
+        }
+        bool FrameBuffer::HasStencilBuffer() const
+        {
+            if (DepthTexture)
+                return DepthTexture->Format() == TextureFormats::DepthStencil ||
+                    DepthTexture->Format() == TextureFormats::DepthStencilFloat;
+            else
+                return false;
         }
         /// <summary> Returns a human-readable string describing the completion state of this framebuffer. </summary>
         string FrameBuffer::ReportCompletionStatus() const

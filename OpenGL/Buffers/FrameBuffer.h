@@ -148,7 +148,10 @@ namespace Cyclone
                 /// <param name="dstArea"> The rectangular region of the target framebuffer where data will be written. </param>
                 OpenGLAPI void Blit(FrameBuffer* target, const Area& srcArea, const Area& dstArea) const;
                 /// <summary> Overwrites all data within each of the textures attached to this framebuffer. </summary>
-                OpenGLAPI void Clear(const Color4& color = Color4::White);
+                /// <param name="color"> The color value to which all attached color buffers will be reset. </param>
+                /// <param name="depth"> The value to which the attached depth buffer will be reset. </param>
+                /// <param name="stencil"> The value to which the attached stencil buffer will be reset. </param>
+                OpenGLAPI void Clear(const Color4& color = Color4::White, float depth = 0.0f, int stencil = 0);
                 /// <summary> Generates a human-readable string detailing the current internal state of this object. </summary>
                 OpenGLAPI string Report()   const;
                 
@@ -165,6 +168,7 @@ namespace Cyclone
                 /** PRIVATE UTILITIES **/
                 void CreateColorAttachment(TextureFormats format);
                 void CreateDepthAttachment(TextureFormats format);
+                bool HasStencilBuffer() const;
                 string ReportCompletionStatus() const;
 
         };
