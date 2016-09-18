@@ -79,15 +79,13 @@ class Program : public BasicRenderer
         }
         void CreateSizedResources() override
         {
-            FBO = new FrameBuffer(RenderWindow->ClientArea().Scale());
+            FBO = new FrameBuffer(RenderWindow->ClientArea().Scale(), TextureFormats::Byte4, TextureFormats::DepthStencil);
             Renderer->RenderTarget(FBO);
         }
 
         void UpdateScene() override
         {
-            glClearStencil(0);
             glStencilMask(~0);
-            glClear(GL_STENCIL_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
             glEnable(GL_STENCIL_TEST);
 
             nvIdentityMatrix(GL_PROJECTION);
@@ -108,7 +106,7 @@ class Program : public BasicRenderer
         {
             CreateRenderingWindow();
             CreateShaderPipeline();
-            //CreateSizedResources();
+            CreateSizedResources();
             CreateSceneResources();
         }
 
