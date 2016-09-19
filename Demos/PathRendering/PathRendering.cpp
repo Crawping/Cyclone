@@ -4,28 +4,24 @@
 
 #include "BasicRenderer.h"
 #include "Console.h"
+#include "EnumerationsSVG.h"
 #include "GPU.h"
 #include "NVPR.h"
 #include "Window3D.h"
+
 #include "Buffers/FrameBuffer.h"
+#include "Geometry/Path2D.h"
+#include "Text/Text2D.h"
+#include "Imaging/Color4.h"
 #include "Pipelines/ShaderPipeline.h"
 
 using namespace Cyclone::Platform;
+using namespace Cyclone::SVG;
 using namespace Cyclone::Utilities;
 using namespace Renderers;
 
 
-#define GL_PATH_STROKE_WIDTH_NV                             0x9075
-#define GL_PATH_JOIN_STYLE_NV                               0x9079
-#define GL_ROUND_NV                                         0x90A4
-#define GL_PATH_FORMAT_SVG_NV                               0x9070
-#define GL_PATH_FORMAT_PS_NV                                0x9071
-#define GL_CLOSE_PATH_NV                                    0x00
-#define GL_MOVE_TO_NV                                       0x02
-#define GL_LINE_TO_NV                                       0x04
-#define GL_COUNT_UP_NV                                      0x9088
-#define GL_CONVEX_HULL_NV                                   0x908B
-#define GL_BOUNDING_BOX_NV                                  0x908D
+
 #define GL_MODELVIEW                      0x1700
 #define GL_PROJECTION                     0x1701
 
@@ -36,7 +32,8 @@ class Program : public BasicRenderer
     public:
 
         Program() : BasicRenderer("NVIDIA Path Rendering"),
-            FBO(nullptr)
+            FBO(nullptr),
+            Text(nullptr)
         {
             ClearColor = Color4::Gray;
 
@@ -44,6 +41,7 @@ class Program : public BasicRenderer
         }
         ~Program()
         {
+            if (Text) { delete Text; }
             if (FBO) { delete FBO; }
         }
 
@@ -62,15 +60,19 @@ class Program : public BasicRenderer
 
     protected:
 
-        FrameBuffer* FBO;
+        FrameBuffer*    FBO;
+        Path2D          Path;
+        Text2D*         Text;
 
         void CreateSceneResources() override
         {
             string svgString = "M100, 180 L40, 10 L190, 120 L10, 120 L160, 10 z";
-            nvPathString(42, GL_PATH_FORMAT_SVG_NV, svgString.size(), svgString.c_str());
+            Path
+                .FillColor(Color4::Blue)
+                .Path(svgString)
+                .StrokeWidth(6.5f);
 
-            nvPathParameteri(42, GL_PATH_JOIN_STYLE_NV, GL_ROUND_NV);
-            nvPathParameterf(42, GL_PATH_STROKE_WIDTH_NV, 6.5f);
+            Text = new Text2D("Testing!");
         }
         void CreateShaderPipeline() override
         {
@@ -90,15 +92,21 @@ class Program : public BasicRenderer
 
             nvIdentityMatrix(GL_PROJECTION);
             nvIdentityMatrix(GL_MODELVIEW);
-            nvOrthoMatrix(GL_MODELVIEW, 0, 1024, 0, 960, -1, 1);
+            nvOrthoMatrix(GL_PROJECTION, 0, 1024, 0, 960, -1, 1);
 
-            nvStencilFillPath(42, GL_COUNT_UP_NV, 0x1F);
+            nvStencilFillPath(Path.ID(), Path.FillMode(), 0x1F);
             
-            glStencilFunc(GL_NOTEQUAL, 0, 0x1F);
+            glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
             glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 
-            nvCoverFillPath(42, GL_BOUNDING_BOX_NV);
+            //nvCoverFillPath(Path.ID(), Path.CoverMode());
 
+            Text->Render();
+            //nvOrthoMatrix(GL_PROJECTION, -10, 20, -10, 20, -1, 1);
+            //nvOrthoMatrix(GL_PROJECTION, 0, 1024, 0, 960, -1, 1);
+
+            nvCoverFillPath(Path.ID(), Path.CoverMode());
+            
             BasicRenderer::UpdateScene();
         }
 
