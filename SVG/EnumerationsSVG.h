@@ -10,7 +10,75 @@ namespace
     using namespace Cyclone::Utilities;
 }
 
+struct CharacterEncodings : public Enumerator
+{
+    enum Encodings
+    {
+        UTF8                            = 0x909A,
+        UTF16                           = 0x909B,
+    };
+};
 
+struct CoverModes : public Enumerator
+{
+    enum Modes
+    {
+        BoundingBox                     = 0x908D,
+        BoundingBoxOfBoundingBoxes      = 0x909C,
+        ConvexHull                      = 0x908B,
+    };
+
+    constexpr CoverModes(enum Modes m = BoundingBox) : Enumerator(m) { }
+};
+
+struct FillModes : public Enumerator
+{
+    enum Modes
+    {
+        CountUp                         = 0x9088,
+        CountDown                       = 0x9089,
+    };
+
+    constexpr FillModes(enum Modes m = CountUp) : Enumerator(m) { }
+};
+
+struct FontStyles : public Enumerator
+{
+    enum Styles
+    {
+        None                            = 0,
+        Bold                            = 0x01,
+        Italic                          = 0x02,
+    };
+
+    constexpr FontStyles(enum Styles s = None) : Enumerator(s) { }
+};
+
+struct GenerationModes : public Enumerator
+{
+    enum Modes
+    {
+        None                            = 0,
+        Constant                        = 0x8576,
+        EyeLinear                       = 0x2400,
+        ObjectLinear                    = 0x2401,
+        ObjectBoundingBox               = 0x908A,
+    };
+};
+
+struct JoinStyles : public Enumerator
+{
+    enum Styles
+    {
+        None                            = 0,
+        Bevel                           = 0x90A6,
+        MiterRevert                     = 0x90A7,
+        MiterTruncate                   = 0x90A8,
+        Round                           = 0x90A4,
+    };
+
+    constexpr JoinStyles(enum Styles s = None) : Enumerator(s) { }
+};
 
 struct PathFormats : public Enumerator
 {
@@ -54,24 +122,7 @@ struct PathParameters : public Enumerator
     constexpr PathParameters(enum Parameters p) : Enumerator(p) { }
 };
 
-struct FillModes : public Enumerator
-{
-    enum Modes
-    {
-        CountUp                         = 0x9088,
-        CountDown                       = 0x9089,
-    };
-};
 
-struct CoverModes : public Enumerator
-{
-    enum Modes
-    {
-        BoundingBox                     = 0x908D,
-        BoundingBoxOfBoundingBoxes      = 0x909C,
-        ConvexHull                      = 0x908B,
-    };
-};
 
 struct TransformTypes : public Enumerator
 {
@@ -89,26 +140,8 @@ struct TransformTypes : public Enumerator
     };
 };
 
-struct CharacterEncodings : public Enumerator
-{
-    enum Encodings
-    {
-        UTF8                            = 0x909A,
-        UTF16                           = 0x909B,
-    };
-};
 
-struct GenerationModes : public Enumerator
-{
-    enum Modes
-    {
-        None                            = 0,
-        Constant                        = 1,
-        EyeLinear                       = 2,
-        ObjectLinear                    = 3,
-        ObjectBoundingBox               = 0x908A,
-    };
-};
+
 
 
 
