@@ -1,2 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="EnumerationsSVG.h" />
+    <ClInclude Include="Geometry\Path2D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Scene2D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SVGAPI.h" />
+    <ClInclude Include="Text\Text2D.h">
+      <Filter>Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Text\Font.h">
+      <Filter>Text</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{68066e14-99f6-4b78-b2b5-032ca66ebdc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text">
+      <UniqueIdentifier>{520b9dd3-7589-4cc2-a658-fdad202a8bcd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Geometry\Path2D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Scene2D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\Text2D.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Text\Font.cpp">
+      <Filter>Text</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

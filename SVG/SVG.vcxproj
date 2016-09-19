@@ -25,7 +25,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -74,10 +74,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../OpenGL;../Platform;../Utilities</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../CoreGL;../OpenGL;../Platform;../SVG;../Utilities</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SVG_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>OpenGL.lib;Platform.lib;Utilities.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -123,6 +125,20 @@
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EnumerationsSVG.h" />
+    <ClInclude Include="Geometry\Path2D.h" />
+    <ClInclude Include="Geometry\Scene2D.h" />
+    <ClInclude Include="SVGAPI.h" />
+    <ClInclude Include="Text\Font.h" />
+    <ClInclude Include="Text\Text2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Geometry\Path2D.cpp" />
+    <ClCompile Include="Geometry\Scene2D.cpp" />
+    <ClCompile Include="Text\Font.cpp" />
+    <ClCompile Include="Text\Text2D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
