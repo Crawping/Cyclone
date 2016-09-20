@@ -28,23 +28,15 @@ namespace Cyclone
 
 
         template<typename T>
-        class OpenGLAPI IGeometric2D
+        class OpenGLAPI IGeometric3D
         {
             public:
-                virtual ~IGeometric2D() { }
-
-                virtual const Array<T>& Points()                    const = 0;
-                virtual const Transform& World()                    const = 0;
-        };
-
-        template<typename T>
-        class OpenGLAPI IGeometric3D : public IGeometric2D<T>
-        {
-            public:
-                virtual ~IGeometric3D() { }
-
                 virtual const Array<uint>& Indices()                const = 0;
+                virtual const Array<T>& Points()                    const = 0;
                 virtual VertexTopologies Topology()			        const = 0;
+                virtual const Transform& World()                    const = 0;
+
+                virtual ~IGeometric3D() { }
         };
 
 
@@ -74,16 +66,6 @@ namespace Cyclone
 
 
 
-        template<typename T>
-        class OpenGLAPI IRenderable2D :
-            public IGeometric2D<T>,
-            public IMaterialEntity
-        {
-            public:
-                virtual bool IsVisible()                    const = 0;
-                virtual ~IRenderable2D() { }
-        };
-
         template <typename T>
         class OpenGLAPI IRenderable3D :
             public IGeometric3D<T>,
@@ -94,6 +76,20 @@ namespace Cyclone
                 virtual ~IRenderable3D() { }
         };
 
+        class OpenGLAPI IRenderableScene
+        {
+            public:
+                virtual ~IRenderableScene() { }
+                virtual void Render()                       const = 0;
+        };
+
+        template<typename T>
+        class OpenGLAPI IRenderablePath :
+            public IRenderable3D<T>,
+            public IRenderableScene
+        {
+            
+        };
 
         class OpenGLAPI IRenderableEntity :
 	        public IGeometricEntity,
