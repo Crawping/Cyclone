@@ -101,8 +101,8 @@ class Program : public BasicRenderer
 
             //nvCoverFillPath(Path.ID(), Path.CoverMode());
 
+            nvOrthoMatrix(GL_PROJECTION, -10, 20, -10, 20, -1, 1);
             Text->Render();
-            //nvOrthoMatrix(GL_PROJECTION, -10, 20, -10, 20, -1, 1);
             //nvOrthoMatrix(GL_PROJECTION, 0, 1024, 0, 960, -1, 1);
 
             nvCoverFillPath(Path.ID(), Path.CoverMode());
