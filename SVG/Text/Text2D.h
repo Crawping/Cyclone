@@ -20,10 +20,15 @@ namespace Cyclone
                 
                 const Array<float>& Kerning() const { return _kerning; }
 
+                const string& Text() const { return _text; }
 
-                SVGAPI Text2D(const string& text);
 
-                SVGAPI void Render() const;
+                SVGAPI Text2D& Text(const string& text);
+
+
+                SVGAPI Text2D();
+
+                SVGAPI void Render() const override;
 
 
 

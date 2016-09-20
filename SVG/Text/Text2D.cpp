@@ -8,11 +8,13 @@ namespace Cyclone
 {
     namespace SVG
     {
-        Text2D::Text2D(const string& text) : 
-            _font("Arial"),
-            _text(text),
-            _kerning(text.size() + 1)
+
+        /** PROPERTIES **/
+        Text2D& Text2D::Text(const string& text)
         {
+            _text = text;
+            _kerning = Array<float>(text.size() + 1);
+
             _kerning(0) = 0.0f;
             nvGetPathSpacing
             (
@@ -34,35 +36,39 @@ namespace Cyclone
                 2 * sizeof(float),
                 &YLimits.X
             );
+
+            return *this;
         }
 
 
+        Text2D::Text2D() :
+            _font("Arial"),
+            _text("")
+        {
+
+        }
 
         void Text2D::Render() const
         {
-            //nvIdentityMatrix(GL_PROJECTION);
-            //nvOrthoMatrix(GL_MODELVIEW, 0, _kerning(_text.size()), YLimits.X, YLimits.Y, -1, 1);
-            //nvOrthoMatrix(GL_MODELVIEW, -10, 10, -10, 10, -1, 1);
-
             nvStencilFillPathInstanced
             (
-                _text.size(), 
-                NumericFormats::UByte, 
-                _text.c_str(), 
-                _font.ID(), 
-                FillMode(), 
-                ~0, 
-                TransformTypes::TranslateX, 
+                _text.size(),
+                NumericFormats::UByte,
+                _text.c_str(),
+                _font.ID(),
+                FillMode(),
+                ~0,
+                TransformTypes::TranslateX,
                 _kerning.ToArray()
             );
             nvCoverFillPathInstanced
             (
-                _text.size(), 
-                NumericFormats::UByte, 
-                _text.c_str(), 
-                _font.ID(), 
-                CoverMode(), 
-                TransformTypes::TranslateX, 
+                _text.size(),
+                NumericFormats::UByte,
+                _text.c_str(),
+                _font.ID(),
+                CoverMode(),
+                TransformTypes::TranslateX,
                 _kerning.ToArray()
             );
         }
