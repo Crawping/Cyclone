@@ -12,8 +12,8 @@ namespace Cyclone
         Path2D& Path2D::CoverMode(CoverModes value)         { _coverMode = value; return *this; }
         Path2D& Path2D::FillColor(const Color4& value)      { _fillColor = value; return *this; }
         Path2D& Path2D::FillMode(FillModes value)           { _fillMode = value; return *this; }
-        Path2D& Path2D::JoinStyle(JoinStyles value) 
-        { 
+        Path2D& Path2D::JoinStyle(JoinStyles value)
+        {
             _joinStyle = value;
             nvPathParameteri(ID(), PathParameters::JoinStyle, value);
             return *this;
@@ -29,6 +29,9 @@ namespace Cyclone
 
 
 
+
+
+
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
             _count(count),
@@ -41,23 +44,19 @@ namespace Cyclone
             _id = nvGenPaths(_count);
         }
 
-        //Path2D::Path2D(const string& path) :
-        //    _fillColor(Color4::Black),
-        //    _id(0),
-        //    _joinStyle(JoinStyles::None),
-        //    _path(path),
-        //    _strokeColor(Color4::Black),
-        //    _strokeWidth(0.0f)
-        //{
-        //    _id = nvGenPaths(1);
-        //}
-
-
         Path2D::~Path2D()
         {
             if (_id) { nvDeletePaths(_id, _count); }
         }
 
+
+
+        void Path2D::Render() const
+        {
+            nvMatrixLoadIdentity(TransformMatrices::ModelView);
+
+            nvStencilFillPath(ID(), FillMode(), 0x1F);
+            nvCoverFillPath(ID(), CoverMode());
+        }
     }
 }
-

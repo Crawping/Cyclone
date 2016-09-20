@@ -7,6 +7,7 @@
 #include "SVGAPI.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -16,7 +17,7 @@ namespace Cyclone
     {
         using namespace OpenGL;
 
-        class Path2D
+        class Path2D : public IRenderable2D<string>
         {
             public:
                 virtual uint Count()                const { return _count; }
@@ -29,6 +30,16 @@ namespace Cyclone
                 virtual const Color4& StrokeColor() const { return _strokeColor; }
                 virtual float StrokeWidth()         const { return 0.0f; }
 
+                const Color4& Color()               const override { return _fillColor; }
+                const Array<uint>& Indices()        const override { return Array<uint>(); }
+                bool IsVisible()                    const override { return true; }
+                const Array<string>& Points()       const override { return Array<string>(); }
+                const Texture2D* Texture()          const override { return nullptr; }
+                VertexTopologies Topology()         const override { return VertexTopologies::Path; }
+                const Transform& World()            const override { return _world; }
+
+
+
                 SVGAPI virtual Path2D& CoverMode(CoverModes value);
                 SVGAPI virtual Path2D& FillColor(const Color4& value);
                 SVGAPI virtual Path2D& FillMode(FillModes value);
@@ -39,12 +50,13 @@ namespace Cyclone
 
 
                 SVGAPI Path2D(uint count = 1);
-                //SVGAPI Path2D(const string& path);
                 SVGAPI ~Path2D();
 
 
+                SVGAPI void Render() const override;
+
             private:
-                
+
                 uint        _count;
                 CoverModes  _coverMode;
                 Color4      _fillColor;
@@ -54,10 +66,10 @@ namespace Cyclone
                 string      _path;
                 Color4      _strokeColor;
                 float       _strokeWidth;
+                Transform   _world;
 
 
-                
-                
+
 
         };
     }
