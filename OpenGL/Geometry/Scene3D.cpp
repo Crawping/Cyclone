@@ -20,13 +20,17 @@ namespace Cyclone
         /** PUBLIC UTILITIES **/
         void Scene3D::Add(const IRenderableEntity& entity)
         {
-            if (entity.Indices().IsEmpty())
+            if (entity.Topology() == VertexTopologies::Path)
+                return;
+            else if (entity.Indices().IsEmpty())
                 Buffers[entity.Topology()].Add(entity);
             else
                 IndexedBuffers[entity.Topology()].Add(entity);
         }
         void Scene3D::Remove(const IRenderableEntity& entity)
         {
+            if (entity.Topology() == VertexTopologies::Path)
+                return;
             if (entity.Indices().IsEmpty())
                 Buffers[entity.Topology()].Remove(entity);
             else
@@ -43,7 +47,7 @@ namespace Cyclone
             for (const auto& kvp : IndexedBuffers)
             {
                 kvp.second.Bind();
-                glMultiDrawElementsIndirect(kvp.first, GL_UNSIGNED_INT, 0, kvp.second.Count(), 0);
+                glMultiDrawElementsIndirect(kvp.first, NumericFormats::UInt, 0, kvp.second.Count(), 0);
             }
         }
         void Scene3D::Update()

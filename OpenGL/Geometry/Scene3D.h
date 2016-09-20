@@ -40,6 +40,7 @@ namespace Cyclone
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderableEntity& entity);
+                OpenGLAPI void Add(const IRenderablePath& entity);
                 OpenGLAPI void Remove(const IRenderableEntity& entity);
                 OpenGLAPI void Render()                                     const;
                 OpenGLAPI void Update();
