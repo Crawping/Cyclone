@@ -14,12 +14,15 @@
         {
     #endif
 
-
+            PlatformAPI extern PFNGLCOVERFILLPATHNVPROC                     nvCoverFillPath;
             PlatformAPI extern PFNGLCOVERFILLPATHINSTANCEDNVPROC            nvCoverFillPathInstanced;
+            PlatformAPI extern PFNGLCOVERSTROKEPATHNVPROC                   nvCoverStrokePath;
             PlatformAPI extern PFNGLCOVERSTROKEPATHINSTANCEDNVPROC          nvCoverStrokePathInstanced;
+
             PlatformAPI extern PFNGLCOPYPATHNVPROC                          nvCopyPath;
             PlatformAPI extern PFNGLDELETEPATHSNVPROC                       nvDeletePaths;
             PlatformAPI extern PFNGLGENPATHSNVPROC                          nvGenPaths;
+
             PlatformAPI extern PFNGLGETPATHCOLORGENIVNVPROC                 nvGetPathColorGeniv;
             PlatformAPI extern PFNGLGETPATHCOLORGENFVNVPROC                 nvGetPathColorGenfv;
             PlatformAPI extern PFNGLGETPATHCOMMANDSNVPROC                   nvGetPathCommands;
@@ -33,10 +36,32 @@
             PlatformAPI extern PFNGLGETPATHSPACINGNVPROC                    nvGetPathSpacing;
             PlatformAPI extern PFNGLGETPATHTEXGENIVNVPROC                   nvGetPathTexGeniv;
             PlatformAPI extern PFNGLGETPATHTEXGENFVNVPROC                   nvGetPathTexGenfv;
+
             PlatformAPI extern PFNGLINTERPOLATEPATHSNVPROC                  nvInterpolatePaths;
             PlatformAPI extern PFNGLISPATHNVPROC                            nvIsPath;
             PlatformAPI extern PFNGLISPOINTINFILLPATHNVPROC                 nvIsPointInFillPath;
             PlatformAPI extern PFNGLISPOINTINSTROKEPATHNVPROC               nvIsPointInStrokePath;
+
+            PlatformAPI extern PFNGLMATRIXFRUSTUMEXTPROC                    nvMatrixFrustum;
+            PlatformAPI extern PFNGLMATRIXLOADDEXTPROC                      nvMatrixLoadd;
+            PlatformAPI extern PFNGLMATRIXLOADFEXTPROC                      nvMatrixLoadf;
+            PlatformAPI extern PFNGLMATRIXLOADIDENTITYEXTPROC               nvMatrixLoadIdentity;
+            PlatformAPI extern PFNGLMATRIXLOADTRANSPOSEDEXTPROC             nvMatrixLoadTransposed;
+            PlatformAPI extern PFNGLMATRIXLOADTRANSPOSEFEXTPROC             nvMatrixLoadTransposef;
+            PlatformAPI extern PFNGLMATRIXMULTDEXTPROC                      nvMatrixMultd;
+            PlatformAPI extern PFNGLMATRIXMULTFEXTPROC                      nvMatrixMultf;
+            PlatformAPI extern PFNGLMATRIXMULTTRANSPOSEDEXTPROC             nvMatrixMultTransposed;
+            PlatformAPI extern PFNGLMATRIXMULTTRANSPOSEFEXTPROC             nvMatrixMultTransposef;
+            PlatformAPI extern PFNGLMATRIXORTHOEXTPROC                      nvMatrixOrtho;
+            PlatformAPI extern PFNGLMATRIXPOPEXTPROC                        nvMatrixPop;
+            PlatformAPI extern PFNGLMATRIXPUSHEXTPROC                       nvMatrixPush;
+            PlatformAPI extern PFNGLMATRIXROTATEDEXTPROC                    nvMatrixRotated;
+            PlatformAPI extern PFNGLMATRIXROTATEFEXTPROC                    nvMatrixRotatef;
+            PlatformAPI extern PFNGLMATRIXSCALEDEXTPROC                     nvMatrixScaled;
+            PlatformAPI extern PFNGLMATRIXSCALEFEXTPROC                     nvMatrixScalef;
+            PlatformAPI extern PFNGLMATRIXTRANSLATEDEXTPROC                 nvMatrixTranslated;
+            PlatformAPI extern PFNGLMATRIXTRANSLATEFEXTPROC                 nvMatrixTranslatef;
+
             PlatformAPI extern PFNGLPATHCOLORGENNVPROC                      nvPathColorGen;
             PlatformAPI extern PFNGLPATHCOMMANDSNVPROC                      nvPathCommands;
             PlatformAPI extern PFNGLPATHCOORDSNVPROC                        nvPathCoords;
@@ -55,17 +80,14 @@
             PlatformAPI extern PFNGLPATHSUBCOMMANDSNVPROC                   nvPathSubCommands;
             PlatformAPI extern PFNGLPATHSUBCOORDSNVPROC                     nvPathSubCoords;
             PlatformAPI extern PFNGLPATHTEXGENNVPROC                        nvPathTexGen;
+
             PlatformAPI extern PFNGLPOINTALONGPATHNVPROC                    nvPointAlongPath;
-            PlatformAPI extern PFNGLCOVERFILLPATHNVPROC                     nvCoverFillPath;
-            PlatformAPI extern PFNGLCOVERSTROKEPATHNVPROC                   nvCoverStrokePath;
             PlatformAPI extern PFNGLSTENCILFILLPATHNVPROC                   nvStencilFillPath;
             PlatformAPI extern PFNGLSTENCILFILLPATHINSTANCEDNVPROC          nvStencilFillPathInstanced;
             PlatformAPI extern PFNGLSTENCILSTROKEPATHNVPROC                 nvStencilStrokePath;
             PlatformAPI extern PFNGLSTENCILSTROKEPATHINSTANCEDNVPROC        nvStencilStrokePathInstanced;
             PlatformAPI extern PFNGLTRANSFORMPATHNVPROC                     nvTransformPath;
             PlatformAPI extern PFNGLWEIGHTPATHSNVPROC                       nvWeightPaths;
-            PlatformAPI extern PFNGLMATRIXLOADIDENTITYEXTPROC               nvIdentityMatrix;
-            PlatformAPI extern PFNGLMATRIXORTHOEXTPROC                      nvOrthoMatrix;
 
 
 

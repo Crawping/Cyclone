@@ -10,11 +10,15 @@
 
 
 /** PATH RENDERING FUNCTION POINTERS **/
+PFNGLCOVERFILLPATHNVPROC                     nvCoverFillPath                            = NULL;
 PFNGLCOVERFILLPATHINSTANCEDNVPROC            nvCoverFillPathInstanced                   = NULL;
+PFNGLCOVERSTROKEPATHNVPROC                   nvCoverStrokePath                          = NULL;
 PFNGLCOVERSTROKEPATHINSTANCEDNVPROC          nvCoverStrokePathInstanced                 = NULL;
+
 PFNGLCOPYPATHNVPROC                          nvCopyPath                                 = NULL;
 PFNGLDELETEPATHSNVPROC                       nvDeletePaths                              = NULL;
 PFNGLGENPATHSNVPROC                          nvGenPaths                                 = NULL;
+
 PFNGLGETPATHCOLORGENIVNVPROC                 nvGetPathColorGeniv                        = NULL;
 PFNGLGETPATHCOLORGENFVNVPROC                 nvGetPathColorGenfv                        = NULL;
 PFNGLGETPATHCOMMANDSNVPROC                   nvGetPathCommands                          = NULL;
@@ -28,12 +32,32 @@ PFNGLGETPATHPARAMETERFVNVPROC                nvGetPathParameterfv               
 PFNGLGETPATHSPACINGNVPROC                    nvGetPathSpacing                           = NULL;
 PFNGLGETPATHTEXGENIVNVPROC                   nvGetPathTexGeniv                          = NULL;
 PFNGLGETPATHTEXGENFVNVPROC                   nvGetPathTexGenfv                          = NULL;
-PFNGLMATRIXLOADIDENTITYEXTPROC               nvIdentityMatrix                           = NULL;
+
 PFNGLINTERPOLATEPATHSNVPROC                  nvInterpolatePaths                         = NULL;
 PFNGLISPATHNVPROC                            nvIsPath                                   = NULL;
 PFNGLISPOINTINFILLPATHNVPROC                 nvIsPointInFillPath                        = NULL;
 PFNGLISPOINTINSTROKEPATHNVPROC               nvIsPointInStrokePath                      = NULL;
-PFNGLMATRIXORTHOEXTPROC                      nvOrthoMatrix                              = NULL;
+
+PFNGLMATRIXFRUSTUMEXTPROC                    nvMatrixFrustum                            = NULL;
+PFNGLMATRIXLOADDEXTPROC                      nvMatrixLoadd                              = NULL;
+PFNGLMATRIXLOADFEXTPROC                      nvMatrixLoadf                              = NULL;
+PFNGLMATRIXLOADIDENTITYEXTPROC               nvMatrixLoadIdentity                       = NULL;
+PFNGLMATRIXLOADTRANSPOSEDEXTPROC             nvMatrixLoadTransposed                     = NULL;
+PFNGLMATRIXLOADTRANSPOSEFEXTPROC             nvMatrixLoadTransposef                     = NULL;
+PFNGLMATRIXMULTDEXTPROC                      nvMatrixMultd                              = NULL;
+PFNGLMATRIXMULTFEXTPROC                      nvMatrixMultf                              = NULL;
+PFNGLMATRIXMULTTRANSPOSEDEXTPROC             nvMatrixMultTransposed                     = NULL;
+PFNGLMATRIXMULTTRANSPOSEFEXTPROC             nvMatrixMultTransposef                     = NULL;
+PFNGLMATRIXORTHOEXTPROC                      nvMatrixOrtho                              = NULL;
+PFNGLMATRIXPOPEXTPROC                        nvMatrixPop                                = NULL;
+PFNGLMATRIXPUSHEXTPROC                       nvMatrixPush                               = NULL;
+PFNGLMATRIXROTATEDEXTPROC                    nvMatrixRotated                            = NULL;
+PFNGLMATRIXROTATEFEXTPROC                    nvMatrixRotatef                            = NULL;
+PFNGLMATRIXSCALEDEXTPROC                     nvMatrixScaled                             = NULL;
+PFNGLMATRIXSCALEFEXTPROC                     nvMatrixScalef                             = NULL;
+PFNGLMATRIXTRANSLATEDEXTPROC                 nvMatrixTranslated                         = NULL;
+PFNGLMATRIXTRANSLATEFEXTPROC                 nvMatrixTranslatef                         = NULL;
+
 PFNGLPATHCOLORGENNVPROC                      nvPathColorGen                             = NULL;
 PFNGLPATHCOMMANDSNVPROC                      nvPathCommands                             = NULL;
 PFNGLPATHCOORDSNVPROC                        nvPathCoords                               = NULL;
@@ -52,9 +76,8 @@ PFNGLPATHSTRINGNVPROC                        nvPathString                       
 PFNGLPATHSUBCOMMANDSNVPROC                   nvPathSubCommands                          = NULL;
 PFNGLPATHSUBCOORDSNVPROC                     nvPathSubCoords                            = NULL;
 PFNGLPATHTEXGENNVPROC                        nvPathTexGen                               = NULL;
+
 PFNGLPOINTALONGPATHNVPROC                    nvPointAlongPath                           = NULL;
-PFNGLCOVERFILLPATHNVPROC                     nvCoverFillPath                            = NULL;
-PFNGLCOVERSTROKEPATHNVPROC                   nvCoverStrokePath                          = NULL;
 PFNGLSTENCILFILLPATHNVPROC                   nvStencilFillPath                          = NULL;
 PFNGLSTENCILFILLPATHINSTANCEDNVPROC          nvStencilFillPathInstanced                 = NULL;
 PFNGLSTENCILSTROKEPATHNVPROC                 nvStencilStrokePath                        = NULL;
@@ -74,12 +97,13 @@ int nvLoadFunctions()
         return 0;
     }
 
-    nvDeletePaths                       = (PFNGLDELETEPATHSNVPROC)                      glGetFunctionPointer("glDeletePathsNV");
-    nvCopyPath                          = (PFNGLCOPYPATHNVPROC)                         glGetFunctionPointer("glCopyPathNV");
     nvCoverFillPath                     = (PFNGLCOVERFILLPATHNVPROC)                    glGetFunctionPointer("glCoverFillPathNV");
     nvCoverFillPathInstanced            = (PFNGLCOVERFILLPATHINSTANCEDNVPROC)           glGetFunctionPointer("glCoverFillPathInstancedNV");
     nvCoverStrokePath                   = (PFNGLCOVERSTROKEPATHNVPROC)                  glGetFunctionPointer("glCoverStrokePathNV");
     nvCoverStrokePathInstanced          = (PFNGLCOVERSTROKEPATHINSTANCEDNVPROC)         glGetFunctionPointer("glCoverStrokePathInstancedNV");
+
+    nvCopyPath                          = (PFNGLCOPYPATHNVPROC)                         glGetFunctionPointer("glCopyPathNV");
+    nvDeletePaths                       = (PFNGLDELETEPATHSNVPROC)                      glGetFunctionPointer("glDeletePathsNV");
     nvGenPaths                          = (PFNGLGENPATHSNVPROC)                         glGetFunctionPointer("glGenPathsNV");
     nvGetPathColorGeniv                 = (PFNGLGETPATHCOLORGENIVNVPROC)                glGetFunctionPointer("glGetPathColorGenivNV");
     nvGetPathColorGenfv                 = (PFNGLGETPATHCOLORGENFVNVPROC)                glGetFunctionPointer("glGetPathColorGenfvNV");
@@ -98,6 +122,29 @@ int nvLoadFunctions()
     nvIsPath                            = (PFNGLISPATHNVPROC)                           glGetFunctionPointer("glIsPathNV");
     nvIsPointInFillPath                 = (PFNGLISPOINTINFILLPATHNVPROC)                glGetFunctionPointer("glIsPointInFillPathNV");
     nvIsPointInStrokePath               = (PFNGLISPOINTINSTROKEPATHNVPROC)              glGetFunctionPointer("glIsPointInStrokePathNV");
+
+    nvMatrixOrtho                       = (PFNGLMATRIXORTHOEXTPROC)                     glGetFunctionPointer("glMatrixOrthoEXT");
+    nvMatrixLoadIdentity                = (PFNGLMATRIXLOADIDENTITYEXTPROC)              glGetFunctionPointer("glMatrixLoadIdentityEXT");
+    nvMatrixFrustum                     = (PFNGLMATRIXFRUSTUMEXTPROC)                   glGetFunctionPointer("glMatrixFrustumEXT");
+    nvMatrixLoadd                       = (PFNGLMATRIXLOADDEXTPROC)                     glGetFunctionPointer("glMatrixLoaddEXT");
+    nvMatrixLoadf                       = (PFNGLMATRIXLOADFEXTPROC)                     glGetFunctionPointer("glMatrixLoadfEXT");
+    nvMatrixLoadIdentity                = (PFNGLMATRIXLOADIDENTITYEXTPROC)              glGetFunctionPointer("glMatrixLoadIdentityEXT");
+    nvMatrixLoadTransposed              = (PFNGLMATRIXLOADTRANSPOSEDEXTPROC)            glGetFunctionPointer("glMatrixLoadTransposedEXT");
+    nvMatrixLoadTransposef              = (PFNGLMATRIXLOADTRANSPOSEFEXTPROC)            glGetFunctionPointer("glMatrixLoadTransposefEXT");
+    nvMatrixMultd                       = (PFNGLMATRIXMULTDEXTPROC)                     glGetFunctionPointer("glMatrixMultdEXT");
+    nvMatrixMultf                       = (PFNGLMATRIXMULTFEXTPROC)                     glGetFunctionPointer("glMatrixMultfEXT");
+    nvMatrixMultTransposed              = (PFNGLMATRIXMULTTRANSPOSEDEXTPROC)            glGetFunctionPointer("glMatrixMultTransposedEXT");
+    nvMatrixMultTransposef              = (PFNGLMATRIXMULTTRANSPOSEFEXTPROC)            glGetFunctionPointer("glMatrixMultTransposefEXT");
+    nvMatrixOrtho                       = (PFNGLMATRIXORTHOEXTPROC)                     glGetFunctionPointer("glMatrixOrthoEXT");
+    nvMatrixPop                         = (PFNGLMATRIXPOPEXTPROC)                       glGetFunctionPointer("glMatrixPopEXT");
+    nvMatrixPush                        = (PFNGLMATRIXPUSHEXTPROC)                      glGetFunctionPointer("glMatrixPushEXT");
+    nvMatrixRotated                     = (PFNGLMATRIXROTATEDEXTPROC)                   glGetFunctionPointer("glMatrixRotatedEXT");
+    nvMatrixRotatef                     = (PFNGLMATRIXROTATEFEXTPROC)                   glGetFunctionPointer("glMatrixRotatefEXT");
+    nvMatrixScaled                      = (PFNGLMATRIXSCALEDEXTPROC)                    glGetFunctionPointer("glMatrixScaledEXT");
+    nvMatrixScalef                      = (PFNGLMATRIXSCALEFEXTPROC)                    glGetFunctionPointer("glMatrixScalefEXT");
+    nvMatrixTranslated                  = (PFNGLMATRIXTRANSLATEDEXTPROC)                glGetFunctionPointer("glMatrixTranslatedEXT");
+    nvMatrixTranslatef                  = (PFNGLMATRIXTRANSLATEFEXTPROC)                glGetFunctionPointer("glMatrixTranslatefEXT");
+
     nvPathColorGen                      = (PFNGLPATHCOLORGENNVPROC)                     glGetFunctionPointer("glPathColorGenNV");
     nvPathCommands                      = (PFNGLPATHCOMMANDSNVPROC)                     glGetFunctionPointer("glPathCommandsNV");
     nvPathCoords                        = (PFNGLPATHCOORDSNVPROC)                       glGetFunctionPointer("glPathCoordsNV");
@@ -116,6 +163,7 @@ int nvLoadFunctions()
     nvPathSubCommands                   = (PFNGLPATHSUBCOMMANDSNVPROC)                  glGetFunctionPointer("glPathSubCommandsNV");
     nvPathSubCoords                     = (PFNGLPATHSUBCOORDSNVPROC)                    glGetFunctionPointer("glPathSubCoordsNV");
     nvPathTexGen                        = (PFNGLPATHTEXGENNVPROC)                       glGetFunctionPointer("glPathTexGenNV");
+
     nvPointAlongPath                    = (PFNGLPOINTALONGPATHNVPROC)                   glGetFunctionPointer("glPointAlongPathNV");
     nvStencilFillPath                   = (PFNGLSTENCILFILLPATHNVPROC)                  glGetFunctionPointer("glStencilFillPathNV");
     nvStencilFillPathInstanced          = (PFNGLSTENCILFILLPATHINSTANCEDNVPROC)         glGetFunctionPointer("glStencilFillPathInstancedNV");
@@ -124,12 +172,10 @@ int nvLoadFunctions()
     nvTransformPath                     = (PFNGLTRANSFORMPATHNVPROC)                    glGetFunctionPointer("glTransformPathNV");
     nvWeightPaths                       = (PFNGLWEIGHTPATHSNVPROC)                      glGetFunctionPointer("glWeightPathsNV");
 
-    nvIdentityMatrix                    = (PFNGLMATRIXLOADIDENTITYEXTPROC)              glGetFunctionPointer("glMatrixLoadIdentityEXT");
-    nvOrthoMatrix                       = (PFNGLMATRIXORTHOEXTPROC)                     glGetFunctionPointer("glMatrixOrthoEXT");
 
     FreeLibrary(libHandle);
 
-    if (!nvPathCommands || !nvPathString || !nvPathParameteri || !nvIdentityMatrix || !nvOrthoMatrix)
+    if (!nvPathCommands || !nvPathString || !nvPathParameteri || !nvMatrixLoadIdentity || !nvMatrixOrtho)
         return 0;
     else
         return 1;
