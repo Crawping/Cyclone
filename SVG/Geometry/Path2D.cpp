@@ -28,12 +28,10 @@ namespace Cyclone
         Path2D& Path2D::StrokeWidth(float value)            { _strokeWidth = value; return *this; }
 
 
-
-
-
-
+        
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
+            Entity3D(Color4::Transparent, VertexTopologies::Path, Array<string>()),
             _count(count),
             _fillColor(Color4::Transparent),
             _id(0),
@@ -51,12 +49,25 @@ namespace Cyclone
 
 
 
+
+        /** UTILITIES **/
         void Path2D::Render() const
         {
-            nvMatrixLoadIdentity(TransformMatrices::ModelView);
+            nvMatrixLoadf(TransformMatrices::ModelView, World().ToArray());
 
-            nvStencilFillPath(ID(), FillMode(), 0x1F);
+            Stencil();
+            Cover();
+        }
+
+
+        /** PROTECTED UTILITIES **/
+        void Path2D::Cover() const
+        {
             nvCoverFillPath(ID(), CoverMode());
+        }
+        void Path2D::Stencil() const
+        {
+            nvStencilFillPath(ID(), FillMode(), 0x1F);
         }
     }
 }
