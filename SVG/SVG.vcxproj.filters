@@ -5,9 +5,6 @@
     <ClInclude Include="Geometry\Path2D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Scene2D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="SVGAPI.h" />
     <ClInclude Include="Text\Text2D.h">
       <Filter>Text</Filter>
@@ -26,9 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Geometry\Path2D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry\Scene2D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Text\Text2D.cpp">
