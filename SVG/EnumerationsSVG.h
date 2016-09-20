@@ -122,7 +122,14 @@ struct PathParameters : public Enumerator
     constexpr PathParameters(enum Parameters p) : Enumerator(p) { }
 };
 
-
+struct TransformMatrices : public Enumerator
+{
+    enum Matrices
+    {
+        ModelView                       = 0x1700,
+        Projection                      = 0x1701,
+    };
+};
 
 struct TransformTypes : public Enumerator
 {
