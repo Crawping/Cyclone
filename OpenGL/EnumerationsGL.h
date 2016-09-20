@@ -340,6 +340,7 @@ struct VertexTopologies : public Enumerator
         Lines                       = GL_LINES,
         LineLoop                    = GL_LINE_LOOP,
         LineStrip                   = GL_LINE_STRIP,
+        Path                        = -1,
         Points                      = GL_POINTS,
         Quads                       = GL_QUADS,
         /// <summary> Instructs the rendering pipeline to create triangles out of an array of vertices. </summary>
