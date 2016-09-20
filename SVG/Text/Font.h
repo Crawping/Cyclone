@@ -21,7 +21,10 @@ namespace Cyclone
 
 
 
-                Font(const string& name);
+                SVGAPI Font(const string& name);
+
+
+                SVGAPI void Render() const override { }
 
 
             private:
