@@ -31,42 +31,26 @@ namespace Cyclone
         class OpenGLAPI IGeometric3D
         {
             public:
-                virtual const Array<uint>& Indices()                const = 0;
-                virtual const Array<T>& Points()                    const = 0;
-                virtual VertexTopologies Topology()			        const = 0;
-                virtual const Transform& World()                    const = 0;
+                virtual const Array<uint>& Indices()        const = 0;
+                virtual const Array<T>& Points()            const = 0;
+                virtual VertexTopologies Topology()         const = 0;
+                virtual const Transform& World()            const = 0;
 
                 virtual ~IGeometric3D() { }
         };
 
-
-
-        class OpenGLAPI IGeometricEntity
-        {
-	        public:
-
-		        virtual ~IGeometricEntity() { }
-
-                virtual const Array<uint>& Indices()                const = 0;
-		        virtual const Array<Vertex::Standard>& Vertices()	const = 0;
-		        virtual const Transform& World()			        const = 0;
-		        virtual VertexTopologies Topology()			        const = 0;
-        };
-
-
-
         class OpenGLAPI IMaterialEntity
         {
-	        public:
-		        virtual ~IMaterialEntity() { }
+            public:
+                virtual ~IMaterialEntity() { }
 
-		        virtual const Texture2D* Texture()			const = 0;
-		        virtual const Color4& Color()				const = 0;
+                virtual const Texture2D* Texture()			const = 0;
+                virtual const Color4& Color()				const = 0;
         };
 
 
 
-        template <typename T>
+        template<typename T>
         class OpenGLAPI IRenderable3D :
             public IGeometric3D<T>,
             public IMaterialEntity
@@ -74,6 +58,15 @@ namespace Cyclone
             public:
                 virtual bool IsVisible()                    const = 0;
                 virtual ~IRenderable3D() { }
+        };
+
+        template<typename T>
+        class OpenGLAPI IRenderable2D :
+            public IRenderable3D<T>
+        {
+            public:
+                virtual ~IRenderable2D() { }
+                virtual void Render()                       const = 0;
         };
 
         class OpenGLAPI IRenderableScene
@@ -89,16 +82,6 @@ namespace Cyclone
             public IRenderableScene
         {
             
-        };
-
-        class OpenGLAPI IRenderableEntity :
-	        public IGeometricEntity,
-	        public IMaterialEntity
-        {
-	        public:
-		        virtual ~IRenderableEntity() { }
-
-		        virtual bool IsVisible()					const = 0;
         };
 
     }

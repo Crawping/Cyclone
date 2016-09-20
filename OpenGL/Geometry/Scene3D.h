@@ -6,6 +6,7 @@
 #include "Buffers/DrawBuffer.h"
 #include "Buffers/UniformData.h"
 #include "GL/OpenGLAPI.h"
+#include "Interfaces/IRenderable.h"
 #include "Interfaces/IUpdatable.h"
 #include <map>
 #include <set>
@@ -16,8 +17,6 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class IRenderableEntity;
-
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
         class Scene3D
@@ -39,17 +38,21 @@ namespace Cyclone
                 ///     be updated. Otherwise, this method generates a new entry in the scene's data collection to hold the
                 ///     necessary rendering information for the entity.
                 /// </param>
-                OpenGLAPI void Add(const IRenderableEntity& entity);
-                OpenGLAPI void Add(const IRenderablePath& entity);
-                OpenGLAPI void Remove(const IRenderableEntity& entity);
+                OpenGLAPI void Add(const IRenderable2D<string>& entity);
+                OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
+                //OpenGLAPI void Add(const IRenderablePath& entity);
+                OpenGLAPI void Remove(const IRenderable2D<string>& entity);
+                OpenGLAPI void Remove(const IRenderable3D<Vertex::Standard>& entity);
                 OpenGLAPI void Render()                                     const;
                 OpenGLAPI void Update();
-                OpenGLAPI void Update(const IRenderableEntity& entity);
+                OpenGLAPI void Update(const IRenderable3D<Vertex::Standard>& entity);
 
             private:
 
                 std::map<VertexTopologies, DrawBuffer<DrawCommand>>             Buffers;
                 std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>      IndexedBuffers;
+
+                std::set<const IRenderable2D<string>*>                          PathBuffer;
 
         };
     }

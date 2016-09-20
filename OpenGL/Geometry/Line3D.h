@@ -12,7 +12,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Line3D : public Entity3D
+        class Line3D : public Entity3D<Vertex::Standard>
         {
             public:
                 /// <summary> Constructs a new white-colored horizontal line spanning the coordinates (-0.5, 0, 0) to (0.5, 0, 0). </summary>

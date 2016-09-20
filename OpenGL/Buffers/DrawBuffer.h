@@ -58,7 +58,7 @@ namespace Cyclone
 
 
                 /** BUFFER UTILITIES **/
-                void Add(const IRenderableEntity& entity)
+                void Add(const IRenderable3D<V>& entity)
                 {
                     if (EntityIndices.count(&entity)) { return; }
 
@@ -76,7 +76,7 @@ namespace Cyclone
                     _needsReallocation = true;
                     _needsUpdate = true;
                 }
-                void Remove(const IRenderableEntity& entity)
+                void Remove(const IRenderable3D<V>& entity)
                 {
                     if (!EntityIndices.count(&entity)) { return; }
 
@@ -128,7 +128,7 @@ namespace Cyclone
                     _needsReallocation = false;
                     _needsUpdate = false;
                 }
-                void Update(const IRenderableEntity& entity)
+                void Update(const IRenderable3D<V>& entity)
                 {
                     if (!EntityIndices.count(&entity)) { return; }
 
@@ -189,19 +189,19 @@ namespace Cyclone
 
                 IndexBuffer                                 Indices;
 
-                std::map<const IRenderableEntity*, uint>    EntityIndices;
+                std::map<const IRenderable3D<V>*, uint>    EntityIndices;
 
-                std::set<const IRenderableEntity*>          ToUpdate;
+                std::set<const IRenderable3D<V>*>          ToUpdate;
 
 
 
                 /** UTILITIES **/
-                void AddCommand(const IRenderableEntity* entity)
+                void AddCommand(const IRenderable3D<V>* entity)
                 {
-                    uint nVertices = entity->Indices().IsEmpty() ? entity->Vertices().Count() : entity->Indices().Count();
+                    uint nVertices = entity->Indices().IsEmpty() ? entity->Points().Count() : entity->Indices().Count();
                     Commands.Add(T(nVertices, 1, Indices.Count(), Vertices.Count(), Commands.Count()));
                 }
-                void AddEntity(const IRenderableEntity* entity)
+                void AddEntity(const IRenderable3D<V>* entity)
                 {
                     U data =
                     {
@@ -210,9 +210,9 @@ namespace Cyclone
                     };
                     Entities.Add(data);
                 }
-                void AddVertices(const IRenderableEntity* entity)
+                void AddVertices(const IRenderable3D<V>* entity)
                 {
-                    const Array<V>& vertices = entity->Vertices();
+                    const Array<V>& vertices = entity->Points();
                     for (uint a = 0; a < vertices.Count(); a++)
                         Vertices.Add(vertices(a));
 

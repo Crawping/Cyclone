@@ -12,7 +12,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Quad3D : public Entity3D
+        class Quad3D : public Entity3D<Vertex::Standard>
         {
 
             public:

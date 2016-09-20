@@ -11,7 +11,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Mesh3D : public Entity3D
+        class Mesh3D : public Entity3D<Vertex::Standard>
         {
             public:
                 Mesh3D(const Array<Vertex::Standard>& vertices) : Entity3D(vertices) { }

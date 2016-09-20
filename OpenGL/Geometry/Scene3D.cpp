@@ -18,23 +18,27 @@ namespace Cyclone
 
 
         /** PUBLIC UTILITIES **/
-        void Scene3D::Add(const IRenderableEntity& entity)
+        void Scene3D::Add(const IRenderable3D<Vertex::Standard>& entity)
         {
-            if (entity.Topology() == VertexTopologies::Path)
-                return;
-            else if (entity.Indices().IsEmpty())
+            if (entity.Indices().IsEmpty())
                 Buffers[entity.Topology()].Add(entity);
             else
                 IndexedBuffers[entity.Topology()].Add(entity);
         }
-        void Scene3D::Remove(const IRenderableEntity& entity)
+        void Scene3D::Add(const IRenderable2D<string>& entity)
         {
-            if (entity.Topology() == VertexTopologies::Path)
-                return;
+            PathBuffer.insert(&entity);
+        }
+        void Scene3D::Remove(const IRenderable3D<Vertex::Standard>& entity)
+        {
             if (entity.Indices().IsEmpty())
                 Buffers[entity.Topology()].Remove(entity);
             else
                 IndexedBuffers[entity.Topology()].Remove(entity);
+        }
+        void Scene3D::Remove(const IRenderable2D<string>& entity)
+        {
+            PathBuffer.erase(&entity);
         }
         void Scene3D::Render() const
         {
@@ -49,6 +53,19 @@ namespace Cyclone
                 kvp.second.Bind();
                 glMultiDrawElementsIndirect(kvp.first, NumericFormats::UInt, 0, kvp.second.Count(), 0);
             }
+
+            if (PathBuffer.size())
+            {
+                glStencilMask(~0);
+                glEnable(GL_STENCIL_TEST);
+                glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
+                glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
+
+                for (const auto* p : PathBuffer)
+                    p->Render();
+
+                glDisable(GL_STENCIL_TEST);
+            }
         }
         void Scene3D::Update()
         {
@@ -58,7 +75,7 @@ namespace Cyclone
                 kvp.second.Update();
         }
 
-        void Scene3D::Update(const IRenderableEntity& entity)
+        void Scene3D::Update(const IRenderable3D<Vertex::Standard>& entity)
         {
             if (entity.Indices().IsEmpty())
                 Buffers[entity.Topology()].Update(entity);

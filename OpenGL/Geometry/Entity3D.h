@@ -17,7 +17,8 @@ namespace Cyclone
     {
         namespace Vertex { struct Standard; }
 
-        class Entity3D : public IRenderableEntity
+        template<typename T>
+        class Entity3D : public IRenderable3D<T>
         {
 
             public:
@@ -99,7 +100,7 @@ namespace Cyclone
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                         const override { return _topology; }
                 /// <summary> Gets a reference to the vertex array defining the geometry of an entity. </summary>
-		        virtual const Array<Vertex::Standard>& Vertices()			const override { return _vertices; }
+		        virtual const Array<T>& Points()			                const override { return _vertices; }
                 /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
                 /// <remarks>
                 ///     The world transformation matrix defines the position, scale, and orientation of an entity in 3D space.
@@ -130,31 +131,31 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
-                Color4                      _color;
-                Array<uint>                 _indices;
-                bool                        _isVisible;
-		        Texture2D*			        _texture;
-                VertexTopologies            _topology;
-		        Array<Vertex::Standard>		_vertices;
-                Transform                   _world;
+                Color4                  _color;
+                Array<uint>             _indices;
+                bool                    _isVisible;
+		        Texture2D*			    _texture;
+                VertexTopologies        _topology;
+		        Array<T>		        _vertices;
+                Transform               _world;
 
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new 3D renderable entity composed of white triangles. </summary>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-		        Entity3D(const Array<Vertex::Standard>& vertices) :
+		        Entity3D(const Array<T>& vertices) :
                     Entity3D(vertices, Array<uint>(0))
 		        {
 
 		        }
 
-                Entity3D(const Array<Vertex::Standard>& vertices, const Array<uint>& indices) :
+                Entity3D(const Array<T>& vertices, const Array<uint>& indices) :
                     Entity3D(Color4::White, VertexTopologies::Triangles, vertices, indices)
                 {
 
                 }
-                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex::Standard>& vertices) :
+                Entity3D(const Color4& color, VertexTopologies topology, const Array<T>& vertices) :
                     Entity3D(color, topology, vertices, Array<uint>())
                 {
 
@@ -163,7 +164,7 @@ namespace Cyclone
                 /// <param name="color"> The base color of this entity's geometry. </param>
                 /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-                Entity3D(const Color4& color, VertexTopologies topology, const Array<Vertex::Standard>& vertices, const Array<uint>& indices) :
+                Entity3D(const Color4& color, VertexTopologies topology, const Array<T>& vertices, const Array<uint>& indices) :
 			        _color(color),
                     _indices(indices),
                     _isVisible(true),
