@@ -21,9 +21,7 @@ namespace Cyclone
     {
 
         using namespace Utilities;
-        struct  PerEntity;
-        class   Texture2D;
-        namespace Vertex { struct Standard; }
+        class Texture2D;
 
 
 
@@ -42,18 +40,16 @@ namespace Cyclone
         class OpenGLAPI IMaterialEntity
         {
             public:
-                virtual ~IMaterialEntity() { }
-
                 virtual const Texture2D* Texture()			const = 0;
                 virtual const Color4& Color()				const = 0;
+
+                virtual ~IMaterialEntity() { }
         };
-
-
 
         template<typename T>
         class OpenGLAPI IRenderable3D :
-            public IGeometric3D<T>,
-            public IMaterialEntity
+            public virtual IGeometric3D<T>,
+            public virtual IMaterialEntity
         {
             public:
                 virtual bool IsVisible()                    const = 0;
@@ -62,7 +58,7 @@ namespace Cyclone
 
         template<typename T>
         class OpenGLAPI IRenderable2D :
-            public IRenderable3D<T>
+            public virtual IRenderable3D<T>
         {
             public:
                 virtual ~IRenderable2D() { }
@@ -74,14 +70,6 @@ namespace Cyclone
             public:
                 virtual ~IRenderableScene() { }
                 virtual void Render()                       const = 0;
-        };
-
-        template<typename T>
-        class OpenGLAPI IRenderablePath :
-            public IRenderable3D<T>,
-            public IRenderableScene
-        {
-            
         };
 
     }
