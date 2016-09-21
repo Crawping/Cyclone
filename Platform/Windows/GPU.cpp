@@ -92,7 +92,7 @@ namespace Cyclone
         void GPU::Execute()
         {
             if (_renderScene)
-                _renderScene->Render();
+                _renderScene->Render(this);
         }
         void GPU::Update()
         {

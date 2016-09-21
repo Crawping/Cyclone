@@ -40,7 +40,7 @@ namespace Cyclone
         {
             PathBuffer.erase(&entity);
         }
-        void Scene3D::Render() const
+        void Scene3D::Render(const GPU* gpu) const
         {
             for (const auto& kvp : Buffers)
             {
@@ -62,7 +62,7 @@ namespace Cyclone
                 glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 
                 for (const auto* p : PathBuffer)
-                    p->Render();
+                    p->Render(gpu);
 
                 glDisable(GL_STENCIL_TEST);
             }
