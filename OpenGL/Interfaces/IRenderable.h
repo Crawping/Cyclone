@@ -11,27 +11,40 @@
 
 namespace Cyclone
 {
+    namespace Platform { class GPU; }
     namespace Utilities
     {
         struct  Color4;
         struct  Transform;
     }
 
+
     namespace OpenGL
     {
 
+        using namespace Platform;
         using namespace Utilities;
         class Texture2D;
 
 
-
+        /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
         template<typename T>
         class OpenGLAPI IGeometric3D
         {
             public:
+                /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
                 virtual const Array<uint>& Indices()        const = 0;
+                /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
+                /// <remarks>
+                ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will 
+                ///     refer to the array of vertices that make up the standard polygons, points, and lines that OpenGL is well-known 
+                ///     for rendering. However, it may also refer to the control points of either a 3D patch object or 2D path object 
+                ///     (note the lack of a 'c' in the latter; though similarly named, the two are very different things). 
+                /// </remarks>
                 virtual const Array<T>& Points()            const = 0;
+                /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual VertexTopologies Topology()         const = 0;
+                /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of 3D geometric shape. </summary>
                 virtual const Transform& World()            const = 0;
 
                 virtual ~IGeometric3D() { }
@@ -62,14 +75,14 @@ namespace Cyclone
         {
             public:
                 virtual ~IRenderable2D() { }
-                virtual void Render()                       const = 0;
+                virtual void Render(const GPU* gpu)         const = 0;
         };
 
         class OpenGLAPI IRenderableScene
         {
             public:
                 virtual ~IRenderableScene() { }
-                virtual void Render()                       const = 0;
+                virtual void Render(const GPU* gpu)         const = 0;
         };
 
     }
