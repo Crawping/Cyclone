@@ -69,9 +69,9 @@ struct BufferAccessIntents : public Flag<BufferAccessIntents>
 
 /// <summary> A list of possible types of buffers that can be created on the GPU. </summary>
 /// <remarks>
-///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which refers to the
-///     location in GPU memory where binding occurs. However, for most applications, calling them 'types' proffers
-///     an easier understanding of the function that they serve.
+///     In the OpenGL documentation, these enumerators are referred to as buffer 'targets', which refers 
+///     to the location in GPU memory where binding occurs. However, for most applications, calling them 
+///     'types' proffers an easier understanding of the function that they serve.
 /// </remarks>
 struct BufferTypes : public Enumerator
 {
