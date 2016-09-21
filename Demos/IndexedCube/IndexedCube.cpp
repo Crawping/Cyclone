@@ -15,7 +15,7 @@ using namespace Cyclone::OpenGL;
 class Program : public BasicRenderer
 {
     public:
-        Program() : 
+        Program() :
             BasicRenderer("Indexed Cube"),
             Cube(nullptr)
         {
@@ -39,7 +39,7 @@ class Program : public BasicRenderer
             BasicRenderer::CreateSceneResources();
             Cube->Scale(100, 100, 100)
                 .Color(Color4::Green)
-                .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
+                .Position(Vector3(RenderWindow->ClientArea().Center(), -50))
                 .Pitch(90)
                 .Roll(90);
             RenderScene->Add(*Cube);
@@ -48,12 +48,12 @@ class Program : public BasicRenderer
         void CreateSizedResources() override
         {
             BasicRenderer::CreateSizedResources();
-            Cube->Position(Vector3(RenderWindow->ClientArea().Center(), 50));
+            Cube->Position(Vector3(RenderWindow->ClientArea().Center(), -50));
         }
 
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
             Renderer->RenderPipeline(RenderPipeline);
         }
 
