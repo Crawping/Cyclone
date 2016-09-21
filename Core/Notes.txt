@@ -16,9 +16,8 @@ TODOS:
 		> OnResize								(DONE)
 
 - 2D Rendering
-	-- Fonts & text
-	-- SVG images
-        > For both of the above, look into the 'NV_path_rendering' NVIDIA extension
+	-- Fonts & text                             (PRELIMINARY)
+	-- SVG images                               (IN PROGRESS)
 
 - 3D Rendering
 	-- Entity instancing
@@ -40,7 +39,7 @@ TODOS:
 	-- Random Number Generator (RNG)
 	-- Generalized Multidimensional Arrays
 	-- Lists									(DONE)
-    -- Vectors
+    -- Vectors                                  (IN PROGRESS)
     -- Trees
         > BST
         > Quadtree
