@@ -18,6 +18,8 @@ TODOS:
 - 2D Rendering
 	-- Fonts & text                             (PRELIMINARY)
 	-- SVG images                               (IN PROGRESS)
+    -- Color gradients
+    -- Enable/disable stroking & filling
 
 - 3D Rendering
 	-- Entity instancing
