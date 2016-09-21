@@ -1,8 +1,7 @@
 #include "Text/Text2D.h"
 #include "NVPR.h"
 
-#define GL_MODELVIEW                      0x1700
-#define GL_PROJECTION                     0x1701
+
 
 namespace Cyclone
 {
@@ -10,10 +9,10 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Text2D& Text2D::Text(const string& text)
+        Text2D& Text2D::Text(const string& value)
         {
-            _text = text;
-            _kerning = Array<float>(text.size() + 1);
+            _text = value;
+            _kerning = Array<float>(value.size() + 1);
 
             _kerning(0) = 0.0f;
             nvGetPathSpacing
@@ -41,6 +40,8 @@ namespace Cyclone
         }
 
 
+
+        /** CONSTRUCTOR **/
         Text2D::Text2D() :
             _font("Arial"),
             _text("")
@@ -48,7 +49,24 @@ namespace Cyclone
 
         }
 
-        void Text2D::Render() const
+
+
+        /** PROTECTED UTILITIES **/
+        void Text2D::Cover() const
+        {
+            nvCoverFillPathInstanced
+            (
+                _text.size(),
+                NumericFormats::UByte,
+                _text.c_str(),
+                _font.ID(),
+                CoverMode(),
+                TransformTypes::TranslateX,
+                _kerning.ToArray()
+            );
+        }
+
+        void Text2D::Stencil() const
         {
             nvStencilFillPathInstanced
             (
@@ -58,16 +76,6 @@ namespace Cyclone
                 _font.ID(),
                 FillMode(),
                 ~0,
-                TransformTypes::TranslateX,
-                _kerning.ToArray()
-            );
-            nvCoverFillPathInstanced
-            (
-                _text.size(),
-                NumericFormats::UByte,
-                _text.c_str(),
-                _font.ID(),
-                CoverMode(),
                 TransformTypes::TranslateX,
                 _kerning.ToArray()
             );

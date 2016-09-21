@@ -18,25 +18,28 @@ namespace Cyclone
         {
             public:
                 
-                const Array<float>& Kerning() const { return _kerning; }
+                /** PROPERTIES **/
+                const Array<float>& Kerning()   const { return _kerning; }
 
-                const string& Text() const { return _text; }
+                const string& Text()            const { return _text; }
+
+                SVGAPI Text2D& Text(const string& value);
 
 
-                SVGAPI Text2D& Text(const string& text);
 
-
+                /** CONSTRUCTORS **/
                 SVGAPI Text2D();
 
-                SVGAPI void Render() const override;
+            protected:
 
-
+                SVGAPI void Cover() const override;
+                SVGAPI void Stencil() const override;
 
             private:
-                Font    _font;
-                string  _text;
+                Font            _font;
+                Array<float>    _kerning;
+                string          _text;
 
-                Array<float> _kerning;
                 Vector2      YLimits;
         };
     }
