@@ -31,8 +31,10 @@
     <None Include="Shaders\Lighting.hsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\BlinnPhong.vsl" />
     <None Include="Shaders\SVG.psl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\BlinnPhong.vsl">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

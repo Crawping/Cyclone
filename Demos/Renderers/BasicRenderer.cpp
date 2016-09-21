@@ -46,7 +46,7 @@ namespace Renderers
     /** EVENT LOOP **/
     void BasicRenderer::Execute()
     {
-        while (CanContinue())
+        while (_canContinue)
         {
             RenderWindow->ProcessEvent();
             Renderer->Clear(ClearColor);
