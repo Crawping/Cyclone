@@ -55,7 +55,7 @@ class Program : public BasicRenderer
 
                 .Color(Color4::Green)
                 .Scale(0.1f, 0.1f)
-                .Position(128, 512);
+                .Position(128, 256);
 
             RenderScene->Add(Text);
         }
@@ -67,21 +67,13 @@ class Program : public BasicRenderer
         void CreateTransformations() override
         {
             BasicRenderer::CreateTransformations();
-
-            nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixFrustum
-            (
-                TransformMatrices::Projection,
-                0, RenderWindow->Width(),
-                0, RenderWindow->Height(),
-                1, 1000
-            );
+            nvMatrixLoadf(TransformMatrices::Projection, (Renderer->Projection() * Renderer->View()).ToArray());
         }
         void UpdateScene() override
         {
             static float count = 0.0f;
-            Text.Z(-5 * sin(count) - 6);
-            count += 0.01f;
+            Text.Z(-4096 * sin(count) - 4096);
+            count += 0.02f;
 
             BasicRenderer::UpdateScene();
         }
