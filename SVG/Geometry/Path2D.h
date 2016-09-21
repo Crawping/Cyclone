@@ -70,6 +70,9 @@ namespace Cyclone
                 Color4      _strokeColor;
                 float       _strokeWidth;
 
+
+
+                /** UTILITIES **/
                 SVGAPI virtual void Cover(const GPU* gpu)     const;
                 SVGAPI virtual void Stencil(const GPU* gpu)   const;
 
