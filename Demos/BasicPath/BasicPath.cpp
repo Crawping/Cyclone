@@ -27,7 +27,7 @@ class Program : public BasicRenderer
 {
     public:
 
-        Program() : 
+        Program() :
             BasicRenderer("NVIDIA Basic Path Rendering")
         {
             Initialize();
@@ -57,8 +57,8 @@ class Program : public BasicRenderer
                 .StrokeWidth(6.5f)
 
                 .Color(Color4::Blue)
-                .Scale(4)
-                .Position(128, 128);
+                .Scale(1)
+                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, -100));
 
             RenderScene->Add(Path);
         }
@@ -72,19 +72,13 @@ class Program : public BasicRenderer
             BasicRenderer::CreateTransformations();
 
             nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixFrustum
-            (
-                TransformMatrices::Projection,
-                0, RenderWindow->Width(),
-                0, RenderWindow->Height(),
-                1, 1000
-            );
+            nvMatrixLoadf(TransformMatrices::Projection, (Renderer->Projection() * Renderer->View()).ToArray());
         }
         void UpdateScene() override
         {
             static float count = 0.0f;
-            Path.Z(-5 * sin(count) - 6);
-            count += 0.01f;
+            Path.Z(-250 * sin(count));
+            count += 0.02f;
 
             BasicRenderer::UpdateScene();
         }
