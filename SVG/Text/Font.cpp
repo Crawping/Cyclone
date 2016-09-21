@@ -16,7 +16,7 @@ namespace Cyclone
                 ID(), 
                 GL_SYSTEM_FONT_NAME_NV, 
                 name.c_str(),
-                _style,
+                Style(),
                 0,
                 256,
                 GL_USE_MISSING_GLYPH_NV,
