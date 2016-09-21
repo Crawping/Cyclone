@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{05306704-E5C7-4FF7-BF84-9B04ED0220DB}</ProjectGuid>
-    <RootNamespace>PathRendering</RootNamespace>
+    <ProjectGuid>{5611568D-1BB2-4EAD-BE0D-CC2A8244AA39}</ProjectGuid>
+    <RootNamespace>BasicText</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -114,12 +114,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicText.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Renderers\Renderers.vcxproj">
       <Project>{0e5c9560-1acc-4ff7-b6a9-afc6e48b98f7}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="PathRendering.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
