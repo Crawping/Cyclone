@@ -87,9 +87,7 @@ namespace Cyclone
                 Transform& Scale(const Vector3& s)                    { UpdateFlag(_size != s); _size = s; return *this; }
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
                 Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
-
-
-                
+                                
 
 
                 /** CONSTRUCTORS **/
