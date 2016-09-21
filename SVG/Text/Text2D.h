@@ -20,11 +20,16 @@ namespace Cyclone
                 
                 /** PROPERTIES **/
                 /// <summary> Gets a numeric array that defines the spacing between individual characters of the rendered text. </summary>
-                const Array<float>& Kerning()   const { return _kerning; }
+                virtual const Array<float>& Kerning()   const { return _kerning; }
+
+                virtual const string& FontName()        const { return _font.Name(); }
+
+                virtual FontStyles FontStyle()          const { return _font.Style(); }
                 /// <summary> Gets the string of text that is being rendered. </summary>
-                const string& Text()            const { return _text; }
+                virtual const string& Text()            const { return _text; }
+                
                 /// <summary> Sets the string of text that is being rendered. </summary>
-                SVGAPI Text2D& Text(const string& value);
+                SVGAPI virtual Text2D& Text(const string& value);
 
 
 
@@ -33,7 +38,7 @@ namespace Cyclone
 
             protected:
 
-                SVGAPI void Cover(const GPU* gpu) const override;
+                SVGAPI void Cover(const GPU* gpu)   const override;
                 SVGAPI void Stencil(const GPU* gpu) const override;
 
             private:
