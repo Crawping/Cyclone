@@ -30,7 +30,8 @@ namespace Renderers
             return;
         }
 
-        Renderer = new GPU();        
+        Renderer = new GPU();
+        glEnable(GL_DEPTH_CLAMP);
     }
 
     BasicRenderer::~BasicRenderer()
@@ -102,8 +103,8 @@ namespace Renderers
         (
             90,
             clientArea.Width / clientArea.Height,
-            (clientArea.Height - 500.0f) / 2.0f,
-            (clientArea.Height + 1000.0f) / 2.0f
+            0.01f,
+            clientArea.Height
         );
 
         Renderer->Projection(projection);
