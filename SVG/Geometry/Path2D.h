@@ -25,9 +25,14 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the number of individual path instances that have been allocated on the GPU. </summary>
+                /// <remarks>
+                ///     For almost all imaging-related paths, this property will return a value of <c>1</c>. Values greater 
+                ///     than <c>1</c> indicate the number of times that a path object is being instanced on the GPU, which 
+                ///     is almost exclusively used only by text rendering.
+                /// </remarks>
                 virtual uint Count()                    const { return _count; }
                 virtual CoverModes CoverMode()          const { return _coverMode; }
-                virtual const Color4& FillColor()       const { return _fillColor; }
                 virtual FillModes FillMode()            const { return _fillMode; }
                 virtual uint ID()                       const { return _id; }
                 virtual JoinStyles JoinStyle()          const { return _joinStyle; }
@@ -36,7 +41,6 @@ namespace Cyclone
                 virtual float StrokeWidth()             const { return 0.0f; }
 
                 SVGAPI virtual Path2D& CoverMode(CoverModes value);
-                SVGAPI virtual Path2D& FillColor(const Color4& value);
                 SVGAPI virtual Path2D& FillMode(FillModes value);
                 SVGAPI virtual Path2D& JoinStyle(JoinStyles value);
                 SVGAPI virtual Path2D& Path(const string& value);
@@ -56,21 +60,18 @@ namespace Cyclone
 
             protected:
 
-                SVGAPI virtual void Cover(const GPU* gpu)     const;
-                SVGAPI virtual void Stencil(const GPU* gpu)   const;
-
-
-            //private:
-
+                /** PROPERTY DATA **/
                 uint        _count;
                 CoverModes  _coverMode;
-                Color4      _fillColor;
                 FillModes   _fillMode;
                 uint        _id;
                 JoinStyles  _joinStyle;
                 string      _path;
                 Color4      _strokeColor;
                 float       _strokeWidth;
+
+                SVGAPI virtual void Cover(const GPU* gpu)     const;
+                SVGAPI virtual void Stencil(const GPU* gpu)   const;
 
         };
     }

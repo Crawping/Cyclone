@@ -12,7 +12,7 @@ namespace Cyclone
 
         /** PROPERTIES **/
         Path2D& Path2D::CoverMode(CoverModes value)         { _coverMode = value; return *this; }
-        Path2D& Path2D::FillColor(const Color4& value)      { _fillColor = value; return *this; }
+        //Path2D& Path2D::FillColor(const Color4& value)      { _fillColor = value; return *this; }
         Path2D& Path2D::FillMode(FillModes value)           { _fillMode = value; return *this; }
         Path2D& Path2D::JoinStyle(JoinStyles value)
         {
@@ -35,7 +35,6 @@ namespace Cyclone
         Path2D::Path2D(uint count) :
             Entity3D(Color4::Transparent, VertexTopologies::Path, Array<string>()),
             _count(count),
-            _fillColor(Color4::Transparent),
             _id(0),
             _path(""),
             _strokeColor(Color4::Transparent),
@@ -66,7 +65,7 @@ namespace Cyclone
         {
             int varID = glGetUniformLocation(gpu->RenderPipeline()->ID(), "InputColor");
             if (varID != -1)
-                glUniform4f(varID, FillColor().R, FillColor().G, FillColor().B, FillColor().A);
+                glUniform4f(varID, Color().R, Color().G, Color().B, Color().A);
 
             nvCoverFillPath(ID(), CoverMode());
         }

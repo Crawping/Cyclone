@@ -19,10 +19,11 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
+                /// <summary> Gets a numeric array that defines the spacing between individual characters of the rendered text. </summary>
                 const Array<float>& Kerning()   const { return _kerning; }
-
+                /// <summary> Gets the string of text that is being rendered. </summary>
                 const string& Text()            const { return _text; }
-
+                /// <summary> Sets the string of text that is being rendered. </summary>
                 SVGAPI Text2D& Text(const string& value);
 
 

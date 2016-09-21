@@ -59,7 +59,7 @@ namespace Cyclone
         {
             int varID = glGetUniformLocation(gpu->RenderPipeline()->ID(), "InputColor");
             if (varID != -1)
-                glUniform4f(varID, FillColor().R, FillColor().G, FillColor().B, FillColor().A);
+                glUniform4f(varID, Color().R, Color().G, Color().B, Color().A);
 
             nvCoverFillPathInstanced
             (
