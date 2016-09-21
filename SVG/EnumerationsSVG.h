@@ -80,6 +80,64 @@ struct JoinStyles : public Enumerator
     constexpr JoinStyles(enum Styles s = None) : Enumerator(s) { }
 };
 
+struct PathCommands : public Enumerator
+{
+    enum Commands
+    {
+        Arc                                     = 0xFE,
+        CircularArcCCW                          = 0xF8,
+        CircularArcCW                           = 0xFA,
+        CircularTangentArc                      = 0xFC,
+        Close                                   = 0x00,
+        ConicCurve                              = 0x1A,
+        CubicCurve                              = 0x0C,
+
+        DuplicateFirstCubicCurve                = 0xF2,
+        DuplicateLastCubicCurve                 = 0xF4,
+
+        HorizontalLine                          = 0x06,
+        LargeArcCCW                             = 0x16,
+        LargeArcCW                              = 0x18,
+        Line                                    = 0x04,
+        Move                                    = 0x02,
+        QuadraticCurve                          = 0x0A,
+
+        Rectangle                               = 0xF6,
+        RelativeArc                             = 0xFF,
+        RelativeConicCurve                      = 0x1B,
+        RelativeCubicCurve                      = 0x0D,
+        RelativeHorizontalLine                  = 0x07,
+        RelativeLargeArcCCW                     = 0x17,
+        RelativeLargeArcCW                      = 0x19,
+        RelativeLine                            = 0x05,
+        RelativeMove                            = 0x03,
+        RelativeQuadraticCurve                  = 0x0B,
+        RelativeRectangle                       = 0xF7,
+        RelativeRoundedRectangle                = 0xE9,
+        RelativeRoundedRectangle2               = 0xEB,
+        RelativeRoundedRectangle4               = 0xED,
+        RelativeRoundedRectangle8               = 0xEF,
+        RelativeSmallArcCCW                     = 0x13,
+        RelativeSmallArcCW                      = 0x15,
+        RelativeSmoothQuadraticCurve            = 0x0F,
+        RelativeSmoothCubicCurve                = 0x11,
+        RelativeVerticalLine                    = 0x09,
+        Restart                                 = 0xF0,
+
+        RoundedRectangle                        = 0xE8,
+        RoundedRectangle2                       = 0xEA,
+        RoundedRectangle4                       = 0xEC,
+        RoundedRectangle8                       = 0xEE,
+
+        SmallArcCCW                             = 0x12,
+        SmallArcCW                              = 0x14,
+        SmoothQuadraticCurve                    = 0x0E,
+        SmoothCubicCurve                        = 0x10,
+
+        VerticalLine                            = 0x08,
+    };
+};
+
 struct PathFormats : public Enumerator
 {
     enum Formats
@@ -146,10 +204,3 @@ struct TransformTypes : public Enumerator
         TransposeAffine3D               = 0x9098,
     };
 };
-
-
-
-
-
-
-
