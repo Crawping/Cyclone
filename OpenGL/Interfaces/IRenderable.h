@@ -27,12 +27,18 @@ namespace Cyclone
         class Texture2D;
 
 
+
         /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
+        /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
         template<typename T>
         class OpenGLAPI IGeometric3D
         {
             public:
                 /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
+                /// <remarks>
+                ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will 
+                ///     return an empty array.
+                /// </remarks>
                 virtual const Array<uint>& Indices()        const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
@@ -50,21 +56,31 @@ namespace Cyclone
                 virtual ~IGeometric3D() { }
         };
 
+        /// <summary> An interface used to specify the material properties of an entity. </summary>
         class OpenGLAPI IMaterialEntity
         {
             public:
+                /// <summary> Gets a pointer to the texture used to render the visible surface of a material. </summary>
+                /// <remarks> 
+                ///     Not all materials or material-like entities will have textured associated with them. In those cases, this 
+                ///     method will return a <c>nullptr</c>.
+                /// </remarks>
                 virtual const Texture2D* Texture()			const = 0;
+                /// <summary> Gets a reference to the base color of a material. </summary>
                 virtual const Color4& Color()				const = 0;
 
                 virtual ~IMaterialEntity() { }
         };
 
+        /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
+        /// <typeparam name="T"> The type of point object that is used to define the geometry of the object. </typeparam>
         template<typename T>
         class OpenGLAPI IRenderable3D :
             public virtual IGeometric3D<T>,
             public virtual IMaterialEntity
         {
             public:
+                /// <summary> Gets whether a renderable entity is currently visible in a scene. </summary>
                 virtual bool IsVisible()                    const = 0;
                 virtual ~IRenderable3D() { }
         };
@@ -82,7 +98,7 @@ namespace Cyclone
         {
             public:
                 virtual ~IRenderableScene() { }
-                virtual void Render(const GPU* gpu)         const = 0;
+                virtual void Render(GPU* gpu)               const = 0;
         };
 
     }

@@ -42,7 +42,7 @@ namespace Cyclone
                 OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
                 OpenGLAPI void Remove(const IRenderable2D<string>& entity);
                 OpenGLAPI void Remove(const IRenderable3D<Vertex::Standard>& entity);
-                OpenGLAPI void Render(const GPU* gpu) const;
+                OpenGLAPI void Render(GPU* gpu) const;
                 OpenGLAPI void Update();
                 OpenGLAPI void Update(const IRenderable3D<Vertex::Standard>& entity);
 

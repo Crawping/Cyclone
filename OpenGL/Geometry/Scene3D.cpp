@@ -40,7 +40,7 @@ namespace Cyclone
         {
             PathBuffer.erase(&entity);
         }
-        void Scene3D::Render(const GPU* gpu) const
+        void Scene3D::Render(GPU* gpu) const
         {
             for (const auto& kvp : Buffers)
             {
