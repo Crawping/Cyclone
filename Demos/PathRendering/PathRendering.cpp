@@ -1,4 +1,4 @@
-/* CHANGELOG 
+/* CHANGELOG
  * Written by Josh Grooms on 20160915
  */
 
@@ -20,11 +20,6 @@ using namespace Cyclone::Platform;
 using namespace Cyclone::SVG;
 using namespace Cyclone::Utilities;
 using namespace Renderers;
-
-
-
-#define GL_MODELVIEW                      0x1700
-#define GL_PROJECTION                     0x1701
 
 
 
@@ -53,8 +48,14 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateSceneResources();
 
-            nvMatrixLoadIdentity(GL_PROJECTION);
-            nvMatrixOrtho(GL_PROJECTION, 0, 1024, 0, 960, -1, 1);
+            nvMatrixLoadIdentity(TransformMatrices::Projection);
+            nvMatrixOrtho
+            (
+                TransformMatrices::Projection,
+                 0, RenderWindow->Width(),
+                 0, RenderWindow->Height(),
+                -1, 1
+            );
 
             string svgString = "M100, 180 L40, 10 L190, 120 L10, 120 L160, 10 z";
             Path
@@ -62,8 +63,14 @@ class Program : public BasicRenderer
                 .Path(svgString)
                 .StrokeWidth(6.5f);
 
+            Path
+                .Scale(0.5f, 0.5f)
+                .Position(128, 128);
+
             Text
-                .Text("Testing!");
+                .Text("Testing!")
+                .Scale(0.1f, 0.1f, 0.1f)
+                .Position(128, 512);
 
             RenderScene->Add(Path);
             RenderScene->Add(Text);
@@ -78,7 +85,7 @@ class Program : public BasicRenderer
             FBO = new FrameBuffer(RenderWindow->ClientArea().Scale(), TextureFormats::Byte4, TextureFormats::DepthStencil);
             Renderer->RenderTarget(FBO);
         }
-        
+
 };
 
 
