@@ -3,7 +3,6 @@
  */
 
 #define _USE_MATH_DEFINES
-
 #include "Constants.h"
 #include "Transform.h"
 #include "Volume.h"
@@ -58,8 +57,8 @@ namespace Cyclone
 
             p.State[0]  = 2.0f * displayVolume.Front() / displayVolume.Width;
             p.State[5]  = 2.0f * displayVolume.Front() / displayVolume.Height;
-            p.State[8]  = -(displayVolume.Left() + displayVolume.Right()) / displayVolume.Width;
-            p.State[9]  = -(displayVolume.Bottom() + displayVolume.Top()) / displayVolume.Height;
+            p.State[8]  = (displayVolume.Left() + displayVolume.Right()) / displayVolume.Width;
+            p.State[9]  = (displayVolume.Bottom() + displayVolume.Top()) / displayVolume.Height;
             p.State[10] = -(displayVolume.Back() + displayVolume.Front()) / displayVolume.Depth;
             p.State[11] = -1.0f;
             p.State[14] = -2.0f * displayVolume.Front() * displayVolume.Back() / displayVolume.Depth;
@@ -72,17 +71,13 @@ namespace Cyclone
         }
         Transform Transform::PerspectiveProjection(float fov, float aspect, float znear, float zfar)
         {
-            float yScale = 1.0f / tan(fov * Constants::Pi / 360.0);
-            float xScale = yScale / aspect;
-
-            float hWidth = znear / xScale;
-            float hHeight = znear / yScale;
+            float hHeight = znear * tan(fov * Constants::Pi / 360.0);
+            float hWidth = hHeight * aspect;
 
             Vector3 position(-hWidth, -hHeight, znear);
             Vector3 size(2.0f * hWidth, 2.0f * hHeight, zfar - znear);
 
-            const Volume boundingVolume(position, size);
-            return PerspectiveProjection(boundingVolume);
+            return PerspectiveProjection(Volume(position, size));
         }
         Transform Transform::Rotation(const Vector3& angles)
         {
