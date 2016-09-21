@@ -52,8 +52,8 @@ class Program : public BasicRenderer
 
             Text
                 .Text("Testing!")
-                .FillColor(Color4::Green)
 
+                .Color(Color4::Green)
                 .Scale(0.1f, 0.1f)
                 .Position(128, 512);
 

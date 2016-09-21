@@ -53,10 +53,10 @@ class Program : public BasicRenderer
 
             string svgString = "M100, 180 L40, 10 L190, 120 L10, 120 L160, 10 z";
             Path
-                .FillColor(Color4::Blue)
                 .Path(svgString)
                 .StrokeWidth(6.5f)
 
+                .Color(Color4::Blue)
                 .Scale(4)
                 .Position(128, 128);
 
