@@ -15,6 +15,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        class FrameBuffer;
         class Scene3D;
         class ShaderPipeline;
     }
@@ -64,6 +65,7 @@ namespace Renderers
             GPU*                Renderer;
             ShaderPipeline*     RenderPipeline;
             Scene3D*            RenderScene;
+            FrameBuffer*        RenderTarget;
             Window3D*           RenderWindow;
             string              Title;
 
@@ -77,6 +79,12 @@ namespace Renderers
 
             
             /** INITIALIZATION UTILITIES **/
+            /// <summary> Initializes the framebuffer object that serves as the rendering target. </summary>
+            /// <remarks>
+            ///     This method gets called at program startup and whenever window resizing events are triggered via the 
+            ///     <see cref="CreateSizedResources"/> method. 
+            /// </remarks>            
+            RendererAPI virtual void CreateRenderTarget();
             /// <summary> Initializes the 3D rendering window that holds all rendered content on the desktop. </summary>
             RendererAPI virtual void CreateRenderingWindow();
             /// <summary> Initializes any resources related to rendering 3D scenes of geometric primitives. </summary>
@@ -85,13 +93,22 @@ namespace Renderers
             ///     to add new geometry to the stored scene.
             /// </remarks>
             RendererAPI virtual void CreateSceneResources();
-
+            /// <summary> Initializes the rendering pipeline containing the shader programs used to render 3D geometry. </summary>
             RendererAPI virtual void CreateShaderPipeline();
             /// <summary> Initializes any resources that depend on the size of the size of the rendering window. </summary>
             /// <remarks>
-            ///     This base implementation initializes both the view and projection transformation matrices.
+            ///     This base implementation calls the methods <see cref="CreateRenderTarget"/> and <see cref="CreateTransformations"/> 
+            ///     to initialize resources that depend explicitly on the size of the rendering window. This method is 
+            ///     also called in response to window resizing events to ensure that these resources are proportioned 
+            ///     correctly.
             /// </remarks>
             RendererAPI virtual void CreateSizedResources();
+            /// <summary> Initializes the projection and view transformation matrices that are used to create 3D environments on 2D computer monitors. </summary
+            /// <remarks>
+            ///     This method gets called at program startup and whenever window resizing events are triggered via the 
+            ///     <see cref="CreateSizedResources"/> method.
+            /// </remarks>
+            RendererAPI virtual void CreateTransformations();
             /// <summary> Initializes all rendering resources. </summary>
             /// <remarks>
             ///     This method summarily calls all other initialization methods. In order, this includes: rendering window, 
@@ -107,6 +124,7 @@ namespace Renderers
             /// <summary> Updates any geometry or scene-related resources while rendering. </summary>
             /// <remarks> This method gets called once near the beginning of each event loop iteration. </remarks>
             RendererAPI virtual void UpdateScene();
+
 
 
             

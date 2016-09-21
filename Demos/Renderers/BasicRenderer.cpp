@@ -3,6 +3,7 @@
 #include "GPU.h"
 #include "Window3D.h"
 
+#include "Buffers/FrameBuffer.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
@@ -17,8 +18,9 @@ namespace Renderers
         _canContinue(true),
         ClearColor(Color4::Gray),
         Renderer(nullptr),
-        RenderScene(nullptr),
         RenderPipeline(nullptr),
+        RenderScene(nullptr),
+        RenderTarget(nullptr),
         RenderWindow(nullptr),
         Title(title)
     {
@@ -35,6 +37,7 @@ namespace Renderers
     {
         if (RenderScene)    { delete RenderScene; }
         if (RenderPipeline) { delete RenderPipeline; }
+        if (RenderTarget)   { delete RenderTarget; }
         if (RenderWindow)   { delete RenderWindow; }
         if (Renderer)       { delete Renderer; }
 
@@ -60,6 +63,14 @@ namespace Renderers
 
 
     /** INITIALIZATION UTILITIES **/
+    void BasicRenderer::CreateRenderTarget()
+    {
+        if (RenderTarget)
+            delete RenderTarget;
+
+        RenderTarget = new FrameBuffer(RenderWindow->ClientArea().Scale());
+        Renderer->RenderTarget(RenderTarget);
+    }
     void BasicRenderer::CreateRenderingWindow()
     {
         RenderWindow = new Window3D(Area(0, 0, 1024, 960), Title);
@@ -79,6 +90,11 @@ namespace Renderers
         Renderer->RenderPipeline(RenderPipeline);
     }
     void BasicRenderer::CreateSizedResources()
+    {
+        CreateRenderTarget();
+        CreateTransformations();
+    }
+    void BasicRenderer::CreateTransformations()
     {
         Area clientArea = RenderWindow->ClientArea();
         Transform view = Transform::Translation(Vector3(-clientArea.Scale() / 2.0f, -clientArea.Height / 2.0f));
