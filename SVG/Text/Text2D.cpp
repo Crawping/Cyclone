@@ -1,5 +1,8 @@
-#include "Text/Text2D.h"
+#include "GPU.h"
 #include "NVPR.h"
+#include "GL/OpenGL.h"
+#include "Pipelines/GraphicsPipeline.h"
+#include "Text/Text2D.h"
 
 
 
@@ -52,8 +55,12 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void Text2D::Cover() const
+        void Text2D::Cover(const GPU* gpu) const
         {
+            int varID = glGetUniformLocation(gpu->RenderPipeline()->ID(), "InputColor");
+            if (varID != -1)
+                glUniform4f(varID, FillColor().R, FillColor().G, FillColor().B, FillColor().A);
+
             nvCoverFillPathInstanced
             (
                 _text.size(),
@@ -66,7 +73,7 @@ namespace Cyclone
             );
         }
 
-        void Text2D::Stencil() const
+        void Text2D::Stencil(const GPU* gpu) const
         {
             nvStencilFillPathInstanced
             (
@@ -80,5 +87,6 @@ namespace Cyclone
                 _kerning.ToArray()
             );
         }
+
     }
 }

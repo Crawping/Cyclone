@@ -1,5 +1,7 @@
-#include "Geometry/Path2D.h"
+#include "GPU.h"
 #include "NVPR.h"
+#include "Geometry/Path2D.h"
+#include "Pipelines/GraphicsPipeline.h"
 
 
 
@@ -51,21 +53,24 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void Path2D::Render() const
+        void Path2D::Render(const GPU* gpu) const
         {
             nvMatrixLoadf(TransformMatrices::ModelView, World().ToArray());
-
-            Stencil();
-            Cover();
+            Stencil(gpu);
+            Cover(gpu);
         }
 
 
         /** PROTECTED UTILITIES **/
-        void Path2D::Cover() const
+        void Path2D::Cover(const GPU* gpu) const
         {
+            int varID = glGetUniformLocation(gpu->RenderPipeline()->ID(), "InputColor");
+            if (varID != -1)
+                glUniform4f(varID, FillColor().R, FillColor().G, FillColor().B, FillColor().A);
+
             nvCoverFillPath(ID(), CoverMode());
         }
-        void Path2D::Stencil() const
+        void Path2D::Stencil(const GPU* gpu) const
         {
             nvStencilFillPath(ID(), FillMode(), 0x1F);
         }

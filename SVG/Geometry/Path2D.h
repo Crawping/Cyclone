@@ -52,12 +52,12 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                SVGAPI void Render() const override;
+                SVGAPI void Render(const GPU* gpu) const override;
 
             protected:
 
-                SVGAPI virtual void Cover()     const;
-                SVGAPI virtual void Stencil()   const;
+                SVGAPI virtual void Cover(const GPU* gpu)     const;
+                SVGAPI virtual void Stencil(const GPU* gpu)   const;
 
 
             //private:
