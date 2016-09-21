@@ -47,29 +47,32 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
+            glDisable(GL_CULL_FACE);
 
             nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixOrtho
+            nvMatrixFrustum
             (
                 TransformMatrices::Projection,
                  0, RenderWindow->Width(),
                  0, RenderWindow->Height(),
-                -1, 1
+                 1, 1000
             );
 
             string svgString = "M100, 180 L40, 10 L190, 120 L10, 120 L160, 10 z";
             Path
                 .FillColor(Color4::Blue)
                 .Path(svgString)
-                .StrokeWidth(6.5f);
+                .StrokeWidth(6.5f)
 
-            Path
-                .Scale(0.5f, 0.5f)
-                .Position(128, 128);
+                //.Scale(0.5f, 0.5f)
+                //.Scale(0.01f, 0.01f)
+                .Position(128, 128);                
 
             Text
                 .Text("Testing!")
-                .Scale(0.1f, 0.1f, 0.1f)
+                .FillColor(Color4::Green)
+
+                .Scale(0.1f, 0.1f)
                 .Position(128, 512);
 
             RenderScene->Add(Path);
@@ -84,6 +87,15 @@ class Program : public BasicRenderer
         {
             FBO = new FrameBuffer(RenderWindow->ClientArea().Scale(), TextureFormats::Byte4, TextureFormats::DepthStencil);
             Renderer->RenderTarget(FBO);
+        }
+
+        void UpdateScene() override
+        {
+            static float count = 0.0f;
+            Text.Z(-5 * sin(count) - 6);
+            count += 0.01f;
+
+            BasicRenderer::UpdateScene();
         }
 
 };
