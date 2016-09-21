@@ -17,7 +17,8 @@ namespace Cyclone
             public:
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-
+                /// <summary> Constructs an OpenGL rendering pipeline consisting of only a fragment shader program. </summary>
+                /// <param name="psSource"> A string containing the full or relative path to a fragment shader source code file (e.g. *.psl). </param>
                 OpenGLAPI ShaderPipeline(const string& psSource);
                 /// <summary> Constructs an OpenGL rendering pipeline consisting of only vertex and fragment shading stages. </summary>
 		        OpenGLAPI ShaderPipeline(const string& vsSource, const string& psSource);
