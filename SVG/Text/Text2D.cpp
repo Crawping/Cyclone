@@ -55,9 +55,9 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void Text2D::Cover(const GPU* gpu) const
+        void Text2D::CoverFill(const GPU* gpu) const
         {
-            int varID = glGetUniformLocation(gpu->RenderPipeline()->ID(), "InputColor");
+            int varID = glGetUniformLocation(gpu->RenderPipelineID(), "InputColor");
             if (varID != -1)
                 glUniform4f(varID, Color().R, Color().G, Color().B, Color().A);
 
@@ -73,7 +73,7 @@ namespace Cyclone
             );
         }
 
-        void Text2D::Stencil(const GPU* gpu) const
+        void Text2D::StencilFill(const GPU* gpu) const
         {
             nvStencilFillPathInstanced
             (

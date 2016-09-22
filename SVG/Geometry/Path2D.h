@@ -38,14 +38,12 @@ namespace Cyclone
                 virtual FillModes FillMode()            const { return _fillMode; }
                 virtual uint ID()                       const { return _id; }
                 virtual JoinStyles JoinStyle()          const { return _joinStyle; }
-                virtual const string& Path()            const { return _path; }
                 virtual const Color4& StrokeColor()     const { return _strokeColor; }
-                virtual float StrokeWidth()             const { return 0.0f; }
+                virtual float StrokeWidth()             const { return _strokeWidth; }
 
                 SVGAPI virtual Path2D& CoverMode(CoverModes value);
                 SVGAPI virtual Path2D& FillMode(FillModes value);
                 SVGAPI virtual Path2D& JoinStyle(JoinStyles value);
-                SVGAPI virtual Path2D& Path(const string& value);
                 SVGAPI virtual Path2D& StrokeColor(const Color4& value);
                 SVGAPI virtual Path2D& StrokeWidth(float value);
 
@@ -65,9 +63,11 @@ namespace Cyclone
             protected:
 
                 /** UTILITIES **/
-                SVGAPI virtual void Cover(const GPU* gpu)       const;
-                SVGAPI virtual void Stencil(const GPU* gpu)     const;
-                SVGAPI virtual void Update()                    const;
+                SVGAPI virtual void CoverFill(const GPU* gpu)       const;
+                SVGAPI virtual void CoverStroke(const GPU* gpu)     const;
+                SVGAPI virtual void StencilFill(const GPU* gpu)     const;
+                SVGAPI virtual void StencilStroke(const GPU* gpu)   const;
+                SVGAPI virtual void Update()                        const;
 
             private:
                 
@@ -77,7 +77,6 @@ namespace Cyclone
                 FillModes           _fillMode;
                 uint                _id;
                 JoinStyles          _joinStyle;
-                string              _path;
                 Color4              _strokeColor;
                 float               _strokeWidth;
                 mutable bool        _pathNeedsUpdate;
