@@ -33,7 +33,7 @@
     <ClCompile Include="Imaging\Color4.cpp">
       <Filter>Imaging</Filter>
     </ClCompile>
-    <ClCompile Include="Collections\Vector.cpp">
+    <ClCompile Include="Collections\Vector.h">
       <Filter>Collections</Filter>
     </ClCompile>
   </ItemGroup>

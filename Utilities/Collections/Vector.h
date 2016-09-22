@@ -12,25 +12,28 @@ namespace Cyclone
     namespace Utilities
     {
         template<typename T, uint U = 0>
-        struct Vector : IArray<T>
+        struct Vector : public IArray<T>
         {
             public:
-                uint Count() const override { return U; }
-                uint Rank() const override { return 1; }
+                virtual uint Count()                    const override { return U; }
+                virtual uint Rank()                     const override { return 1; }
 
+                virtual T& operator ()(uint idx)              { return Data[idx]; }
+                virtual const T& operator ()(uint idx)  const { return Data[idx]; }
 
             private:
                 T Data[U];
         };
 
-        template<typename T> struct Vector<T, 0>
+        template<typename T> 
+        struct Vector<T, 0> : public IArray<T>
         {
             public:
 
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of elements present in this array. </summary>
-                uint Count()        const override { return _count; }
-                uint Rank()         const override { return 1; }
+                virtual uint Count()        const override { return _count; }
+                virtual uint Rank()         const override { return 1; }
 
 
 
@@ -153,10 +156,10 @@ namespace Cyclone
                 }
 
             private:
+
                 uint _count;
                 T* Data;
-
-
+                
         };
 
 
