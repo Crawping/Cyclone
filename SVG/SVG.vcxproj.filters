@@ -12,6 +12,12 @@
     <ClInclude Include="Text\Font.h">
       <Filter>Text</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\Rectangle2D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\ControlPoint2D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geometry">
@@ -30,6 +36,9 @@
     </ClCompile>
     <ClCompile Include="Text\Font.cpp">
       <Filter>Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Rectangle2D.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

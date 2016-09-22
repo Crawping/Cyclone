@@ -14,10 +14,19 @@ namespace Cyclone
         class Rectangle2D : public Path2D
         {
             public:
+                            
+                float CornerRadius() const { return _cornerRadius; }
 
+                SVGAPI Rectangle2D& CornerRadius(float value);
+
+
+                SVGAPI Rectangle2D();
 
 
             private:
+
+                float _cornerRadius;
+                
 
         };
     }
