@@ -5,7 +5,7 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "GL/OpenGLAPI.h"
-#include "Math/Array.h"
+#include "Collections/Vector.h"
 
 
 
@@ -39,7 +39,7 @@ namespace Cyclone
                 ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will 
                 ///     return an empty array.
                 /// </remarks>
-                virtual const Array<uint>& Indices()        const = 0;
+                virtual const Vector<uint>& Indices()        const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
                 ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will 
@@ -47,7 +47,7 @@ namespace Cyclone
                 ///     for rendering. However, it may also refer to the control points of either a 3D patch object or 2D path object 
                 ///     (note the lack of a 'c' in the latter; though similarly named, the two are very different things). 
                 /// </remarks>
-                virtual const Array<T>& Points()            const = 0;
+                virtual const Vector<T>& Points()            const = 0;
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual VertexTopologies Topology()         const = 0;
                 /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of 3D geometric shape. </summary>

@@ -68,7 +68,7 @@ namespace Cyclone
                 /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
                 Vector2 UV;
                 
-                Array<VertexAttribute> Layout() const override
+                Vector<VertexAttribute> Layout() const override
                 {
                     return
                     {
@@ -94,7 +94,7 @@ namespace Cyclone
                 /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
                 Vector2 UV;
 
-                Array<VertexAttribute> Layout() const override
+                Vector<VertexAttribute> Layout() const override
                 {
                     return
                     {

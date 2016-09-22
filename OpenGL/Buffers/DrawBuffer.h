@@ -212,11 +212,11 @@ namespace Cyclone
                 }
                 void AddVertices(const IRenderable3D<V>* entity)
                 {
-                    const Array<V>& vertices = entity->Points();
+                    const Vector<V>& vertices = entity->Points();
                     for (uint a = 0; a < vertices.Count(); a++)
                         Vertices.Add(vertices(a));
 
-                    const Array<uint>& indices = entity->Indices();
+                    const Vector<uint>& indices = entity->Indices();
                     for (uint a = 0; a < indices.Count(); a++)
                         Indices.Add(indices(a));
                 }

@@ -4,8 +4,8 @@
 
 #pragma once
 #include "Buffers/GraphicsBuffer.h"
+#include "Collections/Vector.h"
 #include "GL/OpenGLAPI.h"
-#include "Math/Array.h"
 
 
 
@@ -55,7 +55,7 @@ namespace Cyclone
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new vertex array object on the GPU. </summary>
                 /// <param name="layout"> An array of attributes that define the structure of a vertex for the GPU. </param>
-                OpenGLAPI VertexArray(const Array<VertexAttribute>& layout);
+                OpenGLAPI VertexArray(const Vector<VertexAttribute>& layout);
 
                 
                 /** UTILITIES **/
@@ -81,7 +81,7 @@ namespace Cyclone
                 /// <summary> The numeric identifier for the vertex array object (VAO) on the GPU. </summary>
                 uint                    VAOID;
                 /// <summary> An array of vertex attributes that define the structure of a vertex for the GPU. </summary>
-                Array<VertexAttribute>  Layout;
+                Vector<VertexAttribute>  Layout;
 
         };
 

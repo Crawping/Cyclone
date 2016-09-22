@@ -92,13 +92,13 @@ namespace Cyclone
                 /// <summary> Gets a reference to the base color of the entity. </summary>
                 virtual const Color4& Color()                               const override { return _color; }
                 /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
-                virtual const Array<uint>& Indices()                        const override { return _indices; }
+                virtual const Vector<uint>& Indices()                       const override { return _indices; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture2D* Texture()                          const override { return _texture; }
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                         const override { return _topology; }
                 /// <summary> Gets a reference to the vertex array defining the geometry of an entity. </summary>
-		        virtual const Array<T>& Points()			                const override { return _vertices; }
+		        virtual const Vector<T>& Points()                           const override { return _vertices; }
                 /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
                 /// <remarks>
                 ///     The world transformation matrix defines the position, scale, and orientation of an entity in 3D space.
@@ -132,11 +132,11 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 Color4                  _color;
-                Array<uint>             _indices;
+                Vector<uint>            _indices;
                 bool                    _isVisible;
 		        Texture2D*			    _texture;
                 VertexTopologies        _topology;
-		        Array<T>		        _vertices;
+		        Vector<T>		        _vertices;
                 Transform               _world;
 
 
@@ -144,19 +144,19 @@ namespace Cyclone
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new 3D renderable entity composed of white triangles. </summary>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-		        Entity3D(const Array<T>& vertices) :
-                    Entity3D(vertices, Array<uint>(0))
+		        Entity3D(const Vector<T>& vertices) :
+                    Entity3D(vertices, Vector<uint>(0))
 		        {
 
 		        }
 
-                Entity3D(const Array<T>& vertices, const Array<uint>& indices) :
+                Entity3D(const Vector<T>& vertices, const Vector<uint>& indices) :
                     Entity3D(Color4::White, VertexTopologies::Triangles, vertices, indices)
                 {
 
                 }
-                Entity3D(const Color4& color, VertexTopologies topology, const Array<T>& vertices) :
-                    Entity3D(color, topology, vertices, Array<uint>())
+                Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& vertices) :
+                    Entity3D(color, topology, vertices, Vector<uint>())
                 {
 
                 }
@@ -164,7 +164,7 @@ namespace Cyclone
                 /// <param name="color"> The base color of this entity's geometry. </param>
                 /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
                 /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-                Entity3D(const Color4& color, VertexTopologies topology, const Array<T>& vertices, const Array<uint>& indices) :
+                Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& vertices, const Vector<uint>& indices) :
 			        _color(color),
                     _indices(indices),
                     _isVisible(true),

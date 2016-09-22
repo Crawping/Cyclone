@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Math/Array.h"
+#include "Collections/Vector.h"
 
 
 
@@ -23,7 +23,7 @@ namespace Cyclone
         {
             /// <summary> Gets the exact definition of the vertex data structure for use with OpenGL. </summary>
             /// <returns> An array of vertex attributes that define the format of the vertex structure. </returns>
-            virtual Array<VertexAttribute> Layout() const = 0;
+            virtual Vector<VertexAttribute> Layout() const = 0;
             /// <summary> Destroys any rendering- or heap-allocated resources held by the vertex. </summary>
             virtual ~IVertex() { }
         };

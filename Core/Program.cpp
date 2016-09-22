@@ -62,8 +62,8 @@ namespace Cyclone
         PlaneXZ = new Quad3D();
         PlaneXZ->Pitch(-90).Scale(5000, 5000).Translate(0, 50);
 
-        Array<uint> indices;
-        Array<Vertex::Standard> vertices = Geometry::Cube(indices);
+        Vector<uint> indices;
+        Vector<Vertex::Standard> vertices = Geometry::Cube(indices);
         TestShape = new Mesh3D(vertices, indices);
         TestShape->Scale(Vector3(50, 50, 50)).Translate(250, 250, -10);
 

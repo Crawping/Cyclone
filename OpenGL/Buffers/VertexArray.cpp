@@ -10,7 +10,7 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR **/
-        VertexArray::VertexArray(const Array<VertexAttribute>& layout) :
+        VertexArray::VertexArray(const Vector<VertexAttribute>& layout) :
             GraphicsBuffer(BufferTypes::Array),
             Layout(layout),
             VAOID(0)

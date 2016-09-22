@@ -15,7 +15,7 @@ namespace Cyclone
     {
 
         /** PRIMITIVE GENERATORS **/
-        Array<Vertex::Standard> Geometry::Cube()
+        Vector<Vertex::Standard> Geometry::Cube()
         {
             return
             {
@@ -74,7 +74,7 @@ namespace Cyclone
                 Vertex::Standard(-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f),
             };
         }
-        Array<Vertex::Standard> Geometry::Cube(Array<uint>& indices)
+        Vector<Vertex::Standard> Geometry::Cube(Vector<uint>& indices)
         {
             indices =
             {
@@ -125,11 +125,11 @@ namespace Cyclone
                 Vertex::Standard(-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f),
             };
         }
-        Array<Vertex::Standard> Geometry::Cylinder(uint nfaces)
+        Vector<Vertex::Standard> Geometry::Cylinder(uint nfaces)
         {
             nfaces = max(3, nfaces);
 
-            Array<Vertex::Standard> vertices = Array<Vertex::Standard>(6 * nfaces);
+            Vector<Vertex::Standard> vertices = Vector<Vertex::Standard>(6 * nfaces);
             float angleStep = Constants::TwoPi / nfaces;
             float hAngleStep = angleStep / 2.0f;
 
@@ -154,9 +154,9 @@ namespace Cyclone
 
             return vertices;
         }
-        Array<Vertex::Standard> Geometry::Icosahedron()
+        Vector<Vertex::Standard> Geometry::Icosahedron()
         {
-            Array<Vertex::Standard> icosahedron =
+            Vector<Vertex::Standard> icosahedron =
             {
 				Vertex::Standard( 0.525731f,			0,  0.850651f), // 1
 				Vertex::Standard(			0,  0.850651f,  0.525731f), // 4
@@ -242,7 +242,7 @@ namespace Cyclone
             Geometry::CalculateNormals(icosahedron);
             return icosahedron;
         }
-        Array<Vertex::Standard> Geometry::Line()
+        Vector<Vertex::Standard> Geometry::Line()
         {
             return
             {
@@ -250,11 +250,11 @@ namespace Cyclone
                 Vertex::Standard( 0.5f, 0.0f, 0.0f),
             };
         }
-        Array<Vertex::Standard> Geometry::Point()
+        Vector<Vertex::Standard> Geometry::Point()
         {
             return { Vertex::Standard(0.0f, 0.0f, 0.0f) };
         }
-        Array<Vertex::Standard> Geometry::Quad()
+        Vector<Vertex::Standard> Geometry::Quad()
         {
             return
             {
@@ -266,9 +266,9 @@ namespace Cyclone
                 Vertex::Standard( 0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f),
             };
         }
-        Array<Vertex::Standard> Geometry::Sphere(uint n)
+        Vector<Vertex::Standard> Geometry::Sphere(uint n)
         {
-            Array<Vertex::Standard> sphere = Geometry::Tessellate(Geometry::Icosahedron(), n);
+            Vector<Vertex::Standard> sphere = Geometry::Tessellate(Geometry::Icosahedron(), n);
             for (uint a = 0; a < sphere.Count(); a++)
             {
                 sphere(a).Position.Normalize();
@@ -276,7 +276,7 @@ namespace Cyclone
             }
             return sphere;
         }
-        Array<Vertex::Standard> Geometry::Triangle()
+        Vector<Vertex::Standard> Geometry::Triangle()
         {
             return
             {
@@ -289,7 +289,7 @@ namespace Cyclone
 
 
         /** VERTEX UTILITIES **/
-        void Geometry::CalculateNormals(Array<Vertex::Standard>& vertices)
+        void Geometry::CalculateNormals(Vector<Vertex::Standard>& vertices)
         {
             for (uint a = 0; a < vertices.Count(); a += 3)
             {
@@ -302,24 +302,24 @@ namespace Cyclone
                 vertices(a + 2).Normal  = Math::Cross(-diff2, -diff3).Normalize();
             }
         }
-        void Geometry::Rotate(Array<Vertex::Standard>& vertices, const Vector3& rotation)
+        void Geometry::Rotate(Vector<Vertex::Standard>& vertices, const Vector3& rotation)
         {
             Transform r = Transform::Rotation(rotation);
             for (uint a = 0; a < vertices.Count(); a++)
                 vertices(a).Position = Vector3(r * Vector4(vertices(a).Position, 1.0f));
         }
-        void Geometry::Scale(Array<Vertex::Standard>& vertices, const Vector3& scaling)
+        void Geometry::Scale(Vector<Vertex::Standard>& vertices, const Vector3& scaling)
         {
             for (uint a = 0; a < vertices.Count(); a++)
                 vertices(a).Position *= scaling;
         }
-        Array<Vertex::Standard> Geometry::Tessellate(Array<Vertex::Standard> vertices, uint n)
+        Vector<Vertex::Standard> Geometry::Tessellate(Vector<Vertex::Standard> vertices, uint n)
         {
             if (n > 1)
             vertices = Geometry::Tessellate(vertices, n - 1);
 
             uint nvertices = vertices.Count() * 12;
-            Array<Vertex::Standard> result = Array<Vertex::Standard>(nvertices);
+            Vector<Vertex::Standard> result = Vector<Vertex::Standard>(nvertices);
 
             uint idx = 0;
             for (uint a = 0; a < vertices.Count(); a += 3)
@@ -347,7 +347,7 @@ namespace Cyclone
 
             return result;
         }
-        void Geometry::Translate(Array<Vertex::Standard>& vertices, const Vector3& translation)
+        void Geometry::Translate(Vector<Vertex::Standard>& vertices, const Vector3& translation)
         {
             for (uint a = 0; a < vertices.Count(); a++)
                 vertices(a).Position += translation;

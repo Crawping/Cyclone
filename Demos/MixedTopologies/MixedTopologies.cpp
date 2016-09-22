@@ -25,8 +25,8 @@ class Program : public BasicRenderer
             Icosahedron(nullptr),
             Point()
         {
-            Array<uint> indices;
-            Array<Vertex::Standard> vertices = Geometry::Cube(indices);
+            Vector<uint> indices;
+            Vector<Vertex::Standard> vertices = Geometry::Cube(indices);
             Cube = new Mesh3D(vertices, indices);
 
             vertices = Geometry::Icosahedron();
