@@ -5,7 +5,7 @@
 #pragma once
 #include "EnumerationsSVG.h"
 #include "SVGAPI.h"
-#include "Math/Array.h"
+#include "Collections/Vector.h"
 #include "Math/Vector2.h"
 
 
@@ -18,8 +18,8 @@ namespace Cyclone
 
         struct ControlPoint2D
         {
-            PathCommands Command;
-            Array<float> Coordinates;
+            PathCommands    Command;
+            Vector<float>   Coordinates;
         };
     }
 }

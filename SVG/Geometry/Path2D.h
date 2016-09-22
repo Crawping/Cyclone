@@ -5,6 +5,8 @@
 #pragma once
 #include "EnumerationsSVG.h"
 #include "SVGAPI.h"
+#include "Collections/List.h"
+#include "Geometry/ControlPoint2D.h"
 #include "Geometry/Entity3D.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
@@ -19,8 +21,8 @@ namespace Cyclone
         using namespace OpenGL;
 
         class Path2D : 
-            public Entity3D<string>, 
-            public virtual IRenderable2D<string>
+            public Entity3D<float>, 
+            public virtual IRenderable2D<float>
         {
             public:
 
@@ -56,26 +58,32 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                SVGAPI void Add(const ControlPoint2D& point);
+                SVGAPI void Add(const IArray<ControlPoint2D>& points);
                 SVGAPI void Render(const GPU* gpu) const override;
 
             protected:
 
-                /** PROPERTY DATA **/
-                uint        _count;
-                CoverModes  _coverMode;
-                FillModes   _fillMode;
-                uint        _id;
-                JoinStyles  _joinStyle;
-                string      _path;
-                Color4      _strokeColor;
-                float       _strokeWidth;
-
-
-
                 /** UTILITIES **/
-                SVGAPI virtual void Cover(const GPU* gpu)     const;
-                SVGAPI virtual void Stencil(const GPU* gpu)   const;
+                SVGAPI virtual void Cover(const GPU* gpu)       const;
+                SVGAPI virtual void Stencil(const GPU* gpu)     const;
+                SVGAPI virtual void Update()                    const;
 
+            private:
+                
+                /** PROPERTY DATA **/
+                uint                _count;
+                CoverModes          _coverMode;
+                FillModes           _fillMode;
+                uint                _id;
+                JoinStyles          _joinStyle;
+                string              _path;
+                Color4              _strokeColor;
+                float               _strokeWidth;
+                mutable bool        _pathNeedsUpdate;
+
+                List<PathCommands>  Commands;
+                List<float>         Coordinates;
         };
     }
 }
