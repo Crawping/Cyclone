@@ -59,7 +59,8 @@ class Program : public BasicRenderer
             };
 
             Path
-                .StrokeWidth(6.5f)
+                .StrokeColor(Color4::Cyan)
+                .StrokeWidth(100)
 
                 .Color(Color4::Red)
                 .Scale(1)
