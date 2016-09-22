@@ -25,7 +25,7 @@ namespace Cyclone
             else
                 IndexedBuffers[entity.Topology()].Add(entity);
         }
-        void Scene3D::Add(const IRenderable2D<string>& entity)
+        void Scene3D::Add(const IRenderable2D<float>& entity)
         {
             PathBuffer.insert(&entity);
         }
@@ -36,7 +36,7 @@ namespace Cyclone
             else
                 IndexedBuffers[entity.Topology()].Remove(entity);
         }
-        void Scene3D::Remove(const IRenderable2D<string>& entity)
+        void Scene3D::Remove(const IRenderable2D<float>& entity)
         {
             PathBuffer.erase(&entity);
         }
