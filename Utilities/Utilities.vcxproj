@@ -175,6 +175,7 @@
     <ClInclude Include="Imaging\Bitmap.h" />
     <ClInclude Include="Imaging\Color4.h" />
     <ClInclude Include="Interfaces\IArray.h" />
+    <ClInclude Include="Interfaces\ICollection.h" />
     <ClInclude Include="Math\Array.h" />
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Matrix4x4.h" />

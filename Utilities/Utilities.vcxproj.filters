@@ -87,6 +87,9 @@
     <ClInclude Include="Interfaces\IArray.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\ICollection.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
