@@ -4,6 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
+#include "Collections/Vector.h"
 #include "Interfaces/IArray.h"
 
 
@@ -192,6 +193,19 @@ namespace Cyclone
                     _count--;
                 }
                 
+                Vector<T> ToVector() const
+                {
+                    Vector<T> output(Count());
+                    Node<T>* ctNode = _first;
+                    for (uint a = 0; a < Count(); a++)
+                    {
+                        output(a) = ctNode->Value;
+                        ctNode = ctNode->Next;
+                    }
+
+                    return output;
+                }
+
 
 
                 /** OPERATORS **/
