@@ -12,7 +12,6 @@ namespace Cyclone
 
         /** PROPERTIES **/
         Path2D& Path2D::CoverMode(CoverModes value)         { _coverMode = value; return *this; }
-        //Path2D& Path2D::FillColor(const Color4& value)      { _fillColor = value; return *this; }
         Path2D& Path2D::FillMode(FillModes value)           { _fillMode = value; return *this; }
         Path2D& Path2D::JoinStyle(JoinStyles value)
         {
