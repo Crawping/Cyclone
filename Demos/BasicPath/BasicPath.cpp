@@ -10,6 +10,7 @@
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
+#include "Collections/Vector.h"
 #include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
 
@@ -51,15 +52,24 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateSceneResources();
 
-            string svgString = "M100, 180 L40, 10 L190, 120 L10, 120 L160, 10 z";
+            Vector<ControlPoint2D> path =
+            {
+                { PathCommands::Move, { 100, 180 } },
+                { PathCommands::Line, { 40, 10 } },
+                { PathCommands::Line, { 190, 120 } },
+                { PathCommands::Line, { 10, 120 } },
+                { PathCommands::Line, { 160, 10 } },
+                { PathCommands::Close, { } },
+            };
+            
             Path
-                .Path(svgString)
                 .StrokeWidth(6.5f)
 
                 .Color(Color4::Blue)
                 .Scale(1)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, -100));
 
+            Path.Add(path);
             RenderScene->Add(Path);
         }
         void CreateShaderPipeline() override
