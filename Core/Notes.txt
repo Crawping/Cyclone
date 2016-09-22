@@ -27,6 +27,7 @@ TODOS:
 	-- Patch entities
 	-- Implement IUpdatable Interface           (DONE)
 	-- Customizable vertex layouts              (DONE)
+	-- Proper texture samplers
 
 - Buffers
     -- Vertex index buffer                      (DONE)
