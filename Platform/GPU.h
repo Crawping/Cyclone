@@ -124,6 +124,11 @@ namespace Cyclone
                 PlatformAPI List<string> QueryExtensions() const;
 
 
+
+                PlatformAPI int GetUniformID(const string& name) const;
+                PlatformAPI void SetUniform(const string& name, const Color4& value)    const;
+                PlatformAPI void SetUniform(const string& name, const Transform& value) const;
+
             private:
 
                 /** PROPERTY DATA **/

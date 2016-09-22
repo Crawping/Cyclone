@@ -105,7 +105,7 @@ namespace Cyclone
 
 
 
-        /** GENERAL UTILITIES **/        
+        /** GENERAL UTILITIES **/
         string GPU::Report() const
         {
             return ReportErrors();
@@ -133,6 +133,25 @@ namespace Cyclone
                 extensions.Append(string((const char*)glGetStringi(GL_EXTENSIONS, a)));
 
             return extensions;
+        }
+
+
+        int GPU::GetUniformID(const string& name)                           const
+        {
+            return glGetUniformLocation(RenderPipelineID(), name.c_str());
+        }
+
+        void GPU::SetUniform(const string& name, const Color4& value)       const
+        {
+            int varID = GetUniformID(name);
+            if (varID != -1)
+                glUniform4f(varID, value.R, value.G, value.B, value.A);
+        }
+        void GPU::SetUniform(const string& name, const Transform& value)    const
+        {
+            int varID = GetUniformID(name);
+            if (varID != -1)
+                glUniformMatrix4fv(varID, 1, false, value.ToArray());
         }
 
 
