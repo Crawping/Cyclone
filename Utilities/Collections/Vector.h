@@ -80,6 +80,48 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                Vector& Append(const T& value)
+                {
+                    newCount = Count() + 1;
+                    newData = new T[newCount];
+
+                    for (uint a = 0; a < Count(); a++)
+                        newData[a] = Data[a];
+
+                    newData[newCount - 1] = value;
+
+                    Clear();
+                    _count = newCount;
+                    Data = newData;
+                    return *this;
+                }
+                Vector& Append(const IArray<T>& values)
+                {
+                    if (values.IsEmpty()) { return *this; }
+
+                    newCount = Count() + values.Count();
+                    newData = new T[newCount];
+
+                    for (uint a = 0; a < Count(); a++)
+                        newData[a] = Data[a];
+
+                    for (uint a = Count(); a < newCount; a++)
+                        newData[a] = values(a);
+
+                    Clear();
+                    _count = newCount;
+                    Data = newData;
+                    return *this;
+                }
+                Vector& Clear()
+                {
+                    if (Data)
+                        delete[] Data;
+
+                    _count = 0;
+                    Data = nullptr;
+                    return *this;
+                }
                 /// <summary> Sets each element of the array to a single uniform value. </summary>
                 /// <returns> A reference to the modified array for chaining together operations. </returns>
                 /// <param name="value"> The value to which each element of the array should be set. </param>
@@ -95,9 +137,9 @@ namespace Cyclone
 
 
 		        /** OPERATORS **/
-		        T& operator ()(uint idx)			  { return Data[idx]; }
+		        T& operator ()(uint idx)			           { return Data[idx]; }
 
-		        const T& operator ()(uint idx)	const { return Data[idx]; }
+		        const T& operator ()(uint idx)	const override { return Data[idx]; }
 
 		        Vector& operator =(const Vector<T>& other)
 		        {
