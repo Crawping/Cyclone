@@ -78,9 +78,9 @@ namespace Cyclone
         {
             indices =
             {
-				0,	 1,	 2,	 2,	 1,	 3,
-				4,	 5,	 6,	 6,	 5,	 7,
-				8,	 9, 10, 10,  9, 11,
+				 0,	 1,	 2,	 2,	 1,	 3,
+				 4,	 5,	 6,	 6,	 5,	 7,
+				 8,	 9, 10, 10,  9, 11,
 				12, 13, 14, 14, 13, 15,
 				16, 17, 18, 18, 17, 19,
 				20, 21, 22, 22, 21, 23,
@@ -162,17 +162,17 @@ namespace Cyclone
 				Vertex::Standard(			0,  0.850651f,  0.525731f), // 4
 				Vertex::Standard(-0.525731f,			0,  0.850651f), // 0
 
-				Vertex::Standard(			0,  0.850651f,  0.525731f), // 4
-				Vertex::Standard(-0.850651f,  0.525731f,			0), // 9
-				Vertex::Standard(-0.525731f,			0,  0.850651f),	// 0
+				Vertex::Standard(		  0,  0.850651f,  0.525731f), // 4
+				Vertex::Standard(-0.850651f,  0.525731f,	      0), // 9
+				Vertex::Standard(-0.525731f,	      0,  0.850651f),	// 0
 
-				Vertex::Standard(			0,  0.850651f,  0.525731f), // 4
-				Vertex::Standard(			0,  0.850651f, -0.525731f), // 5
+				Vertex::Standard(		  0,  0.850651f,  0.525731f), // 4
+				Vertex::Standard(         0,  0.850651f, -0.525731f), // 5
 				Vertex::Standard(-0.850651f,  0.525731f,			0), // 9
 
-				Vertex::Standard( 0.850651f,  0.525731f,			0), // 8
-				Vertex::Standard(			0,  0.850651f, -0.525731f), // 5
-				Vertex::Standard(			0,  0.850651f,  0.525731f), // 4
+				Vertex::Standard( 0.850651f,    0.525731f,			0), // 8
+				Vertex::Standard(         0,    0.850651f, -0.525731f), // 5
+				Vertex::Standard(         0,    0.850651f,  0.525731f), // 4
 
 				Vertex::Standard( 0.525731f,			0,  0.850651f), // 1
 				Vertex::Standard( 0.850651f,  0.525731f,			0), // 8
