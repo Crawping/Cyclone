@@ -27,7 +27,7 @@ class Program : public BasicRenderer
     public:
 
         Program() : 
-            BasicRenderer("NVIDIA Basic Path Rendering")
+            BasicRenderer("NVIDIA Basic Text Rendering")
         {
             Initialize();
         }
