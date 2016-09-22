@@ -7,6 +7,7 @@
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
+#include "Pipelines/GraphicsPipeline.h"
 #include "Spatial/Transform.h"
 
 
@@ -19,7 +20,7 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
-        class GraphicsPipeline;
+        //class GraphicsPipeline;
         class IRenderableEntity;
         class Scene3D;
     }
@@ -38,15 +39,20 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 /// <summary> Gets a reference to the projection transformation being used by the rendering pipeline. </summary>
-                const Transform& Projection() const { return _projection; }
+                const Transform& Projection()               const { return _projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
-                const GraphicsPipeline* RenderPipeline() const { return _renderPipeline; }
+                const GraphicsPipeline* RenderPipeline()    const { return _renderPipeline; }
+
+                uint RenderPipelineID()                     const { return _renderPipeline ? _renderPipeline->ID() : 0; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
-                const FrameBuffer* RenderTarget() const { return _renderTarget; }
+                const FrameBuffer* RenderTarget()           const { return _renderTarget; }
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
-                const Window3D* RenderWindow() const { return _renderWindow; }
+                const Window3D* RenderWindow()              const { return _renderWindow; }
                 /// <summary> Gets a reference to the view transformation being used by the rendering pipeline. </summary>
-                const Transform& View() const { return _view; }
+                const Transform& View()                     const { return _view; }
+
+
+
 
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
                 PlatformAPI void Projection(const Transform& projection);
