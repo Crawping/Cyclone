@@ -18,8 +18,12 @@ TODOS:
 - 2D Rendering
 	-- Fonts & text                             (PRELIMINARY)
 	-- SVG images                               (IN PROGRESS)
+    -- Rounded rectangles                       (PRELIMINARY)
     -- Color gradients
     -- Enable/disable stroking & filling
+    -- Proper scaling of SVG elements
+        > Pixels
+        > Ems
 
 - 3D Rendering
 	-- Entity instancing
@@ -42,6 +46,7 @@ TODOS:
 	-- Random Number Generator (RNG)
 	-- Generalized Multidimensional Arrays
 	-- Lists									(DONE)
+        > Efficient iteration
     -- Vectors                                  (IN PROGRESS)
     -- Trees
         > BST
