@@ -11,7 +11,7 @@ namespace Cyclone
         string InputControls::Report() const
         {
             std::stringstream msg;
-            msg << "Input Control Flags Set:";
+            msg << "Input Control Chord:";
             if (Value & InputControls::Alt)             { msg << "\n\tAlt"; }
             if (Value & InputControls::CapsLock)        { msg << "\n\tCapsLock"; }
             if (Value & InputControls::Ctrl)            { msg << "\n\tCtrl"; }

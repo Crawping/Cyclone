@@ -19,48 +19,48 @@ namespace Cyclone
             enum Controls : int
             {
                 Nothing     = 0,
-                /* ALT - Represents the left or right 'Alt' keyboard key.
-                 * 
-                 *      'Alt' is equivalent to the 'Mod1Mask' X library key on my home desktop PC.
-                 */
+                /// <summary> The left or right alt keyboard key. </summary>
+                /// <remarks>
+                ///     In Linux, the alt key is equivalent to <see cref="Mod1Mask"/> on my home desktop PC.
+                /// </remarks>
                 Alt         = (1 << 0),
-                /* CAPSLOCK - Represents the 'CapsLock' keyboard toggle.
-                 * 
-                 *      'CapsLock' is equivalent to the 'LockMask' X library key on my home desktop PC.
-                 */
+                /// <summary> The caps lock keyboard key toggle. </summary>
+                /// <remarks>
+                ///     In Linux, the caps lock key is equivalent to <see cref="LockMask"/> on my home desktop PC.
+                /// </remarks>
                 CapsLock    = (1 << 1),
-                /* CTRL - Represents the left or right 'Ctrl' keyboard key.
-                 * 
-                 *      'Ctrl' is equivalent to the 'ControlMask' X library key on my home desktop PC.
-                 */
+                /// <summary> The left or right ctrl keyboard key. </summary>
+                /// <remarks>
+                ///     In Linux, the ctrl key is equivalent to <see cref="ControlMask"/> on my home desktop PC.
+                /// </remarks>
                 Ctrl        = (1 << 2),
                 Hyper       = (1 << 3),
                 Meta        = (1 << 4),
-                /* NUMLOCK - Represents the 'NumLock' keyboard toggle.
-                 * 
-                 *      'NumLock' is equivalent to the 'Mod2Mask' X library key on my home desktop PC.
-                 */
+                /// <summary> The numlock keyboard key toggle. </summary>
+                /// <remarks>
+                ///     In Linux, the numlock key is equivalent to <see cref="Mod2Mask"/> on my home desktop PC.
+                /// </remarks>
                 NumLock     = (1 << 5),
-                /* SHIFT - Represents the left or right 'Shift' keyboard key.
-                 * 
-                 *      'Shift' is equivalent to the 'ShiftMask' X library key on my home desktop PC.
-                 */
+                /// <summary> The left or right shift keyboard key. </summary>
+                /// <remarks>
+                ///     In Linux, the shift key is equivalent to <see cref="ShiftMask"/> on my home desktop PC.
+                /// </remarks>
                 Shift       = (1 << 6),
-                /* SUPER - Represents the 'super' keyboard key, which is typically the 'Windows' key.
-                 * 
-                 *      Super is equivalent to the 'Mod4Mask' X library key mask on my home PC.
-                 */
+                /// <summary> The super keyboard key, which is typically the Windows key. </summary>
+                /// <remarks>
+                ///     In Linux, the super key is equivalent to <see cref="Mod4Mask"/> on my home desktop PC.
+                /// </remarks>
                 Super       = (1 << 7),
                 Switch      = (1 << 8),  
-                /* BUTTON001 - Represents the primary or left mouse button. */
+                /// <summary> The primary or left mouse button. </summary>
                 Button001   = (1 << 9),
-                /* BUTTON002 - Represents the middle mouse button, which is typically the scroll wheel. */
+                /// <summary> The middle mouse button, which is typically the scroll wheel. </summary>
                 Button002   = (1 << 10),
-                /* BUTTON003 - Represents the secondary or right mouse button. */
+                /// <summary> The secondary or right mouse button. </summary>
                 Button003   = (1 << 11),
-                /* BUTTON004 - Represents the mouse scroll wheel being moved in the upward direction. */
+                /// <summary> The scroll wheel rolled in the upward direction. </summary>
                 Button004   = (1 << 12),
-                /* BUTTON005 - Represents the mouse scroll wheel being moved in the downward direction. */
+                /// <summary> The scroll wheel rolled in the downward direction. </summary>
                 Button005   = (1 << 13),
                 Button006   = (1 << 14),
                 Button007   = (1 << 15),
@@ -88,9 +88,9 @@ namespace Cyclone
     
     
             /** UTILITIES **/
-            /* REPORT - Creates a string containing all of the recognized values that have been set on this flag. */
+            /// <summary> Creates a human-readable string containing all of the recognized values that have been set on this flag. </summary>
             PlatformAPI string Report() const;
-            /* TOSTRING - Converts any of the above control enumerators into an equivalent string representation. */
+            /// <summary> Converts a single control enumerator into an equivalent string representation. </summary>
             PlatformAPI string ToString() const;
     
             InputControls& operator &=(const InputControls& other) { Value &= other.Value; return *this; }
