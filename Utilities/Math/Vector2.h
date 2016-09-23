@@ -47,6 +47,7 @@ namespace Cyclone
 
 
             /** UTILITIES **/
+            string ToString() const;
             /* TRANSLATE - Moves the vector relative to its current position. */
             Vector2& Translate(float x, float y) { X += x; Y += y; return *this; }
             /* TRANSLATE - Moves the vector relative to its current position. */
