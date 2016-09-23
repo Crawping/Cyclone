@@ -33,6 +33,7 @@ namespace Cyclone
                 bool IsBordered()                   const { return _isBordered; }
                 /// <summary> Gets whether the window is currently tracking the position of the HID pointer. </summary>
                 bool IsTrackingPointer()            const { return _isTrackingPointer; }
+                /// <summary> Gets the current pointer button chord being pressed. </summary>
                 InputControls PointerButtonState()  const { return _pointerButtonState; }
                 /// <summary> Gets the current (x, y) coordinates of the HID pointer relative to the upper-left corner of the window client area. </summary>
                 /// <remarks> If pointer tracking is disabled, this property will always return a vector of zeros. </remarks>
