@@ -137,6 +137,14 @@ namespace Cyclone
 
 
 		        /** OPERATORS **/
+                //ICollectionIterator<T> begin() override
+                //{
+                //    return ICollectionIterator<T>(this, 0);
+                //}
+                //ICollectionIterator<T> end() override
+                //{
+                //    return ICollectionIterator<T>(this, Count());
+                //}
 		        T& operator ()(uint idx)			           { return Data[idx]; }
 
 		        const T& operator ()(uint idx)	const override { return Data[idx]; }
@@ -154,7 +162,7 @@ namespace Cyclone
 			        return *this;
 		        }
 
-                Vector<T>& operator =(std::initializer_list<T> values)
+                Vector& operator =(std::initializer_list<T> values)
                 {
                     if (values.size() != Count())
                     {
@@ -171,7 +179,7 @@ namespace Cyclone
                     return *this;
                 }
 
-		        Vector<T>& operator =(Vector<T>&& other)
+		        Vector& operator =(Vector<T>&& other)
 		        {
 			        std::swap(_count, other._count);
 			        std::swap(Data, other.Data);
