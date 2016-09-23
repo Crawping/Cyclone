@@ -61,17 +61,20 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void Path2D::Add(const ControlPoint2D& point)
+        Path2D& Path2D::Add(const ControlPoint2D& point)
         {
             Commands.Append(point.Command);
             Coordinates.Append(point.Coordinates);
 
             _pathNeedsUpdate = true;
+            return *this;
         }
-        void Path2D::Add(const IArray<ControlPoint2D>& points)
+        Path2D& Path2D::Add(const IArray<ControlPoint2D>& points)
         {
             for (uint a = 0; a < points.Count(); a++)
                 Add(points(a));
+
+            return *this;
         }
         void Path2D::Render(const GPU* gpu) const
         {

@@ -60,8 +60,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                SVGAPI void Add(const ControlPoint2D& point);
-                SVGAPI void Add(const IArray<ControlPoint2D>& points);
+                SVGAPI Path2D& Add(const ControlPoint2D& point);
+                SVGAPI Path2D& Add(const IArray<ControlPoint2D>& points);
                 SVGAPI void Render(const GPU* gpu) const override;
 
             protected:
