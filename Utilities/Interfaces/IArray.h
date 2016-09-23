@@ -4,7 +4,8 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-
+#include "UtilitiesAPI.h"
+#include "Interfaces/ICollection.h"
 
 
 namespace Cyclone
@@ -13,14 +14,15 @@ namespace Cyclone
     {
         /// <summary> An interface used to designate a collection as having array-like characteristics. </summary>
         /// <typeparam name="T"> The type name of the data elements held by a collection. </typeparam>
-        template<typename T> struct IArray
+        template<typename T> 
+        struct IArray : public virtual ICollection<T>
         {
             public:
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of elements present in an array-like collection. </summary>
-                virtual uint Count()        const = 0;
+                //virtual uint Count()        const = 0;
                 /// <summary> Gets whether an array-like collection is currently empty. </summary>
-                virtual bool IsEmpty()      const { return Count() == 0; }
+                //virtual bool IsEmpty()      const { return Count() == 0; }
                 /// <summary> Gets the number of dimensions of an array-like collection. </summary>
                 virtual uint Rank()         const = 0;
 
@@ -32,7 +34,7 @@ namespace Cyclone
                 /// <summary> Performs linear indexing of the elements of an array-like collection. </summary>
                 /// <returns> A constant reference to the data element that resides at the inputted array index. </returns>
                 /// <param name="idx"> The numeric index of the desired element within the collection. </param>
-                virtual const T& operator ()(uint idx) const = 0;
+                //virtual const T& operator ()(uint idx) const = 0;
         };
 
     }
