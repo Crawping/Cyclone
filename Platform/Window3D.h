@@ -33,7 +33,9 @@ namespace Cyclone
                 bool IsBordered()                   const { return _isBordered; }
                 /// <summary> Gets whether the window is currently tracking the position of the HID pointer. </summary>
                 bool IsTrackingPointer()            const { return _isTrackingPointer; }
+                InputControls PointerButtonState()  const { return _pointerButtonState; }
                 /// <summary> Gets the current (x, y) coordinates of the HID pointer relative to the upper-left corner of the window client area. </summary>
+                /// <remarks> If pointer tracking is disabled, this property will always return a vector of zeros. </remarks>
                 const Vector2& PointerPosition()    const { return _pointerPosition; }
                 /// <summary> Gets the size of this window (including borders) in pixels. </summary>
                 Vector2 Size()                      const { return _displayArea.Scale(); }
@@ -44,6 +46,9 @@ namespace Cyclone
 
                 /// <summary> Sets the title string that is displayed on the upper window border. </summary>
                 PlatformAPI Window3D& Title(const string& title);
+                /// <summary> Sets whether the window is currently tracking pointer behaviors. </summary>
+                /// <remarks> Setting this value to <c>false</c> disables all pointer events associated with the window. </remarks>
+                PlatformAPI Window3D& IsTrackingPointer(bool value);
 
 
 
@@ -52,8 +57,13 @@ namespace Cyclone
                 Action OnClose;
                 /// <summary> An event triggered whenever the size of the window changes. </summary>
                 Action OnResize;
+                /// <summary> An event triggered whenever the pointer moves within the client area of the window. </summary>
+                Event<const PointerMotionEvent&> OnPointerMotion;
 
-                Event<PointerMotion> OnPointerMotion;
+                Event<const PointerClickEvent&> OnButtonPress;
+
+                Event<const PointerClickEvent&> OnButtonRelease;
+
 
 
 
@@ -89,8 +99,18 @@ namespace Cyclone
                 ///     and the 'Window3D' object itself.
                 /// </remarks>
                 InternalAPI void UpdateSize();
-
+                /// <summary> Updates the cached pointer position data. </summary>
+                /// <param name="x"> The new horizontal pixel position of the pointer relative to the left edge of the client area. </param>
+                /// <param name="y"> The new vertical pixel position of the pointer relative to the top edge of the client area. </param>
+                /// <remarks>
+                ///     This method is for internal use only and is a necessary means of communication between the window's event loop 
+                ///     and the 'Window3D' object itself. 
+                /// </remarks>
                 InternalAPI void UpdatePointerPosition(int x, int y);
+
+                InternalAPI void ProcessButtonPress(InputControls button);
+
+                InternalAPI void ProcessButtonRelease(InputControls button);
 
 
                 /** RENDERING UTILITIES **/
@@ -140,6 +160,7 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 Area            _clientArea;
                 Area            _displayArea;
+                InputControls   _pointerButtonState;
                 bool            _isBordered;
                 bool            _isTrackingPointer;
                 Vector2         _pointerPosition;

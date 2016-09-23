@@ -149,6 +149,7 @@
     <ClInclude Include="CGL.h" />
     <ClInclude Include="GPU.h" />
     <ClInclude Include="GraphicsSettings.h" />
+    <ClInclude Include="InputControls.h" />
     <ClInclude Include="NVPR.h" />
     <ClInclude Include="PlatformAPI.h" />
     <ClInclude Include="Window3D.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CGL.cpp" />
+    <ClCompile Include="InputControls.cpp" />
     <ClCompile Include="NVPR.c" />
     <ClCompile Include="Windows\GPU.cpp" />
     <ClCompile Include="Windows\WGL.c" />

@@ -31,6 +31,8 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateRenderingWindow();
             RenderWindow->OnPointerMotion.Register(this, &Program::WhenPointerMoves);
+            RenderWindow->OnButtonPress.Register(this, &Program::WhenButtonPresses);
+            RenderWindow->OnButtonRelease.Register(this, &Program::WhenButtonReleases);
         }
 
         void Initialize() override
@@ -38,10 +40,22 @@ class Program : public BasicRenderer
             CreateRenderingWindow();
         }
 
-        void WhenPointerMoves(PointerMotion evt)
+        void WhenPointerMoves(const PointerMotionEvent& evt)
         {
-            Console::WriteLine("1. Pointer Position:  " + evt.PointerPosition.ToString());
-            Console::WriteLine("2. Pointer Delta:     " + evt.PointerPositionDelta.ToString());
+            Console::WriteLine("1. Pointer Position:    " + evt.PointerPosition.ToString());
+            Console::WriteLine("2. Pointer Delta:       " + evt.PointerPositionDelta.ToString());
+            Console::WriteLine("");
+        }
+        void WhenButtonPresses(const PointerClickEvent& evt)
+        {
+            Console::WriteLine("1. Button Pressed:      " + evt.Button.ToString());
+            Console::WriteLine("2. Button Chord:        " + evt.Chord.Report());
+            Console::WriteLine("");
+        }
+        void WhenButtonReleases(const PointerClickEvent& evt)
+        {
+            Console::WriteLine("1. Button Released:     " + evt.Button.ToString());
+            Console::WriteLine("2. Button Chord:        " + evt.Chord.Report());
             Console::WriteLine("");
         }
 };

@@ -83,17 +83,29 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 
             case WM_LBUTTONDBLCLK:
             case WM_LBUTTONDOWN:
+                win3D->ProcessButtonPress(InputControls::Button001);
+                break;
+
             case WM_LBUTTONUP:
+                win3D->ProcessButtonRelease(InputControls::Button001);
                 break;
 
             case WM_MBUTTONDBLCLK:
             case WM_MBUTTONDOWN:
+                win3D->ProcessButtonPress(InputControls::Button002);
+                break;
+
             case WM_MBUTTONUP:
+                win3D->ProcessButtonRelease(InputControls::Button002);
                 break;
 
             case WM_RBUTTONDBLCLK:
             case WM_RBUTTONDOWN:
+                win3D->ProcessButtonPress(InputControls::Button003);
+                break;
+
             case WM_RBUTTONUP:
+                win3D->ProcessButtonRelease(InputControls::Button003);
                 break;
 
             case WM_XBUTTONDBLCLK:
@@ -161,6 +173,12 @@ namespace Cyclone
 
 
         /** PROPERTIES **/
+        Window3D& Window3D::IsTrackingPointer(bool value)
+        {
+            _isTrackingPointer = value;
+            if (!value) { _pointerPosition = Vector2::Zero; }
+            return *this;
+        }
         Window3D& Window3D::Title(const string& title)
         {
             _title = title;
@@ -259,6 +277,28 @@ namespace Cyclone
 
 
         /** INTERNAL UTILITIES **/
+        void Window3D::ProcessButtonPress(InputControls button)
+        {
+            _pointerButtonState |= button;
+
+            PointerClickEvent evt =
+            {
+                button,
+                PointerButtonState(),
+            };
+            OnButtonPress(evt);
+        }
+        void Window3D::ProcessButtonRelease(InputControls button)
+        {
+            _pointerButtonState &= ~button;
+
+            PointerClickEvent evt =
+            {
+                button,
+                PointerButtonState(),
+            };
+            OnButtonRelease(evt);
+        }
         void Window3D::UpdateSize()
         {
             RECT displayRect;
@@ -290,17 +330,19 @@ namespace Cyclone
         {
             if (!IsTrackingPointer())                                   { return; }
             if (x == PointerPosition().X && y == PointerPosition().Y)   { return; }
-
+            
             Vector2 oldPosition = PointerPosition();
             _pointerPosition = Vector2(x, y);
 
-            PointerMotion evt =
+            PointerMotionEvent evt =
             {
                 PointerPosition() - oldPosition,
                 PointerPosition(),
             };
             OnPointerMotion(evt);
         }
+
+
 
         /** RENDERING UTILITIES **/
         void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext); }
