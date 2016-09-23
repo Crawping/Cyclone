@@ -60,10 +60,10 @@ class Program : public BasicRenderer
 
             Path
                 .StrokeColor(Color4::Cyan)
-                .StrokeWidth(100)
+                .StrokeWidth(1)
 
                 .Color(Color4::Red)
-                .Scale(1)
+                .Scale(3)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, -100));
 
             Path.Add(path);

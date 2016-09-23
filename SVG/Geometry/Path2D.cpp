@@ -101,7 +101,7 @@ namespace Cyclone
         }
         void Path2D::StencilStroke(const GPU* gpu) const
         {
-            nvStencilStrokePath(ID(), 0x1, ~0);
+            nvStencilStrokePath(ID(), 0x1, 0x1F);
         }
         void Path2D::Update() const
         {
