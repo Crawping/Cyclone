@@ -4,15 +4,15 @@ TODOS:
 	-- Fix event structures						(DONE)
     -- Implement support for return variables
 	-- Implement events in Window3D
-		> OnClickPress
-		> OnClickRelease
+		> OnButtonPress                         (DONE)
+		> OnButtonRelease                       (DONE)
 		> OnClose 								(DONE)
 		> OnDefocus
 		> OnFocus
 		> OnKeyPress
 		> OnKeyRelease
 		> OnMinimize
-		> OnPointerMotion
+		> OnPointerMotion                       (DONE)
 		> OnResize								(DONE)
 
 - 2D Rendering
