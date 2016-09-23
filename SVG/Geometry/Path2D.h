@@ -37,15 +37,19 @@ namespace Cyclone
                 virtual CoverModes CoverMode()          const { return _coverMode; }
                 virtual FillModes FillMode()            const { return _fillMode; }
                 virtual uint ID()                       const { return _id; }
+                virtual EndCaps InitialCap()            const { return _initialCap; }
                 virtual JoinStyles JoinStyle()          const { return _joinStyle; }
                 virtual const Color4& StrokeColor()     const { return _strokeColor; }
                 virtual float StrokeWidth()             const { return _strokeWidth; }
+                virtual EndCaps TerminalCap()           const { return _terminalCap; }
 
                 SVGAPI virtual Path2D& CoverMode(CoverModes value);
                 SVGAPI virtual Path2D& FillMode(FillModes value);
+                SVGAPI virtual Path2D& InitialCap(EndCaps value);
                 SVGAPI virtual Path2D& JoinStyle(JoinStyles value);
                 SVGAPI virtual Path2D& StrokeColor(const Color4& value);
                 SVGAPI virtual Path2D& StrokeWidth(float value);
+                SVGAPI virtual Path2D& TerminalCap(EndCaps value);
 
 
 
@@ -76,10 +80,12 @@ namespace Cyclone
                 CoverModes          _coverMode;
                 FillModes           _fillMode;
                 uint                _id;
+                EndCaps             _initialCap;
                 JoinStyles          _joinStyle;
+                mutable bool        _pathNeedsUpdate;
                 Color4              _strokeColor;
                 float               _strokeWidth;
-                mutable bool        _pathNeedsUpdate;
+                EndCaps             _terminalCap;
 
                 List<PathCommands>  Commands;
                 List<float>         Coordinates;

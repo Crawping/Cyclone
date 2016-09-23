@@ -13,20 +13,31 @@ namespace Cyclone
         /** PROPERTIES **/
         Path2D& Path2D::CoverMode(CoverModes value)         { _coverMode = value; return *this; }
         Path2D& Path2D::FillMode(FillModes value)           { _fillMode = value; return *this; }
+        Path2D& Path2D::InitialCap(EndCaps value)
+        {
+            _initialCap = value;
+            _pathNeedsUpdate = true;
+            return *this;
+        }
         Path2D& Path2D::JoinStyle(JoinStyles value)
         {
             _joinStyle = value;
-            nvPathParameteri(ID(), PathParameters::JoinStyle, value);
+            _pathNeedsUpdate = true;
             return *this;
         }
         Path2D& Path2D::StrokeColor(const Color4& value)    { _strokeColor = value; return *this; }
         Path2D& Path2D::StrokeWidth(float value)            
         { 
-            _strokeWidth = value; 
-            nvPathParameterf(ID(), PathParameters::StrokeWidth, value);
+            _strokeWidth = value;
+            _pathNeedsUpdate = true;
             return *this; 
         }
-
+        Path2D& Path2D::TerminalCap(EndCaps value)
+        {
+            _terminalCap = value;
+            _pathNeedsUpdate = true;
+            return *this;
+        }
 
         
         /** CONSTRUCTORS & DESTRUCTOR **/
@@ -101,7 +112,7 @@ namespace Cyclone
         }
         void Path2D::StencilStroke(const GPU* gpu) const
         {
-            nvStencilStrokePath(ID(), 0x1, 0x1F);
+            nvStencilStrokePath(ID(), 0x1, ~0);
         }
         void Path2D::Update() const
         {
@@ -116,6 +127,11 @@ namespace Cyclone
                 NumericFormats::Float, 
                 Coordinates.ToVector().ToArray()
             );
+
+            nvPathParameteri(ID(), PathParameters::JoinStyle, JoinStyle());
+            nvPathParameteri(ID(), PathParameters::InitialEndCap, InitialCap());
+            nvPathParameterf(ID(), PathParameters::StrokeWidth, StrokeWidth());
+            nvPathParameteri(ID(), PathParameters::TerminalEndCap, TerminalCap());
 
             _pathNeedsUpdate = false;
         }

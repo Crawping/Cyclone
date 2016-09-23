@@ -60,7 +60,7 @@ class Program : public BasicRenderer
 
             Path
                 .StrokeColor(Color4::Cyan)
-                .StrokeWidth(1)
+                .StrokeWidth(4)
 
                 .Color(Color4::Red)
                 .Scale(3)
