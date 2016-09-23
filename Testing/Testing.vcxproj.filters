@@ -38,11 +38,11 @@
     <ClCompile Include="Vertex.cpp">
       <Filter>OpenGL\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry.cpp">
-      <Filter>OpenGL\Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="List.cpp">
       <Filter>Utilities\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry3D.cpp">
+      <Filter>OpenGL\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

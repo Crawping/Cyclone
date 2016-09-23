@@ -3,7 +3,7 @@
  */
 
 //#include "Spatial/Geometry.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::OpenGL;
@@ -12,13 +12,13 @@ using namespace Cyclone::Utilities;
 
 
 /** INTERNAL DATA **/
-struct CanonicalGeometry
+struct CanonicalGeometry3D
 {
     public:
         Vector<uint> CubeIndices;
 
 
-        CanonicalGeometry() :
+        CanonicalGeometry3D() :
             CubeIndices(36)
         {
             CubeIndices =
@@ -36,21 +36,21 @@ struct CanonicalGeometry
 
 
 /** FIXTURE DEFINITION **/
-class _Geometry : public testing::Test
+class _Geometry3D : public testing::Test
 {
 
     protected:
-        CanonicalGeometry   Canon;
+        CanonicalGeometry3D   Canon;
 
         Vector<uint>             CubeIndices;
         Vector<Vertex::Standard> CubeVertices;
 
-        _Geometry() :
+        _Geometry3D() :
             Canon(),
             CubeIndices(36),
             CubeVertices(36)
         {
-            CubeVertices = Geometry::Cube(CubeIndices);
+            CubeVertices = Geometry3D::Cube(CubeIndices);
         }
 
 };
@@ -58,7 +58,7 @@ class _Geometry : public testing::Test
 
 
 /** TESTS **/
-TEST_F(_Geometry, CubeTests)
+TEST_F(_Geometry3D, CubeTests)
 {
     ASSERT_EQ(CubeIndices, Canon.CubeIndices);
 }
