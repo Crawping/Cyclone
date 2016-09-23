@@ -6,6 +6,7 @@
 #include "Event.h"
 #include "PlatformAPI.h"
 #include "TypeDefinitions.h"
+#include "WindowEvents.h"
 #include "Spatial/Area.h"
 
 
@@ -23,19 +24,23 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 /// <summary> Gets the pixel size and position of this window (excluding borders) on the display. </summary>
-                const Area& ClientArea()    const { return _clientArea; }
+                const Area& ClientArea()            const { return _clientArea; }
                 /// <summary> Gets the pixel size and position of this window (including borders) on the display. </summary>
-                const Area& DisplayArea()   const { return _displayArea; }
+                const Area& DisplayArea()           const { return _displayArea; }
                 /// <summary> Gets the height of this window (including borders) in pixels. </summary>
-                uint Height()               const { return (uint)_displayArea.Height; }
+                uint Height()                       const { return (uint)_displayArea.Height; }
                 /// <summary> Gets whether this window has any borders or decorations surrounding it. </summary>
-                bool IsBordered()           const { return _isBordered; }
+                bool IsBordered()                   const { return _isBordered; }
+                /// <summary> Gets whether the window is currently tracking the position of the HID pointer. </summary>
+                bool IsTrackingPointer()            const { return _isTrackingPointer; }
+                /// <summary> Gets the current (x, y) coordinates of the HID pointer relative to the upper-left corner of the window client area. </summary>
+                const Vector2& PointerPosition()    const { return _pointerPosition; }
                 /// <summary> Gets the size of this window (including borders) in pixels. </summary>
-                Vector2 Size()              const { return _displayArea.Scale(); }
+                Vector2 Size()                      const { return _displayArea.Scale(); }
                 /// <summary> Gets the title string that is displayed on the upper window border. </summary>
-                const string& Title()       const { return _title; }
+                const string& Title()               const { return _title; }
                 /// <summary> Gets the width of this window (including borders) in pixels. </summary>
-                uint Width()                const { return (uint)_displayArea.Width; }
+                uint Width()                        const { return (uint)_displayArea.Width; }
 
                 /// <summary> Sets the title string that is displayed on the upper window border. </summary>
                 PlatformAPI Window3D& Title(const string& title);
@@ -47,6 +52,8 @@ namespace Cyclone
                 Action OnClose;
                 /// <summary> An event triggered whenever the size of the window changes. </summary>
                 Action OnResize;
+
+                Event<PointerMotion> OnPointerMotion;
 
 
 
@@ -83,6 +90,7 @@ namespace Cyclone
                 /// </remarks>
                 InternalAPI void UpdateSize();
 
+                InternalAPI void UpdatePointerPosition(int x, int y);
 
 
                 /** RENDERING UTILITIES **/
@@ -133,6 +141,8 @@ namespace Cyclone
                 Area            _clientArea;
                 Area            _displayArea;
                 bool            _isBordered;
+                bool            _isTrackingPointer;
+                Vector2         _pointerPosition;
                 string          _title;
 
         };

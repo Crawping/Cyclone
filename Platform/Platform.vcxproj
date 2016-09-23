@@ -152,6 +152,7 @@
     <ClInclude Include="NVPR.h" />
     <ClInclude Include="PlatformAPI.h" />
     <ClInclude Include="Window3D.h" />
+    <ClInclude Include="WindowEvents.h" />
     <ClInclude Include="Windows\WGL.h" />
   </ItemGroup>
   <ItemGroup>

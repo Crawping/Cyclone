@@ -10,6 +10,7 @@
     <ClInclude Include="GPU.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="NVPR.h" />
+    <ClInclude Include="WindowEvents.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">

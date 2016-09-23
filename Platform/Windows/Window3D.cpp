@@ -1,5 +1,6 @@
 #include "Console.h"
 #include "Math/Vector2.h"
+#include "Utilities.h"
 #include "Window3D.h"
 #include "Windows/WGL.h"
 #include <Windows.h>
@@ -62,18 +63,59 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 {
     Window3D* win3D = (Window3D*)GetWindowLong(win, GWLP_USERDATA);
 
-    switch (msg)
+    if (win3D)
     {
-        case WM_CLOSE:      
-            if (win3D) { win3D->Close(); }
-            break;
-        case WM_DESTROY:
-            break;
-        case WM_SIZE:            
-            if (win3D) { win3D->UpdateSize(); }
-            break;
+        switch (msg)
+        {
+            case WM_CLOSE:
+                win3D->Close();
+                break;
+            case WM_DESTROY:
+                break;
 
-        default:            break;
+            case WM_KEYDOWN:
+            case WM_SYSKEYDOWN:
+                break;
+
+            case WM_KEYUP:
+            case WM_SYSKEYUP:
+                break;
+
+            case WM_LBUTTONDBLCLK:
+            case WM_LBUTTONDOWN:
+            case WM_LBUTTONUP:
+                break;
+
+            case WM_MBUTTONDBLCLK:
+            case WM_MBUTTONDOWN:
+            case WM_MBUTTONUP:
+                break;
+
+            case WM_RBUTTONDBLCLK:
+            case WM_RBUTTONDOWN:
+            case WM_RBUTTONUP:
+                break;
+
+            case WM_XBUTTONDBLCLK:
+            case WM_XBUTTONDOWN:
+            case WM_XBUTTONUP:
+                break;
+
+            case WM_MOUSEMOVE:
+                POINTS pts = MAKEPOINTS(lparam);
+                win3D->UpdatePointerPosition(pts.x, pts.y);
+                break;
+
+            case WM_MOUSEWHEEL:
+            case WM_MOUSEHWHEEL:
+                break;
+
+            case WM_SIZE:
+                win3D->UpdateSize();
+                break;
+
+            default:            break;
+        }
     }
 
     return DefWindowProc(win, msg, wparam, lparam);
@@ -129,9 +171,10 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        Window3D::Window3D(const Area& displayArea, const string& title) : 
+        Window3D::Window3D(const Area& displayArea, const string& title) :
             Internals(new _window3D{ NULL, NULL, NULL }),
             _isBordered(true),
+            _isTrackingPointer(true),
             _title(title)
         {
             WNDCLASS winClass;
@@ -243,7 +286,21 @@ namespace Cyclone
 
             OnResize();
         }
+        void Window3D::UpdatePointerPosition(int x, int y)
+        {
+            if (!IsTrackingPointer())                                   { return; }
+            if (x == PointerPosition().X && y == PointerPosition().Y)   { return; }
 
+            Vector2 oldPosition = PointerPosition();
+            _pointerPosition = Vector2(x, y);
+
+            PointerMotion evt =
+            {
+                PointerPosition() - oldPosition,
+                PointerPosition(),
+            };
+            OnPointerMotion(evt);
+        }
 
         /** RENDERING UTILITIES **/
         void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext); }
