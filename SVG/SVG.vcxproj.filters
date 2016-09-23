@@ -18,6 +18,9 @@
     <ClInclude Include="Geometry\ControlPoint2D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\Geometry2D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geometry">
@@ -38,6 +41,9 @@
       <Filter>Text</Filter>
     </ClCompile>
     <ClCompile Include="Geometry\Rectangle2D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Geometry2D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
