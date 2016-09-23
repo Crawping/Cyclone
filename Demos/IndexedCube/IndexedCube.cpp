@@ -2,7 +2,7 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
@@ -20,7 +20,7 @@ class Program : public BasicRenderer
             Cube(nullptr)
         {
             Vector<uint> indices;
-            Vector<Vertex::Standard> vertices = Geometry::Cube(indices);
+            Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
             Cube = new Mesh3D(vertices, indices);
 
             Initialize();

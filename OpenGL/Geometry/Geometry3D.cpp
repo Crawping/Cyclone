@@ -1,6 +1,6 @@
 #include "Constants.h"
 #include "Utilities.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 #include "Spatial/Transform.h"
 
 
@@ -15,7 +15,7 @@ namespace Cyclone
     {
 
         /** PRIMITIVE GENERATORS **/
-        Vector<Vertex::Standard> Geometry::Cube()
+        Vector<Vertex::Standard> Geometry3D::Cube()
         {
             return
             {
@@ -74,7 +74,7 @@ namespace Cyclone
                 Vertex::Standard(-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f),
             };
         }
-        Vector<Vertex::Standard> Geometry::Cube(Vector<uint>& indices)
+        Vector<Vertex::Standard> Geometry3D::Cube(Vector<uint>& indices)
         {
             indices =
             {
@@ -125,7 +125,7 @@ namespace Cyclone
                 Vertex::Standard(-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f),
             };
         }
-        Vector<Vertex::Standard> Geometry::Cylinder(uint nfaces)
+        Vector<Vertex::Standard> Geometry3D::Cylinder(uint nfaces)
         {
             nfaces = max(3, nfaces);
 
@@ -154,7 +154,7 @@ namespace Cyclone
 
             return vertices;
         }
-        Vector<Vertex::Standard> Geometry::Icosahedron()
+        Vector<Vertex::Standard> Geometry3D::Icosahedron()
         {
             Vector<Vertex::Standard> icosahedron =
             {
@@ -239,10 +239,10 @@ namespace Cyclone
 				Vertex::Standard(			0, -0.850651f, -0.525731f), // 7
             };
 
-            Geometry::CalculateNormals(icosahedron);
+            Geometry3D::CalculateNormals(icosahedron);
             return icosahedron;
         }
-        Vector<Vertex::Standard> Geometry::Line()
+        Vector<Vertex::Standard> Geometry3D::Line()
         {
             return
             {
@@ -250,11 +250,11 @@ namespace Cyclone
                 Vertex::Standard( 0.5f, 0.0f, 0.0f),
             };
         }
-        Vector<Vertex::Standard> Geometry::Point()
+        Vector<Vertex::Standard> Geometry3D::Point()
         {
             return { Vertex::Standard(0.0f, 0.0f, 0.0f) };
         }
-        Vector<Vertex::Standard> Geometry::Quad()
+        Vector<Vertex::Standard> Geometry3D::Quad()
         {
             return
             {
@@ -266,9 +266,9 @@ namespace Cyclone
                 Vertex::Standard( 0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f),
             };
         }
-        Vector<Vertex::Standard> Geometry::Sphere(uint n)
+        Vector<Vertex::Standard> Geometry3D::Sphere(uint n)
         {
-            Vector<Vertex::Standard> sphere = Geometry::Tessellate(Geometry::Icosahedron(), n);
+            Vector<Vertex::Standard> sphere = Geometry3D::Tessellate(Geometry3D::Icosahedron(), n);
             for (uint a = 0; a < sphere.Count(); a++)
             {
                 sphere(a).Position.Normalize();
@@ -276,7 +276,7 @@ namespace Cyclone
             }
             return sphere;
         }
-        Vector<Vertex::Standard> Geometry::Triangle()
+        Vector<Vertex::Standard> Geometry3D::Triangle()
         {
             return
             {
@@ -289,7 +289,7 @@ namespace Cyclone
 
 
         /** VERTEX UTILITIES **/
-        void Geometry::CalculateNormals(Vector<Vertex::Standard>& vertices)
+        void Geometry3D::CalculateNormals(Vector<Vertex::Standard>& vertices)
         {
             for (uint a = 0; a < vertices.Count(); a += 3)
             {
@@ -302,21 +302,21 @@ namespace Cyclone
                 vertices(a + 2).Normal  = Math::Cross(-diff2, -diff3).Normalize();
             }
         }
-        void Geometry::Rotate(Vector<Vertex::Standard>& vertices, const Vector3& rotation)
+        void Geometry3D::Rotate(Vector<Vertex::Standard>& vertices, const Vector3& rotation)
         {
             Transform r = Transform::Rotation(rotation);
             for (uint a = 0; a < vertices.Count(); a++)
                 vertices(a).Position = Vector3(r * Vector4(vertices(a).Position, 1.0f));
         }
-        void Geometry::Scale(Vector<Vertex::Standard>& vertices, const Vector3& scaling)
+        void Geometry3D::Scale(Vector<Vertex::Standard>& vertices, const Vector3& scaling)
         {
             for (uint a = 0; a < vertices.Count(); a++)
                 vertices(a).Position *= scaling;
         }
-        Vector<Vertex::Standard> Geometry::Tessellate(Vector<Vertex::Standard> vertices, uint n)
+        Vector<Vertex::Standard> Geometry3D::Tessellate(Vector<Vertex::Standard> vertices, uint n)
         {
             if (n > 1)
-            vertices = Geometry::Tessellate(vertices, n - 1);
+            vertices = Geometry3D::Tessellate(vertices, n - 1);
 
             uint nvertices = vertices.Count() * 12;
             Vector<Vertex::Standard> result = Vector<Vertex::Standard>(nvertices);
@@ -347,7 +347,7 @@ namespace Cyclone
 
             return result;
         }
-        void Geometry::Translate(Vector<Vertex::Standard>& vertices, const Vector3& translation)
+        void Geometry3D::Translate(Vector<Vertex::Standard>& vertices, const Vector3& translation)
         {
             for (uint a = 0; a < vertices.Count(); a++)
                 vertices(a).Position += translation;

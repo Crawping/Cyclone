@@ -6,7 +6,7 @@
 #include "Window3D.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 
 using namespace Renderers;
 using namespace Cyclone::OpenGL;
@@ -19,7 +19,7 @@ class Program : public BasicRenderer
     public:
         Program() : 
             BasicRenderer("Basic Triangle Rendering"),
-            Triangle(Geometry::Triangle())
+            Triangle(Geometry3D::Triangle())
         { 
             Initialize();
         }

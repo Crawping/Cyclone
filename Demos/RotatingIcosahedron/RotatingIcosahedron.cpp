@@ -1,7 +1,7 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
@@ -16,7 +16,7 @@ class Program : public BasicRenderer
     public:
         Program() :
             BasicRenderer("Rotating Cube"),
-            Icosahedron(Geometry::Icosahedron())
+            Icosahedron(Geometry3D::Icosahedron())
         {
             Initialize();
             glEnable(GL_CULL_FACE);

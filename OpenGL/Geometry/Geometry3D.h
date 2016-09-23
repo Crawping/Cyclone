@@ -14,7 +14,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        namespace Geometry
+        namespace Geometry3D
         {
 
             /** PRIMITIVE GENERATORS **/

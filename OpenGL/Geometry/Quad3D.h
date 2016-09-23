@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Geometry/Entity3D.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 
 
 
@@ -17,7 +17,7 @@ namespace Cyclone
 
             public:
                 /** CONSTRUCTOR **/
-                Quad3D() : Entity3D(Geometry::Quad()) { }
+                Quad3D() : Entity3D(Geometry3D::Quad()) { }
 
         };
     }

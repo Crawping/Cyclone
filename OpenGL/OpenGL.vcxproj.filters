@@ -80,9 +80,6 @@
     <ClInclude Include="Buffers\ArrayBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Geometry.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IVertex.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -97,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="Buffers\IndexBuffer.h">
       <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Geometry3D.h">
+      <Filter>Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,11 +136,11 @@
     <ClCompile Include="Geometry\Point3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Geometry.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Buffers\VertexArray.cpp">
       <Filter>Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Geometry3D.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

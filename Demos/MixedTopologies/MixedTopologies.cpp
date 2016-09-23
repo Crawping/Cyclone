@@ -26,13 +26,13 @@ class Program : public BasicRenderer
             Point()
         {
             Vector<uint> indices;
-            Vector<Vertex::Standard> vertices = Geometry::Cube(indices);
+            Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
             Cube = new Mesh3D(vertices, indices);
 
-            vertices = Geometry::Icosahedron();
+            vertices = Geometry3D::Icosahedron();
             Icosahedron = new Mesh3D(vertices);
 
-            vertices = Geometry::Cylinder(64);
+            vertices = Geometry3D::Cylinder(64);
             Cylinder = new Mesh3D(vertices);
 
             Initialize();

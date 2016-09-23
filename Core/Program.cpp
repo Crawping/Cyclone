@@ -10,7 +10,7 @@
 #include "Geometry/Quad3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 
 
 
@@ -63,7 +63,7 @@ namespace Cyclone
         PlaneXZ->Pitch(-90).Scale(5000, 5000).Translate(0, 50);
 
         Vector<uint> indices;
-        Vector<Vertex::Standard> vertices = Geometry::Cube(indices);
+        Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
         TestShape = new Mesh3D(vertices, indices);
         TestShape->Scale(Vector3(50, 50, 50)).Translate(250, 250, -10);
 
