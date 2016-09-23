@@ -11,8 +11,8 @@ class _Vertex : public testing::Test
     protected:
         
         Vertex::Simple _v0;
-        Array<VertexAttribute> _a1;
-        Array<VertexAttribute> _a2;
+        Vector<VertexAttribute> _a1;
+        Vector<VertexAttribute> _a2;
 
 
 
