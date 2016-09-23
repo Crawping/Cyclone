@@ -3,10 +3,9 @@
  */
 
 #pragma once
+#include "Collections/Vector.h"
 #include "Geometry/Vertex.h"
 #include "GL/OpenGLAPI.h"
-#include "Collections/Vector.h"
-#include "Math/Array.h"
 
 
 
