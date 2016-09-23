@@ -20,7 +20,7 @@ TODOS:
 	-- SVG images                               (IN PROGRESS)
     -- Rounded rectangles                       (PRELIMINARY)
     -- Color gradients
-    -- Enable/disable stroking & filling
+    -- Enable/disable stroking & filling        (DONE)
     -- Proper scaling of SVG elements
         > Pixels
         > Ems
@@ -56,6 +56,7 @@ TODOS:
 - Rename
 	-- GraphicsArray		-> ArrayBuffer      (DONE)
 	-- GraphicsMap			-> MapBuffer		(DONE)
+    -- Geometry             -> Geometry3D       (DONE)
 	-- Primitives Folder	-> Geometry         (DONE)
     -- Vertices             -> Vertex           (DONE)
 
