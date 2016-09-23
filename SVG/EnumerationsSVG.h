@@ -23,12 +23,36 @@ struct CoverModes : public Enumerator
 {
     enum Modes
     {
+        /// <summary> Indicates that fragments within the bounding box of a shape should be rasterized. </summary>
         BoundingBox                             = 0x908D,
         BoundingBoxOfBoundingBoxes              = 0x909C,
+        /// <summary> Indicates that fragments within the covex hull of a shape should be rasterized. </summary>
         ConvexHull                              = 0x908B,
     };
 
     constexpr CoverModes(enum Modes m = BoundingBox) : Enumerator(m) { }
+};
+
+struct DashOffsetResets : public Enumerator
+{
+    enum Resets
+    {
+        MoveContinues                           = 0x90B6,
+        MoveResets                              = 0x90B5,
+    };
+};
+
+struct EndCaps : public Enumerator
+{
+    enum Caps
+    {
+        Flat                                    = 0,
+        Round                                   = 0x90A4,
+        Square                                  = 0x90A3,
+        Triangular                              = 0x90A5,
+    };
+
+    constexpr EndCaps(enum Caps c = Flat) : Enumerator(c) { }
 };
 
 struct FillModes : public Enumerator
@@ -63,6 +87,14 @@ struct GenerationModes : public Enumerator
         EyeLinear                               = 0x2400,
         ObjectLinear                            = 0x2401,
         ObjectBoundingBox                       = 0x908A,
+    };
+};
+
+struct GlyphMetrics : public Enumerator
+{
+    enum Metrics
+    {
+
     };
 };
 
