@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "TypeDefinitions.h"
 #include "GL/OpenGLAPI.h"
 
 
@@ -16,7 +17,6 @@ namespace Cyclone
         {
 
             public:
-                using uint = unsigned int;
 
                 /** PROPERTIES **/
                 /// <summary> Gets the unique numeric identifier for this entity on the GPU. </summary>
