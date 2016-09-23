@@ -49,13 +49,13 @@ class Program : public BasicRenderer
         void WhenButtonPresses(const PointerClickEvent& evt)
         {
             Console::WriteLine("1. Button Pressed:      " + evt.Button.ToString());
-            Console::WriteLine("2. Button Chord:        " + evt.Chord.Report());
+            Console::WriteLine("2. " + evt.Chord.Report());
             Console::WriteLine("");
         }
         void WhenButtonReleases(const PointerClickEvent& evt)
         {
             Console::WriteLine("1. Button Released:     " + evt.Button.ToString());
-            Console::WriteLine("2. Button Chord:        " + evt.Chord.Report());
+            Console::WriteLine("2. " + evt.Chord.Report());
             Console::WriteLine("");
         }
 };
