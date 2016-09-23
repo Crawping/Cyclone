@@ -15,7 +15,7 @@ using namespace Cyclone::Utilities;
 struct CanonicalGeometry
 {
     public:
-        Array<uint> CubeIndices;
+        Vector<uint> CubeIndices;
 
 
         CanonicalGeometry() :
@@ -42,8 +42,8 @@ class _Geometry : public testing::Test
     protected:
         CanonicalGeometry   Canon;
 
-        Array<uint>             CubeIndices;
-        Array<Vertex::Standard> CubeVertices;
+        Vector<uint>             CubeIndices;
+        Vector<Vertex::Standard> CubeVertices;
 
         _Geometry() :
             Canon(),
