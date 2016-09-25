@@ -116,9 +116,9 @@ namespace Cyclone
 
                 InternalAPI void ProcessButtonRelease(InputControls button);
 
-                InternalAPI void ProcessKeyPress(InputControls key);
+                InternalAPI void ProcessKeyPress(KeyboardKeys key);
 
-                InternalAPI void ProcessKeyRelease(InputControls key);
+                InternalAPI void ProcessKeyRelease(KeyboardKeys key);
 
 
 
@@ -169,9 +169,10 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 Area            _clientArea;
                 Area            _displayArea;
-                InputControls   _pointerButtonState;
+                KeyboardKeys    _keyboardState;
                 bool            _isBordered;
                 bool            _isTrackingPointer;
+                InputControls   _pointerButtonState;
                 Vector2         _pointerPosition;
                 string          _title;
 

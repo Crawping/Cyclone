@@ -53,6 +53,43 @@ const static int DefaultContextSettings[] =
 
 
 /** INTERNAL FUNCTIONS **/
+
+static KeyboardKeys translateKeys(WPARAM keyCode)
+{
+    switch (keyCode)
+    {
+        case VK_CONTROL:    return KeyboardKeys::Control;
+        case VK_MENU:       return KeyboardKeys::Alt;
+        case VK_SHIFT:      return KeyboardKeys::Shift;
+        case 0x41:          return KeyboardKeys::A;
+        case 0x42:          return KeyboardKeys::B;
+        case 0x43:          return KeyboardKeys::C;
+        case 0x44:          return KeyboardKeys::D;
+        case 0x45:          return KeyboardKeys::E;
+        case 0x46:          return KeyboardKeys::F;
+        case 0x47:          return KeyboardKeys::G;
+        case 0x48:          return KeyboardKeys::H;
+        case 0x49:          return KeyboardKeys::I;
+        case 0x4A:          return KeyboardKeys::J;
+        case 0x4B:          return KeyboardKeys::K;
+        case 0x4C:          return KeyboardKeys::L;
+        case 0x4D:          return KeyboardKeys::M;
+        case 0x4E:          return KeyboardKeys::N;
+        case 0x4F:          return KeyboardKeys::O;
+        case 0x50:          return KeyboardKeys::P;
+        case 0x51:          return KeyboardKeys::Q;
+        case 0x52:          return KeyboardKeys::R;
+        case 0x53:          return KeyboardKeys::S;
+        case 0x54:          return KeyboardKeys::T;
+        case 0x55:          return KeyboardKeys::U;
+        case 0x56:          return KeyboardKeys::V;
+        case 0x57:          return KeyboardKeys::W;
+        case 0x58:          return KeyboardKeys::X;
+        case 0x59:          return KeyboardKeys::Y;
+        case 0x5A:          return KeyboardKeys::Z;
+        default:            return KeyboardKeys::Nothing;
+    }
+}
 /// <summary> Handles any events posted to a specific window on the Windows platform. </summary>
 /// <param name="win"> The handle of the window to which the event is being posted. </param>
 /// <param name="msg"> The type of event that is being posted. </param>
@@ -62,6 +99,8 @@ const static int DefaultContextSettings[] =
 static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPARAM lparam)
 {
     Window3D* win3D = (Window3D*)GetWindowLong(win, GWLP_USERDATA);
+    //InputControls key;
+    KeyboardKeys key;
 
     if (win3D)
     {
@@ -75,10 +114,16 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 
             case WM_KEYDOWN:
             case WM_SYSKEYDOWN:
+                key = translateKeys(wparam);
+                if (key.Count())
+                    win3D->ProcessKeyPress(key);
                 break;
 
             case WM_KEYUP:
             case WM_SYSKEYUP:
+                key = translateKeys(wparam);
+                if (key.Count())
+                    win3D->ProcessKeyRelease(key);
                 break;
 
             case WM_LBUTTONDBLCLK:
@@ -299,6 +344,24 @@ namespace Cyclone
             };
             OnButtonRelease(evt);
         }
+        void Window3D::ProcessKeyPress(KeyboardKeys key)
+        {
+            KeyboardEvent evt =
+            {
+                key,
+                _keyboardState.Press(key),
+            };
+            OnKeyPress(evt);
+        }
+        void Window3D::ProcessKeyRelease(KeyboardKeys key)
+        {
+            KeyboardEvent evt =
+            {
+                key,
+                _keyboardState.Release(key),
+            };
+            OnKeyRelease(evt);
+        }
         void Window3D::UpdateSize()
         {
             RECT displayRect;
@@ -344,7 +407,7 @@ namespace Cyclone
 
 
 
-        /** RENDERING UTILITIES **/
+        /** INTERNAL RENDERING UTILITIES **/
         void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext); }
         void Window3D::Present()            const { SwapBuffers(Internals->DeviceContext); }
         void Window3D::Unbind()             const { wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext); }
