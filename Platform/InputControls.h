@@ -5,6 +5,7 @@
 #pragma once
 #include "Enumerator.h"
 #include "PlatformAPI.h"
+#include <bitset>
 
 
 
@@ -51,7 +52,7 @@ namespace Cyclone
                 ///     In Linux, the super key is equivalent to <see cref="Mod4Mask"/> on my home desktop PC.
                 /// </remarks>
                 Super       = (1 << 7),
-                Switch      = (1 << 8),  
+                Switch      = (1 << 8),
                 /// <summary> The primary or left mouse button. </summary>
                 Button001   = (1 << 9),
                 /// <summary> The middle mouse button, which is typically the scroll wheel. </summary>
@@ -79,22 +80,171 @@ namespace Cyclone
                 Button020   = (1 << 28),
                 Movement    = (1 << 29),
             };
-    
-    
+
+
             /** CONSTRUCTORS **/
             InputControls(enum Controls c = Nothing) : Flag((int)c) { }
             InputControls(int c) : Flag(c) { }
-    
-    
-    
+
+
+
             /** UTILITIES **/
             /// <summary> Creates a human-readable string containing all of the recognized values that have been set on this flag. </summary>
             PlatformAPI string Report() const;
             /// <summary> Converts a single control enumerator into an equivalent string representation. </summary>
             PlatformAPI string ToString() const;
-    
+
             InputControls& operator &=(const InputControls& other) { Value &= other.Value; return *this; }
             InputControls& operator |=(const InputControls& other) { Value |= other.Value; return *this; }
+        };
+
+
+
+        struct KeyboardKeys
+        {
+
+            public:
+                enum Keys
+                {
+                    Nothing = 0,
+
+                    Escape,
+
+                    F1,
+                    F2,
+                    F3,
+                    F4,
+                    F5,
+                    F6,
+                    F7,
+                    F8,
+                    F9,
+                    F10,
+                    F11,
+                    F12,
+
+                    Zero,
+                    One,
+                    Two,
+                    Three,
+                    Four,
+                    Five,
+                    Six,
+                    Seven,
+                    Eight,
+                    Nine,
+
+                    A,
+                    B,
+                    C,
+                    D,
+                    E,
+                    F,
+                    G,
+                    H,
+                    I,
+                    J,
+                    K,
+                    L,
+                    M,
+                    N,
+                    O,
+                    P,
+                    Q,
+                    R,
+                    S,
+                    T,
+                    U,
+                    V,
+                    W,
+                    X,
+                    Y,
+                    Z,
+
+                    Apostrophe,
+                    BackTick,
+                    BracketOpen,
+                    BracketClose,
+                    BackSlash,
+                    Comma,
+                    Dash,
+                    Equals,
+                    ForwardSlash,
+                    Period,
+                    Semicolon,
+
+                    Backspace,
+                    Enter,
+                    Space,
+                    Tab,
+
+                    Alt,
+                    CapsLock,
+                    Control,
+                    Shift,
+                    Super,
+
+                    Delete,
+                    Down,
+                    End,
+                    Home,
+                    Insert,
+                    Left,
+                    Menu,
+                    PageDown,
+                    PageUp,
+                    Pause,
+                    PrintScreen,
+                    Right,
+                    ScrollLock,
+                    Up,
+
+                    AsteriskKP,
+                    DashKP,
+                    EnterKP,
+                    ForwardSlashKP,
+                    NumLock,
+                    PeriodKP,
+                    PlusKP,
+
+                    KP0,
+                    KP1,
+                    KP2,
+                    KP3,
+                    KP4,
+                    KP5,
+                    KP6,
+                    KP7,
+                    KP8,
+                    KP9,
+                };
+
+                /// <summary> Gets the number of keys currently pressed on the keyboard. </summary>
+                uint Count() const { return State.count(); }
+
+
+
+                /** CONSTRUCTOR **/
+                PlatformAPI KeyboardKeys(enum Keys k = Nothing);
+
+
+
+                /** UTILITIES **/
+                PlatformAPI bool IsPressed(enum Keys k) const;
+                PlatformAPI bool IsPressed(const KeyboardKeys& k) const;
+                PlatformAPI KeyboardKeys& Press(enum Keys k);
+                PlatformAPI KeyboardKeys& Press(const KeyboardKeys& k);
+                PlatformAPI KeyboardKeys& Release(enum Keys k);
+                PlatformAPI KeyboardKeys& Release(const KeyboardKeys& k);
+
+                PlatformAPI string Report() const;
+                PlatformAPI string ToString() const;
+
+
+            private:
+
+                std::bitset<128> State;
+
         };
     }
 }
