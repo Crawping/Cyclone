@@ -218,6 +218,11 @@ namespace Cyclone
 
 
         /** PROPERTIES **/
+        Window3D& Window3D::IsTrackingKeyRepeat(bool value)
+        {
+            _isTrackingKeyRepeat = value;
+            return *this;
+        }
         Window3D& Window3D::IsTrackingPointer(bool value)
         {
             _isTrackingPointer = value;
@@ -237,6 +242,8 @@ namespace Cyclone
         Window3D::Window3D(const Area& displayArea, const string& title) :
             Internals(new _window3D{ NULL, NULL, NULL }),
             _isBordered(true),
+            _isTrackingKeyboard(true),
+            _isTrackingKeyRepeat(true),
             _isTrackingPointer(true),
             _title(title)
         {
@@ -324,8 +331,9 @@ namespace Cyclone
         /** INTERNAL UTILITIES **/
         void Window3D::ProcessButtonPress(InputControls button)
         {
-            _pointerButtonState |= button;
+            if (!IsTrackingPointer()) { return; }
 
+            _pointerButtonState |= button;
             PointerClickEvent evt =
             {
                 button,
@@ -335,8 +343,9 @@ namespace Cyclone
         }
         void Window3D::ProcessButtonRelease(InputControls button)
         {
-            _pointerButtonState &= ~button;
+            if (!IsTrackingPointer()) { return; }
 
+            _pointerButtonState &= ~button;
             PointerClickEvent evt =
             {
                 button,
@@ -346,6 +355,9 @@ namespace Cyclone
         }
         void Window3D::ProcessKeyPress(KeyboardKeys key)
         {
+            if ( !IsTrackingKeyboard() || (!IsTrackingKeyRepeat() && _keyboardState.IsPressed(key)) )
+                return;
+            
             KeyboardEvent evt =
             {
                 key,
@@ -355,6 +367,8 @@ namespace Cyclone
         }
         void Window3D::ProcessKeyRelease(KeyboardKeys key)
         {
+            if (!IsTrackingKeyboard()) { return; }
+
             KeyboardEvent evt =
             {
                 key,

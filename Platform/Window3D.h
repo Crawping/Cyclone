@@ -31,6 +31,10 @@ namespace Cyclone
                 uint Height()                       const { return (uint)_displayArea.Height; }
                 /// <summary> Gets whether this window has any borders or decorations surrounding it. </summary>
                 bool IsBordered()                   const { return _isBordered; }
+
+                bool IsTrackingKeyboard()           const { return _isTrackingKeyboard; }
+
+                bool IsTrackingKeyRepeat()          const { return _isTrackingKeyRepeat; }
                 /// <summary> Gets whether the window is currently tracking the position of the HID pointer. </summary>
                 bool IsTrackingPointer()            const { return _isTrackingPointer; }
                 /// <summary> Gets the current pointer button chord being pressed. </summary>
@@ -50,6 +54,8 @@ namespace Cyclone
                 /// <summary> Sets whether the window is currently tracking pointer behaviors. </summary>
                 /// <remarks> Setting this value to <c>false</c> disables all pointer events associated with the window. </remarks>
                 PlatformAPI Window3D& IsTrackingPointer(bool value);
+
+                PlatformAPI Window3D& IsTrackingKeyRepeat(bool value);
 
 
 
@@ -171,7 +177,9 @@ namespace Cyclone
                 Area            _displayArea;
                 KeyboardKeys    _keyboardState;
                 bool            _isBordered;
+                bool            _isTrackingKeyboard;
                 bool            _isTrackingPointer;
+                bool            _isTrackingKeyRepeat;
                 InputControls   _pointerButtonState;
                 Vector2         _pointerPosition;
                 string          _title;
