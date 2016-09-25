@@ -67,22 +67,19 @@ namespace Cyclone
 
                 }
 
-                bool operator ==(const ICollectionIterator<T>& other)   const
+                virtual bool operator ==(const ICollectionIterator<T>& other)   const
                 {
                     return (Index() == other.Index()) && (Collection == other.Collection);
                 }
-                bool operator !=(const ICollectionIterator<T>& other)   const { return !(*this == other); }
+                virtual bool operator !=(const ICollectionIterator<T>& other)   const { return !(*this == other); }
 
-                T& operator *()
-                {
-                    return Collection(Index());
-                }
+                virtual T& operator *()                                               { return *Collection(_index); }
+                virtual const T& operator *(void)                               const { return *Collection(_index); }
 
-                virtual ICollectionIterator& operator ++()
-                {
-                    ++_index;
-                    return *this;
-                }
+
+                virtual const ICollectionIterator& operator ++()                      { ++_index; return *this; }
+                virtual const ICollectionIterator& operator ++(int)                   { _index++; return *this; }
+
 
             protected:
                 uint                    _index;
