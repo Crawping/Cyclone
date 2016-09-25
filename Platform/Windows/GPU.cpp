@@ -47,7 +47,7 @@ namespace Cyclone
         {
             _renderScene = scene;
         }
-        void GPU::View(const Transform& view)
+        void GPU::View(const Camera& view)
         {
             _view = view;
         }
@@ -161,8 +161,8 @@ namespace Cyclone
         {
             PerFrame data =
             {
-                _projection.ToArray(),
-                _view.ToArray(),
+                _projection.ToMatrix4x4(),
+                _view.ToMatrix4x4(),
                 Vector3::One,
                 0,
             };

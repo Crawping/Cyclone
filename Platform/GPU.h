@@ -8,6 +8,7 @@
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
 #include "Pipelines/GraphicsPipeline.h"
+#include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 
 
@@ -20,11 +21,9 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
-        //class GraphicsPipeline;
         class IRenderableEntity;
         class Scene3D;
     }
-
 
 
     namespace Platform
@@ -49,7 +48,7 @@ namespace Cyclone
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* RenderWindow()              const { return _renderWindow; }
                 /// <summary> Gets a reference to the view transformation being used by the rendering pipeline. </summary>
-                const Transform& View()                     const { return _view; }
+                const Camera& View()                        const { return _view; }
 
 
 
@@ -65,7 +64,7 @@ namespace Cyclone
                 /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>
                 PlatformAPI void Scene(Scene3D* scene, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
-                PlatformAPI void View(const Transform& view);
+                PlatformAPI void View(const Camera& view);
 
 
 
@@ -107,12 +106,12 @@ namespace Cyclone
                 /// <summary> Performs any necessary updates to buffer objects currently bound to the GPU. </summary>
                 PlatformAPI void Update();
 
-                
+
 
                 /** GENERAL UTILITIES **/
                 /// <summary> Generates a human-readable string detailing the internal state of the GPU object and any OpenGL errors encountered. </summary>
                 /// <remarks>
-                ///     Calls to this method impose a significant performance penalty and therefore should only be made sparingly, if 
+                ///     Calls to this method impose a significant performance penalty and therefore should only be made sparingly, if
                 ///     at all. Prefer invoking this functionality only while debugging.
                 /// </remarks>
                 PlatformAPI string Report() const;
@@ -125,7 +124,7 @@ namespace Cyclone
 
 
 
-                PlatformAPI int GetUniformID(const string& name) const;
+                PlatformAPI int GetUniformID(const string& name)                        const;
                 PlatformAPI void SetUniform(const string& name, const Color4& value)    const;
                 PlatformAPI void SetUniform(const string& name, const Transform& value) const;
 
@@ -138,19 +137,19 @@ namespace Cyclone
                 FrameBuffer*                _renderTarget;
                 Window3D*                   _renderWindow;
                 Scene3D*                    _renderScene;
-                Transform                   _view;
+                Camera                      _view;
 
 
 
                 /** PRIVATE DATA **/
                 UniformBuffer<PerFrame>     PerFrameBuffer;
-                
+
 
 
                 /** PRIVATE UTILITIES **/
                 void RestoreRenderingDefaults();
                 string ReportErrors() const;
-                
+
         };
     }
 }
