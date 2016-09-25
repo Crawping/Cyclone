@@ -9,8 +9,8 @@ TODOS:
 		> OnClose 								(DONE)
 		> OnDefocus
 		> OnFocus
-		> OnKeyPress
-		> OnKeyRelease
+		> OnKeyPress							(DONE)
+		> OnKeyRelease							(DONE)
 		> OnMinimize
 		> OnPointerMotion                       (DONE)
 		> OnResize								(DONE)
@@ -42,12 +42,14 @@ TODOS:
 
 - Primitive Types
 	-- Arbitrary precision numbers
+	-- Camera class 							(PRELIMINARY)
 	-- Clock
 	-- Random Number Generator (RNG)
+	-- Implement ICollection interface			(PRELIMINARY)
 	-- Generalized Multidimensional Arrays
 	-- Lists									(DONE)
         > Efficient iteration
-    -- Vectors                                  (IN PROGRESS)
+    -- Vectors                                  (PRELIMINARY)
     -- Trees
         > BST
         > Quadtree
@@ -62,7 +64,7 @@ TODOS:
 
 - General
 	-- Integrate exception throws
-    -- Implement HID control interface
+    -- Implement HID control interface			(PRELIMINARY)
     -- MSAA
     -- Display3D class for monitor info
 	-- Copy prevention for critical resources
