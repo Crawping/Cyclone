@@ -14,11 +14,13 @@ namespace Cyclone
         /** PROPERTIES **/
         Vector3 Camera::Forward() const
         {
-            return Vector3(State(2, 0), State(2, 1), State(2, 2)).Normalize();
+            Update();
+            return Vector3(-State(2, 0), -State(2, 1), -State(2, 2)).Normalize();
         }
 
         Vector3 Camera::Right() const
         {
+            Update();
             return Vector3(State(0, 0), State(0, 1), State(0, 2)).Normalize();
         }
 
@@ -59,11 +61,11 @@ namespace Cyclone
         /** UTILITIES **/
         Camera& Camera::Rotate(const Vector3& r)
         {
-            return Orientation(Pitch() + r.X, Yaw() + r.Y, Roll() + r.Z);
+            return Orientation(Orientation() + r);
         }
         Camera& Camera::Translate(const Vector3& t)
         {
-            return Position(X() + t.X, Y() + t.Y, Z() + t.Z);
+            return Position(Position() + t);
         }
 
 
