@@ -56,15 +56,18 @@ namespace Cyclone
                 /** EVENTS **/
                 /// <summary> An event triggered when the window is about to close. </summary>
                 Action OnClose;
-                /// <summary> An event triggered whenever the size of the window changes. </summary>
+                /// <summary> An event triggered after the size of the window changes. </summary>
                 Action OnResize;
-                /// <summary> An event triggered whenever the pointer moves within the client area of the window. </summary>
+                /// <summary> An event triggered after the pointer moves within the client area of the window. </summary>
                 Event<const PointerMotionEvent&> OnPointerMotion;
 
                 Event<const PointerClickEvent&> OnButtonPress;
 
                 Event<const PointerClickEvent&> OnButtonRelease;
 
+                Event<const KeyboardEvent&> OnKeyPress;
+
+                Event<const KeyboardEvent&> OnKeyRelease;
 
 
 
@@ -112,6 +115,11 @@ namespace Cyclone
                 InternalAPI void ProcessButtonPress(InputControls button);
 
                 InternalAPI void ProcessButtonRelease(InputControls button);
+
+                InternalAPI void ProcessKeyPress(InputControls key);
+
+                InternalAPI void ProcessKeyRelease(InputControls key);
+
 
 
                 /** RENDERING UTILITIES **/

@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20160710
  */
 
-#include "Matrix4x4.h"
+#include "Math/Matrix4x4.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;
