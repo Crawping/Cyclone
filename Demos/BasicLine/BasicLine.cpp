@@ -1,7 +1,7 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
-#include "Geometry/Geometry.h"
+#include "Geometry/Geometry3D.h"
 #include "Geometry/Line3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
