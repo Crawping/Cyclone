@@ -189,7 +189,7 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        /// <summary> Calculates the values of each element of the state matrix. </summary>
+        /// <summary> Calculates the value for each element of the state matrix. </summary>
         /// <remarks>
         ///     This method effectively performs matrix multiplication to concatenate different affine transformations and does so in
         ///     a single pass, without actually generating and multiplying the component matrices. However, under that model, the

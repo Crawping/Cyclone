@@ -20,73 +20,73 @@ namespace Cyclone
             public:
                 /** POSITIONAL PROPERTIES **/
                 /// <summary> Gets the translation along the x-axis. </summary>
-                float X()                                       const { return _position.X; }
+                virtual float X()                                       const { return _position.X; }
                 /// <summary> Gets the translation along the y-axis. </summary>
-                float Y()                                       const { return _position.Y; }
+                virtual float Y()                                       const { return _position.Y; }
                 /// <summary> Gets the translation along the z-axis. </summary>
-                float Z()                                       const { return _position.Z; }
+                virtual float Z()                                       const { return _position.Z; }
 
                 /// <summary> Sets the translation along the x-axis. </summary>
-                Transform& X(float x)                                 { UpdateFlag(_position.X != x); _position.X = x; return *this; }
+                virtual Transform& X(float x)                                 { return Position(x, Y(), Z()); }
                 /// <summary> Sets the translation along the y-axis. </summary>
-                Transform& Y(float y)                                 { UpdateFlag(_position.Y != y); _position.Y = y; return *this; }
+                virtual Transform& Y(float y)                                 { return Position(X(), y, Z()); }
                 /// <summary> Sets the translation along the z-axis. </summary>
-                Transform& Z(float z)                                 { UpdateFlag(_position.Z != z); _position.Z = z; return *this; }
+                virtual Transform& Z(float z)                                 { return Position(X(), Y(), z); }
 
                 /// <summary> Gets the (x, y, z) translation components of the transformation matrix. </summary>
-                const Vector3& Position()                       const { return _position; }
+                virtual const Vector3& Position()                       const { return _position; }
                 /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
-                Transform& Position(const Vector3& p)                 { UpdateFlag(_position != p); _position = p; return *this; }
+                virtual Transform& Position(const Vector3& p)                 { UpdateFlag(_position != p); _position = p; return *this; }
                 /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
-                Transform& Position(float x, float y, float z)        { return Position(Vector3(x, y, z)); }
+                virtual Transform& Position(float x, float y, float z)        { return Position(Vector3(x, y, z)); }
 
 
 
                 /** ROTATIONAL PROPERTIES **/
-                /// <summary> Gets the angle of rotation about the x-axis in degrees. </summary>
-                float Pitch()                                   const { return _orientation.X; }
-                /// <summary> Gets the angle of rotation about the z-axis in degrees. </summary>
-                float Roll()                                    const { return _orientation.Z; }
-                /// <summary> Gets the angle of rotation about the y-axis in degrees. </summary>
-                float Yaw()                                     const { return _orientation.Y; }
+                /// <summary> Gets the angle of rotation about the x-axis in radians. </summary>
+                virtual float Pitch()                                   const { return _orientation.X; }
+                /// <summary> Gets the angle of rotation about the z-axis in radians. </summary>
+                virtual float Roll()                                    const { return _orientation.Z; }
+                /// <summary> Gets the angle of rotation about the y-axis in radians. </summary>
+                virtual float Yaw()                                     const { return _orientation.Y; }
 
-                /// <summary> Sets the angle of rotation about the x-axis in degrees. </summary>
-                Transform& Pitch(float p)                             { UpdateFlag(_orientation.X != p); _orientation.X = p; return *this; }
-                /// <summary> Sets the angle of rotation about the z-axis in degrees. </summary>
-                Transform& Roll(float r)                              { UpdateFlag(_orientation.Z != r); _orientation.Z = r; return *this; }
-                /// <summary> Sets the angle of rotation about the y-axis in degrees. </summary>
-                Transform& Yaw(float y)                               { UpdateFlag(_orientation.Y != y); _orientation.Y = y; return *this; }
+                /// <summary> Sets the angle of rotation about the x-axis in radians. </summary>
+                virtual Transform& Pitch(float p)                             { return Orientation(p, Yaw(), Roll()); }
+                /// <summary> Sets the angle of rotation about the z-axis in radians. </summary>
+                virtual Transform& Roll(float r)                              { return Orientation(Pitch(), Yaw(), r); }
+                /// <summary> Sets the angle of rotation about the y-axis in radians. </summary>
+                virtual Transform& Yaw(float y)                               { return Orientation(Pitch(), y, Roll()); }
 
-                /// <summary> Gets the angles of rotation about the (x, y, z) axes in degrees. </summary>
-                const Vector3& Orientation()                    const { return _orientation; }
-                /// <summary> Sets the angles of rotation about the (x, y, z) axes in degrees. </summary>
-                Transform& Orientation(const Vector3& o)              { UpdateFlag(_orientation != o); _orientation = o; return *this; }
-                /// <summary> Sets the angles of rotation about the (x, y, z) axes in degrees. </summary>
-                Transform& Orientation(float p, float y, float r)     { return Orientation(Vector3(p, y, r)); }
+                /// <summary> Gets the angles of rotation about the (x, y, z) axes in radians. </summary>
+                virtual const Vector3& Orientation()                    const { return _orientation; }
+                /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
+                virtual Transform& Orientation(const Vector3& o)              { UpdateFlag(_orientation != o); _orientation = o; return *this; }
+                /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
+                virtual Transform& Orientation(float p, float y, float r)     { return Orientation(Vector3(p, y, r)); }
 
 
 
                 /** SCALING PROPERTIES **/
                 /// <summary> Gets the scaling factor along the x-axis. </summary>
-                float ScaleX()                                  const { return _size.X; }
+                virtual float ScaleX()                                  const { return _size.X; }
                 /// <summary> Gets the scaling factor along the y-axis. </summary>
-                float ScaleY()                                  const { return _size.Y; }
+                virtual float ScaleY()                                  const { return _size.Y; }
                 /// <summary> Gets the scaling factor along the z-axis. </summary>
-                float ScaleZ()                                  const { return _size.Z; }
+                virtual float ScaleZ()                                  const { return _size.Z; }
 
                 /// <summary> Sets the x-axis scaling component of the transformation matrix. </summary>
-                Transform& ScaleX(float x)                            { UpdateFlag(_size.X != x); _size.X = x; return *this; }
+                virtual Transform& ScaleX(float x)                            { return Scale(x, ScaleY(), ScaleZ()); }
                 /// <summary> Sets the y-axis scaling component of the transformation matrix. </summary>
-                Transform& ScaleY(float y)                            { UpdateFlag(_size.Y != y); _size.Y = y; return *this; }
+                virtual Transform& ScaleY(float y)                            { return Scale(ScaleX(), y, ScaleZ()); }
                 /// <summary> Sets the z-axis scaling component of the transformation matrix. </summary>
-                Transform& ScaleZ(float z)                            { UpdateFlag(_size.Z != z); _size.Z = z; return *this; }
+                virtual Transform& ScaleZ(float z)                            { return Scale(ScaleX(), ScaleY(), z); }
 
                 /// <summary> Gets the (x, y, z) scaling components of the transformation matrix. </summary>
-                const Vector3& Scale()                          const { return _size; }
+                virtual const Vector3& Scale()                          const { return _size; }
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
-                Transform& Scale(const Vector3& s)                    { UpdateFlag(_size != s); _size = s; return *this; }
+                virtual Transform& Scale(const Vector3& s)                    { UpdateFlag(_size != s); _size = s; return *this; }
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
-                Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
+                virtual Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
                                 
 
 
@@ -142,12 +142,14 @@ namespace Cyclone
                 /// </returns>
                 UtilitiesAPI static Transform PerspectiveProjection(float fov, float aspect, float znear, float zfar);
                 /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
-                /// <param name="angles"> A three-element vector representing the desired (pitch, yaw, roll) rotations of the transform in degrees. </param>
+                /// <param name="angles"> A three-element vector representing the desired (pitch, yaw, roll) rotations of the transform in radians. </param>
+                /// <remarks> The transform constructed by this method follows the right-hand rule for rotation about any axis. </remarks>
                 UtilitiesAPI static Transform Rotation(const Vector3& angles);
                 /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
-                /// <param name="pitch"> The desired amount of pitch (i.e. rotation about the x-axis) in units of degrees. </param>
-                /// <param name="yaw"> The desired amount of yaw (i.e. rotation about the y-axis) in units of degrees. </param>
-                /// <param name="roll"> The desired amount of roll (i.e. rotation about the z-axis) in units of degrees. </param>
+                /// <param name="pitch"> The rotation about the x-axis in radians. </param>
+                /// <param name="yaw"> The rotation about the y-axis in radians. </param>
+                /// <param name="roll"> The rotation about the z-axis in radians. </param>
+                /// <remarks> The transform constructed by this method follows the right-hand rule for rotation about any axis. </remarks>
                 UtilitiesAPI static Transform Rotation(float pitch, float yaw, float roll);
                 UtilitiesAPI static Transform Scaling(const Vector3& size);
                 UtilitiesAPI static Transform Scaling(float x, float y, float z);
@@ -158,31 +160,31 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
-                UtilitiesAPI string Report() const;
+                UtilitiesAPI virtual string Report()                                const;
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                Transform& Rotate(const Vector3& angles)                          { return Orientation(_orientation + angles); }
+                virtual Transform& Rotate(const Vector3& angles)                          { return Orientation(_orientation + angles); }
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                Transform& Rotate(float p, float y, float r)                      { return Rotate(Vector3(p, y, r)); }
+                virtual Transform& Rotate(float p, float y, float r)                      { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
-                UtilitiesAPI const float* ToArray()                         const { UpdateState(); return State.ToArray(); }
+                UtilitiesAPI virtual const float* ToArray()                         const { UpdateState(); return State.ToArray(); }
 
-                UtilitiesAPI const Matrix4x4& ToMatrix4x4()                 const { UpdateState(); return State; }
+                UtilitiesAPI virtual const Matrix4x4& ToMatrix4x4()                 const { UpdateState(); return State; }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                Transform& Translate(const Vector3& t)                            { return Position(_position + t); }
+                virtual Transform& Translate(const Vector3& t)                            { return Position(_position + t); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                Transform& Translate(float x, float y, float z)                   { return Translate(Vector3(x, y, z)); }
+                virtual Transform& Translate(float x, float y, float z)                   { return Translate(Vector3(x, y, z)); }
 
 
 
                 /** OPERATORS **/
                 /// <summary> Determines whether one transformation is equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the both transformations are identical, or <c>false</c> otherwise. </returns>
-                UtilitiesAPI bool operator ==(const Transform& other)       const;
+                UtilitiesAPI virtual bool operator ==(const Transform& other)       const;
                 /// <summary> Determines whether one transformation is not equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
-                bool operator !=(const Transform& other)                    const { return !(*this == other); }
+                virtual bool operator !=(const Transform& other)                    const { return !(*this == other); }
                 
-                Vector4 operator *(const Vector4& right)                    const { return ToMatrix4x4() * right; }
+                virtual Vector4 operator *(const Vector4& right)                    const { return ToMatrix4x4() * right; }
 
 
 
