@@ -44,6 +44,9 @@
     <ClCompile Include="Geometry3D.cpp">
       <Filter>OpenGL\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Utilities\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
