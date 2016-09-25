@@ -25,15 +25,34 @@ namespace Cyclone
         {
 			UtilitiesAPI constexpr Vector3 Cross(const Vector3& x, const Vector3& y);
 
-            /// <summary> Returns the maximum of three values. </summary>
-            UtilitiesAPI float Max(float x, float y, float z);
-            /// <summary> Returns the maximum of four values. </summary>
-            UtilitiesAPI float Max(float x, float y, float z, float w);
-            /// <summary> Returns the minimum of three values. </summary>
-            UtilitiesAPI float Min(float x, float y, float z);
-            /// <summary> Returns the minimum of four values. </summary>
-            UtilitiesAPI float Min(float x, float y, float z, float w);
 
+            /// <summary> Returns the maximum of three values. </summary>
+            UtilitiesAPI constexpr float Max(float x, float y, float z);
+            /// <summary> Returns the maximum of four values. </summary>
+            UtilitiesAPI constexpr float Max(float x, float y, float z, float w);
+            /// <summary> Returns the minimum of three values. </summary>
+            UtilitiesAPI constexpr float Min(float x, float y, float z);
+            /// <summary> Returns the minimum of four values. </summary>
+            UtilitiesAPI constexpr float Min(float x, float y, float z, float w);
+
+        }
+
+
+        template<typename T> constexpr T clamp(T x, T min, T max)
+        {
+            return (x < min) ? min :
+                (x > max) ? max : x;
+        }
+
+        template<typename T> T wrap(T x, T min, T max)
+        {
+            float notUsed;
+            T range = max - min;
+            return
+                (x < min) ?
+                    max - (modf((min - x) / range, &notUsed) * range) :
+                (x > max) ?
+                    min + (modf((x - max) / range, &notUsed) * range) : x;
         }
 
         /// <summary> Converts any number into an equivalent string representation. </summary>

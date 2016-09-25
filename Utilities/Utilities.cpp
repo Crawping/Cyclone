@@ -36,13 +36,13 @@ namespace Cyclone
 					(u.X * v.Y) - (u.Y * v.X)
 				);
 			}
-            float Max(float x, float y, float z)
+            constexpr float Max(float x, float y, float z)
             {
                 return  (x > y) ?
                             ((x > z) ? x : z) :
                             ((y > z) ? y : z);
             }
-            float Max(float x, float y, float z, float w)
+            constexpr float Max(float x, float y, float z, float w)
             {
                 return  (x > y) ?
                             (x > z) ?
@@ -52,13 +52,13 @@ namespace Cyclone
                                 ((y > w) ? y : w) :
                                 ((z > w) ? z : w);
             }
-            float Min(float x, float y, float z)
+            constexpr float Min(float x, float y, float z)
             {
                 return  (x < y) ?
                             ((x < z) ? x : z ) :
                             ((y < z) ? y : z );
             }
-            float Min(float x, float y, float z, float w)
+            constexpr float Min(float x, float y, float z, float w)
             {
                 return  (x < y) ?
                             (x < z) ?
