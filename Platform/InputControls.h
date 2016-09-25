@@ -241,6 +241,11 @@ namespace Cyclone
                 PlatformAPI string ToString() const;
 
 
+                /** OPERATORS **/
+                PlatformAPI bool operator ==(const KeyboardKeys& other) const;
+                bool operator !=(const KeyboardKeys& other) const { return !(*this == other); }
+
+
             private:
 
                 std::bitset<128> State;

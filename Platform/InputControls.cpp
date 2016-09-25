@@ -130,13 +130,23 @@ namespace Cyclone
             return *this;
         }
 
+        
 
+        /** OPERATORS **/
+        bool KeyboardKeys::operator ==(const KeyboardKeys& other) const
+        {
+            if (Count() != other.Count()) { return false; }
+            return State == other.State;
+        }
+
+
+        /** REPORTING UTILITIES **/
         string KeyboardKeys::Report() const
         {
             std::stringstream msg;
             msg << "Keyboard Control Chord:";
 
-            if (Count() == 0) { return " Nothing"; }
+            if (Count() == 0) { msg << " Nothing"; return msg.str(); }
 
             if (State[KeyboardKeys::Nothing])           { msg << "\n\tNothing"; }
             if (State[KeyboardKeys::Escape])            { msg << "\n\tEscape"; }
