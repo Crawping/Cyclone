@@ -58,7 +58,7 @@ class Program : public BasicRenderer
                 { PathCommands::Close,{ } },
             };
 
-            Path
+            Path.Add(path)
                 .StrokeColor(Color4::Cyan)
                 .StrokeWidth(4)
 
@@ -66,7 +66,6 @@ class Program : public BasicRenderer
                 .Scale(3)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, -100));
 
-            Path.Add(path);
             RenderScene->Add(Path);
         }
         void CreateShaderPipeline() override
@@ -78,13 +77,17 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateTransformations();
 
+            const Matrix4x4& projection = Renderer->Projection().ToMatrix4x4();
+            const Matrix4x4& view = Renderer->View().ToMatrix4x4();
+
             nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixLoadf(TransformMatrices::Projection, (Renderer->Projection() * Renderer->View()).ToArray());
+            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
         }
         void UpdateScene() override
         {
             static float count = 0.0f;
             Path.Z(-250 * sin(count));
+            Path.Roll(count);
             count += 0.02f;
 
             BasicRenderer::UpdateScene();

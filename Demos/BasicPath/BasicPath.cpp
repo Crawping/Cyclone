@@ -72,8 +72,11 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateTransformations();
 
+            const Matrix4x4& projection = Renderer->Projection().ToMatrix4x4();
+            const Matrix4x4& view = Renderer->View().ToMatrix4x4();
+
             nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixLoadf(TransformMatrices::Projection, (Renderer->Projection() * Renderer->View()).ToArray());
+            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
         }
         void UpdateScene() override
         {

@@ -7,6 +7,7 @@
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Spatial/Camera.h"
 
 
 
@@ -98,8 +99,9 @@ namespace Renderers
     void BasicRenderer::CreateTransformations()
     {
         Area clientArea = RenderWindow->ClientArea();
-        Transform view = Transform::Translation(Vector3(-clientArea.Scale() / 2.0f, -clientArea.Height / 2.0f));
-        Transform projection = Transform::PerspectiveProjection
+        View.Translate(Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f));
+
+        Projection = Transform::PerspectiveProjection
         (
             90,
             clientArea.Width / clientArea.Height,
@@ -107,8 +109,8 @@ namespace Renderers
             clientArea.Height
         );
 
-        Renderer->Projection(projection);
-        Renderer->View(view);
+        Renderer->Projection(Projection);
+        Renderer->View(View);
     }
     void BasicRenderer::Initialize()
     {

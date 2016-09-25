@@ -6,6 +6,8 @@
 #include "RendererAPI.h"
 #include "TypeDefinitions.h"
 #include "Imaging/Color4.h"
+#include "Spatial/Camera.h"
+#include "Spatial/Transform.h"
 #include <string>
 
 
@@ -62,12 +64,14 @@ namespace Renderers
 
             /** DATA **/
             Color4              ClearColor;
+            Transform           Projection;
             GPU*                Renderer;
             ShaderPipeline*     RenderPipeline;
             Scene3D*            RenderScene;
             FrameBuffer*        RenderTarget;
             Window3D*           RenderWindow;
             string              Title;
+            Camera              View;
 
 
 
