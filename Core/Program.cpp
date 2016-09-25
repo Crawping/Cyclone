@@ -51,7 +51,7 @@ namespace Cyclone
 
         Renderer        = new GPU();
         RenderWindow    = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window");
-        RenderPipeline  = new ShaderPipeline("../OpenGL/Shaders/Default.vsl", "../OpenGL/Shaders/Default.psl");
+        RenderPipeline  = new ShaderPipeline("../Demos/Renderers/Shaders/BlinnPhong.vsl", "../Demos/Renderers/Shaders/BlinnPhong.psl");
         RenderScene     = new Scene3D();
 
         Renderer->RenderWindow(RenderWindow);
@@ -60,7 +60,7 @@ namespace Cyclone
         CreateSizedResources();
 
         PlaneXZ = new Quad3D();
-        PlaneXZ->Pitch(-90).Scale(5000, 5000).Translate(0, 50);
+        PlaneXZ->Pitch(-90).Scale(5000).Translate(0, 50);
 
         Vector<uint> indices;
         Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
@@ -126,7 +126,8 @@ namespace Cyclone
             delete RenderTarget;
 
         Area clientArea = RenderWindow->ClientArea();
-        View = Transform::Translation(Vector3(-clientArea.Scale() / 2.0f, -clientArea.Height / 2.0f));
+        View.Translate( Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f) );
+
         Projection = Transform::PerspectiveProjection
         (
             90,

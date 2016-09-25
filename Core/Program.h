@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Buffers/VertexBuffer.h"
+#include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 
 
@@ -56,7 +57,7 @@ namespace Cyclone
             Scene3D*        RenderScene;
             FrameBuffer*    RenderTarget;
             Window3D*       RenderWindow;
-            Transform       View;
+            Camera          View;
             Mesh3D*         TestShape;
 
             Quad3D*         PlaneXZ;
