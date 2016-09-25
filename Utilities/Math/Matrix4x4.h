@@ -96,8 +96,8 @@ namespace Cyclone
                 float& operator ()(uint idx);
                 float& operator ()(uint a, uint b);
     
-                Vector4 operator ()(char a, uint b)         const;
-                Vector4 operator ()(uint a, char b)         const;
+                //Vector4 operator ()(char a, uint b)         const;
+                //Vector4 operator ()(uint a, char b)         const;
 
 
 

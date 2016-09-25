@@ -114,16 +114,16 @@ namespace Cyclone
                 return Data[idx];
         }
 
-        Vector4 Matrix4x4::operator ()(char a, uint b)         const
-        {
-            int idx = b * 4;
-            return Vector4(Data[idx], Data[idx + 1], Data[idx + 2], Data[idx + 3]);
-        }
+        //Vector4 Matrix4x4::operator ()(char a, uint b)         const
+        //{
+        //    int idx = b * 4;
+        //    return Vector4(Data[idx], Data[idx + 1], Data[idx + 2], Data[idx + 3]);
+        //}
 
-        Vector4 Matrix4x4::operator ()(uint a, char b)         const
-        {
-            return Vector4(Data[a], Data[a + 4], Data[a + 8], Data[a + 12]);
-        }
+        //Vector4 Matrix4x4::operator ()(uint a, char b)         const
+        //{
+        //    return Vector4(Data[a], Data[a + 4], Data[a + 8], Data[a + 12]);
+        //}
 
 
 
