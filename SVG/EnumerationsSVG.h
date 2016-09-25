@@ -121,6 +121,7 @@ struct PathCommands //: public Enumerator
             CircularArcCCW                          = 0xF8,
             CircularArcCW                           = 0xFA,
             CircularTangentArc                      = 0xFC,
+            /// <summary> Terminates a list of path commands. </summary>
             Close                                   = 0x00,
             ConicCurve                              = 0x1A,
             CubicCurve                              = 0x0C,
@@ -131,10 +132,12 @@ struct PathCommands //: public Enumerator
             HorizontalLine                          = 0x06,
             LargeArcCCW                             = 0x16,
             LargeArcCW                              = 0x18,
+            /// <summary> Draws a straight 2D line from the current path position to the point (x, y). </summary>
             Line                                    = 0x04,
             Move                                    = 0x02,
             QuadraticCurve                          = 0x0A,
 
+            /// <summary> Draws a 2D rectangle using the parameters (x, y, width, height). </summary>
             Rectangle                               = 0xF6,
             RelativeArc                             = 0xFF,
             RelativeConicCurve                      = 0x1B,
@@ -157,6 +160,7 @@ struct PathCommands //: public Enumerator
             RelativeVerticalLine                    = 0x09,
             Restart                                 = 0xF0,
 
+            /// <summary> Draws a 2D rectangle with uniformly rounded corners using the parameters (x, y, width, height, radius). </summary>
             RoundedRectangle                        = 0xE8,
             RoundedRectangle2                       = 0xEA,
             RoundedRectangle4                       = 0xEC,
