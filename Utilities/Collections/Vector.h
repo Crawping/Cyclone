@@ -33,6 +33,8 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of elements present in this array. </summary>
                 virtual uint Count()        const override { return _count; }
+                virtual T& First()          const { return Data[0]; }
+                virtual T& Last()           const { return Data[Count() - 1]; }
                 virtual uint Rank()         const override { return 1; }
 
 
@@ -82,13 +84,13 @@ namespace Cyclone
                 /** UTILITIES **/
                 Vector& Append(const T& value)
                 {
-                    newCount = Count() + 1;
-                    newData = new T[newCount];
+                    uint newCount = Count() + 1;
+                    T* newData = new T[newCount];
 
                     for (uint a = 0; a < Count(); a++)
                         newData[a] = Data[a];
 
-                    newData[newCount - 1] = value;
+                    newData[Count()] = value;
 
                     Clear();
                     _count = newCount;
@@ -99,14 +101,14 @@ namespace Cyclone
                 {
                     if (values.IsEmpty()) { return *this; }
 
-                    newCount = Count() + values.Count();
-                    newData = new T[newCount];
+                    uint newCount = Count() + values.Count();
+                    T* newData = new T[newCount];
 
                     for (uint a = 0; a < Count(); a++)
                         newData[a] = Data[a];
 
                     for (uint a = Count(); a < newCount; a++)
-                        newData[a] = values(a);
+                        newData[a] = values(a - Count());
 
                     Clear();
                     _count = newCount;
@@ -137,14 +139,14 @@ namespace Cyclone
 
 
 		        /** OPERATORS **/
-                //ICollectionIterator<T> begin() override
-                //{
-                //    return ICollectionIterator<T>(this, 0);
-                //}
-                //ICollectionIterator<T> end() override
-                //{
-                //    return ICollectionIterator<T>(this, Count());
-                //}
+                ICollectionIterator<T> begin()
+                {
+                    return ICollectionIterator<T>(this, 0);
+                }
+                ICollectionIterator<T> end()
+                {
+                    return ICollectionIterator<T>(this, Count());
+                }
 		        T& operator ()(uint idx)			           { return Data[idx]; }
 
 		        const T& operator ()(uint idx)	const override { return Data[idx]; }
