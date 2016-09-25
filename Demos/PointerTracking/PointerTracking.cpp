@@ -42,20 +42,20 @@ class Program : public BasicRenderer
 
         void WhenPointerMoves(const PointerMotionEvent& evt)
         {
-            Console::WriteLine("1. Pointer Position:    " + evt.PointerPosition.ToString());
-            Console::WriteLine("2. Pointer Delta:       " + evt.PointerPositionDelta.ToString());
+            Console::WriteLine("1. Pointer Position:    " + evt.Position.ToString());
+            Console::WriteLine("2. Pointer Delta:       " + evt.Delta.ToString());
             Console::WriteLine("");
         }
         void WhenButtonPresses(const PointerClickEvent& evt)
         {
             Console::WriteLine("1. Button Pressed:      " + evt.Button.ToString());
-            Console::WriteLine("2. " + evt.Chord.Report());
+            Console::WriteLine("2. " + evt.State.Report());
             Console::WriteLine("");
         }
         void WhenButtonReleases(const PointerClickEvent& evt)
         {
             Console::WriteLine("1. Button Released:     " + evt.Button.ToString());
-            Console::WriteLine("2. " + evt.Chord.Report());
+            Console::WriteLine("2. " + evt.State.Report());
             Console::WriteLine("");
         }
 };
