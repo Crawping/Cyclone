@@ -31,9 +31,9 @@ namespace Cyclone
                 uint Height()                       const { return (uint)_displayArea.Height; }
                 /// <summary> Gets whether this window has any borders or decorations surrounding it. </summary>
                 bool IsBordered()                   const { return _isBordered; }
-
+                /// <summary> Gets whether the window is currently tracking keyboard events. </summary>
                 bool IsTrackingKeyboard()           const { return _isTrackingKeyboard; }
-
+                /// <summary> Gets whether repeating keyboard events are handled by the window. </summary>
                 bool IsTrackingKeyRepeat()          const { return _isTrackingKeyRepeat; }
                 /// <summary> Gets whether the window is currently tracking the position of the HID pointer. </summary>
                 bool IsTrackingPointer()            const { return _isTrackingPointer; }
@@ -54,7 +54,7 @@ namespace Cyclone
                 /// <summary> Sets whether the window is currently tracking pointer behaviors. </summary>
                 /// <remarks> Setting this value to <c>false</c> disables all pointer events associated with the window. </remarks>
                 PlatformAPI Window3D& IsTrackingPointer(bool value);
-
+                /// <summary> Sets whether the window is currently tracking repeating key presses. </summary>
                 PlatformAPI Window3D& IsTrackingKeyRepeat(bool value);
 
 
@@ -66,13 +66,13 @@ namespace Cyclone
                 Action OnResize;
                 /// <summary> An event triggered after the pointer moves within the client area of the window. </summary>
                 Event<const PointerMotionEvent&> OnPointerMotion;
-
+                /// <summary> An event triggered after a button on the pointer device is pressed. </summary>
                 Event<const PointerClickEvent&> OnButtonPress;
-
+                /// <summary> An event triggered after a pressed button on the pointer device is released. </summary>
                 Event<const PointerClickEvent&> OnButtonRelease;
-
+                /// <summary> An event triggered after a single keyboard key is pressed. </summary>
                 Event<const KeyboardEvent&> OnKeyPress;
-
+                /// <summary> An event triggered after a pressed keyboard key is released. </summary>
                 Event<const KeyboardEvent&> OnKeyRelease;
 
 
