@@ -33,6 +33,8 @@ class Program : public BasicRenderer
             BasicRenderer("NVIDIA Basic Path Rendering")
         {
             Initialize();
+            nvPathStencilDepthOffset(-0.05f, -1);
+            nvPathCoverDepthFunc(GL_ALWAYS);
         }
 
     protected:
@@ -82,6 +84,7 @@ class Program : public BasicRenderer
         {
             static float count = 0.0f;
             Path.Z(-250 * sin(count));
+            Path.Yaw(count);
             count += 0.02f;
 
             BasicRenderer::UpdateScene();
