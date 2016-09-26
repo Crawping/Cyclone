@@ -36,6 +36,9 @@
     <ClCompile Include="Collections\Vector.h">
       <Filter>Collections</Filter>
     </ClCompile>
+    <ClCompile Include="Spatial\Camera.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
@@ -88,6 +91,12 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\ICollection.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Spatial\Camera.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\ITransformation3D.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>

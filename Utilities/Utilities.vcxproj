@@ -163,6 +163,7 @@
     <ClCompile Include="Math\Vector4.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
     <ClCompile Include="Spatial\Border.cpp" />
+    <ClCompile Include="Spatial\Camera.cpp" />
     <ClCompile Include="Spatial\Transform.cpp" />
     <ClCompile Include="Spatial\Volume.cpp" />
     <ClCompile Include="Utilities.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Imaging\Color4.h" />
     <ClInclude Include="Interfaces\IArray.h" />
     <ClInclude Include="Interfaces\ICollection.h" />
+    <ClInclude Include="Interfaces\ITransformation3D.h" />
     <ClInclude Include="Math\Array.h" />
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Matrix4x4.h" />
@@ -185,6 +187,7 @@
     <ClInclude Include="Property.h" />
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
+    <ClInclude Include="Spatial\Camera.h" />
     <ClInclude Include="Spatial\Transform.h" />
     <ClInclude Include="Spatial\Volume.h" />
     <ClInclude Include="TypeDefinitions.h" />
