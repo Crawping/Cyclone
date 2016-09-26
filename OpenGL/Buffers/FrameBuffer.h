@@ -151,7 +151,7 @@ namespace Cyclone
                 /// <param name="color"> The color value to which all attached color buffers will be reset. </param>
                 /// <param name="depth"> The value to which the attached depth buffer will be reset. </param>
                 /// <param name="stencil"> The value to which the attached stencil buffer will be reset. </param>
-                OpenGLAPI void Clear(const Color4& color = Color4::White, float depth = 0.0f, int stencil = 0);
+                OpenGLAPI void Clear(const Color4& color = Color4::White, float depth = 1.0f, int stencil = 0);
                 /// <summary> Generates a human-readable string detailing the current internal state of this object. </summary>
                 OpenGLAPI string Report()   const;
                 
