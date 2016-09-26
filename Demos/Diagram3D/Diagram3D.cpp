@@ -17,6 +17,7 @@
 #include "Imaging/Color4.h"
 #include "Math/Constants.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Text/Text2D.h"
 
 using namespace Cyclone::Platform;
 using namespace Cyclone::SVG;
@@ -40,6 +41,10 @@ class Program : public AdvancedRenderer
     protected:
 
         Path2D          Path;
+        Text2D          BottomLabel;
+        Text2D          LeftLabel;
+        Text2D          RightLabel;
+        Text2D          TopLabel;
 
         Path2D          BackWall;
         Path2D          BottomWall;
@@ -60,8 +65,40 @@ class Program : public AdvancedRenderer
                 .Color(Color4::Blue)
                 .Scale(1)
                 .Position(Vector3(RenderWindow->Size() * Vector2(0.33f, -0.5f), 0.0f));
+
+            BottomLabel
+                .Text("Bottom")
+                .Color(Color4::Yellow)
+
+                .Position(425, 288)
+                .Scale(0.0125f, 0.0125f);
+
+            LeftLabel
+                .Text("Left")
+                .Color(Color4::Yellow)
+
+                .Position(275, 433)
+                .Scale(0.0125f, 0.0125f);
+
+            RightLabel
+                .Text("Right")
+                .Color(Color4::Yellow)
+
+                .Position(600, 433)
+                .Scale(0.0125f, 0.0125f);
             
+            TopLabel
+                .Text("Top")
+                .Color(Color4::Yellow)
+
+                .Position(440, 585)
+                .Scale(0.0125f, 0.0125f);
+
             RenderScene->Add(Path);
+            RenderScene->Add(BottomLabel);
+            RenderScene->Add(LeftLabel);
+            RenderScene->Add(RightLabel);
+            RenderScene->Add(TopLabel);
         }
         void CreateShaderPipeline() override
         {
@@ -70,10 +107,6 @@ class Program : public AdvancedRenderer
         }
         void UpdateScene() override
         {
-            //static float count = 0.0f;
-            //Path.Z(-250 * sin(count));
-            //Path.Yaw(count);
-            //count += 0.02f;
             const Matrix4x4& projection = Renderer->Projection().ToMatrix4x4();
             const Matrix4x4& view = Renderer->View().ToMatrix4x4();
 
