@@ -61,7 +61,7 @@ class Program : public BasicRenderer
 
                 .Color(Color4::Blue)
                 .Scale(1)
-                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, -100));
+                .Position(Vector3(RenderWindow->ClientArea().Scale() / Vector2(2.0f, 3.0f), -100));
 
             RenderScene->Add(Path);
         }
@@ -83,7 +83,7 @@ class Program : public BasicRenderer
         void UpdateScene() override
         {
             static float count = 0.0f;
-            Path.Z(-250 * sin(count));
+            Path.Z(-225 * sin(count));
             Path.Yaw(count);
             count += 0.02f;
 
