@@ -21,17 +21,18 @@ out PixelShaderInput
 } Output;
 
 
-uniform vec3 LightPosition = vec3(-10000, 10000, 20000);
+uniform vec3 LightPosition = vec3(-10, 10, 20);
 
 
 void main(void)
 {
     mat4 worldViewTransform = PerFrameData[0].View * PerEntityData[gl_DrawIDARB].World;
     vec4 viewPosition = worldViewTransform * vec4(Position, 1.0);
+    vec4 lightPosition = PerFrameData[0].View * vec4(LightPosition, 1.0);
     
     Output.EntityIndex  = gl_DrawIDARB;
     Output.ToEye        = -viewPosition.xyz;
-    Output.ToLight      = LightPosition - viewPosition.xyz;
+    Output.ToLight      = LightPosition.xyz - viewPosition.xyz;
     Output.TexUV        = UV;
     Output.WorldNormal  = mat3(worldViewTransform) * Normal;
 
