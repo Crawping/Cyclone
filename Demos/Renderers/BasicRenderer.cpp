@@ -32,6 +32,8 @@ namespace Renderers
         }
 
         Renderer = new GPU();
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
         glEnable(GL_DEPTH_CLAMP);
     }
 
@@ -105,8 +107,8 @@ namespace Renderers
         (
             90,
             clientArea.Width / clientArea.Height,
-            0.01f,
-            clientArea.Height
+            1,
+            4.0f * clientArea.Width
         );
 
         Renderer->Projection(Projection);
