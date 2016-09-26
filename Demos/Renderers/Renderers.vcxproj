@@ -130,10 +130,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AdvancedRenderer.h" />
     <ClInclude Include="BasicRenderer.h" />
     <ClInclude Include="RendererAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AdvancedRenderer.cpp" />
     <ClCompile Include="BasicRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClInclude Include="BasicRenderer.h" />
     <ClInclude Include="RendererAPI.h" />
+    <ClInclude Include="AdvancedRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicRenderer.cpp" />
+    <ClCompile Include="AdvancedRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
