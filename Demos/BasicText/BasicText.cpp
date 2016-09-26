@@ -26,10 +26,12 @@ class Program : public BasicRenderer
 {
     public:
 
-        Program() : 
+        Program() :
             BasicRenderer("NVIDIA Basic Text Rendering")
         {
             Initialize();
+            nvPathStencilDepthOffset(-0.05f, -1);
+            nvPathCoverDepthFunc(GL_ALWAYS);
         }
 
     protected:
@@ -54,7 +56,7 @@ class Program : public BasicRenderer
                 .Text("Testing!")
 
                 .Color(Color4::Green)
-                .Scale(0.1f, 0.1f)
+                .Scale(0.05f, 0.05f)
                 .Position(128, 256);
 
             RenderScene->Add(Text);
@@ -77,7 +79,8 @@ class Program : public BasicRenderer
         void UpdateScene() override
         {
             static float count = 0.0f;
-            Text.Z(-4096 * sin(count) - 4096);
+            Text.Z(-1024 * sin(count) - 1024);
+            //Text.Yaw(count);
             count += 0.02f;
 
             BasicRenderer::UpdateScene();
