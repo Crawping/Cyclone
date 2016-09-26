@@ -61,6 +61,9 @@ static KeyboardKeys translateKeys(WPARAM keyCode)
         case VK_CONTROL:    return KeyboardKeys::Control;
         case VK_MENU:       return KeyboardKeys::Alt;
         case VK_SHIFT:      return KeyboardKeys::Shift;
+        case VK_SPACE:      return KeyboardKeys::Space;
+        case VK_F1:         return KeyboardKeys::F1;
+        case VK_F2:         return KeyboardKeys::F2;
         case 0x41:          return KeyboardKeys::A;
         case 0x42:          return KeyboardKeys::B;
         case 0x43:          return KeyboardKeys::C;
