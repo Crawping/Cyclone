@@ -10,6 +10,15 @@
 
 namespace Renderers
 {
+
+    AdvancedRenderer::AdvancedRenderer(const string& title) :
+        BasicRenderer(title),
+        MoveSpeed(16.0f)
+    {
+
+    }
+
+
     void AdvancedRenderer::Execute()
     {
         while (CanContinue())
@@ -42,25 +51,21 @@ namespace Renderers
         RenderWindow->OnKeyPress.Register(this, &AdvancedRenderer::ProcessKeyPress);
         RenderWindow->OnKeyRelease.Register(this, &AdvancedRenderer::ProcessKeyRelease);
     }
-
     void AdvancedRenderer::CreateShaderPipeline()
     {
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
         Renderer->RenderPipeline(RenderPipeline);
     }
-
-
+    
 
     void AdvancedRenderer::Render()
     {
         Renderer->Execute();
     }
-
     void AdvancedRenderer::Present()
     {
         Renderer->Present();
     }
-
     void AdvancedRenderer::UpdateScene()
     {
         if (WalkingDirection != Vector3::Zero)
@@ -75,14 +80,29 @@ namespace Renderers
 
     void AdvancedRenderer::ProcessKeyPress(const KeyboardEvent& evt)
     {
+        Vector3 dir;
         if (evt.Key == KeyboardKeys::A)
-            WalkingDirection += View.Left();
+            dir = View.Left();
         else if (evt.Key == KeyboardKeys::D)
-            WalkingDirection += View.Right();
+            dir = View.Right();
         else if (evt.Key == KeyboardKeys::S)
-            WalkingDirection += View.Backward();
+            dir = View.Backward();
         else if (evt.Key == KeyboardKeys::W)
-            WalkingDirection += View.Forward();
+            dir = View.Forward();
+
+        dir.Y = 0.0f;
+
+        if (evt.Key == KeyboardKeys::Shift)
+            dir = -Vector3::UnitY;
+        else if (evt.Key == KeyboardKeys::Space)
+            dir = Vector3::UnitY;
+
+        WalkingDirection += dir;
+
+        if (evt.Key == KeyboardKeys::F1)
+            CreateTransformations();
+        else if (evt.Key == KeyboardKeys::F2)
+            return;
     }
     void AdvancedRenderer::ProcessKeyRelease(const KeyboardEvent& evt)
     {
@@ -92,14 +112,24 @@ namespace Renderers
             return;
         }
 
+        Vector3 dir;
         if (evt.Key == KeyboardKeys::A)
-            WalkingDirection -= View.Left();
+            dir = View.Left();
         else if (evt.Key == KeyboardKeys::D)
-            WalkingDirection -= View.Right();
+            dir = View.Right();
         else if (evt.Key == KeyboardKeys::S)
-            WalkingDirection -= View.Backward();
+            dir = View.Backward();
         else if (evt.Key == KeyboardKeys::W)
-            WalkingDirection -= View.Forward();
+            dir = View.Forward();
+
+        dir.Y = 0.0f;
+
+        if (evt.Key == KeyboardKeys::Shift)
+            dir = -Vector3::UnitY;
+        else if (evt.Key == KeyboardKeys::Space)
+            dir = Vector3::UnitY;
+
+        WalkingDirection -= dir;
     }
     void AdvancedRenderer::ProcessPointerMotion(const PointerMotionEvent& evt)
     {
@@ -108,6 +138,5 @@ namespace Renderers
         View.Rotate(Vector3(pitch, yaw, 0.0f));
         Renderer->View(View);
     }
-
 
 }

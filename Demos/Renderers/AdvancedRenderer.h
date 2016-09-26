@@ -14,8 +14,7 @@ namespace Renderers
     {
         public:
 
-            
-
+            /** APPLICATION UTILITIES **/
             RendererAPI void Execute() override;
 
         protected:
@@ -24,14 +23,12 @@ namespace Renderers
             Vector3 WalkingDirection;
 
             
-            AdvancedRenderer(const string& title) :
-                BasicRenderer(title),
-                MoveSpeed(16.0f)
-            {
-
-            }
+            /** CONSTRUCTOR **/
+            RendererAPI AdvancedRenderer(const string& title);
 
 
+
+            /** INITIALIZATION UTILITIES **/
             RendererAPI virtual void CreateRenderTarget() override;
 
             RendererAPI virtual void CreateRenderingWindow() override;
@@ -44,6 +41,9 @@ namespace Renderers
 
             RendererAPI virtual void ProcessPointerMotion(const PointerMotionEvent& evt);
 
+
+
+            /** RENDERING UTILITIES **/
             RendererAPI virtual void Render();
 
             RendererAPI virtual void Present();

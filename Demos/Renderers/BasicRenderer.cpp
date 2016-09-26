@@ -101,7 +101,9 @@ namespace Renderers
     void BasicRenderer::CreateTransformations()
     {
         Area clientArea = RenderWindow->ClientArea();
-        View.Translate(Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f));
+        View
+            .Orientation(Vector3::Zero)
+            .Position(Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f));
 
         Projection = Transform::PerspectiveProjection
         (
