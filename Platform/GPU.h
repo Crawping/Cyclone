@@ -78,7 +78,7 @@ namespace Cyclone
                 /// <summary> Clears the depth-stencil and render target buffers in preparation for a new render loop iteration. </summary>
                 /// <param name="color"> The color value that will be used to nullify or replace all contents of the render target. </param>
                 /// <remarks> This method should be among the first called within the rendering loop. </remarks>
-                PlatformAPI void Clear(const Color4& color);
+                PlatformAPI void Clear(const Color4& color = Color4::White, float depth = 1.0f, int stencil = 0);
                 /// <summary> Swaps the front and back rendering buffers, displaying the contents of the backbuffer to the user. </summary>
                 /// <remarks>
                 ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often

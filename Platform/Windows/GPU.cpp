@@ -72,13 +72,16 @@ namespace Cyclone
 
 
         /** RENDERING UTILITIES **/
-        void GPU::Clear(const Color4& color)
+        void GPU::Clear(const Color4& color, float depth, int stencil)
         {
             RestoreRenderingDefaults();
             if (_renderTarget)
                 _renderTarget->Clear(color);
             else
+            {
                 glClearBufferfv(GL_COLOR, 0, color.ToArray());
+                glClearBufferfv(GL_DEPTH, 0, &depth);
+            }
         }
         void GPU::Present()
         {
@@ -173,7 +176,6 @@ namespace Cyclone
                 glViewport(0, 0, _renderWindow->ClientArea().Width, _renderWindow->ClientArea().Height);
 
             glActiveTexture(GL_TEXTURE0);
-            glEnable(GL_CULL_FACE);
         }
         string GPU::ReportErrors() const
         {
