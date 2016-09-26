@@ -10,10 +10,7 @@
 
 namespace Cyclone
 {
-    namespace
-    {
-        using namespace Utilities;
-    }
+    namespace { using namespace Utilities; }
 
     namespace Platform
     {
@@ -32,15 +29,28 @@ namespace Cyclone
         };
 
         /// <summary> An event structure containing information about pointer button clicks. </summary>
+        /// <remarks>
+        ///     This event structure gets dispatched every time a pointer device button is pressed or released while 
+        ///     the <see cref="Window3D"/> rendering window has input focus.
+        /// </remarks>
         struct PointerClickEvent
         {
+            /// <summary> The specific pointer device button that has been either pressed or released. </summary>
             InputControls Button;
+            /// <summary> The current state of all pointer device buttons. </summary>
             InputControls State;
         };
 
+        /// <summary> An event structure containing information about user interactions with keyboard keys. </summary>
+        /// <remarks>
+        ///     This event structure gets dispatched every time a keyboard key is either pressed or released while the 
+        ///     <see cref="Window3D"/> rendering window has input focus. 
+        /// </remarks>
         struct KeyboardEvent
         {
+            /// <summary> The specific keyboard key that has been either pressed or released. </summary>
             const KeyboardKeys& Key;
+            /// <summary> The current state of all keyboard keys. </summary>
             const KeyboardKeys& State;
         };
 
