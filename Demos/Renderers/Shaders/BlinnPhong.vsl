@@ -21,7 +21,7 @@ out PixelShaderInput
 } Output;
 
 
-uniform vec3 LightPosition = vec3(-10, 10, 20);
+uniform vec3 LightPosition = vec3(-100, 100, 20);
 
 
 void main(void)
