@@ -74,6 +74,10 @@ namespace Cyclone
 
         RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
         RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
+
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
+        glEnable(GL_DEPTH_CLAMP);
     }
     Program::~Program()
     {
