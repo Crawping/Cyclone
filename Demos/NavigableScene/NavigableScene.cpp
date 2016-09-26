@@ -2,9 +2,7 @@
  * Written by Josh Grooms on 20160923
  */
 
-
-
-#include "BasicRenderer.h"
+#include "AdvancedRenderer.h"
 #include "Console.h"
 #include "GPU.h"
 #include "Utilities.h"
@@ -25,14 +23,14 @@ using namespace Cyclone::Utilities;
 
 
 
-class Program : public BasicRenderer
+class Program : public AdvancedRenderer
 {
     public:
-        Program() : 
-            BasicRenderer("Navigable 3D Scene")
+        Program() :
+            AdvancedRenderer("Navigable 3D Scene")
         {
             Initialize();
-            
+
         }
         ~Program()
         {
@@ -45,7 +43,7 @@ class Program : public BasicRenderer
 
 
     protected:
-        
+
         const float MoveSpeed = 16.0f;
 
         Mesh3D* Cube;
@@ -57,7 +55,7 @@ class Program : public BasicRenderer
 
         void CreateSceneResources() override
         {
-            BasicRenderer::CreateSceneResources();
+            AdvancedRenderer::CreateSceneResources();
 
             Vector<uint> indices;
             Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
@@ -93,29 +91,8 @@ class Program : public BasicRenderer
             RenderScene->Add(*Icosahedron);
             RenderScene->Add(Point);
         }
-        void CreateRenderingWindow() override
-        {
-            BasicRenderer::CreateRenderingWindow();
-
-            RenderWindow->IsTrackingKeyRepeat(false);
-            RenderWindow->OnPointerMotion.Register(this, &Program::ProcessPointerMotion);
-            RenderWindow->OnKeyPress.Register(this, &Program::ProcessKeyPress);
-            RenderWindow->OnKeyRelease.Register(this, &Program::ProcessKeyRelease);
-        }
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
-            Renderer->RenderPipeline(RenderPipeline);
-        }
         void UpdateScene() override
         {
-            Vector3 dir = WalkingDirection;
-            if (dir != Vector3::Zero)
-            {
-                View.Translate(dir.Normalize() * MoveSpeed);
-                Renderer->View(View);
-            }
-
             Cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
             Cylinder->Rotate(Vector3(0.0f, 0.0f, 0.01f));
             Icosahedron->Rotate(Vector3(0.01f, 0.0f, 0.0f));
@@ -126,45 +103,7 @@ class Program : public BasicRenderer
             RenderScene->Update(*Icosahedron);
             RenderScene->Update(Point);
 
-            BasicRenderer::UpdateScene();
-        }
-
-
-
-        void ProcessKeyPress(const KeyboardEvent& evt)
-        {
-            if (evt.Key == KeyboardKeys::A)
-                WalkingDirection += View.Left();
-            else if (evt.Key == KeyboardKeys::D)
-                WalkingDirection += View.Right();
-            else if (evt.Key == KeyboardKeys::S)
-                WalkingDirection += View.Backward();
-            else if (evt.Key == KeyboardKeys::W)
-                WalkingDirection += View.Forward();
-        }
-        void ProcessKeyRelease(const KeyboardEvent& evt)
-        {
-            if (evt.State.Count() == 0)
-            {
-                WalkingDirection = Vector3::Zero;
-                return;
-            }
-
-            if (evt.Key == KeyboardKeys::A)
-                WalkingDirection -= View.Left();
-            else if (evt.Key == KeyboardKeys::D)
-                WalkingDirection -= View.Right();
-            else if (evt.Key == KeyboardKeys::S)
-                WalkingDirection -= View.Backward();
-            else if (evt.Key == KeyboardKeys::W)
-                WalkingDirection -= View.Forward();
-        }
-        void ProcessPointerMotion(const PointerMotionEvent& evt)
-        {
-            float pitch = (evt.Delta.Y * Constants::Pi / RenderWindow->ClientArea().Height);
-            float yaw = evt.Delta.X * Constants::TwoPi * 2.0f / RenderWindow->ClientArea().Width;
-            View.Rotate(Vector3(pitch, yaw, 0.0f));
-            Renderer->View(View);
+            AdvancedRenderer::UpdateScene();
         }
 
 };
