@@ -47,6 +47,7 @@ namespace Cyclone
                 SVGAPI virtual Path2D& FillMode(FillModes value);
                 SVGAPI virtual Path2D& InitialCap(EndCaps value);
                 SVGAPI virtual Path2D& JoinStyle(JoinStyles value);
+                SVGAPI virtual Path2D& Path(const string& value);
                 SVGAPI virtual Path2D& StrokeColor(const Color4& value);
                 SVGAPI virtual Path2D& StrokeWidth(float value);
                 SVGAPI virtual Path2D& TerminalCap(EndCaps value);
@@ -82,6 +83,7 @@ namespace Cyclone
                 uint                _id;
                 EndCaps             _initialCap;
                 JoinStyles          _joinStyle;
+                string              _path;
                 mutable bool        _pathNeedsUpdate;
                 Color4              _strokeColor;
                 float               _strokeWidth;

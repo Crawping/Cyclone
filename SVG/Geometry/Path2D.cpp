@@ -25,6 +25,12 @@ namespace Cyclone
             _pathNeedsUpdate = true;
             return *this;
         }
+        Path2D& Path2D::Path(const string& value)
+        {
+            _path = value;
+            _pathNeedsUpdate = true;
+            return *this;
+        }
         Path2D& Path2D::StrokeColor(const Color4& value)    { _strokeColor = value; return *this; }
         Path2D& Path2D::StrokeWidth(float value)            
         { 
@@ -121,15 +127,18 @@ namespace Cyclone
         {
             if (!_pathNeedsUpdate) { return; }
 
-            nvPathCommands
-            (
-                ID(), 
-                Commands.Count(), 
-                (const ubyte*)(Commands.ToVector().ToArray()), 
-                Coordinates.Count(), 
-                NumericFormats::Float, 
-                Coordinates.ToVector().ToArray()
-            );
+            if (_path.size())
+                nvPathString(ID(), PathFormats::SVG, _path.size(), _path.c_str());
+            else
+                nvPathCommands
+                (
+                    ID(), 
+                    Commands.Count(), 
+                    (const ubyte*)(Commands.ToVector().ToArray()), 
+                    Coordinates.Count(), 
+                    NumericFormats::Float, 
+                    Coordinates.ToVector().ToArray()
+                );
 
             nvPathParameteri(ID(), PathParameters::JoinStyle, JoinStyle());
             nvPathParameteri(ID(), PathParameters::InitialEndCap, InitialCap());
