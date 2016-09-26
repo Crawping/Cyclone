@@ -57,7 +57,7 @@ class Program : public BasicRenderer
 
                 .Color(Color4::Green)
                 .Scale(0.05f, 0.05f)
-                .Position(128, 256);
+                .Position(224, 320);
 
             RenderScene->Add(Text);
         }
