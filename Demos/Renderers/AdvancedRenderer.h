@@ -14,13 +14,17 @@ namespace Renderers
     {
         public:
 
+            RendererAPI virtual ~AdvancedRenderer();
+
             /** APPLICATION UTILITIES **/
             RendererAPI void Execute() override;
 
         protected:
 
-            float   MoveSpeed;
-            Vector3 WalkingDirection;
+            float           MoveSpeed;
+            Vector3         WalkingDirection;
+            ShaderPipeline* PipelineMSAA;
+            FrameBuffer*    TempFBO;
 
             
             /** CONSTRUCTOR **/
@@ -35,6 +39,9 @@ namespace Renderers
 
             RendererAPI virtual void CreateShaderPipeline() override;
 
+
+
+            /** EVENT HANDLING UTILITIES **/
             RendererAPI virtual void ProcessKeyPress(const KeyboardEvent& evt);
 
             RendererAPI virtual void ProcessKeyRelease(const KeyboardEvent& evt);

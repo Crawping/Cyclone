@@ -13,9 +13,16 @@ namespace Renderers
 
     AdvancedRenderer::AdvancedRenderer(const string& title) :
         BasicRenderer(title),
-        MoveSpeed(16.0f)
+        MoveSpeed(16.0f),
+        PipelineMSAA(nullptr),
+        TempFBO(nullptr)
     {
 
+    }
+    AdvancedRenderer::~AdvancedRenderer()
+    {
+        if (TempFBO)        { delete TempFBO; }
+        if (PipelineMSAA) { delete PipelineMSAA; }
     }
 
 
@@ -39,7 +46,15 @@ namespace Renderers
         if (RenderTarget)
             delete RenderTarget;
 
-        RenderTarget = new FrameBuffer(RenderWindow->ClientArea().Scale(), TextureFormats::Byte4, TextureFormats::DepthStencil);
+        TempFBO = new FrameBuffer(RenderWindow->ClientArea().Scale());
+
+        RenderTarget = new FrameBuffer
+        (
+            RenderWindow->ClientArea().Scale(), 
+            TextureFormats::Byte4, 
+            TextureFormats::DepthStencil,
+            TextureTargets::Texture2DMS
+        );
         Renderer->RenderTarget(RenderTarget);
     }
     void AdvancedRenderer::CreateRenderingWindow()
@@ -53,6 +68,7 @@ namespace Renderers
     }
     void AdvancedRenderer::CreateShaderPipeline()
     {
+        PipelineMSAA = new ShaderPipeline("../Renderers/Shaders/BlitMS.vsl", "../Renderers/Shaders/BlitMS.psl");
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
         Renderer->RenderPipeline(RenderPipeline);
     }
@@ -64,7 +80,19 @@ namespace Renderers
     }
     void AdvancedRenderer::Present()
     {
+        //Renderer->RenderPipeline(PipelineMSAA);
+
+        //RenderTarget->Unbind();
+        ////Renderer->RenderTarget(TempFBO);
+        //Renderer->RenderTarget(nullptr);
+        //
+        //RenderTarget->ColorTexture->Bind();
+        //Renderer->Execute();
         Renderer->Present();
+        //RenderTarget->ColorTexture->Unbind();
+
+        //Renderer->RenderPipeline(RenderPipeline);
+        //Renderer->RenderTarget(RenderTarget);
     }
     void AdvancedRenderer::UpdateScene()
     {
