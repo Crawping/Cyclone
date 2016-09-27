@@ -1,0 +1,21 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20160927
+ */
+
+
+#version 440 core
+
+out vec4            OutputColor;
+layout(binding = 0) uniform sampler2DMS InputImage;
+
+
+
+void main(void)
+{
+    ivec2 texCoords = ivec2(gl_FragCoord.xy);
+
+    for (int a = 0; a < 8; a++)
+        OutputColor = texelFetch(InputImage, texCoords, 1);
+
+    OutputColor /= 8.0;
+}

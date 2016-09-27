@@ -39,5 +39,11 @@
     <None Include="Shaders\BlinnPhong.vsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\BlitMS.vsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\BlitMS.psl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

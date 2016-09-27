@@ -141,6 +141,8 @@
   <ItemGroup>
     <None Include="Shaders\BlinnPhong.psl" />
     <None Include="Shaders\BlinnPhong.vsl" />
+    <None Include="Shaders\BlitMS.psl" />
+    <None Include="Shaders\BlitMS.vsl" />
     <None Include="Shaders\Default.hsl" />
     <None Include="Shaders\Default.psl" />
     <None Include="Shaders\Default.vsl" />
