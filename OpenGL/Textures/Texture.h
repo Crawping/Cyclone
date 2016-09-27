@@ -23,9 +23,9 @@ namespace Cyclone
                 virtual TextureFormats Format() const { return _format; }
                 virtual ulong Handle()          const { return _handle; }
                 virtual uint Height()           const = 0;
-                /* ID - Gets the unique numeric identifier for this texture object on the GPU. */
+                /// <summary> Gets the unique numeric identifier for the texture object on the GPU. </summary>
                 virtual uint ID()               const override { return _id; }
-                /* ISEMPTY - Gets whether this texture has any zero-length dimensions. */
+                /// <summary> Gets whether the texture has any zero-length dimensions. </summary>
                 virtual bool IsEmpty()          const = 0;
                 virtual TextureTargets Target() const { return _target; }
                 virtual uint Width()            const = 0;
@@ -60,7 +60,9 @@ namespace Cyclone
 
 
                 /** GPU RESOURCE UTILITIES **/
+                /// <summary> Reserves storage space for the texture on the GPU. </summary>
                 OpenGLAPI virtual void Allocate();
+
                 OpenGLAPI virtual void Create();
                 OpenGLAPI virtual void Destroy();
                 virtual void Reallocate()       { Destroy(); Create(); Allocate(); }
