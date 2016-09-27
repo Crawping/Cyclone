@@ -46,12 +46,6 @@ class Program : public AdvancedRenderer
         Text2D          RightLabel;
         Text2D          TopLabel;
 
-        Path2D          BackWall;
-        Path2D          BottomWall;
-        Path2D          FrontWall;
-        Path2D          LeftWall;
-        Path2D          RightWall;
-
 
         void CreateSceneResources() override
         {
