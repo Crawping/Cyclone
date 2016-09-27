@@ -23,9 +23,9 @@ namespace Cyclone
         struct PointerMotionEvent
         {
             /// <summary> The (x, y) change in position relative to where the pointer was before the motion event was triggered. </summary>
-            Vector2 Delta;
+            const Vector2& Delta;
             /// <summary> The new (x, y) pixel position of the pointer relative to the upper-left corner of the window's client area. </summary>
-            Vector2 Position;
+            const Vector2& Position;
         };
 
         /// <summary> An event structure containing information about pointer button clicks. </summary>
@@ -36,9 +36,9 @@ namespace Cyclone
         struct PointerClickEvent
         {
             /// <summary> The specific pointer device button that has been either pressed or released. </summary>
-            InputControls Button;
+            PointerButtons Button;
             /// <summary> The current state of all pointer device buttons. </summary>
-            InputControls State;
+            PointerButtons State;
         };
 
         /// <summary> An event structure containing information about user interactions with keyboard keys. </summary>

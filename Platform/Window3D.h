@@ -38,7 +38,7 @@ namespace Cyclone
                 /// <summary> Gets whether the window is currently tracking the position of the HID pointer. </summary>
                 bool IsTrackingPointer()            const { return _isTrackingPointer; }
                 /// <summary> Gets the current pointer button chord being pressed. </summary>
-                InputControls PointerButtonState()  const { return _pointerButtonState; }
+                PointerButtons PointerButtonState() const { return _pointerButtonState; }
                 /// <summary> Gets the current (x, y) coordinates of the HID pointer relative to the upper-left corner of the window client area. </summary>
                 /// <remarks> If pointer tracking is disabled, this property will always return a vector of zeros. </remarks>
                 const Vector2& PointerPosition()    const { return _pointerPosition; }
@@ -103,12 +103,6 @@ namespace Cyclone
 
 
                 /** INTERNAL UTILITIES **/
-                /// <summary> Updates the cached window position and size data. </summary>
-                /// <remarks>
-                ///     This method is for internal use only and is a necessary means of communication between the window's event loop 
-                ///     and the 'Window3D' object itself.
-                /// </remarks>
-                InternalAPI void UpdateSize();
                 /// <summary> Updates the cached pointer position data. </summary>
                 /// <param name="x"> The new horizontal pixel position of the pointer relative to the left edge of the client area. </param>
                 /// <param name="y"> The new vertical pixel position of the pointer relative to the top edge of the client area. </param>
@@ -118,14 +112,19 @@ namespace Cyclone
                 /// </remarks>
                 InternalAPI void UpdatePointerPosition(int x, int y);
 
-                InternalAPI void ProcessButtonPress(InputControls button);
+                InternalAPI void ProcessButtonPress(PointerButtons button);
 
-                InternalAPI void ProcessButtonRelease(InputControls button);
+                InternalAPI void ProcessButtonRelease(PointerButtons button);
 
                 InternalAPI void ProcessKeyPress(KeyboardKeys key);
 
                 InternalAPI void ProcessKeyRelease(KeyboardKeys key);
-
+                /// <summary> Updates the cached window position and size data. </summary>
+                /// <remarks>
+                ///     This method is for internal use only and is a necessary means of communication between the window's event loop 
+                ///     and the 'Window3D' object itself.
+                /// </remarks>
+                InternalAPI void ProcessSizeChange();
 
 
                 /** RENDERING UTILITIES **/
@@ -180,7 +179,7 @@ namespace Cyclone
                 bool            _isTrackingKeyboard;
                 bool            _isTrackingPointer;
                 bool            _isTrackingKeyRepeat;
-                InputControls   _pointerButtonState;
+                PointerButtons  _pointerButtonState;
                 Vector2         _pointerPosition;
                 string          _title;
 

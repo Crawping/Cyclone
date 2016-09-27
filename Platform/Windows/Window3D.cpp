@@ -131,29 +131,29 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 
             case WM_LBUTTONDBLCLK:
             case WM_LBUTTONDOWN:
-                win3D->ProcessButtonPress(InputControls::Button001);
+                win3D->ProcessButtonPress(PointerButtons::Button001);
                 break;
 
             case WM_LBUTTONUP:
-                win3D->ProcessButtonRelease(InputControls::Button001);
+                win3D->ProcessButtonRelease(PointerButtons::Button001);
                 break;
 
             case WM_MBUTTONDBLCLK:
             case WM_MBUTTONDOWN:
-                win3D->ProcessButtonPress(InputControls::Button002);
+                win3D->ProcessButtonPress(PointerButtons::Button002);
                 break;
 
             case WM_MBUTTONUP:
-                win3D->ProcessButtonRelease(InputControls::Button002);
+                win3D->ProcessButtonRelease(PointerButtons::Button002);
                 break;
 
             case WM_RBUTTONDBLCLK:
             case WM_RBUTTONDOWN:
-                win3D->ProcessButtonPress(InputControls::Button003);
+                win3D->ProcessButtonPress(PointerButtons::Button003);
                 break;
 
             case WM_RBUTTONUP:
-                win3D->ProcessButtonRelease(InputControls::Button003);
+                win3D->ProcessButtonRelease(PointerButtons::Button003);
                 break;
 
             case WM_XBUTTONDBLCLK:
@@ -171,7 +171,7 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
                 break;
 
             case WM_SIZE:
-                win3D->UpdateSize();
+                win3D->ProcessSizeChange();
                 break;
 
             default:            break;
@@ -285,7 +285,7 @@ namespace Cyclone
                 return;
             }
 
-            UpdateSize();
+            ProcessSizeChange();
             ShowWindow(Internals->ID, SW_SHOW);
         }
 
@@ -332,7 +332,7 @@ namespace Cyclone
 
 
         /** INTERNAL UTILITIES **/
-        void Window3D::ProcessButtonPress(InputControls button)
+        void Window3D::ProcessButtonPress(PointerButtons button)
         {
             if (!IsTrackingPointer()) { return; }
 
@@ -344,7 +344,7 @@ namespace Cyclone
             };
             OnButtonPress(evt);
         }
-        void Window3D::ProcessButtonRelease(InputControls button)
+        void Window3D::ProcessButtonRelease(PointerButtons button)
         {
             if (!IsTrackingPointer()) { return; }
 
@@ -379,7 +379,7 @@ namespace Cyclone
             };
             OnKeyRelease(evt);
         }
-        void Window3D::UpdateSize()
+        void Window3D::ProcessSizeChange()
         {
             RECT displayRect;
             GetWindowRect(Internals->ID, &displayRect);

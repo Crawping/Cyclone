@@ -15,44 +15,11 @@ namespace Cyclone
 
     namespace Platform
     {
-        struct InputControls : public Flag<InputControls>
+        struct PointerButtons : public Flag<PointerButtons>
         {
             enum Controls : int
             {
                 Nothing     = 0,
-                /// <summary> The left or right alt keyboard key. </summary>
-                /// <remarks>
-                ///     In Linux, the alt key is equivalent to <see cref="Mod1Mask"/> on my home desktop PC.
-                /// </remarks>
-                Alt         = (1 << 0),
-                /// <summary> The caps lock keyboard key toggle. </summary>
-                /// <remarks>
-                ///     In Linux, the caps lock key is equivalent to <see cref="LockMask"/> on my home desktop PC.
-                /// </remarks>
-                CapsLock    = (1 << 1),
-                /// <summary> The left or right ctrl keyboard key. </summary>
-                /// <remarks>
-                ///     In Linux, the ctrl key is equivalent to <see cref="ControlMask"/> on my home desktop PC.
-                /// </remarks>
-                Ctrl        = (1 << 2),
-                Hyper       = (1 << 3),
-                Meta        = (1 << 4),
-                /// <summary> The numlock keyboard key toggle. </summary>
-                /// <remarks>
-                ///     In Linux, the numlock key is equivalent to <see cref="Mod2Mask"/> on my home desktop PC.
-                /// </remarks>
-                NumLock     = (1 << 5),
-                /// <summary> The left or right shift keyboard key. </summary>
-                /// <remarks>
-                ///     In Linux, the shift key is equivalent to <see cref="ShiftMask"/> on my home desktop PC.
-                /// </remarks>
-                Shift       = (1 << 6),
-                /// <summary> The super keyboard key, which is typically the Windows key. </summary>
-                /// <remarks>
-                ///     In Linux, the super key is equivalent to <see cref="Mod4Mask"/> on my home desktop PC.
-                /// </remarks>
-                Super       = (1 << 7),
-                Switch      = (1 << 8),
                 /// <summary> The primary or left mouse button. </summary>
                 Button001   = (1 << 9),
                 /// <summary> The middle mouse button, which is typically the scroll wheel. </summary>
@@ -83,8 +50,8 @@ namespace Cyclone
 
 
             /** CONSTRUCTORS **/
-            InputControls(enum Controls c = Nothing) : Flag((int)c) { }
-            InputControls(int c) : Flag(c) { }
+            PointerButtons(enum Controls c = Nothing) : Flag((int)c) { }
+            PointerButtons(int c) : Flag(c) { }
 
 
 
@@ -94,8 +61,8 @@ namespace Cyclone
             /// <summary> Converts a single control enumerator into an equivalent string representation. </summary>
             PlatformAPI string ToString() const;
 
-            InputControls& operator &=(const InputControls& other) { Value &= other.Value; return *this; }
-            InputControls& operator |=(const InputControls& other) { Value |= other.Value; return *this; }
+            PointerButtons& operator &=(const PointerButtons& other) { Value &= other.Value; return *this; }
+            PointerButtons& operator |=(const PointerButtons& other) { Value |= other.Value; return *this; }
         };
 
 
@@ -178,10 +145,30 @@ namespace Cyclone
                     Space,
                     Tab,
 
+                    /// <summary> The left or right alt keyboard key. </summary>
+                    /// <remarks>
+                    ///     In Linux, the alt key is equivalent to <see cref="Mod1Mask"/> on my home desktop PC.
+                    /// </remarks>
                     Alt,
+                    /// <summary> The caps lock keyboard key toggle. </summary>
+                    /// <remarks>
+                    ///     In Linux, the caps lock key is equivalent to <see cref="LockMask"/> on my home desktop PC.
+                    /// </remarks>
                     CapsLock,
+                    /// <summary> The left or right ctrl keyboard key. </summary>
+                    /// <remarks>
+                    ///     In Linux, the ctrl key is equivalent to <see cref="ControlMask"/> on my home desktop PC.
+                    /// </remarks>
                     Control,
+                    /// <summary> The left or right shift keyboard key. </summary>
+                    /// <remarks>
+                    ///     In Linux, the shift key is equivalent to <see cref="ShiftMask"/> on my home desktop PC.
+                    /// </remarks>
                     Shift,
+                    /// <summary> The super keyboard key, which is typically the Windows key. </summary>
+                    /// <remarks>
+                    ///     In Linux, the super key is equivalent to <see cref="Mod4Mask"/> on my home desktop PC.
+                    /// </remarks>
                     Super,
 
                     Delete,
@@ -203,6 +190,10 @@ namespace Cyclone
                     DashKP,
                     EnterKP,
                     ForwardSlashKP,
+                    /// <summary> The numlock keyboard key toggle. </summary>
+                    /// <remarks>
+                    ///     In Linux, the numlock key is equivalent to <see cref="Mod2Mask"/> on my home desktop PC.
+                    /// </remarks>
                     NumLock,
                     PeriodKP,
                     PlusKP,
