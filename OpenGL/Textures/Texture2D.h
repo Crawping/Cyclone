@@ -60,14 +60,11 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                Texture2D(TextureFormats format, const Vector2& size = Vector2::Zero);
+                Texture2D(const Vector2& size, TextureFormats format = TextureFormats::Byte4, TextureTargets target = TextureTargets::Texture2D);
 
 
 
                 /** UTILITIES **/
-                /* ALLOCATE - Generates an empty two-dimensional texture of a designated size on the GPU. */
-                //void Allocate() override;
-
                 virtual void BindResources()            const override;
                 /* COPY - Performs a deep copy operation, replacing all data in this object with those from another texture. */
                 void Copy(const Texture2D& texture);

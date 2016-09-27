@@ -25,8 +25,18 @@ namespace Cyclone
             DepthTexture(nullptr)
         {
             glCreateFramebuffers(1, &_id);
-            CreateColorAttachment(colorFormat);
-            CreateDepthAttachment(depthFormat);
+            CreateColorAttachment(colorFormat, TextureTargets::Texture2D);
+            CreateDepthAttachment(depthFormat, TextureTargets::Texture2D);
+        }
+        FrameBuffer::FrameBuffer(const Vector2& size, TextureFormats colorFormat, TextureFormats depthFormat, TextureTargets target) :
+            _id(0),
+            _size(size),
+            ColorTexture(nullptr),
+            DepthTexture(nullptr)
+        {
+            glCreateFramebuffers(1, &_id);
+            CreateColorAttachment(colorFormat, target);
+            CreateDepthAttachment(depthFormat, target);
         }
         FrameBuffer::~FrameBuffer()
         {
@@ -43,14 +53,14 @@ namespace Cyclone
         {
             FrameBuffer* cbuffer = new FrameBuffer();
             cbuffer->_size = size;
-            cbuffer->CreateColorAttachment(format);
+            cbuffer->CreateColorAttachment(format, TextureTargets::Texture2D);
             return cbuffer;
         }
         FrameBuffer* FrameBuffer::DepthBuffer(const Vector2& size, TextureFormats format)
         {
             FrameBuffer* dbuffer = new FrameBuffer();
             dbuffer->_size = size;
-            dbuffer->CreateDepthAttachment(format);
+            dbuffer->CreateDepthAttachment(format, TextureTargets::Texture2D);
             return dbuffer;
         }
 
@@ -117,17 +127,17 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        void FrameBuffer::CreateColorAttachment(TextureFormats format)
+        void FrameBuffer::CreateColorAttachment(TextureFormats format, TextureTargets target)
         {
-            ColorTexture = new Texture2D(format, Size());
+            ColorTexture = new Texture2D(Size(), format, target);
             ColorTexture->Sampler.EdgeWrap = WrapModes::Repeat;
 
             glNamedFramebufferTexture(_id, GL_COLOR_ATTACHMENT0, ColorTexture->ID(), 0);
             glNamedFramebufferDrawBuffer(_id, GL_COLOR_ATTACHMENT0);
         }
-        void FrameBuffer::CreateDepthAttachment(TextureFormats format)
+        void FrameBuffer::CreateDepthAttachment(TextureFormats format, TextureTargets target)
         {
-            DepthTexture = new Texture2D(format, Size());
+            DepthTexture = new Texture2D(Size(), format, target);
             if (HasStencilBuffer())
                 glNamedFramebufferTexture(ID(), GL_DEPTH_STENCIL_ATTACHMENT, DepthTexture->ID(), 0);
             else

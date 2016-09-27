@@ -14,7 +14,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class FrameBuffer : public IBindable
+        class FrameBuffer : public virtual IBindable
         {
 
             public:
@@ -36,6 +36,8 @@ namespace Cyclone
                 uint ID()               const override { return _id; }
                 /// <summary> Gets the width and height of this framebuffer in pixels. </summary>
                 const Vector2& Size()   const { return _size; }
+
+                TextureTargets Target() const { return _target; }
                 /// <summary> Gets the width of this framebuffer in pixels. </summary>
                 uint Width()            const { return (uint)_size.X; }
 
@@ -61,6 +63,8 @@ namespace Cyclone
                 /// </param>
                 /// <returns></returns>
                 OpenGLAPI FrameBuffer(const Vector2& size, TextureFormats colorFormat = TextureFormats::Byte4, TextureFormats depthFormat = TextureFormats::DepthFloat);
+
+                OpenGLAPI FrameBuffer(const Vector2& size, TextureFormats colorFormat, TextureFormats depthFormat, TextureTargets target);
                 /// <summary> Unbinds the framebuffer and destroys all resources that are held by it. </summary>
                 OpenGLAPI ~FrameBuffer();
 
@@ -160,14 +164,15 @@ namespace Cyclone
             private:
 
                 /** PROPERTY DATA **/
-                uint        _id;
-                Vector2     _size;
+                uint            _id;
+                Vector2         _size;
+                TextureTargets  _target;
 
 
 
                 /** PRIVATE UTILITIES **/
-                void CreateColorAttachment(TextureFormats format);
-                void CreateDepthAttachment(TextureFormats format);
+                void CreateColorAttachment(TextureFormats format, TextureTargets target);
+                void CreateDepthAttachment(TextureFormats format, TextureTargets target);
                 bool HasStencilBuffer() const;
                 string ReportCompletionStatus() const;
 
