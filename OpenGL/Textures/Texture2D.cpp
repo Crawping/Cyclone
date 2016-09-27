@@ -13,7 +13,7 @@ namespace Cyclone
     namespace OpenGL
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
-        Texture2D::Texture2D(TextureFormats format, const Vector2& size) :
+        Texture2D::Texture2D(const Vector2& size, TextureFormats format, TextureTargets target) :
             Texture(format, TextureTargets::Texture2D),
             _size(size),
             Tint(Color4::White)
@@ -24,10 +24,6 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void Texture2D::Allocate()
-        {
-            glTextureStorage2D(ID(), 5, Format(), (int)Width(), (int)Height());
-        }
         void Texture2D::BindResources() const
         {
             Sampler.Bind();

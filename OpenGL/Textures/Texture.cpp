@@ -59,6 +59,14 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
+        void Texture::Allocate()
+        {
+            if (Target() == TextureTargets::Texture2DMS)
+                glTextureStorage2DMultisample(ID(), 8, Format(), (int)Width(), (int)Height(), true);
+            else
+                glTextureStorage2D(ID(), 5, Format(), (int)Width(), (int)Height());
+        }
+
         void Texture::Create()
         {
             if (_id)

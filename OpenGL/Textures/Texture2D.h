@@ -25,7 +25,7 @@ namespace Cyclone
     }
 
     namespace OpenGL
-    {       
+    {
         using namespace Cyclone::Utilities;
 
 
@@ -45,7 +45,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 /* HEIGHT - The height in pixels of the texture as it is found on the GPU. */
-                uint Height()           const { return (uint)_size.Y; }
+                uint Height()           const override { return (uint)_size.Y; }
                 /* ISEMPTY - Gets whether this texture has any zero-length dimensions. */
                 bool IsEmpty()          const override { return Height() == 0 || Width() == 0; }
                 /* SIZE - Gets the height and width of the texture as it exists on the GPU. */
@@ -55,7 +55,7 @@ namespace Cyclone
                  *      This width value ignores any image modifications provided through cropping or padding. It returns the true
                  *      width of the texture from memory.
                  */
-                uint Width()            const { return (uint)_size.X; }
+                uint Width()            const override { return (uint)_size.X; }
 
 
 
@@ -66,7 +66,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 /* ALLOCATE - Generates an empty two-dimensional texture of a designated size on the GPU. */
-                void Allocate() override;
+                //void Allocate() override;
 
                 virtual void BindResources()            const override;
                 /* COPY - Performs a deep copy operation, replacing all data in this object with those from another texture. */
