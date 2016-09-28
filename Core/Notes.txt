@@ -65,7 +65,7 @@ TODOS:
 - General
 	-- Integrate exception throws
     -- Implement HID control interface			(PRELIMINARY)
-    -- MSAA
+    -- MSAA										(IN PROGRESS)
     -- Display3D class for monitor info
 	-- Copy prevention for critical resources
 	-- Fix multithreaded compilation            (DONE)
