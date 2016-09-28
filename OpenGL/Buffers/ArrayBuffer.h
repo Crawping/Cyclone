@@ -24,8 +24,8 @@ namespace Cyclone
 		        virtual uint Count()            const override { return Data.size(); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
 		        virtual ulong Stride()          const override { return sizeof(T); }
-		        
-                
+
+
 
                 /** UTILITIES **/
 		        /// <summary> Removes all of the data currently stored within this buffer. </summary>
@@ -53,7 +53,7 @@ namespace Cyclone
                 /// <summary> Writes the contents of a single data element to the application-side memory held by this buffer. </summary>
 		        /// <param name="index">
 		        ///		An integer index indicating where the element in <paramref name="data"/> will be inserted into the buffer.
-		        ///		<para> </para>
+		        ///		<para>ï¿½</para>
 		        ///		If an element already exists at this position, then its value will be overwritten by <paramref name="data"/>. <para/>
 		        ///		If, however, this argument refers to a position at or beyond the end of the buffer storage,					  <para/>
 		        ///		then a new storage element will be created at the requested position and a complete reallocation			  <para/>
@@ -68,7 +68,7 @@ namespace Cyclone
 		        ///		memory) side. Transferring these modifications over to the corresponding GPU memory for use within shader
 		        ///		programs requires a subsequent call to the 'Update' method of this class.
 		        /// </remarks>
-		        virtual void Set(uint index, const T& data) 
+		        virtual void Set(uint index, const T& data)
                 {
                     if (index == Count())
                         return Add(data);
@@ -83,10 +83,11 @@ namespace Cyclone
                     if (!NeedsUpdate())     { return; }
 
                     GraphicsBuffer::Update();
-                    
+
                     T* handles = (T*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
-                    for (uint a = 0; a < Count(); a++)
-                        handles[a] = Data[a];
+                    if (handles)
+                        for (uint a = 0; a < Count(); a++)
+                            handles[a] = Data[a];
 
                     GraphicsBuffer::Unmap();
                 }
@@ -107,7 +108,7 @@ namespace Cyclone
                 /// <summary> Constructs a one-dimensional data buffer of a specified size whose data can accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
                 /// <param name="length"> The desired number of data elements to stored within the buffer. </param>
-		        ArrayBuffer(BufferTypes type, uint length) : 
+		        ArrayBuffer(BufferTypes type, uint length) :
                     GraphicsBuffer(type),
                     Data(length)
                 {
@@ -115,7 +116,7 @@ namespace Cyclone
                 }
 
 
-		
+
             private:
 
 		        /** PRIVATE DATA **/
