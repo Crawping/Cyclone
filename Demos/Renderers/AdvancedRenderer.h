@@ -14,7 +14,6 @@ namespace Renderers
     {
         public:
 
-            RendererAPI virtual ~AdvancedRenderer();
 
             /** APPLICATION UTILITIES **/
             RendererAPI void Execute() override;
@@ -23,8 +22,6 @@ namespace Renderers
 
             float           MoveSpeed;
             Vector3         WalkingDirection;
-            ShaderPipeline* PipelineMSAA;
-            FrameBuffer*    TempFBO;
 
             
             /** CONSTRUCTOR **/

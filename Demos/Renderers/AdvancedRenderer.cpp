@@ -1,4 +1,5 @@
 #include "AdvancedRenderer.h"
+#include "Console.h"
 #include "GPU.h"
 #include "Window3D.h"
 
@@ -13,17 +14,11 @@ namespace Renderers
 
     AdvancedRenderer::AdvancedRenderer(const string& title) :
         BasicRenderer(title),
-        MoveSpeed(16.0f),
-        PipelineMSAA(nullptr),
-        TempFBO(nullptr)
+        MoveSpeed(16.0f)
     {
-
+        
     }
-    AdvancedRenderer::~AdvancedRenderer()
-    {
-        if (TempFBO)        { delete TempFBO; }
-        if (PipelineMSAA) { delete PipelineMSAA; }
-    }
+    
 
 
     void AdvancedRenderer::Execute()
@@ -46,8 +41,6 @@ namespace Renderers
         if (RenderTarget)
             delete RenderTarget;
 
-        TempFBO = new FrameBuffer(RenderWindow->ClientArea().Scale());
-
         RenderTarget = new FrameBuffer
         (
             RenderWindow->ClientArea().Scale(), 
@@ -56,6 +49,10 @@ namespace Renderers
             TextureTargets::Texture2DMS
         );
         Renderer->RenderTarget(RenderTarget);
+
+        glEnable(GL_MULTISAMPLE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
     void AdvancedRenderer::CreateRenderingWindow()
     {
@@ -68,31 +65,21 @@ namespace Renderers
     }
     void AdvancedRenderer::CreateShaderPipeline()
     {
-        PipelineMSAA = new ShaderPipeline("../Renderers/Shaders/BlitMS.vsl", "../Renderers/Shaders/BlitMS.psl");
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
         Renderer->RenderPipeline(RenderPipeline);
+        Console::WriteLine(Renderer->Report());
     }
     
 
     void AdvancedRenderer::Render()
     {
         Renderer->Execute();
+        Console::WriteLine(Renderer->Report());
+        //Console::WriteLine(RenderTarget->Report());
     }
     void AdvancedRenderer::Present()
     {
-        //Renderer->RenderPipeline(PipelineMSAA);
-
-        //RenderTarget->Unbind();
-        ////Renderer->RenderTarget(TempFBO);
-        //Renderer->RenderTarget(nullptr);
-        //
-        //RenderTarget->ColorTexture->Bind();
-        //Renderer->Execute();
         Renderer->Present();
-        //RenderTarget->ColorTexture->Unbind();
-
-        //Renderer->RenderPipeline(RenderPipeline);
-        //Renderer->RenderTarget(RenderTarget);
     }
     void AdvancedRenderer::UpdateScene()
     {
