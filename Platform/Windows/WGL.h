@@ -22,19 +22,29 @@
             PlatformAPI extern PFNWGLCHOOSEPIXELFORMATARBPROC       wglChoosePixelFormat;
 
 
+			InternalAPI extern const int						DefaultContextSettings[];
+            InternalAPI extern const int                        DefaultPixelAttributes[];
+            InternalAPI extern const PIXELFORMATDESCRIPTOR      DefaultPixelFormat;
+
             /// <summary> A handle for the GDI device context bound to the loading window. </summary>
-            InternalAPI extern HDC      LoadingDeviceContext;
+            InternalAPI extern HDC                              LoadingDeviceContext;
             /// <summary> A handle for the OpenGL rendering context bound to the loading window and device context. </summary>
-            InternalAPI extern HGLRC    LoadingRenderContext;
+            InternalAPI extern HGLRC                            LoadingRenderContext;
             /// <summary> A handle for the Windows Forms window that is created in order to load OpenGL function pointers. </summary>
             /// <remarks>
             ///     Loading the OpenGL API on the Windows platform is a complicated procedure.
             /// </remarks>
-            InternalAPI extern HWND     LoadingWindow;
+            InternalAPI extern HWND                             LoadingWindow;
 
 
 
-            /** PUBLIC API FUNCTIONS **/
+            /** INTERNAL API FUNCTIONS **/
+			InternalAPI HGLRC wglCreateRenderContext(HWND window, HDC deviceContext);
+
+			InternalAPI HWND wglCreateWindow();
+
+			InternalAPI int wglLoadAPI();
+
             InternalAPI int wglLoadFunctions();
 
             InternalAPI void wglDestroyResources();

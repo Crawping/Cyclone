@@ -11,61 +11,14 @@ using namespace Cyclone::Utilities;
 
 
 /** INTERNAL DATA **/
-const static PIXELFORMATDESCRIPTOR DefaultPixelFormat =
-{
-    sizeof(PIXELFORMATDESCRIPTOR),                                  // nSize
-    1,                                                              // nVersion
-    PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,     // dwFlags
-    PFD_TYPE_RGBA,                                                  // iPixelType
-    32,                                                             // cColorBits
-    8,                                                              // cRedBits
-    0,                                                              // cRedShift
-    8,                                                              // cGreenBits
-    0,                                                              // cGreenShift
-    8,                                                              // cBlueBits
-    0,                                                              // cBlueShift
-    8,                                                              // cAlphaBits
-    0,                                                              // cAlphaShift
-    0,                                                              // cAccumBits
-    0,                                                              // cAccumRedBits
-    0,                                                              // cAccumGreenBi
-    0,                                                              // cAccumBlueBit
-    0,                                                              // cAccumAlphaBi
-    24,                                                             // cDepthBits
-    8,                                                              // cStencilBits
-    0,                                                              // cAuxBuffers
-    PFD_MAIN_PLANE,                                                 // iLayerType       (deprecated & ignored)
-    0,                                                              // bReserved
-    0,                                                              // dwLayerMask      (deprecated & ignored)
-    0,                                                              // dwVisibleMask
-    0,                                                              // dwDamageMask     (deprecated & ignored)
-};
-
-const static int DefaultContextSettings[] =
-{
-    WGL_CONTEXT_FLAGS_ARB,          WGL_CONTEXT_DEBUG_BIT_ARB,
-    WGL_CONTEXT_MAJOR_VERSION_ARB,  4,
-    WGL_CONTEXT_MINOR_VERSION_ARB,  4,
-    WGL_CONTEXT_PROFILE_MASK_ARB,   WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
-    NULL,
-};
-
-
-
-const static int DefaultPixelAttributes[] =
-{
-    WGL_SUPPORT_OPENGL_ARB,         GL_TRUE,
-    WGL_PIXEL_TYPE_ARB,             WGL_TYPE_RGBA_ARB,
-    WGL_ACCELERATION_ARB,           WGL_FULL_ACCELERATION_ARB,
-    WGL_COLOR_BITS_ARB,             32,
-    WGL_ALPHA_BITS_ARB,             8,
-    WGL_DEPTH_BITS_ARB,             24,
-    WGL_STENCIL_BITS_ARB,           8,
-    WGL_DOUBLE_BUFFER_ARB,          GL_TRUE,
-    WGL_SAMPLE_BUFFERS_ARB,         GL_TRUE,
-    WGL_SAMPLES_ARB,                16,
-    NULL,
-};
+//const static int DefaultContextSettings[] =
+//{
+//    WGL_CONTEXT_FLAGS_ARB,          WGL_CONTEXT_DEBUG_BIT_ARB,
+//    WGL_CONTEXT_MAJOR_VERSION_ARB,  4,
+//    WGL_CONTEXT_MINOR_VERSION_ARB,  4,
+//    WGL_CONTEXT_PROFILE_MASK_ARB,   WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+//    NULL,
+//};
 
 
 
@@ -299,6 +252,9 @@ namespace Cyclone
             float fAttribs[] = { 0.0f, 0.0f };
             int idxPixelFormat = 0;
             uint nformats = 0;
+			
+			Internals->RenderContext = wglCreateContextAttribs(Internals->DeviceContext, NULL, DefaultContextSettings);
+			Bind();
 
             if (!wglChoosePixelFormat(Internals->DeviceContext, DefaultPixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
                 Console::WriteLine("Failed to find an advanced pixel format.");
@@ -454,7 +410,7 @@ namespace Cyclone
 
 
         /** INTERNAL RENDERING UTILITIES **/
-        void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, LoadingRenderContext); }
+        void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, Internals->RenderContext); }
         void Window3D::Present()            const { SwapBuffers(Internals->DeviceContext); }
         void Window3D::Unbind()             const { wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext); }
     }

@@ -21,37 +21,37 @@ HGLRC TemporaryRenderContext            = NULL;
 HWND LoadingWindow                      = NULL;
 static HINSTANCE LibraryHandle          = NULL;
 
-const static PIXELFORMATDESCRIPTOR DefaultPixelFormat =
+const PIXELFORMATDESCRIPTOR DefaultPixelFormat =
 {
     sizeof(PIXELFORMATDESCRIPTOR),                                  // nSize
     1,                                                              // nVersion
     PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,     // dwFlags
     PFD_TYPE_RGBA,                                                  // iPixelType
     32,                                                             // cColorBits
-    8,                                                              // cRedBits;
-    0,                                                              // cRedShift;
-    8,                                                              // cGreenBits;
-    0,                                                              // cGreenShift;
-    8,                                                              // cBlueBits;
-    0,                                                              // cBlueShift;
-    8,                                                              // cAlphaBits;
-    0,                                                              // cAlphaShift;
-    0,                                                              // cAccumBits;
+    8,                                                              // cRedBits
+    0,                                                              // cRedShift
+    8,                                                              // cGreenBits
+    0,                                                              // cGreenShift
+    8,                                                              // cBlueBits
+    0,                                                              // cBlueShift
+    8,                                                              // cAlphaBits
+    0,                                                              // cAlphaShift
+    0,                                                              // cAccumBits
     0,                                                              // cAccumRedBits
-    0,                                                              // cAccumGreenBi
-    0,                                                              // cAccumBlueBit
-    0,                                                              // cAccumAlphaBi
-    24,                                                             // cDepthBits;
-    8,                                                              // cStencilBits;
-    0,                                                              // cAuxBuffers;
-    PFD_MAIN_PLANE,                                                 // iLayerType;
-    0,                                                              // bReserved;
-    0,                                                              // dwLayerMask;
+    0,                                                              // cAccumGreenBits
+    0,                                                              // cAccumBlueBits
+    0,                                                              // cAccumAlphaBits
+    24,                                                             // cDepthBits
+    8,                                                              // cStencilBits
+    0,                                                              // cAuxBuffers
+    PFD_MAIN_PLANE,                                                 // iLayerType       (deprecated & ignored)
+    0,                                                              // bReserved
+    0,                                                              // dwLayerMask      (deprecated & ignored)
     0,                                                              // dwVisibleMask
-    0,                                                              // dwDamageMask;
+    0,                                                              // dwDamageMask     (deprecated & ignored)
 };
 
-const static int DefaultContextSettings[] =
+const int DefaultContextSettings[] =
 {
     WGL_CONTEXT_FLAGS_ARB,          WGL_CONTEXT_DEBUG_BIT_ARB,
     WGL_CONTEXT_MAJOR_VERSION_ARB,  4,
@@ -60,7 +60,7 @@ const static int DefaultContextSettings[] =
     NULL,
 };
 
-const static int DefaultPixelAttributes[] =
+const int DefaultPixelAttributes[] =
 {
     WGL_SUPPORT_OPENGL_ARB,         GL_TRUE,
     WGL_PIXEL_TYPE_ARB,             WGL_TYPE_RGBA_ARB,
@@ -94,50 +94,59 @@ static LRESULT CALLBACK WindowMessageHandler(HWND win, UINT msg, WPARAM wparam, 
 /// <returns> An integer Boolean whose value is logically false if any errors were encountered. </returns>
 static int FinalizeLoadingContext()
 {
+    //wglMakeCurrent(LoadingDeviceContext, NULL);
+    //wglDeleteContext(TemporaryRenderContext);
+    //ReleaseDC(LoadingWindow, LoadingDeviceContext);
+    //DestroyWindow(LoadingWindow);
+    //TemporaryRenderContext = NULL;
 
-    wglMakeCurrent(LoadingDeviceContext, NULL);
-    wglDeleteContext(TemporaryRenderContext);
-    ReleaseDC(LoadingWindow, LoadingDeviceContext);
-    DestroyWindow(LoadingWindow);
-    TemporaryRenderContext = NULL;
+    //UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
 
-    UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
+    //InitializeLoadingWindow();
 
-    InitializeLoadingWindow();
+    //LoadingDeviceContext = GetDC(LoadingWindow);
+    //
+    //float fAttribs[] = { 0.0f, 0.0f };
+    //int idxPixelFormat = 0;
+    //UINT nformats = 0;
 
-    LoadingDeviceContext = GetDC(LoadingWindow);
-    
-    float fAttribs[] = { 0.0f, 0.0f };
-    int idxPixelFormat = 0;
-    UINT nformats = 0;
+    //if (!wglChoosePixelFormat(LoadingDeviceContext, DefaultPixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
+    //{
+    //    fprintf(stderr, "Failed to find an advanced pixel format.");
+    //    return 0;
+    //}
 
-    if (!wglChoosePixelFormat(LoadingDeviceContext, DefaultPixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
-    {
-        fprintf(stderr, "Failed to find an advanced pixel format.");
-        return 0;
-    }
+    //if (!idxPixelFormat)
+    //{
+    //    fprintf(stderr, "Failed to acquire a valid pixel format.");
+    //    return 0;
+    //}
+    //else if (!SetPixelFormat(LoadingDeviceContext, idxPixelFormat, &DefaultPixelFormat))
+    //{
+    //    fprintf(stderr, "Failed to set the advanced pixel format.");
+    //    idxPixelFormat = ChoosePixelFormat(LoadingDeviceContext, &DefaultPixelFormat);
+    //}
 
-    if (!idxPixelFormat)
-    {
-        fprintf(stderr, "Failed to acquire a valid pixel format.");
-        return 0;
-    }
-    else if (!SetPixelFormat(LoadingDeviceContext, idxPixelFormat, &DefaultPixelFormat))
-    {
-        fprintf(stderr, "Failed to set the advanced pixel format.");
-        idxPixelFormat = ChoosePixelFormat(LoadingDeviceContext, &DefaultPixelFormat);
-    }
+	LoadingDeviceContext = GetDC(LoadingWindow);
+	if (!SetPixelFormat(LoadingDeviceContext, ChoosePixelFormat(LoadingDeviceContext, &DefaultPixelFormat), &DefaultPixelFormat))
+	{
+		fprintf(stderr, "Failed to set the pixel format for the loading context.\n");
+		return 0;
+	}
 
     LoadingRenderContext = wglCreateContextAttribs(LoadingDeviceContext, NULL, DefaultContextSettings);
     if (!LoadingRenderContext)
     {
-        fprintf(stderr, "Failed to create the advanced OpenGL rendering context.");
+        fprintf(stderr, "Failed to create the advanced OpenGL rendering context.\n");
         return 0;
     }
 
+    //wglMakeCurrent(LoadingDeviceContext, NULL);
+    //wglDeleteContext(TemporaryRenderContext);
+
     if (!wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext))
     {
-        fprintf(stderr, "Failed to bind the advanced OpenGL rendering context to the loading window.");
+        fprintf(stderr, "Failed to bind the advanced OpenGL rendering context to the loading window.\n");
         return 0;
     }
 
@@ -149,15 +158,14 @@ static int FinalizeLoadingContext()
 static int InitializeLoadingContext()
 {
     LoadingDeviceContext = GetDC(LoadingWindow);
-
     if (!SetPixelFormat(LoadingDeviceContext, ChoosePixelFormat(LoadingDeviceContext, &DefaultPixelFormat), &DefaultPixelFormat))
     {
         fprintf(stderr, "Failed to set the pixel format for the loading context.\n");
         return 0;
     }
 
-    TemporaryRenderContext = wglCreateContext(LoadingDeviceContext);
-    if (!wglMakeCurrent(LoadingDeviceContext, TemporaryRenderContext))
+    LoadingRenderContext = wglCreateContext(LoadingDeviceContext);
+    if (!wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext))
     {
         fprintf(stderr, "Failed to initialize the temporary rendering context.\n");
         return 0;
@@ -168,7 +176,7 @@ static int InitializeLoadingContext()
 
 /// <summary> Creates and initializes the Windows Forms window used to load OpenGL function pointers and rendering contexts. </summary>
 /// <returns> An integer Boolean whose value is logically false if any errors were encountered. </returns>
-static int InitializeLoadingWindow()
+static HWND CreateRenderingWindow()
 {
     WNDCLASS winClass;
     ZeroMemory(&winClass, sizeof(winClass));
@@ -207,38 +215,123 @@ static int InitializeLoadingWindow()
     return 1;
 }
 
-
-
-
-
-int wglLoadFunctions()
+static void DestroyLoadingWindow()
 {
-    if (!InitializeLoadingWindow() || !InitializeLoadingContext())
-        return 0;
+	if (LoadingRenderContext)
+		wglMakeCurrent(LoadingDeviceContext, NULL);
 
-    LibraryHandle = LoadLibrary(L"opengl32.dll");
-    if (!LibraryHandle)
-    {
-        fprintf(stderr, "Failed to load the OpenGL library 'opengl32.dll'.\n");
-        return 0;
-    }
+	if (LoadingRenderContext)	{ wglDeleteContext(LoadingRenderContext); }
+	if (TemporaryRenderContext) { wglDeleteContext(TemporaryRenderContext); }
+	if (LoadingDeviceContext)	{ ReleaseDC(LoadingWindow, LoadingDeviceContext); }
+	if (LoadingWindow)			{ DestroyWindow(LoadingWindow); }
 
-    wglCreateContextAttribs     = (PFNWGLCREATECONTEXTATTRIBSARBPROC)glGetFunctionPointer("wglCreateContextAttribsARB");
-    wglGetExtensionsString      = (PFNWGLGETEXTENSIONSSTRINGARBPROC)glGetFunctionPointer("wglGetExtensionsStringARB");
+	LoadingDeviceContext	= NULL;
+	LoadingRenderContext	= NULL;
+	LoadingWindow			= NULL;
+	TemporaryRenderContext	= NULL;
+
+	UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
+}
+
+
+
+
+/** API FUNCTIONS **/
+HGLRC wglCreateRenderContext(HWND window, HDC deviceContext)
+{
+	if (!SetPixelFormat(deviceContext, ChoosePixelFormat(deviceContext, &DefaultPixelFormat), &DefaultPixelFormat))
+	{
+		fprintf(stderr, "Failed to set the pixel format for the device context.\n");
+		return NULL;
+	}
+
+	HGLRC renderContext = wglCreateContextAttribs(deviceContext, NULL, DefaultContextSettings);
+	if (!renderContext)
+	{
+		fprintf(stderr, "Failed to create an advanced OpenGL rendering context.\n");
+		return NULL;
+	}
+
+	return renderContext;
+}
+HWND wglCreateWindow()
+{
+	WNDCLASS winClass;
+	ZeroMemory(&winClass, sizeof(winClass));
+
+    winClass.hCursor        = LoadCursor(NULL, IDC_ARROW);
+    winClass.hInstance      = GetModuleHandle(NULL);
+    winClass.lpfnWndProc    = WindowMessageHandler;
+    winClass.lpszClassName  = TEXT("LoadingWindowWGL");
+    winClass.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+
+	if (!RegisterClass(&winClass))
+	{
+		fprintf(stderr, "Failed to register the API loading window class.\n");
+		return NULL;
+	}
+
+	HWND window = CreateWindowEx
+	(
+		WS_EX_OVERLAPPEDWINDOW,
+		TEXT("LoadingWindowWGL"),
+		TEXT("WGL API Loading Window"),
+		WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+		0, 0, 1, 1,
+		NULL,
+		NULL,
+		GetModuleHandle(NULL),
+		NULL
+	);
+
+	if (!LoadingWindow)
+	{
+		fprintf(stderr, "Failed to create the API loading window.\n");
+		return NULL;
+	}
+
+	return window;
+}
+
+int wglLoadAPI()
+{
+	LibraryHandle = LoadLibrary(L"opengl32.dll");
+	if (!LibraryHandle)
+	{
+		fprintf(stderr, "Failed to load the OpenGL library 'opengl32.dll'.\n");
+		return 0;
+	}
+
+	wglCreateContextAttribs		= (PFNWGLCREATECONTEXTATTRIBSARBPROC)glGetFunctionPointer("wglCreateContextAttribsARB");
+	wglGetExtensionsString      = (PFNWGLGETEXTENSIONSSTRINGARBPROC)glGetFunctionPointer("wglGetExtensionsStringARB");
     wglGetPixelFormatAttribiv   = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)glGetFunctionPointer("wglGetPixelFormatAttribivARB");
     wglSwapInterval             = (PFNWGLSWAPINTERVALEXTPROC)glGetFunctionPointer("wglSwapInterval");
     wglChoosePixelFormat        = (PFNWGLCHOOSEPIXELFORMATARBPROC)glGetFunctionPointer("wglChoosePixelFormatARB");
-    
-    if (!FinalizeLoadingContext())
-        return 0;
-    
 
-    FreeLibrary(LibraryHandle);
-    LibraryHandle = NULL;    
+	FreeLibrary(LibraryHandle);
+	LibraryHandle = NULL;
+
+	return 1;
+}
+
+int wglLoadFunctions()
+{
+    if (!CreateLoadingWindow() || !InitializeLoadingContext())
+        return 0;
+
+	if (!wglLoadAPI())
+		return 0;
+
+	DestroyLoadingWindow();
+
+	if (!CreateLoadingWindow() || !FinalizeLoadingContext())
+		return 0;
+
+	if (!wglLoadAPI())
+		return 0; 
 
     return 1;
 }
-
 
 void wglDestroyResources()
 {
@@ -254,3 +347,30 @@ void wglDestroyResources()
 
     UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
 }
+
+
+/** FIRST PASS **/
+
+// Create loading window
+// Get device context
+// Choose simple pixel format
+// Describe pixel format?
+// Set simple pixel format
+// Create advanced render context
+// Make context current
+// Load WGL extensions
+
+
+/** SECOND PASS **/
+// Make NULL the current context
+// Destroy the rendering context
+// Destroy the device context
+// Destroy the loading window
+// Create a new window
+// Get the device context
+// Choose advanced pixel format
+// Describe pixel format?
+// Set advanced pixel format
+// Create advanced render context
+// Make advanced context current
+// Load WGL extensions

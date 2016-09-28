@@ -1,5 +1,4 @@
 #include "AdvancedRenderer.h"
-#include "Console.h"
 #include "GPU.h"
 #include "Window3D.h"
 
@@ -16,9 +15,8 @@ namespace Renderers
         BasicRenderer(title),
         MoveSpeed(16.0f)
     {
-        
+
     }
-    
 
 
     void AdvancedRenderer::Execute()
@@ -51,8 +49,6 @@ namespace Renderers
         Renderer->RenderTarget(RenderTarget);
 
         glEnable(GL_MULTISAMPLE);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
     void AdvancedRenderer::CreateRenderingWindow()
     {
@@ -67,15 +63,11 @@ namespace Renderers
     {
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
         Renderer->RenderPipeline(RenderPipeline);
-        Console::WriteLine(Renderer->Report());
-    }
-    
+    }    
 
     void AdvancedRenderer::Render()
     {
         Renderer->Execute();
-        Console::WriteLine(Renderer->Report());
-        //Console::WriteLine(RenderTarget->Report());
     }
     void AdvancedRenderer::Present()
     {

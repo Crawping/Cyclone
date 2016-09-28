@@ -14,7 +14,6 @@ namespace Renderers
     {
         public:
 
-
             /** APPLICATION UTILITIES **/
             RendererAPI void Execute() override;
 
