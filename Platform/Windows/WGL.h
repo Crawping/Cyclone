@@ -19,7 +19,7 @@
             PlatformAPI extern PFNWGLGETEXTENSIONSSTRINGARBPROC     wglGetExtensionsString;
             PlatformAPI extern PFNWGLGETPIXELFORMATATTRIBIVARBPROC  wglGetPixelFormatAttribiv;
             PlatformAPI extern PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval;
-
+            PlatformAPI extern PFNWGLCHOOSEPIXELFORMATARBPROC       wglChoosePixelFormat;
 
 
             /// <summary> A handle for the GDI device context bound to the loading window. </summary>

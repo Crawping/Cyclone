@@ -34,11 +34,11 @@ const static PIXELFORMATDESCRIPTOR DefaultPixelFormat =
     24,                                                             // cDepthBits
     8,                                                              // cStencilBits
     0,                                                              // cAuxBuffers
-    PFD_MAIN_PLANE,                                                 // iLayerType
+    PFD_MAIN_PLANE,                                                 // iLayerType       (deprecated & ignored)
     0,                                                              // bReserved
-    0,                                                              // dwLayerMask
+    0,                                                              // dwLayerMask      (deprecated & ignored)
     0,                                                              // dwVisibleMask
-    0,                                                              // dwDamageMask
+    0,                                                              // dwDamageMask     (deprecated & ignored)
 };
 
 const static int DefaultContextSettings[] =
@@ -47,6 +47,23 @@ const static int DefaultContextSettings[] =
     WGL_CONTEXT_MAJOR_VERSION_ARB,  4,
     WGL_CONTEXT_MINOR_VERSION_ARB,  4,
     WGL_CONTEXT_PROFILE_MASK_ARB,   WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+    NULL,
+};
+
+
+
+const static int DefaultPixelAttributes[] =
+{
+    WGL_SUPPORT_OPENGL_ARB,         GL_TRUE,
+    WGL_PIXEL_TYPE_ARB,             WGL_TYPE_RGBA_ARB,
+    WGL_ACCELERATION_ARB,           WGL_FULL_ACCELERATION_ARB,
+    WGL_COLOR_BITS_ARB,             32,
+    WGL_ALPHA_BITS_ARB,             8,
+    WGL_DEPTH_BITS_ARB,             24,
+    WGL_STENCIL_BITS_ARB,           8,
+    WGL_DOUBLE_BUFFER_ARB,          GL_TRUE,
+    WGL_SAMPLE_BUFFERS_ARB,         GL_TRUE,
+    WGL_SAMPLES_ARB,                16,
     NULL,
 };
 
@@ -278,7 +295,19 @@ namespace Cyclone
             SetWindowLong(Internals->ID, GWLP_USERDATA, (long)this);
             Internals->DeviceContext = GetDC(Internals->ID);
 
-            int idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);
+            //int idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);
+            float fAttribs[] = { 0.0f, 0.0f };
+            int idxPixelFormat = 0;
+            uint nformats = 0;
+
+            if (!wglChoosePixelFormat(Internals->DeviceContext, DefaultPixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
+                Console::WriteLine("Failed to find an advanced pixel format.");
+            else if (!SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
+            {
+                Console::WriteLine("Failed to set the advanced pixel format.");
+                idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);                
+            }
+
             if (!SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
             {
                 Console::WriteLine("Failed to set the pixel format for the 3D rendering window.");

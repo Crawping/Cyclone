@@ -9,6 +9,8 @@ PFNWGLGETEXTENSIONSSTRINGARBPROC     wglGetExtensionsString     = NULL;
 PFNWGLCREATECONTEXTATTRIBSARBPROC    wglCreateContextAttribs    = NULL;
 PFNWGLSWAPINTERVALEXTPROC            wglSwapInterval            = NULL;
 PFNWGLGETPIXELFORMATATTRIBIVARBPROC  wglGetPixelFormatAttribiv  = NULL;
+PFNWGLCHOOSEPIXELFORMATARBPROC       wglChoosePixelFormat       = NULL;
+
 
 
 
@@ -58,6 +60,22 @@ const static int DefaultContextSettings[] =
     NULL,
 };
 
+const static int DefaultPixelAttributes[] =
+{
+    WGL_SUPPORT_OPENGL_ARB,         GL_TRUE,
+    WGL_PIXEL_TYPE_ARB,             WGL_TYPE_RGBA_ARB,
+    WGL_ACCELERATION_ARB,           WGL_FULL_ACCELERATION_ARB,
+    WGL_COLOR_BITS_ARB,             32,
+    WGL_ALPHA_BITS_ARB,             8,
+    WGL_DEPTH_BITS_ARB,             24,
+    WGL_STENCIL_BITS_ARB,           8,
+    WGL_DOUBLE_BUFFER_ARB,          GL_TRUE,
+    WGL_SAMPLE_BUFFERS_ARB,         GL_TRUE,
+    WGL_SAMPLES_ARB,                16,
+    NULL,
+};
+
+
 
 /** INTERNAL UTILITIES **/
 static LRESULT CALLBACK WindowMessageHandler(HWND win, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -76,16 +94,46 @@ static LRESULT CALLBACK WindowMessageHandler(HWND win, UINT msg, WPARAM wparam, 
 /// <returns> An integer Boolean whose value is logically false if any errors were encountered. </returns>
 static int FinalizeLoadingContext()
 {
+
+    wglMakeCurrent(LoadingDeviceContext, NULL);
+    wglDeleteContext(TemporaryRenderContext);
+    ReleaseDC(LoadingWindow, LoadingDeviceContext);
+    DestroyWindow(LoadingWindow);
+    TemporaryRenderContext = NULL;
+
+    UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
+
+    InitializeLoadingWindow();
+
+    LoadingDeviceContext = GetDC(LoadingWindow);
+    
+    float fAttribs[] = { 0.0f, 0.0f };
+    int idxPixelFormat = 0;
+    UINT nformats = 0;
+
+    if (!wglChoosePixelFormat(LoadingDeviceContext, DefaultPixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
+    {
+        fprintf(stderr, "Failed to find an advanced pixel format.");
+        return 0;
+    }
+
+    if (!idxPixelFormat)
+    {
+        fprintf(stderr, "Failed to acquire a valid pixel format.");
+        return 0;
+    }
+    else if (!SetPixelFormat(LoadingDeviceContext, idxPixelFormat, &DefaultPixelFormat))
+    {
+        fprintf(stderr, "Failed to set the advanced pixel format.");
+        idxPixelFormat = ChoosePixelFormat(LoadingDeviceContext, &DefaultPixelFormat);
+    }
+
     LoadingRenderContext = wglCreateContextAttribs(LoadingDeviceContext, NULL, DefaultContextSettings);
     if (!LoadingRenderContext)
     {
         fprintf(stderr, "Failed to create the advanced OpenGL rendering context.");
         return 0;
     }
-
-    wglMakeCurrent(LoadingDeviceContext, NULL);
-    wglDeleteContext(TemporaryRenderContext);
-    TemporaryRenderContext = NULL;
 
     if (!wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext))
     {
@@ -176,13 +224,14 @@ int wglLoadFunctions()
     }
 
     wglCreateContextAttribs     = (PFNWGLCREATECONTEXTATTRIBSARBPROC)glGetFunctionPointer("wglCreateContextAttribsARB");
+    wglGetExtensionsString      = (PFNWGLGETEXTENSIONSSTRINGARBPROC)glGetFunctionPointer("wglGetExtensionsStringARB");
+    wglGetPixelFormatAttribiv   = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)glGetFunctionPointer("wglGetPixelFormatAttribivARB");
+    wglSwapInterval             = (PFNWGLSWAPINTERVALEXTPROC)glGetFunctionPointer("wglSwapInterval");
+    wglChoosePixelFormat        = (PFNWGLCHOOSEPIXELFORMATARBPROC)glGetFunctionPointer("wglChoosePixelFormatARB");
     
     if (!FinalizeLoadingContext())
         return 0;
     
-    wglGetExtensionsString      = (PFNWGLGETEXTENSIONSSTRINGARBPROC)glGetFunctionPointer("wglGetExtensionsStringARB");
-    wglGetPixelFormatAttribiv   = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)glGetFunctionPointer("wglGetPixelFormatAttribivARB");
-    wglSwapInterval             = (PFNWGLSWAPINTERVALEXTPROC)glGetFunctionPointer("wglSwapInterval");
 
     FreeLibrary(LibraryHandle);
     LibraryHandle = NULL;    
