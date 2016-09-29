@@ -14,6 +14,23 @@
         {
     #endif
 
+			typedef struct _window3D
+			{
+				HDC     DeviceContext;
+				HWND    ID;
+				HGLRC   RenderContext;
+
+
+				PFNWGLCREATECONTEXTATTRIBSARBPROC    CreateContextAttribs;
+				PFNWGLGETEXTENSIONSSTRINGARBPROC     GetExtensionsString;
+				PFNWGLGETPIXELFORMATATTRIBIVARBPROC  GetPixelFormatAttribiv;
+				PFNWGLSWAPINTERVALEXTPROC            SwapInterval;
+				PFNWGLCHOOSEPIXELFORMATARBPROC       ChoosePixelFormat;
+
+			} _window3D;
+
+
+
             /** WGL FUNCTION POINTERS **/
             PlatformAPI extern PFNWGLCREATECONTEXTATTRIBSARBPROC    wglCreateContextAttribs;
             PlatformAPI extern PFNWGLGETEXTENSIONSSTRINGARBPROC     wglGetExtensionsString;
@@ -36,14 +53,6 @@
             /// </remarks>
             InternalAPI extern HWND                             LoadingWindow;
 
-
-
-            typedef struct _window3D
-            {
-                HDC     DeviceContext;
-                HWND    ID;
-                HGLRC   RenderContext;
-            } _window3D;
 
 
             /** INTERNAL API FUNCTIONS **/
