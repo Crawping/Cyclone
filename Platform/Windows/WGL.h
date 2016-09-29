@@ -38,14 +38,23 @@
 
 
 
+            typedef struct _window3D
+            {
+                HDC     DeviceContext;
+                HWND    ID;
+                HGLRC   RenderContext;
+            } _window3D;
+
+
             /** INTERNAL API FUNCTIONS **/
-			InternalAPI HGLRC wglCreateRenderContext(HWND window, HDC deviceContext);
+			InternalAPI _window3D* wglCreateWindow(const int* pixelAttributes, WNDPROC msgLoop);
 
-			InternalAPI HWND wglCreateWindow();
+            InternalAPI void wglDestroyWindow(_window3D* window);
 
-			InternalAPI int wglLoadAPI();
+			//InternalAPI int wglLoadAPI();
 
             InternalAPI int wglLoadFunctions();
+
 
             InternalAPI void wglDestroyResources();
             
