@@ -16,7 +16,7 @@ class Program : public BasicRenderer
 {
     public:
         Program() :
-            BasicRenderer("Indexed Cube"),
+            BasicRenderer(Area(0, 0, 1024, 960), "Indexed Cube"),
             Cube(nullptr)
         {
             Vector<uint> indices;

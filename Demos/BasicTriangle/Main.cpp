@@ -18,7 +18,7 @@ class Program : public BasicRenderer
 {
     public:
         Program() : 
-            BasicRenderer("Basic Triangle Rendering"),
+            BasicRenderer(Area(0, 0, 1024, 960), "Basic Triangle Rendering"),
             Triangle(Geometry3D::Triangle())
         { 
             Initialize();

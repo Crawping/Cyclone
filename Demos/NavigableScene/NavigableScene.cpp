@@ -27,7 +27,7 @@ class Program : public AdvancedRenderer
 {
     public:
         Program() :
-            AdvancedRenderer("Navigable 3D Scene")
+            AdvancedRenderer(Area(0, 0, 1024, 960), "Navigable 3D Scene")
         {
             Initialize();
 

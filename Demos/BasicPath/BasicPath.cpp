@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20160915
  */
 
-#include "BasicRenderer.h"
+#include "AdvancedRenderer.h"
 #include "Console.h"
 #include "EnumerationsSVG.h"
 #include "GPU.h"
@@ -25,12 +25,12 @@ using namespace Renderers;
 
 
 
-class Program : public BasicRenderer
+class Program : public AdvancedRenderer
 {
     public:
 
         Program() :
-            BasicRenderer("NVIDIA Basic Path Rendering")
+            AdvancedRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering")
         {
             Initialize();
             nvPathStencilDepthOffset(-0.05f, -1);
@@ -43,14 +43,6 @@ class Program : public BasicRenderer
 
 
 
-        void CreateRenderTarget() override
-        {
-            if (RenderTarget)
-                delete RenderTarget;
-
-            RenderTarget = new FrameBuffer(RenderWindow->ClientArea().Scale(), TextureFormats::Byte4, TextureFormats::DepthStencil);
-            Renderer->RenderTarget(RenderTarget);
-        }
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();

@@ -15,7 +15,7 @@ class Program : public BasicRenderer
 {
     public:
         Program() : 
-            BasicRenderer("Basic Point Rendering")
+            BasicRenderer(Area(0, 0, 1024, 960), "Basic Point Rendering")
         {
             Initialize();
         }

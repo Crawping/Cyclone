@@ -14,8 +14,12 @@ class Program : public BasicRenderer
 {
     public: 
         Program() : 
-            BasicRenderer("Pointer Tracking")
+            BasicRenderer(Area(0, 0, 1024, 960), "Pointer Tracking")
         {
+			RenderWindow->OnPointerMotion.Register(this, &Program::WhenPointerMoves);
+			RenderWindow->OnButtonPress.Register(this, &Program::WhenButtonPresses);
+			RenderWindow->OnButtonRelease.Register(this, &Program::WhenButtonReleases);
+
             Initialize();
         }
 
@@ -26,19 +30,8 @@ class Program : public BasicRenderer
         }
 
     protected:
-        
-        void CreateRenderingWindow() override
-        {
-            BasicRenderer::CreateRenderingWindow();
-            RenderWindow->OnPointerMotion.Register(this, &Program::WhenPointerMoves);
-            RenderWindow->OnButtonPress.Register(this, &Program::WhenButtonPresses);
-            RenderWindow->OnButtonRelease.Register(this, &Program::WhenButtonReleases);
-        }
 
-        void Initialize() override
-        {
-            CreateRenderingWindow();
-        }
+        void Initialize() override { }
 
         void WhenPointerMoves(const PointerMotionEvent& evt)
         {

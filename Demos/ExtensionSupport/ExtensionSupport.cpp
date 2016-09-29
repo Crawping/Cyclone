@@ -13,7 +13,7 @@ using namespace Renderers;
 class Program : public BasicRenderer
 {
     public: 
-        Program() : BasicRenderer("OpenGL Extension Support")
+        Program() : BasicRenderer(Area(0, 0, 1, 1), "OpenGL Extension Support")
         {
             Initialize();
 

@@ -16,7 +16,7 @@ class Program : public BasicRenderer
 {
     public:
         Program() : 
-            BasicRenderer("Rotating Cube"),
+            BasicRenderer(Area(0, 0, 1024, 960), "Rotating Cube"),
             Cube(Geometry3D::Cube())
         {
             Initialize();

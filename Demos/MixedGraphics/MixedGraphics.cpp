@@ -31,7 +31,7 @@ class Program : public AdvancedRenderer
     public:
 
         Program() :
-            AdvancedRenderer("NVIDIA Basic Rounded Rectangle Rendering"),
+            AdvancedRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering"),
             PipelineSVG(nullptr),
             SceneSVG(nullptr),
             Sphere(Geometry3D::Sphere(4))

@@ -19,7 +19,7 @@ class Program : public BasicRenderer
     public:
 
         Program() :
-            BasicRenderer("Mixed Primitive Rendering"),
+            BasicRenderer(Area(0, 0, 1024, 960), "Mixed Primitive Rendering"),
             Cube(nullptr),
             Cylinder(nullptr),
             Icosahedron(nullptr),

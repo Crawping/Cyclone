@@ -31,7 +31,7 @@ class Program : public AdvancedRenderer
     public:
 
         Program() :
-            AdvancedRenderer("NVIDIA Basic Path Rendering")
+            AdvancedRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering")
         {
             Initialize();
             nvPathStencilDepthOffset(-0.05f, -1);

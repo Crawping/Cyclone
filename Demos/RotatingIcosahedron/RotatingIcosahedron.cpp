@@ -15,7 +15,7 @@ class Program : public BasicRenderer
 {
     public:
         Program() :
-            BasicRenderer("Rotating Cube"),
+            BasicRenderer(Area(0, 0, 1024, 960), "Rotating Cube"),
             Icosahedron(Geometry3D::Icosahedron())
         {
             Initialize();

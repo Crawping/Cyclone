@@ -15,7 +15,7 @@ class Program : public BasicRenderer
 {
     public:
         Program() :
-            BasicRenderer("Rotating Sphere"),
+            BasicRenderer(Area(0, 0, 1024, 960), "Rotating Sphere"),
             Sphere(Geometry3D::Sphere(3))
         {
             Initialize();

@@ -29,7 +29,7 @@ class Program : public BasicRenderer
     public:
 
         Program() :
-            BasicRenderer("NVIDIA Basic Rounded Rectangle Rendering")
+            BasicRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering")
         {
             Initialize();
         }
