@@ -43,7 +43,9 @@ namespace Cyclone
     {
         ParseInputArguments(nargs, args);
 
-        RenderWindow    = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window");
+        Renderer = new GPU();
+
+		CreateRenderingWindow();		
 
         if (!cglLoadAPI())
         {
@@ -51,30 +53,9 @@ namespace Cyclone
             return;
         }
 
-        Renderer        = new GPU();
-        RenderPipeline  = new ShaderPipeline("../Demos/Renderers/Shaders/BlinnPhong.vsl", "../Demos/Renderers/Shaders/BlinnPhong.psl");
-        RenderScene     = new Scene3D();
-
-        Renderer->RenderWindow(RenderWindow);
-        Renderer->RenderPipeline(RenderPipeline);
-
-        CreateSizedResources();
-
-        PlaneXZ = new Quad3D();
-        PlaneXZ->Pitch(-90).Scale(5000).Translate(0, 50);
-
-        Vector<uint> indices;
-        Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
-        TestShape = new Mesh3D(vertices, indices);
-        TestShape->Scale(Vector3(50, 50, 50)).Translate(250, 250, -10);
-
-        RenderScene->Add(*TestShape);
-        RenderScene->Add(*PlaneXZ);
-
-        Renderer->Scene(RenderScene);
-
-        RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
-        RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
+		CreateRenderingPipeline();
+		CreateSceneResources();
+        CreateSizedResources();        
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
@@ -129,28 +110,77 @@ namespace Cyclone
     {
         _canContinue = false;
     }
+	void Program::CreateRenderingPipeline()
+	{
+		RenderPipeline = new ShaderPipeline("../Demos/Renderers/Shaders/BlinnPhong.vsl", "../Demos/Renderers/Shaders/BlinnPhong.psl");
+		Renderer->RenderPipeline(RenderPipeline);
+	}
+	void Program::CreateRenderingTarget()
+	{
+		if (RenderTarget)
+		{
+			delete RenderTarget;
+			RenderTarget = nullptr;
+		}
+
+		//RenderTarget = new FrameBuffer
+		//(
+		//	RenderWindow->ClientArea().Scale(),
+		//	TextureFormats::Byte4,
+		//	TextureFormats::DepthStencil,
+		//	TextureTargets::Texture2DMS
+		//);
+		//Renderer->RenderTarget(RenderTarget);
+
+		//glEnable(GL_MULTISAMPLE);
+	}
+	void Program::CreateRenderingWindow()
+	{
+		RenderWindow = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window");
+		RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
+		RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
+
+		Renderer->RenderWindow(RenderWindow);
+	}
+	void Program::CreateSceneResources()
+	{
+		RenderScene = new Scene3D();
+		Renderer->Scene(RenderScene);
+
+		PlaneXZ = new Quad3D();
+		PlaneXZ->Pitch(-90).Scale(5000).Translate(0, 50);
+
+		Vector<uint> indices;
+		Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
+		TestShape = new Mesh3D(vertices, indices);
+		TestShape->Scale(Vector3(50, 50, 50)).Translate(250, 250, -10);
+
+		RenderScene->Add(*TestShape);
+		RenderScene->Add(*PlaneXZ);
+	}
     void Program::CreateSizedResources()
     {
-        if (RenderTarget)
-            delete RenderTarget;
-
-        Area clientArea = RenderWindow->ClientArea();
-        View.Translate( Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f) );
-
-        Projection = Transform::PerspectiveProjection
-        (
-            90,
-            clientArea.Width / clientArea.Height,
-            (clientArea.Height - 100.0f) / 2.0f,
-            (clientArea.Height + 100.0f) / 2.0f
-        );
-
-        RenderTarget = new FrameBuffer(clientArea.Scale());
-
-        Renderer->RenderTarget(RenderTarget);
-        Renderer->Projection(Projection);
-        Renderer->View(View);
+		CreateRenderingTarget();
+		CreateTransformations();        
     }
+	void Program::CreateTransformations()
+	{
+		Area clientArea = RenderWindow->ClientArea();
+		View
+			.Orientation(Vector3::Zero)
+			.Position(Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f));
+
+		Projection = Transform::PerspectiveProjection
+		(
+			90,
+			clientArea.Width / clientArea.Height,
+			1,
+			4.0f * clientArea.Width
+		);
+
+		Renderer->Projection(Projection);
+		Renderer->View(View);
+	}
     void Program::ParseInputArguments(int nargs, char** args)
     {
         if (nargs == 1)

@@ -65,7 +65,12 @@ namespace Cyclone
 
 
             /** UTILITIES **/
+			void CreateRenderingPipeline();
+			void CreateRenderingTarget();
+			void CreateRenderingWindow();
+			void CreateSceneResources();
             void CreateSizedResources();
+			void CreateTransformations();
             void ParseInputArguments(int nargs, char** args);
 
             void BreakEventLoop();
