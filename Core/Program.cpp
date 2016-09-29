@@ -43,6 +43,8 @@ namespace Cyclone
     {
         ParseInputArguments(nargs, args);
 
+        RenderWindow    = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window");
+
         if (!cglLoadAPI())
         {
             PostInfo("Failed to initialize the OpenGL library.");
@@ -50,7 +52,6 @@ namespace Cyclone
         }
 
         Renderer        = new GPU();
-        RenderWindow    = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window");
         RenderPipeline  = new ShaderPipeline("../Demos/Renderers/Shaders/BlinnPhong.vsl", "../Demos/Renderers/Shaders/BlinnPhong.psl");
         RenderScene     = new Scene3D();
 
@@ -78,6 +79,10 @@ namespace Cyclone
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LESS);
         glEnable(GL_DEPTH_CLAMP);
+
+        glEnable(GL_MULTISAMPLE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
     Program::~Program()
     {
