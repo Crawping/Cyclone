@@ -11,6 +11,20 @@ using namespace Cyclone::Utilities;
 
 
 /** INTERNAL FUNCTIONS **/
+const int DefaultPixelAttributes[] =
+{
+	WGL_SUPPORT_OPENGL_ARB,         GL_TRUE,
+	WGL_PIXEL_TYPE_ARB,             WGL_TYPE_RGBA_ARB,
+	WGL_ACCELERATION_ARB,           WGL_FULL_ACCELERATION_ARB,
+	WGL_COLOR_BITS_ARB,             32,
+	WGL_ALPHA_BITS_ARB,             8,
+	WGL_DEPTH_BITS_ARB,             24,
+	WGL_STENCIL_BITS_ARB,           8,
+	WGL_DOUBLE_BUFFER_ARB,          GL_TRUE,
+	WGL_SAMPLE_BUFFERS_ARB,         GL_TRUE,
+	WGL_SAMPLES_ARB,                4,
+	NULL,
+};
 
 static KeyboardKeys translateKeys(WPARAM keyCode)
 {
@@ -197,7 +211,16 @@ namespace Cyclone
             _isTrackingPointer(true),
             _title(title)
         {
-            Internals = wglCreateWindow(DefaultPixelAttributes, &WindowMessageLoop);
+			WindowSettings settings = 
+			{
+				str2wstr("WindowWGL").c_str(),
+				{ (int)displayArea.Left(), (int)displayArea.Bottom(), (int)displayArea.Right(), (int)displayArea.Top() },
+				WindowMessageLoop,
+				DefaultPixelAttributes,
+				str2wstr(title).c_str(),
+			};
+
+            Internals = wglCreateWindow(&settings);
             if (Internals)
             {
 				SetWindowLong(Internals->ID, GWLP_USERDATA, (long)this);

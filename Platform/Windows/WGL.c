@@ -16,9 +16,11 @@ PFNWGLCHOOSEPIXELFORMATARBPROC       wglChoosePixelFormat       = NULL;
 
 
 /** WGL RESOURCES **/
+/// <summary> A handle for the GDI device context bound to the loading window. </summary>
 HDC LoadingDeviceContext                = NULL;
+/// <summary> A handle for the OpenGL rendering context bound to the loading window and device context. </summary>
 HGLRC LoadingRenderContext              = NULL;
-HGLRC TemporaryRenderContext            = NULL;
+/// <summary> A handle for the Windows Forms window that is created in order to load OpenGL function pointers. </summary>
 HWND LoadingWindow                      = NULL;
 
 const PIXELFORMATDESCRIPTOR DefaultPixelFormat =
@@ -60,21 +62,6 @@ const int DefaultContextSettings[] =
     NULL,
 };
 
-const int DefaultPixelAttributes[] =
-{
-    WGL_SUPPORT_OPENGL_ARB,         GL_TRUE,
-    WGL_PIXEL_TYPE_ARB,             WGL_TYPE_RGBA_ARB,
-    WGL_ACCELERATION_ARB,           WGL_FULL_ACCELERATION_ARB,
-    WGL_COLOR_BITS_ARB,             32,
-    WGL_ALPHA_BITS_ARB,             8,
-    WGL_DEPTH_BITS_ARB,             24,
-    WGL_STENCIL_BITS_ARB,           8,
-    WGL_DOUBLE_BUFFER_ARB,          GL_TRUE,
-    WGL_SAMPLE_BUFFERS_ARB,         GL_TRUE,
-    WGL_SAMPLES_ARB,                4,
-    NULL,
-};
-
 
 
 /** INTERNAL UTILITIES **/
@@ -96,14 +83,12 @@ static void DestroyLoadingWindow()
 		wglMakeCurrent(LoadingDeviceContext, NULL);
 
 	if (LoadingRenderContext)	{ wglDeleteContext(LoadingRenderContext); }
-	if (TemporaryRenderContext) { wglDeleteContext(TemporaryRenderContext); }
 	if (LoadingDeviceContext)	{ ReleaseDC(LoadingWindow, LoadingDeviceContext); }
 	if (LoadingWindow)			{ DestroyWindow(LoadingWindow); }
 
 	LoadingDeviceContext	= NULL;
 	LoadingRenderContext	= NULL;
 	LoadingWindow			= NULL;
-	TemporaryRenderContext	= NULL;
 
 	UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
 }
@@ -166,14 +151,40 @@ static int CreateLoadingWindow()
     return 1;
 }
 
+static int LoadFunctionPointers()
+{
+	HINSTANCE libHandle = LoadLibrary(L"opengl32.dll");
+	if (!libHandle)
+	{
+		fprintf(stderr, "Failed to load the OpenGL library 'opengl32.dll'.\n");
+		return 0;
+	}
+
+	wglCreateContextAttribs		= (PFNWGLCREATECONTEXTATTRIBSARBPROC)glGetFunctionPointer("wglCreateContextAttribsARB");
+	wglGetExtensionsString      = (PFNWGLGETEXTENSIONSSTRINGARBPROC)glGetFunctionPointer("wglGetExtensionsStringARB");
+    wglGetPixelFormatAttribiv   = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)glGetFunctionPointer("wglGetPixelFormatAttribivARB");
+    wglSwapInterval             = (PFNWGLSWAPINTERVALEXTPROC)glGetFunctionPointer("wglSwapInterval");
+    wglChoosePixelFormat        = (PFNWGLCHOOSEPIXELFORMATARBPROC)glGetFunctionPointer("wglChoosePixelFormatARB");
+
+    if (!wglCreateContextAttribs)
+    {
+		FreeLibrary(libHandle);
+        fprintf(stderr, "Failed to load the WGL function pointers.\n");
+        return 0;
+    }
+
+	FreeLibrary(libHandle);
+	return 1;
+}
+
 
 
 /** API FUNCTIONS **/
-_window3D* wglCreateWindow(const int* pixelAttributes, WNDPROC msgLoop)
+_window3D* wglCreateWindow(const WindowSettings* settings)
 {
     if (!CreateLoadingWindow())
         return NULL;
-
+	
     DestroyLoadingWindow();
 
 	WNDCLASS winClass;
@@ -181,8 +192,8 @@ _window3D* wglCreateWindow(const int* pixelAttributes, WNDPROC msgLoop)
 
     winClass.hCursor        = LoadCursor(NULL, IDC_ARROW);
     winClass.hInstance      = GetModuleHandle(NULL);
-    winClass.lpfnWndProc    = msgLoop;
-    winClass.lpszClassName  = TEXT("WindowWGL");
+    winClass.lpfnWndProc    = settings->MessageHandler;
+    winClass.lpszClassName  = settings->ClassName;
     winClass.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 
 	if (!RegisterClass(&winClass))
@@ -192,14 +203,17 @@ _window3D* wglCreateWindow(const int* pixelAttributes, WNDPROC msgLoop)
 	}
 
     _window3D* win = calloc(1, sizeof(_window3D));
-
+	win->ClassName = settings->ClassName;
 	win->ID = CreateWindowEx
 	(
 		WS_EX_OVERLAPPEDWINDOW,
-		TEXT("WindowWGL"),
-		TEXT("WGL API Loading Window"),
+		settings->ClassName,
+		settings->Title,
         WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		0, 0, 1024, 960,
+		settings->DisplayArea.left, 
+		settings->DisplayArea.top,
+		settings->DisplayArea.right - settings->DisplayArea.left,
+		settings->DisplayArea.bottom - settings->DisplayArea.top,
 		NULL,
 		NULL,
 		GetModuleHandle(NULL),
@@ -219,18 +233,16 @@ _window3D* wglCreateWindow(const int* pixelAttributes, WNDPROC msgLoop)
     int idxPixelFormat = 0;
     UINT nformats = 0;
 
-    if (!wglChoosePixelFormat(win->DeviceContext, pixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
-        fprintf(stderr, "Failed to find an advanced pixel format.");
-    else if (!SetPixelFormat(win->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
-    {
-        fprintf(stderr, "Failed to set the advanced pixel format.");
-        idxPixelFormat = ChoosePixelFormat(win->DeviceContext, &DefaultPixelFormat);
-    }
+	if (!wglChoosePixelFormat(win->DeviceContext, settings->PixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
+	{
+        fprintf(stderr, "Failed to find an advanced pixel format. Falling back to the legacy format.\n");
+		idxPixelFormat = ChoosePixelFormat(win->DeviceContext, &DefaultPixelFormat);
+	}
 
     if (!SetPixelFormat(win->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
     {
         wglDestroyWindow(win);
-        fprintf(stderr, "Failed to set the pixel format for the 3D rendering window.");
+        fprintf(stderr, "Failed to set the pixel format for the 3D rendering window.\n");
         return NULL;
     }
 
@@ -259,28 +271,10 @@ void wglDestroyWindow(_window3D* window)
     if (window->DeviceContext)  { ReleaseDC(LoadingWindow, LoadingDeviceContext); }
     if (window->ID)             { DestroyWindow(LoadingWindow); }
 
-    UnregisterClass(TEXT("WindowWGL"), GetModuleHandle(NULL));
+    UnregisterClass(window->ClassName, GetModuleHandle(NULL));
     free(window);
 }
 
-//int wglLoadAPI()
-//{
-//    if (!CreateLoadingWindow() || !InitializeLoadingContext())
-//        return 0;
-//
-//    if (!wglLoadAPI())
-//        return 0;
-//
-//    DestroyLoadingWindow();
-//
-//    if (!CreateLoadingWindow() || !FinalizeLoadingContext())
-//        return 0;
-//
-//    if (!wglLoadAPI())
-//        return 0;
-//
-//    return 1;
-//}
 
 int wglLoadFunctions()
 {
@@ -311,14 +305,12 @@ int wglLoadFunctions()
 void wglDestroyResources()
 {
     if (LoadingRenderContext)   { wglDeleteContext(LoadingRenderContext); }
-    if (TemporaryRenderContext) { wglDeleteContext(TemporaryRenderContext); }
     if (LoadingDeviceContext)   { ReleaseDC(LoadingWindow, LoadingDeviceContext); }
     if (LoadingWindow)          { DestroyWindow(LoadingWindow); }
 
     LoadingDeviceContext    = NULL;
     LoadingRenderContext    = NULL;
     LoadingWindow           = NULL;
-    TemporaryRenderContext  = NULL;
 
     UnregisterClass(TEXT("LoadingWindowWGL"), GetModuleHandle(NULL));
 }
