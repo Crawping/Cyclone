@@ -24,14 +24,12 @@ namespace Renderers
 
             
             /** CONSTRUCTOR **/
-            RendererAPI AdvancedRenderer(const string& title);
+            RendererAPI AdvancedRenderer(const Area& displayArea, const string& title);
 
 
 
             /** INITIALIZATION UTILITIES **/
             RendererAPI virtual void CreateRenderTarget() override;
-
-            RendererAPI virtual void CreateRenderingWindow() override;
 
             RendererAPI virtual void CreateShaderPipeline() override;
 

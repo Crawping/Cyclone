@@ -11,14 +11,22 @@
 namespace Renderers
 {
 
-    AdvancedRenderer::AdvancedRenderer(const string& title) :
-        BasicRenderer(title),
+	/** CONSTRUCTOR **/
+    AdvancedRenderer::AdvancedRenderer(const Area& displayArea, const string& title) :
+        BasicRenderer(displayArea, title),
         MoveSpeed(16.0f)
     {
+		RenderWindow->IsTrackingKeyRepeat(false);
+		RenderWindow->OnPointerMotion.Register(this, &AdvancedRenderer::ProcessPointerMotion);
+		RenderWindow->OnKeyPress.Register(this, &AdvancedRenderer::ProcessKeyPress);
+		RenderWindow->OnKeyRelease.Register(this, &AdvancedRenderer::ProcessKeyRelease);
 
+		glEnable(GL_MULTISAMPLE);
     }
 
 
+
+	/** PUBLIC UTILITIES **/
     void AdvancedRenderer::Execute()
     {
         while (CanContinue())
@@ -31,33 +39,27 @@ namespace Renderers
             Present();
         }
     }
+	
 
 
-
+	/** PROTECTED UTILITIES **/
     void AdvancedRenderer::CreateRenderTarget()
     {
         if (RenderTarget)
             delete RenderTarget;
 
-        RenderTarget = new FrameBuffer
-        (
-            RenderWindow->ClientArea().Scale(), 
-            TextureFormats::Byte4, 
-            TextureFormats::DepthStencil,
-            TextureTargets::Texture2DMS
-        );
-        Renderer->RenderTarget(RenderTarget);
+		Renderer->RenderTarget(nullptr);
 
-        glEnable(GL_MULTISAMPLE);
-    }
-    void AdvancedRenderer::CreateRenderingWindow()
-    {
-        BasicRenderer::CreateRenderingWindow();
+        //RenderTarget = new FrameBuffer
+        //(
+        //    RenderWindow->ClientArea().Scale(), 
+        //    TextureFormats::Byte4, 
+        //    TextureFormats::DepthStencil,
+        //    TextureTargets::Texture2DMS
+        //);
+        //Renderer->RenderTarget(RenderTarget);
 
-        RenderWindow->IsTrackingKeyRepeat(false);
-        RenderWindow->OnPointerMotion.Register(this, &AdvancedRenderer::ProcessPointerMotion);
-        RenderWindow->OnKeyPress.Register(this, &AdvancedRenderer::ProcessKeyPress);
-        RenderWindow->OnKeyRelease.Register(this, &AdvancedRenderer::ProcessKeyRelease);
+        //glEnable(GL_MULTISAMPLE);
     }
     void AdvancedRenderer::CreateShaderPipeline()
     {
