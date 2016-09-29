@@ -25,16 +25,7 @@ namespace Renderers
         RenderWindow(nullptr),
         Title(title)
     {
-        if (!cglLoadAPI())
-        {
-            _canContinue = false;
-            return;
-        }
-
         Renderer = new GPU();
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LESS);
-        glEnable(GL_DEPTH_CLAMP);
     }
 
     BasicRenderer::~BasicRenderer()
@@ -78,10 +69,20 @@ namespace Renderers
     void BasicRenderer::CreateRenderingWindow()
     {
         RenderWindow = new Window3D(Area(0, 0, 1024, 960), Title);
+        if (!cglLoadAPI())
+        {
+            _canContinue = false;
+            return;
+        }
+
         Renderer->RenderWindow(RenderWindow);
 
         RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
         RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
+
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LESS);
+        glEnable(GL_DEPTH_CLAMP);
     }
     void BasicRenderer::CreateSceneResources()
     {
