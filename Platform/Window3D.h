@@ -9,6 +9,7 @@
 #include "WindowEvents.h"
 #include "Spatial/Area.h"
 
+struct _window3D;
 
 
 namespace Cyclone
@@ -166,7 +167,7 @@ namespace Cyclone
                 InternalAPI void Unbind()               const;
 
             private:
-                struct          _window3D;
+                
                 _window3D*      Internals;
 
 

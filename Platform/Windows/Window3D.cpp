@@ -10,18 +10,6 @@ using namespace Cyclone::Utilities;
 
 
 
-/** INTERNAL DATA **/
-//const static int DefaultContextSettings[] =
-//{
-//    WGL_CONTEXT_FLAGS_ARB,          WGL_CONTEXT_DEBUG_BIT_ARB,
-//    WGL_CONTEXT_MAJOR_VERSION_ARB,  4,
-//    WGL_CONTEXT_MINOR_VERSION_ARB,  4,
-//    WGL_CONTEXT_PROFILE_MASK_ARB,   WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
-//    NULL,
-//};
-
-
-
 /** INTERNAL FUNCTIONS **/
 
 static KeyboardKeys translateKeys(WPARAM keyCode)
@@ -180,13 +168,13 @@ namespace Cyclone
     namespace Platform
     {
 
-        struct Window3D::_window3D
-        {
-            HDC     DeviceContext;
-            /// <summary> The native handle of the window. </summary>
-            HWND    ID;
-            HGLRC   RenderContext;
-        };
+        //struct Window3D::_window3D
+        //{
+        //    HDC     DeviceContext;
+        //    /// <summary> The native handle of the window. </summary>
+        //    HWND    ID;
+        //    HGLRC   RenderContext;
+        //};
 
 
 
@@ -213,78 +201,85 @@ namespace Cyclone
 
         /** CONSTRUCTOR & DESTRUCTOR **/
         Window3D::Window3D(const Area& displayArea, const string& title) :
-            Internals(new _window3D{ NULL, NULL, NULL }),
+            Internals(nullptr),
             _isBordered(true),
             _isTrackingKeyboard(true),
             _isTrackingKeyRepeat(true),
             _isTrackingPointer(true),
             _title(title)
         {
-            WNDCLASS winClass;
-            
-            ZeroMemory(&winClass, sizeof(winClass));
+   //         WNDCLASS winClass;
+   //         
+   //         ZeroMemory(&winClass, sizeof(winClass));
 
-            winClass.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-            winClass.lpfnWndProc    = WindowMessageLoop;
-            winClass.hInstance      = GetModuleHandle(NULL);
-            winClass.lpszClassName  = TEXT("OpenGL");
+   //         winClass.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+   //         winClass.lpfnWndProc    = WindowMessageLoop;
+   //         winClass.hInstance      = GetModuleHandle(NULL);
+   //         winClass.lpszClassName  = TEXT("OpenGL");
 
-            RegisterClass(&winClass); 
+   //         RegisterClass(&winClass); 
 
-            Internals->ID = CreateWindowEx
-            (
-                WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
-                TEXT("OpenGL"),
-                str2wstr(title).c_str(),
-                WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-                (int)displayArea.X,     (int)displayArea.Y,
-                (int)displayArea.Width, (int)displayArea.Height,
-                NULL,
-                NULL,
-                GetModuleHandle(NULL),
-                NULL
-            );
+   //         Internals->ID = CreateWindowEx
+   //         (
+   //             WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
+   //             TEXT("OpenGL"),
+   //             str2wstr(title).c_str(),
+   //             WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+   //             (int)displayArea.X,     (int)displayArea.Y,
+   //             (int)displayArea.Width, (int)displayArea.Height,
+   //             NULL,
+   //             NULL,
+   //             GetModuleHandle(NULL),
+   //             NULL
+   //         );
 
-            SetWindowLong(Internals->ID, GWLP_USERDATA, (long)this);
-            Internals->DeviceContext = GetDC(Internals->ID);
+   //         SetWindowLong(Internals->ID, GWLP_USERDATA, (long)this);
+   //         Internals->DeviceContext = GetDC(Internals->ID);
 
-            //int idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);
-            float fAttribs[] = { 0.0f, 0.0f };
-            int idxPixelFormat = 0;
-            uint nformats = 0;
-			
-			Internals->RenderContext = wglCreateContextAttribs(Internals->DeviceContext, NULL, DefaultContextSettings);
-			Bind();
+   //         //int idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);
+   //         float fAttribs[] = { 0.0f, 0.0f };
+   //         int idxPixelFormat = 0;
+   //         uint nformats = 0;
+			//
+			//Internals->RenderContext = wglCreateContextAttribs(Internals->DeviceContext, NULL, DefaultContextSettings);
+			//Bind();
 
-            if (!wglChoosePixelFormat(Internals->DeviceContext, DefaultPixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
-                Console::WriteLine("Failed to find an advanced pixel format.");
-            else if (!SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
+   //         if (!wglChoosePixelFormat(Internals->DeviceContext, DefaultPixelAttributes, fAttribs, 1, &idxPixelFormat, &nformats))
+   //             Console::WriteLine("Failed to find an advanced pixel format.");
+   //         else if (!SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
+   //         {
+   //             Console::WriteLine("Failed to set the advanced pixel format.");
+   //             idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);                
+   //         }
+
+   //         if (!SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
+   //         {
+   //             Console::WriteLine("Failed to set the pixel format for the 3D rendering window.");
+   //             return;
+   //         }
+
+
+            Internals = wglCreateWindow(DefaultPixelAttributes, &WindowMessageLoop);
+            if (Internals)
             {
-                Console::WriteLine("Failed to set the advanced pixel format.");
-                idxPixelFormat = ChoosePixelFormat(Internals->DeviceContext, &DefaultPixelFormat);                
+                ProcessSizeChange();
+                ShowWindow(Internals->ID, SW_SHOW);
             }
-
-            if (!SetPixelFormat(Internals->DeviceContext, idxPixelFormat, &DefaultPixelFormat))
-            {
-                Console::WriteLine("Failed to set the pixel format for the 3D rendering window.");
-                return;
-            }
-
-            ProcessSizeChange();
-            ShowWindow(Internals->ID, SW_SHOW);
         }
 
         Window3D::~Window3D()
         {
-            if (Internals->RenderContext)
-                wglDeleteContext(Internals->RenderContext);
-            if (Internals->DeviceContext)
-                ReleaseDC(Internals->ID, Internals->DeviceContext);
+            //if (Internals->RenderContext)
+            //    wglDeleteContext(Internals->RenderContext);
+            //if (Internals->DeviceContext)
+            //    ReleaseDC(Internals->ID, Internals->DeviceContext);
 
-            if (Internals->ID)  { DestroyWindow(Internals->ID); }
-            if (Internals)      { delete Internals; }
+            //if (Internals->ID)  { DestroyWindow(Internals->ID); }
+            //if (Internals)      { delete Internals; }
 
-            UnregisterClass(TEXT("OpenGL"), GetModuleHandle(NULL));
+            //UnregisterClass(TEXT("OpenGL"), GetModuleHandle(NULL));
+
+            if (Internals) { wglDestroyWindow(Internals); }
         }
 
 
@@ -412,6 +407,6 @@ namespace Cyclone
         /** INTERNAL RENDERING UTILITIES **/
         void Window3D::Bind()               const { wglMakeCurrent(Internals->DeviceContext, Internals->RenderContext); }
         void Window3D::Present()            const { SwapBuffers(Internals->DeviceContext); }
-        void Window3D::Unbind()             const { wglMakeCurrent(LoadingDeviceContext, LoadingRenderContext); }
+        void Window3D::Unbind()             const { wglMakeCurrent(Internals->DeviceContext, NULL); }
     }
 }
