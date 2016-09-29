@@ -27,11 +27,11 @@ using namespace Cyclone::Utilities;
 
     int Cyclone::Platform::cglLoadAPI()
     {
-        if (!wglLoadFunctions())
-        {
-            Console::WriteLine("Failed to load the WGL library functions.");
-            return 0;
-        }
+        //if (!wglLoadFunctions())
+        //{
+        //    Console::WriteLine("Failed to load the WGL library functions.");
+        //    return 0;
+        //}
 
         if (!glLoadFunctions())
         {
@@ -49,7 +49,7 @@ using namespace Cyclone::Utilities;
     }
     void Cyclone::Platform::cglClearAPI()
     {
-        wglDestroyResources();
+        //wglDestroyResources();
     }
 
 #endif
