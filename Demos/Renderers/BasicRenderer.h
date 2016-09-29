@@ -6,6 +6,7 @@
 #include "RendererAPI.h"
 #include "TypeDefinitions.h"
 #include "Imaging/Color4.h"
+#include "Spatial/Area.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 #include <string>
@@ -78,7 +79,7 @@ namespace Renderers
             /** CONSTRUCTOR **/
             /// <summary> Constructs a basic renderer that can be used to display geometric primitives. </summary>
             /// <param name="title"> The title string to be displayed on the rendering window's upper border. </param>
-            RendererAPI BasicRenderer(const string& title);
+            RendererAPI BasicRenderer(const Area& displayArea, const string& title);
             
 
             
@@ -89,8 +90,6 @@ namespace Renderers
             ///     <see cref="CreateSizedResources"/> method. 
             /// </remarks>            
             RendererAPI virtual void CreateRenderTarget();
-            /// <summary> Initializes the 3D rendering window that holds all rendered content on the desktop. </summary>
-            RendererAPI virtual void CreateRenderingWindow();
             /// <summary> Initializes any resources related to rendering 3D scenes of geometric primitives. </summary>
             /// <remarks>
             ///     This base implementation performs no actions and should be overridden by any subclass that wishes 

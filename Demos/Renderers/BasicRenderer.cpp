@@ -15,7 +15,7 @@ namespace Renderers
 {
 
     /** CONSTRUCTOR & DESTRUCTOR **/
-    BasicRenderer::BasicRenderer(const string& title) : 
+    BasicRenderer::BasicRenderer(const Area& displayArea, const string& title) :
         _canContinue(true),
         ClearColor(Color4::Gray),
         Renderer(nullptr),
@@ -25,7 +25,22 @@ namespace Renderers
         RenderWindow(nullptr),
         Title(title)
     {
-        Renderer = new GPU();
+        Renderer		= new GPU();
+		RenderWindow	= new Window3D(displayArea, title);
+
+		if (!cglLoadAPI())
+		{
+			_canContinue = false;
+			return;
+		}
+
+		RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
+		RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
+		Renderer->RenderWindow(RenderWindow);
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		glEnable(GL_DEPTH_CLAMP);
     }
 
     BasicRenderer::~BasicRenderer()
@@ -39,7 +54,7 @@ namespace Renderers
         cglClearAPI();
     }
 
-    
+
 
     /** EVENT LOOP **/
     void BasicRenderer::Execute()
@@ -65,24 +80,6 @@ namespace Renderers
 
         RenderTarget = new FrameBuffer(RenderWindow->ClientArea().Scale());
         Renderer->RenderTarget(RenderTarget);
-    }
-    void BasicRenderer::CreateRenderingWindow()
-    {
-        RenderWindow = new Window3D(Area(0, 0, 1024, 960), Title);
-        if (!cglLoadAPI())
-        {
-            _canContinue = false;
-            return;
-        }
-
-        Renderer->RenderWindow(RenderWindow);
-
-        RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
-        RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
-
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LESS);
-        glEnable(GL_DEPTH_CLAMP);
     }
     void BasicRenderer::CreateSceneResources()
     {
@@ -119,7 +116,6 @@ namespace Renderers
     }
     void BasicRenderer::Initialize()
     {
-        CreateRenderingWindow();
         CreateShaderPipeline();
         CreateSizedResources();
         CreateSceneResources();
