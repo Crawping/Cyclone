@@ -30,7 +30,6 @@ class Program : public AdvancedRenderer
             AdvancedRenderer(Area(0, 0, 1024, 960), "Navigable 3D Scene")
         {
             Initialize();
-
         }
         ~Program()
         {
@@ -44,13 +43,10 @@ class Program : public AdvancedRenderer
 
     protected:
 
-        const float MoveSpeed = 16.0f;
-
         Mesh3D* Cube;
         Mesh3D* Cylinder;
         Mesh3D* Icosahedron;
         Point3D Point;
-        Vector3 WalkingDirection;
 
 
         void CreateSceneResources() override
