@@ -84,7 +84,7 @@ namespace Cyclone
                 target ? target->ID() : 0,
                 srcArea.X, srcArea.Y, srcArea.Width, srcArea.Height,
                 dstArea.X, dstArea.Y, dstArea.Width, dstArea.Height,
-                GL_COLOR_BUFFER_BIT, // | ( DepthTexture ? GL_DEPTH_BUFFER_BIT : 0 ),
+                GL_COLOR_BUFFER_BIT | ( DepthTexture ? GL_DEPTH_BUFFER_BIT : 0 ),
                 GL_NEAREST
             );
         }
