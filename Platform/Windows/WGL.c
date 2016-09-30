@@ -206,7 +206,7 @@ _window3D* wglCreateWindow(const WindowSettings* settings)
 	win->ClassName = settings->ClassName;
 	win->ID = CreateWindowEx
 	(
-		WS_EX_OVERLAPPEDWINDOW,
+        WS_EX_APPWINDOW | WS_EX_WINDOWEDGE,
 		settings->ClassName,
 		settings->Title,
         WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
