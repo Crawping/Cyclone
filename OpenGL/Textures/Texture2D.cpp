@@ -14,8 +14,9 @@ namespace Cyclone
     {
         /** CONSTRUCTORS & DESTRUCTOR **/
         Texture2D::Texture2D(const Vector2& size, TextureFormats format, TextureTargets target) :
-            Texture(format, TextureTargets::Texture2D),
+            Texture(format, target),
             _size(size),
+            
             Tint(Color4::White)
         {
             Allocate();
