@@ -56,10 +56,6 @@
 			InternalAPI _window3D* wglCreateWindow(const WindowSettings* settings);
 
             InternalAPI void wglDestroyWindow(_window3D* window);
-
-            InternalAPI int wglLoadFunctions();
-
-            InternalAPI void wglDestroyResources();
             
     #ifdef __cplusplus
         }

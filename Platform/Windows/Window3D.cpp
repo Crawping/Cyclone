@@ -201,7 +201,7 @@ namespace Cyclone
             std::wstring winClass = str2wstr("WindowWGL");
             std::wstring winTitle = str2wstr(title);
 
-            int DefaultPixelAttributes[] =
+            const int defaultPixelAttributes[] =
             {
                 WGL_SUPPORT_OPENGL_ARB,             GL_TRUE,
                 WGL_PIXEL_TYPE_ARB,                 WGL_TYPE_RGBA_ARB,
@@ -212,8 +212,7 @@ namespace Cyclone
                 WGL_STENCIL_BITS_ARB,               8,
                 WGL_DOUBLE_BUFFER_ARB,              GL_TRUE,
                 WGL_SAMPLE_BUFFERS_ARB,             GL_TRUE,
-                nsamples ? WGL_SAMPLES_ARB : NULL,  nsamples,
-                //WGL_SAMPLES_ARB,                0,
+                WGL_SAMPLES_ARB,					nsamples,
                 NULL,
             };          
 
@@ -222,7 +221,7 @@ namespace Cyclone
                 winClass.c_str(),
 				{ (int)displayArea.Left(), (int)displayArea.Bottom(), (int)displayArea.Right(), (int)displayArea.Top() },
 				WindowMessageLoop,
-				DefaultPixelAttributes,
+				nsamples ? defaultPixelAttributes : nullptr,
 				winTitle.c_str(),
 			};
 
