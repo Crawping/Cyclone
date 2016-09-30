@@ -41,8 +41,6 @@ namespace Renderers
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 		glEnable(GL_DEPTH_CLAMP);
-
-        //glDisable(GL_MULTISAMPLE);
     }
 
     BasicRenderer::~BasicRenderer()
@@ -80,7 +78,12 @@ namespace Renderers
         if (RenderTarget)
             delete RenderTarget;
 
-        RenderTarget = new FrameBuffer(RenderWindow->ClientArea().Scale());
+        RenderTarget = new FrameBuffer
+		(
+			RenderWindow->ClientArea().Scale(),
+			TextureFormats::Byte4,
+			TextureFormats::DepthStencil
+		);
         Renderer->RenderTarget(RenderTarget);
     }
     void BasicRenderer::CreateSceneResources()
