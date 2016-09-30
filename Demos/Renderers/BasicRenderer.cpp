@@ -23,6 +23,7 @@ namespace Renderers
         RenderScene(nullptr),
         RenderTarget(nullptr),
         RenderWindow(nullptr),
+		SamplesMSAA(nsamples),
         Title(title)
     {
         Renderer		= new GPU();
@@ -82,7 +83,8 @@ namespace Renderers
 		(
 			RenderWindow->ClientArea().Scale(),
 			TextureFormats::Byte4,
-			TextureFormats::DepthStencil
+			TextureFormats::DepthStencil,
+			SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D
 		);
         Renderer->RenderTarget(RenderTarget);
     }

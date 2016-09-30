@@ -13,16 +13,14 @@ namespace Renderers
 {
 
 	/** CONSTRUCTOR **/
-    AdvancedRenderer::AdvancedRenderer(const Area& displayArea, const string& title) :
-        BasicRenderer(displayArea, title, 4),
+    AdvancedRenderer::AdvancedRenderer(const Area& displayArea, const string& title, int nsamples) :
+        BasicRenderer(displayArea, title, nsamples),
         MoveSpeed(16.0f)
     {
 		RenderWindow->IsTrackingKeyRepeat(false);
 		RenderWindow->OnPointerMotion.Register(this, &AdvancedRenderer::ProcessPointerMotion);
 		RenderWindow->OnKeyPress.Register(this, &AdvancedRenderer::ProcessKeyPress);
 		RenderWindow->OnKeyRelease.Register(this, &AdvancedRenderer::ProcessKeyRelease);
-
-		glEnable(GL_MULTISAMPLE);
     }
 
 

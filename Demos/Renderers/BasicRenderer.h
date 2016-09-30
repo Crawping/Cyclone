@@ -71,6 +71,7 @@ namespace Renderers
             Scene3D*            RenderScene;
             FrameBuffer*        RenderTarget;
             Window3D*           RenderWindow;
+			int					SamplesMSAA;
             string              Title;
             Camera              View;
 
