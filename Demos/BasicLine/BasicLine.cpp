@@ -15,7 +15,7 @@ class Program : public BasicRenderer
 {
     public:
         Program() :
-            BasicRenderer("Basic Line")
+            BasicRenderer(Area(0, 0, 1024, 960), "Basic Line")
         {
             Initialize();
             glEnable(GL_LINE_SMOOTH);
