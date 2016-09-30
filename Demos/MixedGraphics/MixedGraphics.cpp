@@ -50,12 +50,10 @@ class Program : public AdvancedRenderer
 
     protected:
 
-        const float     MoveSpeed = 16.0f;
         Path2D          Path;
         ShaderPipeline* PipelineSVG;
         Mesh3D          Sphere;
         Scene3D*        SceneSVG;
-        Vector3         WalkingDirection;
 
 
         void CreateSceneResources() override
@@ -89,18 +87,11 @@ class Program : public AdvancedRenderer
         }
         void UpdateScene() override
         {
-            Vector3 dir = WalkingDirection;
-            if (dir != Vector3::Zero)
-            {
-                View.Translate(dir.Normalize() * MoveSpeed);
-                Renderer->View(View);
-            }
+			const Matrix4x4& projection = Projection.ToMatrix4x4();
+			const Matrix4x4& view = View.ToMatrix4x4();
 
-            const Matrix4x4& projection = Renderer->Projection().ToMatrix4x4();
-            const Matrix4x4& view = Renderer->View().ToMatrix4x4();
-
-            nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
+			nvMatrixLoadIdentity(TransformMatrices::Projection);
+			nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
 
             static float count = 0.0f;
             Path.Z(-250 * sin(count));
