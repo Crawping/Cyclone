@@ -11,21 +11,6 @@ using namespace Cyclone::Utilities;
 
 
 /** INTERNAL FUNCTIONS **/
-const int DefaultPixelAttributes[] =
-{
-	WGL_SUPPORT_OPENGL_ARB,         GL_TRUE,
-	WGL_PIXEL_TYPE_ARB,             WGL_TYPE_RGBA_ARB,
-	WGL_ACCELERATION_ARB,           WGL_FULL_ACCELERATION_ARB,
-	WGL_COLOR_BITS_ARB,             32,
-	WGL_ALPHA_BITS_ARB,             8,
-	WGL_DEPTH_BITS_ARB,             24,
-	WGL_STENCIL_BITS_ARB,           8,
-	WGL_DOUBLE_BUFFER_ARB,          GL_TRUE,
-	WGL_SAMPLE_BUFFERS_ARB,         GL_TRUE,
-	WGL_SAMPLES_ARB,                4,
-	NULL,
-};
-
 static KeyboardKeys translateKeys(WPARAM keyCode)
 {
     switch (keyCode)
@@ -171,7 +156,9 @@ static std::wstring str2wstr(const std::string& text)
         return L"";
     }
 
-    return std::wstring(wtext);        
+    std::wstring wstr = wtext;
+    free(wtext);
+    return wstr;
 }
 
 
@@ -203,7 +190,7 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        Window3D::Window3D(const Area& displayArea, const string& title) :
+        Window3D::Window3D(const Area& displayArea, const string& title, int nsamples) :
             Internals(nullptr),
             _isBordered(true),
             _isTrackingKeyboard(true),
@@ -211,13 +198,32 @@ namespace Cyclone
             _isTrackingPointer(true),
             _title(title)
         {
+            std::wstring winClass = str2wstr("WindowWGL");
+            std::wstring winTitle = str2wstr(title);
+
+            int DefaultPixelAttributes[] =
+            {
+                WGL_SUPPORT_OPENGL_ARB,             GL_TRUE,
+                WGL_PIXEL_TYPE_ARB,                 WGL_TYPE_RGBA_ARB,
+                WGL_ACCELERATION_ARB,               WGL_FULL_ACCELERATION_ARB,
+                WGL_COLOR_BITS_ARB,                 32,
+                WGL_ALPHA_BITS_ARB,                 8,
+                WGL_DEPTH_BITS_ARB,                 24,
+                WGL_STENCIL_BITS_ARB,               8,
+                WGL_DOUBLE_BUFFER_ARB,              GL_TRUE,
+                WGL_SAMPLE_BUFFERS_ARB,             GL_TRUE,
+                nsamples ? WGL_SAMPLES_ARB : NULL,  nsamples,
+                //WGL_SAMPLES_ARB,                0,
+                NULL,
+            };          
+
 			WindowSettings settings = 
 			{
-				str2wstr("WindowWGL").c_str(),
+                winClass.c_str(),
 				{ (int)displayArea.Left(), (int)displayArea.Bottom(), (int)displayArea.Right(), (int)displayArea.Top() },
 				WindowMessageLoop,
 				DefaultPixelAttributes,
-				str2wstr(title).c_str(),
+				winTitle.c_str(),
 			};
 
             Internals = wglCreateWindow(&settings);

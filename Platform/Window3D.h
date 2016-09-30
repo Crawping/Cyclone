@@ -82,7 +82,7 @@ namespace Cyclone
                 /// <summary> Constructs a new 3D rendering window occupying a specified area of the computer display. </summary>
                 /// <param name="displayArea"> The desired pixel position and size of the window on the desktop. </param>
                 /// <param name="title"> The desired title of the window to be displayed on the border. </param>
-                PlatformAPI Window3D(const Area& displayArea, const string& title);
+                PlatformAPI Window3D(const Area& displayArea, const string& title, int nsamples = 1);
                 PlatformAPI ~Window3D();
 
 
