@@ -123,20 +123,20 @@ namespace Cyclone
 			RenderTarget = nullptr;
 		}
 
-		//RenderTarget = new FrameBuffer
-		//(
-		//	RenderWindow->ClientArea().Scale(),
-		//	TextureFormats::Byte4,
-		//	TextureFormats::DepthStencil,
-		//	TextureTargets::Texture2DMS
-		//);
-		//Renderer->RenderTarget(RenderTarget);
+		RenderTarget = new FrameBuffer
+		(
+			RenderWindow->ClientArea().Scale(),
+			TextureFormats::Byte4,
+			TextureFormats::DepthStencil,
+			TextureTargets::Texture2DMS
+		);
+		Renderer->RenderTarget(RenderTarget);
 
-		//glEnable(GL_MULTISAMPLE);
+		glEnable(GL_MULTISAMPLE);
 	}
 	void Program::CreateRenderingWindow()
 	{
-		RenderWindow = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window");
+		RenderWindow = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window", 4);
 		RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
 		RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
 

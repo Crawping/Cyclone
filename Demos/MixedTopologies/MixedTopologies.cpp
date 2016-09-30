@@ -19,7 +19,7 @@ class Program : public BasicRenderer
     public:
 
         Program() :
-            BasicRenderer(Area(0, 0, 1024, 960), "Mixed Primitive Rendering"),
+            BasicRenderer(Area(0, 0, 1024, 960), "Mixed Primitive Rendering", 4),
             Cube(nullptr),
             Cylinder(nullptr),
             Icosahedron(nullptr),
@@ -50,7 +50,6 @@ class Program : public BasicRenderer
         Mesh3D* Cylinder;
         Mesh3D* Icosahedron;
         Point3D Point;
-
 
         void CreateSceneResources() override
         {

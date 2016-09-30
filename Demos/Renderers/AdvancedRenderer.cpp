@@ -1,4 +1,5 @@
 #include "AdvancedRenderer.h"
+#include "Console.h"
 #include "GPU.h"
 #include "Window3D.h"
 
@@ -13,7 +14,7 @@ namespace Renderers
 
 	/** CONSTRUCTOR **/
     AdvancedRenderer::AdvancedRenderer(const Area& displayArea, const string& title) :
-        BasicRenderer(displayArea, title),
+        BasicRenderer(displayArea, title, 4),
         MoveSpeed(16.0f)
     {
 		RenderWindow->IsTrackingKeyRepeat(false);
@@ -50,16 +51,14 @@ namespace Renderers
 
 		Renderer->RenderTarget(nullptr);
 
-        //RenderTarget = new FrameBuffer
-        //(
-        //    RenderWindow->ClientArea().Scale(), 
-        //    TextureFormats::Byte4, 
-        //    TextureFormats::DepthStencil,
-        //    TextureTargets::Texture2DMS
-        //);
-        //Renderer->RenderTarget(RenderTarget);
-
-        //glEnable(GL_MULTISAMPLE);
+        RenderTarget = new FrameBuffer
+        (
+            RenderWindow->ClientArea().Scale(), 
+            TextureFormats::Byte4, 
+            TextureFormats::DepthStencil,
+            TextureTargets::Texture2DMS
+        );
+        Renderer->RenderTarget(RenderTarget);
     }
     void AdvancedRenderer::CreateShaderPipeline()
     {

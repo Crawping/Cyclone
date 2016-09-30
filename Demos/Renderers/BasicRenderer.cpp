@@ -15,7 +15,7 @@ namespace Renderers
 {
 
     /** CONSTRUCTOR & DESTRUCTOR **/
-    BasicRenderer::BasicRenderer(const Area& displayArea, const string& title) :
+    BasicRenderer::BasicRenderer(const Area& displayArea, const string& title, int nsamples) :
         _canContinue(true),
         ClearColor(Color4::Gray),
         Renderer(nullptr),
@@ -26,7 +26,7 @@ namespace Renderers
         Title(title)
     {
         Renderer		= new GPU();
-		RenderWindow	= new Window3D(displayArea, title);
+		RenderWindow	= new Window3D(displayArea, title, nsamples);
 
 		if (!cglLoadAPI())
 		{
@@ -41,6 +41,8 @@ namespace Renderers
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 		glEnable(GL_DEPTH_CLAMP);
+
+        //glDisable(GL_MULTISAMPLE);
     }
 
     BasicRenderer::~BasicRenderer()
