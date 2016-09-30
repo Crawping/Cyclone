@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20160915
  */
 
-#include "AdvancedRenderer.h"
+#include "BasicRenderer.h"
 #include "Console.h"
 #include "EnumerationsSVG.h"
 #include "GPU.h"
@@ -25,16 +25,17 @@ using namespace Renderers;
 
 
 
-class Program : public AdvancedRenderer
+class Program : public BasicRenderer
 {
     public:
 
         Program() :
-            AdvancedRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering")
+            BasicRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering", 4)
         {
-            Initialize();
             nvPathStencilDepthOffset(-0.05f, -1);
             nvPathCoverDepthFunc(GL_ALWAYS);
+            
+			Initialize();
         }
 
     protected:
@@ -66,11 +67,11 @@ class Program : public AdvancedRenderer
         {
             BasicRenderer::CreateTransformations();
 
-            const Matrix4x4& projection = Renderer->Projection().ToMatrix4x4();
-            const Matrix4x4& view = Renderer->View().ToMatrix4x4();
+			const Matrix4x4& projection = Projection.ToMatrix4x4();
+			const Matrix4x4& view = View.ToMatrix4x4();
 
-            nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
+			nvMatrixLoadIdentity(TransformMatrices::Projection);
+			nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
         }
         void UpdateScene() override
         {
