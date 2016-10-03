@@ -54,7 +54,7 @@ namespace Cyclone
                 UtilitiesAPI Camera& Rotate(const Vector3& r)                   override;
 
 
-                const Matrix4x4& ToMatrix4x4()                                  const override { Update(); return State; }
+                UtilitiesAPI const Matrix4x4& ToMatrix4x4()                                  const override { Update(); return State; }
 
 
 
