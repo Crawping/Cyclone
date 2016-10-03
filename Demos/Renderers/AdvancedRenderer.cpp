@@ -54,7 +54,7 @@ namespace Renderers
             RenderWindow->ClientArea().Scale(), 
             TextureFormats::Byte4, 
             TextureFormats::DepthStencil,
-            TextureTargets::Texture2DMS
+            SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D
         );
         Renderer->RenderTarget(RenderTarget);
     }
@@ -109,6 +109,9 @@ namespace Renderers
             CreateTransformations();
         else if (evt.Key == KeyboardKeys::F2)
             return;
+
+        if (evt.Key == KeyboardKeys::Control)
+            MoveSpeed /= 4.0f;
     }
     void AdvancedRenderer::ProcessKeyRelease(const KeyboardEvent& evt)
     {
@@ -134,6 +137,9 @@ namespace Renderers
             dir = -Vector3::UnitY;
         else if (evt.Key == KeyboardKeys::Space)
             dir = Vector3::UnitY;
+
+        if (evt.Key == KeyboardKeys::Control)
+            MoveSpeed *= 4.0f;
 
         WalkingDirection -= dir;
     }
