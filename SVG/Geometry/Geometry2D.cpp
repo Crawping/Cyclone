@@ -39,11 +39,11 @@ namespace Cyclone
         {
             return
             {
-                { PathCommands::Move,   { 100, 180 } },
-                { PathCommands::Line,   { 40, 10 } },
+                { PathCommands::Move,   {  40,  10 } },
+                { PathCommands::Line,   { 100, 180 } },
+                { PathCommands::Line,   { 160,  10 } },
+                { PathCommands::Line,   {  10, 120 } },
                 { PathCommands::Line,   { 190, 120 } },
-                { PathCommands::Line,   { 10, 120 } },
-                { PathCommands::Line,   { 160, 10 } },
                 { PathCommands::Close,  { } },
             };
         }
