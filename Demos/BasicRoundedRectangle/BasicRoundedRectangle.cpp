@@ -32,6 +32,8 @@ class Program : public BasicRenderer
             BasicRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering")
         {
             Initialize();
+            nvPathStencilDepthOffset(-0.05f, -1);
+            nvPathCoverDepthFunc(GL_ALWAYS);
         }
 
     protected:
