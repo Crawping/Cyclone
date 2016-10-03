@@ -117,9 +117,9 @@ namespace Cyclone
 
                 InternalAPI void ProcessButtonRelease(PointerButtons button);
 
-                InternalAPI void ProcessKeyPress(KeyboardKeys key);
+                InternalAPI void ProcessKeyPress(KeyboardKeys key, ubyte code);
 
-                InternalAPI void ProcessKeyRelease(KeyboardKeys key);
+                InternalAPI void ProcessKeyRelease(KeyboardKeys key, ubyte code);
                 /// <summary> Updates the cached window position and size data. </summary>
                 /// <remarks>
                 ///     This method is for internal use only and is a necessary means of communication between the window's event loop 

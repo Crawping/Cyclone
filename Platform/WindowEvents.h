@@ -48,6 +48,7 @@ namespace Cyclone
         /// </remarks>
         struct KeyboardEvent
         {
+            ubyte Code;
             /// <summary> The specific keyboard key that has been either pressed or released. </summary>
             const KeyboardKeys& Key;
             /// <summary> The current state of all keyboard keys. </summary>

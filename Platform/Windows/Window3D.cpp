@@ -15,7 +15,9 @@ static KeyboardKeys translateKeys(WPARAM keyCode)
 {
     switch (keyCode)
     {
+        case VK_BACK:       return KeyboardKeys::Backspace;
         case VK_CONTROL:    return KeyboardKeys::Control;
+        case VK_RETURN:     return KeyboardKeys::Enter;
         case VK_MENU:       return KeyboardKeys::Alt;
         case VK_SHIFT:      return KeyboardKeys::Shift;
         case VK_SPACE:      return KeyboardKeys::Space;
@@ -75,14 +77,14 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
             case WM_SYSKEYDOWN:
                 key = translateKeys(wparam);
                 if (key.Count())
-                    win3D->ProcessKeyPress(key);
+                    win3D->ProcessKeyPress(key, wparam);
                 break;
 
             case WM_KEYUP:
             case WM_SYSKEYUP:
                 key = translateKeys(wparam);
                 if (key.Count())
-                    win3D->ProcessKeyRelease(key);
+                    win3D->ProcessKeyRelease(key, wparam);
                 break;
 
             case WM_LBUTTONDBLCLK:
@@ -293,24 +295,26 @@ namespace Cyclone
             };
             OnButtonRelease(evt);
         }
-        void Window3D::ProcessKeyPress(KeyboardKeys key)
+        void Window3D::ProcessKeyPress(KeyboardKeys key, ubyte code)
         {
             if ( !IsTrackingKeyboard() || (!IsTrackingKeyRepeat() && _keyboardState.IsPressed(key)) )
                 return;
             
             KeyboardEvent evt =
             {
+                code,
                 key,
                 _keyboardState.Press(key),
             };
             OnKeyPress(evt);
         }
-        void Window3D::ProcessKeyRelease(KeyboardKeys key)
+        void Window3D::ProcessKeyRelease(KeyboardKeys key, ubyte code)
         {
             if (!IsTrackingKeyboard()) { return; }
 
             KeyboardEvent evt =
             {
+                code,
                 key,
                 _keyboardState.Release(key),
             };
