@@ -3,14 +3,14 @@
  */
 
 #pragma once
-#include "Vector2.h"
+#include "Math/Vector2.h"
 
 
 
 namespace Cyclone
 {
     namespace Utilities
-    {    
+    {
         struct Color4;
 
 
@@ -35,9 +35,9 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs a matrix of RGBA color values representing a bitmap image. </summary>
-                /// <param name="size"> 
+                /// <param name="size">
                 ///     A two-element vector specifying the desired width and height of the bitmap in pixels.
-                ///		<para> </para>
+                ///		<para>ï¿½</para>
                 ///     The X component of this vector represents bitmap pixel width, while the Y component <para/>
                 ///     height. Fractional parts of the two float values are completely ignored.
                 /// </param>
@@ -62,7 +62,7 @@ namespace Cyclone
                 /** OPERATORS **/
                 Color4* ToArray() { return Pixels; }
 
-		        UtilitiesAPI Color4& operator ()(int a, int b);
+		        UtilitiesAPI Color4& operator ()(uint a, uint b);
 
 		        UtilitiesAPI Bitmap& operator =(Bitmap& other);
 		        UtilitiesAPI Bitmap& operator =(Bitmap&& other);
@@ -74,8 +74,8 @@ namespace Cyclone
 
                 /// <summary> A native array of color values comprising the pixel data for this bitmap. </summary>
                 /// <remarks>
-                ///     This array is meant to be interpretted as through it were a 2D matrix of pixel colors, 
-                ///     but is actually stored and addressed as a flattened vector of values(in column-major 
+                ///     This array is meant to be interpretted as through it were a 2D matrix of pixel colors,
+                ///     but is actually stored and addressed as a flattened vector of values(in column-major
                 ///     format).
                 /// </remarks>
                 Color4* Pixels;

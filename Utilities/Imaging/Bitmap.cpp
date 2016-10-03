@@ -1,6 +1,9 @@
 #include "Bitmap.h"
 #include "Color4.h"
+#include "Console.h"
 #include "Utilities.h"
+#include "Imaging/Color4.h"
+
 #include <cstring>
 #include <sstream>
 
@@ -10,6 +13,7 @@ namespace Cyclone
 {
     namespace Utilities
     {
+
         /** CONSTRUCTOR & DESTRUCTOR **/
         Bitmap::Bitmap(Bitmap&& other) :
             _size(other.Size()),
@@ -50,7 +54,7 @@ namespace Cyclone
         }
         Bitmap& Bitmap::Fill(const Color4& color)
         {
-            for (int a = 0; a < Length(); a++)
+            for (uint a = 0; a < Length(); a++)
                 Pixels[a] = color;
             return *this;
         }
@@ -59,8 +63,8 @@ namespace Cyclone
             std::stringstream msg;
             msg << "Bitmap Pixel Values:\n\n";
 
-            for (int a = 0; a < Height(); a++)
-                for (int b = 0; b < Width(); b++)
+            for (uint a = 0; a < Height(); a++)
+                for (uint b = 0; b < Width(); b++)
                     msg << "\t(" << a << ", " << b << "): " << Pixels[sub2ind(Height(), Width(), a, b)].ToString() << "\n";
 
             msg << "\n";
@@ -68,8 +72,9 @@ namespace Cyclone
         }
 
 
+
         /** OPERATORS **/
-        Color4& Bitmap::operator ()(int a, int b)
+        Color4& Bitmap::operator ()(uint a, uint b)
         {
             int idx = sub2ind(Height(), Width(), a, b);
             return Pixels[idx];
@@ -82,10 +87,11 @@ namespace Cyclone
             return *this;
         }
         Bitmap& Bitmap::operator =(Bitmap&& other)
-    {
-        std::swap(_size, other._size);
-        std::swap(Pixels, other.Pixels);
-        return *this;
-    }
+        {
+            std::swap(_size, other._size);
+            std::swap(Pixels, other.Pixels);
+            return *this;
+        }
+
     }
 }
