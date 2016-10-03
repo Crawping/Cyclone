@@ -1,0 +1,19 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20161001
+ */
+
+#version 440 core
+
+in vec2         TexUV;
+flat in int     EntityIndex;
+
+out vec4 OutputColor;
+
+
+layout (binding = 0) uniform sampler2D InputTexture;
+
+void main(void)
+{
+    //OutputColor = texture(InputTexture, TexUV).argb;
+    OutputColor = texture(InputTexture, TexUV);
+}
