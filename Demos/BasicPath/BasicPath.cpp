@@ -50,10 +50,11 @@ class Program : public BasicRenderer
 
             Path.Add(Geometry2D::Star())
                 .JoinStyle(JoinStyles::Round)
+                .StrokeColor(Color4::Black)
                 .StrokeWidth(6.5f)
 
                 .Color(Color4::Blue)
-                .Scale(1)
+                .Scale(2)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / Vector2(2.0f, 3.0f), -100));
 
             RenderScene->Add(Path);
