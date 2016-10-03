@@ -15,7 +15,7 @@ namespace Cyclone
         Text2D& Text2D::Text(const string& value)
         {
             _text = value;
-            _kerning = Array<float>(value.size() + 1);
+            _kerning = Vector<float>(value.size() + 1);
 
             _kerning(0) = 0.0f;
             nvGetPathSpacing
