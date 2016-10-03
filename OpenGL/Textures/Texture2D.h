@@ -61,6 +61,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 Texture2D(const Vector2& size, TextureFormats format = TextureFormats::Byte4, TextureTargets target = TextureTargets::Texture2D);
+                Texture2D(const string& fileName);
 
 
 
