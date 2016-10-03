@@ -69,7 +69,10 @@ namespace Cyclone
         /** UTILITIES **/
         Path2D& Path2D::Add(const ControlPoint2D& point)
         {
-            Commands.Append(point.Command);
+            if (Commands.IsEmpty() || Commands.Last() == PathCommands::Close)
+                Commands.Append(PathCommands::Move);
+            else
+                Commands.Append(point.Command);
             Coordinates.Append(point.Coordinates);
 
             _pathNeedsUpdate = true;
@@ -81,6 +84,13 @@ namespace Cyclone
                 Add(points(a));
 
             return *this;
+        }
+        void Path2D::Clear()
+        {
+            Commands.Clear();
+            Coordinates.Clear();
+
+            _pathNeedsUpdate = true;
         }
         void Path2D::Render(const GPU* gpu) const
         {
