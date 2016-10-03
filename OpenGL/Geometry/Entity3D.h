@@ -112,6 +112,8 @@ namespace Cyclone
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
                 virtual Entity3D& IsVisible(bool value)                     { _isVisible = value; return *this; }
 
+                virtual Entity3D& Texture(const Texture2D* texture)         { _texture = texture; return *this; }
+
 
                 /** DESTRUCTOR **/
                 /// <summary> Destroys any special resources held by this entity. </summary>
@@ -134,7 +136,7 @@ namespace Cyclone
                 Color4                  _color;
                 Vector<uint>            _indices;
                 bool                    _isVisible;
-		        Texture2D*			    _texture;
+		        const Texture2D*			    _texture;
                 VertexTopologies        _topology;
 		        Vector<T>		        _vertices;
                 Transform               _world;
