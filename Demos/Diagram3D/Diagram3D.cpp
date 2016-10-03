@@ -54,6 +54,7 @@ class Program : public AdvancedRenderer
             Path
                 .Path(SVG)
                 .JoinStyle(JoinStyles::Round)
+                .StrokeColor(Color4::Black)
                 .StrokeWidth(2)
 
                 .Color(Color4::Blue)
