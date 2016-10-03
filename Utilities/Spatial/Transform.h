@@ -159,6 +159,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                UtilitiesAPI Transform Inverse() const;
+                UtilitiesAPI Transform& Invert();
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI virtual string Report()                                const;
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>

@@ -139,6 +139,21 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        Transform& Transform::Invert()
+        {
+            Position(-Position());
+            Scale(Vector3::One / Scale());
+            Orientation(-Orientation());
+
+            return *this;
+        }
+
+        Transform Transform::Inverse() const
+        {
+            Transform copy(*this);
+            copy.Invert();
+            return copy;
+        }
         string Transform::Report() const
         {
             UpdateState();
