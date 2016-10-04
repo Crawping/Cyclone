@@ -168,7 +168,7 @@ static int LoadFunctionPointers()
 	wglCreateContextAttribs		= (PFNWGLCREATECONTEXTATTRIBSARBPROC)glGetFunctionPointer("wglCreateContextAttribsARB");
 	wglGetExtensionsString      = (PFNWGLGETEXTENSIONSSTRINGARBPROC)glGetFunctionPointer("wglGetExtensionsStringARB");
     wglGetPixelFormatAttribiv   = (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)glGetFunctionPointer("wglGetPixelFormatAttribivARB");
-    wglSwapInterval             = (PFNWGLSWAPINTERVALEXTPROC)glGetFunctionPointer("wglSwapInterval");
+    wglSwapInterval             = (PFNWGLSWAPINTERVALEXTPROC)glGetFunctionPointer("wglSwapIntervalEXT");
     wglChoosePixelFormat        = (PFNWGLCHOOSEPIXELFORMATARBPROC)glGetFunctionPointer("wglChoosePixelFormatARB");
 
     if (!wglCreateContextAttribs)
