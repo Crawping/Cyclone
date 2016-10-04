@@ -39,6 +39,8 @@ class Program : public AdvancedRenderer
 
             nvPathStencilDepthOffset(-0.05f, -1);
             nvPathCoverDepthFunc(GL_ALWAYS);
+
+			glEnable(GL_CULL_FACE);
         }
         ~Program()
         {
@@ -68,7 +70,7 @@ class Program : public AdvancedRenderer
         {
             AdvancedRenderer::CreateSceneResources();
             SceneSVG = new Scene3D();
-            Image = new Texture2D("../ImageDisplay/House.jpg");
+            Image = new Texture2D("../ImageDisplay/House (11250x8627).jpg");
             Image->Bind();
 
             Quad
