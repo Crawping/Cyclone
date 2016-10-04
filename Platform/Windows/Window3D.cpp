@@ -23,6 +23,18 @@ static KeyboardKeys translateKeys(WPARAM keyCode)
         case VK_SPACE:      return KeyboardKeys::Space;
         case VK_F1:         return KeyboardKeys::F1;
         case VK_F2:         return KeyboardKeys::F2;
+
+		case 0x30:          return KeyboardKeys::Zero;
+		case 0x31:          return KeyboardKeys::One;
+		case 0x32:          return KeyboardKeys::Two;
+		case 0x33:          return KeyboardKeys::Three;
+		case 0x34:          return KeyboardKeys::Four;
+		case 0x35:          return KeyboardKeys::Five;
+		case 0x36:          return KeyboardKeys::Six;
+		case 0x37:          return KeyboardKeys::Seven;
+		case 0x38:          return KeyboardKeys::Eight;
+		case 0x39:          return KeyboardKeys::Nine;
+
         case 0x41:          return KeyboardKeys::A;
         case 0x42:          return KeyboardKeys::B;
         case 0x43:          return KeyboardKeys::C;
@@ -49,6 +61,19 @@ static KeyboardKeys translateKeys(WPARAM keyCode)
         case 0x58:          return KeyboardKeys::X;
         case 0x59:          return KeyboardKeys::Y;
         case 0x5A:          return KeyboardKeys::Z;
+
+		case 0xBD:          return KeyboardKeys::Dash;
+		case 0xBB:          return KeyboardKeys::Equals;
+		case 0xDB:          return KeyboardKeys::BracketOpen;
+		case 0xDD:          return KeyboardKeys::BracketClose;
+		case 0xDC:          return KeyboardKeys::BackSlash;
+		case 0xBA:          return KeyboardKeys::Semicolon;
+		case 0xDE:          return KeyboardKeys::Apostrophe;
+		case 0xC0:          return KeyboardKeys::BackTick;
+		case 0xBC:          return KeyboardKeys::Comma;
+		case 0xBE:          return KeyboardKeys::Period;
+		case 0xBF:          return KeyboardKeys::ForwardSlash;
+
         default:            return KeyboardKeys::Nothing;
     }
 }
