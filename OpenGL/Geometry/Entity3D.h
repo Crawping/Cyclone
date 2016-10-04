@@ -97,11 +97,14 @@ namespace Cyclone
 		        virtual const Texture2D* Texture()                          const override { return _texture; }
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                         const override { return _topology; }
-                /// <summary> Gets a reference to the vertex array defining the geometry of an entity. </summary>
+                /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
 		        virtual const Vector<T>& Points()                           const override { return _vertices; }
                 /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
                 /// <remarks>
-                ///     The world transformation matrix defines the position, scale, and orientation of an entity in 3D space.
+                ///     The world transform defines the position, scale, and orientation of an entity in 3D space. It is typically 
+                ///     used to apply the rotation, scaling, and translation operations that place the geometry of an entity 
+                ///     (defined by the <see cref="Points"/> method) into its correct position in a three-dimensional environment 
+                ///     called 'world' space.
                 /// </remarks>
                 virtual const Transform& World()                            const override { return _world; }
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
@@ -136,7 +139,7 @@ namespace Cyclone
                 Color4                  _color;
                 Vector<uint>            _indices;
                 bool                    _isVisible;
-		        const Texture2D*			    _texture;
+		        const Texture2D*		_texture;
                 VertexTopologies        _topology;
 		        Vector<T>		        _vertices;
                 Transform               _world;
