@@ -57,7 +57,7 @@ class Program : public BasicRenderer
             Vector<ControlPoint2D> path =
             {
                 { PathCommands::RoundedRectangle, { -50, -50, 100, 100, 12 } },
-                { PathCommands::Close,{ } },
+                { PathCommands::Close, { } },
             };
 
             Path.Add(path)
