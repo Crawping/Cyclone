@@ -169,7 +169,8 @@ namespace Cyclone
                 virtual Transform& Rotate(float p, float y, float r)                      { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
                 UtilitiesAPI virtual const float* ToArray()                         const { UpdateState(); return State.ToArray(); }
-
+                /// <summary> Converts a transformation data structure into an ordinary 4x4 transformation matrix. </summary>
+                /// <returns> A reference to the transformation matrix that performs the desired rotation, scaling, and translation operations. </returns>
                 UtilitiesAPI virtual const Matrix4x4& ToMatrix4x4()                 const { UpdateState(); return State; }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
                 virtual Transform& Translate(const Vector3& t)                            { return Position(_position + t); }
