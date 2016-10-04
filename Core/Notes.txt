@@ -18,6 +18,7 @@ TODOS:
 - 2D Rendering
 	-- Fonts & text                             (PRELIMINARY)
 	-- SVG images                               (IN PROGRESS)
+        > Path string parsing
     -- Rounded rectangles                       (PRELIMINARY)
     -- Color gradients
     -- Enable/disable stroking & filling        (DONE)
