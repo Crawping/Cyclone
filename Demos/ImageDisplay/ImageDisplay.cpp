@@ -22,7 +22,7 @@ class Program : public AdvancedRenderer
     public:
 
         Program() : 
-            AdvancedRenderer(Area(0, 0, 1024, 960), "Image Display", 4),
+            AdvancedRenderer(Area(0, 0, 1024, 960), "Image Display", 0),
             Image(nullptr)
         {
             Initialize();
