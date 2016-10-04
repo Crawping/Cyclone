@@ -207,6 +207,12 @@ namespace Cyclone
             if (!value) { _pointerPosition = Vector2::Zero; }
             return *this;
         }
+        Window3D& Window3D::IsVSyncEnabled(bool value)
+        {
+            _isVSyncEnabled = value;
+            wglSwapInterval(value);
+            return *this;
+        }
         Window3D& Window3D::Title(const string& title)
         {
             _title = title;
@@ -223,6 +229,7 @@ namespace Cyclone
             _isTrackingKeyboard(true),
             _isTrackingKeyRepeat(true),
             _isTrackingPointer(true),
+            _isVSyncEnabled(true),
             _title(title)
         {
             std::wstring winClass = str2wstr("WindowWGL");
@@ -258,6 +265,8 @@ namespace Cyclone
 				SetWindowLong(Internals->ID, GWLP_USERDATA, (long)this);
                 ProcessSizeChange();
                 ShowWindow(Internals->ID, SW_SHOW);
+
+                wglSwapInterval(1);
             }
         }
 

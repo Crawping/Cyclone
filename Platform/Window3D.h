@@ -38,6 +38,8 @@ namespace Cyclone
                 bool IsTrackingKeyRepeat()          const { return _isTrackingKeyRepeat; }
                 /// <summary> Gets whether the window is currently tracking the position of the HID pointer. </summary>
                 bool IsTrackingPointer()            const { return _isTrackingPointer; }
+
+                bool IsVSyncEnabled()               const { return _isVSyncEnabled; }
                 /// <summary> Gets the current pointer button chord being pressed. </summary>
                 PointerButtons PointerButtonState() const { return _pointerButtonState; }
                 /// <summary> Gets the current (x, y) coordinates of the HID pointer relative to the upper-left corner of the window client area. </summary>
@@ -57,6 +59,8 @@ namespace Cyclone
                 PlatformAPI Window3D& IsTrackingPointer(bool value);
                 /// <summary> Sets whether the window is currently tracking repeating key presses. </summary>
                 PlatformAPI Window3D& IsTrackingKeyRepeat(bool value);
+
+                PlatformAPI Window3D& IsVSyncEnabled(bool value);
 
 
 
@@ -180,6 +184,7 @@ namespace Cyclone
                 bool            _isTrackingKeyboard;
                 bool            _isTrackingPointer;
                 bool            _isTrackingKeyRepeat;
+                bool            _isVSyncEnabled;
                 PointerButtons  _pointerButtonState;
                 Vector2         _pointerPosition;
                 string          _title;
