@@ -146,7 +146,7 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 
             case WM_MOUSEMOVE:
                 POINTS pts = MAKEPOINTS(lparam);
-                win3D->UpdatePointerPosition(pts.x, pts.y);
+                win3D->ProcessPointerMotion(pts.x, pts.y);
                 break;
 
             case WM_MOUSEWHEEL:
@@ -354,6 +354,21 @@ namespace Cyclone
             };
             OnKeyRelease(evt);
         }
+        void Window3D::ProcessPointerMotion(int x, int y)
+        {
+            if (!IsTrackingPointer())                                   { return; }
+            if (x == PointerPosition().X && y == PointerPosition().Y)   { return; }
+            
+            Vector2 oldPosition = PointerPosition();
+            _pointerPosition = Vector2(x, y);
+
+            PointerMotionEvent evt =
+            {
+                PointerPosition() - oldPosition,
+                PointerPosition(),
+            };
+            OnPointerMotion(evt);
+        }
         void Window3D::ProcessSizeChange()
         {
             RECT displayRect;
@@ -380,21 +395,6 @@ namespace Cyclone
             );
 
             OnResize();
-        }
-        void Window3D::UpdatePointerPosition(int x, int y)
-        {
-            if (!IsTrackingPointer())                                   { return; }
-            if (x == PointerPosition().X && y == PointerPosition().Y)   { return; }
-            
-            Vector2 oldPosition = PointerPosition();
-            _pointerPosition = Vector2(x, y);
-
-            PointerMotionEvent evt =
-            {
-                PointerPosition() - oldPosition,
-                PointerPosition(),
-            };
-            OnPointerMotion(evt);
         }
 
 

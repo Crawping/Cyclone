@@ -108,14 +108,6 @@ namespace Cyclone
 
 
                 /** INTERNAL UTILITIES **/
-                /// <summary> Updates the cached pointer position data. </summary>
-                /// <param name="x"> The new horizontal pixel position of the pointer relative to the left edge of the client area. </param>
-                /// <param name="y"> The new vertical pixel position of the pointer relative to the top edge of the client area. </param>
-                /// <remarks>
-                ///     This method is for internal use only and is a necessary means of communication between the window's event loop 
-                ///     and the 'Window3D' object itself. 
-                /// </remarks>
-                InternalAPI void UpdatePointerPosition(int x, int y);
 
                 InternalAPI void ProcessButtonPress(PointerButtons button);
 
@@ -124,12 +116,21 @@ namespace Cyclone
                 InternalAPI void ProcessKeyPress(KeyboardKeys key, ubyte code);
 
                 InternalAPI void ProcessKeyRelease(KeyboardKeys key, ubyte code);
+                /// <summary> Updates the cached pointer position data. </summary>
+                /// <param name="x"> The new horizontal pixel position of the pointer relative to the left edge of the client area. </param>
+                /// <param name="y"> The new vertical pixel position of the pointer relative to the top edge of the client area. </param>
+                /// <remarks>
+                ///     This method is for internal use only and is a necessary means of communication between the window's event loop 
+                ///     and the 'Window3D' object itself. 
+                /// </remarks>
+                InternalAPI void ProcessPointerMotion(int x, int y);
                 /// <summary> Updates the cached window position and size data. </summary>
                 /// <remarks>
                 ///     This method is for internal use only and is a necessary means of communication between the window's event loop 
                 ///     and the 'Window3D' object itself.
                 /// </remarks>
                 InternalAPI void ProcessSizeChange();
+
 
 
                 /** RENDERING UTILITIES **/
@@ -172,10 +173,6 @@ namespace Cyclone
 
             private:
                 
-                _window3D*      Internals;
-
-
-
                 /** PROPERTY DATA **/
                 Area            _clientArea;
                 Area            _displayArea;
@@ -189,6 +186,10 @@ namespace Cyclone
                 Vector2         _pointerPosition;
                 string          _title;
 
+
+
+                /** PRIVATE DATA **/
+                _window3D*      Internals;
         };
     }
 }
