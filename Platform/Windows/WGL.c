@@ -99,13 +99,13 @@ static int CreateLoadingWindow()
 {
     WNDCLASS winClass;
     ZeroMemory(&winClass, sizeof(winClass));
-    
+
     winClass.hCursor        = LoadCursor(NULL, IDC_ARROW);
     winClass.hInstance      = GetModuleHandle(NULL);
     winClass.lpfnWndProc    = WindowMessageHandler;
     winClass.lpszClassName  = TEXT("LoadingWindowWGL");
     winClass.style          = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-    
+
     if (!RegisterClass(&winClass))
     {
         fprintf(stderr, "Failed to register the API loading window class.\n");
@@ -187,6 +187,21 @@ static int LoadFunctionPointers()
 /** API FUNCTIONS **/
 _window3D* wglCreateWindow(const WindowSettings* settings)
 {
+    /* NOTES FOR CODE BELOW
+     *
+     * On the Windows platform, getting an advanced OpenGL rendering context is a really weird procedure. It's basically a very hacky
+     * workaround/fix for what amounts to a chicken-and-egg problem, but it's well known that what follows is the only way to do it.
+     * The problem is this: an active OpenGL context MUST exist before you can load WGL functions, but WGL functions MUST be used to
+     * create advanced OpenGL contexts. The solution arises because of the word 'advanced' in that last part. We can create a basic
+     * context that supports the loading of WGL functions and then create a more advanced context to replace it.
+     *
+     * Except that alone doesn't work because the advanced rendering context requires different pixel format settings that can only be
+     * set on any given desktop window ONCE. After these settings are applied to a window, which is a necessary step in the creation
+     * of the basic context, they can never ever change again for the entire life of the window. That means we have to destroy the
+     * entire window and recreate it from scratch just so we have the WGL functions available to create the rendering context we want
+     * (e.g. for multisample antialiasing).
+     */
+
 	if (settings->PixelAttributes)
 	{
 		if (!CreateLoadingWindow())
@@ -217,7 +232,7 @@ _window3D* wglCreateWindow(const WindowSettings* settings)
 		settings->ClassName,
 		settings->Title,
         WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-		settings->DisplayArea.left, 
+		settings->DisplayArea.left,
 		settings->DisplayArea.top,
 		settings->DisplayArea.right - settings->DisplayArea.left,
 		settings->DisplayArea.bottom - settings->DisplayArea.top,
@@ -269,7 +284,7 @@ _window3D* wglCreateWindow(const WindowSettings* settings)
     {
         wglDestroyWindow(win);
         return NULL;
-    }    
+    }
 
 	return win;
 }
