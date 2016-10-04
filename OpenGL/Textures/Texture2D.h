@@ -36,26 +36,10 @@ namespace Cyclone
             public:
 
                 /** DATA **/
-                /* SAMPLER - A data structure that dictates how to sample this texture within a shader program. */
+                /// <summary> A data structure that dictates how the texture is sampled within a GPU shader program. </summary>
                 TextureSampler  Sampler;
-                /* TINT - A 32-bit RGBA color that will be used to tint the rendered texture. */
+                /// <summary> A 32-bit RGBA color used to tint the rendered texture. </summary>
                 Color4          Tint;
-
-
-
-                /** PROPERTIES **/
-                /* HEIGHT - The height in pixels of the texture as it is found on the GPU. */
-                uint Height()           const override { return (uint)_size.Y; }
-                /* ISEMPTY - Gets whether this texture has any zero-length dimensions. */
-                bool IsEmpty()          const override { return Height() == 0 || Width() == 0; }
-                /* SIZE - Gets the height and width of the texture as it exists on the GPU. */
-                const Vector2& Size()   const { return _size; }
-                /* WIDTH - The width in pixels of the texture as it is found on the GPU.
-                 *
-                 *      This width value ignores any image modifications provided through cropping or padding. It returns the true
-                 *      width of the texture from memory.
-                 */
-                uint Width()            const override { return (uint)_size.X; }
 
 
 
@@ -75,9 +59,6 @@ namespace Cyclone
                 Bitmap Read(const Vector3& offset, const Vector2& size)          const;
 
                 virtual string Report()         const;
-
-            protected:
-                Vector2     _size;
 
         };
     }

@@ -7,14 +7,67 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        
+        /** PROPERTIES **/
+        Texture& Texture::Format(TextureFormats value)
+        {
+            if (value != _format)
+            {
+                _format = value;
+                _needsUpdate = true;
+            }
+            return *this;
+        }
+        Texture& Texture::MipmapCount(uint value)
+        {
+            if (value != _mipmapCount)
+            {
+                _mipmapCount = value;
+                _needsUpdate = true;
+            }
+            return *this;
+        }
+        Texture& Texture::Size(const Vector3& value)
+        {
+            if (value != _size)
+            {
+                _size = value;
+                _needsUpdate = true;
+            }
+            return *this;
+        }
+        Texture& Texture::Target(TextureTargets value)
+        {
+            if (value != _target)
+            {
+                _target = value;
+                _needsUpdate = true;
+            }
+            return *this;
+        }
+
+
+
         /** CONSTRUCTORS & DESTRUCTOR **/
-        Texture::Texture(TextureFormats format, TextureTargets target) :
+        Texture::Texture() :
+            _handle(0),
+            _id(0),
+            _mipmapCount(4),
+            _needsUpdate(true)
+        {
+
+        }
+            
+        Texture::Texture(const Vector3& size, TextureFormats format, TextureTargets target) :
             _format(format),
             _handle(0),
             _id(0),
+            _mipmapCount(4),
+            _needsUpdate(true),
+            _size(size),
             _target(target)
         {
-            Create();
+            
         }
         Texture::~Texture()
         {
@@ -55,16 +108,34 @@ namespace Cyclone
             if (IsEmpty()) { return; }
             glGenerateTextureMipmap(ID());
         }
+        void Texture::Update()
+        {
+            if (!NeedsUpdate()) { return; }
+
+            Reallocate();
+            _needsUpdate = false;
+        }
 
 
 
         /** PROTECTED UTILITIES **/
         void Texture::Allocate()
         {
-            if (Target() == TextureTargets::Texture2DMS)
-                glTextureStorage2DMultisample(ID(), 4, Format(), (int)Width(), (int)Height(), true);
-            else
-                glTextureStorage2D(ID(), 5, Format(), (int)Width(), (int)Height());
+            switch (Target())
+            {
+                case TextureTargets::Texture1D:
+                    glTextureStorage1D(ID(), MipmapCount(), Format(), (int)Width());
+                    break;
+                case TextureTargets::Texture2D:
+                    glTextureStorage2D(ID(), MipmapCount(), Format(), (int)Width(), (int)Height());
+                    break;
+                case TextureTargets::Texture2DMS:
+                    glTextureStorage2DMultisample(ID(), 4, Format(), (int)Width(), (int)Height(), true);
+                    break;
+                case TextureTargets::Texture3D:
+                    glTextureStorage3D(ID(), MipmapCount(), Format(), (int)Width(), (int)Height(), (int)Depth());
+                    break;
+            }
         }
 
         void Texture::Create()
@@ -80,11 +151,17 @@ namespace Cyclone
         {
             if (_id)
             {
-                MakeNonresident();
+                //MakeNonresident();
                 glDeleteTextures(1, &_id);
                 _handle = 0;
                 _id = 0;
             }
+        }
+        void Texture::Reallocate()
+        {
+            Destroy();
+            Create();
+            Allocate();
         }
     }
 }

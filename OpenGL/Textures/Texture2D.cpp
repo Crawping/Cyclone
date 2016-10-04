@@ -32,17 +32,14 @@ namespace Cyclone
 
         /** CONSTRUCTORS & DESTRUCTOR **/
         Texture2D::Texture2D(const Vector2& size, TextureFormats format, TextureTargets target) :
-            Texture(format, target),
-            _size(size),            
+            Texture(size, format, target),
             Tint(Color4::White)
         {
-            Allocate();
+            Update();
         }
 
-        Texture2D::Texture2D(const string& fileName) : 
-            Texture(TextureFormats::Byte3, TextureTargets::Texture2D)
-        {
-            
+        Texture2D::Texture2D(const string& fileName)
+        {            
             jpeg_decompress_struct jpgInfo;
             FILE* jpgFile;
 
@@ -69,8 +66,8 @@ namespace Cyclone
             jpeg_start_decompress(&jpgInfo);
 
             Vector2 jpgSize(jpgInfo.output_width, jpgInfo.output_height);
-            _size = Vector2( min(jpgSize.X, 16384), min(jpgSize.Y, 16384) );
-            Allocate();
+            Size(Vector2( min(jpgSize.X, 16384), min(jpgSize.Y, 16384) ));
+            Update();
 
             int rowStride = jpgSize.X * jpgInfo.output_components;
             ubyte* rowBuffer  = new ubyte[rowStride];
@@ -100,8 +97,8 @@ namespace Cyclone
             Sampler = texture.Sampler;
             if (texture.Size() != Size())
             {
-                _size = texture.Size();
-                Reallocate();
+                Size(texture.Size());
+                Update();
             }
 
             glCopyImageSubData
