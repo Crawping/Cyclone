@@ -374,3 +374,15 @@ struct WrapModes : public Enumerator
 
     constexpr WrapModes(enum Modes m = Repeat) : Enumerator((int)m) { }
 };
+
+struct VSyncModes : public Enumerator
+{
+	enum Modes
+	{
+		Adaptive                    = -1,
+		Disable                     = 0,
+		Enable                      = 1,
+	};
+
+    constexpr VSyncModes(enum Modes m = Enable) : Enumerator((int)m) { }
+};
