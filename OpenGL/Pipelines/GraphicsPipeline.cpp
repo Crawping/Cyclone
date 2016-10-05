@@ -58,16 +58,16 @@ namespace Cyclone
             glGetProgramiv(ID(), GL_LINK_STATUS, &successful);
             if (!successful)
             {
-                Console::WriteLine("Failed to link the shader pipeline programs.");
-                Console::WriteLine(ReportShaderLog());
+                PostInfo("Failed to link the shader pipeline programs.");
+                PostInfo(ReportShaderLog());
             }
 
             glValidateProgram(ID());
             glGetProgramiv(ID(), GL_VALIDATE_STATUS, &successful);
             if (!successful)
             {
-                Console::WriteLine("Failed to validate the shader pipeline.");
-                Console::WriteLine(ReportShaderLog());
+                PostInfo("Failed to validate the shader pipeline.");
+                PostInfo(ReportShaderLog());
             }
 
             return successful;
