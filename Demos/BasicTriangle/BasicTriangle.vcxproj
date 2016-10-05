@@ -232,7 +232,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="BasicTriangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Renderers\Renderers.vcxproj">
