@@ -90,6 +90,8 @@ namespace Cyclone
         }
         void Texture::MakeResident()
         {
+            Update();
+
             if (!_handle)
                 _handle = glGetTextureHandleARB(_id);
             glMakeTextureHandleResidentARB(Handle());
@@ -105,7 +107,9 @@ namespace Cyclone
         /** TEXTURE UTILITIES **/
         void Texture::GenerateMipmap()
         {
-            if (IsEmpty()) { return; }
+            Update();
+            if (IsEmpty() || Target() == TextureTargets::Texture2DMS) 
+                return;
             glGenerateTextureMipmap(ID());
         }
         void Texture::Update()
@@ -132,7 +136,9 @@ namespace Cyclone
                 case TextureTargets::Texture2DMS:
                     glTextureStorage2DMultisample(ID(), 4, Format(), (int)Width(), (int)Height(), true);
                     break;
+
                 case TextureTargets::Texture3D:
+                case TextureTargets::TextureArray2D:
                     glTextureStorage3D(ID(), MipmapCount(), Format(), (int)Width(), (int)Height(), (int)Depth());
                     break;
             }

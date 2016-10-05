@@ -94,6 +94,8 @@ namespace Cyclone
         }
         void Texture2D::Copy(const Texture2D& texture)
         {
+            Update();
+
             Sampler = texture.Sampler;
             if (texture.Size() != Size())
             {
@@ -114,6 +116,8 @@ namespace Cyclone
         }
         void Texture2D::CopyFramebuffer(const Area &screenArea, int level)
         {
+            Update();
+
             glCopyTextureSubImage2D
             (
                 ID(), 
