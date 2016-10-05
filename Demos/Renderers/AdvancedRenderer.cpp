@@ -78,7 +78,7 @@ namespace Renderers
         {
             Vector3 dir = WalkingDirection;
             View.Translate(dir.Normalize() * MoveSpeed);
-            Renderer->View(View);
+            Renderer->View(&View);
         }
 
         BasicRenderer::UpdateScene();
@@ -148,7 +148,7 @@ namespace Renderers
         float pitch = (evt.Delta.Y * Constants::Pi / RenderWindow->ClientArea().Height);
         float yaw = evt.Delta.X * Constants::TwoPi * 2.0f / RenderWindow->ClientArea().Width;
         View.Rotate(Vector3(pitch, yaw, 0.0f));
-        Renderer->View(View);
+        Renderer->View(&View);
     }
 
 }

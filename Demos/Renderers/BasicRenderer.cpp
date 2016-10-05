@@ -121,8 +121,8 @@ namespace Renderers
             4.0f * clientArea.Width
         );
 
-        Renderer->Projection(Projection);
-        Renderer->View(View);
+        Renderer->Projection(&Projection);
+        Renderer->View(&View);
     }
     void BasicRenderer::Initialize()
     {
