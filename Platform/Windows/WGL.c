@@ -187,7 +187,7 @@ static int LoadFunctionPointers()
 /** API FUNCTIONS **/
 _window3D* wglCreateWindow(const WindowSettings* settings)
 {
-    /* NOTES FOR CODE BELOW
+    /* NOTES ON THE CODE BELOW
      *
      * On the Windows platform, getting an advanced OpenGL rendering context is a really weird procedure. It's basically a very hacky
      * workaround/fix for what amounts to a chicken-and-egg problem, but it's well known that what follows is the only way to do it.
@@ -272,7 +272,7 @@ _window3D* wglCreateWindow(const WindowSettings* settings)
         return NULL;
     }
 
-    win->RenderContext = wglCreateContext(win->DeviceContext);
+    win->RenderContext = wglCreateContextAttribs(win->DeviceContext, NULL, DefaultContextSettings);
     if (!wglMakeCurrent(win->DeviceContext, win->RenderContext))
     {
         wglDestroyWindow(win);
