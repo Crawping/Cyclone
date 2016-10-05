@@ -320,6 +320,8 @@ struct TextureTargets : public Enumerator
         /// <summary> A two-dimensional texture storage format. </summary>
         Texture2D                   = GL_TEXTURE_2D,
 
+        TextureArray2D              = GL_TEXTURE_2D_ARRAY,
+
         Texture2DMS                 = GL_TEXTURE_2D_MULTISAMPLE,
         /// <summary> A three-dimensional texture storage format. </summary>
         Texture3D                   = GL_TEXTURE_3D,
