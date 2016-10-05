@@ -7,7 +7,6 @@
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
-#include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
@@ -22,8 +21,11 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
-        class IRenderableEntity;
         class Scene3D;
+    }
+    namespace Utilities
+    {
+        class ITransformation3D;
     }
 
 
@@ -50,7 +52,7 @@ namespace Cyclone
                 const ITransformation3D* View()             const { return _view; }
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* Window()                    const { return _renderWindow; }
-                                
+
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
                 PlatformAPI void Pipeline(GraphicsPipeline* pipeline);
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>

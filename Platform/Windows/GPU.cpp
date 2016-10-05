@@ -8,6 +8,7 @@
 #include "Geometry/Scene3D.h"
 #include "Interfaces/IBindable.h"
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Windows/WGL.h"
 
