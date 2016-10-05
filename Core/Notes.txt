@@ -19,11 +19,12 @@ TODOS:
 	-- Fonts & text                             (PRELIMINARY)
 	-- SVG images                               (IN PROGRESS)
         > Path string parsing
+        > XML file parsing
     -- Rounded rectangles                       (PRELIMINARY)
     -- Color gradients
     -- Enable/disable stroking & filling        (DONE)
     -- Proper scaling of SVG elements
-        > Pixels
+        > Pixels                                (DONE)
         > Ems
 
 - 3D Rendering
@@ -33,6 +34,9 @@ TODOS:
 	-- Implement IUpdatable Interface           (DONE)
 	-- Customizable vertex layouts              (DONE)
 	-- Proper texture samplers
+    -- BMP textures 
+    -- JPEG textures                            (DONE)
+    -- PNG textures
 
 - Buffers
     -- Vertex index buffer                      (DONE)
@@ -43,7 +47,7 @@ TODOS:
 
 - Primitive Types
 	-- Arbitrary precision numbers
-	-- Camera class 							(PRELIMINARY)
+	-- Camera class 							(DONE)
 	-- Clock
 	-- Random Number Generator (RNG)
 	-- Implement ICollection interface			(PRELIMINARY)
@@ -75,7 +79,7 @@ TODOS:
     -- Varying vertex topologies				(DONE)
     -- Varying vertex layouts                   (PRELIMINARY)
     -- Varying shader pipelines
-        > Compute
+        > Compute                               (PRELIMINARY)
         > Deferred
         > Forward
         > Indirect
