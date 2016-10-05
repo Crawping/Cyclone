@@ -89,14 +89,14 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CoreGL;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\Buffers;.\Interfaces;.\Pipelines;.\Textures;..\..\libjpg\jpeg-9b;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CoreGL;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\Buffers;.\Interfaces;.\Pipelines;.\Textures;..\..\libjpeg\jpeg-9b;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>jpeg.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);..\..\libjpg\jpeg-9b\Release;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);..\..\libjpeg\jpeg-9b\Release;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -174,6 +174,7 @@
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
+    <ClInclude Include="Pipelines\ComputePipeline.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
     <ClInclude Include="Pipelines\Shader.h" />
     <ClInclude Include="Pipelines\ShaderPipeline.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="Geometry\Geometry3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Geometry\Scene3D.cpp" />
+    <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />
     <ClCompile Include="Pipelines\ShaderPipeline.cpp" />
