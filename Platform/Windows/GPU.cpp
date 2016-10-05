@@ -27,7 +27,7 @@ namespace Cyclone
             if (_renderPipeline)
                 _renderPipeline->Bind();
         }
-        void GPU::Projection(const Transform& projection)
+        void GPU::Projection(ITransformation3D* projection)
         {
             _projection = projection;
         }
@@ -41,7 +41,7 @@ namespace Cyclone
             if (_renderTarget)
                 _renderTarget->Bind(slot);
         }
-        void GPU::View(const Camera& view)
+        void GPU::View(ITransformation3D* view)
         {
             _view = view;
         }
@@ -164,8 +164,8 @@ namespace Cyclone
         {
             PerFrame data =
             {
-                _projection.ToMatrix4x4(),
-                _view.ToMatrix4x4(),
+                _projection->ToMatrix4x4(),
+                _view->ToMatrix4x4(),
                 Vector3::One,
                 0,
             };

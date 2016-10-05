@@ -7,6 +7,7 @@
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
+#include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
@@ -37,29 +38,29 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                /// <summary> Gets a reference to the projection transformation being used by the rendering pipeline. </summary>
-                const Transform& Projection()               const { return _projection; }
+                /// <summary> Gets a pointer to the projection transformation being used by the rendering pipeline. </summary>
+                const ITransformation3D* Projection()       const { return _projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
                 const GraphicsPipeline* Pipeline()          const { return _renderPipeline; }
 
                 uint PipelineID()                           const { return _renderPipeline ? _renderPipeline->ID() : 0; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
                 const FrameBuffer* Target()                 const { return _renderTarget; }
-                /// <summary> Gets a reference to the view transformation being used by the rendering pipeline. </summary>
-                const Camera& View()                        const { return _view; }
+                /// <summary> Gets a pointer to the view transformation being used by the rendering pipeline. </summary>
+                const ITransformation3D* View()             const { return _view; }
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* Window()                    const { return _renderWindow; }
                                 
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
                 PlatformAPI void Pipeline(GraphicsPipeline* pipeline);
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
-                PlatformAPI void Projection(const Transform& projection);
+                PlatformAPI void Projection(ITransformation3D* projection);
                 /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>
                 PlatformAPI void Scene(Scene3D* scene, int slot = 0);
                 /// <summary> Sets the framebuffer to which all subsequent rendering will occur. </summary>
                 PlatformAPI void Target(FrameBuffer* framebuffer, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
-                PlatformAPI void View(const Camera& view);
+                PlatformAPI void View(ITransformation3D* view);
                 /// <summary> Sets the window that will be used to display the images in the render target. </summary>
                 PlatformAPI void Window(Window3D* window);
 
@@ -129,12 +130,12 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 float                       _fov;
-                Transform                   _projection;
+                ITransformation3D*          _projection;
                 GraphicsPipeline*           _renderPipeline;
                 FrameBuffer*                _renderTarget;
                 Window3D*                   _renderWindow;
                 Scene3D*                    _renderScene;
-                Camera                      _view;
+                ITransformation3D*          _view;
 
 
 
