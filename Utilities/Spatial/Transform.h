@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Interfaces/ITransformation3D.h"
 #include "Math/Matrix4x4.h"
 #include "Math/Vector3.h"
 
@@ -15,7 +16,7 @@ namespace Cyclone
         struct Volume;
 
         /// <summary> A data structure representing a 4x4 transformation matrix used to translate, scale, and rotate entities in 3D space. </summary>
-        struct Transform
+        struct Transform : public ITransformation3D
         {
             public:
                 /** POSITIONAL PROPERTIES **/
@@ -34,9 +35,9 @@ namespace Cyclone
                 virtual Transform& Z(float z)                                 { return Position(X(), Y(), z); }
 
                 /// <summary> Gets the (x, y, z) translation components of the transformation matrix. </summary>
-                virtual const Vector3& Position()                       const { return _position; }
+                virtual const Vector3& Position()                       const override { return _position; }
                 /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
-                virtual Transform& Position(const Vector3& p)                 { UpdateFlag(_position != p); _position = p; return *this; }
+                virtual Transform& Position(const Vector3& p)                 override { UpdateFlag(_position != p); _position = p; return *this; }
                 /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
                 virtual Transform& Position(float x, float y, float z)        { return Position(Vector3(x, y, z)); }
 
@@ -58,9 +59,9 @@ namespace Cyclone
                 virtual Transform& Yaw(float y)                               { return Orientation(Pitch(), y, Roll()); }
 
                 /// <summary> Gets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                virtual const Vector3& Orientation()                    const { return _orientation; }
+                virtual const Vector3& Orientation()                    const override { return _orientation; }
                 /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                virtual Transform& Orientation(const Vector3& o)              { UpdateFlag(_orientation != o); _orientation = o; return *this; }
+                virtual Transform& Orientation(const Vector3& o)              override { UpdateFlag(_orientation != o); _orientation = o; return *this; }
                 /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
                 virtual Transform& Orientation(float p, float y, float r)     { return Orientation(Vector3(p, y, r)); }
 
@@ -82,9 +83,9 @@ namespace Cyclone
                 virtual Transform& ScaleZ(float z)                            { return Scale(ScaleX(), ScaleY(), z); }
 
                 /// <summary> Gets the (x, y, z) scaling components of the transformation matrix. </summary>
-                virtual const Vector3& Scale()                          const { return _size; }
+                virtual const Vector3& Scale()                          const override { return _size; }
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
-                virtual Transform& Scale(const Vector3& s)                    { UpdateFlag(_size != s); _size = s; return *this; }
+                virtual Transform& Scale(const Vector3& s)                    override { UpdateFlag(_size != s); _size = s; return *this; }
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
                 virtual Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
                                 
@@ -164,16 +165,16 @@ namespace Cyclone
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI virtual string Report()                                const;
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Rotate(const Vector3& angles)                          { return Orientation(_orientation + angles); }
+                virtual Transform& Rotate(const Vector3& angles)                          override { return Orientation(_orientation + angles); }
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
                 virtual Transform& Rotate(float p, float y, float r)                      { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
                 UtilitiesAPI virtual const float* ToArray()                         const { UpdateState(); return State.ToArray(); }
                 /// <summary> Converts a transformation data structure into an ordinary 4x4 transformation matrix. </summary>
                 /// <returns> A reference to the transformation matrix that performs the desired rotation, scaling, and translation operations. </returns>
-                UtilitiesAPI virtual const Matrix4x4& ToMatrix4x4()                 const { UpdateState(); return State; }
+                UtilitiesAPI virtual const Matrix4x4& ToMatrix4x4()                 const override { UpdateState(); return State; }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Translate(const Vector3& t)                            { return Position(_position + t); }
+                virtual Transform& Translate(const Vector3& t)                            override { return Position(_position + t); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
                 virtual Transform& Translate(float x, float y, float z)                   { return Translate(Vector3(x, y, z)); }
 
