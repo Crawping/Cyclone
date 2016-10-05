@@ -65,7 +65,7 @@ class Program : public AdvancedRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../ImageDisplay/TexturedShading.psl");
-            Renderer->RenderPipeline(RenderPipeline);
+            Renderer->Pipeline(RenderPipeline);
         }
 
 };

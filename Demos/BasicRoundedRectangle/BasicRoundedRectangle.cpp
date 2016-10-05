@@ -48,7 +48,7 @@ class Program : public BasicRenderer
                 delete RenderTarget;
 
             RenderTarget = new FrameBuffer(RenderWindow->ClientArea().Scale(), TextureFormats::Byte4, TextureFormats::DepthStencil);
-            Renderer->RenderTarget(RenderTarget);
+            Renderer->Target(RenderTarget);
         }
         void CreateSceneResources() override
         {
@@ -73,7 +73,7 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-            Renderer->RenderPipeline(RenderPipeline);
+            Renderer->Pipeline(RenderPipeline);
         }
         void CreateTransformations() override
         {

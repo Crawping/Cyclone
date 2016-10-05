@@ -57,10 +57,7 @@ namespace Cyclone
         /** PROTECTED UTILITIES **/
         void Text2D::CoverFill(const GPU* gpu) const
         {
-            int varID = glGetUniformLocation(gpu->RenderPipelineID(), "InputColor");
-            if (varID != -1)
-                glUniform4f(varID, Color().R, Color().G, Color().B, Color().A);
-
+            gpu->SetUniform("InputColor", Color());
             nvCoverFillPathInstanced
             (
                 _text.size(),

@@ -90,7 +90,7 @@ class Program : public AdvancedRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../ImageDisplay/TexturedShading.psl");
-            Renderer->RenderPipeline(RenderPipeline);
+            Renderer->Pipeline(RenderPipeline);
 
             PipelineSVG = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
         }
@@ -182,13 +182,13 @@ class Program : public AdvancedRenderer
             nvMatrixLoadIdentity(TransformMatrices::Projection);
             nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
 
-            Renderer->RenderPipeline(RenderPipeline);
+            Renderer->Pipeline(RenderPipeline);
             Renderer->Scene(RenderScene);
 
             Renderer->Update();
             Renderer->Execute();
 
-            Renderer->RenderPipeline(PipelineSVG);
+            Renderer->Pipeline(PipelineSVG);
             Renderer->Scene(SceneSVG);
 
             AdvancedRenderer::UpdateScene();

@@ -107,13 +107,13 @@ class Program : public AdvancedRenderer
             Sphere.Color(color).Rotate(0.01f);
             RenderScene->Update(Sphere);
 
-            Renderer->RenderPipeline(PipelineSVG);
+            Renderer->Pipeline(PipelineSVG);
             Renderer->Scene(SceneSVG);
 
             Renderer->Update();
             Renderer->Execute();
 
-            Renderer->RenderPipeline(RenderPipeline);
+            Renderer->Pipeline(RenderPipeline);
             Renderer->Scene(RenderScene);
 
             AdvancedRenderer::UpdateScene();

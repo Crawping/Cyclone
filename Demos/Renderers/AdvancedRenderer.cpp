@@ -47,7 +47,7 @@ namespace Renderers
         if (RenderTarget)
             delete RenderTarget;
 
-		Renderer->RenderTarget(nullptr);
+		Renderer->Target(nullptr);
 
         RenderTarget = new FrameBuffer
         (
@@ -56,12 +56,12 @@ namespace Renderers
             TextureFormats::DepthStencil,
             SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D
         );
-        Renderer->RenderTarget(RenderTarget);
+        Renderer->Target(RenderTarget);
     }
     void AdvancedRenderer::CreateShaderPipeline()
     {
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
-        Renderer->RenderPipeline(RenderPipeline);
+        Renderer->Pipeline(RenderPipeline);
     }    
 
     void AdvancedRenderer::Render()

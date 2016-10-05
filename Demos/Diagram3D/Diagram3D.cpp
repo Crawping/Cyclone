@@ -98,7 +98,7 @@ class Program : public AdvancedRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-            Renderer->RenderPipeline(RenderPipeline);
+            Renderer->Pipeline(RenderPipeline);
         }
         void UpdateScene() override
         {

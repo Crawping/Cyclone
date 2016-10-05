@@ -37,7 +37,7 @@ namespace Renderers
 
 		RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
 		RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
-		Renderer->RenderWindow(RenderWindow);
+		Renderer->Window(RenderWindow);
 
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
@@ -89,7 +89,7 @@ namespace Renderers
 			TextureFormats::DepthStencil,
 			SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D
 		);
-        Renderer->RenderTarget(RenderTarget);
+        Renderer->Target(RenderTarget);
     }
     void BasicRenderer::CreateSceneResources()
     {
@@ -99,7 +99,7 @@ namespace Renderers
     void BasicRenderer::CreateShaderPipeline()
     {
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Default.psl");
-        Renderer->RenderPipeline(RenderPipeline);
+        Renderer->Pipeline(RenderPipeline);
     }
     void BasicRenderer::CreateSizedResources()
     {

@@ -112,7 +112,7 @@ namespace Cyclone
 	void Program::CreateRenderingPipeline()
 	{
 		RenderPipeline = new ShaderPipeline("../Demos/Renderers/Shaders/BlinnPhong.vsl", "../Demos/Renderers/Shaders/BlinnPhong.psl");
-		Renderer->RenderPipeline(RenderPipeline);
+		Renderer->Pipeline(RenderPipeline);
 	}
 	void Program::CreateRenderingTarget()
 	{
@@ -129,7 +129,7 @@ namespace Cyclone
 			TextureFormats::DepthStencil,
 			TextureTargets::Texture2DMS
 		);
-		Renderer->RenderTarget(RenderTarget);
+		Renderer->Target(RenderTarget);
 	}
 	void Program::CreateRenderingWindow()
 	{
@@ -137,7 +137,7 @@ namespace Cyclone
 		RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
 		RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
 
-		Renderer->RenderWindow(RenderWindow);
+		Renderer->Window(RenderWindow);
 	}
 	void Program::CreateSceneResources()
 	{

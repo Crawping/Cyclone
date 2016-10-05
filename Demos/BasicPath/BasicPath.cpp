@@ -62,7 +62,7 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-            Renderer->RenderPipeline(RenderPipeline);
+            Renderer->Pipeline(RenderPipeline);
         }
         void CreateTransformations() override
         {
