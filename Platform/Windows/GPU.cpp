@@ -58,10 +58,12 @@ namespace Cyclone
         /** CONSTRUCTOR & DESTRUCTOR **/
         GPU::GPU() :
             _fov(90),
+            _projection(nullptr),
             _renderPipeline(nullptr),
             _renderTarget(nullptr),
             _renderWindow(nullptr),
-            _renderScene(nullptr)
+            _renderScene(nullptr),
+            _view(nullptr)
         {
 
         }
@@ -163,15 +165,18 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void GPU::RestoreRenderingDefaults()
         {
-            PerFrame data =
+            if (_projection && _view)
             {
-                _projection->ToMatrix4x4(),
-                _view->ToMatrix4x4(),
-                Vector3::One,
-                0,
-            };
+                PerFrame data =
+                {
+                    _projection->ToMatrix4x4(),
+                    _view->ToMatrix4x4(),
+                    Vector3::One,
+                    0,
+                };
 
-            PerFrameBuffer.Set(0, data);
+                PerFrameBuffer.Set(0, data);
+            }
 
             if (_renderWindow)
                 glViewport(0, 0, _renderWindow->ClientArea().Width, _renderWindow->ClientArea().Height);
