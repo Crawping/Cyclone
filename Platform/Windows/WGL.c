@@ -271,8 +271,12 @@ _window3D* wglCreateWindow(const WindowSettings* settings)
         fprintf(stderr, "Failed to set the pixel format for the 3D rendering window.\n");
         return NULL;
     }
+    
+    if (settings->PixelAttributes)
+        win->RenderContext = wglCreateContextAttribs(win->DeviceContext, NULL, DefaultContextSettings);
+    else
+        win->RenderContext = wglCreateContext(win->DeviceContext);
 
-    win->RenderContext = wglCreateContextAttribs(win->DeviceContext, NULL, DefaultContextSettings);
     if (!wglMakeCurrent(win->DeviceContext, win->RenderContext))
     {
         wglDestroyWindow(win);
