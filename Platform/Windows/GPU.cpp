@@ -21,35 +21,35 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        void GPU::Projection(const Transform& projection)
-        {
-            _projection = projection;
-        }
-        void GPU::RenderPipeline(GraphicsPipeline* pipeline)
+        void GPU::Pipeline(GraphicsPipeline* pipeline)
         {
             _renderPipeline = pipeline;
             if (_renderPipeline)
                 _renderPipeline->Bind();
         }
-        void GPU::RenderTarget(FrameBuffer* framebuffer, int slot)
+        void GPU::Projection(const Transform& projection)
         {
-            _renderTarget = framebuffer;
-            if (_renderTarget)
-                _renderTarget->Bind(slot);
-        }
-        void GPU::RenderWindow(Window3D* window)
-        {
-            _renderWindow = window;
-            if (_renderWindow)
-                _renderWindow->Bind();
+            _projection = projection;
         }
         void GPU::Scene(Scene3D* scene, int slot)
         {
             _renderScene = scene;
         }
+        void GPU::Target(FrameBuffer* framebuffer, int slot)
+        {
+            _renderTarget = framebuffer;
+            if (_renderTarget)
+                _renderTarget->Bind(slot);
+        }
         void GPU::View(const Camera& view)
         {
             _view = view;
+        }
+        void GPU::Window(Window3D* window)
+        {
+            _renderWindow = window;
+            if (_renderWindow)
+                _renderWindow->Bind();
         }
 
 
@@ -141,7 +141,7 @@ namespace Cyclone
 
         int GPU::GetUniformID(const string& name)                           const
         {
-            return glGetUniformLocation(RenderPipelineID(), name.c_str());
+            return glGetUniformLocation(PipelineID(), name.c_str());
         }
 
         void GPU::SetUniform(const string& name, const Color4& value)       const

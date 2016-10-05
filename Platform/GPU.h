@@ -40,31 +40,28 @@ namespace Cyclone
                 /// <summary> Gets a reference to the projection transformation being used by the rendering pipeline. </summary>
                 const Transform& Projection()               const { return _projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
-                const GraphicsPipeline* RenderPipeline()    const { return _renderPipeline; }
+                const GraphicsPipeline* Pipeline()          const { return _renderPipeline; }
 
-                uint RenderPipelineID()                     const { return _renderPipeline ? _renderPipeline->ID() : 0; }
+                uint PipelineID()                           const { return _renderPipeline ? _renderPipeline->ID() : 0; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
-                const FrameBuffer* RenderTarget()           const { return _renderTarget; }
-                /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
-                const Window3D* RenderWindow()              const { return _renderWindow; }
+                const FrameBuffer* Target()                 const { return _renderTarget; }
                 /// <summary> Gets a reference to the view transformation being used by the rendering pipeline. </summary>
                 const Camera& View()                        const { return _view; }
-
-
-
-
+                /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
+                const Window3D* Window()                    const { return _renderWindow; }
+                                
+                /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
+                PlatformAPI void Pipeline(GraphicsPipeline* pipeline);
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
                 PlatformAPI void Projection(const Transform& projection);
-                /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
-                PlatformAPI void RenderPipeline(GraphicsPipeline* pipeline);
-                /// <summary> Sets the framebuffer to which all subsequent rendering will occur. </summary>
-                PlatformAPI void RenderTarget(FrameBuffer* framebuffer, int slot = 0);
-                /// <summary> Sets the window that will be used to display the images in the render target. </summary>
-                PlatformAPI void RenderWindow(Window3D* window);
                 /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>
                 PlatformAPI void Scene(Scene3D* scene, int slot = 0);
+                /// <summary> Sets the framebuffer to which all subsequent rendering will occur. </summary>
+                PlatformAPI void Target(FrameBuffer* framebuffer, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
                 PlatformAPI void View(const Camera& view);
+                /// <summary> Sets the window that will be used to display the images in the render target. </summary>
+                PlatformAPI void Window(Window3D* window);
 
 
 
