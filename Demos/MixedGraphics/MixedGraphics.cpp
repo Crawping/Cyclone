@@ -34,7 +34,7 @@ class Program : public AdvancedRenderer
             AdvancedRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering"),
             PipelineSVG(nullptr),
             SceneSVG(nullptr),
-            Sphere(Geometry3D::Sphere(4))
+            Sphere(Geometry3D::CalculateNormals(Geometry3D::Sphere(4)))
         {
             Initialize();
             nvPathStencilDepthOffset(-0.05f, -1);

@@ -289,7 +289,7 @@ namespace Cyclone
 
 
         /** VERTEX UTILITIES **/
-        void Geometry3D::CalculateNormals(Vector<Vertex::Standard>& vertices)
+        Vector<Vertex::Standard>& Geometry3D::CalculateNormals(Vector<Vertex::Standard>& vertices)
         {
             for (uint a = 0; a < vertices.Count(); a += 3)
             {
@@ -301,6 +301,8 @@ namespace Cyclone
                 vertices(a + 1).Normal  = Math::Cross(diff3, -diff1).Normalize();
                 vertices(a + 2).Normal  = Math::Cross(-diff2, -diff3).Normalize();
             }
+
+            return vertices;
         }
         void Geometry3D::Rotate(Vector<Vertex::Standard>& vertices, const Vector3& rotation)
         {

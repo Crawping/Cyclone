@@ -65,7 +65,7 @@ namespace Cyclone
 
             /** VERTEX UTILITIES **/
             /// <summary> Estimates the normal vectors for a list of non-indexed triangles in model space. </summary>
-            OpenGLAPI void CalculateNormals(Vector<Vertex::Standard>& vertices);
+            OpenGLAPI Vector<Vertex::Standard>& CalculateNormals(Vector<Vertex::Standard>& vertices);
             /// <summary> Rotates vertex positions and normal vectors by a specified amount. </summary>
             OpenGLAPI void Rotate(Vector<Vertex::Standard>& vertices, const Vector3& rotation);
             /// <summary> Scales vertex positions to make geometry appear larger in model space. </summary>
