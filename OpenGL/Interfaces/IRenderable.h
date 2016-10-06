@@ -31,7 +31,7 @@ namespace Cyclone
         /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
         /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
         template<typename T>
-        class OpenGLAPI IGeometric3D
+        class IGeometric3D
         {
             public:
                 /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
@@ -57,7 +57,7 @@ namespace Cyclone
         };
 
         /// <summary> An interface used to specify the material properties of an entity. </summary>
-        class OpenGLAPI IMaterialEntity
+        class IMaterialEntity
         {
             public:
                 /// <summary> Gets a pointer to the texture used to render the visible surface of a material. </summary>
@@ -75,7 +75,7 @@ namespace Cyclone
         /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
         /// <typeparam name="T"> The type of point object that is used to define the geometry of the object. </typeparam>
         template<typename T>
-        class OpenGLAPI IRenderable3D :
+        class IRenderable3D :
             public virtual IGeometric3D<T>,
             public virtual IMaterialEntity
         {
@@ -86,7 +86,7 @@ namespace Cyclone
         };
 
         template<typename T>
-        class OpenGLAPI IRenderable2D :
+        class IRenderable2D :
             public virtual IRenderable3D<T>
         {
             public:
@@ -94,7 +94,7 @@ namespace Cyclone
                 virtual void Render(const GPU* gpu)         const = 0;
         };
 
-        class OpenGLAPI IRenderableScene
+        class IRenderableScene
         {
             public:
                 virtual ~IRenderableScene() { }
