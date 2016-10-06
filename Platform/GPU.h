@@ -8,8 +8,6 @@
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
 #include "Pipelines/GraphicsPipeline.h"
-#include "Spatial/Camera.h"
-#include "Spatial/Transform.h"
 
 
 
