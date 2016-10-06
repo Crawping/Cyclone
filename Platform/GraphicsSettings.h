@@ -3,7 +3,9 @@
  */
 
 #pragma once
-#include "Spatial/Transform.h"
+#include "EnumerationsGL.h"
+#include "PlatformAPI.h"
+#include "Interfaces/IGraphicsSettings.h"
 
 
 
@@ -16,22 +18,38 @@ namespace Cyclone
         class FrameBuffer;
         class GraphicsPipeline;
     }
+    namespace Utilities
+    {
+        class ITransformation3D;
+    }
+
+
 
     namespace Platform
     {
+
         struct BlendSettings
         {
+            bool IsEnabled;
 
         };
 
 
-        struct GraphicsSettings
+        struct GraphicsSettings : public IGraphicsSettings
         {
-            BlendSettings       Blending;
-            Transform           Projection;
+            //BlendSettings       Blending;
+            bool                IsBlendingEnabled;
+            FaceCullModes       FaceCulling;
+
             GraphicsPipeline*   Pipeline;
-            FrameBuffer*        RenderTarget;
-            Transform           View;
+            ITransformation3D*  Projection;
+            FrameBuffer*        Target;
+            ITransformation3D*  View;
+
+            /** CONSTRUCTOR **/
+            PlatformAPI GraphicsSettings();
+
+            PlatformAPI void Apply(GPU* gpu) const override;
         };
     }
 }

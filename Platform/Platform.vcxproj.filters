@@ -12,10 +12,16 @@
     <ClInclude Include="NVPR.h" />
     <ClInclude Include="WindowEvents.h" />
     <ClInclude Include="InputControls.h" />
+    <ClInclude Include="Interfaces\IGraphicsSettings.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
       <UniqueIdentifier>{051d679b-c49b-4460-80be-9ccd990be058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{0843754d-a70c-46c5-96a8-f24a55ca0192}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -31,5 +37,6 @@
     </ClCompile>
     <ClCompile Include="NVPR.c" />
     <ClCompile Include="InputControls.cpp" />
+    <ClCompile Include="GraphicsSettings.cpp" />
   </ItemGroup>
 </Project>
