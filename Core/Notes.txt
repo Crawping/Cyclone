@@ -74,6 +74,7 @@ TODOS:
     -- Display3D class for monitor info
 	-- Copy prevention for critical resources
 	-- Fix multithreaded compilation            (DONE)
+	-- Picking & hit testing
 
 - Scenes
     -- Varying vertex topologies				(DONE)
