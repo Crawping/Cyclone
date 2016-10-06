@@ -44,6 +44,7 @@ TODOS:
     -- Persistently mapped buffers				(PRELIMINARY)
     -- Customizable access intents				(DONE)
     -- Direct storage access & manipulation
+    -- Configurable MSAA counts for FBOs
 
 - Primitive Types
 	-- Arbitrary precision numbers
@@ -69,12 +70,15 @@ TODOS:
 
 - General
 	-- Integrate exception throws
-    -- Implement HID control interface			(PRELIMINARY)
-    -- MSAA										(PRELIMINARY)
+    -- Implement HID control interface			(DONE)
+        > Fix character input recognition
+    -- MSAA										(DONE)
     -- Display3D class for monitor info
 	-- Copy prevention for critical resources
 	-- Fix multithreaded compilation            (DONE)
 	-- Picking & hit testing
+    -- Remove OpenGL from EnumerationsGL
+    -- State settings for the GPU class         (IN PROGRESS)
 
 - Scenes
     -- Varying vertex topologies				(DONE)
