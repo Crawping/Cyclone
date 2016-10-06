@@ -30,7 +30,7 @@ namespace Cyclone
 
 
 
-        class OpenGLAPI Texture2D : public Texture
+        class OpenGLAPI Texture2D : public Texture3D
         {
 
             public:

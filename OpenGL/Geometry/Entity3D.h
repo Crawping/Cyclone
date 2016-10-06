@@ -8,6 +8,7 @@
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
 #include "Spatial/Transform.h"
+#include "Textures/Texture.h"
 
 
 
@@ -15,6 +16,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        //class Texture;
         namespace Vertex { struct Standard; }
 
         template<typename T>
@@ -94,7 +96,7 @@ namespace Cyclone
                 /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
                 virtual const Vector<uint>& Indices()                       const override { return _indices; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
-		        virtual const Texture2D* Texture()                          const override { return _texture; }
+		        virtual const Texture3D* Texture()                          const override { return _texture; }
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                         const override { return _topology; }
                 /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
@@ -115,7 +117,7 @@ namespace Cyclone
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
                 virtual Entity3D& IsVisible(bool value)                     { _isVisible = value; return *this; }
 
-                virtual Entity3D& Texture(const Texture2D* texture)         { _texture = texture; return *this; }
+                virtual Entity3D& Texture(const Texture3D* texture)         { _texture = texture; return *this; }
 
 
                 /** DESTRUCTOR **/
@@ -139,7 +141,7 @@ namespace Cyclone
                 Color4                  _color;
                 Vector<uint>            _indices;
                 bool                    _isVisible;
-		        const Texture2D*		_texture;
+		        const Texture3D*		_texture;
                 VertexTopologies        _topology;
 		        Vector<T>		        _vertices;
                 Transform               _world;

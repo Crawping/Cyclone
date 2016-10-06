@@ -9,7 +9,7 @@ namespace Cyclone
     {
         
         /** PROPERTIES **/
-        Texture& Texture::Format(TextureFormats value)
+        Texture3D& Texture3D::Format(TextureFormats value)
         {
             if (value != _format)
             {
@@ -18,7 +18,7 @@ namespace Cyclone
             }
             return *this;
         }
-        Texture& Texture::MipmapCount(uint value)
+        Texture3D& Texture3D::MipmapCount(uint value)
         {
             if (value != _mipmapCount)
             {
@@ -27,7 +27,7 @@ namespace Cyclone
             }
             return *this;
         }
-        Texture& Texture::Size(const Vector3& value)
+        Texture3D& Texture3D::Size(const Vector3& value)
         {
             if (value != _size)
             {
@@ -36,7 +36,7 @@ namespace Cyclone
             }
             return *this;
         }
-        Texture& Texture::Target(TextureTargets value)
+        Texture3D& Texture3D::Target(TextureTargets value)
         {
             if (value != _target)
             {
@@ -49,16 +49,15 @@ namespace Cyclone
 
 
         /** CONSTRUCTORS & DESTRUCTOR **/
-        Texture::Texture() :
+        Texture3D::Texture3D() :
             _handle(0),
             _id(0),
             _mipmapCount(4),
             _needsUpdate(true)
         {
 
-        }
-            
-        Texture::Texture(const Vector3& size, TextureFormats format, TextureTargets target) :
+        }            
+        Texture3D::Texture3D(const Vector3& size, TextureFormats format, TextureTargets target) :
             _format(format),
             _handle(0),
             _id(0),
@@ -69,7 +68,7 @@ namespace Cyclone
         {
             
         }
-        Texture::~Texture()
+        Texture3D::~Texture3D()
         {
             //MakeNonresident();
             if (_id)
@@ -79,16 +78,16 @@ namespace Cyclone
 
 
         /** BINDING UTILITIES **/
-        void Texture::BindEntity(int slot) const
+        void Texture3D::BindEntity(int slot) const
         {
             glActiveTexture(GL_TEXTURE0 + slot);
             glBindTexture(Target(), ID());
         }
-        void Texture::MakeNonresident()
+        void Texture3D::MakeNonresident()
         {
             glMakeTextureHandleNonResidentARB(Handle());
         }
-        void Texture::MakeResident()
+        void Texture3D::MakeResident()
         {
             Update();
 
@@ -96,7 +95,7 @@ namespace Cyclone
                 _handle = glGetTextureHandleARB(_id);
             glMakeTextureHandleResidentARB(Handle());
         }
-        void Texture::UnbindEntity() const
+        void Texture3D::UnbindEntity() const
         {
             glBindTexture(Target(), 0);
             glActiveTexture(GL_TEXTURE0);
@@ -105,14 +104,14 @@ namespace Cyclone
 
 
         /** TEXTURE UTILITIES **/
-        void Texture::GenerateMipmap()
+        void Texture3D::GenerateMipmap()
         {
             Update();
             if (IsEmpty() || Target() == TextureTargets::Texture2DMS) 
                 return;
             glGenerateTextureMipmap(ID());
         }
-        void Texture::Update()
+        void Texture3D::Update()
         {
             if (!NeedsUpdate()) { return; }
 
@@ -123,7 +122,7 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void Texture::Allocate()
+        void Texture3D::Allocate()
         {
             switch (Target())
             {
@@ -144,7 +143,7 @@ namespace Cyclone
             }
         }
 
-        void Texture::Create()
+        void Texture3D::Create()
         {
             if (_id)
             {
@@ -153,7 +152,7 @@ namespace Cyclone
             }
             glCreateTextures(Target(), 1, &_id);
         }
-        void Texture::Destroy()
+        void Texture3D::Destroy()
         {
             if (_id)
             {
@@ -163,7 +162,7 @@ namespace Cyclone
                 _id = 0;
             }
         }
-        void Texture::Reallocate()
+        void Texture3D::Reallocate()
         {
             Destroy();
             Create();

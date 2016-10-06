@@ -24,7 +24,7 @@ namespace Cyclone
 
         using namespace Platform;
         using namespace Utilities;
-        class Texture2D;
+        class Texture3D;
 
 
 
@@ -39,7 +39,7 @@ namespace Cyclone
                 ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will 
                 ///     return an empty array.
                 /// </remarks>
-                virtual const Vector<uint>& Indices()        const = 0;
+                virtual const Vector<uint>& Indices()       const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
                 ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will 
@@ -47,7 +47,7 @@ namespace Cyclone
                 ///     for rendering. However, it may also refer to the control points of either a 3D patch object or 2D path object 
                 ///     (note the lack of a 'c' in the latter; though similarly named, the two are very different things). 
                 /// </remarks>
-                virtual const Vector<T>& Points()            const = 0;
+                virtual const Vector<T>& Points()           const = 0;
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual VertexTopologies Topology()         const = 0;
                 /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of 3D geometric shape. </summary>
@@ -65,7 +65,7 @@ namespace Cyclone
                 ///     Not all materials or material-like entities will have textured associated with them. In those cases, this 
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
-                virtual const Texture2D* Texture()			const = 0;
+                virtual const Texture3D* Texture()			const = 0;
                 /// <summary> Gets a reference to the base color of a material. </summary>
                 virtual const Color4& Color()				const = 0;
 

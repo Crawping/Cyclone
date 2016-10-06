@@ -16,7 +16,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Texture : public IBindable
+        class Texture3D : public IBindable
         {
             public:
 
@@ -42,16 +42,16 @@ namespace Cyclone
                 /// <summary> Gets the width of the texture in pixels. </summary>
                 virtual uint Width()            const { return (uint)_size.X; }
 
-                OpenGLAPI virtual Texture& Format(TextureFormats value);
-                OpenGLAPI virtual Texture& MipmapCount(uint value);
-                OpenGLAPI virtual Texture& Size(const Vector3& value);
-                OpenGLAPI virtual Texture& Target(TextureTargets value);
+                OpenGLAPI virtual Texture3D& Format(TextureFormats value);
+                OpenGLAPI virtual Texture3D& MipmapCount(uint value);
+                OpenGLAPI virtual Texture3D& Size(const Vector3& value);
+                OpenGLAPI virtual Texture3D& Target(TextureTargets value);
 
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/                
-                OpenGLAPI Texture(const Vector3& size, TextureFormats format, TextureTargets target);
-                OpenGLAPI virtual ~Texture();
+                OpenGLAPI Texture3D(const Vector3& size, TextureFormats format, TextureTargets target);
+                OpenGLAPI virtual ~Texture3D();
 
 
 
@@ -75,7 +75,7 @@ namespace Cyclone
             protected:
 
                 /** CONSTRUCTOR **/
-                OpenGLAPI Texture();
+                OpenGLAPI Texture3D();
 
 
 
