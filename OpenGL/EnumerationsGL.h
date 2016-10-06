@@ -103,6 +103,18 @@ struct BufferTypes : public Enumerator
     constexpr BufferTypes(enum Buffers b = Uniform) : Enumerator((int)b) { }
 };
 
+struct FaceCullModes : public Enumerator
+{
+    enum Modes
+    {
+        None                        = 0,
+        Back                        = GL_BACK,
+        Front                       = GL_FRONT,
+        FrontAndBack                = GL_FRONT_AND_BACK,
+    };
+
+    constexpr FaceCullModes(enum Modes m = None) : Enumerator((int)m) { }
+};
 
 struct NumericFormats : public Enumerator
 {
