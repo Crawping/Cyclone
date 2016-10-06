@@ -100,7 +100,7 @@ namespace Cyclone
                 /// <summary> Gets the type of primitive that the vertices in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                         const override { return _topology; }
                 /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
-		        virtual const Vector<T>& Points()                           const override { return _vertices; }
+		        virtual const Vector<T>& Points()                           const override { return _points; }
                 /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
                 /// <remarks>
                 ///     The world transform defines the position, scale, and orientation of an entity in 3D space. It is typically 
@@ -143,41 +143,41 @@ namespace Cyclone
                 bool                    _isVisible;
 		        const Texture3D*		_texture;
                 VertexTopologies        _topology;
-		        Vector<T>		        _vertices;
+		        Vector<T>		        _points;
                 Transform               _world;
 
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new 3D renderable entity composed of white triangles. </summary>
-                /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-		        Entity3D(const Vector<T>& vertices) :
-                    Entity3D(vertices, Vector<uint>(0))
+                /// <param name="points"> The array of points that define the geometry of this entity. </param>
+		        Entity3D(const Vector<T>& points) :
+                    Entity3D(points, Vector<uint>(0))
 		        {
 
 		        }
 
-                Entity3D(const Vector<T>& vertices, const Vector<uint>& indices) :
-                    Entity3D(Color4::White, VertexTopologies::Triangles, vertices, indices)
+                Entity3D(const Vector<T>& points, const Vector<uint>& indices) :
+                    Entity3D(Color4::White, VertexTopologies::Triangles, points, indices)
                 {
 
                 }
-                Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& vertices) :
-                    Entity3D(color, topology, vertices, Vector<uint>())
+                Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& points) :
+                    Entity3D(color, topology, points, Vector<uint>())
                 {
 
                 }
 		        /// <summary> Constructs a new 3D renderable entity. </summary>
                 /// <param name="color"> The base color of this entity's geometry. </param>
                 /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
-                /// <param name="vertices"> The vertex array that defines the geometry of this entity. </param>
-                Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& vertices, const Vector<uint>& indices) :
+                /// <param name="points"> The array of points that define the geometry of this entity. </param>
+                Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& points, const Vector<uint>& indices) :
 			        _color(color),
                     _indices(indices),
                     _isVisible(true),
+			        _points(points),
                     _texture(nullptr),
-			        _topology(topology),
-			        _vertices(vertices)
+			        _topology(topology)
 		        {
 
 		        }
