@@ -35,7 +35,7 @@ namespace Cyclone
         };
 
 
-        struct GraphicsSettings : public IGraphicsSettings
+        struct GraphicsSettings //: public IGraphicsSettings
         {
             //BlendSettings       Blending;
             bool                IsBlendingEnabled;
@@ -48,8 +48,6 @@ namespace Cyclone
 
             /** CONSTRUCTOR **/
             PlatformAPI GraphicsSettings();
-
-            PlatformAPI void Apply(GPU* gpu) const override;
         };
     }
 }
