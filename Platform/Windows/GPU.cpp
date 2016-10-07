@@ -1,6 +1,7 @@
 #include "CGL.h"
 #include "Console.h"
 #include "GPU.h"
+#include "GraphicsSettings.h"
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
@@ -85,6 +86,29 @@ namespace Cyclone
                 glClearBufferfv(GL_COLOR, 0, color.ToArray());
                 glClearBufferfv(GL_DEPTH, 0, &depth);
             }
+        }
+        void GPU::Configure(const GraphicsSettings& settings)
+        {
+            if (settings.IsBlendingEnabled)
+            {
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            }
+            else
+                glDisable(GL_BLEND);
+
+            if (settings.FaceCulling)
+            {
+                glEnable(GL_CULL_FACE);
+                glCullFace(settings.FaceCulling);
+            }
+            else
+                glDisable(GL_CULL_FACE);
+
+            Pipeline(settings.Pipeline);
+            Projection(settings.Projection);
+            Target(settings.Target);
+            View(settings.View);
         }
         void GPU::Present()
         {
