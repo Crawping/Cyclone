@@ -15,9 +15,28 @@ namespace Cyclone
         struct Vector : public IArray<T>
         {
             public:
+                /** PROPERTIES **/
                 virtual uint Count()                    const override { return U; }
                 virtual uint Rank()                     const override { return 1; }
 
+
+
+                /** CONSTRUCTORS **/
+                Vector(const T& value)
+                {
+                    for (uint a = 0; a < Count(); a++)
+                        Data[a] = value;
+                }
+                Vector(std::initializer_list<T> values)
+                {
+                    int idx = 0;
+                    for (const T& v : values)
+                        Data[idx++] = v;
+                }
+
+
+
+                /** OPERATORS **/
                 virtual T& operator ()(uint idx)              { return Data[idx]; }
                 virtual const T& operator ()(uint idx)  const { return Data[idx]; }
 
