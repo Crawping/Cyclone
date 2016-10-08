@@ -26,6 +26,7 @@ TODOS:
     -- Proper scaling of SVG elements
         > Pixels                                (DONE)
         > Ems
+    -- Hit testing
 
 - 3D Rendering
 	-- Entity instancing
@@ -37,6 +38,7 @@ TODOS:
     -- BMP textures 
     -- JPEG textures                            (DONE)
     -- PNG textures
+    -- Hit testing
 
 - Buffers
     -- Vertex index buffer                      (DONE)
