@@ -168,6 +168,7 @@
     <ClInclude Include="Geometry\Point3D.h" />
     <ClInclude Include="Geometry\Quad3D.h" />
     <ClInclude Include="Geometry\Scene3D.h" />
+    <ClInclude Include="Geometry\Space3D.h" />
     <ClInclude Include="Geometry\Vertex.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
     <ClInclude Include="Interfaces\IGraphicsBuffer.h" />

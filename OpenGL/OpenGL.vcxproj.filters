@@ -101,6 +101,9 @@
     <ClInclude Include="Pipelines\ComputePipeline.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\Space3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
