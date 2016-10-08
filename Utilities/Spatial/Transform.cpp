@@ -55,11 +55,11 @@ namespace Cyclone
         {
             Transform p;
 
-            p.State[0]  = 2.0f * displayVolume.Front() / displayVolume.Width;
-            p.State[5]  = 2.0f * displayVolume.Front() / displayVolume.Height;
+            p.State[0]  = 2.0f * displayVolume.Back() / displayVolume.Width;
+            p.State[5]  = 2.0f * displayVolume.Back() / displayVolume.Height;
             p.State[8]  = (displayVolume.Left() + displayVolume.Right()) / displayVolume.Width;
             p.State[9]  = (displayVolume.Bottom() + displayVolume.Top()) / displayVolume.Height;
-            p.State[10] = -(displayVolume.Back() + displayVolume.Front()) / displayVolume.Depth;
+            p.State[10] = -(displayVolume.Front() + displayVolume.Back()) / displayVolume.Depth;
             p.State[11] = -1.0f;
             p.State[14] = -2.0f * displayVolume.Front() * displayVolume.Back() / displayVolume.Depth;
             p.State[15] = 0.0f;
