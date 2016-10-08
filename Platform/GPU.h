@@ -125,9 +125,10 @@ namespace Cyclone
 
 
 
-                PlatformAPI int GetUniformID(const string& name)                        const;
-                PlatformAPI void SetUniform(const string& name, const Color4& value)    const;
-                PlatformAPI void SetUniform(const string& name, const Transform& value) const;
+                /** UNIFORM DATA ACCESSORS **/
+                PlatformAPI int GetUniformID(const string& name)                                const;
+                PlatformAPI void SetUniform(const string& name, const Color4& value)            const;
+                PlatformAPI void SetUniform(const string& name, const ITransformation3D& value) const;
 
             private:
 

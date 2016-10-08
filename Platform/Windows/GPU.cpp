@@ -166,22 +166,23 @@ namespace Cyclone
         }
 
 
-        int GPU::GetUniformID(const string& name)                           const
+
+        /** UNIFORM DATA ACCESSORS **/
+        int GPU::GetUniformID(const string& name)                                   const
         {
             return glGetUniformLocation(PipelineID(), name.c_str());
         }
-
-        void GPU::SetUniform(const string& name, const Color4& value)       const
+        void GPU::SetUniform(const string& name, const Color4& value)               const
         {
             int varID = GetUniformID(name);
             if (varID != -1)
                 glUniform4f(varID, value.R, value.G, value.B, value.A);
         }
-        void GPU::SetUniform(const string& name, const Transform& value)    const
+        void GPU::SetUniform(const string& name, const ITransformation3D& value)    const
         {
             int varID = GetUniformID(name);
             if (varID != -1)
-                glUniformMatrix4fv(varID, 1, false, value.ToArray());
+                glUniformMatrix4fv(varID, 1, false, value.ToMatrix4x4().ToArray());
         }
 
 
