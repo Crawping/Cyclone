@@ -46,9 +46,9 @@ namespace Cyclone
 
 
             /** PROPERTIES **/
-            constexpr float Back()                      const { return Z + Depth; }
+            constexpr float Back()                      const { return Z; }
             constexpr float Bottom()                    const { return Y; }
-            constexpr float Front()                     const { return Z; }
+            constexpr float Front()                     const { return Z + Depth; }
             constexpr float Left()                      const { return X; }
             constexpr float Right()                     const { return X + Width; }
             constexpr float Top()                       const { return Y + Height; }
@@ -104,6 +104,7 @@ namespace Cyclone
 
 
             /** UTILITIES **/
+            bool Contains(const Vector3& point) const;
             string Report() const;
 
 
