@@ -5,7 +5,6 @@
 #pragma once
 #include "Collections/Vector.h"
 #include "Geometry/Path2D.h"
-//#include "Math/Array.h"
 #include "Math/Vector2.h"
 #include "Text/Font.h"
 
