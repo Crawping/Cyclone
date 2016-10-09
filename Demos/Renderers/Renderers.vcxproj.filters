@@ -4,10 +4,12 @@
     <ClInclude Include="BasicRenderer.h" />
     <ClInclude Include="RendererAPI.h" />
     <ClInclude Include="AdvancedRenderer.h" />
+    <ClInclude Include="PathRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicRenderer.cpp" />
     <ClCompile Include="AdvancedRenderer.cpp" />
+    <ClCompile Include="PathRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
