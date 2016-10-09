@@ -42,14 +42,6 @@ class Program : public BasicRenderer
 
 
 
-        void CreateRenderTarget() override
-        {
-            if (RenderTarget)
-                delete RenderTarget;
-
-            RenderTarget = new FrameBuffer(RenderWindow->ClientArea().Scale(), TextureFormats::Byte4, TextureFormats::DepthStencil);
-            Renderer->Target(RenderTarget);
-        }
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
@@ -62,11 +54,11 @@ class Program : public BasicRenderer
 
             Path.Add(path)
                 .StrokeColor(Color4::Cyan)
-                .StrokeWidth(4)
+                .StrokeWidth(2)
 
                 .Color(Color4::Red)
                 .Scale(3)
-                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, -100));
+                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0));
 
             RenderScene->Add(Path);
         }
@@ -79,8 +71,8 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateTransformations();
 
-            const Matrix4x4& projection = Renderer->Projection().ToMatrix4x4();
-            const Matrix4x4& view = Renderer->View().ToMatrix4x4();
+            const Matrix4x4& projection = Projection.ToMatrix4x4();
+            const Matrix4x4& view = View.ToMatrix4x4();
 
             nvMatrixLoadIdentity(TransformMatrices::Projection);
             nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
