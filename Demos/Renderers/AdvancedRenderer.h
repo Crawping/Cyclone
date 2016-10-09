@@ -26,7 +26,9 @@ namespace Renderers
 
         protected:
 
+            bool            IsFreeLookEnabled;
             float           MoveSpeed;
+            Vector2         PointerPosition;
             Vector3         WalkingDirection;
 
             

@@ -15,6 +15,7 @@ namespace Renderers
 	/** CONSTRUCTOR **/
     AdvancedRenderer::AdvancedRenderer(const Area& displayArea, const string& title, int nsamples) :
         BasicRenderer(displayArea, title, nsamples),
+        IsFreeLookEnabled(true),
         MoveSpeed(16.0f)
     {
 		RenderWindow->IsTrackingKeyRepeat(false);
@@ -145,10 +146,14 @@ namespace Renderers
     }
     void AdvancedRenderer::ProcessPointerMotion(const PointerMotionEvent& evt)
     {
-        float pitch = (evt.Delta.Y * Constants::Pi / RenderWindow->ClientArea().Height);
-        float yaw = evt.Delta.X * Constants::TwoPi * 2.0f / RenderWindow->ClientArea().Width;
-        View.Rotate(Vector3(pitch, yaw, 0.0f));
-        Renderer->View(&View);
+        PointerPosition = evt.Position;
+        if (IsFreeLookEnabled)
+        {
+            float pitch = (evt.Delta.Y * Constants::Pi / RenderWindow->ClientArea().Height);
+            float yaw = evt.Delta.X * Constants::TwoPi * 2.0f / RenderWindow->ClientArea().Width;
+            View.Rotate(Vector3(pitch, yaw, 0.0f));
+            Renderer->View(&View);
+        }
     }
 
 }
