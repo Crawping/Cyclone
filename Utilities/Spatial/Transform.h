@@ -160,7 +160,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                UtilitiesAPI Transform Inverse() const;
+                UtilitiesAPI Matrix4x4 Inverse() const;
                 UtilitiesAPI Transform& Invert();
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI virtual string Report()                                const;
