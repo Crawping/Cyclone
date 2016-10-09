@@ -16,12 +16,19 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        bool Volume::Contains(const Vector3& point) const
+        constexpr bool Volume::Contains(const Vector3& point) const
         {
             return
                 (Left() <= point.X && Right() >= point.X) &&
                 (Bottom() <= point.Y && Top() >= point.Y) &&
                 (Back() <= point.Z && Front() >= point.Z);
+        }
+        constexpr bool Volume::Contains(const Volume& volume) const
+        {
+            return
+                (Left() <= volume.Left() && Right() >= volume.Right()) &&
+                (Bottom() <= volume.Bottom() && Top() >= volume.Top()) &&
+                (Back() <= volume.Back() && Front() >= volume.Front());
         }
         string Volume::Report() const
         {

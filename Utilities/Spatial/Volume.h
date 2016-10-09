@@ -3,9 +3,9 @@
  */
 
 #pragma once
-#include "Area.h"
-#include "Vector3.h"
 #include "TypeDefinitions.h"
+#include "Spatial/Area.h"
+#include "Math/Vector3.h"
 
 
 
@@ -17,6 +17,7 @@ namespace Cyclone
     {
 
         /// <summary> A data structure that describes a three-dimensional rectangular prism occupying a volume of space. </summary>
+        /// <remarks> Documentation throughout this structure assumes usage of a right-handed 3D coordinate system. </remarks>
         struct UtilitiesAPI Volume
         {
 
@@ -29,11 +30,11 @@ namespace Cyclone
 
 
             /** DATA **/
-            /// <summary> The x-axis coordinate for the front-lower-left corner of the rectangular prism. </summary>
+            /// <summary> The x-axis coordinate for the back-lower-left corner of the rectangular prism. </summary>
             float X;
-            /// <summary> The y-axis coordinate for the front-lower-left corner of the rectangular prism. </summary>
+            /// <summary> The y-axis coordinate for the back-lower-left corner of the rectangular prism. </summary>
             float Y;
-            /// <summary> The z-axis coordinate for the front-lower-left corner of the rectangular prism. </summary>
+            /// <summary> The z-axis coordinate for the back-lower-left corner of the rectangular prism. </summary>
             float Z;
 
             /// <summary> The extent of the volume along the x-axis. </summary>
@@ -46,11 +47,23 @@ namespace Cyclone
 
 
             /** PROPERTIES **/
+            /// <summary> Gets the z-axis coordinate of the volume's far plane. </summary>
+            /// <remarks> Note that this is equivalent to getting the z-coordinate of the volume directly. </remarks>
             constexpr float Back()                      const { return Z; }
+            /// <summary> Gets the y-axis coordinate of the volume's bottom plane. </summary>
+            /// <remarks> Note that this is equivalent to getting the y-coordinate of the volume directly. </remarks>
             constexpr float Bottom()                    const { return Y; }
+            /// <summary> Gets the z-axis coordinate of the volume's near plane. </summary>
+            /// <remarks> The front plane position is calculated by adding the depth to the back plane position. </remarks>
             constexpr float Front()                     const { return Z + Depth; }
+            /// <summary> Gets the x-axis coordinate of the volume's left plane. </summary>
+            /// <remarks> Note that this is equivalent to getting the x-coordinate of the volume directly. </remarks>
             constexpr float Left()                      const { return X; }
+            /// <summary> Gets the x-axis coordinate of the volume's right plane. </summary>
+            /// <remarks> The right plane position is calculated by adding the width to the left plane position. </remarks>
             constexpr float Right()                     const { return X + Width; }
+            /// <summary> Gets the y-axis coordinate of the volume's top plane. </summary>
+            /// <remarks> The top plane position is calculated by adding the height to the bottom plane position. </remarks>
             constexpr float Top()                       const { return Y + Height; }
 
             /// <summary> Determines whether this rectangular prism has a total volume of zero. </summary>
@@ -80,9 +93,12 @@ namespace Cyclone
             {
 
             }
-            constexpr Volume(const Area& area) :
+            /// <summary> Constructs a volume data structure by extruding a 2D rectangular area along the z-axis. </summary>
+            /// <param name="area"> A two-dimensional region of space to be converted into a three-dimensional volume. </param>
+            /// <param name="depth"> The desired size of the resulting volume along the z-axis. </param>
+            constexpr Volume(const Area& area, float depth = 1.0f) :
                 X(area.X), Y(area.Y), Z(0.0f),
-                Width(area.Width), Height(area.Height), Depth(1.0f)
+                Width(area.Width), Height(area.Height), Depth(depth)
             {
 
             }
@@ -104,7 +120,26 @@ namespace Cyclone
 
 
             /** UTILITIES **/
-            bool Contains(const Vector3& point) const;
+            /// <summary> Determines whether a point lies within the bounds of the volume. </summary>
+            /// <returns> A Boolean <c>true</c> if the point's coordinates lie inside of the volume, or <c>false</c> otherwise. </returns>
+            /// <param name="point"> The </param>
+            /// <remarks>
+            ///     This method tests whether a particular point lies within or on the bounds of a volume in 3D space. Note that this 
+            ///     means any point whose coordinates fall exactly on the bounds of the rectangular prism is considered contained and 
+            ///     thus will pass the inspection.
+            /// </remarks>
+            constexpr bool Contains(const Vector3& point) const;
+            /// <summary> Determines whether this volume completely contains another one. </summary>
+            /// <returns> A Boolean <c>true</c> if the inputted volume fits within this one, or <c>false</c> otherwise. </returns>
+            /// <param name="volume"> Another <see cref="Volume"/> data structure to be tested. </param>
+            /// <remarks>
+            ///     This method tests the edge locations of two volume descriptions to determine if one fits within the other. Passing 
+            ///     the test requires that one volume (on which this method is called) be positioned and sized such that it contains a 
+            ///     smaller or equivalently sized volume (the input argument). Note that this means two identical volumes are considered 
+            ///     to contain one another and thus will pass the inspection.
+            /// </remarks>
+            constexpr bool Contains(const Volume& volume) const;
+            /// <summary> Generates a human-readable string detailing the current state of the data structure. </summary>
             string Report() const;
 
 
