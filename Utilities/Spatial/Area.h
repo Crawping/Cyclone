@@ -12,6 +12,11 @@ namespace Cyclone
     namespace Utilities
     {
         /// <summary> A data structure that describes a two-dimensional rectangular region of space. </summary>
+        /// <remarks> 
+        ///     Documentation throughout this structure assumes usage of an upright, 2D coordinate system. Care should be taken 
+        ///     when using other axes configurations (e.g. image and window space with their inverted y-axes) so as not to create 
+        ///     confusion.
+        /// </remarks>
         struct UtilitiesAPI Area
         {
 
@@ -114,73 +119,51 @@ namespace Cyclone
 
             /** UTILITIES **/
             /// <summary> Determines whether another area fits inside of this one. </summary>
-            /// <param name="other">
-            ///     A reference to the Area structure whose region will be tested to fit within an area 'A'.
-            /// </param>
+            /// <param name="other"> A reference to the Area structure whose region will be tested to fit within this one. </param>
             /// <returns>
-            ///     A Boolean indicating whether or not the area in 'A' contains the area in 'other'.
+            ///     A Boolean <c>true</c> if this area contains the inputted one, or <c>false</c> otherwise.
             ///     <para> </para>
-            ///     If 'other' lies within a larger area 'A', then a Boolean true is returned. Otherwise, this method returns false.    <para/>
             ///     Edge coordinates that are equal to one another across the two area structures are considered contained.
             /// </returns>
             /// <remarks>
-            ///     This method tests the edge locations of two area descriptions to determine if one fits within the other. Passing
-            ///     the test requires that one large area(on which this method is called) be positioned and sized such that it
-            ///     contains a smaller or equivalently sized area(the input argument 'other').In contrast to the related method
-            ///     'Surrounds', two equivalent areas here are considered contained and thus pass the inspection.
+            ///     This method tests the edge locations of two area descriptions to determine if one fits within the other. 
+            ///     Passing the test requires that one large area (on which this method is called) be positioned and sized such 
+            ///     that it contains a smaller or equivalently sized area (the input argument <paramref name="other"/>). In 
+            ///     contrast to the related method <see cref="Surrounds"/>, two equivalent areas here are considered contained 
+            ///     and thus pass the inspection.
             /// </remarks>
             constexpr bool Contains(const Area& other)      const;
             /// <summary> Determines whether a particular point lies within this area. </summary>
             /// <param name="point"> A two-element vector containing the (x, y) coordinates of the point to be tested. </param>
             /// <returns> A Boolean <c>true</c> if the point lies within or on the border of the area, or <c>false</c> otherwise. </returns>
             constexpr bool Contains(const Vector2& point)   const;
-            /// <summary> Contrains an area such that its edge coordinates lie on or within another area. </summary>
-            /// <returns>
-            ///     A reference to the cropped (and the larger original) area. 
-            ///     <para> </para>
-            ///     This output is provided to facilitate the chaining of multiple methods together in a single line of code operating  <para/>
-            ///     on an Area structure.
-            /// </returns>
-            /// <param name="keep">
-            ///     A reference to the smaller area that will be used to resize the larger 'A' one.
-            ///     <para> </para>
-            ///     As a typical example, this could be a small rectangular area within 'A' that should be kept, while the rest of the  <para/>
-            ///     surrounding region in 'A' should be cropped away, rather like the cropping of an image.
-            /// </param>
+            /// <summary> Constrains an area such that its edge coordinates lie on or within another area. </summary>
+            /// <returns> A reference to the cropped (and the larger original) area. </returns>
+            /// <param name="keep"> A reference to the smaller area that will potentially be used to resize this one. </param>
             /// <remarks>
-            ///     This method resizes a large area(the one on which this method is called) to fit within an inputted smaller area.
+            ///     This method resizes a large area (the one on which this method is called) to fit within an inputted smaller area.
             ///     It accomplishes this by comparing the edge coordinates of the two data structures, keeping the largest left and
-            ///     bottom values as well as the lowest right and top coordinates.These values are then used to replace the original
+            ///     bottom values as well as the lowest right and top coordinates. These values are then used to replace the original
             ///     ones in the larger area.
             /// </remarks>
             Area& Crop(const Area& keep);
             /// <summary> Flips the rectangular area about one of its two dimensions. </summary>
-            /// <returns>
-            ///     A reference to the flipped (and original) area. 
-            ///     <para> </para>
-            ///     This output is provided to facilitate the chaining of multiple methods together in a single line of code operating  <para/>
-            ///     on an Area structure.
-            /// </returns>
-            /// <param name="dim">
-            ///     An unsigned integer specifying the dimension across which the rectangle will be flipped.
-            ///     <para> </para>
-            ///     By default, areas are flipped across the first dimension (i.e. the x-axis), resulting in the left and right edge    <para/>
-            ///     coordinates being swapped with one another.                                                                         <para/>
-            ///     DEFAULT: 1                                                                                                          <para/>
-            ///     OPTIONS: 1 or 2 
-            /// </param>
+            /// <returns> A reference to the flipped (and original) area. </returns>
+            /// <param name="dim"> An unsigned integer specifying the dimension across which the rectangle will be flipped. </param>
             /// <remarks>
             ///     This method effectively swaps the values of two opposing edges on the rectangular area. Which set of edges are
-            ///     flipped is controlled by the 'dim' argument that defaults to flipping the area vertically (i.e. the top and
-            ///     bottom edge coordinates are swapped). Flipping always occurs x- or y-axis-aligned midlines within the rectangular
-            ///     area; performing flips across arbitrary axes is not supported.
+            ///     flipped is controlled by the <paramref name="dim"/> argument. Inputting a value of <c>0</c> results in a flip 
+            ///     across the area's vertical midline, meaning the <see cref="Left"/> and <see cref="Right"/> values will be swapped 
+            ///     and the <see cref="Width"/> of the area will change sign. Inputting a value of <c>1</c> will result in a flip 
+            ///     across the area's horizontal midline. Flipping always occurs across x- or y-axis-aligned midlines within the 
+            ///     rectangular area; performing flips across arbitrary axes is not supported.
             /// </remarks>
             Area& Flip(uint dim);
-            /// <summary> Determines whether or not two separate areas share any overlapping regions. </summary>
+            /// <summary> Determines whether two separate areas share any overlapping regions. </summary>
             bool Intersects(Area other)                     const;
-            /// <summary> Determines whether or not this region has a total area of zero. </summary>
+            /// <summary> Determines whether this region has a total area of zero. </summary>
             constexpr bool IsEmpty()                        const { return (Width == 0) || (Height == 0); }
-            /// <summary> Determines whether or not this region represents a positive, non-zero area. </summary>
+            /// <summary> Determines whether this region represents a positive, non-zero area. </summary>
             constexpr bool IsPositive()                     const { return (Width > 0) && (Height > 0); }
 
             Area& Normalize();
@@ -188,20 +171,14 @@ namespace Cyclone
             Area& Rectify();
             /// <summary> Returns a formatted string that describes the boundaries of this rectangular area. </summary>
             string Report()                                 const;
-            /// <summary>
-            ///     Determines whether or not another area fits inside of this one without overlapping their edges.
-            /// </summary>
-            /// <param name="other">
-            ///     A reference to the Area structure whose region will be tested to be surrounded by the area 'A'.
-            /// </param>
-            /// <returns>
-            ///     A Boolean indicating whether or not the area in 'A' surrounds the area in 'other'.
-            /// </returns>
+            /// <summary> Determines whether or not another area fits inside of this one without overlapping their edges. </summary>
+            /// <returns> A Boolean <c>true</c> if inputted area is fully surrounded by this one, or <c>false</c> otherwise. </returns>
+            /// <param name="other"> Another <see cref="Area"/> data structure to be tested. </param>
             /// <remarks>
-            ///     This method tests the edge locations of two area desciptions to determine if one fits within the other.Passing
-            ///     the test requires that one large area(on which this method is called) be positioned and such that it fully
-            ///     surrounds a smaller area(the input argument 'other').Unlike the related method 'Contains', two equivalent areas
-            ///     are not considered to surround one another and thus fail the inspection.
+            ///     This method tests the edge locations of two area desciptions to determine if one fits within the other. Passing
+            ///     the test requires that one large area (on which this method is called) be positioned and such that it fully
+            ///     surrounds a smaller area (the input argument). Unlike the related method <see cref="Contains"/>, two identical 
+            ///     areas are not considered to surround one another and thus will fail the inspection.
             /// </remarks>
             constexpr bool Surrounds(const Area& other)     const;
             /// <summary> Sets the position of the lower left area corner relative to its current location. </summary>
@@ -214,7 +191,11 @@ namespace Cyclone
 
 
             /** OPERATORS **/
+            /// <summary> Determines whether two areas are equivalent to one another. </summary>
+            /// <returns> A Boolean <c>true</c> if the two areas are identical, or <c>false</c> otherwise. </returns>
             constexpr bool operator ==(const Area& other)   const;
+            /// <summary> Determines whether two areas are not equivalent to one another. </summary>
+            /// <returns> A Boolean <c>true</c> if the two areas are not identical, or <c>false</c> otherwise. </returns>
             constexpr bool operator !=(const Area& other)   const { return !(*this == other); }
 
         };
