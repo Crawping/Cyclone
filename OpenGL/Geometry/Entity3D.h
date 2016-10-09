@@ -8,7 +8,7 @@
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
 #include "Spatial/Transform.h"
-#include "Textures/Texture.h"
+#include "Spatial/Volume.h"
 
 
 
@@ -16,7 +16,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        //class Texture;
+        class Texture3D;
         namespace Vertex { struct Standard; }
 
         template<typename T>
