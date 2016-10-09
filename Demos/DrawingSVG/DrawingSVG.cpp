@@ -29,10 +29,10 @@ class Program : public AdvancedRenderer
             AdvancedRenderer(Area(0, 0, 1024, 960), "Drawing SVG Elements", 4),
             Image(nullptr),
             IsEnteringText(false),
-            IsFreeLookEnabled(false),
             PipelineSVG(nullptr),
             SceneSVG(nullptr)
         {
+            IsFreeLookEnabled = false;
             RenderWindow->OnButtonPress.Register(this, &Program::ProcessButtonPress);
             RenderWindow->OnButtonRelease.Register(this, &Program::ProcessButtonRelease);
             Initialize();
@@ -56,9 +56,7 @@ class Program : public AdvancedRenderer
         Path2D              DrawingPath;
         Texture2D*          Image;
         bool                IsEnteringText;
-        bool                IsFreeLookEnabled;
         ShaderPipeline*     PipelineSVG;
-        Vector2             PointerPosition;
         Vector2             LastClickPosition;
         Quad3D              Quad;
         Scene3D*            SceneSVG;
@@ -107,6 +105,10 @@ class Program : public AdvancedRenderer
                     PathCommands::Line,
                     { PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y }
                 };
+
+                if (DrawingPath.IsEmpty() || DrawingPath.IsClosed())
+                    newPt.Command = PathCommands::Move;
+
                 DrawingPath.Add(newPt);
             }
             else if (evt.Button == PointerButtons::Button003)
@@ -166,12 +168,6 @@ class Program : public AdvancedRenderer
             AdvancedRenderer::ProcessKeyPress(evt);
         }
 
-        void ProcessPointerMotion(const PointerMotionEvent& evt) override
-        {
-            PointerPosition = evt.Position;
-            if (IsFreeLookEnabled)
-                AdvancedRenderer::ProcessPointerMotion(evt);
-        }
 
 
         void UpdateScene() override
