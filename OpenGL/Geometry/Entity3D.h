@@ -91,6 +91,7 @@ namespace Cyclone
 
 
 		        /** RENDERABLE INTERFACE METHODS **/
+                virtual const Volume& Bounds()                              const override { return _bounds; }
                 /// <summary> Gets a reference to the base color of the entity. </summary>
                 virtual const Color4& Color()                               const override { return _color; }
                 /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
@@ -112,6 +113,8 @@ namespace Cyclone
                 /// </remarks>
                 virtual const Transform& World()                            const override { return _world; }
 
+
+                virtual Entity3D& Bounds(const Volume& bounds)              { _bounds = bounds; return *this; }
                 /// <summary> Sets the base color of the entity. </summary>
                 virtual Entity3D& Color(const Color4& color)                { _color = color; return *this; }
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
@@ -138,6 +141,7 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
+                Volume                  _bounds;
                 Color4                  _color;
                 Vector<uint>            _indices;
                 bool                    _isVisible;
