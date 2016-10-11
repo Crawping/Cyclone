@@ -4,20 +4,13 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "PlatformAPI.h"
-#include "Interfaces/IGraphicsSettings.h"
+#include "GL/OpenGLAPI.h"
 
 
 
 namespace Cyclone
 {
-    using namespace OpenGL;
     using namespace Utilities;
-    namespace OpenGL
-    {
-        class FrameBuffer;
-        class GraphicsPipeline;
-    }
     namespace Utilities
     {
         class ITransformation3D;
@@ -25,29 +18,25 @@ namespace Cyclone
 
 
 
-    namespace Platform
+    namespace OpenGL
     {
+        class FrameBuffer;
+        class GraphicsPipeline;
 
-        struct BlendSettings
+        
+
+        struct GraphicsSettings
         {
-            bool IsEnabled;
-
-        };
-
-
-        struct GraphicsSettings //: public IGraphicsSettings
-        {
-            //BlendSettings       Blending;
             bool                IsBlendingEnabled;
-            FaceCullModes       FaceCulling;
-
+            CullingModes        CullingMode;
             GraphicsPipeline*   Pipeline;
             ITransformation3D*  Projection;
             FrameBuffer*        Target;
             ITransformation3D*  View;
 
+
             /** CONSTRUCTOR **/
-            PlatformAPI GraphicsSettings();
+            OpenGLAPI GraphicsSettings();
         };
     }
 }

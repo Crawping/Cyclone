@@ -1,11 +1,10 @@
-#include "GPU.h"
 #include "GraphicsSettings.h"
 
 
 
 namespace Cyclone
 {
-    namespace Platform
+    namespace OpenGL
     {
 
         GraphicsSettings::GraphicsSettings() :
