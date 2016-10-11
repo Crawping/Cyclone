@@ -21,6 +21,8 @@ namespace Cyclone
 
             SVGAPI Vector<ControlPoint2D> Line();
 
+            SVGAPI Vector<ControlPoint2D> Point();
+
             SVGAPI Vector<ControlPoint2D> Rectangle();
 
             SVGAPI Vector<ControlPoint2D> RoundedRectangle();

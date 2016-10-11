@@ -11,12 +11,20 @@ namespace Cyclone
         {
             return
             {
-                { PathCommands::Move,   { -0.5, 0 } },
-                { PathCommands::Line,   {  0.5, 0 } },
+                { PathCommands::Move,   { -0.5f, 0 } },
+                { PathCommands::Line,   {  0.5f, 0 } },
                 { PathCommands::Close,  { } },
             };
         }
 
+        Vector<ControlPoint2D> Geometry2D::Point()
+        {
+            return
+            {
+                { PathCommands::Line,   { 0.001f, 0.001f } },
+                { PathCommands::Close,  { } },
+            };
+        }
         Vector<ControlPoint2D> Geometry2D::Rectangle()
         {
             return 
