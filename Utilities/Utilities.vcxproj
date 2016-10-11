@@ -177,6 +177,7 @@
     <ClInclude Include="Imaging\Color4.h" />
     <ClInclude Include="Interfaces\IArray.h" />
     <ClInclude Include="Interfaces\ICollection.h" />
+    <ClInclude Include="Interfaces\IReportable.h" />
     <ClInclude Include="Interfaces\ITransformation3D.h" />
     <ClInclude Include="Math\Array.h" />
     <ClInclude Include="Math\Constants.h" />
