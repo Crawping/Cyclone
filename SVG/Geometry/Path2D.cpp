@@ -46,6 +46,7 @@ namespace Cyclone
         }
 
         
+
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
             Entity3D(Color4::Transparent, VertexTopologies::Path, Vector<float>()),
@@ -63,18 +64,13 @@ namespace Cyclone
             if (_id) { nvDeletePaths(_id, _count); }
         }
 
-
-
+        
 
         /** UTILITIES **/
         Path2D& Path2D::Add(const ControlPoint2D& point)
         {
-            if (Commands.IsEmpty() || Commands.Last() == PathCommands::Close)
-                Commands.Append(PathCommands::Move);
-            else
-                Commands.Append(point.Command);
+            Commands.Append(point.Command);
             Coordinates.Append(point.Coordinates);
-
             _pathNeedsUpdate = true;
             return *this;
         }
@@ -154,8 +150,9 @@ namespace Cyclone
             nvPathParameteri(ID(), PathParameters::InitialEndCap, InitialCap());
             nvPathParameterf(ID(), PathParameters::StrokeWidth, StrokeWidth());
             nvPathParameteri(ID(), PathParameters::TerminalEndCap, TerminalCap());
-
+            
             _pathNeedsUpdate = false;
         }
+
     }
 }
