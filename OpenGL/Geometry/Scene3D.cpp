@@ -1,3 +1,5 @@
+#include "RenderStage.h"
+#include "Collections/List.h"
 #include "Interfaces/IRenderable.h"
 #include "Geometry/Scene3D.h"
 #include "Spatial/Transform.h"
@@ -13,10 +15,20 @@ namespace Cyclone
 
 
 
-        List<IRenderingStage3D*> Scene3D::Stages() const
+        List<IRenderStage*> Scene3D::Stages() const
         {
-            return List<IRenderingStage3D*>();
-            //for ()
+            //for (uint a = 0; a < Stages3D.Count(); a++)
+            //    delete Stages3D(a);
+
+            //Stages3D.Clear();
+
+            //for (const auto& kvp : Buffers)
+            //    Stages3D.Append(new RenderStage3D(kvp.first, &kvp.second, nullptr));
+
+            //for (const auto& kvp : IndexedBuffers)
+            //    Stages3D.Append(new IndexedRenderStage3D(kvp.first, &kvp.second, nullptr));
+
+            return Stages3D;
         }
 
 
@@ -26,6 +38,12 @@ namespace Cyclone
         {
 
         }
+        Scene3D::~Scene3D()
+        {
+            for (uint a = 0; a < Stages3D.Count(); a++)
+                delete Stages3D(a);
+        }
+
 
 
 
@@ -58,39 +76,38 @@ namespace Cyclone
         {
             PathBuffer.erase(&entity);
         }
-        void Scene3D::Render(GPU* gpu) const
-        {
-            for (const auto& kvp : Buffers)
-            {
-                kvp.second.Bind();
-                glMultiDrawArraysIndirect(kvp.first, 0, kvp.second.Count(), 0);
-            }
+        //void Scene3D::Render(GPU* gpu) const
+        //{
+        //    if (PathBuffer.size())
+        //    {
+        //        glStencilMask(~0);
+        //        glEnable(GL_STENCIL_TEST);
+        //        glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
+        //        glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 
-            for (const auto& kvp : IndexedBuffers)
-            {
-                kvp.second.Bind();
-                glMultiDrawElementsIndirect(kvp.first, NumericFormats::UInt, 0, kvp.second.Count(), 0);
-            }
+        //        for (const auto* p : PathBuffer)
+        //            p->Render(gpu);
 
-            if (PathBuffer.size())
-            {
-                glStencilMask(~0);
-                glEnable(GL_STENCIL_TEST);
-                glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
-                glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
-
-                for (const auto* p : PathBuffer)
-                    p->Render(gpu);
-
-                glDisable(GL_STENCIL_TEST);
-            }
-        }
+        //        glDisable(GL_STENCIL_TEST);
+        //    }
+        //}
         void Scene3D::Update()
         {
+            for (uint a = 0; a < Stages3D.Count(); a++)
+                delete Stages3D(a);
+
+            Stages3D.Clear();
+
             for (auto& kvp : Buffers)
+            {
                 kvp.second.Update();
+                Stages3D.Append(new RenderStage3D(kvp.first, &kvp.second, nullptr));
+            }
             for (auto& kvp : IndexedBuffers)
+            {
                 kvp.second.Update();
+                Stages3D.Append(new IndexedRenderStage3D(kvp.first, &kvp.second, nullptr));
+            }
         }
 
         void Scene3D::Update(const IRenderable3D<Vertex::Standard>& entity)

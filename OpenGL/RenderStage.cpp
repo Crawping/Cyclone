@@ -8,9 +8,10 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        RenderStage3D::RenderStage3D() :
-            _data(nullptr),
-            _settings(nullptr)
+        RenderStage3D::RenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data, const GraphicsSettings* settings) :
+            _data(data),
+            _settings(settings),
+            _topology(topology)
         {
 
         }
@@ -18,12 +19,12 @@ namespace Cyclone
 
         void RenderStage3D::Render()
         {
-            glMultiDrawArraysIndirect(Topology(), 0, PipelineData()->Count(), 0);
+            glMultiDrawArraysIndirect(Topology(), 0, Data()->Count(), 0);
         }
 
         void IndexedRenderStage3D::Render()
         {
-            glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, PipelineData()->Count(), 0);
+            glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, Data()->Count(), 0);
         }
     }
 }

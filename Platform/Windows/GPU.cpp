@@ -8,6 +8,7 @@
 #include "Buffers/VertexBuffer.h"
 #include "Geometry/Scene3D.h"
 #include "Interfaces/IBindable.h"
+#include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
@@ -135,16 +136,14 @@ namespace Cyclone
                 auto stages = _renderScene->Stages();
                 for (uint a = 0; a < stages.Count(); a++)
                 {
-                    IRenderingStage3D* ctStage = stages(a);
+                    IRenderStage* ctStage = stages(a);
                     if (ctStage->Settings())
                         Configure(*(ctStage->Settings()));
-                    if (ctStage->PipelineData())
-                        ctStage->PipelineData()->Bind();
+                    if (ctStage->Data() && ctStage->Data()->Count())
+                        ctStage->Data()->Bind();
                     
                     ctStage->Render();
                 }
-
-                _renderScene->Render(this);
             }
         }
         void GPU::Update()

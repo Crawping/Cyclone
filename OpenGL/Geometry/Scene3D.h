@@ -6,9 +6,9 @@
 #include "RenderStage.h"
 #include "Buffers/DrawBuffer.h"
 #include "Buffers/UniformData.h"
+#include "Collections/List.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IRenderable.h"
-//#include "Interfaces/IRenderingStage.h"
 #include "Interfaces/IUpdatable.h"
 #include <map>
 #include <set>
@@ -21,18 +21,18 @@ namespace Cyclone
     {
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
-        class Scene3D
+        class Scene3D : public IRenderableScene
         {
 
             public:
 
-                OpenGLAPI List<IRenderingStage3D*> Stages() const;
+                OpenGLAPI List<IRenderStage*> Stages() const override;
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
                 OpenGLAPI Scene3D();
-
+                OpenGLAPI ~Scene3D();
 
 
                 /** UTILITIES **/
@@ -47,7 +47,7 @@ namespace Cyclone
                 OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
                 OpenGLAPI void Remove(const IRenderable2D<float>& entity);
                 OpenGLAPI void Remove(const IRenderable3D<Vertex::Standard>& entity);
-                OpenGLAPI void Render(GPU* gpu) const;
+                //OpenGLAPI void Render(GPU* gpu) const override;
                 OpenGLAPI void Update();
                 OpenGLAPI void Update(const IRenderable3D<Vertex::Standard>& entity);
 
@@ -58,11 +58,7 @@ namespace Cyclone
 
                 std::set<const IRenderable2D<float>*>                           PathBuffer;
 
-                std::map<VertexTopologies, IRenderingStage3D*>                  Stages3D;
-                //std::map<VertexTopologies, IRenderingStage2D*>
-
-                //List<IRenderingStage3D*> RenderingStages;
-                //RenderStage3D                                                   
+                List<IRenderStage*>                                             Stages3D;                                              
 
         };
     }

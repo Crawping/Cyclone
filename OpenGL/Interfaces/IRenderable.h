@@ -28,6 +28,7 @@ namespace Cyclone
         using namespace Platform;
         using namespace Utilities;
         class Texture3D;
+        class IRenderStage;
 
 
 
@@ -111,8 +112,11 @@ namespace Cyclone
         class IRenderableScene
         {
             public:
+
+                virtual List<IRenderStage*> Stages()                const = 0;
+
                 virtual ~IRenderableScene() { }
-                virtual void Render(GPU* gpu)                       const = 0;
+                //virtual void Render(GPU* gpu)                       const = 0;
         };
 
     }
