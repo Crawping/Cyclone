@@ -26,7 +26,7 @@ TODOS:
     -- Proper scaling of SVG elements
         > Pixels                                (DONE)
         > Ems
-    -- Hit testing
+    -- Hit testing								(PRELIMINARY)
 
 - 3D Rendering
 	-- Entity instancing
