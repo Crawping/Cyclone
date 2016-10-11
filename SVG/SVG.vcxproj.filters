@@ -21,6 +21,12 @@
     <ClInclude Include="Geometry\Geometry2D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\DrawingPath.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Point2D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geometry">
@@ -44,6 +50,9 @@
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Geometry\Geometry2D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\DrawingPath.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
