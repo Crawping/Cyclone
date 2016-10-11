@@ -3,10 +3,12 @@
  */
 
 #pragma once
+#include "RenderStage.h"
 #include "Buffers/DrawBuffer.h"
 #include "Buffers/UniformData.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IRenderable.h"
+//#include "Interfaces/IRenderingStage.h"
 #include "Interfaces/IUpdatable.h"
 #include <map>
 #include <set>
@@ -23,6 +25,9 @@ namespace Cyclone
         {
 
             public:
+
+                OpenGLAPI List<IRenderingStage3D*> Stages() const;
+
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
@@ -52,6 +57,12 @@ namespace Cyclone
                 std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>      IndexedBuffers;
 
                 std::set<const IRenderable2D<float>*>                           PathBuffer;
+
+                std::map<VertexTopologies, IRenderingStage3D*>                  Stages3D;
+                //std::map<VertexTopologies, IRenderingStage2D*>
+
+                //List<IRenderingStage3D*> RenderingStages;
+                //RenderStage3D                                                   
 
         };
     }

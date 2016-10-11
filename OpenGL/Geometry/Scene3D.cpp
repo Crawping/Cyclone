@@ -9,6 +9,18 @@ namespace Cyclone
     namespace OpenGL
     {
 
+
+
+
+
+        List<IRenderingStage3D*> Scene3D::Stages() const
+        {
+            return List<IRenderingStage3D*>();
+            //for ()
+        }
+
+
+
         /** CONSTRUCTOR **/
         Scene3D::Scene3D()
         {
@@ -27,7 +39,13 @@ namespace Cyclone
         }
         void Scene3D::Add(const IRenderable2D<float>& entity)
         {
+            if (PathBuffer.count(&entity)) { return; }
+
             PathBuffer.insert(&entity);
+
+            //const auto& components = entity.Components();
+            //for (uint a = 0; a < components.Count(); a++)
+            //    Add(*components(a));
         }
         void Scene3D::Remove(const IRenderable3D<Vertex::Standard>& entity)
         {
