@@ -174,7 +174,7 @@
     <ClInclude Include="Interfaces\IBindable.h" />
     <ClInclude Include="Interfaces\IGraphicsBuffer.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
-    <ClInclude Include="Interfaces\IRenderingStage.h" />
+    <ClInclude Include="Interfaces\IRenderStage.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
@@ -193,7 +193,6 @@
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexArray.cpp" />
     <ClCompile Include="Geometry\Geometry3D.cpp" />
-    <ClCompile Include="Geometry\Mesh3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Geometry\Scene3D.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
