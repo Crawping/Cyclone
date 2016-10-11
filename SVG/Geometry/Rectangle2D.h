@@ -19,8 +19,10 @@ namespace Cyclone
 
                 SVGAPI Rectangle2D& CornerRadius(float value);
 
+                SVGAPI Rectangle2D(float cornerRadius = 0.0f);
 
-                SVGAPI Rectangle2D();
+                Rectangle2D& Add(const ControlPoint2D& point) override { return *this; }
+                void Clear() override { }
 
 
             private:

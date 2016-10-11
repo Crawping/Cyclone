@@ -9,14 +9,19 @@ namespace Cyclone
 
         Rectangle2D& Rectangle2D::CornerRadius(float value)
         {
-            _cornerRadius;
-
+            _cornerRadius = value;
             return *this;
         }
 
-        Rectangle2D::Rectangle2D()
+        Rectangle2D::Rectangle2D(float cornerRadius) : 
+            _cornerRadius(cornerRadius)
         {
-
+            Vector<ControlPoint2D> rect = 
+            {
+                { PathCommands::RoundedRectangle, { 0, 0, 1, 1, CornerRadius() } },
+                { PathCommands::Close,            { } },
+            };
+            Path2D::Add(rect);
         }
     }
 }
