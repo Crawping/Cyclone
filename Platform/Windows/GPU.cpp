@@ -25,30 +25,36 @@ namespace Cyclone
         /** PROPERTIES **/
         void GPU::Pipeline(GraphicsPipeline* pipeline)
         {
-            _renderPipeline = pipeline;
-            if (_renderPipeline)
-                _renderPipeline->Bind();
+            if (pipeline == _settings.Pipeline) { return; }
+
+            _settings.Pipeline = pipeline;
+            if (_settings.Pipeline)
+                _settings.Pipeline->Bind();
         }
         void GPU::Projection(ITransformation3D* projection)
         {
-            _projection = projection;
+            _settings.Projection = projection;
         }
         void GPU::Scene(Scene3D* scene, int slot)
         {
             _renderScene = scene;
         }
-        void GPU::Target(FrameBuffer* framebuffer, int slot)
+        void GPU::Target(FrameBuffer* target, int slot)
         {
-            _renderTarget = framebuffer;
-            if (_renderTarget)
-                _renderTarget->Bind(slot);
+            if (target == _settings.Target) { return; }
+
+            _settings.Target = target;
+            if (_settings.Target)
+                _settings.Target->Bind(slot);
         }
         void GPU::View(ITransformation3D* view)
         {
-            _view = view;
+            _settings.View = view;
         }
         void GPU::Window(Window3D* window)
         {
+            if (window == _renderWindow) { return; }
+
             _renderWindow = window;
             if (_renderWindow)
                 _renderWindow->Bind();
@@ -58,13 +64,8 @@ namespace Cyclone
 
         /** CONSTRUCTOR & DESTRUCTOR **/
         GPU::GPU() :
-            _fov(90),
-            _projection(nullptr),
-            _renderPipeline(nullptr),
-            _renderTarget(nullptr),
             _renderWindow(nullptr),
-            _renderScene(nullptr),
-            _view(nullptr)
+            _renderScene(nullptr)
         {
 
         }
@@ -79,8 +80,8 @@ namespace Cyclone
         void GPU::Clear(const Color4& color, float depth, int stencil)
         {
             RestoreRenderingDefaults();
-            if (_renderTarget)
-                _renderTarget->Clear(color);
+            if (_settings.Target)
+                _settings.Target->Clear(color);
             else
             {
                 glClearBufferfv(GL_COLOR, 0, color.ToArray());
@@ -89,22 +90,30 @@ namespace Cyclone
         }
         void GPU::Configure(const GraphicsSettings& settings)
         {
-            if (settings.IsBlendingEnabled)
+            if (settings.IsBlendingEnabled && !IsBlendingEnabled())
             {
                 glEnable(GL_BLEND);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                _settings.IsBlendingEnabled = settings.IsBlendingEnabled;
             }
-            else
+            else if (!settings.IsBlendingEnabled && IsBlendingEnabled())
+            {
                 glDisable(GL_BLEND);
-
-            if (settings.FaceCulling)
+                _settings.IsBlendingEnabled = settings.IsBlendingEnabled;
+            }
+            
+            if (settings.CullingMode && !CullingMode())
             {
                 glEnable(GL_CULL_FACE);
-                glCullFace(settings.FaceCulling);
+                glCullFace(settings.CullingMode);
+                _settings.CullingMode = settings.CullingMode;
             }
-            else
+            else if (!settings.CullingMode && CullingMode())
+            {
                 glDisable(GL_CULL_FACE);
-
+                _settings.CullingMode = settings.CullingMode;
+            }
+            
             Pipeline(settings.Pipeline);
             Projection(settings.Projection);
             Target(settings.Target);
@@ -114,15 +123,29 @@ namespace Cyclone
         {
             if (!_renderWindow) { return; }
 
-            if (_renderTarget)
-                _renderTarget->Blit(0, _renderTarget->DisplayArea(), _renderWindow->ClientArea());
+            if (_settings.Target)
+                _settings.Target->Blit(0, _settings.Target->DisplayArea(), _renderWindow->ClientArea());
 
             _renderWindow->Present();
         }
         void GPU::Execute()
         {
             if (_renderScene)
+            {
+                auto stages = _renderScene->Stages();
+                for (uint a = 0; a < stages.Count(); a++)
+                {
+                    IRenderingStage3D* ctStage = stages(a);
+                    if (ctStage->Settings())
+                        Configure(*(ctStage->Settings()));
+                    if (ctStage->PipelineData())
+                        ctStage->PipelineData()->Bind();
+                    
+                    ctStage->Render();
+                }
+
                 _renderScene->Render(this);
+            }
         }
         void GPU::Update()
         {
@@ -190,12 +213,12 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void GPU::RestoreRenderingDefaults()
         {
-            if (_projection && _view)
+            if (_settings.Projection && _settings.View)
             {
                 PerFrame data =
                 {
-                    _projection->ToMatrix4x4(),
-                    _view->ToMatrix4x4(),
+                    _settings.Projection->ToMatrix4x4(),
+                    _settings.View->ToMatrix4x4(),
                     Vector3::One,
                     0,
                 };

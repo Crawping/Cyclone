@@ -3,10 +3,12 @@
  */
 
 #pragma once
+#include "GraphicsSettings.h"
 #include "PlatformAPI.h"
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
+#include "Interfaces/IReportable.h"
 #include "Pipelines/GraphicsPipeline.h"
 
 
@@ -29,26 +31,27 @@ namespace Cyclone
 
     namespace Platform
     {
-        class GraphicsSettings;
         class Window3D;
 
 
 
-        class GPU
+        class GPU : public IReportable
         {
             public:
 
                 /** PROPERTIES **/
+                CullingModes CullingMode()                  const { return _settings.CullingMode; }
+                bool IsBlendingEnabled()                    const { return _settings.IsBlendingEnabled; }
                 /// <summary> Gets a pointer to the projection transformation being used by the rendering pipeline. </summary>
-                const ITransformation3D* Projection()       const { return _projection; }
+                const ITransformation3D* Projection()       const { return _settings.Projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
-                const GraphicsPipeline* Pipeline()          const { return _renderPipeline; }
+                const GraphicsPipeline* Pipeline()          const { return _settings.Pipeline; }
 
-                uint PipelineID()                           const { return _renderPipeline ? _renderPipeline->ID() : 0; }
+                uint PipelineID()                           const { return _settings.Pipeline ? _settings.Pipeline->ID() : 0; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
-                const FrameBuffer* Target()                 const { return _renderTarget; }
+                const FrameBuffer* Target()                 const { return _settings.Target; }
                 /// <summary> Gets a pointer to the view transformation being used by the rendering pipeline. </summary>
-                const ITransformation3D* View()             const { return _view; }
+                const ITransformation3D* View()             const { return _settings.View; }
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* Window()                    const { return _renderWindow; }
 
@@ -115,7 +118,7 @@ namespace Cyclone
                 ///     Calls to this method impose a significant performance penalty and therefore should only be made sparingly, if
                 ///     at all. Prefer invoking this functionality only while debugging.
                 /// </remarks>
-                PlatformAPI string Report() const;
+                PlatformAPI string Report() const override;
                 /// <summary> Determines whether a specific OpenGL extension is available on the current system. </summary>
                 /// <returns> A Boolean <c>true</c> if the given extension is supported, or <c>false</c> otherwise. </returns>
                 /// <param name="extension"> A string containing the name of extension for which support is being queried. </param>
@@ -133,13 +136,9 @@ namespace Cyclone
             private:
 
                 /** PROPERTY DATA **/
-                float                       _fov;
-                ITransformation3D*          _projection;
-                GraphicsPipeline*           _renderPipeline;
-                FrameBuffer*                _renderTarget;
                 Window3D*                   _renderWindow;
                 Scene3D*                    _renderScene;
-                ITransformation3D*          _view;
+                GraphicsSettings            _settings;
 
 
 
