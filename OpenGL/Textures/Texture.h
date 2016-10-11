@@ -21,25 +21,27 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                /// <summary> Gets the depth of the texture in pixels. </summary>
+                /// <summary> Gets the depth of the texture in texels. </summary>
                 virtual uint Depth()            const { return (uint)_size.Z; }
                 virtual TextureFormats Format() const { return _format; }
+                /// <summary> Gets the direct handle reference to the texture on the GPU. </summary>
+                /// <remarks> This property is associated with the OpenGL bindless texturing extension and is not yet enabled for use. </remarks>                
                 virtual ulong Handle()          const { return _handle; }
-                /// <summary> Gets the height of the texture in pixels. </summary>
+                /// <summary> Gets the height of the texture in texels. </summary>
                 virtual uint Height()           const { return (uint)_size.Y; }
                 /// <summary> Gets the unique numeric identifier for the texture object on the GPU. </summary>
                 virtual uint ID()               const override { return _id; }
                 /// <summary> Gets whether the texture has any zero-length dimensions. </summary>
                 virtual bool IsEmpty()          const { return Height() && Width() && Depth(); }
-
+                /// <summary> Gets the number of mipmap levels associated with the texture. </summary>
                 virtual bool MipmapCount()      const { return _mipmapCount; }
-
+                
                 virtual bool NeedsUpdate()      const { return _needsUpdate; }
-                /// <summary> Gets the (width, height, depth) of the texture in pixels. </summary>
+                /// <summary> Gets the (x, y, z) size of the texture in texels. </summary>
                 virtual const Vector3& Size()   const { return _size; }
 
                 virtual TextureTargets Target() const { return _target; }
-                /// <summary> Gets the width of the texture in pixels. </summary>
+                /// <summary> Gets the width of the texture in texels. </summary>
                 virtual uint Width()            const { return (uint)_size.X; }
 
                 OpenGLAPI virtual Texture3D& Format(TextureFormats value);
