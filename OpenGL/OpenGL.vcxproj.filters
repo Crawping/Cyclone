@@ -104,6 +104,11 @@
     <ClInclude Include="Geometry\Space3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IRenderingStage.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsSettings.h" />
+    <ClInclude Include="RenderStage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -151,6 +156,11 @@
     <ClCompile Include="Pipelines\ComputePipeline.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
+    <ClCompile Include="Geometry\Mesh3D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsSettings.cpp" />
+    <ClCompile Include="RenderStage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
@@ -197,5 +207,6 @@
     <None Include="Shaders\Occlusion.vsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

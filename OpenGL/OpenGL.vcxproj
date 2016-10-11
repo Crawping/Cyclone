@@ -170,15 +170,18 @@
     <ClInclude Include="Geometry\Scene3D.h" />
     <ClInclude Include="Geometry\Space3D.h" />
     <ClInclude Include="Geometry\Vertex.h" />
+    <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
     <ClInclude Include="Interfaces\IGraphicsBuffer.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
+    <ClInclude Include="Interfaces\IRenderingStage.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
     <ClInclude Include="Pipelines\Shader.h" />
     <ClInclude Include="Pipelines\ShaderPipeline.h" />
+    <ClInclude Include="RenderStage.h" />
     <ClInclude Include="Textures\Texture.h" />
     <ClInclude Include="Textures\Texture2D.h" />
     <ClInclude Include="Textures\TextureSampler.h" />
@@ -190,17 +193,21 @@
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexArray.cpp" />
     <ClCompile Include="Geometry\Geometry3D.cpp" />
+    <ClCompile Include="Geometry\Mesh3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Geometry\Scene3D.cpp" />
+    <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />
     <ClCompile Include="Pipelines\ShaderPipeline.cpp" />
+    <ClCompile Include="RenderStage.cpp" />
     <ClCompile Include="Textures\Texture.cpp" />
     <ClCompile Include="Textures\Texture2D.cpp" />
     <ClCompile Include="Textures\TextureSampler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Shaders\Default.hsl" />
     <None Include="Shaders\Default.psl" />
     <None Include="Shaders\Default.vsl" />
