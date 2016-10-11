@@ -3,7 +3,9 @@
  */
 
 #pragma once
+#include "Collections/List.h"
 #include "Geometry/Entity3D.h"
+#include "Geometry/Vertex.h"
 
 
 
@@ -11,6 +13,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        
+
         class Mesh3D : public Entity3D<Vertex::Standard>
         {
             public:
@@ -21,6 +25,20 @@ namespace Cyclone
                 {
 
                 }
+
+                void Add(const Vertex::Standard& vertex)
+                {
+                    Vertices.Append(vertex);
+                }
+                void Add(const IArray<Vertex::Standard>& vertices)
+                {
+                    Vertices.Append(vertices);
+                }
+
+
+            private:
+                
+                List<Vertex::Standard> Vertices;
         };
     }
 }
