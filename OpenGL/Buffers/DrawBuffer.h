@@ -8,9 +8,9 @@
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
+#include "Interfaces/ICollection.h"
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IRenderable.h"
-#include "Spatial/Transform.h"
 #include <map>
 #include <set>
 
@@ -61,6 +61,10 @@ namespace Cyclone
                 void Add(const IRenderable3D<V>& entity)
                 {
                     if (EntityIndices.count(&entity)) { return; }
+
+                    const auto& components = entity.Components();
+                    for (uint a = 0; a < components.Count(); a++)
+                        Add(*components(a));
 
                     EntityIndices[&entity] = Commands.Count();
                     _needsReallocation = true;
@@ -131,6 +135,9 @@ namespace Cyclone
                 void Update(const IRenderable3D<V>& entity)
                 {
                     if (!EntityIndices.count(&entity)) { return; }
+                    const auto& components = entity.Components();
+                    for (uint a = 0; a < components.Count(); a++)
+                        Update(*components(a));
 
                     ToUpdate.insert(&entity);
                     _needsUpdate = true;
@@ -189,9 +196,9 @@ namespace Cyclone
 
                 IndexBuffer                                 Indices;
 
-                std::map<const IRenderable3D<V>*, uint>    EntityIndices;
+                std::map<const IRenderable3D<V>*, uint>     EntityIndices;
 
-                std::set<const IRenderable3D<V>*>          ToUpdate;
+                std::set<const IRenderable3D<V>*>           ToUpdate;
 
 
 

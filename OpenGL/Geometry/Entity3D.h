@@ -91,19 +91,22 @@ namespace Cyclone
 
 
 		        /** RENDERABLE INTERFACE METHODS **/
+
                 virtual const Volume& Bounds()                              const override { return _bounds; }
+
+                virtual const List<IRenderable3D<T>*>& Components()         const override { return _components; }
                 /// <summary> Gets a reference to the base color of the entity. </summary>
                 virtual const Color4& Color()                               const override { return _color; }
                 /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
                 virtual const Vector<uint>& Indices()                       const override { return _indices; }
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                    const override { return _isVisible; }
+                /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
+		        virtual const Vector<T>& Points()                           const override { return _points; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture3D* Texture()                          const override { return _texture; }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                         const override { return _topology; }
-                /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
-		        virtual const Vector<T>& Points()                           const override { return _points; }
                 /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
                 /// <remarks>
                 ///     The world transform defines the position, scale, and orientation of an entity in 3D space. It is typically 
@@ -150,6 +153,7 @@ namespace Cyclone
 		        Vector<T>		        _points;
                 Transform               _world;
 
+                List<IRenderable3D<T>*> _components;
 
 
                 /** CONSTRUCTOR **/
