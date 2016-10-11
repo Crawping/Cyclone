@@ -103,17 +103,28 @@ struct BufferTypes : public Enumerator
     constexpr BufferTypes(enum Buffers b = Uniform) : Enumerator((int)b) { }
 };
 
-struct FaceCullModes : public Enumerator
+/// <summary> A list of possible face culling modes that can be applied to rendering on the GPU. </summary>
+/// <remarks>
+///     These modes are used to specify which faces of 3D geometry are ultimately displayed on a rendering 
+///     target and can be used directly with the functions <see cref="glEnable"/> and <see cref="glDisable"/>. 
+///     By default, the front face of any geometry is defined as the side on which vertex ordering proceeds 
+///     in a counterclockwise fashion, while the back face has a clockwise vertex ordering.
+/// </remarks>
+struct CullingModes : public Enumerator
 {
     enum Modes
     {
+        /// <summary> Prevents the culling of the front and back faces of any geometry. </summary>
         None                        = 0,
+        /// <summary> Prevents the rendering of the back face of any geometry. </summary>
         Back                        = GL_BACK,
+        /// <summary> Prevents the rendering of the front face of any geometry. </summary>
         Front                       = GL_FRONT,
+        /// <summary> Prevents the rendering of the front and back faces of any geometry. </summary>
         FrontAndBack                = GL_FRONT_AND_BACK,
     };
 
-    constexpr FaceCullModes(enum Modes m = None) : Enumerator((int)m) { }
+    constexpr CullingModes(enum Modes m = None) : Enumerator((int)m) { }
 };
 
 struct NumericFormats : public Enumerator
