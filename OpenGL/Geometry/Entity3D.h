@@ -96,13 +96,17 @@ namespace Cyclone
 
                 virtual const List<IRenderable3D<T>*>& Components()         const override { return _components; }
                 /// <summary> Gets a reference to the base color of the entity. </summary>
-                virtual const Color4& Color()                               const override { return _color; }
+                virtual const Color4& Color()                               const override { return _primaryColor; }
                 /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
                 virtual const Vector<uint>& Indices()                       const override { return _indices; }
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                    const override { return _isVisible; }
                 /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
 		        virtual const Vector<T>& Points()                           const override { return _points; }
+
+                virtual const Color4& PrimaryColor()                        const override { return _primaryColor; }
+
+                virtual const Color4& SecondaryColor()                      const override { return _secondaryColor; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture3D* Texture()                          const override { return _texture; }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
@@ -119,7 +123,7 @@ namespace Cyclone
 
                 virtual Entity3D& Bounds(const Volume& bounds)              { _bounds = bounds; return *this; }
                 /// <summary> Sets the base color of the entity. </summary>
-                virtual Entity3D& Color(const Color4& color)                { _color = color; return *this; }
+                virtual Entity3D& Color(const Color4& color)                { _primaryColor = color; return *this; }
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
                 virtual Entity3D& IsVisible(bool value)                     { _isVisible = value; return *this; }
 
@@ -145,9 +149,10 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 Volume                  _bounds;
-                Color4                  _color;
                 Vector<uint>            _indices;
                 bool                    _isVisible;
+                Color4                  _primaryColor;
+                Color4                  _secondaryColor;
 		        const Texture3D*		_texture;
                 VertexTopologies        _topology;
 		        Vector<T>		        _points;
@@ -180,7 +185,7 @@ namespace Cyclone
                 /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
                 /// <param name="points"> The array of points that define the geometry of this entity. </param>
                 Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& points, const Vector<uint>& indices) :
-			        _color(color),
+			        _primaryColor(color),
                     _indices(indices),
                     _isVisible(true),
 			        _points(points),

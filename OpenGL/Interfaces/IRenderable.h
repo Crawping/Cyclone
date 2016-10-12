@@ -74,8 +74,13 @@ namespace Cyclone
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
                 virtual const Texture3D* Texture()			        const = 0;
+
                 /// <summary> Gets a reference to the base color of a material. </summary>
                 virtual const Color4& Color()				        const = 0;
+
+                virtual const Color4& PrimaryColor()                const = 0;
+
+                virtual const Color4& SecondaryColor()              const = 0;
 
                 virtual ~IMaterialEntity() { }
         };
@@ -95,18 +100,10 @@ namespace Cyclone
 
                 /// <summary> Gets whether a renderable entity is currently visible in a scene. </summary>
                 virtual bool IsVisible()                                        const = 0;
+
                 virtual ~IRenderable3D() { }
         };
 
-
-
-        template<typename T> class IRenderable2D :
-            public virtual IRenderable3D<T>
-        {
-            public:
-                virtual ~IRenderable2D() { }
-                virtual void Render()                               const = 0;
-        };
 
         class IRenderableScene
         {
