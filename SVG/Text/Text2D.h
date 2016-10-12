@@ -38,8 +38,8 @@ namespace Cyclone
 
             protected:
 
-                SVGAPI void CoverFill(const GPU* gpu)   const override;
-                SVGAPI void StencilFill(const GPU* gpu) const override;
+                SVGAPI void CoverFill()   const override;
+                SVGAPI void StencilFill() const override;
 
             private:
                 Font            _font;

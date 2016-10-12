@@ -53,8 +53,8 @@ namespace Cyclone
             _count(count),
             _id(0),
             _pathNeedsUpdate(false),
-            _strokeColor(Color4::Transparent),
-            _strokeWidth(0.0f)
+            _strokeColor(Color4::Black),
+            _strokeWidth(2.0f)
         {
             _id = nvGenPaths(_count);
         }
@@ -88,7 +88,7 @@ namespace Cyclone
 
             _pathNeedsUpdate = true;
         }
-        void Path2D::Render(const GPU* gpu) const
+        void Path2D::Render() const
         {
             if (!IsVisible()) { return; }
 
@@ -97,35 +97,35 @@ namespace Cyclone
             
             if (Color() != Color4::Transparent)
             {                
-                StencilFill(gpu);
-                CoverFill(gpu);
+                StencilFill();
+                CoverFill();
             }
 
             if (StrokeWidth() != 0.0f)
             {
-                StencilStroke(gpu);
-                CoverStroke(gpu);
+                StencilStroke();
+                CoverStroke();
             }
         }
 
 
 
         /** PROTECTED UTILITIES **/
-        void Path2D::CoverFill(const GPU* gpu) const
+        void Path2D::CoverFill() const
         {
-            gpu->SetUniform("InputColor", Color());
+            //gpu->SetUniform("InputColor", Color());
             nvCoverFillPath(ID(), CoverMode());
         }
-        void Path2D::CoverStroke(const GPU* gpu) const
+        void Path2D::CoverStroke() const
         {
-            gpu->SetUniform("InputColor", StrokeColor());
+            //gpu->SetUniform("InputColor", StrokeColor());
             nvCoverStrokePath(ID(), CoverMode());
         }
-        void Path2D::StencilFill(const GPU* gpu) const
+        void Path2D::StencilFill() const
         {
             nvStencilFillPath(ID(), FillMode(), 0x1F);
         }
-        void Path2D::StencilStroke(const GPU* gpu) const
+        void Path2D::StencilStroke() const
         {
             nvStencilStrokePath(ID(), 0x1, ~0);
         }

@@ -27,6 +27,7 @@
     <ClInclude Include="Geometry\Point2D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="RenderStage2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geometry">
@@ -55,5 +56,6 @@
     <ClCompile Include="Geometry\DrawingPath.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="RenderStage2D.cpp" />
   </ItemGroup>
 </Project>

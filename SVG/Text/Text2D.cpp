@@ -55,9 +55,9 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void Text2D::CoverFill(const GPU* gpu) const
+        void Text2D::CoverFill() const
         {
-            gpu->SetUniform("InputColor", Color());
+            //gpu->SetUniform("InputColor", Color());
             nvCoverFillPathInstanced
             (
                 _text.size(),
@@ -70,7 +70,7 @@ namespace Cyclone
             );
         }
 
-        void Text2D::StencilFill(const GPU* gpu) const
+        void Text2D::StencilFill() const
         {
             nvStencilFillPathInstanced
             (

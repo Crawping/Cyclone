@@ -54,9 +54,10 @@ namespace Cyclone
             private:
 
                 std::map<VertexTopologies, DrawBuffer<DrawCommand>>             Buffers;
+
                 std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>      IndexedBuffers;
 
-                std::set<const IRenderable2D<float>*>                           PathBuffer;
+                //std::set<const IRenderable2D<float>*>                           PathBuffer;
 
                 List<IRenderStage*>                                             Stages3D;                                              
 

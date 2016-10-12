@@ -72,7 +72,7 @@ namespace Cyclone
                 SVGAPI virtual Path2D& Add(const ControlPoint2D& point);
                 SVGAPI virtual Path2D& Add(const IArray<ControlPoint2D>& points);
                 SVGAPI virtual void Clear();
-                SVGAPI virtual void Render(const GPU* gpu) const override;
+                SVGAPI virtual void Render() const override;
 
             protected:
                 
@@ -82,11 +82,11 @@ namespace Cyclone
 
 
                 /** RENDERING UTILITIES **/
-                SVGAPI virtual void CoverFill(const GPU* gpu)       const;
-                SVGAPI virtual void CoverStroke(const GPU* gpu)     const;
-                SVGAPI virtual void StencilFill(const GPU* gpu)     const;
-                SVGAPI virtual void StencilStroke(const GPU* gpu)   const;
-                SVGAPI virtual void Update()                        const;
+                SVGAPI virtual void CoverFill()       const;
+                SVGAPI virtual void CoverStroke()     const;
+                SVGAPI virtual void StencilFill()     const;
+                SVGAPI virtual void StencilStroke()   const;
+                SVGAPI virtual void Update()          const;
 
             private:
                 

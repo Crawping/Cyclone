@@ -100,13 +100,12 @@ namespace Cyclone
 
 
 
-        template<typename T>
-        class IRenderable2D :
+        template<typename T> class IRenderable2D :
             public virtual IRenderable3D<T>
         {
             public:
                 virtual ~IRenderable2D() { }
-                virtual void Render(const GPU* gpu)                 const = 0;
+                virtual void Render()                               const = 0;
         };
 
         class IRenderableScene
