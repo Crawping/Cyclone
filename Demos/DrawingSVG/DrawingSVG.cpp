@@ -6,6 +6,7 @@
 #include "GPU.h"
 #include "NVPR.h"
 #include "Window3D.h"
+#include "Geometry/DrawingPath.h"
 #include "Geometry/Quad3D.h"
 #include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
@@ -53,7 +54,7 @@ class Program : public AdvancedRenderer
         }
 
     protected:
-        Path2D              DrawingPath;
+        DrawingPath         Path;
         Texture2D*          Image;
         bool                IsEnteringText;
         ShaderPipeline*     PipelineSVG;
@@ -75,7 +76,7 @@ class Program : public AdvancedRenderer
                 .Position(RenderWindow->ClientArea().Scale() / 2.0f)
                 .Scale(Vector3(RenderWindow->ClientArea().Scale(), 0.0f));
 
-            DrawingPath
+            Path
                 .JoinStyle(JoinStyles::Round)
                 .StrokeColor(Color4(1.0f, 0.0f, 0.0f, 0.875f))
                 .StrokeWidth(2)
@@ -83,7 +84,7 @@ class Program : public AdvancedRenderer
                 .Color(Color4(0.0f, 0.0f, 1.0f, 0.75f));
 
             RenderScene->Add(Quad);
-            SceneSVG->Add(DrawingPath);
+            SceneSVG->Add(Path);
         }
         void CreateShaderPipeline() override
         {
@@ -106,10 +107,10 @@ class Program : public AdvancedRenderer
                     { PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y }
                 };
 
-                if (DrawingPath.IsEmpty() || DrawingPath.IsClosed())
+                if (Path.IsEmpty() || Path.IsClosed())
                     newPt.Command = PathCommands::Move;
 
-                DrawingPath.Add(newPt);
+                Path.Add(newPt);
             }
             else if (evt.Button == PointerButtons::Button003)
                 IsFreeLookEnabled = true;
@@ -135,7 +136,7 @@ class Program : public AdvancedRenderer
                 return;
             }
             if (evt.Key == KeyboardKeys::C)
-                DrawingPath.Add
+                Path.Add
                 ({ 
                     PathCommands::SmoothQuadraticCurve, 
                     { 
@@ -145,7 +146,7 @@ class Program : public AdvancedRenderer
                 });
 
             else if (evt.Key == KeyboardKeys::E)
-                DrawingPath.Add({ PathCommands::Close, { } });
+                Path.Add({ PathCommands::Close, { } });
             else if (evt.Key == KeyboardKeys::T)
             {
                 IsEnteringText = true;
@@ -161,7 +162,7 @@ class Program : public AdvancedRenderer
                 }
 
                 TextBoxes.Clear();
-                DrawingPath.Clear();
+                Path.Clear();
 
             }
 
