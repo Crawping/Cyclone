@@ -36,7 +36,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Add(const IRenderable2D<float>& entity);
+                //OpenGLAPI void Add(const IRenderable2D<float>& entity);
                 /// <summary> Adds a renderable entity to this scene. </summary>
                 /// <param name="entity">
                 ///     A reference to the renderable entity that will be added to the scene. If this entity already exists
@@ -45,7 +45,7 @@ namespace Cyclone
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
-                OpenGLAPI void Remove(const IRenderable2D<float>& entity);
+                //OpenGLAPI void Remove(const IRenderable2D<float>& entity);
                 OpenGLAPI void Remove(const IRenderable3D<Vertex::Standard>& entity);
                 //OpenGLAPI void Render(GPU* gpu) const override;
                 OpenGLAPI void Update();

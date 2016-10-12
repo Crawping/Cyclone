@@ -17,17 +17,6 @@ namespace Cyclone
 
         List<IRenderStage*> Scene3D::Stages() const
         {
-            //for (uint a = 0; a < Stages3D.Count(); a++)
-            //    delete Stages3D(a);
-
-            //Stages3D.Clear();
-
-            //for (const auto& kvp : Buffers)
-            //    Stages3D.Append(new RenderStage3D(kvp.first, &kvp.second, nullptr));
-
-            //for (const auto& kvp : IndexedBuffers)
-            //    Stages3D.Append(new IndexedRenderStage3D(kvp.first, &kvp.second, nullptr));
-
             return Stages3D;
         }
 
@@ -55,26 +44,12 @@ namespace Cyclone
             else
                 IndexedBuffers[entity.Topology()].Add(entity);
         }
-        void Scene3D::Add(const IRenderable2D<float>& entity)
-        {
-            if (PathBuffer.count(&entity)) { return; }
-
-            PathBuffer.insert(&entity);
-
-            //const auto& components = entity.Components();
-            //for (uint a = 0; a < components.Count(); a++)
-            //    Add(*components(a));
-        }
         void Scene3D::Remove(const IRenderable3D<Vertex::Standard>& entity)
         {
             if (entity.Indices().IsEmpty())
                 Buffers[entity.Topology()].Remove(entity);
             else
                 IndexedBuffers[entity.Topology()].Remove(entity);
-        }
-        void Scene3D::Remove(const IRenderable2D<float>& entity)
-        {
-            PathBuffer.erase(&entity);
         }
         //void Scene3D::Render(GPU* gpu) const
         //{
