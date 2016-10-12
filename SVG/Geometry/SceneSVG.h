@@ -4,8 +4,10 @@
 
 #pragma once
 #include "SVGAPI.h"
-#include "Interfaces/IRenderable.h"
-
+#include "Buffers/UniformBuffer.h"
+//#include "Interfaces/IRenderable.h"
+#include "Interfaces/IRenderable2D.h"
+#include <set>
 
 
 namespace Cyclone
@@ -32,8 +34,15 @@ namespace Cyclone
                 SVGAPI void Update();
 
 
-            //private:
+            private:
                 
+                //List<IRenderable2D<float>*>     Entities;
+                std::set< const IRenderable2D<float>* >     Entities;
+
+                List<IRenderStage*> Stages2D;
+
+                UniformBuffer<Color4> FillColors;
+                UniformBuffer<Color4> StrokeColors;
 
         };
     }

@@ -127,6 +127,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buffers\DrawBuffer2D.h" />
     <ClInclude Include="EnumerationsSVG.h" />
     <ClInclude Include="Geometry\ControlPoint2D.h" />
     <ClInclude Include="Geometry\DrawingPath.h" />
@@ -134,6 +135,8 @@
     <ClInclude Include="Geometry\Path2D.h" />
     <ClInclude Include="Geometry\Point2D.h" />
     <ClInclude Include="Geometry\Rectangle2D.h" />
+    <ClInclude Include="Geometry\SceneSVG.h" />
+    <ClInclude Include="Interfaces\IRenderable2D.h" />
     <ClInclude Include="RenderStage2D.h" />
     <ClInclude Include="SVGAPI.h" />
     <ClInclude Include="Text\Font.h" />
@@ -144,6 +147,7 @@
     <ClCompile Include="Geometry\Geometry2D.cpp" />
     <ClCompile Include="Geometry\Path2D.cpp" />
     <ClCompile Include="Geometry\Rectangle2D.cpp" />
+    <ClCompile Include="Geometry\SceneSVG.cpp" />
     <ClCompile Include="RenderStage2D.cpp" />
     <ClCompile Include="Text\Font.cpp" />
     <ClCompile Include="Text\Text2D.cpp" />

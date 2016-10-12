@@ -10,6 +10,7 @@
 #include "Geometry/Entity3D.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/IRenderable2D.h"
 #include "Spatial/Transform.h"
 
 
@@ -35,6 +36,7 @@ namespace Cyclone
                 /// </remarks>
                 virtual uint InstanceCount()            const { return _count; }
                 virtual CoverModes CoverMode()          const { return _coverMode; }
+                virtual const Color4& FillColor()       const { return PrimaryColor(); }
                 virtual FillModes FillMode()            const { return _fillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
                 virtual uint ID()                       const { return _id; }
@@ -44,7 +46,7 @@ namespace Cyclone
                 virtual bool IsEmpty()                  const { return Commands.Count() == 0; }
                 virtual JoinStyles JoinStyle()          const { return _joinStyle; }
                 /// <summary> Gets the color of the path's surrounding stroke. </summary>
-                virtual const Color4& StrokeColor()     const { return _strokeColor; }
+                virtual const Color4& StrokeColor()     const { return SecondaryColor(); }
                 /// <summary> Gets the width of the path's surrounding stroke. </summary>
                 virtual float StrokeWidth()             const { return _strokeWidth; }
                 virtual EndCaps TerminalCap()           const { return _terminalCap; }
