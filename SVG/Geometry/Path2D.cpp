@@ -88,26 +88,10 @@ namespace Cyclone
 
             _pathNeedsUpdate = true;
         }
-        //void Path2D::Render() const
-        //{
-        //    if (!IsVisible()) { return; }
-
-        //    Update();
-        //    
-        //    if (Color() != Color4::Transparent)
-        //    {                
-        //        StencilFill();
-        //        CoverFill();
-        //    }
-
-        //    if (StrokeWidth() != 0.0f)
-        //    {
-        //        StencilStroke();
-        //        CoverStroke();
-        //    }
-        //}
 
 
+
+        /** RENDERING UTILITIES **/
         void Path2D::Fill() const
         {
             if (!IsVisible()) { return; }
@@ -120,26 +104,6 @@ namespace Cyclone
             nvStencilStrokePath(ID(), 0x1, ~0);
             nvCoverStrokePath(ID(), CoverMode());
         }
-
-
-
-        /** PROTECTED UTILITIES **/
-        //void Path2D::CoverFill() const
-        //{
-        //    
-        //}
-        //void Path2D::CoverStroke() const
-        //{
-        //    
-        //}
-        //void Path2D::StencilFill() const
-        //{
-        //    
-        //}
-        //void Path2D::StencilStroke() const
-        //{
-        //    
-        //}
         void Path2D::Update() const
         {
             if (!_pathNeedsUpdate) { return; }

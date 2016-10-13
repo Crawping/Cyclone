@@ -79,6 +79,7 @@ namespace Cyclone
 
                 SVGAPI virtual void Fill() const override;
                 SVGAPI virtual void Stroke() const override;
+                SVGAPI virtual void Update() const override;
 
             protected:
                 
@@ -92,7 +93,6 @@ namespace Cyclone
                 //SVGAPI virtual void CoverStroke()     const;
                 //SVGAPI virtual void StencilFill()     const;
                 //SVGAPI virtual void StencilStroke()   const;
-                SVGAPI virtual void Update()          const;
 
             private:
                 
