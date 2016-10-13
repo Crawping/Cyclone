@@ -6,6 +6,7 @@
 #include "SVGAPI.h"
 #include "Buffers/UniformBuffer.h"
 //#include "Interfaces/IRenderable.h"
+#include "Imaging/Color4.h"
 #include "Interfaces/IRenderable2D.h"
 #include <set>
 
@@ -31,7 +32,7 @@ namespace Cyclone
                 SVGAPI void Add(const IRenderable2D<float>& entity);
                 SVGAPI void Remove(const IRenderable2D<float>& entity);
 
-                SVGAPI void Update();
+                SVGAPI void Update() override;
 
 
             private:
@@ -41,8 +42,9 @@ namespace Cyclone
 
                 List<IRenderStage*> Stages2D;
 
-                UniformBuffer<Color4> FillColors;
-                UniformBuffer<Color4> StrokeColors;
+                UniformBuffer<Color4> Colors;
+                //UniformBuffer<Color4> FillColors;
+                //UniformBuffer<Color4> StrokeColors;
 
         };
     }

@@ -1,4 +1,6 @@
 #include "Geometry/SceneSVG.h"
+#include "RenderStage2D.h"
+//#include "Interfaces/IRenderStage.h"
 
 
 
@@ -28,14 +30,15 @@ namespace Cyclone
             if (Entities.count(&entity)) { return; }
             
             Entities.insert(&entity);
-            FillColors.Add(entity.PrimaryColor());
-            StrokeColors.Add(entity.SecondaryColor());
+            Colors.Add(entity.PrimaryColor());
+            Colors.Add(entity.SecondaryColor());
+            //FillColors.Add(entity.PrimaryColor());
+            //StrokeColors.Add(entity.SecondaryColor());
 
-            const auto& components = entity.Components();
-            for (uint a = 0; a < components.Count(); a++)
-                if (components(a)->Topology() == VertexTopologies::Path)
-                    Add( dynamic_cast<IRenderable2D<float>&>(*components(a)) );
-
+            //const auto& components = entity.Components();
+            //for (uint a = 0; a < components.Count(); a++)
+            //    if (components(a)->Topology() == VertexTopologies::Path)
+            //        Add( dynamic_cast<IRenderable2D<float>&>(*components(a)) );
 
         }
         void SceneSVG::Remove(const IRenderable2D<float>& entity)
@@ -50,7 +53,8 @@ namespace Cyclone
 
             Stages2D.Clear();
 
-            
+            Colors.Update();
+            Stages2D.Append( new RenderStage2D(&Colors, &Entities, nullptr) );            
         }
 
     }
