@@ -14,7 +14,7 @@
 #include "Geometry/Geometry2D.h"
 #include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
-
+#include "Geometry/SceneSVG.h"
 #include "Imaging/Color4.h"
 #include "Pipelines/ShaderPipeline.h"
 
@@ -30,23 +30,31 @@ class Program : public BasicRenderer
     public:
 
         Program() :
-            BasicRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering", 4)
+            BasicRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering", 4),
+            Scene(nullptr)
         {
             nvPathStencilDepthOffset(-0.05f, -1);
             nvPathCoverDepthFunc(GL_ALWAYS);
             
 			Initialize();
         }
+        ~Program()
+        {
+            if (Scene) { delete Scene; }
+        }
 
     protected:
 
         Path2D          Path;
-
+        SceneSVG*       Scene;
 
 
         void CreateSceneResources() override
         {
-            BasicRenderer::CreateSceneResources();
+            //BasicRenderer::CreateSceneResources();
+
+            Scene = new SceneSVG();
+            Renderer->Scene(Scene);
 
             Path.Add(Geometry2D::Star())
                 .JoinStyle(JoinStyles::Round)
@@ -57,7 +65,7 @@ class Program : public BasicRenderer
                 .Scale(2)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / Vector2(2.0f, 3.0f), -100));
 
-            RenderScene->Add(Path);
+            Scene->Add(Path);
         }
         void CreateShaderPipeline() override
         {
@@ -81,7 +89,8 @@ class Program : public BasicRenderer
             Path.Yaw(count);
             count += 0.02f;
 
-            BasicRenderer::UpdateScene();
+            Renderer->Update();
+            //BasicRenderer::UpdateScene();
         }
 
 };

@@ -6,10 +6,27 @@
 
 out vec4 OutputColor;
 
-uniform vec4 InputColor;
+
+layout(binding = 0, std140) uniform ColorBuffer
+{
+    vec4 ColorData[1024];
+};
+
+
+
+
+
+
+uniform int DrawID;
+
+
+
+
+//uniform vec4 InputColor;
 
 
 void main(void)
 {
-    OutputColor = InputColor;
+    //OutputColor = InputColor;
+    OutputColor = ColorData[DrawID];
 }
