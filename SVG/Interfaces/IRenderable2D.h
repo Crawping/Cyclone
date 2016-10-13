@@ -20,7 +20,10 @@ namespace Cyclone
                 
                 virtual ~IRenderable2D() { }
 
-                virtual void Render() const = 0;
+                //virtual void Render() const = 0;
+
+                virtual void Fill() const = 0;
+                virtual void Stroke() const = 0;
 
         };
 

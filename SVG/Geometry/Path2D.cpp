@@ -88,47 +88,58 @@ namespace Cyclone
 
             _pathNeedsUpdate = true;
         }
-        void Path2D::Render() const
+        //void Path2D::Render() const
+        //{
+        //    if (!IsVisible()) { return; }
+
+        //    Update();
+        //    
+        //    if (Color() != Color4::Transparent)
+        //    {                
+        //        StencilFill();
+        //        CoverFill();
+        //    }
+
+        //    if (StrokeWidth() != 0.0f)
+        //    {
+        //        StencilStroke();
+        //        CoverStroke();
+        //    }
+        //}
+
+
+        void Path2D::Fill() const
         {
             if (!IsVisible()) { return; }
-
-            Update();
-            nvMatrixLoadf(TransformMatrices::ModelView, World().ToArray());
-            
-            if (Color() != Color4::Transparent)
-            {                
-                StencilFill();
-                CoverFill();
-            }
-
-            if (StrokeWidth() != 0.0f)
-            {
-                StencilStroke();
-                CoverStroke();
-            }
+            nvStencilFillPath(ID(), FillMode(), 0x1F);
+            nvCoverFillPath(ID(), CoverMode());
+        }
+        void Path2D::Stroke() const
+        {
+            if (!IsVisible()) { return; }
+            nvStencilStrokePath(ID(), 0x1, ~0);
+            nvCoverStrokePath(ID(), CoverMode());
         }
 
 
 
         /** PROTECTED UTILITIES **/
-        void Path2D::CoverFill() const
-        {
-            //gpu->SetUniform("InputColor", Color());
-            nvCoverFillPath(ID(), CoverMode());
-        }
-        void Path2D::CoverStroke() const
-        {
-            //gpu->SetUniform("InputColor", StrokeColor());
-            nvCoverStrokePath(ID(), CoverMode());
-        }
-        void Path2D::StencilFill() const
-        {
-            nvStencilFillPath(ID(), FillMode(), 0x1F);
-        }
-        void Path2D::StencilStroke() const
-        {
-            nvStencilStrokePath(ID(), 0x1, ~0);
-        }
+        //void Path2D::CoverFill() const
+        //{
+        //    
+        //}
+        //void Path2D::CoverStroke() const
+        //{
+        //    
+        //}
+        //void Path2D::StencilFill() const
+        //{
+        //    
+        //}
+        //void Path2D::StencilStroke() const
+        //{
+        //    
+        //}
         void Path2D::Update() const
         {
             if (!_pathNeedsUpdate) { return; }

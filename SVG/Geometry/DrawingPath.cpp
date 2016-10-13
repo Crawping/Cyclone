@@ -46,12 +46,12 @@ namespace Cyclone
                 delete Points(a);
         }
 
-        void DrawingPath::Render() const
-        {
-            Path2D::Render();
-            for (uint a = 0; a < Points.Count(); a++)
-                Points(a)->Render();
-        }
+        //void DrawingPath::Render() const
+        //{
+        //    Path2D::Render();
+        //    for (uint a = 0; a < Points.Count(); a++)
+        //        Points(a)->Render();
+        //}
 
     }
 }

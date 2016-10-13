@@ -54,10 +54,9 @@ namespace Cyclone
 
 
 
-        /** PROTECTED UTILITIES **/
-        void Text2D::CoverFill() const
+        void Text2D::Fill() const
         {
-            //gpu->SetUniform("InputColor", Color());
+            if (!IsVisible()) { return; }
             nvCoverFillPathInstanced
             (
                 _text.size(),
@@ -69,9 +68,9 @@ namespace Cyclone
                 _kerning.ToArray()
             );
         }
-
-        void Text2D::StencilFill() const
+        void Text2D::Stroke() const
         {
+            if (!IsVisible()) { return; }
             nvStencilFillPathInstanced
             (
                 _text.size(),
@@ -84,6 +83,19 @@ namespace Cyclone
                 _kerning.ToArray()
             );
         }
+
+
+
+        /** PROTECTED UTILITIES **/
+        //void Text2D::CoverFill() const
+        //{
+        //    
+        //}
+
+        //void Text2D::StencilFill() const
+        //{
+        //    
+        //}
 
     }
 }
