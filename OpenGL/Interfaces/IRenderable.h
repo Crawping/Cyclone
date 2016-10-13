@@ -113,6 +113,8 @@ namespace Cyclone
 
                 virtual ~IRenderableScene() { }
                 //virtual void Render(GPU* gpu)                       const = 0;
+
+                virtual void Update() = 0;
         };
 
     }
