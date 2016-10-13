@@ -36,7 +36,7 @@ namespace Cyclone
         {
             _settings.Projection = projection;
         }
-        void GPU::Scene(Scene3D* scene, int slot)
+        void GPU::Scene(IRenderableScene* scene, int slot)
         {
             _renderScene = scene;
         }

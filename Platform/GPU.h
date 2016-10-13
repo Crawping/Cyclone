@@ -60,7 +60,7 @@ namespace Cyclone
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
                 PlatformAPI void Projection(ITransformation3D* projection);
                 /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>
-                PlatformAPI void Scene(Scene3D* scene, int slot = 0);
+                PlatformAPI void Scene(IRenderableScene* scene, int slot = 0);
                 /// <summary> Sets the framebuffer to which all subsequent rendering will occur. </summary>
                 PlatformAPI void Target(FrameBuffer* framebuffer, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
@@ -137,7 +137,7 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 Window3D*                   _renderWindow;
-                Scene3D*                    _renderScene;
+                IRenderableScene*           _renderScene;
                 GraphicsSettings            _settings;
 
 
