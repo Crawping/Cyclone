@@ -17,11 +17,12 @@ namespace Cyclone
 
         SceneSVG::SceneSVG()
         {
-
+            
         }
         SceneSVG::~SceneSVG()
         {
-
+            for (uint a = 0; a < Stages2D.Count(); a++)
+                delete Stages2D(a);
         }
 
 
@@ -32,8 +33,6 @@ namespace Cyclone
             Entities.insert(&entity);
             Colors.Add(entity.PrimaryColor());
             Colors.Add(entity.SecondaryColor());
-            //FillColors.Add(entity.PrimaryColor());
-            //StrokeColors.Add(entity.SecondaryColor());
 
             //const auto& components = entity.Components();
             //for (uint a = 0; a < components.Count(); a++)
@@ -53,8 +52,11 @@ namespace Cyclone
 
             Stages2D.Clear();
 
+            for (const auto* e : Entities)
+                e->Update();
+
             Colors.Update();
-            Stages2D.Append( new RenderStage2D(&Colors, &Entities, nullptr) );            
+            Stages2D.Append( new RenderStage2D(&Colors, &Entities, &_settings) );
         }
 
     }

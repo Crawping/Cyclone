@@ -28,13 +28,7 @@ namespace Cyclone
                 virtual const GraphicsSettings* Settings()      const override { return _settings; }
                 virtual VertexTopologies Topology()             const override { return VertexTopologies::Path; }
 
-                RenderStage2D(const UniformBuffer<Color4>* data, const std::set< const IRenderable2D<float>* >* entities, const GraphicsSettings* settings) :
-                    _data(data),
-                    _settings(settings),
-                    Entities(entities)
-                {
-
-                }
+                SVGAPI RenderStage2D(const UniformBuffer<Color4>* data, const std::set< const IRenderable2D<float>* >* entities, const GraphicsSettings* settings);
 
                 SVGAPI void Render() override;
 

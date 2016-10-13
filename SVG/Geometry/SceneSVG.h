@@ -3,9 +3,10 @@
  */
 
 #pragma once
+#include "GraphicsSettings.h"
 #include "SVGAPI.h"
+
 #include "Buffers/UniformBuffer.h"
-//#include "Interfaces/IRenderable.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable2D.h"
 #include <set>
@@ -24,27 +25,30 @@ namespace Cyclone
 
                 SVGAPI List<IRenderStage*> Stages() const override;
 
+                SceneSVG& Pipeline(GraphicsPipeline* value) { _settings.Pipeline = value; return *this; }
+                SceneSVG& Target(FrameBuffer* value) { _settings.Target = value; return *this; }
 
+
+                /** CONSTRUCTOR & DESTRUCTOR **/
                 SVGAPI SceneSVG();
                 SVGAPI ~SceneSVG();
 
 
                 SVGAPI void Add(const IRenderable2D<float>& entity);
                 SVGAPI void Remove(const IRenderable2D<float>& entity);
-
                 SVGAPI void Update() override;
 
 
             private:
                 
-                //List<IRenderable2D<float>*>     Entities;
+                GraphicsSettings    _settings;
+
+
                 std::set< const IRenderable2D<float>* >     Entities;
 
                 List<IRenderStage*> Stages2D;
 
                 UniformBuffer<Color4> Colors;
-                //UniformBuffer<Color4> FillColors;
-                //UniformBuffer<Color4> StrokeColors;
 
         };
     }

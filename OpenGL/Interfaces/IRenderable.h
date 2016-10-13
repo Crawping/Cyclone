@@ -74,12 +74,11 @@ namespace Cyclone
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
                 virtual const Texture3D* Texture()			        const = 0;
-
                 /// <summary> Gets a reference to the base color of a material. </summary>
                 virtual const Color4& Color()				        const = 0;
-
+                /// <summary> Gets a reference to the primary color of the material. </summary>
                 virtual const Color4& PrimaryColor()                const = 0;
-
+                /// <summary> Gets a reference to the secondary color of the material. </summary>
                 virtual const Color4& SecondaryColor()              const = 0;
 
                 virtual ~IMaterialEntity() { }
@@ -112,7 +111,6 @@ namespace Cyclone
                 virtual List<IRenderStage*> Stages()                const = 0;
 
                 virtual ~IRenderableScene() { }
-                //virtual void Render(GPU* gpu)                       const = 0;
 
                 virtual void Update() = 0;
         };

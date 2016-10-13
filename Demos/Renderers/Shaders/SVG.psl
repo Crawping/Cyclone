@@ -13,20 +13,10 @@ layout(binding = 0, std140) uniform ColorBuffer
 };
 
 
-
-
-
-
 uniform int DrawID;
-
-
-
-
-//uniform vec4 InputColor;
 
 
 void main(void)
 {
-    //OutputColor = InputColor;
     OutputColor = ColorData[DrawID];
 }

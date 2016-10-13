@@ -49,10 +49,9 @@ class Program : public BasicRenderer
         SceneSVG*       Scene;
 
 
+
         void CreateSceneResources() override
         {
-            //BasicRenderer::CreateSceneResources();
-
             Scene = new SceneSVG();
             Renderer->Scene(Scene);
 
@@ -66,6 +65,8 @@ class Program : public BasicRenderer
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / Vector2(2.0f, 3.0f), -100));
 
             Scene->Add(Path);
+            Scene->Pipeline(RenderPipeline);
+            Scene->Target(RenderTarget);
         }
         void CreateShaderPipeline() override
         {
@@ -90,7 +91,6 @@ class Program : public BasicRenderer
             count += 0.02f;
 
             Renderer->Update();
-            //BasicRenderer::UpdateScene();
         }
 
 };

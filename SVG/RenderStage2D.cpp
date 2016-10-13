@@ -1,6 +1,9 @@
+#include "EnumerationsSVG.h"
+#include "NVPR.h"
 #include "GraphicsSettings.h"
 #include "RenderStage2D.h"
 #include "Interfaces/IGraphicsBuffer.h"
+#include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
 
 //using namespace Cyclone::OpenGL;
@@ -11,6 +14,16 @@ namespace Cyclone
 {
     namespace SVG
     {
+
+        /** CONSTRUCTOR **/
+        RenderStage2D::RenderStage2D(const UniformBuffer<Color4>* data, const std::set< const IRenderable2D<float>* >* entities, const GraphicsSettings* settings) : 
+            _data(data),
+            _settings(settings),
+            Entities(entities)
+        {
+
+        }
+
 
         void RenderStage2D::Render()
         {
@@ -26,6 +39,7 @@ namespace Cyclone
             int idx = 0;
             for (const auto* e : *Entities)
             {
+                nvMatrixLoadf(TransformMatrices::ModelView, e->World().ToMatrix4x4().ToArray());
                 SetUniform(drawID, idx++);
                 e->Fill();
                 SetUniform(drawID, idx++);
@@ -34,11 +48,7 @@ namespace Cyclone
 
             glDisable(GL_STENCIL_TEST);
         }
-
-
-
-
-
+        
 
 
         int RenderStage2D::GetUniformID(const string& name)                                   const
