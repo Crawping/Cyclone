@@ -127,28 +127,39 @@ struct CullingModes : public Enumerator
     constexpr CullingModes(enum Modes m = None) : Enumerator((int)m) { }
 };
 
+/// <summary> A list of numeric storage formats supported by OpenGL. </summary>
 struct NumericFormats : public Enumerator
 {
     enum Formats
     {
+        /// <summary> An 8-bit signed byte format. </summary>
         Byte                        = GL_BYTE,
+        /// <summary> A 64-bit double-precision floating point format. </summary>
         Double                      = GL_DOUBLE,
         Fixed                       = GL_FIXED,
+        /// <summary> A 32-bit single-precision floating point format. </summary>
         Float                       = GL_FLOAT,
+        /// <summary> A 32-bit signed integer format. </summary>
         Int                         = GL_INT,
         PackedInt                   = GL_INT_2_10_10_10_REV,
         PackedFloat                 = GL_UNSIGNED_INT_10F_11F_11F_REV,
-        PackedUint                  = GL_UNSIGNED_INT_2_10_10_10_REV,
+        PackedUInt                  = GL_UNSIGNED_INT_2_10_10_10_REV,
+        /// <summary> A 16-bit signed integer format. </summary>
         Short                       = GL_SHORT,
+        /// <summary> A 16-bit half-precision floating point format. </summary>
         ShortFloat                  = GL_HALF_FLOAT,
+        /// <summary> An 8-bit unsigned byte format. </summary>
         UByte                       = GL_UNSIGNED_BYTE,
+        /// <summary> A 32-bit unsigned integer format. </summary>
         UInt                        = GL_UNSIGNED_INT,
+        /// <summary> A 16-bit unsigned integer format. </summary>
         UShort                      = GL_UNSIGNED_SHORT,
     };
 
     constexpr NumericFormats(enum Formats f = UByte) : Enumerator((int)f) { }
 
-    uint ByteSize() const
+    /// <summary> Gets the number of bits required to store a single value of a specific numeric format. </summary>
+    uint BitSize() const
     {
         switch (Value)
         {
@@ -164,7 +175,7 @@ struct NumericFormats : public Enumerator
             case Int:
             case PackedInt:
             case PackedFloat:
-            case PackedUint:
+            case PackedUInt:
             case UInt:          return 32;
 
             case Double:        return 64;
@@ -344,7 +355,7 @@ struct TextureTargets : public Enumerator
         Texture2D                   = GL_TEXTURE_2D,
 
         TextureArray2D              = GL_TEXTURE_2D_ARRAY,
-
+        /// <summary> A multisampled two-dimensional texture storage format. </summary>
         Texture2DMS                 = GL_TEXTURE_2D_MULTISAMPLE,
         /// <summary> A three-dimensional texture storage format. </summary>
         Texture3D                   = GL_TEXTURE_3D,
