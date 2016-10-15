@@ -36,13 +36,11 @@ namespace Cyclone
                 /** CONSTRUCTORS **/
                 SVGAPI Text2D();
 
+
+
+                /** RENDERING UTILITIES **/
                 SVGAPI void Fill() const override;
                 SVGAPI void Stroke() const override;
-
-            protected:
-
-                //SVGAPI void CoverFill()   const override;
-                //SVGAPI void StencilFill() const override;
 
             private:
                 Font            _font;

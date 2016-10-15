@@ -54,9 +54,23 @@ namespace Cyclone
 
 
 
+        /** RENDERING UTILITIES **/
         void Text2D::Fill() const
         {
             if (!IsVisible()) { return; }
+
+            nvStencilFillPathInstanced
+            (
+                _text.size(),
+                NumericFormats::UByte,
+                _text.c_str(),
+                _font.ID(),
+                FillMode(),
+                ~0,
+                TransformTypes::TranslateX,
+                _kerning.ToArray()
+            );
+
             nvCoverFillPathInstanced
             (
                 _text.size(),
@@ -70,32 +84,8 @@ namespace Cyclone
         }
         void Text2D::Stroke() const
         {
-            if (!IsVisible()) { return; }
-            nvStencilFillPathInstanced
-            (
-                _text.size(),
-                NumericFormats::UByte,
-                _text.c_str(),
-                _font.ID(),
-                FillMode(),
-                ~0,
-                TransformTypes::TranslateX,
-                _kerning.ToArray()
-            );
+
         }
-
-
-
-        /** PROTECTED UTILITIES **/
-        //void Text2D::CoverFill() const
-        //{
-        //    
-        //}
-
-        //void Text2D::StencilFill() const
-        //{
-        //    
-        //}
 
     }
 }
