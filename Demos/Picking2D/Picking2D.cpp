@@ -39,7 +39,7 @@ class Program : public PathRenderer
 
         void CreateSceneResources() override
         {
-            AdvancedRenderer::CreateSceneResources();
+            PathRenderer::CreateSceneResources();
 
             Path
                 .JoinStyle(JoinStyles::Round)
@@ -48,7 +48,7 @@ class Program : public PathRenderer
 
                 .Color(Color4(0.0f, 0.0f, 1.0f, 0.75f));
 
-            RenderScene->Add(Path);
+            PathScene->Add(Path);
         }
 
         void ProcessButtonPress(const PointerClickEvent& evt)
@@ -99,11 +99,11 @@ class Program : public PathRenderer
             else if (evt.Key == KeyboardKeys::F2)
                 Path.Clear();
 
-            AdvancedRenderer::ProcessKeyPress(evt);
+            PathRenderer::ProcessKeyPress(evt);
         }
         void ProcessPointerMotion(const PointerMotionEvent& evt) override
         {
-            AdvancedRenderer::ProcessPointerMotion(evt);
+            PathRenderer::ProcessPointerMotion(evt);
 
             if (IsShapeMoving)
             {

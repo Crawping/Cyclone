@@ -2,11 +2,11 @@
  * Written by Josh Grooms on 20160922
  */
 
-#include "BasicRenderer.h"
 #include "Console.h"
 #include "EnumerationsSVG.h"
 #include "GPU.h"
 #include "NVPR.h"
+#include "PathRenderer.h"
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
@@ -24,16 +24,14 @@ using namespace Renderers;
 
 
 
-class Program : public BasicRenderer
+class Program : public PathRenderer
 {
     public:
 
         Program() :
-            BasicRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering")
+            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering")
         {
             Initialize();
-            nvPathStencilDepthOffset(-0.05f, -1);
-            nvPathCoverDepthFunc(GL_ALWAYS);
         }
 
     protected:
@@ -44,7 +42,7 @@ class Program : public BasicRenderer
 
         void CreateSceneResources() override
         {
-            BasicRenderer::CreateSceneResources();
+            PathRenderer::CreateSceneResources();
 
             Vector<ControlPoint2D> path =
             {
@@ -60,22 +58,7 @@ class Program : public BasicRenderer
                 .Scale(3)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0));
 
-            RenderScene->Add(Path);
-        }
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-            Renderer->Pipeline(RenderPipeline);
-        }
-        void CreateTransformations() override
-        {
-            BasicRenderer::CreateTransformations();
-
-            const Matrix4x4& projection = Projection.ToMatrix4x4();
-            const Matrix4x4& view = View.ToMatrix4x4();
-
-            nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
+            PathScene->Add(Path);
         }
         void UpdateScene() override
         {
@@ -84,7 +67,7 @@ class Program : public BasicRenderer
             Path.Roll(count);
             count += 0.02f;
 
-            BasicRenderer::UpdateScene();
+            PathRenderer::UpdateScene();
         }
 
 };

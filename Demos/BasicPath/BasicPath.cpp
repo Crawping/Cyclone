@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20160915
  */
 
-#include "BasicRenderer.h"
+#include "PathRenderer.h"
 #include "Console.h"
 #include "EnumerationsSVG.h"
 #include "GPU.h"
@@ -25,35 +25,29 @@ using namespace Renderers;
 
 
 
-class Program : public BasicRenderer
+class Program : public PathRenderer
 {
     public:
 
         Program() :
-            BasicRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering", 4),
-            Scene(nullptr)
-        {
-            nvPathStencilDepthOffset(-0.05f, -1);
-            nvPathCoverDepthFunc(GL_ALWAYS);
-            
+            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering")
+        {            
 			Initialize();
         }
         ~Program()
         {
-            if (Scene) { delete Scene; }
+            
         }
 
     protected:
 
         Path2D          Path;
-        SceneSVG*       Scene;
 
 
 
         void CreateSceneResources() override
         {
-            Scene = new SceneSVG();
-            Renderer->Scene(Scene);
+            PathRenderer::CreateSceneResources();
 
             Path.Add(Geometry2D::Star())
                 .JoinStyle(JoinStyles::Round)
@@ -64,24 +58,7 @@ class Program : public BasicRenderer
                 .Scale(2)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / Vector2(2.0f, 3.0f), -100));
 
-            Scene->Add(Path);
-            Scene->Pipeline(RenderPipeline);
-            Scene->Target(RenderTarget);
-        }
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-            Renderer->Pipeline(RenderPipeline);
-        }
-        void CreateTransformations() override
-        {
-            BasicRenderer::CreateTransformations();
-
-			const Matrix4x4& projection = Projection.ToMatrix4x4();
-			const Matrix4x4& view = View.ToMatrix4x4();
-
-			nvMatrixLoadIdentity(TransformMatrices::Projection);
-			nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
+            PathScene->Add(Path);
         }
         void UpdateScene() override
         {
@@ -90,7 +67,7 @@ class Program : public BasicRenderer
             Path.Yaw(count);
             count += 0.02f;
 
-            Renderer->Update();
+            PathRenderer::UpdateScene();
         }
 
 };

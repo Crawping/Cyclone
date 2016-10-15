@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20160915
  */
 
-#include "AdvancedRenderer.h"
+#include "PathRenderer.h"
 #include "Console.h"
 #include "EnumerationsSVG.h"
 #include "GPU.h"
@@ -11,6 +11,7 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Geometry/Scene3D.h"
+#include "Geometry/SceneSVG.h"
 #include "Imaging/Color4.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Text/Text2D.h"
@@ -22,16 +23,14 @@ using namespace Renderers;
 
 
 
-class Program : public AdvancedRenderer
+class Program : public PathRenderer
 {
     public:
 
         Program() :
-            AdvancedRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Text Rendering")
+            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Text Rendering")
         {
             Initialize();
-            nvPathStencilDepthOffset(-0.05f, -1);
-            nvPathCoverDepthFunc(GL_ALWAYS);
         }
 
     protected:
@@ -42,31 +41,17 @@ class Program : public AdvancedRenderer
 		
 		void CreateSceneResources() override
         {
-            BasicRenderer::CreateSceneResources();
+            PathRenderer::CreateSceneResources();
 
             Text
                 .Text("Testing!")
 
+                .StrokeColor(Color4::Black)
                 .Color(Color4::Green)
                 .Scale(0.05f, 0.05f)
                 .Position(224, 320);
 
-            RenderScene->Add(Text);
-        }
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-            Renderer->Pipeline(RenderPipeline);
-        }
-        void CreateTransformations() override
-        {
-            BasicRenderer::CreateTransformations();
-
-            const Matrix4x4& projection = Projection.ToMatrix4x4();
-            const Matrix4x4& view = View.ToMatrix4x4();
-
-            nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
+            PathScene->Add(Text);
         }
         void UpdateScene() override
         {
@@ -75,7 +60,7 @@ class Program : public AdvancedRenderer
             Text.Yaw(count);
             count += 0.02f;
 
-            BasicRenderer::UpdateScene();
+            PathRenderer::UpdateScene();
         }
 
 };
