@@ -9,6 +9,7 @@
 #include "Geometry/DrawingPath.h"
 #include "Geometry/Quad3D.h"
 #include "Geometry/Scene3D.h"
+#include "Geometry/SceneSVG.h"
 #include "Geometry/Path2D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Text/Text2D.h"
@@ -31,7 +32,7 @@ class Program : public AdvancedRenderer
             Image(nullptr),
             IsEnteringText(false),
             PipelineSVG(nullptr),
-            SceneSVG(nullptr)
+            PathScene(nullptr)
         {
             IsFreeLookEnabled = false;
             RenderWindow->OnButtonPress.Register(this, &Program::ProcessButtonPress);
@@ -50,7 +51,7 @@ class Program : public AdvancedRenderer
 
             if (Image)          { delete Image; }
             if (PipelineSVG)    { delete PipelineSVG; }
-            if (SceneSVG)       { delete SceneSVG; }
+            if (PathScene)      { delete PathScene; }
         }
 
     protected:
@@ -60,7 +61,7 @@ class Program : public AdvancedRenderer
         ShaderPipeline*     PipelineSVG;
         Vector2             LastClickPosition;
         Quad3D              Quad;
-        Scene3D*            SceneSVG;
+        SceneSVG*           PathScene;
         List<Text2D*>       TextBoxes;
 
 
@@ -68,7 +69,7 @@ class Program : public AdvancedRenderer
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
-            SceneSVG = new Scene3D();
+            PathScene = new SceneSVG();
             Image = new Texture2D("../ImageDisplay/House (11250x8627).jpg");
             Image->Bind();
 
@@ -84,7 +85,9 @@ class Program : public AdvancedRenderer
                 .Color(Color4(0.0f, 0.0f, 1.0f, 0.75f));
 
             RenderScene->Add(Quad);
-            SceneSVG->Add(Path);
+            PathScene->Add(Path);
+            PathScene->Pipeline(PipelineSVG);
+            PathScene->Target(RenderTarget);
         }
         void CreateShaderPipeline() override
         {
@@ -157,13 +160,12 @@ class Program : public AdvancedRenderer
             {
                 for (uint a = 0; a < TextBoxes.Count(); a++)
                 {
-                    SceneSVG->Remove(*TextBoxes(a));
+                    PathScene->Remove(*TextBoxes(a));
                     delete TextBoxes(a);
                 }
 
                 TextBoxes.Clear();
                 Path.Clear();
-
             }
 
             AdvancedRenderer::ProcessKeyPress(evt);
@@ -186,7 +188,7 @@ class Program : public AdvancedRenderer
             Renderer->Execute();
 
             Renderer->Pipeline(PipelineSVG);
-            Renderer->Scene(SceneSVG);
+            Renderer->Scene(PathScene);
 
             AdvancedRenderer::UpdateScene();
         }
@@ -203,7 +205,7 @@ class Program : public AdvancedRenderer
                 .Position(PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y);
 
             TextBoxes.Append(text);
-            SceneSVG->Add(*text);
+            PathScene->Add(*text);
         }
 
 };
