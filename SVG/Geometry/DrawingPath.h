@@ -31,7 +31,10 @@ namespace Cyclone
                 /** UTILITIES **/
                 SVGAPI DrawingPath& Add(const ControlPoint2D& point)            override;
                 SVGAPI void Clear()                                             override;
-                //SVGAPI void Render()                                      const override;
+
+                SVGAPI void Fill() const override;
+                SVGAPI void Stroke() const override;
+                SVGAPI void Update() const override;
 
             private:
 

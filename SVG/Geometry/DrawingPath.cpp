@@ -33,6 +33,7 @@ namespace Cyclone
             pt->JoinStyle(JoinStyles::Round)
                 .StrokeColor(_pointColor)
                 .StrokeWidth(StrokeWidth() * 1.5f)
+                .Color(_pointColor)
                 .Position(ptCoords);
 
             Points.Append(pt);
@@ -46,12 +47,25 @@ namespace Cyclone
                 delete Points(a);
         }
 
-        //void DrawingPath::Render() const
-        //{
-        //    Path2D::Render();
-        //    for (uint a = 0; a < Points.Count(); a++)
-        //        Points(a)->Render();
-        //}
+        void DrawingPath::Fill() const
+        {
+            Path2D::Fill();
+            //for (uint a = 0; a < Points.Count(); a++)
+            //    Points(a)->Fill();
+        }
+        void DrawingPath::Stroke() const
+        {
+            Path2D::Stroke();
+            //for (uint a = 0; a < Points.Count(); a++)
+            //    Points(a)->Stroke();
+        }
+        void DrawingPath::Update() const
+        {
+            Path2D::Update();
+            //for (uint a = 0; a < Points.Count(); a++)
+            //    Points(a)->Update();
+        }
+
 
     }
 }
