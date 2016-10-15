@@ -17,16 +17,14 @@ namespace Cyclone
 {
 
     /** FORWARD DECLARATIONS **/
-    using namespace OpenGL;
+    namespace { using namespace OpenGL; }
     namespace OpenGL
     {
         class FrameBuffer;
         class Scene3D;
     }
-    namespace Utilities
-    {
-        class ITransformation3D;
-    }
+    namespace Utilities { class ITransformation3D; }
+
 
 
     namespace Platform
@@ -46,8 +44,6 @@ namespace Cyclone
                 const ITransformation3D* Projection()       const { return _settings.Projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
                 const GraphicsPipeline* Pipeline()          const { return _settings.Pipeline; }
-
-                uint PipelineID()                           const { return _settings.Pipeline ? _settings.Pipeline->ID() : 0; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
                 const FrameBuffer* Target()                 const { return _settings.Target; }
                 /// <summary> Gets a pointer to the view transformation being used by the rendering pipeline. </summary>
@@ -72,7 +68,10 @@ namespace Cyclone
 
                 /** CONSTRUCTOR **/
                 PlatformAPI GPU();
+                PlatformAPI GPU(GPU&& other) = delete;
+                PlatformAPI GPU(const GPU& other) = delete;
                 PlatformAPI ~GPU();
+
 
 
 
@@ -123,7 +122,7 @@ namespace Cyclone
                 /// <returns> A Boolean <c>true</c> if the given extension is supported, or <c>false</c> otherwise. </returns>
                 /// <param name="extension"> A string containing the name of extension for which support is being queried. </param>
                 PlatformAPI bool SupportsExtension(const string& extension) const;
-
+                /// <summary> Gets a list of all OpenGL extensions that are supported in the current environment. </summary>
                 PlatformAPI List<string> QueryExtensions() const;
 
 

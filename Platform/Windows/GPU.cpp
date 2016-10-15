@@ -192,7 +192,7 @@ namespace Cyclone
         /** UNIFORM DATA ACCESSORS **/
         int GPU::GetUniformID(const string& name)                                   const
         {
-            return glGetUniformLocation(PipelineID(), name.c_str());
+            return glGetUniformLocation(Pipeline()->ID(), name.c_str());
         }
         void GPU::SetUniform(const string& name, const Color4& value)               const
         {
