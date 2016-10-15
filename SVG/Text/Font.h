@@ -35,7 +35,7 @@ namespace Cyclone
                 /// <summary> An empty implementation that prevents frivolously rendering an entire character collection. </summary>
                 void Fill()     const override { }
                 void Stroke()   const override { }
-                //SVGAPI void Render() const override { }
+                void Update()   const override { }
 
             private:
 
