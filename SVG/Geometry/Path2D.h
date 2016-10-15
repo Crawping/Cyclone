@@ -21,8 +21,8 @@ namespace Cyclone
     {
         using namespace OpenGL;
 
-        class Path2D : 
-            public Entity3D<float>, 
+        class Path2D :
+            public Entity3D<float>,
             public virtual IRenderable2D<float>
         {
             public:
@@ -30,8 +30,8 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the number of individual path instances that have been allocated on the GPU. </summary>
                 /// <remarks>
-                ///     For almost all imaging-related paths, this property will return a value of <c>1</c>. Values greater 
-                ///     than <c>1</c> indicate the number of times that a path object is being instanced on the GPU, which 
+                ///     For almost all imaging-related paths, this property will return a value of <c>1</c>. Values greater
+                ///     than <c>1</c> indicate the number of times that a path object is being instanced on the GPU, which
                 ///     is almost exclusively used only by text rendering.
                 /// </remarks>
                 virtual uint InstanceCount()            const { return _count; }
@@ -74,28 +74,19 @@ namespace Cyclone
                 SVGAPI virtual Path2D& Add(const ControlPoint2D& point);
                 SVGAPI virtual Path2D& Add(const IArray<ControlPoint2D>& points);
                 SVGAPI virtual void Clear();
-                //SVGAPI virtual void Render() const override;
-
 
                 SVGAPI virtual void Fill() const override;
                 SVGAPI virtual void Stroke() const override;
                 SVGAPI virtual void Update() const override;
 
             protected:
-                
+
                 /** DATA **/
                 List<PathCommands>  Commands;
                 List<float>         Coordinates;
 
-
-                /** RENDERING UTILITIES **/
-                //SVGAPI virtual void CoverFill()       const;
-                //SVGAPI virtual void CoverStroke()     const;
-                //SVGAPI virtual void StencilFill()     const;
-                //SVGAPI virtual void StencilStroke()   const;
-
             private:
-                
+
                 /** PROPERTY DATA **/
                 uint                _count;
                 CoverModes          _coverMode;
