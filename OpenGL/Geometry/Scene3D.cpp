@@ -1,4 +1,4 @@
-#include "RenderStage.h"
+#include "RenderStage3D.h"
 #include "Collections/List.h"
 #include "Interfaces/IRenderable.h"
 #include "Geometry/Scene3D.h"
@@ -15,7 +15,7 @@ namespace Cyclone
 
 
 
-        List<IRenderStage*> Scene3D::Stages() const
+        const List<IRenderStage*>& Scene3D::Stages() const
         {
             return Stages3D;
         }
@@ -51,21 +51,6 @@ namespace Cyclone
             else
                 IndexedBuffers[entity.Topology()].Remove(entity);
         }
-        //void Scene3D::Render(GPU* gpu) const
-        //{
-        //    if (PathBuffer.size())
-        //    {
-        //        glStencilMask(~0);
-        //        glEnable(GL_STENCIL_TEST);
-        //        glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
-        //        glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
-
-        //        for (const auto* p : PathBuffer)
-        //            p->Render(gpu);
-
-        //        glDisable(GL_STENCIL_TEST);
-        //    }
-        //}
         void Scene3D::Update()
         {
             for (uint a = 0; a < Stages3D.Count(); a++)
@@ -76,12 +61,12 @@ namespace Cyclone
             for (auto& kvp : Buffers)
             {
                 kvp.second.Update();
-                Stages3D.Append(new RenderStage3D(kvp.first, &kvp.second, nullptr));
+                Stages3D.Append(new RenderStage3D(kvp.first, &kvp.second, &_settings));
             }
             for (auto& kvp : IndexedBuffers)
             {
                 kvp.second.Update();
-                Stages3D.Append(new IndexedRenderStage3D(kvp.first, &kvp.second, nullptr));
+                Stages3D.Append(new IndexedRenderStage3D(kvp.first, &kvp.second, &_settings));
             }
         }
 

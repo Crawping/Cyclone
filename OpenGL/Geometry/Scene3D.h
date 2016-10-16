@@ -3,13 +3,14 @@
  */
 
 #pragma once
-#include "RenderStage.h"
+#include "GraphicsSettings.h"
 #include "Buffers/DrawBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IUpdatable.h"
+
 #include <map>
 #include <set>
 
@@ -19,6 +20,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        class IRenderStage;
+
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
         class Scene3D : public IRenderableScene
@@ -26,7 +29,13 @@ namespace Cyclone
 
             public:
 
-                OpenGLAPI List<IRenderStage*> Stages() const override;
+                OpenGLAPI const List<IRenderStage*>& Stages() const override;
+
+                Scene3D& Pipeline(GraphicsPipeline* value)      { _settings.Pipeline = value; return *this; }
+                Scene3D& Projection(ITransformation3D* value)   { _settings.Projection = value; return *this; }
+                Scene3D& Target(FrameBuffer* value)             { _settings.Target = value; return *this; }
+                Scene3D& View(ITransformation3D* value)         { _settings.View = value; return *this; }
+
 
 
                 /** CONSTRUCTOR **/
@@ -35,8 +44,8 @@ namespace Cyclone
                 OpenGLAPI ~Scene3D();
 
 
+
                 /** UTILITIES **/
-                //OpenGLAPI void Add(const IRenderable2D<float>& entity);
                 /// <summary> Adds a renderable entity to this scene. </summary>
                 /// <param name="entity">
                 ///     A reference to the renderable entity that will be added to the scene. If this entity already exists
@@ -45,19 +54,17 @@ namespace Cyclone
                 ///     necessary rendering information for the entity.
                 /// </param>
                 OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
-                //OpenGLAPI void Remove(const IRenderable2D<float>& entity);
                 OpenGLAPI void Remove(const IRenderable3D<Vertex::Standard>& entity);
-                //OpenGLAPI void Render(GPU* gpu) const override;
                 OpenGLAPI void Update();
                 OpenGLAPI void Update(const IRenderable3D<Vertex::Standard>& entity);
 
             private:
 
+                GraphicsSettings _settings;
+
                 std::map<VertexTopologies, DrawBuffer<DrawCommand>>             Buffers;
 
                 std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>      IndexedBuffers;
-
-                //std::set<const IRenderable2D<float>*>                           PathBuffer;
 
                 List<IRenderStage*>                                             Stages3D;                                              
 
