@@ -27,8 +27,11 @@ namespace Renderers
     void PathRenderer::CreateSceneResources()
     {
         PathScene = new SceneSVG();
-        PathScene->Pipeline(RenderPipeline);
-        PathScene->Target(RenderTarget);
+        PathScene->Pipeline(RenderPipeline)
+            .Projection(&Projection)
+            .Target(RenderTarget)
+            .View(&View);
+
         Renderer->Scene(PathScene);
     }
     void PathRenderer::CreateShaderPipeline()

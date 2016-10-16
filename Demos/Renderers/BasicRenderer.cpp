@@ -94,6 +94,11 @@ namespace Renderers
     void BasicRenderer::CreateSceneResources()
     {
         RenderScene = new Scene3D();
+        RenderScene->Pipeline(RenderPipeline)
+            .Projection(&Projection)
+            .Target(RenderTarget)
+            .View(&View);
+
         Renderer->Scene(RenderScene);
     }
     void BasicRenderer::CreateShaderPipeline()
