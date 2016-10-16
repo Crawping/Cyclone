@@ -2,9 +2,9 @@
  * Written by Josh Grooms on 20161002
  */
 
-#include "AdvancedRenderer.h"
 #include "GPU.h"
 #include "NVPR.h"
+#include "PathRenderer.h"
 #include "Window3D.h"
 #include "Geometry/DrawingPath.h"
 #include "Geometry/Quad3D.h"
@@ -23,21 +23,19 @@ using namespace Cyclone::Utilities;
 
 
 
-class Program : public AdvancedRenderer
+class Program : public PathRenderer
 {
     public:
 
         Program() : 
-            AdvancedRenderer(Area(0, 0, 1024, 960), "Drawing SVG Elements", 4),
+            PathRenderer(Area(0, 0, 1024, 960), "Drawing SVG Elements"),
             Image(nullptr),
-            IsEnteringText(false),
-            PipelineSVG(nullptr),
-            PathScene(nullptr)
+            IsEnteringText(false)
         {
-            IsFreeLookEnabled = false;
+            Initialize();
+
             RenderWindow->OnButtonPress.Register(this, &Program::ProcessButtonPress);
             RenderWindow->OnButtonRelease.Register(this, &Program::ProcessButtonRelease);
-            Initialize();
 
             nvPathStencilDepthOffset(-0.05f, -1);
             nvPathCoverDepthFunc(GL_ALWAYS);
@@ -50,30 +48,21 @@ class Program : public AdvancedRenderer
                 delete TextBoxes(a);
 
             if (Image)          { delete Image; }
-            if (PipelineSVG)    { delete PipelineSVG; }
-            if (PathScene)      { delete PathScene; }
         }
 
     protected:
         DrawingPath         Path;
         Texture2D*          Image;
         bool                IsEnteringText;
-        ShaderPipeline*     PipelineSVG;
         Vector2             LastClickPosition;
         Quad3D              Quad;
-        SceneSVG*           PathScene;
         List<Text2D*>       TextBoxes;
 
 
 
         void CreateSceneResources() override
         {
-            AdvancedRenderer::CreateSceneResources();
-            PathScene = new SceneSVG();
-            PathScene->Pipeline(PipelineSVG)
-                .Projection(&Projection)
-                .Target(RenderTarget)
-                .View(&View);
+            PathRenderer::CreateSceneResources();
 
             Image = new Texture2D("../ImageDisplay/House (11250x8627).jpg");
             Image->Bind();
@@ -96,7 +85,6 @@ class Program : public AdvancedRenderer
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../ImageDisplay/TexturedShading.psl");
             PipelineSVG = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
 
@@ -168,6 +156,7 @@ class Program : public AdvancedRenderer
 
                 TextBoxes.Clear();
                 Path.Clear();
+                PathScene->Update(Path);
             }
 
             AdvancedRenderer::ProcessKeyPress(evt);
@@ -177,23 +166,10 @@ class Program : public AdvancedRenderer
 
         void UpdateScene() override
         {
-            const Matrix4x4& projection = Projection.ToMatrix4x4();
-            const Matrix4x4& view = View.ToMatrix4x4();
-
             RenderScene->Update(Quad);
-            Renderer->Pipeline(RenderPipeline);
-            Renderer->Scene(RenderScene);
-
-            Renderer->Update();
-            Renderer->Execute();
-
-            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
-
             PathScene->Update(Path);
-            Renderer->Pipeline(PipelineSVG);
-            Renderer->Scene(PathScene);
 
-            AdvancedRenderer::UpdateScene();
+            PathRenderer::UpdateScene();
         }
         
 
