@@ -42,9 +42,11 @@ class Program : public PathRenderer
             PathRenderer::CreateSceneResources();
 
             Path
+                .PointColor(Color4::Black)
+                .PointSize(8)
                 .JoinStyle(JoinStyles::Round)
                 .StrokeColor(Color4(1.0f, 0.0f, 0.0f, 0.875f))
-                .StrokeWidth(4)
+                .StrokeWidth(2)
 
                 .Color(Color4(0.0f, 0.0f, 1.0f, 0.75f));
 
@@ -106,15 +108,20 @@ class Program : public PathRenderer
             PathRenderer::ProcessPointerMotion(evt);
 
             if (IsShapeMoving)
-            {
-                float translation[3] = { evt.Delta.X, -evt.Delta.Y, 0.0f };
-                nvTransformPath(Path.ID(), Path.ID(), TransformTypes::Translate3D, translation);
-            }
+                Path.Translate(evt.Delta.X, -evt.Delta.Y);
 
             if (nvIsPointInFillPath(Path.ID(), ~0, PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y))
                 Path.Color(Color4::Green);
             else
                 Path.Color(Color4::Blue);
+
+            PathScene->Update(Path);
+        }
+
+        void UpdateScene() override
+        {
+            PathScene->Update(Path);
+            PathRenderer::UpdateScene();
         }
 
 };
