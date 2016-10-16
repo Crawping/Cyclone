@@ -18,7 +18,7 @@ namespace Cyclone
         {
             Vector<ControlPoint2D> rect = 
             {
-                { PathCommands::RoundedRectangle, { 0, 0, 1, 1, CornerRadius() } },
+                { PathCommands::RoundedRectangle, { -0.5, -0.5, 1, 1, CornerRadius() } },
                 { PathCommands::Close,            { } },
             };
             Path2D::Add(rect);
