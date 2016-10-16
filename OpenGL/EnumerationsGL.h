@@ -375,16 +375,24 @@ struct VertexTopologies : public Enumerator
 {
     enum Topologies
     {
+        /// <summary> Instructs the rendering pipeline to draw lines using an array of vertices. </summary>
         Lines                       = GL_LINES,
         LineLoop                    = GL_LINE_LOOP,
         LineStrip                   = GL_LINE_STRIP,
+        /// <summary> Instructs the rendering pipeline to draw scalable vector graphics using an array of control points. </summary>
+        /// <remarks>
+        ///     This is a special enumerator inserted to support the rendering of resolution-independent paths, which is the process used 
+        ///     to generate scalable vector graphics (SVGs). Because this is a special format, ordinary OpenGL functions that operate on 
+        ///     vertex topologies will not work with this value. 
+        /// </remarks>
         Path                        = -1,
+        /// <summary> Instructs the rendering pipeline to draw individual points using an array of vertices. </summary>
         Points                      = GL_POINTS,
         Quads                       = GL_QUADS,
-        /// <summary> Instructs the rendering pipeline to create triangles out of an array of vertices. </summary>
+        /// <summary> Instructs the rendering pipeline to draw triangles using an array of vertices. </summary>
         Triangles                   = GL_TRIANGLES,
         TriangleFan                 = GL_TRIANGLE_FAN,
-        /// <summary> Instructs the rendering pipeline to create a series of contiguous triangles out of an array of vertices. </summary>
+        /// <summary> Instructs the rendering pipeline to draw a series of contiguous triangles using an array of vertices. </summary>
         TriangleStrip               = GL_TRIANGLE_STRIP,
     };
 
@@ -411,12 +419,44 @@ struct WrapModes : public Enumerator
     constexpr WrapModes(enum Modes m = Repeat) : Enumerator((int)m) { }
 };
 
+/// <summary> A list of supported modes by which framebuffer changes are synchronized to the computer screen refresh rate. </summary>
 struct VSyncModes : public Enumerator
 {
 	enum Modes
 	{
+        /// <summary> Synchronizes screen refreshing with the rate at which the framebuffer is updated. </summary>
+        /// <remarks>
+        ///     This vsync mode is a relatively new innovation that is usually referred to by the trade names 'G-Sync' 
+        ///     (on NVIDIA hardware) or 'FreeSync' (on AMD hardware) and currently requires specialized hardware to 
+        ///     operate.
+        /// </remarks>
 		Adaptive                    = -1,
+        /// <summary> Disables the synchronization between monitor refreshing and framebuffer updates. </summary>
+        /// <remarks>
+        ///     Disabling vsync allows updates to the computer monitor and the OpenGL framebuffer to occur completely 
+        ///     asynchronously, meaning that the screen is free to refresh at its native rate (usually 60 Hz) and the 
+        ///     framebuffer is refreshed as quickly as the GPU can execute the bound rendering pipeline. This mode works 
+        ///     best when the process of rendering into a framebuffer occurs more quickly than the native screen refresh 
+        ///     rate and no specialized hardware is available to take advantage of adaptive refreshing.
+        ///
+        ///     However, if the GPU requires more time to render to a framebuffer than the screen takes to refresh (i.e. 
+        ///     more than 1/60th of a second), then use of this mode leads to the appearance of an image artifact called 
+        ///     'tearing'. Screen tearing occurs when the monitor refreshes what's displayed to the user even though the 
+        ///     GPU is not yet finished updating the framebuffer, and the result is a visible image that contains both 
+        ///     old and new rendered graphics. If the framebuffer update being processed involves significant changes to 
+        ///     the imagery relative to the previous frame, then this phenomenon becomes very noticeable and unpleasant.
+        /// </remarks>
 		Disable                     = 0,
+        /// <summary> Synchronizes framebuffer updates with the rate at which the computer screen is refreshed. </summary>
+        /// <remarks>
+        ///     Enabling vsync forces framebuffer updates to occur synchronously with the updates to the computer monitor, 
+        ///     meaning that the framebuffer can only be refreshed whenever the screen generates a refresh pulse. This 
+        ///     mode works best when the process of rendering into a framebuffer is significantly slower than the native 
+        ///     screen refresh rate (usually 60 Hz) and no specialized hardware is available to take advantage of adaptive 
+        ///     refreshing. In such cases, vsync prevents the appearance of an ugly imaging artifact called 'tearing', which 
+        ///     occurs when the screen refreshes in the middle of a framebuffer update and displays both new and outdated 
+        ///     graphics to the user.
+        /// </remarks>
 		Enable                      = 1,
 	};
 
