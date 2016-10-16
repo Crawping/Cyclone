@@ -18,7 +18,7 @@ namespace Cyclone
         }
 
 
-
+        /** CONSTRUCTOR **/
         DrawBuffer2D::DrawBuffer2D() :
             _needsReallocation(false),
             _needsUpdate(false)
@@ -27,6 +27,7 @@ namespace Cyclone
         }
 
 
+        /** BUFFER UTILITIES **/
         void DrawBuffer2D::Add(const IRenderable2D<float>& entity)
         {
             if (EntityIndices.count(&entity)) { return; }
@@ -40,16 +41,15 @@ namespace Cyclone
             _needsReallocation = true;
             _needsUpdate = true;
         }
-
         void DrawBuffer2D::Clear()
         {
             ColorBuffer.Clear();
             EntityIndices.clear();
+            ToUpdate.clear();
 
             _needsReallocation = true;
             _needsUpdate = true;
         }
-
         void DrawBuffer2D::Remove(const IRenderable2D<float>& entity)
         {
             if (!EntityIndices.count(&entity)) { return; }
@@ -109,6 +109,8 @@ namespace Cyclone
         }
 
 
+
+        /** PRIVATE UTILITIES **/
         void DrawBuffer2D::Add(const IRenderable3D<float>* entity)
         {
             if ( entity && (entity->Topology() == VertexTopologies::Path) )
@@ -117,7 +119,13 @@ namespace Cyclone
         void DrawBuffer2D::Update(const IRenderable3D<float>* entity)
         {
             if ( entity && (entity->Topology() == VertexTopologies::Path) )
-                Update( dynamic_cast<const IRenderable2D<float>&>(*entity) );
+            {
+                const auto& entity2D = dynamic_cast<const IRenderable2D<float>&>(*entity);
+                if (EntityIndices.count(&entity2D))
+                    Update(entity2D);
+                else
+                    Add(entity2D);
+            }
         }
     }
 }
