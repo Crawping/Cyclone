@@ -67,6 +67,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+
+                Matrix4x4 Inverse()                         const;
                 /// <summary> Gets the pointer to the native data array stored by this object. </summary>
                 /// <returns> A pointer to the first single-precision float value in this matrix. </returns>
                 /// <remarks> 

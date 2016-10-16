@@ -21,7 +21,7 @@ namespace Cyclone
             _updateFlag(false)
         {
 
-        }        
+        }
         Transform::Transform(const Transform& other) :
             _orientation(other._orientation),
             _position(other._position),
@@ -91,11 +91,11 @@ namespace Cyclone
             r.State(0)  = (cr * cy);
             r.State(1)  = (cy * sr);
             r.State(2)  = (-sy);
-                        
+
             r.State(4)  = (cr * sp * sy) - (cp * sr);
             r.State(5)  = (cp * cr) + (sp * sr * sy);
             r.State(6)  = (cy * sp);
-                        
+
             r.State(8)  = (sp * sr) + (cp * cr * sy);
             r.State(9)  = (cp * sr * sy) - (cr * sp);
             r.State(10) = (cp * cy);
@@ -150,48 +150,7 @@ namespace Cyclone
 
         Matrix4x4 Transform::Inverse() const
         {
-            const Matrix4x4& state = ToMatrix4x4();
-
-            float s0 = state(0, 0) * state(1, 1) - state(1, 0) * state(0, 1);
-            float s1 = state(0, 0) * state(1, 2) - state(1, 0) * state(0, 2);
-            float s2 = state(0, 0) * state(1, 3) - state(1, 0) * state(0, 3);
-            float s3 = state(0, 1) * state(1, 2) - state(1, 1) * state(0, 2);
-            float s4 = state(0, 1) * state(1, 3) - state(1, 1) * state(0, 3);
-            float s5 = state(0, 2) * state(1, 3) - state(1, 2) * state(0, 3);
-
-            float c5 = state(2, 2) * state(3, 3) - state(3, 2) * state(2, 3);
-            float c4 = state(2, 1) * state(3, 3) - state(3, 1) * state(2, 3);
-            float c3 = state(2, 1) * state(3, 2) - state(3, 1) * state(2, 2);
-            float c2 = state(2, 0) * state(3, 3) - state(3, 0) * state(2, 3);
-            float c1 = state(2, 0) * state(3, 2) - state(3, 0) * state(2, 2);
-            float c0 = state(2, 0) * state(3, 1) - state(3, 0) * state(2, 1);
-
-            // Should check for 0 determinant
-            float invdet = 1.0f / (s0 * c5 - s1 * c4 + s2 * c3 + s3 * c2 - s4 * c1 + s5 * c0);
-
-            Matrix4x4 inverse;
-
-            inverse(0, 0) = (state(1, 1) * c5 - state(1, 2) * c4 + state(1, 3) * c3) * invdet;
-            inverse(0, 1) = (-state(0, 1) * c5 + state(0, 2) * c4 - state(0, 3) * c3) * invdet;
-            inverse(0, 2) = (state(3, 1) * s5 - state(3, 2) * s4 + state(3, 3) * s3) * invdet;
-            inverse(0, 3) = (-state(2, 1) * s5 + state(2, 2) * s4 - state(2, 3) * s3) * invdet;
-
-            inverse(1, 0) = (-state(1, 0) * c5 + state(1, 2) * c2 - state(1, 3) * c1) * invdet;
-            inverse(1, 1) = (state(0, 0) * c5 - state(0, 2) * c2 + state(0, 3) * c1) * invdet;
-            inverse(1, 2) = (-state(3, 0) * s5 + state(3, 2) * s2 - state(3, 3) * s1) * invdet;
-            inverse(1, 3) = (state(2, 0) * s5 - state(2, 2) * s2 + state(2, 3) * s1) * invdet;
-
-            inverse(2, 0) = (state(1, 0) * c4 - state(1, 1) * c2 + state(1, 3) * c0) * invdet;
-            inverse(2, 1) = (-state(0, 0) * c4 + state(0, 1) * c2 - state(0, 3) * c0) * invdet;
-            inverse(2, 2) = (state(3, 0) * s4 - state(3, 1) * s2 + state(3, 3) * s0) * invdet;
-            inverse(2, 3) = (-state(2, 0) * s4 + state(2, 1) * s2 - state(2, 3) * s0) * invdet;
-
-            inverse(3, 0) = (-state(1, 0) * c3 + state(1, 1) * c1 - state(1, 2) * c0) * invdet;
-            inverse(3, 1) = (state(0, 0) * c3 - state(0, 1) * c1 + state(0, 2) * c0) * invdet;
-            inverse(3, 2) = (-state(3, 0) * s3 + state(3, 1) * s1 - state(3, 2) * s0) * invdet;
-            inverse(3, 3) = (state(2, 0) * s3 - state(2, 1) * s1 + state(2, 2) * s0) * invdet;
-
-            return inverse;
+            return State.Inverse();
         }
         string Transform::Report() const
         {
@@ -248,9 +207,9 @@ namespace Cyclone
         ///     This method effectively performs matrix multiplication to concatenate different affine transformations and does so in
         ///     a single pass, without actually generating and multiplying the component matrices. However, under that model, the
         ///     calculations performed here would correspond with multiplying transformation matrices in the following order:
-        ///     
+        ///
         ///         Translation * Roll * Yaw * Pitch * Scale
-        ///     
+        ///
         ///     The equations used in this method were derived using MATLAB.
         /// </remarks>
         void Transform::UpdateState() const
@@ -270,7 +229,7 @@ namespace Cyclone
             State(4)  = -h * ((cp * sr) - (cr * sp * sy));
             State(5)  = h * ((cp * cr) + (sp * sr * sy));
             State(6)  = (h * cy * sp);
-                      
+
             State(8)  = d * ((sp * sr) + (cp * cr * sy));
             State(9)  = -d * ((cr * sp) - (cp * sr * sy));
             State(10) = (cp * cy * d);
