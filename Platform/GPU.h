@@ -39,7 +39,13 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 CullingModes CullingMode()                  const { return _settings.CullingMode; }
-                bool IsBlendingEnabled()                    const { return _settings.IsBlendingEnabled; }
+
+                bool IsBlendEnabled()                       const { return _settings.IsBlendEnabled; }
+
+                bool IsDepthTestEnabled()                   const { return _settings.IsDepthTestEnabled; }
+
+                bool IsStencilTestEnabled()                 const { return _settings.IsStencilTestEnabled; }
+
                 /// <summary> Gets a pointer to the projection transformation being used by the rendering pipeline. </summary>
                 const ITransformation3D* Projection()       const { return _settings.Projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
