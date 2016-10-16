@@ -10,6 +10,7 @@
 #include "Interfaces/IBindable.h"
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/IRenderStage.h"
 #include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Windows/WGL.h"
@@ -68,7 +69,9 @@ namespace Cyclone
             _renderWindow(nullptr),
             _renderScene(nullptr)
         {
-
+            _settings.IsBlendEnabled        = false;
+            _settings.IsDepthTestEnabled    = false;
+            _settings.IsStencilTestEnabled  = false;
         }
         GPU::~GPU()
         {
@@ -91,18 +94,31 @@ namespace Cyclone
         }
         void GPU::Configure(const GraphicsSettings& settings)
         {
-            if (settings.IsBlendingEnabled && !IsBlendingEnabled())
+            if (settings.IsBlendEnabled && !IsBlendEnabled())
             {
                 glEnable(GL_BLEND);
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                _settings.IsBlendingEnabled = settings.IsBlendingEnabled;
+                _settings.IsBlendEnabled = settings.IsBlendEnabled;
             }
-            else if (!settings.IsBlendingEnabled && IsBlendingEnabled())
+            else if (!settings.IsBlendEnabled && IsBlendEnabled())
             {
                 glDisable(GL_BLEND);
-                _settings.IsBlendingEnabled = settings.IsBlendingEnabled;
+                _settings.IsBlendEnabled = settings.IsBlendEnabled;
             }
             
+            if (settings.IsDepthTestEnabled && !IsDepthTestEnabled())
+            {
+                glEnable(GL_DEPTH_TEST);
+                glEnable(GL_DEPTH_CLAMP);
+                glDepthFunc(GL_LESS);
+            }
+            else if (!settings.IsBlendEnabled && IsBlendEnabled())
+            {
+                glDisable(GL_DEPTH_TEST);
+                glDisable(GL_DEPTH_CLAMP);
+            }
+
+
             if (settings.CullingMode && !CullingMode())
             {
                 glEnable(GL_CULL_FACE);
@@ -133,7 +149,7 @@ namespace Cyclone
         {
             if (_renderScene)
             {
-                auto stages = _renderScene->Stages();
+                const auto& stages = _renderScene->Stages();
                 for (uint a = 0; a < stages.Count(); a++)
                 {
                     IRenderStage* ctStage = stages(a);
