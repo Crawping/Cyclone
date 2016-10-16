@@ -70,6 +70,11 @@ class Program : public AdvancedRenderer
         {
             AdvancedRenderer::CreateSceneResources();
             PathScene = new SceneSVG();
+            PathScene->Pipeline(PipelineSVG)
+                .Projection(&Projection)
+                .Target(RenderTarget)
+                .View(&View);
+
             Image = new Texture2D("../ImageDisplay/House (11250x8627).jpg");
             Image->Bind();
 
@@ -85,16 +90,13 @@ class Program : public AdvancedRenderer
                 .Color(Color4(0.0f, 0.0f, 1.0f, 0.75f));
 
             RenderScene->Add(Quad);
-            PathScene->Add(Path);
-            PathScene->Pipeline(PipelineSVG);
-            PathScene->Target(RenderTarget);
+            PathScene->Add(Path);            
         }
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../ImageDisplay/TexturedShading.psl");
-            Renderer->Pipeline(RenderPipeline);
-
             PipelineSVG = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
+            Renderer->Pipeline(RenderPipeline);
         }
 
 
@@ -178,15 +180,16 @@ class Program : public AdvancedRenderer
             const Matrix4x4& projection = Projection.ToMatrix4x4();
             const Matrix4x4& view = View.ToMatrix4x4();
 
-            nvMatrixLoadIdentity(TransformMatrices::Projection);
-            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
-
+            RenderScene->Update(Quad);
             Renderer->Pipeline(RenderPipeline);
             Renderer->Scene(RenderScene);
 
             Renderer->Update();
             Renderer->Execute();
 
+            nvMatrixLoadf(TransformMatrices::Projection, (projection * view).ToArray());
+
+            PathScene->Update(Path);
             Renderer->Pipeline(PipelineSVG);
             Renderer->Scene(PathScene);
 
