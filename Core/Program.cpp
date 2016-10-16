@@ -54,15 +54,8 @@ namespace Cyclone
         }
 
 		CreateRenderingPipeline();
-		CreateSceneResources();
         CreateSizedResources();        
-
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LESS);
-        glEnable(GL_DEPTH_CLAMP);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		CreateSceneResources();
     }
     Program::~Program()
     {
@@ -129,7 +122,6 @@ namespace Cyclone
 			TextureFormats::DepthStencil,
 			TextureTargets::Texture2DMS
 		);
-		Renderer->Target(RenderTarget);
 	}
 	void Program::CreateRenderingWindow()
 	{
@@ -142,7 +134,10 @@ namespace Cyclone
 	void Program::CreateSceneResources()
 	{
 		RenderScene = new Scene3D();
-		Renderer->Scene(RenderScene);
+        RenderScene->Pipeline(RenderPipeline)
+            .Projection(&Projection)
+            .Target(RenderTarget)
+            .View(&View);
 
 		PlaneXZ = new Quad3D();
 		PlaneXZ->Pitch(-90).Scale(5000).Translate(0, 50);
@@ -154,6 +149,8 @@ namespace Cyclone
 
 		RenderScene->Add(*TestShape);
 		RenderScene->Add(*PlaneXZ);
+
+        Renderer->Scene(RenderScene);
 	}
     void Program::CreateSizedResources()
     {
@@ -174,9 +171,6 @@ namespace Cyclone
 			1,
 			4.0f * clientArea.Width
 		);
-
-		Renderer->Projection(&Projection);
-		Renderer->View(&View);
 	}
     void Program::ParseInputArguments(int nargs, char** args)
     {
