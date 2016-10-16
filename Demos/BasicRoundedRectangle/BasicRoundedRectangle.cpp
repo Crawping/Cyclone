@@ -11,6 +11,7 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Collections/Vector.h"
+#include "Geometry/Rectangle2D.h"
 #include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
 
@@ -29,14 +30,15 @@ class Program : public PathRenderer
     public:
 
         Program() :
-            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering")
+            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering"),
+            Path(0.25f)
         {
             Initialize();
         }
 
     protected:
 
-        Path2D          Path;
+        Rectangle2D     Path;
 
 
 
@@ -44,18 +46,12 @@ class Program : public PathRenderer
         {
             PathRenderer::CreateSceneResources();
 
-            Vector<ControlPoint2D> path =
-            {
-                { PathCommands::RoundedRectangle, { -50, -50, 100, 100, 12 } },
-                { PathCommands::Close, { } },
-            };
-
-            Path.Add(path)
+            Path
                 .StrokeColor(Color4::Cyan)
-                .StrokeWidth(2)
+                .StrokeWidth(0.0625f)
 
                 .Color(Color4::Red)
-                .Scale(3)
+                .Scale(32)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0));
 
             PathScene->Add(Path);
