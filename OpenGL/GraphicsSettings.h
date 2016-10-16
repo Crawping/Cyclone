@@ -27,7 +27,10 @@ namespace Cyclone
 
         struct GraphicsSettings
         {
-            bool                IsBlendingEnabled;
+            bool                IsBlendEnabled;
+            bool                IsDepthTestEnabled;
+            bool                IsStencilTestEnabled;
+
             CullingModes        CullingMode;
             GraphicsPipeline*   Pipeline;
             ITransformation3D*  Projection;

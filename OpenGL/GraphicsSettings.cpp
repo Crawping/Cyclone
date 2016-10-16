@@ -8,7 +8,9 @@ namespace Cyclone
     {
 
         GraphicsSettings::GraphicsSettings() :
-            IsBlendingEnabled(true),
+            IsBlendEnabled(true),
+            IsDepthTestEnabled(true),
+            IsStencilTestEnabled(true),
             Pipeline(nullptr),
             Projection(nullptr),
             Target(nullptr),
