@@ -76,13 +76,9 @@ namespace Cyclone
                 /// <summary> Clears the contents of the drawing buffer. </summary>
                 void Clear()                                    override
                 {
-                    Commands.Clear();
-                    Entities.Clear();
-                    Vertices.Clear();
-                    Indices.Clear();
-
-                    _needsReallocation = true;
-                    _needsUpdate = true;
+                    ClearBuffers();
+                    EntityIndices.clear();
+                    ToUpdate.clear();
                 }
                 /// <summary> Determines whether the drawing buffer contains a particular 3D renderable entity. </summary>
                 /// <returns> A Boolean <c>true</c> if the entity is present in the buffer, or <c>false</c> otherwise. </returns>
@@ -104,8 +100,7 @@ namespace Cyclone
 
                     if (_needsReallocation)
                     {
-                        Clear();
-
+                        ClearBuffers();
                         for (const auto& kvp : EntityIndices)
                         {
                             EntityIndices[kvp.first] = Commands.Count();
@@ -239,6 +234,16 @@ namespace Cyclone
                     const Vector<uint>& indices = entity->Indices();
                     for (uint a = 0; a < indices.Count(); a++)
                         Indices.Add(indices(a));
+                }
+                void ClearBuffers()
+                {
+                    Commands.Clear();
+                    Entities.Clear();
+                    Vertices.Clear();
+                    Indices.Clear();
+
+                    _needsReallocation = true;
+                    _needsUpdate = true;
                 }
 
         };
