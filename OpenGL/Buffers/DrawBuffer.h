@@ -58,6 +58,9 @@ namespace Cyclone
 
 
                 /** BUFFER UTILITIES **/
+                /// <summary> Adds a 3D renderable entity to the drawing buffer. </summary>
+                /// <param name="entity"> A reference to the 3D renderable entity to be added to the drawing buffer. </param>
+                /// <remarks> If the inputted entity is already present, then this method has no effect on the buffer. </remarks>
                 void Add(const IRenderable3D<V>& entity)
                 {
                     if (EntityIndices.count(&entity)) { return; }
@@ -70,7 +73,8 @@ namespace Cyclone
                     _needsReallocation = true;
                     _needsUpdate = true;
                 }
-                void Clear()                    override
+                /// <summary> Clears the contents of the drawing buffer. </summary>
+                void Clear()                                    override
                 {
                     Commands.Clear();
                     Entities.Clear();
@@ -80,6 +84,12 @@ namespace Cyclone
                     _needsReallocation = true;
                     _needsUpdate = true;
                 }
+                /// <summary> Determines whether the drawing buffer contains a particular 3D renderable entity. </summary>
+                /// <returns> A Boolean <c>true</c> if the entity is present in the buffer, or <c>false</c> otherwise. </returns>
+                bool Contains(const IRenderable3D<V>& entity)   const { return EntityIndices.count(&entity); }
+                /// <summary> Removes a 3D renderable entity from the drawing buffer. </summary>
+                /// <param name="entity"> A reference to the 3D renderable entity to be removed from the drawing buffer. </param>
+                /// <remarks> If the inputted entity isn't already present, then this method had no effect on the buffer. </remarks>
                 void Remove(const IRenderable3D<V>& entity)
                 {
                     if (!EntityIndices.count(&entity)) { return; }
@@ -88,7 +98,7 @@ namespace Cyclone
                     _needsReallocation = true;
                     _needsUpdate = true;
                 }
-                void Update()                   override
+                void Update()                                   override
                 {
                     if (!NeedsUpdate()) { return; }
 
@@ -135,6 +145,7 @@ namespace Cyclone
                 void Update(const IRenderable3D<V>& entity)
                 {
                     if (!EntityIndices.count(&entity)) { return; }
+
                     const auto& components = entity.Components();
                     for (uint a = 0; a < components.Count(); a++)
                         Update(*components(a));
@@ -151,6 +162,8 @@ namespace Cyclone
                     BindEntity(slot);
                     BindResources();
                 }
+                /// <summary> Binds the command, per-entity, vertex, and index buffers to the GPU. </summary>
+                /// <param name="slot"> The buffer binding index at which buffers will be attached to the GPU. </param>
                 void BindEntity(int slot = 0)   const override
                 {
                     Commands.Bind(slot);
