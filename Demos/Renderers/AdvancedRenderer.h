@@ -19,11 +19,6 @@ namespace Renderers
 {
     class AdvancedRenderer : public BasicRenderer
     {
-        public:
-
-            /** APPLICATION UTILITIES **/
-            RendererAPI void Execute() override;
-
         protected:
 
             bool            IsFreeLookEnabled;
@@ -38,7 +33,6 @@ namespace Renderers
 
 
             /** INITIALIZATION UTILITIES **/
-            RendererAPI virtual void CreateRenderTarget() override;
 
             RendererAPI virtual void CreateShaderPipeline() override;
 
@@ -54,9 +48,6 @@ namespace Renderers
 
 
             /** RENDERING UTILITIES **/
-            RendererAPI virtual void Render();
-
-            RendererAPI virtual void Present();
 
             RendererAPI virtual void UpdateScene() override;
 

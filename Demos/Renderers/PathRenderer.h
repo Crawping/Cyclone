@@ -19,7 +19,10 @@ namespace Renderers
 
         protected:
 
-            SceneSVG* PathScene;
+            SceneSVG*       PathScene;
+            ShaderPipeline* PipelineSVG;
+
+
 
             /** CONSTRUCTOR **/
             RendererAPI PathRenderer(const Area& displayArea, const string& title);
@@ -33,6 +36,7 @@ namespace Renderers
 
 
             /** RENDERING UTILITIES **/
+            RendererAPI virtual void Render() override;
             RendererAPI virtual void UpdateScene() override;
 
     };

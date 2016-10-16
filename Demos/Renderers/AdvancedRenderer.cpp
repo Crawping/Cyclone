@@ -26,60 +26,17 @@ namespace Renderers
 
 
 
-	/** PUBLIC UTILITIES **/
-    void AdvancedRenderer::Execute()
-    {
-        while (CanContinue())
-        {
-            RenderWindow->ProcessEvent();
-            Renderer->Clear(ClearColor);
-
-            UpdateScene();
-            Render();
-            Present();
-        }
-    }
-	
-
-
 	/** PROTECTED UTILITIES **/
-    void AdvancedRenderer::CreateRenderTarget()
-    {
-        if (RenderTarget)
-            delete RenderTarget;
-
-		Renderer->Target(nullptr);
-
-        RenderTarget = new FrameBuffer
-        (
-            RenderWindow->ClientArea().Scale(), 
-            TextureFormats::Byte4, 
-            TextureFormats::DepthStencil,
-            SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D
-        );
-        Renderer->Target(RenderTarget);
-    }
     void AdvancedRenderer::CreateShaderPipeline()
     {
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
-        Renderer->Pipeline(RenderPipeline);
     }    
-
-    void AdvancedRenderer::Render()
-    {
-        Renderer->Execute();
-    }
-    void AdvancedRenderer::Present()
-    {
-        Renderer->Present();
-    }
     void AdvancedRenderer::UpdateScene()
     {
         if (WalkingDirection != Vector3::Zero)
         {
             Vector3 dir = WalkingDirection;
             View.Translate(dir.Normalize() * MoveSpeed);
-            Renderer->View(&View);
         }
 
         BasicRenderer::UpdateScene();

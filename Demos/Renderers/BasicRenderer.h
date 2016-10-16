@@ -93,8 +93,8 @@ namespace Renderers
             RendererAPI virtual void CreateRenderTarget();
             /// <summary> Initializes any resources related to rendering 3D scenes of geometric primitives. </summary>
             /// <remarks>
-            ///     This base implementation performs no actions and should be overridden by any subclass that wishes 
-            ///     to add new geometry to the stored scene.
+            ///     This base implementation creates and initializes the 3D scene object. It should be overridden by any 
+            ///     subclass that wishes to add new geometry to the stored scene.
             /// </remarks>
             RendererAPI virtual void CreateSceneResources();
             /// <summary> Initializes the rendering pipeline containing the shader programs used to render 3D geometry. </summary>
@@ -120,6 +120,9 @@ namespace Renderers
             /// </remarks>
             RendererAPI virtual void Initialize();
 
+
+            /** RENDERING UTILITIES **/
+            RendererAPI virtual void Render();
 
 
             /** PROTECTED UTILITIES **/

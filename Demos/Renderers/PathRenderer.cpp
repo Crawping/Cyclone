@@ -10,7 +10,8 @@ namespace Renderers
     /** CONSTRUCTOR **/
     PathRenderer::PathRenderer(const Area& displayArea, const string& title) :
         AdvancedRenderer(displayArea, title, 4),
-        PathScene(nullptr)
+        PathScene(nullptr),
+        PipelineSVG(nullptr)
     {
         IsFreeLookEnabled = false;
 
@@ -26,23 +27,33 @@ namespace Renderers
     /** INITIALIZATION UTILITIES **/
     void PathRenderer::CreateSceneResources()
     {
+        AdvancedRenderer::CreateSceneResources();
+
         PathScene = new SceneSVG();
-        PathScene->Pipeline(RenderPipeline)
+        PathScene->Pipeline(PipelineSVG)
             .Projection(&Projection)
             .Target(RenderTarget)
             .View(&View);
-
-        Renderer->Scene(PathScene);
     }
     void PathRenderer::CreateShaderPipeline()
     {
-        RenderPipeline = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
-        Renderer->Pipeline(RenderPipeline);
+        AdvancedRenderer::CreateShaderPipeline();
+        PipelineSVG = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
     }
 
 
 
     /** RENDERING UTILITIES **/
+    void PathRenderer::Render()
+    {
+        AdvancedRenderer::Render();
+        if (PathScene)
+        {
+            Renderer->Scene(PathScene);
+            Renderer->Update();
+            Renderer->Execute();
+        }
+    }
     void PathRenderer::UpdateScene()
     {
         const Matrix4x4& projection = Projection.ToMatrix4x4();

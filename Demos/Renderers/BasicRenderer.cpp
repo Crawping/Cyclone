@@ -38,13 +38,6 @@ namespace Renderers
 		RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
 		RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
 		Renderer->Window(RenderWindow);
-
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
-		glEnable(GL_DEPTH_CLAMP);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     BasicRenderer::~BasicRenderer()
@@ -69,7 +62,7 @@ namespace Renderers
             Renderer->Clear(ClearColor);
 
             UpdateScene();
-            Renderer->Execute();
+            Render();
             Renderer->Present();
         }
     }
@@ -89,7 +82,6 @@ namespace Renderers
 			TextureFormats::DepthStencil,
 			SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D
 		);
-        Renderer->Target(RenderTarget);
     }
     void BasicRenderer::CreateSceneResources()
     {
@@ -98,13 +90,10 @@ namespace Renderers
             .Projection(&Projection)
             .Target(RenderTarget)
             .View(&View);
-
-        Renderer->Scene(RenderScene);
     }
     void BasicRenderer::CreateShaderPipeline()
     {
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Default.psl");
-        Renderer->Pipeline(RenderPipeline);
     }
     void BasicRenderer::CreateSizedResources()
     {
@@ -125,9 +114,6 @@ namespace Renderers
             1,
             4.0f * clientArea.Width
         );
-
-        Renderer->Projection(&Projection);
-        Renderer->View(&View);
     }
     void BasicRenderer::Initialize()
     {
@@ -139,9 +125,19 @@ namespace Renderers
 
 
     /** PROTECTED UTILITIES **/
+    void BasicRenderer::Render()
+    {
+        if (RenderScene)
+        {
+            Renderer->Scene(RenderScene);
+            Renderer->Update();
+            Renderer->Execute();
+        }
+        //Renderer->Execute();
+    }
     void BasicRenderer::UpdateScene()
     {
-        Renderer->Update();
+
     }
 
 }
