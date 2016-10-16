@@ -24,9 +24,6 @@ namespace Cyclone
                 const GraphicsSettings* Settings()                          const override { return _settings; }
                 VertexTopologies Topology()                                 const override { return _topology; }
 
-                RenderStage3D& Data(const IGraphicsBuffer* value)           { _data = value; return *this; }
-                RenderStage3D& Settings(const GraphicsSettings* value)      { _settings = value; return *this; }
-                RenderStage3D& Topology(VertexTopologies value)             { _topology = value; return *this; }
 
                 OpenGLAPI RenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data, const GraphicsSettings* settings);
 
