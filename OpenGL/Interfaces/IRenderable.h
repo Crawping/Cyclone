@@ -19,6 +19,7 @@ namespace Cyclone
     {
         struct Color4;
         struct ITransformation3D;
+        struct Vector3;
         struct Volume;
     }
 
@@ -60,6 +61,10 @@ namespace Cyclone
                 virtual const ITransformation3D& World()            const = 0;
 
                 virtual ~IGeometric3D() { }
+
+
+                virtual IGeometric3D& Rotate(const Vector3& value)        = 0;
+                virtual IGeometric3D& Translate(const Vector3& value)     = 0;
         };
 
 
