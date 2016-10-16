@@ -86,20 +86,28 @@ namespace Cyclone
 
 
 
-        /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
-        /// <typeparam name="T"> The type of point object that is used to define the geometry of the object. </typeparam>
-        template<typename T>
-        class IRenderable3D :
+        template <typename T>
+        class IRenderable :
             public virtual IGeometric3D<T>,
             public virtual IMaterialEntity
         {
             public:
+                /// <summary> Gets whether a renderable entity is currently visible in a scene. </summary>
+                virtual bool IsVisible()                            const = 0;
+
+                virtual ~IRenderable() { }
+        };
+
+
+        /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
+        /// <typeparam name="T"> The type of point object that is used to define the geometry of the object. </typeparam>
+        template<typename T>
+        class IRenderable3D : public virtual IRenderable<T>            
+        {
+            public:
 
                 virtual const ICollection< IRenderable3D<T>* >& Components()    const = 0;
-
-                /// <summary> Gets whether a renderable entity is currently visible in a scene. </summary>
-                virtual bool IsVisible()                                        const = 0;
-
+                
                 virtual ~IRenderable3D() { }
         };
 
@@ -108,7 +116,7 @@ namespace Cyclone
         {
             public:
 
-                virtual List<IRenderStage*> Stages()                const = 0;
+                virtual const ICollection<IRenderStage*>& Stages()              const = 0;
 
                 virtual ~IRenderableScene() { }
 
