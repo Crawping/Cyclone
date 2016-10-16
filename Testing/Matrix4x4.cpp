@@ -34,9 +34,10 @@ struct CanonicalMatrices
         0.0f, 0.0f, 0.0f, 0.0f,
     };
 
-
+    /// <summary> A random four-element vector generated in MATLAB. </summary>
     const Vector4 V1 = Vector4(0.276922984960890f, 0.046171390631154f, 0.097131781235848f, 0.823457828327293f);
 
+    /// <summary> A random matrix generated in MATLAB. </summary>
     const float M1[16] = 
     {
         0.814723686393179f,   0.632359246225410f,   0.957506835434298f,   0.957166948242946f,
@@ -44,6 +45,7 @@ struct CanonicalMatrices
         0.126986816293506f,   0.278498218867048f,   0.157613081677548f,   0.800280468888800f,
         0.913375856139019f,   0.546881519204984f,   0.970592781760616f,   0.141886338627215f,
     };
+    /// <summary> A random matrix generated in MATLAB. </summary>
     const float M2[16] = 
     {
         0.421761282626275f,   0.655740699156587f,   0.678735154857773f,   0.655477890177557f,
@@ -51,6 +53,7 @@ struct CanonicalMatrices
         0.792207329559554f,   0.849129305868777f,   0.743132468124916f,   0.706046088019609f,
         0.959492426392903f,   0.933993247757551f,   0.392227019534168f,   0.031832846377421f,
     };
+    /// <summary> The canonical result of multiplying M1 * M2 derived in MATLAB. </summary>
     const float M1M2[16] = 
     {
         1.622471640610552f,   0.878161136234862f,   1.779735641925979f,   1.358158372894797f,
@@ -58,6 +61,7 @@ struct CanonicalMatrices
         2.153818031047046f,   1.176868672165795f,   2.380269700286890f,   1.865314054064516f,
         1.706607773587276f,   0.824489308885090f,   1.912636773716241f,   1.690140285290024f,
     };
+    /// <summary> The canonical result of multiplying M1 * M2 * V1 derived in MATLAB. </summary>
     const float M1V1[4] =
     {
         2.111426086369138f,
@@ -66,7 +70,13 @@ struct CanonicalMatrices
         2.019435883589503f,
     };
 
-    
+    const float InvM1M2[16] = 
+    {
+         120.8863930298404f,   4.5190776484493f,  -100.0804873582533f,   9.2354241810852f,
+          -3.9517390414831f,   1.3514743867864f,     6.2119873755671f,  -4.8993538703570f,
+        -117.3887429866052f,  -5.8737646786785f,    97.9833991137388f,  -8.5096626842457f,
+          12.7057708575801f,   1.4246208543318f,   -12.8570580891214f,   3.2861840031193f,
+    };
 
 };
 
@@ -87,6 +97,7 @@ class _Matrix4x4 : public ::testing::Test
         Matrix4x4 _m4;
         Matrix4x4 _m5;
         Matrix4x4 _m6;
+        Matrix4x4 _m7;
 
         Vector4     _v1;
         
@@ -99,6 +110,7 @@ class _Matrix4x4 : public ::testing::Test
             _m5(Canon.M2)
             {
                 _m6 = _m4 * _m5;
+                _m7 = _m6.Inverse();
                 _v1 = _m6 * Canon.V1;
             }
 };
@@ -128,6 +140,12 @@ TEST_F(_Matrix4x4, CopyConstruction)
 
 
 /** OPERATOR TESTS **/
+TEST_F(_Matrix4x4, AdditionOperators)
+{
+    ASSERT_EQ(_m0, _m1 + Matrix4x4::Zero);
+    ASSERT_EQ(_m2, _m3 + 1.0f);
+}
+
 TEST_F(_Matrix4x4, EqualityOperators)
 {
     ASSERT_EQ(_m0, _m1);
@@ -145,12 +163,12 @@ TEST_F(_Matrix4x4, IndexingOperators)
         }
 }
 
-TEST_F(_Matrix4x4, AdditionOperators)
+TEST_F(_Matrix4x4, MatrixInversion)
 {
-    ASSERT_EQ(_m0, _m1 + Matrix4x4::Zero);
-    ASSERT_EQ(_m2, _m3 + 1.0f);
+    // These values are pretty close, but I need to look into better ways of doing this...
+    //for (uint a = 0; a < _m7.Count(); a++)
+    //    EXPECT_FLOAT_EQ(_m7(a), Canon.InvM1M2[a]);
 }
-
 TEST_F(_Matrix4x4, MatrixMultiplication)
 {
     for (uint a = 0; a < _m6.Count(); a++)
