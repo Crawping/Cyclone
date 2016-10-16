@@ -3,23 +3,21 @@
  */
 
 #pragma once
-#include "RenderStage.h"
 #include "SVGAPI.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable2D.h"
+#include "Interfaces/IRenderStage.h"
 #include <set>
 
 
 namespace Cyclone
 {
     namespace { using namespace OpenGL; }
-    namespace OpenGL
-    {
-        template<typename T> class UniformBuffer;
-    }
 
     namespace SVG
     {
+        class DrawBuffer2D;
+
         struct RenderStage2D : public IRenderStage
         {
             public:
@@ -28,7 +26,7 @@ namespace Cyclone
                 virtual const GraphicsSettings* Settings()      const override { return _settings; }
                 virtual VertexTopologies Topology()             const override { return VertexTopologies::Path; }
 
-                SVGAPI RenderStage2D(const UniformBuffer<Color4>* data, const std::set< const IRenderable2D<float>* >* entities, const GraphicsSettings* settings);
+                SVGAPI RenderStage2D(const DrawBuffer2D* data, const GraphicsSettings* settings);
 
                 SVGAPI void Render() override;
 
@@ -36,13 +34,13 @@ namespace Cyclone
             protected:
 
                 SVGAPI int GetUniformID(const string& name) const;
-                SVGAPI void SetUniform(const string& name, const Color4& value) const;
+                SVGAPI void SetUniform(int id, const Color4& value) const;
                 SVGAPI void SetUniform(int id, int value) const;
 
 
             private:
                 
-                const UniformBuffer<Color4>*    _data;
+                const DrawBuffer2D*             _data;
                 const GraphicsSettings*         _settings;
 
                 const std::set< const IRenderable2D<float>* >* Entities;

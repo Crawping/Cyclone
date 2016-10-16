@@ -2,11 +2,10 @@
 #include "NVPR.h"
 #include "GraphicsSettings.h"
 #include "RenderStage2D.h"
+#include "Buffers/DrawBuffer2D.h"
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
-
-//using namespace Cyclone::OpenGL;
 
 
 
@@ -16,10 +15,9 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR **/
-        RenderStage2D::RenderStage2D(const UniformBuffer<Color4>* data, const std::set< const IRenderable2D<float>* >* entities, const GraphicsSettings* settings) : 
+        RenderStage2D::RenderStage2D(const DrawBuffer2D* data, const GraphicsSettings* settings) : 
             _data(data),
-            _settings(settings),
-            Entities(entities)
+            _settings(settings)
         {
 
         }
@@ -27,23 +25,22 @@ namespace Cyclone
 
         void RenderStage2D::Render()
         {
-            if (!Entities->size()) { return; }
-
             glStencilMask(~0);
             glEnable(GL_STENCIL_TEST);
             glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
             glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
 
-            int drawID = GetUniformID("DrawID");
-            
             int idx = 0;
-            for (const auto* e : *Entities)
+            int drawID = GetUniformID("DrawID");
+            auto entities = _data->Entities();
+
+            for (uint a = 0; a < entities.Count(); a++)
             {
-                nvMatrixLoadf(TransformMatrices::ModelView, e->World().ToMatrix4x4().ToArray());
+                nvMatrixLoadf(TransformMatrices::ModelView, entities(a)->World().ToMatrix4x4().ToArray());
                 SetUniform(drawID, idx++);
-                e->Fill();
+                entities(a)->Fill();
                 SetUniform(drawID, idx++);
-                e->Stroke();
+                entities(a)->Stroke();
             }
 
             glDisable(GL_STENCIL_TEST);
@@ -62,11 +59,9 @@ namespace Cyclone
         {
             glUniform1i(id, value);
         }
-        void RenderStage2D::SetUniform(const string& name, const Color4& value)               const
+        void RenderStage2D::SetUniform(int id, const Color4& value)               const
         {
-            int varID = GetUniformID(name);
-            if (varID != -1)
-                glUniform4f(varID, value.R, value.G, value.B, value.A);
+            glUniform4f(id, value.R, value.G, value.B, value.A);
         }
     }
 }
