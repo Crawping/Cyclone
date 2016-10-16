@@ -127,6 +127,10 @@ namespace Cyclone
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
                 virtual Entity3D& IsVisible(bool value)                     { _isVisible = value; return *this; }
 
+                virtual Entity3D& PrimaryColor(const Color4& value)         { _primaryColor = value; return *this; }
+
+                virtual Entity3D& SecondaryColor(const Color4& value)       { _secondaryColor = value; return *this; }
+
                 virtual Entity3D& Texture(const Texture3D* texture)         { _texture = texture; return *this; }
 
 
