@@ -25,7 +25,7 @@ namespace Cyclone
 
             public:
 
-                /** POSITION PROPERTIES **/
+                /** POSITIONAL PROPERTIES **/
                 /// <summary> Gets the position of the entity along the world x-axis. </summary>
                 virtual float X()                                           const { return _world.X(); }
 		        /// <summary> Gets the position of the entity along the world y-axis. </summary>
@@ -34,15 +34,22 @@ namespace Cyclone
                 virtual float Z()                                           const { return _world.Z(); }
 
 		        /// <summary> Sets the position of the entity along the world x-axis. </summary>
-                virtual Entity3D& X(float x)                                      { _world.X(x); return *this; }
+                virtual Entity3D& X(float x)                                      { return Position(x, Y(), Z()); }
 		        /// <summary> Sets the position of the entity along the world y-axis. </summary>
-                virtual Entity3D& Y(float y)                                      { _world.Y(y); return *this; }
+                virtual Entity3D& Y(float y)                                      { return Position(X(), y, Z()); }
 		        /// <summary> Sets the position of the entity along the world z-axis. </summary>
-                virtual Entity3D& Z(float z)                                      { _world.Z(z); return *this; }
+                virtual Entity3D& Z(float z)                                      { return Position(X(), Y(), z); }
+
+                /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
+                virtual const Vector3& Position()                           const { return _world.Position(); }
+		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
+                virtual Entity3D& Position(const Vector3& p)                      { _world.Position(p); return *this; }
+		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
+                virtual Entity3D& Position(float x, float y, float z = 0.0f)      { return Position(Vector3(x, y, z)); }
 
 
 
-                /** ROTATION PROPERTIES **/
+                /** ROTATIONAL PROPERTIES **/
                 /// <summary> Gets the angle of rotation about the x-axis in degrees. </summary>
                 virtual float Pitch()                                       const { return _world.Pitch(); }
                 /// <summary> Gets the angle of rotation about the z-axis in degrees. </summary>
@@ -51,11 +58,17 @@ namespace Cyclone
                 virtual float Yaw()                                         const { return _world.Yaw(); }
 
                 /// <summary> Sets the angle of rotation about the x-axis in degrees. </summary>
-                virtual Entity3D& Pitch(float p)                                  { _world.Pitch(p); return *this; }
+                virtual Entity3D& Pitch(float p)                                  { return Orientation(p, Yaw(), Roll()); }
                 /// <summary> Sets the angle of rotation about the z-axis in degrees. </summary>
-                virtual Entity3D& Roll(float r)                                   { _world.Roll(r); return *this; }
+                virtual Entity3D& Roll(float r)                                   { return Orientation(Pitch(), Yaw(), r); }
                 /// <summary> Sets the angle of rotation about the y-axis in degrees. </summary>
-                virtual Entity3D& Yaw(float y)                                    { _world.Yaw(y); return *this; }
+                virtual Entity3D& Yaw(float y)                                    { return Orientation(Pitch(), y, Roll()); }
+
+                virtual const Vector3& Orientation()                        const { return _world.Orientation(); }
+
+                virtual Entity3D& Orientation(const Vector3& value)               { _world.Orientation(value); return *this; }
+
+                virtual Entity3D& Orientation(float p, float y, float r)          { return Orientation(Vector3(p, y, r)); }
 
 
 
@@ -68,25 +81,18 @@ namespace Cyclone
                 virtual float Width()                                       const { return _world.ScaleX(); }
 
 		        /// <summary> Sets the size of the entity along the z-axis. </summary>
-                virtual Entity3D& Depth(float z)                                  { _world.ScaleZ(z); return *this; }
+                virtual Entity3D& Depth(float z)                                  { return Scale(Width(), Height(), z); }
 		        /// <summary> Sets the size of the entity along the y-axis. </summary>
-                virtual Entity3D& Height(float y)                                 { _world.ScaleY(y); return *this; }
+                virtual Entity3D& Height(float y)                                 { return Scale(Width(), y, Depth()); }
 		        /// <summary> Sets the size of the entity along the x-axis. </summary>
-                virtual Entity3D& Width(float x)                                  { _world.ScaleX(x); return *this; }
-
-		        /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
-                virtual const Vector3& Position()                           const { return _world.Position(); }
-		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
-                virtual Entity3D& Position(const Vector3& p)                      { _world.Position(p); return *this; }
-		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
-                virtual Entity3D& Position(float x, float y, float z = 0.0f)      { _world.Position(x, y, z); return *this; }
+                virtual Entity3D& Width(float x)                                  { return Scale(x, Height(), Depth()); }
 
 		        /// <summary> Gets the size of the entity in 3D space. </summary>
                 virtual const Vector3& Scale() const                              { return _world.Scale(); }
 		        /// <summary> Sets the size of the entity in 3D space. </summary>
                 virtual Entity3D& Scale(const Vector3& s)                         { _world.Scale(s); return *this; }
 		        /// <summary> Sets the size of the entity in 3D space. </summary>
-                virtual Entity3D& Scale(float x, float y, float z = 1.0f)         { _world.Scale(x, y, z); return *this; }
+                virtual Entity3D& Scale(float x, float y, float z = 1.0f)         { return Scale(Vector3(x, y, z)); }
 
 
 
@@ -143,11 +149,11 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 /// <summary> Sets the angles of rotation about the (x, y, z) axes in degrees. </summary>
-                virtual Entity3D& Rotate(const Vector3& r)                  { _world.Rotate(r); return *this; }
+                virtual Entity3D& Rotate(const Vector3& r)                  override { _world.Rotate(r); return *this; }
                 /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
-                virtual void Translate(float x, float y, float z = 0.0f)    { _world.Translate(x, y, z); }
+                virtual Entity3D& Translate(float x, float y, float z = 0.0f)        { return Translate(Vector3(x, y, z)); }
                 /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
-                virtual void Translate(const Vector3& t)                    { _world.Translate(t); }
+                virtual Entity3D& Translate(const Vector3& t)               override { _world.Translate(t); return *this; }
 
             protected:
 
