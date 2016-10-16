@@ -34,11 +34,7 @@ class Program : public PathRenderer
         {            
 			Initialize();
         }
-        ~Program()
-        {
-            
-        }
-
+        
     protected:
 
         Path2D          Path;
@@ -66,6 +62,8 @@ class Program : public PathRenderer
             Path.Z(-225 * sin(count));
             Path.Yaw(count);
             count += 0.02f;
+
+            PathScene->Update(Path);
 
             PathRenderer::UpdateScene();
         }

@@ -60,6 +60,8 @@ class Program : public PathRenderer
             Text.Yaw(count);
             count += 0.02f;
 
+            PathScene->Update(Text);
+
             PathRenderer::UpdateScene();
         }
 

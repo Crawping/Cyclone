@@ -3,23 +3,13 @@
  */
 
 #include "PathRenderer.h"
-#include "Console.h"
 #include "EnumerationsSVG.h"
-#include "GPU.h"
-#include "NVPR.h"
-#include "Window3D.h"
 
-#include "Buffers/FrameBuffer.h"
-#include "Collections/Vector.h"
-#include "Geometry/Geometry2D.h"
-#include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
 #include "Imaging/Color4.h"
 #include "Math/Constants.h"
-#include "Pipelines/ShaderPipeline.h"
 #include "Text/Text2D.h"
 
-using namespace Cyclone::Platform;
 using namespace Cyclone::SVG;
 using namespace Cyclone::Utilities;
 using namespace Renderers;
@@ -34,8 +24,6 @@ class Program : public PathRenderer
             PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering")
         {
             Initialize();
-            nvPathStencilDepthOffset(-0.05f, -1);
-            nvPathCoverDepthFunc(GL_ALWAYS);
         }
 
     protected:
