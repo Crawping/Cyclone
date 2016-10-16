@@ -1,5 +1,7 @@
+#include "NVPR.h"
 #include "Geometry/DrawingPath.h"
-#include "Geometry/Rectangle2D.h"
+#include "Geometry/Point2D.h"
+//#include "Geometry/Rectangle2D.h"
 
 
 
@@ -17,8 +19,8 @@ namespace Cyclone
         }
         DrawingPath::~DrawingPath()
         {
-            for (uint a = 0; a < Points.Count(); a++)
-                delete Points(a);
+            for (uint a = 0; a < _components.Count(); a++)
+                delete _components(a);
         }
 
 
@@ -28,44 +30,34 @@ namespace Cyclone
         {
             Path2D::Add(point);
             Vector3 ptCoords(point.Coordinates(0), point.Coordinates(1), 0.0f);
-            Rectangle2D* pt = new Rectangle2D(PointSize().X / 4.0f);
+            Point2D* pt = new Point2D();
 
             pt->JoinStyle(JoinStyles::Round)
-                .StrokeColor(_pointColor)
-                .StrokeWidth(StrokeWidth() * 1.5f)
+                .StrokeWidth(0)
                 .Color(_pointColor)
-                .Position(ptCoords);
+                .Position(ptCoords)
+                .Scale(PointSize());
 
-            Points.Append(pt);
+            _components.Append(pt);
             return *this;
         }
 
         void DrawingPath::Clear()
         {
             Path2D::Clear();
-            for (uint a = 0; a < Points.Count(); a++)
-                delete Points(a);
+            for (uint a = 0; a < _components.Count(); a++)
+                delete _components(a);
+            _components.Clear();
         }
 
-        void DrawingPath::Fill() const
+        DrawingPath& DrawingPath::Translate(const Vector3& t)
         {
-            Path2D::Fill();
-            //for (uint a = 0; a < Points.Count(); a++)
-            //    Points(a)->Fill();
-        }
-        void DrawingPath::Stroke() const
-        {
-            Path2D::Stroke();
-            //for (uint a = 0; a < Points.Count(); a++)
-            //    Points(a)->Stroke();
-        }
-        void DrawingPath::Update() const
-        {
-            Path2D::Update();
-            //for (uint a = 0; a < Points.Count(); a++)
-            //    Points(a)->Update();
-        }
+            for (uint a = 0; a < _components.Count(); a++)
+                _components(a)->Translate(t);
 
+            Path2D::Translate(t);
+            return *this;
+        }
 
     }
 }

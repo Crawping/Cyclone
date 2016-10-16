@@ -16,9 +16,15 @@ namespace Cyclone
         class DrawingPath : public Path2D
         {
             public:
+                using Path2D::Translate;
+
 
                 /** PROPERTIES **/
-                const Vector2& PointSize() const  { return _pointSize; }
+                const Color4& PointColor() const { return _pointColor; }
+                const Vector2& PointSize() const { return _pointSize; }
+
+                DrawingPath& PointColor(const Color4& value) { _pointColor = value; return *this; }
+                DrawingPath& PointSize(const Vector2& value) { _pointSize = value; return *this; }
 
 
 
@@ -32,17 +38,13 @@ namespace Cyclone
                 SVGAPI DrawingPath& Add(const ControlPoint2D& point)            override;
                 SVGAPI void Clear()                                             override;
 
-                SVGAPI void Fill() const override;
-                SVGAPI void Stroke() const override;
-                SVGAPI void Update() const override;
+                SVGAPI DrawingPath& Translate(const Vector3& t)                 override;
 
             private:
 
                 /** PROPERTY DATA **/
                 Vector2             _pointSize;
                 Color4              _pointColor;
-
-                List<Rectangle2D*>  Points;
 
         };
     }
