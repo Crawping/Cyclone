@@ -31,7 +31,7 @@ namespace Cyclone
             _pathNeedsUpdate = true;
             return *this;
         }
-        Path2D& Path2D::StrokeColor(const Color4& value)    { _strokeColor = value; return *this; }
+        Path2D& Path2D::StrokeColor(const Color4& value)    { Entity3D::SecondaryColor(value); return *this; }
         Path2D& Path2D::StrokeWidth(float value)            
         { 
             _strokeWidth = value;
@@ -53,7 +53,6 @@ namespace Cyclone
             _count(count),
             _id(0),
             _pathNeedsUpdate(false),
-            _strokeColor(Color4::Black),
             _strokeWidth(2.0f)
         {
             _id = nvGenPaths(_count);
@@ -126,6 +125,16 @@ namespace Cyclone
             nvPathParameterf(ID(), PathParameters::StrokeWidth, StrokeWidth());
             nvPathParameteri(ID(), PathParameters::TerminalEndCap, TerminalCap());
             
+            const Matrix4x4& world3D = World().ToMatrix4x4();
+            Vector<float, 12> world2D =
+            {
+                world3D(0, 0), world3D(1, 0), world3D(2, 0),
+                world3D(0, 1), world3D(1, 1), world3D(2, 1),
+                world3D(0, 2), world3D(1, 2), world3D(2, 2),
+            };
+
+            //nvTransformPath(ID(), ID(), TransformTypes::Affine3D, &world2D(0));
+
             _pathNeedsUpdate = false;
         }
 

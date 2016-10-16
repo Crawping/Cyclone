@@ -96,7 +96,6 @@ namespace Cyclone
                 JoinStyles          _joinStyle;
                 string              _path;
                 mutable bool        _pathNeedsUpdate;
-                Color4              _strokeColor;
                 float               _strokeWidth;
                 EndCaps             _terminalCap;
 
