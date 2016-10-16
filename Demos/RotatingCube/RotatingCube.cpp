@@ -30,11 +30,13 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Cube.Scale(100, 100, 100)
+            Cube
                 .Color(Color4::Green)
                 .Position(RenderWindow->ClientArea().Center())
                 .Pitch(90)
-                .Roll(90);
+                .Roll(90)
+                .Scale(100, 100, 100);
+
             RenderScene->Add(Cube);
         }
 
@@ -47,7 +49,6 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
         void UpdateScene() override

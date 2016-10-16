@@ -54,7 +54,6 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
         void UpdateScene() override
@@ -69,6 +68,7 @@ class Program : public BasicRenderer
             Cube->Rotate(Vector3(0.01f, 0.05f, 0.01f))
                 .Color(color);
             RenderScene->Update(*Cube);
+
             BasicRenderer::UpdateScene();
         }
 };

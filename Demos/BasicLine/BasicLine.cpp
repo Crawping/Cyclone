@@ -46,7 +46,6 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
         void UpdateScene() override
@@ -60,6 +59,7 @@ class Program : public BasicRenderer
 
             Line.Color(color).Rotate(0.01f);
             RenderScene->Update(Line);
+
             BasicRenderer::UpdateScene();
         }
 };

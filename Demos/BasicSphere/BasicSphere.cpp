@@ -27,11 +27,13 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Sphere.Scale(100, 100, 100)
+
+            Sphere
                 .Color(Color4(0.0f, 0.75f, 1.0f))
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
-                .Roll(90);
+                .Roll(90)
+                .Scale(100, 100, 100);
 
             RenderScene->Add(Sphere);
         }
@@ -45,7 +47,6 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
         void UpdateScene() override
@@ -59,6 +60,7 @@ class Program : public BasicRenderer
 
             Sphere.Color(color).Rotate(0.01f);
             RenderScene->Update(Sphere);
+
             BasicRenderer::UpdateScene();
         }
 };

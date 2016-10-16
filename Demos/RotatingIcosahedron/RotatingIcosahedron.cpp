@@ -28,11 +28,12 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Icosahedron.Scale(100, 100, 100)
+            Icosahedron
                 .Color(Color4::Cyan)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
-                .Roll(90);
+                .Roll(90)
+                .Scale(100, 100, 100);
 
             RenderScene->Add(Icosahedron);
         }
@@ -46,7 +47,6 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
         void UpdateScene() override

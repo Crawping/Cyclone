@@ -84,7 +84,6 @@ class Program : public BasicRenderer
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
         void UpdateScene() override

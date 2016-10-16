@@ -42,12 +42,11 @@ class Program : public AdvancedRenderer
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
-            PostInfo(Renderer->Report());
+
             Image = new Texture2D("../ImageDisplay/World (21600x10800).jpg");
             //Image = new Texture2D("../ImageDisplay/Dorset Durdle (6400x4000).jpg");
             //Image = new Texture2D("../ImageDisplay/Scottish Beach (1080x1920).jpg");
             //Image = new Texture2D("../ImageDisplay/Solar System (12000x7000).jpg");
-            PostInfo(Renderer->Report());
 
             Image->Sampler.EdgeWrap = WrapModes::Repeat;
             Image->GenerateMipmap();
@@ -59,13 +58,10 @@ class Program : public AdvancedRenderer
                 .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f);
 
             RenderScene->Add(Quad);
-
-            PostInfo(Renderer->Report());
         }
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../ImageDisplay/TexturedShading.psl");
-            Renderer->Pipeline(RenderPipeline);
         }
 
 };
