@@ -16,16 +16,10 @@ namespace Cyclone
             public:
 
                 SVGAPI Point2D(const Vector3& point = Vector3::Zero) 
-                { 
-                    Position(point); 
+                {
+                    Position(point);
                     Path2D::Add(Geometry2D::Point());
                 }
-
-
-
-                Point2D& Add(const ControlPoint2D& point)   override { return *this; }
-                void Clear()                                override { }
-                
 
         };
     }
