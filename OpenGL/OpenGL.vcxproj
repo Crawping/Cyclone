@@ -206,7 +206,6 @@
     <ClCompile Include="Textures\TextureSampler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="Shaders\Default.hsl" />
     <None Include="Shaders\Default.psl" />
     <None Include="Shaders\Default.vsl" />

@@ -143,6 +143,7 @@
     <ClInclude Include="Text\Text2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Buffers\DrawBuffer2D.cpp" />
     <ClCompile Include="Geometry\DrawingPath.cpp" />
     <ClCompile Include="Geometry\Geometry2D.cpp" />
     <ClCompile Include="Geometry\Path2D.cpp" />
