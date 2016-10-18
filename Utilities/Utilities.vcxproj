@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collections\List.h" />
+    <ClInclude Include="Collections\Octree.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Enumerator.h" />
     <ClInclude Include="Event.h" />

@@ -102,6 +102,9 @@
     <ClInclude Include="Interfaces\IReportable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Collections\Octree.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
