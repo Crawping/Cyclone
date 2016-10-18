@@ -11,8 +11,8 @@ namespace Cyclone
         {
             return
             {
-                { PathCommands::Move,   { -0.5f, 0 } },
-                { PathCommands::Line,   {  0.5f, 0 } },
+                { PathCommands::Move,   { -0.5f, 0.0f } },
+                { PathCommands::Line,   {  0.5f, 0.0f } },
                 { PathCommands::Close,  { } },
             };
         }
@@ -22,8 +22,8 @@ namespace Cyclone
             return
             {
                 { PathCommands::Move,   { 0.5f, 0.0f } },
-                { PathCommands::Arc,    { 0.5f, 0.5f, 0, 1, 1, -0.5f, 0 } },
-                { PathCommands::Arc,    { 0.5f, 0.5f, 0, 1, 1,  0.5f, 0 } },
+                { PathCommands::Arc,    { 0.5f, 0.5f, 0.0f, 1.0f, 1.0f, -0.5f, 0.0f } },
+                { PathCommands::Arc,    { 0.5f, 0.5f, 0.0f, 1.0f, 1.0f,  0.5f, 0.0f } },
                 { PathCommands::Close,  { } },
             };
         }
