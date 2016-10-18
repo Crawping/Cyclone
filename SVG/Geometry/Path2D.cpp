@@ -32,11 +32,11 @@ namespace Cyclone
             return *this;
         }
         Path2D& Path2D::StrokeColor(const Color4& value)    { Entity3D::SecondaryColor(value); return *this; }
-        Path2D& Path2D::StrokeWidth(float value)            
-        { 
+        Path2D& Path2D::StrokeWidth(float value)
+        {
             _strokeWidth = value;
             _pathNeedsUpdate = true;
-            return *this; 
+            return *this;
         }
         Path2D& Path2D::TerminalCap(EndCaps value)
         {
@@ -45,7 +45,7 @@ namespace Cyclone
             return *this;
         }
 
-        
+
 
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
@@ -63,7 +63,7 @@ namespace Cyclone
             if (_id) { nvDeletePaths(_id, _count); }
         }
 
-        
+
 
         /** UTILITIES **/
         Path2D& Path2D::Add(const ControlPoint2D& point)
@@ -112,11 +112,11 @@ namespace Cyclone
             else
                 nvPathCommands
                 (
-                    ID(), 
-                    Commands.Count(), 
-                    (const ubyte*)(Commands.ToVector().ToArray()), 
-                    Coordinates.Count(), 
-                    NumericFormats::Float, 
+                    ID(),
+                    Commands.Count(),
+                    (const ubyte*)(Commands.ToVector().ToArray()),
+                    Coordinates.Count(),
+                    NumericFormats::Float,
                     Coordinates.ToVector().ToArray()
                 );
 
@@ -124,16 +124,6 @@ namespace Cyclone
             nvPathParameteri(ID(), PathParameters::InitialEndCap, InitialCap());
             nvPathParameterf(ID(), PathParameters::StrokeWidth, StrokeWidth());
             nvPathParameteri(ID(), PathParameters::TerminalEndCap, TerminalCap());
-            
-            const Matrix4x4& world3D = World().ToMatrix4x4();
-            Vector<float, 12> world2D =
-            {
-                world3D(0, 0), world3D(1, 0), world3D(2, 0),
-                world3D(0, 1), world3D(1, 1), world3D(2, 1),
-                world3D(0, 2), world3D(1, 2), world3D(2, 2),
-            };
-
-            //nvTransformPath(ID(), ID(), TransformTypes::Affine3D, &world2D(0));
 
             _pathNeedsUpdate = false;
         }
