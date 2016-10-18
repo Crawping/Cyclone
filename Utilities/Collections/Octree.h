@@ -55,24 +55,67 @@ namespace Cyclone
                 template<typename T>
                 struct Node
                 {
-                    Node<T>* Left;
-                    Node<T>* Right;
-                    Node<T>* Up;
-                    Node<T>* Down;
+                    private:
+                        Node<T>*    NE;
+                        Node<T>*    NW;
+                        Node<T>*    SE;
+                        Node<T>*    SW;
+
+                        Area        Bounds;
+                        T           Value;
+
+                            void Subdivide()
+                            {
+                                if (NE) { return; }
+
+                                Vector2 center = Bounds.Center();
+                                Vector2 size = Bounds.Scale() / 2.0f;
+
+                                NE = new Node<T>( Area(Bounds.Position() + center, size) );
+                                NW = new Node<T>( Area(Bounds.Position() + Vector2(0.0f, center.Y), size) );
+                                SE = new Node<T>( Area(Bounds.Position(), size) );
+                                SW = new Node<T>( Area(Bounds.Position() + Vector2(center.X, 0.0f), size) );
+                            }
 
 
-                    Node() :
-                        Left(nullptr), Right(nullptr),
-                        Up(nullptr), Down(nullptr)
-                    {
+                    public:
+                        Node(const Area& bounds) :
+                            Bounds(bounds)
+                            NE(nullptr), NW(nullptr),
+                            SW(nullptr), SW(nullptr)
+                        {
 
-                    }
+                        }
+                        ~Node()
+                        {
+                            if (NE) { delete NE; }
+                            if (NW) { delete NW; }
+                            if (SE) { delete SE; }
+                            if (SW) { delete SW; }
+                        }
 
 
-                    void Insert(const Vector2& point, T value)
-                    {
+                        bool Insert(const Vector2& point, T value)
+                        {
+                            if (!Bounds.Contains(point))
+                                return false;
 
-                    }
+                            if (!Value)
+                            {
+                                Value = value;
+                                return true;
+                            }
+
+                            Subdivide();
+                            Vector2 center = Bounds.Center();
+
+                            if (NE->Insert(point, value)) { return true; }
+                            if (NW->Insert(point, value)) { return true; }
+                            if (SE->Insert(point, value)) { return true; }
+                            if (SW->Insert(point, value)) { return true; }
+                        
+                            return false;                            
+                        }
 
                 };
         };
