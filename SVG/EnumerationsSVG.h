@@ -132,8 +132,9 @@ struct PathCommands //: public Enumerator
             HorizontalLine                          = 0x06,
             LargeArcCCW                             = 0x16,
             LargeArcCW                              = 0x18,
-            /// <summary> Draws a straight 2D line from the current path position to the point (x, y). </summary>
+            /// <summary> Draws a straight line from the current path position to the point (x, y). </summary>
             Line                                    = 0x04,
+            /// <summary> Moves the current path position to the new location (x, y). </summary>
             Move                                    = 0x02,
             QuadraticCurve                          = 0x0A,
 
