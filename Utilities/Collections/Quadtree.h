@@ -111,6 +111,7 @@ namespace Cyclone
                         }
 
                     public:
+
                         Node(const Area& bounds) :
                             Bounds(bounds)
                             NE(nullptr), NW(nullptr),
