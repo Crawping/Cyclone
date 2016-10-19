@@ -18,8 +18,9 @@ namespace Cyclone
         /// <summary> Converts 2D matrix subscripts into an equivalent 1D linear index for column-major arrays. </summary>
         UtilitiesAPI int sub2ind(int nrows, int ncols, int a, int b);
 
+        UtilitiesAPI uint nextpow2(uint x);
 
-
+        
         /** MATH UTILITIES **/
         namespace Math
         {
@@ -38,6 +39,16 @@ namespace Cyclone
         }
 
 
+
+        /** TEMPLATED UTILITIES **/
+        /// <summary> Constrains numeric or comparable data to a range of values between some inputted minimum and maximum. </summary>
+        /// <param name="x"> The data point to be constrained. </param>
+        /// <param name="min"> The minimum value that <paramref name="x"/> is allowed to take. </param>
+        /// <param name="max"> The maximum value that <paramref name="x"/> is allowed to take. </param>
+        /// <returns> 
+        ///     The same value of <paramref name="x"/> if it lies between <paramref name="min"/> and <paramref name="max"/>, 
+        ///     inclusively. Otherwise, the closer of <paramref name="min"/> or <paramref name="max"/> is returned.
+        /// </returns>
         template<typename T> constexpr T clamp(T x, T min, T max)
         {
             return (x < min) ? min :
@@ -61,6 +72,9 @@ namespace Cyclone
             return std::to_string(number);
         }
 
+
+
+        /** FILE UTILITIES **/
         /// <summary> Reads all text found within a file and returns it as a single string. </summary>
         UtilitiesAPI string readfile(const string& filename);
     }
