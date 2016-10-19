@@ -105,6 +105,9 @@
     <ClInclude Include="Collections\Octree.h">
       <Filter>Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Collections\Quadtree.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

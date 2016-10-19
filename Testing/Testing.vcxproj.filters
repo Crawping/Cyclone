@@ -47,6 +47,9 @@
     <ClCompile Include="Vector.cpp">
       <Filter>Utilities\Collections</Filter>
     </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Utilities\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
