@@ -251,6 +251,8 @@ namespace Cyclone
                     other._count = 0;
                     other._first = nullptr;
                     other._last = nullptr;
+
+                    return *this;
                 }
                 /// <summary> Clears the list of any stored data and copies the contents of another list into it. </summary>
                 /// <param name="values"> An array-like collection of data elements to be copied. </param>
