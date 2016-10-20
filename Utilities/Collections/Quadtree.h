@@ -181,16 +181,15 @@ namespace Cyclone
 
                         Node(const Area& bounds) :
                             _bounds(bounds),
-                            Subtrees(nullptr)
+                            Subtrees({ nullptr, nullptr, nullptr, nullptr })
                         {
 
                         }
                         ~Node()
                         {
                             for (uint a = 0; a < Subtrees.Count(); a++)
-                                if (Subtrees(a)) { delete Subtrees(a); }
-
-                            Values.Clear();
+                                if (Subtrees(a))
+                                    delete Subtrees(a);
                         }
 
 
