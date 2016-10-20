@@ -27,11 +27,16 @@ class _Area : public testing::Test
         Area _a2;
         Area _a3;
 
+        Area _a4;
+        Area _a5;
+
 
         _Area() : 
             _a1(Area::Unit),
             _a2(_v1.X, _v1.Y, _v1.Z, _v1.W),
-            _a3(_v2.X, _v2.Y, _v2.Z, _v2.W)
+            _a3(_v2.X, _v2.Y, _v2.Z, _v2.W),
+            _a4(-50.0f, -72.7f, 25.5f, 13.7f),
+            _a5( 88.2f,  54.1f, 32.6f, 66.6f)
         {
             
         }
@@ -48,7 +53,6 @@ TEST_F(_Area, DefaultConstruction)
     ASSERT_EQ(_a0.Width,    0.0f);
     ASSERT_EQ(_a0.Height,   0.0f);
 }
-
 TEST_F(_Area, ObjectConstruction)
 {
     ASSERT_EQ(_a2.X,        _v1.X);
@@ -77,7 +81,6 @@ TEST_F(_Area, AreaContainment)
     ASSERT_FALSE(_a3.Contains(_a2));
     ASSERT_FALSE(_a2.Contains(_a3));
 }
-
 TEST_F(_Area, PointContainment)
 {
     ASSERT_TRUE(_a1.Contains(_p1));
@@ -88,7 +91,6 @@ TEST_F(_Area, PointContainment)
     ASSERT_FALSE(_a2.Contains(_p1));
     ASSERT_FALSE(_a3.Contains(_p1));
 }
-
 TEST_F(_Area, Cropping)
 {
     _a2.Crop(_a3);
@@ -97,7 +99,6 @@ TEST_F(_Area, Cropping)
     ASSERT_EQ(_a2.Right(),  fminf(_a2.Right(), _a3.Right()));
     ASSERT_EQ(_a2.Top(),    fminf(_a2.Top(), _a3.Top()));
 }
-
 TEST_F(_Area, Flipping)
 {
     Area _a2Copy = Area(_a2).Flip(1);
@@ -115,6 +116,18 @@ TEST_F(_Area, Intersection)
 	ASSERT_FALSE(_a1.Intersects(_a2));
 	ASSERT_TRUE(_a2.Intersects(_a2));
 }
+TEST_F(_Area, Union)
+{
+    Area _a5Copy(_a5);
+    _a5Copy.Union(_a4);
+
+    ASSERT_FLOAT_EQ(_a5Copy.Left(),     _a4.Left());
+    ASSERT_FLOAT_EQ(_a5Copy.Right(),    _a5.Right());
+    ASSERT_FLOAT_EQ(_a5Copy.Bottom(),   _a4.Bottom());
+    ASSERT_FLOAT_EQ(_a5Copy.Top(),      _a5.Top());
+}
+
+
 
 /** OPERATOR TESTS **/
 TEST_F(_Area, EqualityOperators)

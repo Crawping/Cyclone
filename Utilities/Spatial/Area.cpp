@@ -141,11 +141,13 @@ namespace Cyclone
         }
         Area& Area::Union(const Area& other)
         {
-            X = Math::Min(Left(), Right(), other.Left(), other.Right());
-            Y = Math::Min(Bottom(), Top(), other.Bottom(), other.Top());
+            float left      = Math::Min(Left(), Right(), other.Left(), other.Right());
+            float bottom    = Math::Min(Bottom(), Top(), other.Bottom(), other.Top());
+            float right     = Math::Max(Left(), Right(), other.Left(), other.Right());
+            float top       = Math::Max(Bottom(), Top(), other.Bottom(), other.Top());
 
-            Right( Math::Max(Left(), Right(), other.Left(), other.Right()) );
-            Top( Math::Max(Bottom(), Top(), other.Bottom(), other.Top()) );
+            Left(left);     Right(right);
+            Bottom(bottom); Top(top);
 
             return *this;
         }
