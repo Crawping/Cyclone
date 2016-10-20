@@ -8,6 +8,10 @@
 using namespace Cyclone::Utilities;
 
 
+struct VectorElement
+{
+    int Value;
+};
 
 class _Vector : public testing::Test
 {
@@ -17,11 +21,18 @@ class _Vector : public testing::Test
         Vector<char> _v1;
         Vector<char> _v2;
 
+        Vector<VectorElement*, 4> _v3;
+
 
         _Vector() :
-            _v1({ 'a', 'b', 'c', 'd', 'e' })
+            _v1({ 'a', 'b', 'c', 'd', 'e' }),
+            _v3({ nullptr, nullptr, nullptr, nullptr })
         {
             _v2 = { 'f', 'g', 'h', 'i', 'j' };
+            _v3(0) = new VectorElement{ 1 };
+            _v3(1) = new VectorElement{ 2 };
+            _v3(2) = new VectorElement{ 3 };
+            _v3(3) = new VectorElement{ 4 };
         }
 };
 
@@ -129,3 +140,9 @@ TEST_F(_Vector, InequalityOperator)
 //        ASSERT_EQ(it, _v1(idx++));
 //    }
 //}
+TEST_F(_Vector, ElementDeletion)
+{
+    for (uint a = 0; a < _v3.Count(); a++)
+        if (_v3(a)) 
+            delete _v3(a);
+}
