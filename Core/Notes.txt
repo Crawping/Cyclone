@@ -58,9 +58,11 @@ TODOS:
 	-- Lists									(DONE)
         > Efficient iteration
     -- Vectors                                  (PRELIMINARY)
+        > Static checking of initializer list
+          length for stack vectors
     -- Trees
         > BST
-        > Quadtree
+        > Quadtree                              (IN PROGRESS)
         > Octree
 
 - Rename
