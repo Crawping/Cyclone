@@ -5,6 +5,7 @@
 #pragma once
 #include "Utilities.h"
 #include "Collections/List.h"
+#include "Collections/Vector.h"
 #include "Spatial/Area.h"
 
 
@@ -58,9 +59,11 @@ namespace Cyclone
                 void Insert(const Area& bounds, T value)
                 {
                     if (Root && Root->Insert(bounds, value)) { _count++; return; }
-
-                    float size = nextpow2((uint)Math::Max(bounds.Width, bounds.Height, 1.0f));
-                    Area rootBounds(bounds.Position(), Vector2(size));
+                    
+                    Area rootBounds(bounds);
+                    rootBounds.Union(Bounds());
+                    float size = nextpow2((uint)Math::Max(rootBounds.Width, rootBounds.Height, 1.0f));
+                    rootBounds.Scale(size);
 
                     Node<T>* newRoot = new Node<T>(rootBounds);
 
@@ -93,76 +96,69 @@ namespace Cyclone
                 {
                     private:
 
-                        Area            _bounds;
+                        Area                _bounds;
 
-                        Node<T>*        NE;
-                        Node<T>*        NW;
-                        Node<T>*        SE;
-                        Node<T>*        SW;
-                        List<KVP<T>>    Values;
+                        Vector<Node<T>*, 4> Subtrees;
+                        List<KVP<T>>        Values;
+
+
 
                         void Subdivide()
                         {
-                            if (NE) { return; }
-
+                            if (Subtrees(0)) { return; }
+                                                        
                             Vector2 center = Bounds().Center();
                             Vector2 size = Bounds().Scale() / 2.0f;
 
-                            NE = new Node<T>(Area(Bounds().Position() + center, size));
-                            NW = new Node<T>(Area(Bounds().Position() + Vector2(0.0f, center.Y), size));
-                            SE = new Node<T>(Area(Bounds().Position(), size));
-                            SW = new Node<T>(Area(Bounds().Position() + Vector2(center.X, 0.0f), size));
+                            Subtrees(0) = new Node<T>(Area(Bounds().Position() + center, size));
+                            Subtrees(1) = new Node<T>(Area(Bounds().Position() + Vector2(0.0f, center.Y), size));
+                            Subtrees(2) = new Node<T>(Area(Bounds().Position(), size));
+                            Subtrees(3) = new Node<T>(Area(Bounds().Position() + Vector2(center.X, 0.0f), size));
 
                             List<uint> idsToRemove;
-                            for (uint a = 0; a < Values.Count(); a++)
-                                if (Insert(Values(a).Bounds, Values(a).Value))
-                                    idsToRemove.Append(a);
-
+                            
+                            if (Values.IsEmpty()) { return; }
                             for (uint a = Values.Count() - 1; a >= 0; a--)
-                                Values.Remove(idsToRemove(a));
+                                if (Insert(Values(a).Bounds, Values(a).Value))
+                                    Values.Remove(a);
                         }
                         List<KVP<T>> SubtreeIndex(const Area& bounds) const
                         {
-                            if (NE)
-                            {
-                                if (NE->Bounds() == bounds) { return NE->Contents(); }
-                                if (NE->Bounds() == bounds) { return NE->Contents(); }
-                                if (NE->Bounds() == bounds) { return NE->Contents(); }
-                                if (NE->Bounds() == bounds) { return NE->Contents(); }
-                            }
+                            if (!Subtrees(0)) { return List<KVP<T>>(); }
+
+                            for (uint a = 0; a < Subtrees.Count(); a++)
+                                if (Subtrees(a)->Bounds() == bounds)
+                                    return Subtrees(a)->Contents();
 
                             return List<KVP<T>>();
                         }
                         bool SubtreeInsert(Node<T>* node)
                         {
-                            if (!NE) { return false; }
+                            if (!Subtrees(0)) { return false; }
 
-                            if (NE->Insert(node)) { return true; }
-                            if (NW->Insert(node)) { return true; }
-                            if (SE->Insert(node)) { return true; }
-                            if (SW->Insert(node)) { return true; }
+                            for (uint a = 0; a < Subtrees.Count(); a++)
+                                if (Subtrees(a)->Insert(node))
+                                    return true;
 
                             return false;
                         }
                         bool SubtreeInsert(const Area& bounds, T value)
                         {
-                            if (!NE) { return false; }
+                            if (!Subtrees(0)) { return false; }
 
-                            if (NE->Insert(bounds, value)) { return true; }
-                            if (NW->Insert(bounds, value)) { return true; }
-                            if (SE->Insert(bounds, value)) { return true; }
-                            if (SW->Insert(bounds, value)) { return true; }
+                            for (uint a = 0; a < Subtrees.Count(); a++)
+                                if (Subtrees(a)->Insert(bounds, value))
+                                    return true;
 
                             return false;
                         }
                         bool SubtreeRemove(const Area& bounds)
                         {
-                            if (!NE) { return false; }
+                            if (!Subtrees(0)) { return false; }
 
-                            if (NE->Remove(point)) { return true; }
-                            if (NW->Remove(point)) { return true; }
-                            if (SE->Remove(point)) { return true; }
-                            if (SW->Remove(point)) { return true; }
+                            for (uint a = 0; a < Subtrees.Count(); a++)
+                                if (Subtrees(a)->remove(bounds))
+                                    return true;
 
                             return false;
                         }
@@ -172,32 +168,27 @@ namespace Cyclone
                         const Area& Bounds()        const { return _bounds; }
                         List<KVP<T>> Contents()     const
                         {
+                            if (!Subtrees(0)) { return Values; }
+
                             List<KVP<T>> contents = Values;
-                            if (NE)
-                            {
-                                contents.Append(NE->Contents());
-                                contents.Append(NW->Contents());
-                                contents.Append(SE->Contents());
-                                contents.Append(SW->Contents());
-                            }
+                            for (uint a = 0; a < Subtrees.Count(); a++)
+                                contents.Append(Subtrees(a)->Contents());
 
                             return contents;
                         }
 
 
+
                         Node(const Area& bounds) :
                             _bounds(bounds),
-                            NE(nullptr), NW(nullptr),
-                            SE(nullptr), SW(nullptr)
+                            Subtrees(nullptr)
                         {
 
                         }
                         ~Node()
                         {
-                            if (NE) { delete NE; }
-                            if (NW) { delete NW; }
-                            if (SE) { delete SE; }
-                            if (SW) { delete SW; }
+                            for (uint a = 0; a < Subtrees.Count(); a++)
+                                if (Subtrees(a)) { delete Subtrees(a); }
 
                             Values.Clear();
                         }
@@ -212,7 +203,13 @@ namespace Cyclone
                             if (!Contains(bounds)) { return List<KVP<T>>(); }
                             if (Bounds() == bounds) { return Contents(); }
 
-                            return SubtreeIndex(bounds);
+                            List<KVP<T>> intersections;
+                            for (uint a = 0; a < Values.Count(); a++)
+                                if (bounds.Contains(Values(a).Bounds))
+                                    intersections.Append(Values(a));
+
+                            intersections.Append(SubtreeIndex(bounds));
+                            return intersections;
                         }
                         bool Insert(Node<T>* node)
                         {
@@ -220,18 +217,23 @@ namespace Cyclone
                             if (!Bounds().Contains(node->Bounds())) { return false; }
                             if (SubtreeInsert(node))                { return true; }
 
-                            if (NE) { return false; }
+                            if (Subtrees(0)) { return false; }
                             Subdivide();
 
                             Node<T>** toReplace = nullptr;
-                            if      (NE->Bounds().Contains(node->Bounds())) { toReplace = &NE; }
-                            else if (NW->Bounds().Contains(node->Bounds())) { toReplace = &NW; }
-                            else if (SE->Bounds().Contains(node->Bounds())) { toReplace = &SE; }
-                            else if (SW->Bounds().Contains(node->Bounds())) { toReplace = &SW; }
-                            else    { return false; }
-                                
-                            delete *toReplace;
-                            *toReplace = node;
+
+                            for (uint a = 0; a < Subtrees.Count(); a++)
+                                if (Subtrees(a)->Contains(node->Bounds()))
+                                {
+                                    toReplace = &Subtrees(a);
+                                    break;
+                                }
+
+                            if (toReplace)
+                            {
+                                delete *toReplace;
+                                *toReplace = node;
+                            }
                         }
                         bool Insert(const Area& bounds, T value)
                         {
@@ -244,7 +246,7 @@ namespace Cyclone
                                 return true;
                             }
 
-                            if (NE) { return false; }
+                            if (Subtrees(0)) { return false; }
 
                             Subdivide();
                             return SubtreeInsert(bounds, value);       

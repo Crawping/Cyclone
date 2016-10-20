@@ -22,16 +22,17 @@ class _Quadtree : public testing::Test
         Quadtree<int> _q0;
         Quadtree<int> _q1;
 
-        Vector<int, 4> _vi1;
+        Vector<int, 4> _v1;
 
 
 
         _Quadtree() : 
-            _a1(0, 0, 8, 8),
-            _a2(0, 0, 4, 4),
-            _a3(4, 4, 3, 3),
-            _a4(0, 4, 2, 2),
-            _vi1({ 16, 32, 64, 128 })
+            _a1(  0,   0,  8,   8),
+            _a2(  0,   0,  4,   4),
+            _a3(-16, -16, 32,  32),
+            _a4(  0,   4,  2,   2),
+
+            _v1({ 16,  32, 64, 128 })
         {
             
         }
@@ -53,11 +54,11 @@ TEST_F(_Quadtree, DefaultConstruction)
 /** UTILITY TESTS **/
 TEST_F(_Quadtree, SubtreeInsertion)
 {
-    _q1.Insert(_a1, _vi1(0));
+    _q1.Insert(_a1, _v1(0));
     ASSERT_EQ(_q1.Bounds(), _a1);
     ASSERT_EQ(_q1.Count(), 1);
 
-    _q1.Insert(_a2, _vi1(1));
+    _q1.Insert(_a2, _v1(1));
     ASSERT_EQ(_q1.Bounds(), _a1);
     ASSERT_EQ(_q1.Count(), 2);
 
@@ -65,18 +66,45 @@ TEST_F(_Quadtree, SubtreeInsertion)
     ASSERT_EQ(treeContents.Count(), 2);
 
     for (uint a = 0; a < treeContents.Count(); a++)
-        ASSERT_EQ(treeContents(a), _vi1(a));
+        ASSERT_EQ(treeContents(a), _v1(a));
+
+    _q1.Insert(_a4, _v1(2));
+    ASSERT_EQ(_q1.Bounds(), _a1);
+    ASSERT_EQ(_q1.Count(), 3);
+
+    treeContents = _q1.Index(_a1);
+    ASSERT_EQ(treeContents.Count(), 3);
+
+    for (uint a = 0; a < treeContents.Count(); a++)
+        ASSERT_EQ(treeContents(a), _v1(a));
+
 }
 
 TEST_F(_Quadtree, SupertreeInsertion)
 {
-    _q1.Insert(_a2, _vi1(0));
+    _q1.Insert(_a2, _v1(2));
     ASSERT_EQ(_q1.Bounds(), _a2);
     ASSERT_EQ(_q1.Count(), 1);
 
-    _q1.Insert(_a1, _vi1(1));
+    _q1.Insert(_a1, _v1(1));
     ASSERT_EQ(_q1.Bounds(), _a1);
     ASSERT_EQ(_q1.Count(), 2);
+
+    List<int> treeContents = _q1.Index(_a1);
+    ASSERT_EQ(treeContents.Count(), 2);
+
+    for (uint a = 0; a < treeContents.Count(); a++)
+        ASSERT_EQ(treeContents(a), _v1(a + 1));
+
+    _q1.Insert(_a3, _v1(0));
+    ASSERT_EQ(_q1.Bounds(), _a3);
+    ASSERT_EQ(_q1.Count(), 3);
+
+    treeContents = _q1.Index(_a3);
+    ASSERT_EQ(treeContents.Count(), 3);
+
+    for (uint a = 0; a < treeContents.Count(); a++)
+        ASSERT_EQ(treeContents(a), _v1(a));
 }
 
 
