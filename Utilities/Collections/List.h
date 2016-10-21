@@ -13,19 +13,14 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        //template<typename T> struct Node;
-
-
-        //template<typename T> class List::Iterator;
-
-
         /// <summary> A class that represents a doubly-linked list of generic data. </summary>
         /// <typeparam name="T"> The type name of the data elements held by the list. </typeparam>
         template<typename T>
         class List : public ICollection<T>
         {
-
             public:
+                template<typename T> struct Iterator;
+
 
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of elements present in the list. </summary>
@@ -69,8 +64,7 @@ namespace Cyclone
                 List(const ICollection<T>& other) :
                     List()
                 {
-                    for (uint a = 0; a < other.Count(); a++)
-                        Append(other(a));
+                    Insert(0, other);
                 }
                 /// <summary> Constructs a new linked list that stores the values found within an initializer list. </summary>
                 /// <param name="values"> An initialization list containing the values to be stored within the new list. </param>
@@ -94,6 +88,7 @@ namespace Cyclone
                 void Append(const T& value)                                         { Insert(Count(), value); }
                 /// <summary> Adds the contents of another collection to the end of the list.
                 /// <param name="values"> An array-like collection containing the data elements to be copied and added to the list. </param>
+                /// <remarks> Appending an element to this class of linked list is an O(1) operation. </remarks>
                 void Append(const ICollection<T>& values)                           { Insert(Count(), values); }
                 /// <summary> Removes all data elements stored within the list. </summary>
                 /// <remarks>
@@ -131,34 +126,17 @@ namespace Cyclone
                 void Insert(uint index, const T& value)
                 {
                     index = (index > Count()) ? Count() : index;
-
                     Node<T>* toShift = Index(index);
-                    Node<T>* newNode = new Node<T>(value);
 
                     if (toShift)
-                    {
                         if (toShift->Previous)
-                        {
-                            toShift->Previous->Next = newNode;
-                            newNode->Previous = toShift->Previous;
-                        }
+                            toShift->Previous = toShift->Previous->Next = new Node<T>(value, toShift->Previous, toShift);
                         else
-                            _first = newNode;
-
-                        newNode->Next = toShift;
-                        toShift->Previous = newNode;
-                    }
+                            _first = toShift->Previous = new Node<T>(value, toShift->Previous, toShift);
                     else if (IsEmpty())
-                    {
-                        _first = newNode;
-                        _last = newNode;
-                    }
+                        _first = _last = new Node<T>(value);
                     else
-                    {
-                        _last->Next = newNode;
-                        newNode->Previous = _last;
-                        _last = newNode;
-                    }
+                        _last = _last->Next = new Node<T>(value, _last);
 
                     _count++;
                 }
@@ -213,14 +191,14 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                //ICollectionIterator<T> begin() override
-                //{
-                //    return Iterator<T>(this, 0);
-                //}
-                //ICollectionIterator<T> end() override
-                //{
-                //    return Iterator<T>(nullptr, Count());
-                //}
+                Iterator<T> begin() //override
+                {
+                    return Iterator<T>(0, _first);
+                }
+                Iterator<T> end() //override
+                {
+                    return Iterator<T>(Count(), nullptr);
+                }
                 /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
                 /// <param name="index"> The numeric position of the desired data element within the list. </param>
                 /// <returns> A reference to the data element stored at the inputted position. </returns>
@@ -260,8 +238,7 @@ namespace Cyclone
                 List& operator =(const ICollection<T>& values)
                 {
                     Clear();
-                    for (uint a = 0; a < values.Count(); a++)
-                        Append(values(a));
+                    Insert(0, values);
                     return *this;
                 }
                 /// <summary> Clears the list of any stored data and copies the contents of an initialization list into it. </summary>
@@ -279,78 +256,102 @@ namespace Cyclone
 
             private:
 
-                template<typename T> struct Node
-                {
-                    Node<T>*    Next;
-                    Node<T>*    Previous;
-                    T           Value;
-
-                    Node(const T& value) :
-                        Next(nullptr),
-                        Previous(nullptr),
-                        Value(value)
-                    {
-
-                    }
-                    Node(const T& value, Node<T>* previous, Node<T>* next) :
-                        Next(next),
-                        Previous(previous),
-                        Value(value)
-                    {
-
-                    }
-                };
-
-                /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
-                /// <param name="index"> The numeric position of the desired data element within the list. </param>
-                /// <returns> A pointer to the list node that resides at the inputted position or <c>nullptr</c> if the position is invalid. </returns>
-                Node<T>* Index(uint index) const
-                {
-                    if (index >= Count())
-                        return nullptr;
-
-                    Node<T>* node = _first;
-                    for (uint a = 0; a < index; a++)
-                        node = node->Next;
-
-                    return node;
-                }
-
-
-
                 /** PROPERTY DATA **/
                 uint        _count;
                 Node<T>*    _first;
                 Node<T>*    _last;
 
 
+
+                /** UTILITIES **/
+                /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
+                /// <param name="index"> The numeric position of the desired data element within the list. </param>
+                /// <returns> A pointer to the list node that resides at the inputted position or <c>nullptr</c> if the position is invalid. </returns>
+                Node<T>* Index(uint index) const
+                {
+                    if (index >= Count()) { return nullptr; }
+
+                    Node<T>* node = nullptr;
+                    if ((Count() - index) > index)
+                    {
+                        node = _first;
+                        for (uint a = 0; a < index; a++)
+                            node = node->Next;
+                    }
+                    else
+                    {
+                        node = _last;
+                        for (uint a = Count() - 1; a > index; a--)
+                            node = node->Previous;
+                    }
+
+                    return node;
+                }
+
+
+
+
                 template<typename T>
-                class Iterator : public ICollectionIterator< Node<T> >
+                struct Node
+                {
+                    Node<T>*    Next;
+                    Node<T>*    Previous;
+                    T           Value;
+
+                    /** CONSTRUCTOR **/
+                    Node(const T& value, Node<T>* previous = nullptr, Node<T>* next = nullptr) :
+                        Next(next),
+                        Previous(previous),
+                        Value(value)
+                    {
+
+                    }
+
+                };
+
+
+
+                template<typename T>
+                struct Iterator : public ICollectionIterator<T>
                 {
                     public:
 
-                        Iterator(const Node<T>* node, uint index) :
-                            Element(node)
+                        /** PROPERTIES **/
+                        uint Index() const override { return _index; }
+
+
+
+                        /** CONSTRUCTOR **/
+                        Iterator(uint idx, Node<T>* element) :
+                            _index(idx),
+                            Element(element)
                         {
-                            _index = index;
+
                         }
 
-                        bool operator ==(const Iterator<T>& other) const override
+
+
+                        /** OPERATORS **/
+                        const T& operator *()   const override { return Element->Value; }
+                        Iterator& operator++()      override { Element = Element->Next; _index++; return *this; }
+                        Iterator& operator++(int)   override { Element = Element->Next; _index++; return *this; }
+
+                        bool operator ==(const ICollectionIterator<T>& other) const override
                         {
-                            return (Index == other.Index()) && (Element == other.Element);
+                            auto node = dynamic_cast<const Iterator<T>*>(&other);
+                            if (node)
+                                return (Index() == node->Index()) && (Element == node->Element);
+                            else
+                                return false;
                         }
-
-                        T& operator *() override { return Collection->Value; }
-
-                        Iterator& operator ++()
+                        bool operator !=(const ICollectionIterator<T>& other) const override
                         {
-                            ++_index;
-                            Element = Element->Next;
-                            return *this;
+                            return !operator ==(other);
                         }
 
                     private:
-                        const Node<T>* Element;
+                        uint        _index;
+                        Node<T>*    Element;
                 };
 
         };
