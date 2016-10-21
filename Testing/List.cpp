@@ -132,3 +132,14 @@ TEST_F(_List, IndexingOperator)
     ASSERT_EQ(_l1(3), 'd');
     ASSERT_EQ(_l1(4), 'e');
 }
+
+TEST_F(_List, RangedForLoop)
+{
+    uint idx = 0;
+    for (const char& it : _l1)
+        ASSERT_EQ(it, _l1(idx++));
+
+    idx = 0;
+    for (auto it : _l2)
+        ASSERT_EQ(it, _l2(idx++));
+}

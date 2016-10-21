@@ -132,14 +132,16 @@ TEST_F(_Vector, InequalityOperator)
 {
     ASSERT_NE(_v1, _v2);
 }
-//TEST_F(_Vector, RangedForLoop)
-//{
-//    uint idx = 0;
-//    for (const char& it : _v1)
-//    {
-//        ASSERT_EQ(it, _v1(idx++));
-//    }
-//}
+TEST_F(_Vector, RangedForLoop)
+{
+    uint idx = 0;
+    for (const char& it : _v1)
+        ASSERT_EQ(it, _v1(idx++));
+
+    idx = 0;
+    for (auto it : _v2)
+        ASSERT_EQ(it, _v2(idx++));
+}
 TEST_F(_Vector, ElementDeletion)
 {
     for (uint a = 0; a < _v3.Count(); a++)
