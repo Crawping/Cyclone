@@ -28,8 +28,8 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                //virtual ICollectionIterator<T> begin() = 0;
-                //virtual ICollectionIterator<T> end()   = 0;
+                //virtual ICollectionIterator<T>& begin() = 0;
+                //virtual ICollectionIterator<T>& end()   = 0;
 
                 /// <summary> Performs linear indexing of the elements of an array-like collection. </summary>
                 /// <returns> A constant reference to the data element that resides at the inputted array index. </returns>
@@ -52,38 +52,24 @@ namespace Cyclone
         {
             public:
 
-                virtual uint Index() const { return _index; }
-
-                ICollectionIterator() :
-                    _index(0),
-                    Collection(nullptr)
-                {
-
-                }
-                ICollectionIterator(const ICollection<T>* collection, uint index) :
-                    _index(index),
-                    Collection(collection)
-                {
-
-                }
-
-                virtual bool operator ==(const ICollectionIterator<T>& other)   const
-                {
-                    return (Index() == other.Index()) && (Collection == other.Collection);
-                }
-                virtual bool operator !=(const ICollectionIterator<T>& other)   const { return !(*this == other); }
-
-                virtual T& operator *()                                               { return *Collection(_index); }
-                virtual const T& operator *(void)                               const { return *Collection(_index); }
+                /** PROPERTIES **/
+                virtual uint Index() const = 0;
 
 
-                virtual const ICollectionIterator& operator ++()                      { ++_index; return *this; }
-                virtual const ICollectionIterator& operator ++(int)                   { _index++; return *this; }
+
+                /** DESTRUCTOR **/
+                virtual ~ICollectionIterator() { }
 
 
-            protected:
-                uint                    _index;
-                const ICollection<T>*   Collection;
+
+                /** OPERATORS **/
+                virtual bool operator ==(const ICollectionIterator<T>& other)   const = 0;
+                virtual bool operator !=(const ICollectionIterator<T>& other)   const { return !operator ==(other); }
+
+                virtual const T& operator *()                                   const = 0;
+
+                virtual ICollectionIterator& operator ++()                      = 0;
+                virtual ICollectionIterator& operator ++(int)                   { return operator ++(); }
 
         };
 
