@@ -36,6 +36,7 @@ namespace Cyclone
                 /// </remarks>
                 virtual uint InstanceCount()            const { return _count; }
                 virtual CoverModes CoverMode()          const { return _coverMode; }
+                /// <summary> Gets the color of the path's fill area. </summary>
                 virtual const Color4& FillColor()       const { return PrimaryColor(); }
                 virtual FillModes FillMode()            const { return _fillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
@@ -75,15 +76,21 @@ namespace Cyclone
                 SVGAPI virtual Path2D& Add(const IArray<ControlPoint2D>& points);
                 SVGAPI virtual void Clear();
 
-                SVGAPI virtual void Fill() const override;
-                SVGAPI virtual void Stroke() const override;
-                SVGAPI virtual void Update() const override;
+                SVGAPI virtual void Fill()          const override;
+                SVGAPI virtual void Stroke()        const override;
+                SVGAPI virtual void Update()        const override;
 
             protected:
 
                 /** DATA **/
                 List<PathCommands>  Commands;
                 List<float>         Coordinates;
+
+
+
+                /** PROPERTIES **/
+                void NeedsUpdate(bool value)        const { _pathNeedsUpdate = _pathNeedsUpdate ? true : value; }
+
 
             private:
 
