@@ -19,6 +19,7 @@ namespace Cyclone
         class List : public ICollection<T>
         {
             public:
+                template<typename T> struct Node;
                 template<typename T> struct Iterator;
 
 
