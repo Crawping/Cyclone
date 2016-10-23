@@ -22,30 +22,58 @@ namespace Cyclone
                
 
                 /** PROPERTIES **/
+                /// <summary> Gets the two-dimensional bounding area for all contents of the quadtree. </summary>
                 const Area& Bounds()    const 
                 { 
                     if (Root)   { return Root->Bounds(); }
                     else        { return Area::Empty; }
                 }
+                /// <summary> Gets the number of entities stored within the quadtree. </summary>
                 const uint Count()      const { return _count; }
+
                 bool IsEmpty()          const { return Bounds().IsEmpty(); }
+
+                List<Area> Keys()       const
+                {
+                    List<Area> keys;
+                    List<KVP<T>> contents = Root->Contents();
+
+                    for (KVP<T> kvp : contents)
+                        keys.Append(kvp.Bounds);
+
+                    return keys;
+                }
+                List<T> Values()        const
+                {
+                    List<T> values;
+                    List<KVP<T>> contents = Root->Contents();
+
+                    for (KVP<T> kvp : contents)
+                        values.Append(kvp.Value);
+                    
+                    return values;
+                }
 
 
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs an empty quadtree data structure that can be populated with bounded two-dimensional entities. </summary>
                 Quadtree() :
                     _count(0),
                     Root(nullptr)
                 {
 
                 }
+                /// <summary> Destroys heap-allocated resources held by the quadtree. </summary>
                 ~Quadtree()
                 { 
                     if (Root) { delete Root; } 
                 }
 
 
+
                 /** UTILITIES **/
+
                 List<T> Index(const Area& bounds) const
                 {
                     List<T> contents;
@@ -97,7 +125,9 @@ namespace Cyclone
                     public:
 
                         /** PROPERTIES **/
+                        /// <summary> Gets the boundary region of the node. </summary>
                         const Area& Bounds()        const { return _bounds; }
+                        /// <summary> Gets a list of all entities and their boundaries stored within the node and its subtrees. </summary>
                         List<KVP<T>> Contents()     const
                         {
                             if (!Subtrees(0)) { return Values; }
@@ -204,12 +234,15 @@ namespace Cyclone
                         /** PROPERTY DATA **/
                         Area                _bounds;
 
+                        /// <summary> The (NE, NW, SW, SE) ordered subtrees of the node. </summary>
                         Vector<Node<T>*, 4> Subtrees;
+                        /// <summary> A list of entities and their associated boundary regions that are stored in the quadtree node. </summary>
                         List<KVP<T>>        Values;
 
 
 
                         /** UTILITIES **/
+                        /// <summary> Splits a node into four equal-sized quadrants and redistributes stored entities among them. </summary>
                         void Subdivide()
                         {
                             if (Subtrees(0)) { return; }
@@ -225,10 +258,11 @@ namespace Cyclone
                             List<uint> idsToRemove;
                             
                             if (Values.IsEmpty()) { return; }
-                            for (uint a = Values.Count() - 1; a >= 0; a--)
-                                if (Insert(Values(a).Bounds, Values(a).Value))
+                            for (int a = Values.Count() - 1; a >= 0; a--)
+                                if (SubtreeInsert(Values(a).Bounds, Values(a).Value))
                                     Values.Remove(a);
                         }
+
                         List<KVP<T>> SubtreeIndex(const Area& bounds) const
                         {
                             if (!Subtrees(0)) { return List<KVP<T>>(); }
