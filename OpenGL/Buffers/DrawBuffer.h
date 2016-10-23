@@ -201,7 +201,7 @@ namespace Cyclone
                 UniformBuffer<U>                            Entities;
                 /// <summary> A collection of vertices used to build geometry on the GPU. </summary>
                 VertexBuffer<V>                             Vertices;
-
+                /// <summary> A collection of indices that dictate the vertex drawing order. </summary>
                 IndexBuffer                                 Indices;
 
                 std::map<const IRenderable3D<V>*, uint>     EntityIndices;
