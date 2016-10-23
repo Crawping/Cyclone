@@ -16,13 +16,13 @@ namespace Cyclone
         Path2D& Path2D::InitialCap(EndCaps value)
         {
             _initialCap = value;
-            _pathNeedsUpdate = true;
+            _paramsNeedUpdate = true;
             return *this;
         }
         Path2D& Path2D::JoinStyle(JoinStyles value)
         {
             _joinStyle = value;
-            _pathNeedsUpdate = true;
+            _paramsNeedUpdate = true;
             return *this;
         }
         Path2D& Path2D::Path(const string& value)
@@ -35,13 +35,13 @@ namespace Cyclone
         Path2D& Path2D::StrokeWidth(float value)
         {
             _strokeWidth = value;
-            _pathNeedsUpdate = true;
+            _paramsNeedUpdate = true;
             return *this;
         }
         Path2D& Path2D::TerminalCap(EndCaps value)
         {
             _terminalCap = value;
-            _pathNeedsUpdate = true;
+            _paramsNeedUpdate = true;
             return *this;
         }
 
@@ -53,6 +53,7 @@ namespace Cyclone
             _count(count),
             _id(0),
             _pathNeedsUpdate(false),
+            _paramsNeedUpdate(false),
             _strokeWidth(2.0f)
         {
             _id = nvGenPaths(_count);
@@ -73,8 +74,10 @@ namespace Cyclone
             _pathNeedsUpdate = true;
             return *this;
         }
-        Path2D& Path2D::Add(const IArray<ControlPoint2D>& points)
+        Path2D& Path2D::Add(const ICollection<ControlPoint2D>& points)
         {
+            if (points.IsEmpty()) { return; }
+
             for (uint a = 0; a < points.Count(); a++)
                 Add(points(a));
 
@@ -105,6 +108,14 @@ namespace Cyclone
         }
         void Path2D::Update() const
         {
+            UpdatePath();
+            UpdateParameters();
+        }
+
+
+
+        void Path2D::UpdatePath() const
+        {
             if (!_pathNeedsUpdate) { return; }
 
             if (_path.size())
@@ -120,13 +131,18 @@ namespace Cyclone
                     Coordinates.ToVector().ToArray()
                 );
 
+            _pathNeedsUpdate = false;
+        }
+        void Path2D::UpdateParameters() const
+        {
+            if (!_paramsNeedUpdate) { return; }
+
             nvPathParameteri(ID(), PathParameters::JoinStyle, JoinStyle());
             nvPathParameteri(ID(), PathParameters::InitialEndCap, InitialCap());
             nvPathParameterf(ID(), PathParameters::StrokeWidth, StrokeWidth());
             nvPathParameteri(ID(), PathParameters::TerminalEndCap, TerminalCap());
 
-            _pathNeedsUpdate = false;
+            _paramsNeedUpdate = false;
         }
-
     }
 }
