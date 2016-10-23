@@ -20,21 +20,21 @@ namespace Cyclone
     namespace SVG
     {
 
-        class SceneSVG : public IRenderableScene
+        class Scene2D : public IRenderableScene
         {
             public:
 
                 SVGAPI const List<IRenderStage*>& Stages()             const override;
 
-                SceneSVG& Pipeline(GraphicsPipeline* value)     { _settings.Pipeline = value; return *this; }
-                SceneSVG& Projection(ITransformation3D* value)  { _settings.Projection = value; return *this; }
-                SceneSVG& Target(FrameBuffer* value)            { _settings.Target = value; return *this; }
-                SceneSVG& View(ITransformation3D* value)        { _settings.View = value; return *this; }
+                Scene2D& Pipeline(GraphicsPipeline* value)     { _settings.Pipeline = value; return *this; }
+                Scene2D& Projection(ITransformation3D* value)  { _settings.Projection = value; return *this; }
+                Scene2D& Target(FrameBuffer* value)            { _settings.Target = value; return *this; }
+                Scene2D& View(ITransformation3D* value)        { _settings.View = value; return *this; }
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                SVGAPI SceneSVG();
-                SVGAPI ~SceneSVG();
+                SVGAPI Scene2D();
+                SVGAPI ~Scene2D();
 
 
                 SVGAPI void Add(const IRenderable2D<float>& entity);
@@ -48,13 +48,7 @@ namespace Cyclone
                 GraphicsSettings    _settings;
 
                 DrawBuffer2D        Buffers;
-
-
-                //std::set< const IRenderable2D<float>* >     Entities;
-
                 List<IRenderStage*> Stages2D;
-
-                //UniformBuffer<Color4> Colors;
 
         };
     }
