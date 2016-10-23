@@ -59,19 +59,20 @@ class Program : public BasicRenderer
             Vector2 szWin = RenderWindow->Size();
 
             Cube->Scale(100, 100, 100)
-                .Color(Color4::Yellow)
+                .PrimaryColor(Color4::Yellow)
                 .Translate(Vector3(ctrWin - (szWin / 8.0f), 50));
 
-            Cylinder->Color(Color4(0.0f, 0.75f, 1.0f))
+            Cylinder->PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Scale(50, 125, 50)
                 .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50));
 
             Icosahedron->Scale(100, 100, 100)
-                .Color(Color4::Magenta)
+                .PrimaryColor(Color4::Magenta)
                 .Translate(Vector3(ctrWin + (szWin / 8.0f), 50));
 
-            Point.Scale(100, 100, 1)
-                .Color(Color4::Cyan)
+            Point
+                .PrimaryColor(Color4::Cyan)
+                .Scale(100, 100, 1)
                 .Translate(Vector3(ctrWin + (szWin / Vector2(-8.0f, 8.0f))));
 
             RenderScene->Add(*Cube);

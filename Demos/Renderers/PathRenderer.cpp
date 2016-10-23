@@ -29,7 +29,7 @@ namespace Renderers
     {
         AdvancedRenderer::CreateSceneResources();
 
-        PathScene = new SceneSVG();
+        PathScene = new Scene2D();
         PathScene->Pipeline(PipelineSVG)
             .Projection(&Projection)
             .Target(RenderTarget)

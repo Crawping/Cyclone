@@ -9,7 +9,6 @@
 #include "Geometry/DrawingPath.h"
 #include "Geometry/Quad3D.h"
 #include "Geometry/Scene3D.h"
-#include "Geometry/SceneSVG.h"
 #include "Geometry/Path2D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Text/Text2D.h"
@@ -73,13 +72,12 @@ class Program : public PathRenderer
 
             Path
                 .JoinStyle(JoinStyles::Round)
-                .StrokeColor(Color4(1.0f, 0.0f, 0.0f, 0.875f))
                 .StrokeWidth(2)
-
-                .Color(Color4(0.0f, 0.0f, 1.0f, 0.75f));
+                .PrimaryColor(Color4(0.0f, 0.0f, 1.0f, 0.75f))
+                .SecondaryColor(Color4(1.0f, 0.0f, 0.0f, 0.875f));
 
             RenderScene->Add(Quad);
-            PathScene->Add(Path);            
+            PathScene->Add(Path);
         }
         void CreateShaderPipeline() override
         {

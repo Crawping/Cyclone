@@ -53,8 +53,8 @@ class Program : public AdvancedRenderer
             Image->Bind();
 
             Quad
-                .Color(Color4::Blue)
                 .Position(RenderWindow->ClientArea().Center())
+                .PrimaryColor(Color4::Blue)
                 .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f);
 
             RenderScene->Add(Quad);

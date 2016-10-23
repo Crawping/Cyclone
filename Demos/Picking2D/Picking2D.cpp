@@ -43,12 +43,15 @@ class Program : public PathRenderer
 
             Path
                 .PointColor(Color4::Black)
-                .PointSize(8)
+                .PointSize(10)
+
+                .TerminalCap(EndCaps::Triangular)
+                .InitialCap(EndCaps::Triangular)
                 .JoinStyle(JoinStyles::Round)
-                .StrokeColor(Color4(1.0f, 0.0f, 0.0f, 0.875f))
                 .StrokeWidth(2)
 
-                .Color(Color4(0.0f, 0.0f, 1.0f, 0.75f));
+                .PrimaryColor(Color4(0.0f, 0.0f, 1.0f, 0.75f))
+                .SecondaryColor(Color4(1.0f, 0.0f, 0.0f, 0.875f));
 
             PathScene->Add(Path);
         }

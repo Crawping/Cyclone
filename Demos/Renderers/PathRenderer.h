@@ -4,7 +4,7 @@
 
 #pragma once
 #include "AdvancedRenderer.h"
-#include "Geometry/SceneSVG.h"
+#include "Geometry/Scene2D.h"
 
 
 
@@ -19,7 +19,7 @@ namespace Renderers
 
         protected:
 
-            SceneSVG*       PathScene;
+            Scene2D*        PathScene;
             ShaderPipeline* PipelineSVG;
 
 

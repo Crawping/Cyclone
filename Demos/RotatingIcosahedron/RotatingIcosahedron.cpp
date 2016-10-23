@@ -29,8 +29,8 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateSceneResources();
             Icosahedron
-                .Color(Color4::Cyan)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
+                .PrimaryColor(Color4::Cyan)
                 .Pitch(90)
                 .Roll(90)
                 .Scale(100, 100, 100);

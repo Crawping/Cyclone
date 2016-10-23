@@ -35,12 +35,11 @@ class Program : public PathRenderer
             PathRenderer::CreateSceneResources();
 
             Path
-                .StrokeColor(Color4::Cyan)
                 .StrokeWidth(0.0625f)
-
-                .Color(Color4::Red)
-                .Scale(32)
-                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0));
+                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0))
+                .PrimaryColor(Color4::Red)
+                .Scale(128)
+                .SecondaryColor(Color4::Cyan);
 
             PathScene->Add(Path);
         }
@@ -49,6 +48,7 @@ class Program : public PathRenderer
             static float count = 0.0f;
             Path.Z(-250 * sin(count));
             Path.Roll(count);
+            Path.CornerRadius(0.5f * abs(sin(count)));
             count += 0.02f;
 
             PathScene->Update(Path);

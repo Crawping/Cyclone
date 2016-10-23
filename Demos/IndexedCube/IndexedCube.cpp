@@ -38,8 +38,8 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateSceneResources();
             Cube->Scale(100, 100, 100)
-                .Color(Color4::Green)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), -50))
+                .PrimaryColor(Color4::Green)
                 .Pitch(90)
                 .Roll(90);
             RenderScene->Add(*Cube);
@@ -66,7 +66,7 @@ class Program : public BasicRenderer
             );
 
             Cube->Rotate(Vector3(0.01f, 0.05f, 0.01f))
-                .Color(color);
+                .PrimaryColor(color);
             RenderScene->Update(*Cube);
 
             BasicRenderer::UpdateScene();

@@ -11,7 +11,6 @@
 #include "Collections/Vector.h"
 #include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/SceneSVG.h"
 #include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
 
@@ -53,21 +52,22 @@ class Program : public PathRenderer
         {
             PathRenderer::CreateSceneResources();
 
-            Sphere.Scale(100, 100, 100)
-                .Color(Color4(0.0f, 0.75f, 1.0f))
-                .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
+            Sphere
                 .Pitch(90)
-                .Roll(90);
+                .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
+                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
+                .Roll(90)
+                .Scale(100);
 
             Path
                 .Path(SVG)
                 .JoinStyle(JoinStyles::Round)
-                .StrokeColor(Color4::Cyan)
                 .StrokeWidth(2)
 
-                .Color(Color4::Red)
+                .Position(Vector3(RenderWindow->ClientArea().Scale() * Vector2(0.375f, -0.5f), 0.0f))
+                .PrimaryColor(Color4::Red)
                 .Scale(1)
-                .Position(Vector3(RenderWindow->ClientArea().Scale() * Vector2(0.375f, -0.5f), 0.0f));
+                .SecondaryColor(Color4::Cyan);
 
             RenderScene->Add(Sphere);
             PathScene->Add(Path);
@@ -88,7 +88,7 @@ class Program : public PathRenderer
                 0.125f * sinf(Sphere.Roll()) + 0.875
             );
 
-            Sphere.Color(color).Rotate(0.01f);
+            Sphere.PrimaryColor(color).Rotate(0.01f);
             RenderScene->Update(Sphere);
             
             PathRenderer::UpdateScene();

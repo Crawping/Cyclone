@@ -29,11 +29,11 @@ class Program : public BasicRenderer
             BasicRenderer::CreateSceneResources();
 
             Sphere
-                .Color(Color4(0.0f, 0.75f, 1.0f))
-                .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
+                .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
+                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Roll(90)
-                .Scale(100, 100, 100);
+                .Scale(100);
 
             RenderScene->Add(Sphere);
         }

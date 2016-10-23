@@ -31,8 +31,8 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateSceneResources();
             Cube
-                .Color(Color4::Green)
                 .Position(RenderWindow->ClientArea().Center())
+                .PrimaryColor(Color4::Green)
                 .Pitch(90)
                 .Roll(90)
                 .Scale(100, 100, 100);

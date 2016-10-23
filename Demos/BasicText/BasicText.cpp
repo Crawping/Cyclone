@@ -11,7 +11,6 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Geometry/Scene3D.h"
-#include "Geometry/SceneSVG.h"
 #include "Imaging/Color4.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Text/Text2D.h"
@@ -45,11 +44,10 @@ class Program : public PathRenderer
 
             Text
                 .Text("Testing!")
-
-                .StrokeColor(Color4::Black)
-                .Color(Color4::Green)
+                .Position(224, 320)
+                .PrimaryColor(Color4::Green)
                 .Scale(0.05f, 0.05f)
-                .Position(224, 320);
+                .SecondaryColor(Color4::Black);
 
             PathScene->Add(Text);
         }

@@ -26,7 +26,12 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Point.Color(Color4::Blue).Scale(100, 100).Position(RenderWindow->ClientArea().Center());
+
+            Point
+                .Position(RenderWindow->ClientArea().Center())
+                .PrimaryColor(Color4::Blue)
+                .Scale(100);
+
             RenderScene->Add(Point);
         }
         

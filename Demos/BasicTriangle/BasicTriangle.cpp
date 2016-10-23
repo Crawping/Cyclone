@@ -30,7 +30,11 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Triangle.Scale(100, 100).Position(RenderWindow->ClientArea().Center());
+
+            Triangle
+                .Position(RenderWindow->ClientArea().Center())
+                .Scale(100);
+
             RenderScene->Add(Triangle);
         }
 };

@@ -42,44 +42,40 @@ class Program : public PathRenderer
             Path
                 .Path(SVG)
                 .JoinStyle(JoinStyles::Round)
-                .StrokeColor(Color4::Black)
                 .StrokeWidth(2)
 
-                .Color(Color4::Blue)
+                .Position(Vector3(RenderWindow->Size() * Vector2(0.33f, -0.5f), 0.0f))
+                .PrimaryColor(Color4::Blue)
                 .Scale(1)
-                .Position(Vector3(RenderWindow->Size() * Vector2(0.33f, -0.5f), 0.0f));
+                .SecondaryColor(Color4::Black);
 
             BottomLabel
                 .Text("Bottom")
-                .StrokeColor(Color4::Green)
-                .Color(Color4::Yellow)
-
                 .Position(425, 288)
-                .Scale(0.0125f, 0.0125f);
+                .PrimaryColor(Color4::Yellow)
+                .Scale(0.0125f, 0.0125f)
+                .SecondaryColor(Color4::Green);
 
             LeftLabel
                 .Text("Left")
-                .StrokeColor(Color4::Green)
-                .Color(Color4::Yellow)
-
+                .PrimaryColor(Color4::Yellow)
                 .Position(275, 433)
-                .Scale(0.0125f, 0.0125f);
+                .Scale(0.0125f, 0.0125f)
+                .SecondaryColor(Color4::Green);
 
             RightLabel
                 .Text("Right")
-                .StrokeColor(Color4::Green)
-                .Color(Color4::Yellow)
-
                 .Position(600, 433)
-                .Scale(0.0125f, 0.0125f);
+                .PrimaryColor(Color4::Yellow)
+                .Scale(0.0125f, 0.0125f)
+                .SecondaryColor(Color4::Green);
             
             TopLabel
                 .Text("Top")
-                .StrokeColor(Color4::Green)
-                .Color(Color4::Yellow)
-
                 .Position(440, 585)
-                .Scale(0.0125f, 0.0125f);
+                .PrimaryColor(Color4::Yellow)
+                .Scale(0.0125f, 0.0125f)
+                .SecondaryColor(Color4::Green);
 
             PathScene->Add(Path);
             PathScene->Add(BottomLabel);
