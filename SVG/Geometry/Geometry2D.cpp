@@ -29,9 +29,9 @@ namespace Cyclone
         }
         Vector<ControlPoint2D> Geometry2D::Rectangle()
         {
-            return 
+            return
             {
-                { PathCommands::Rectangle,  { 0, 0, 100, 100 } },
+                { PathCommands::Rectangle,  { -0.5f, -0.5f, 1.0f, 1.0f } },
                 { PathCommands::Close,      { } },
             };
         }
@@ -40,7 +40,7 @@ namespace Cyclone
         {
             return
             {
-                { PathCommands::RoundedRectangle,   { 0, 0, 100, 100, 12 } },
+                { PathCommands::RoundedRectangle,   { -0.5f, -0.5f, 1.0f, 1.0f, 0.25f } },
                 { PathCommands::Close,              { } },
             };
         }
