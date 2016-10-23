@@ -58,7 +58,6 @@ namespace Cyclone
             _needsReallocation = true;
             _needsUpdate = true;
         }
-
         void DrawBuffer2D::Update()
         {
             if (!NeedsUpdate()) { return; }
@@ -127,5 +126,6 @@ namespace Cyclone
                     Add(entity2D);
             }
         }
+
     }
 }

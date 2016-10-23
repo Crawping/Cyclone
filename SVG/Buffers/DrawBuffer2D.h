@@ -23,17 +23,24 @@ namespace Cyclone
                 
                 List<const IRenderable2D<float>*> Entities() const;
 
-
+                
+                /** PROPERTIES **/
+                /// <summary> Gets the number of renderable entities stored within the buffer. </summary>
                 uint Count()        const override { return EntityIndices.size(); }
+                /// <summary> Gets the unique numeric identifier associated with the color buffer. </summary>
                 uint ID()           const override { return ColorBuffer.ID(); }
+                /// <summary> Gets whether the GPU-side buffer contents require updating. </summary>
                 bool NeedsUpdate()  const override { return _needsUpdate || _needsReallocation; }
 
 
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs a new empty draw buffer that can be populated with renderable 2D entities. </summary>
                 SVGAPI DrawBuffer2D();
-                SVGAPI DrawBuffer2D(DrawBuffer2D&& other) = delete;
-                SVGAPI DrawBuffer2D(const DrawBuffer2D& other) = delete;
+                /// <summary> Prevents the draw buffer from being moved. </summary>
+                SVGAPI DrawBuffer2D(DrawBuffer2D&& other)       = delete;
+                /// <summary> Prevents the draw buffer from being copied. </summary>
+                SVGAPI DrawBuffer2D(const DrawBuffer2D& other)  = delete;
 
 
 
@@ -49,15 +56,16 @@ namespace Cyclone
                 SVGAPI void BindEntity(int slot = 0)    const override { ColorBuffer.BindEntity(); }
                 SVGAPI void BindResources()             const override { ColorBuffer.BindResources(); }
 
-                SVGAPI void Unbind()            const override { UnbindEntity(); UnbindResources(); }
-                SVGAPI void UnbindEntity()      const override { ColorBuffer.UnbindEntity(); }
-                SVGAPI void UnbindResources()   const override { ColorBuffer.UnbindResources(); }
+                SVGAPI void Unbind()                    const override { UnbindEntity(); UnbindResources(); }
+                SVGAPI void UnbindEntity()              const override { ColorBuffer.UnbindEntity(); }
+                SVGAPI void UnbindResources()           const override { ColorBuffer.UnbindResources(); }
 
-                SVGAPI void Update() override;
+                SVGAPI void Update()                    override;
                 SVGAPI void Update(const IRenderable2D<float>& entity);
 
             private:
             
+                /** DATA **/
                 bool _needsReallocation;
                 bool _needsUpdate;
 
@@ -66,6 +74,8 @@ namespace Cyclone
                 std::set<const IRenderable2D<float>*>           ToUpdate;
 
 
+
+                /** UTILITIES **/
                 void Add(const IRenderable3D<float>* entity);
                 void Update(const IRenderable3D<float>* entity);
                 
