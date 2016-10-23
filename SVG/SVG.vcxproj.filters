@@ -28,14 +28,14 @@
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="RenderStage2D.h" />
-    <ClInclude Include="Geometry\SceneSVG.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IRenderable2D.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Buffers\DrawBuffer2D.h">
       <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Scene2D.h">
+      <Filter>Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -72,11 +72,11 @@
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="RenderStage2D.cpp" />
-    <ClCompile Include="Geometry\SceneSVG.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Buffers\DrawBuffer2D.cpp">
       <Filter>Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Scene2D.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
