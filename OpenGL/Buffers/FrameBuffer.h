@@ -35,7 +35,7 @@ namespace Cyclone
                 /// <summary> Gets the numeric handle (or 'Name' in OpenGL jargon) associated with this framebuffer. </summary>
                 uint ID()               const override { return _id; }
                 /// <summary> Gets the width and height of this framebuffer in pixels. </summary>
-                const Vector2& Size()   const { return _size; }
+                const Vector3& Size()   const { return (Vector3)_size; }
 
                 TextureTargets Target() const { return _target; }
                 /// <summary> Gets the width of this framebuffer in pixels. </summary>
@@ -48,8 +48,12 @@ namespace Cyclone
                 OpenGLAPI FrameBuffer();
                 /// <summary> Constructs a new framebuffer object that can be used to render images. </summary>
                 /// <param name="size">
-                ///     The desired width and height (in pixels) of the framebuffer, specified respectively as
-                ///     the X and Y components of a two-element vector.
+                ///     The (x, y, z, w) size of the texture objects that comprise the framebuffer. 
+                ///     <para> </para>
+                ///     Texture size is specified as a four-element vector containing width, height, depth, 
+                ///     and count values, in that order. If a multisampled texture is being requested, then 
+                ///     the vector's 'W' component is interpretted as the sample count. Otherwise, this value 
+                ///     is interpretted as the mipmap level count for the texture's storage.
                 /// </param>
                 /// <param name="colorFormat">
                 ///     The desired format of the color texture attachment.
@@ -62,9 +66,9 @@ namespace Cyclone
                 ///     DEFAULT: TextureFormats::DepthFloat
                 /// </param>
                 /// <returns></returns>
-                OpenGLAPI FrameBuffer(const Vector2& size, TextureFormats colorFormat = TextureFormats::Byte4, TextureFormats depthFormat = TextureFormats::DepthFloat);
+                OpenGLAPI FrameBuffer(const Vector4& size, TextureFormats colorFormat = TextureFormats::Byte4, TextureFormats depthFormat = TextureFormats::DepthFloat);
 
-                OpenGLAPI FrameBuffer(const Vector2& size, TextureFormats colorFormat, TextureFormats depthFormat, TextureTargets target);
+                OpenGLAPI FrameBuffer(const Vector4& size, TextureFormats colorFormat, TextureFormats depthFormat, TextureTargets target);
                 /// <summary> Unbinds the framebuffer and destroys all resources that are held by it. </summary>
                 OpenGLAPI ~FrameBuffer();
 
@@ -94,7 +98,7 @@ namespace Cyclone
                 ///     Framebuffers constructed via this method contain only a color buffer attachment; the depth buffer is left as
                 ///     a null pointer. This enables render-to-texture functionality but disables depth testing.
                 /// </remarks>
-                static OpenGLAPI FrameBuffer* ColorBuffer(const Vector2& size, TextureFormats format = TextureFormats::Byte4);
+                static OpenGLAPI FrameBuffer* ColorBuffer(const Vector4& size, TextureFormats format = TextureFormats::Byte4);
                 /// <summary> Constructs a framebuffer object containing only a single depth buffer attachment. </summary>
                 /// <param name="size">
                 ///     The desired width and height of the depth texture that will be attached to this framebuffer
@@ -117,7 +121,7 @@ namespace Cyclone
                 ///     Framebuffers constructed via this method contain only a depth buffer attachment; the color buffer is left as
                 ///     a null pointer. This enables depth testing functionality but disables the rendering of colors to a texture.
                 /// </remarks>
-                static OpenGLAPI FrameBuffer* DepthBuffer(const Vector2& size, TextureFormats format = TextureFormats::DepthFloat);
+                static OpenGLAPI FrameBuffer* DepthBuffer(const Vector4& size, TextureFormats format = TextureFormats::DepthFloat);
 
 
 
@@ -165,7 +169,7 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 uint            _id;
-                Vector2         _size;
+                Vector4         _size;
                 TextureTargets  _target;
 
 

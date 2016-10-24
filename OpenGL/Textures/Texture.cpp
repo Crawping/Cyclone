@@ -1,5 +1,6 @@
 #include "Console.h"
-#include "Texture.h"
+#include "Utilities.h"
+#include "Textures/Texture.h"
 
 
 
@@ -19,7 +20,7 @@ namespace Cyclone
         Texture3D& Texture3D::MipmapCount(uint value)
         {
             if (value == MipmapCount()) { return *this; }
-            _mipmapCount = value;
+            _size.W = value > 1 ? value : 1.0f;
             _needsUpdate = true;
             return *this;
         }
@@ -44,21 +45,20 @@ namespace Cyclone
         Texture3D::Texture3D() :
             _handle(0),
             _id(0),
-            _mipmapCount(4),
             _needsUpdate(true)
         {
 
         }            
-        Texture3D::Texture3D(const Vector3& size, TextureFormats format, TextureTargets target) :
+        Texture3D::Texture3D(const Vector4& size, TextureFormats format, TextureTargets target) :
             _format(format),
             _handle(0),
             _id(0),
-            _mipmapCount(4),
             _needsUpdate(true),
             _size(size),
             _target(target)
         {
-            
+            if (!IsMultisampled() && _size.W < 1.0f)
+                _size.W = 1.0f;
         }
         Texture3D::~Texture3D()
         {
@@ -125,7 +125,7 @@ namespace Cyclone
                     glTextureStorage2D(ID(), MipmapCount(), Format(), (int)Width(), (int)Height());
                     break;
                 case TextureTargets::Texture2DMS:
-                    glTextureStorage2DMultisample(ID(), 4, Format(), (int)Width(), (int)Height(), true);
+                    glTextureStorage2DMultisample(ID(), SampleCount(), Format(), (int)Width(), (int)Height(), true);
                     break;
 
                 case TextureTargets::Texture3D:

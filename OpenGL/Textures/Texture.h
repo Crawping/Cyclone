@@ -8,7 +8,7 @@
 
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IBindable.h"
-#include "Math/Vector3.h"
+#include "Math/Vector4.h"
 
 
 
@@ -25,7 +25,10 @@ namespace Cyclone
                 virtual uint Depth()            const { return (uint)_size.Z; }
                 virtual TextureFormats Format() const { return _format; }
                 /// <summary> Gets the direct handle reference to the texture on the GPU. </summary>
-                /// <remarks> This property is associated with the OpenGL bindless texturing extension and is not yet enabled for use. </remarks>                
+                /// <remarks> 
+                ///     This property is associated with the OpenGL bindless texturing extension and is not 
+                ///     yet enabled for use. 
+                /// </remarks>
                 virtual ulong Handle()          const { return _handle; }
                 /// <summary> Gets the height of the texture in texels. </summary>
                 virtual uint Height()           const { return (uint)_size.Y; }
@@ -33,12 +36,16 @@ namespace Cyclone
                 virtual uint ID()               const override { return _id; }
                 /// <summary> Gets whether the texture has any zero-length dimensions. </summary>
                 virtual bool IsEmpty()          const { return Height() && Width() && Depth(); }
+
+                virtual bool IsMultisampled()   const { return Target() == TextureTargets::Texture2DMS; }
                 /// <summary> Gets the number of mipmap levels associated with the texture. </summary>
-                virtual uint MipmapCount()      const { return _mipmapCount; }
+                virtual uint MipmapCount()      const { return IsMultisampled() ? 1 : (uint)_size.W; }
                 
                 virtual bool NeedsUpdate()      const { return _needsUpdate; }
+                /// <summary> Gets the number of samples associated with each texel of the texture. </summary>
+                virtual uint SampleCount()      const { return IsMultisampled() ? (uint)_size.W : 0; }
                 /// <summary> Gets the (x, y, z) size of the texture in texels. </summary>
-                virtual const Vector3& Size()   const { return _size; }
+                virtual const Vector3& Size()   const { return (Vector3)_size; }
 
                 virtual TextureTargets Target() const { return _target; }
                 /// <summary> Gets the width of the texture in texels. </summary>
@@ -51,8 +58,20 @@ namespace Cyclone
 
 
 
-                /** CONSTRUCTOR & DESTRUCTOR **/                
-                OpenGLAPI Texture3D(const Vector3& size, TextureFormats format, TextureTargets target);
+                /** CONSTRUCTOR & DESTRUCTOR **/
+                /// <summary> Constructs a new texture object of the specified size, format, and type. </summary>
+                /// <param name="size"> 
+                ///     The desired (x, y, z, w) size of the texture. 
+                ///     <para> </para>
+                ///     Texture size is specified as a four-element vector containing width, height, depth, 
+                ///     and count values, in that order. If a multisampled texture is being requested, then 
+                ///     the vector's 'W' component is interpretted as the sample count. Otherwise, this value 
+                ///     is interpretted as the desired number of mipmap levels for the texture's storage.
+                /// </param>
+                /// <param name="format"> One of the <see cref="TextureFormat"/> enumerators specifying the format of the texture's data. </param>
+                /// <param name="target"> One of the <see cref="TextureTarget"/> enumerators specifying the type of the texture. </param>
+                OpenGLAPI Texture3D(const Vector4& size, TextureFormats format, TextureTargets target);
+                /// <summary> Destroys the texture object and all associated resources. </summary>
                 OpenGLAPI virtual ~Texture3D();
 
 
@@ -114,9 +133,8 @@ namespace Cyclone
                 TextureFormats  _format;
                 ulong           _handle;
                 uint            _id;
-                uint            _mipmapCount;
                 bool            _needsUpdate;
-                Vector3         _size;
+                Vector4         _size;
                 TextureTargets  _target;
 
         };
