@@ -28,7 +28,7 @@ namespace Renderers
 
             
             /** CONSTRUCTOR **/
-            RendererAPI AdvancedRenderer(const Area& displayArea, const string& title, int nsamples = 4);
+            RendererAPI AdvancedRenderer(const Area& displayArea, const string& title, uint nsamples = 4);
 
 
 

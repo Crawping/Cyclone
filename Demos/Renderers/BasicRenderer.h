@@ -80,7 +80,7 @@ namespace Renderers
             /** CONSTRUCTOR **/
             /// <summary> Constructs a basic renderer that can be used to display geometric primitives. </summary>
             /// <param name="title"> The title string to be displayed on the rendering window's upper border. </param>
-            RendererAPI BasicRenderer(const Area& displayArea, const string& title, int nsamples = 0);
+            RendererAPI BasicRenderer(const Area& displayArea, const string& title, uint nsamples = 0);
             
 
             

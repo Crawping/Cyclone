@@ -15,7 +15,7 @@ namespace Renderers
 {
 
     /** CONSTRUCTOR & DESTRUCTOR **/
-    BasicRenderer::BasicRenderer(const Area& displayArea, const string& title, int nsamples) :
+    BasicRenderer::BasicRenderer(const Area& displayArea, const string& title, uint nsamples) :
         _canContinue(true),
         ClearColor(Color4::Gray),
         Renderer(nullptr),
@@ -75,9 +75,10 @@ namespace Renderers
         if (RenderTarget)
             delete RenderTarget;
 
+        Vector2 szWin = RenderWindow->ClientArea().Scale();
         RenderTarget = new FrameBuffer
 		(
-			RenderWindow->ClientArea().Scale(),
+			Vector4(szWin.X, szWin.Y, 1.0f, SamplesMSAA),
 			TextureFormats::Byte4,
 			TextureFormats::DepthStencil,
 			SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D

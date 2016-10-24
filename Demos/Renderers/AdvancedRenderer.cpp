@@ -13,7 +13,7 @@ namespace Renderers
 {
 
 	/** CONSTRUCTOR **/
-    AdvancedRenderer::AdvancedRenderer(const Area& displayArea, const string& title, int nsamples) :
+    AdvancedRenderer::AdvancedRenderer(const Area& displayArea, const string& title, uint nsamples) :
         BasicRenderer(displayArea, title, nsamples),
         IsFreeLookEnabled(true),
         MoveSpeed(16.0f)
