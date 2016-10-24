@@ -76,7 +76,7 @@ namespace Cyclone
         }
         Path2D& Path2D::Add(const ICollection<ControlPoint2D>& points)
         {
-            if (points.IsEmpty()) { return; }
+            if (points.IsEmpty()) { return *this; }
 
             for (uint a = 0; a < points.Count(); a++)
                 Add(points(a));
