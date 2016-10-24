@@ -17,10 +17,10 @@ TODOS:
 
 - 2D Rendering
 	-- Fonts & text                             (PRELIMINARY)
-	-- SVG images                               (IN PROGRESS)
+	-- SVG images                               
         > Path string parsing
         > XML file parsing
-    -- Rounded rectangles                       (PRELIMINARY)
+    -- Rounded rectangles                       (DONE)
     -- Color gradients
     -- Enable/disable stroking & filling        (DONE)
     -- Proper scaling of SVG elements
@@ -56,13 +56,13 @@ TODOS:
 	-- Implement ICollection interface			(PRELIMINARY)
 	-- Generalized Multidimensional Arrays
 	-- Lists									(DONE)
-        > Efficient iteration
+        > Efficient iteration                   (DONE)
     -- Vectors                                  (PRELIMINARY)
         > Static checking of initializer list
           length for stack vectors
     -- Trees
         > BST
-        > Quadtree                              (IN PROGRESS)
+        > Quadtree                              (PRELIMINARY)
         > Octree
 
 - Rename
