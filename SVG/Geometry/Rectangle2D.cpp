@@ -1,4 +1,5 @@
 #include "Geometry/Rectangle2D.h"
+#include "Geometry/Geometry2D.h"
 
 
 
@@ -6,22 +7,35 @@ namespace Cyclone
 {
     namespace SVG
     {
-
-        Rectangle2D& Rectangle2D::CornerRadius(float value)
+        Rectangle2D& Rectangle2D::Position(const Vector3& value)
         {
-            _cornerRadius = value;
+            Coordinates(0) = value.X;
+            Coordinates(1) = value.Y;
+            NeedsUpdate(true);
             return *this;
         }
 
-        Rectangle2D::Rectangle2D(float cornerRadius) : 
-            _cornerRadius(cornerRadius)
+
+        Rectangle2D& Rectangle2D::CornerRadius(float value)
         {
-            Vector<ControlPoint2D> rect = 
-            {
-                { PathCommands::RoundedRectangle, { -0.5, -0.5, 1, 1, CornerRadius() } },
-                { PathCommands::Close,            { } },
-            };
-            Path2D::Add(rect);
+            if (value == CornerRadius()) { return *this; }
+            Coordinates(4) = value;
+            NeedsUpdate(true);
+            return *this;
+        }
+        Rectangle2D& Rectangle2D::Size(const Vector2& value)
+        {
+            Coordinates(2) = value.X;
+            Coordinates(3) = value.Y;
+            NeedsUpdate(true);
+            return *this;
+        }
+
+
+        Rectangle2D::Rectangle2D(float cornerRadius)
+        {
+            Path2D::Add(Geometry2D::RoundedRectangle());
+            CornerRadius(cornerRadius);
         }
     }
 }

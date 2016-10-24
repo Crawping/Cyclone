@@ -15,16 +15,19 @@ namespace Cyclone
         {
             public:
                             
-                float CornerRadius() const { return _cornerRadius; }
+                /** PROPERTIES **/
+                float CornerRadius() const { return Coordinates(4); }
 
                 SVGAPI Rectangle2D& CornerRadius(float value);
 
-                SVGAPI Rectangle2D(float cornerRadius = 0.25f);
+                SVGAPI Rectangle2D& Position(const Vector3& value) override;
 
-            private:
+                SVGAPI Rectangle2D& Size(const Vector2& value);
 
-                float _cornerRadius;
-                
+
+
+                /** CONSTRUCTOR **/
+                SVGAPI Rectangle2D(float cornerRadius = 0.0f);               
 
         };
     }
