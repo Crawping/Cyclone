@@ -17,7 +17,7 @@ namespace Cyclone
         /** ARRAY UTILITIES **/
         /// <summary> Converts 2D matrix subscripts into an equivalent 1D linear index for column-major arrays. </summary>
         UtilitiesAPI int sub2ind(int nrows, int ncols, int a, int b);
-
+        /// <summary> Finds the next number greater than <see cref="x"/> that is also an integer power of two. </summary>
         UtilitiesAPI uint nextpow2(uint x);
 
         
