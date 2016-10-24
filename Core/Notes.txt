@@ -46,7 +46,7 @@ TODOS:
     -- Persistently mapped buffers				(PRELIMINARY)
     -- Customizable access intents				(DONE)
     -- Direct storage access & manipulation
-    -- Configurable MSAA counts for FBOs
+    -- Configurable MSAA counts for FBOs        (DONE)
 
 - Primitive Types
 	-- Arbitrary precision numbers
