@@ -115,9 +115,10 @@ namespace Cyclone
 			RenderTarget = nullptr;
 		}
 
+        Vector2 szWin = RenderWindow->ClientArea().Scale();
 		RenderTarget = new FrameBuffer
 		(
-			RenderWindow->ClientArea().Scale(),
+			Vector4(szWin.X, szWin.Y, 1.0f, 4.0f),
 			TextureFormats::Byte4,
 			TextureFormats::DepthStencil,
 			TextureTargets::Texture2DMS
