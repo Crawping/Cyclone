@@ -11,38 +11,30 @@ namespace Cyclone
         /** PROPERTIES **/
         Texture3D& Texture3D::Format(TextureFormats value)
         {
-            if (value != _format)
-            {
-                _format = value;
-                _needsUpdate = true;
-            }
+            if (value == Format()) { return *this; }
+            _format = value;
+            _needsUpdate = true;
             return *this;
         }
         Texture3D& Texture3D::MipmapCount(uint value)
         {
-            if (value != _mipmapCount)
-            {
-                _mipmapCount = value;
-                _needsUpdate = true;
-            }
+            if (value == MipmapCount()) { return *this; }
+            _mipmapCount = value;
+            _needsUpdate = true;
             return *this;
         }
         Texture3D& Texture3D::Size(const Vector3& value)
         {
-            if (value != _size)
-            {
-                _size = value;
-                _needsUpdate = true;
-            }
+            if (value == Size()) { return *this; }
+            _size = value;
+            _needsUpdate = true;
             return *this;
         }
         Texture3D& Texture3D::Target(TextureTargets value)
         {
-            if (value != _target)
-            {
-                _target = value;
-                _needsUpdate = true;
-            }
+            if (value == Target())
+            _target = value;
+            _needsUpdate = true;
             return *this;
         }
 
@@ -106,15 +98,15 @@ namespace Cyclone
         /** TEXTURE UTILITIES **/
         void Texture3D::GenerateMipmap()
         {
-            Update();
-            if (IsEmpty() || Target() == TextureTargets::Texture2DMS) 
+            if ( IsEmpty() || !MipmapCount() || (Target() == TextureTargets::Texture2DMS) ) 
                 return;
+
+            Update();
             glGenerateTextureMipmap(ID());
         }
         void Texture3D::Update()
         {
             if (!NeedsUpdate()) { return; }
-
             Reallocate();
             _needsUpdate = false;
         }

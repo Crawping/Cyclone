@@ -34,7 +34,7 @@ namespace Cyclone
                 /// <summary> Gets whether the texture has any zero-length dimensions. </summary>
                 virtual bool IsEmpty()          const { return Height() && Width() && Depth(); }
                 /// <summary> Gets the number of mipmap levels associated with the texture. </summary>
-                virtual bool MipmapCount()      const { return _mipmapCount; }
+                virtual uint MipmapCount()      const { return _mipmapCount; }
                 
                 virtual bool NeedsUpdate()      const { return _needsUpdate; }
                 /// <summary> Gets the (x, y, z) size of the texture in texels. </summary>
@@ -58,7 +58,11 @@ namespace Cyclone
 
 
                 /** BINDING UTILITIES **/
+                /// <summary> Summarily binds the texture object and its associated resources to the GPU rendering pipeline. </summary>
+                /// <param name="slot"> The desired texture binding slot, which is <c>0</c> by default. </param>
                 void Bind(int slot = 0)                 const override { BindEntity(slot); BindResources(); }
+                /// <summary> Binds the texture object to the GPU rendering pipeline. </summary>
+                /// <param name="slot"> The desired texture binding slot, which is <c>0</c> by default. </param>
                 OpenGLAPI void BindEntity(int slot = 0) const override;
                 void BindResources()                    const override { }
 
@@ -69,6 +73,13 @@ namespace Cyclone
 
 
                 /** TEXTURE UTILITIES **/
+                /// <summary> Generates lower resolution image data to populate the mipmap levels of the texture. </summary>
+                /// <remarks> 
+                ///     Space for texture mipmaps must first be reserved during object allocation. If no mipmap levels 
+                ///     have been allocated (i.e. the <see cref="MipmapCount"/> is zero), or the texture contains a 
+                ///     zero-length dimension, or the texture target is a multisampled one, mipmap generation will 
+                ///     silently fail.
+                /// </remarks>
                 OpenGLAPI virtual void GenerateMipmap();
                 OpenGLAPI virtual void MakeNonresident();
                 OpenGLAPI virtual void MakeResident();
@@ -77,6 +88,7 @@ namespace Cyclone
             protected:
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs an empty texture object that can be manually initialized by subclasses. </summary>
                 OpenGLAPI Texture3D();
 
 
@@ -90,11 +102,10 @@ namespace Cyclone
                 /// </remarks>
                 OpenGLAPI virtual void Allocate();
                 /// <summary> Creates the texture object on the GPU. </summary>
-                /// <remarks>
-                ///     
-                /// </remarks>
                 OpenGLAPI virtual void Create();
+                /// <summary> Destroys the texture object on the GPU. </summary>
                 OpenGLAPI virtual void Destroy();
+                /// <summary> Summarily destroys and recreates the texture object on the GPU. </summary>
                 OpenGLAPI virtual void Reallocate();
 
             private:
