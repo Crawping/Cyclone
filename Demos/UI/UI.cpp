@@ -4,8 +4,8 @@
 
 #include "NVPR.h"
 #include "PathRenderer.h"
+#include "Controls/Button.h"
 #include "Geometry/Rectangle2D.h"
-#include "Button.h"
 
 using namespace Renderers;
 using namespace Cyclone::SVG;
