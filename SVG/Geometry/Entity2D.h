@@ -3,16 +3,19 @@
  */
 
 #pragma once
-
-#include "Area.h"
+#include "Math/Vector2.h"
+#include "Spatial/Area.h"
 
 
 
 namespace Cyclone
 {
-    namespace OpenGL
+    namespace
     {
-        class ShaderPipeline;
+        using namespace Utilities;
+    }
+    namespace SVG
+    {        
 
         class Entity2D
         {
@@ -47,14 +50,7 @@ namespace Cyclone
         
                 /** DESTRUCTOR **/
                 virtual ~Entity2D() { }
-        
-        
-        
-                /** UTILITIES **/
-                virtual void Render(ShaderPipeline* shaders) = 0;
-        
-        
-        
+               
             protected:
         
                 Area _displayArea;

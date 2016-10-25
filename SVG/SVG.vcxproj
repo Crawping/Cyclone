@@ -131,6 +131,7 @@
     <ClInclude Include="EnumerationsSVG.h" />
     <ClInclude Include="Geometry\ControlPoint2D.h" />
     <ClInclude Include="Geometry\DrawingPath.h" />
+    <ClInclude Include="Geometry\Entity2D.h" />
     <ClInclude Include="Geometry\Geometry2D.h" />
     <ClInclude Include="Geometry\Path2D.h" />
     <ClInclude Include="Geometry\Point2D.h" />
@@ -145,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="Buffers\DrawBuffer2D.cpp" />
     <ClCompile Include="Geometry\DrawingPath.cpp" />
+    <ClCompile Include="Geometry\Entity2D.cpp" />
     <ClCompile Include="Geometry\Geometry2D.cpp" />
     <ClCompile Include="Geometry\Path2D.cpp" />
     <ClCompile Include="Geometry\Rectangle2D.cpp" />

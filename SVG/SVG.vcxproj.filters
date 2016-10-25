@@ -37,6 +37,9 @@
     <ClInclude Include="Geometry\Scene2D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\Entity2D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geometry">
@@ -76,6 +79,9 @@
       <Filter>Buffers</Filter>
     </ClCompile>
     <ClCompile Include="Geometry\Scene2D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Entity2D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
