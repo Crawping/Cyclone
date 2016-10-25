@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="UIAPI.h" />
+    <ClInclude Include="StyleUI.h" />
+    <ClInclude Include="Interfaces\IInterfaceControl.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\InterfaceControl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{ed8ab15d-5e68-4a83-b91e-3c88cb578de0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{5cf7cdca-6da5-456c-8291-bcc9771c9f0d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Button.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
