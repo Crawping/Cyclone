@@ -29,17 +29,19 @@ namespace Cyclone
                 bool IsEnabled()                const { return _isEnabled; }
 
 
-                Button& IsEnabled(bool value)   { _isEnabled = false; return *this; }
+                UIAPI Button& IsEnabled(bool value);
+                UIAPI Button& Text(const string& value);
 
 
 
                 /** EVENTS **/
-                Event<const Button&> OnHover;
-                Event<const Button&> OnPress;
-                Event<const Button&> OnRelease;
+                //Event<const Button&> OnHover;
+                //Event<const Button&> OnPress;
+                //Event<const Button&> OnRelease;
+
 
                 
-                UIAPI Button() : Rectangle2D() { }
+                UIAPI Button();
 
 
 
