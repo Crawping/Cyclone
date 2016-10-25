@@ -18,11 +18,15 @@ namespace Cyclone
         {
             public:
                 
+                /** PROPERTIES **/
+                virtual Vector2 Offset()    const = 0;
+                virtual Vector2 Size()      const = 0;
+
                 virtual ~IRenderable2D() { }
 
-                virtual void Fill()     const = 0;
-                virtual void Stroke()   const = 0;
-                virtual void Update()   const = 0;
+                virtual void Fill()         const = 0;
+                virtual void Stroke()       const = 0;
+                virtual void Update()       const = 0;
 
         };
 
