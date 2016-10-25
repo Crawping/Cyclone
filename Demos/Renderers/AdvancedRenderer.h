@@ -33,7 +33,7 @@ namespace Renderers
 
 
             /** INITIALIZATION UTILITIES **/
-
+            /// <summary> Creates a rendering pipeline using the Blinn-Phong shader programs. </summary>
             RendererAPI virtual void CreateShaderPipeline() override;
 
 
