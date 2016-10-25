@@ -35,9 +35,11 @@ namespace Cyclone
                 ///     is almost exclusively used only by text rendering.
                 /// </remarks>
                 virtual uint InstanceCount()            const { return _count; }
+
                 virtual CoverModes CoverMode()          const { return _coverMode; }
                 /// <summary> Gets the color of the path's fill area. </summary>
                 virtual const Color4& FillColor()       const { return PrimaryColor(); }
+
                 virtual FillModes FillMode()            const { return _fillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
                 virtual uint ID()                       const { return _id; }
@@ -56,12 +58,15 @@ namespace Cyclone
                 /// <summary> Gets the end cap style used to terminate path segments. </summary>
                 virtual EndCaps TerminalCap()           const { return _terminalCap; }
 
+
                 SVGAPI virtual Path2D& CoverMode(CoverModes value);
+
                 SVGAPI virtual Path2D& FillMode(FillModes value);
                 /// <summary> Sets the end cap style used to initiate path segments. </summary>
                 SVGAPI virtual Path2D& InitialCap(EndCaps value);
                 /// <summary> Sets the joint style used to connect two path segments. </summary>
                 SVGAPI virtual Path2D& JoinStyle(JoinStyles value);
+
                 SVGAPI virtual Path2D& Path(const string& value);
                 /// <summary> Sets the color of the path's surrounding stroke. </summary>
                 SVGAPI virtual Path2D& StrokeColor(const Color4& value);
