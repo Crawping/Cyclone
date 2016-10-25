@@ -9,7 +9,10 @@
     <ClInclude Include="Controls\InterfaceControl.h">
       <Filter>Controls</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="Controls\InterfaceLayer.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\Button.h">
       <Filter>Controls</Filter>
     </ClInclude>
   </ItemGroup>
@@ -22,7 +25,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="Controls\InterfaceLayer.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\Button.cpp">
       <Filter>Controls</Filter>
     </ClCompile>
   </ItemGroup>
