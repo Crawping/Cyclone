@@ -17,6 +17,20 @@ namespace Cyclone
 
     namespace UI
     {
+        struct ControlStyle
+        {
+            Color4      BackgroundColor;
+            Area        BackgroundArea;
+            Color4      BorderColor;
+            Border      BorderWidth;
+            Border      BorderRadius;
+            string      FontName;
+            float       FontSize;
+            uint        FontWeight;
+            Color4      ForegroundColor;
+        };
+
+
         class InterfaceControl : public IInterfaceControl
         {
             public:
@@ -36,21 +50,5 @@ namespace Cyclone
 
         };
 
-
-
-
-
-        struct ControlStyle
-        {
-            Color4      BackgroundColor;
-            Area        BackgroundArea;
-            Color4      BorderColor;
-            Border      BorderWidth;
-            Border      BorderRadius;
-            string      FontName;
-            float       FontSize;
-            uint        FontWeight;
-            Color4      ForegroundColor;
-        };
     }
 }
