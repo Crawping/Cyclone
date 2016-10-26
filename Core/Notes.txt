@@ -82,7 +82,7 @@ TODOS:
 	-- Fix multithreaded compilation            (DONE)
 	-- Picking & hit testing
     -- Remove OpenGL from EnumerationsGL
-    -- State settings for the GPU class         (IN PROGRESS)
+    -- State settings for the GPU class         (PRELIMINARY)
 
 - Scenes
     -- Varying vertex topologies				(DONE)
