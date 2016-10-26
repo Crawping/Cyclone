@@ -66,7 +66,7 @@ namespace Cyclone
             jpeg_start_decompress(&jpgInfo);
 
             Vector2 jpgSize(jpgInfo.output_width, jpgInfo.output_height);
-            Size(Vector2( min(jpgSize.X, 16384), min(jpgSize.Y, 16384) ));
+            Size(Vector3( min(jpgSize.X, 16384), min(jpgSize.Y, 16384), 1.0f ));
             Update();
 
             int rowStride = jpgSize.X * jpgInfo.output_components;

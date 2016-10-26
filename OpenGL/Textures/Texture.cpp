@@ -27,7 +27,7 @@ namespace Cyclone
         Texture3D& Texture3D::Size(const Vector3& value)
         {
             if (value == Size()) { return *this; }
-            _size = value;
+            _size = Vector4(value, _size.W);
             _needsUpdate = true;
             return *this;
         }
