@@ -19,8 +19,8 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
-                virtual Vector2 Offset()    const = 0;
-                virtual Vector2 Size()      const = 0;
+                //virtual Vector2 Offset()    const = 0;
+                //virtual Vector2 Size()      const = 0;
 
                 virtual ~IRenderable2D() { }
 
