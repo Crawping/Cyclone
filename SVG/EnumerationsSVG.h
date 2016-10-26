@@ -117,6 +117,14 @@ struct PathCommands //: public Enumerator
     public:
         enum Commands : ubyte
         {
+            /// <summary> Draws an arc using the parameters (rx, ry, roll, isLarge, isPositive, x, y). </summary>
+            /// <param name="rx"> The radius of the arc along the x-axis. </param>
+            /// <param name="ry"> The radius of the arc along the y-axis. </param>
+            /// <param name="roll"> The arc's angle of rotation about the z-axis in degrees. </param>
+            /// <param name="isLarge"> Determines if the angle subtended by the arc is greater than 180 degrees. </param>
+            /// <param name="isPositive"> Determines if arc drawing should proceed through positive angles. </param>
+            /// <param name="x"> The x-coordinate at which arc drawing should terminate. </param>
+            /// <param name="y"> The y-coordinate at which arc drawing should terminate. </param>
             Arc                                     = 0xFE,
             CircularArcCCW                          = 0xF8,
             CircularArcCW                           = 0xFA,
