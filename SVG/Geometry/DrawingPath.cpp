@@ -29,14 +29,17 @@ namespace Cyclone
         DrawingPath& DrawingPath::Add(const ControlPoint2D& point)
         {
             Path2D::Add(point);
-            Vector3 ptCoords(point.Coordinates(0), point.Coordinates(1), 0.0f);
+            Vector2 ptCoords(point.Coordinates(0), point.Coordinates(1));
             Point2D* pt = new Point2D();
 
-            pt->JoinStyle(JoinStyles::Round)
+            pt->Offset(ptCoords)
+                .Size(PointSize())
+
+                .JoinStyle(JoinStyles::Round)
                 .StrokeWidth(0)
-                .Color(_pointColor)
-                .Position(ptCoords)
-                .Scale(PointSize());
+                .PrimaryColor(_pointColor);
+                //.Position(ptCoords)
+                //.Scale(PointSize());
 
             _components.Append(pt);
             return *this;
