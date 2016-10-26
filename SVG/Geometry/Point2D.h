@@ -15,11 +15,16 @@ namespace Cyclone
         {
             public:
 
-                SVGAPI Point2D(const Vector3& point = Vector3::Zero) 
-                {
-                    Position(point);
-                    Path2D::Add(Geometry2D::Point());
-                }
+                /** PROPERTIES **/
+                SVGAPI Vector2 Offset() const;
+                SVGAPI Vector2 Size() const;
+
+
+                SVGAPI Point2D& Offset(const Vector2& value);
+                SVGAPI Point2D& Size(const Vector2& value);
+
+
+                SVGAPI Point2D();
 
         };
     }
