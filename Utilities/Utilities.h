@@ -26,11 +26,15 @@ namespace Cyclone
         {
 			UtilitiesAPI constexpr Vector3 Cross(const Vector3& x, const Vector3& y);
 
-
+            /// <summary> Returns the maximum of two values. </summary>
+            UtilitiesAPI constexpr float Max(float x, float y);
             /// <summary> Returns the maximum of three values. </summary>
             UtilitiesAPI constexpr float Max(float x, float y, float z);
             /// <summary> Returns the maximum of four values. </summary>
             UtilitiesAPI constexpr float Max(float x, float y, float z, float w);
+
+            /// <summary> Returns the minimum of two values. </summary>
+            UtilitiesAPI constexpr float Min(float x, float y);
             /// <summary> Returns the minimum of three values. </summary>
             UtilitiesAPI constexpr float Min(float x, float y, float z);
             /// <summary> Returns the minimum of four values. </summary>
