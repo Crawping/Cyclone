@@ -42,13 +42,18 @@ struct DashOffsetResets : public Enumerator
     };
 };
 
+/// <summary> A list of supported end cap styles that can be applied to path segments. </summary>
 struct EndCaps : public Enumerator
 {
     enum Caps
     {
+        /// <summary> A flat square end cap that does not extend beyond the final control point of the segment. </summary>
         Flat                                    = 0,
+        /// <summary> A semicircular end cap that extends beyond the final control point of the segment. </summary>
         Round                                   = 0x90A4,
+        /// <summary> A flat square end cap that extends beyond the final control point of the segment. </summary>
         Square                                  = 0x90A3,
+        /// <summary> A triangular end cap that extends beyond the final control point of the segment. </summary>
         Triangular                              = 0x90A5,
     };
 
@@ -66,12 +71,16 @@ struct FillModes : public Enumerator
     constexpr FillModes(enum Modes m = CountUp) : Enumerator(m) { }
 };
 
+/// <summary> A list of support font rendering styles. </summary>
 struct FontStyles : public Enumerator
 {
     enum Styles
     {
+        /// <summary> The normal character style. </summary>
         None                                    = 0,
+        /// <summary> A style that produces thick, bold characters. </summary>
         Bold                                    = 0x01,
+        /// <summary> A style that produces thinner characters with a slightly forward slant. </summary>
         Italic                                  = 0x02,
     };
 
@@ -98,20 +107,24 @@ struct GlyphMetrics : public Enumerator
     };
 };
 
+/// <summary> A list of supported styles by which path segments can be joined together. </summary>
 struct JoinStyles : public Enumerator
 {
     enum Styles
     {
+        /// <summary> The normal square path segment joint. </summary>
         None                                    = 0,
         Bevel                                   = 0x90A6,
         MiterRevert                             = 0x90A7,
         MiterTruncate                           = 0x90A8,
+        /// <summary> A style that produces path segment joints with rounded semicircular corners. </summary>
         Round                                   = 0x90A4,
     };
 
     constexpr JoinStyles(enum Styles s = None) : Enumerator(s) { }
 };
 
+/// <summary> A list of supported commands used to construct path segments. </summary>
 struct PathCommands //: public Enumerator
 {
     public:
@@ -136,13 +149,13 @@ struct PathCommands //: public Enumerator
 
             DuplicateFirstCubicCurve                = 0xF2,
             DuplicateLastCubicCurve                 = 0xF4,
-
+            /// <summary> Draws a straight horizontal line through the absolute axis intercept (y). </summary>
             HorizontalLine                          = 0x06,
             LargeArcCCW                             = 0x16,
             LargeArcCW                              = 0x18,
-            /// <summary> Draws a straight line from the current path position to the point (x, y). </summary>
+            /// <summary> Draws a straight line from the current path position to the absolute point (x, y). </summary>
             Line                                    = 0x04,
-            /// <summary> Moves the current path position to the new location (x, y). </summary>
+            /// <summary> Moves the current path position to the absolute location (x, y). </summary>
             Move                                    = 0x02,
             QuadraticCurve                          = 0x0A,
 
@@ -151,10 +164,13 @@ struct PathCommands //: public Enumerator
             RelativeArc                             = 0xFF,
             RelativeConicCurve                      = 0x1B,
             RelativeCubicCurve                      = 0x0D,
+            /// <summary> Draws a straight horizontal line through the relative axis intercept (dy). </summary>
             RelativeHorizontalLine                  = 0x07,
             RelativeLargeArcCCW                     = 0x17,
             RelativeLargeArcCW                      = 0x19,
+            /// <summary> Draws a straight line from the current path position to the relative point (dx, dy). </summary>
             RelativeLine                            = 0x05,
+            /// <summary> Moves the current path position to an offset location at (dx, dy). </summary>
             RelativeMove                            = 0x03,
             RelativeQuadraticCurve                  = 0x0B,
             RelativeRectangle                       = 0xF7,
@@ -166,6 +182,7 @@ struct PathCommands //: public Enumerator
             RelativeSmallArcCW                      = 0x15,
             RelativeSmoothQuadraticCurve            = 0x0F,
             RelativeSmoothCubicCurve                = 0x11,
+            /// <summary> Draws a straight vertical light through the relative axis intercept (dx). </summary>
             RelativeVerticalLine                    = 0x09,
             Restart                                 = 0xF0,
 
@@ -179,16 +196,12 @@ struct PathCommands //: public Enumerator
             SmallArcCW                              = 0x14,
             SmoothQuadraticCurve                    = 0x0E,
             SmoothCubicCurve                        = 0x10,
-
+            /// <summary> Draws a straight vertical line through the absolute axis intercept (x). </summary>
             VerticalLine                            = 0x08,
         };
 
-        constexpr PathCommands(enum Commands c = Move) :
-            Value(c)
-        {
-
-        }
-
+        constexpr PathCommands(enum Commands c = Move) : Value(c) { }
+        
         constexpr operator ubyte() const { return Value; }
 
     private:
