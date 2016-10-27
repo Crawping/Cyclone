@@ -51,10 +51,10 @@ namespace Cyclone
                 /// <summary> Gets the width of the texture in texels. </summary>
                 virtual uint Width()            const { return (uint)_size.X; }
 
-                OpenGLAPI virtual Texture3D& Format(TextureFormats value);
-                OpenGLAPI virtual Texture3D& MipmapCount(uint value);
-                OpenGLAPI virtual Texture3D& Size(const Vector3& value);
-                OpenGLAPI virtual Texture3D& Target(TextureTargets value);
+                //OpenGLAPI virtual Texture3D& Format(TextureFormats value);
+                //OpenGLAPI virtual Texture3D& MipmapCount(uint value);
+                OpenGLAPI virtual Texture3D& Size(const Vector4& value);
+                //OpenGLAPI virtual Texture3D& Target(TextureTargets value);
 
 
 

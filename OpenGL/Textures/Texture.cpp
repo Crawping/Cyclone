@@ -10,34 +10,35 @@ namespace Cyclone
     {
         
         /** PROPERTIES **/
-        Texture3D& Texture3D::Format(TextureFormats value)
-        {
-            if (value == Format()) { return *this; }
-            _format = value;
-            _needsUpdate = true;
-            return *this;
-        }
-        Texture3D& Texture3D::MipmapCount(uint value)
-        {
-            if (value == MipmapCount()) { return *this; }
-            _size.W = value > 1 ? value : 1.0f;
-            _needsUpdate = true;
-            return *this;
-        }
-        Texture3D& Texture3D::Size(const Vector3& value)
+        //Texture3D& Texture3D::Format(TextureFormats value)
+        //{
+        //    if (value == Format()) { return *this; }
+        //    _format = value;
+        //    _needsUpdate = true;
+        //    return *this;
+        //}
+        //Texture3D& Texture3D::MipmapCount(uint value)
+        //{
+        //    if (value == MipmapCount()) { return *this; }
+        //    _size.W = value > 1 ? value : 1.0f;
+        //    _needsUpdate = true;
+        //    return *this;
+        //}
+        Texture3D& Texture3D::Size(const Vector4& value)
         {
             if (value == Size()) { return *this; }
-            _size = Vector4(value, _size.W);
+            
+            _size = Vector4(value.X, value.Y, value.Z, Math::Min(value.W, 1.0f));
             _needsUpdate = true;
             return *this;
         }
-        Texture3D& Texture3D::Target(TextureTargets value)
-        {
-            if (value == Target())
-            _target = value;
-            _needsUpdate = true;
-            return *this;
-        }
+        //Texture3D& Texture3D::Target(TextureTargets value)
+        //{
+        //    if (value == Target())
+        //    _target = value;
+        //    _needsUpdate = true;
+        //    return *this;
+        //}
 
 
 
