@@ -18,7 +18,8 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                virtual bool IsEnabled() const = 0;
+                virtual bool IsEnabled()                const = 0;
+                virtual IInterfaceControl& Parent()     const = 0;
 
 
 
