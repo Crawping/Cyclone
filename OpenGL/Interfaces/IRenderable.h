@@ -14,7 +14,7 @@ namespace Cyclone
 {
 
     /** FORWARD DECLARATIONS **/
-    namespace Platform { class GPU; }
+    namespace { using namespace Utilities; }    
     namespace Utilities
     {
         struct Color4;
@@ -22,21 +22,15 @@ namespace Cyclone
         struct Vector3;
         struct Volume;
     }
-
-
+    
     namespace OpenGL
-    {
-        using namespace Platform;
-        using namespace Utilities;
+    {   
         class Texture3D;
         class IRenderStage;
 
-
-
         /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
         /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
-        template<typename T>
-        class IGeometric3D
+        template<typename T> class IGeometric3D
         {
             public:
                 /// <summary> Gets the bounding volume of the 3D geometric shape. </summary>
@@ -91,8 +85,7 @@ namespace Cyclone
 
 
 
-        template <typename T>
-        class IRenderable :
+        template <typename T> class IRenderable :
             public virtual IGeometric3D<T>,
             public virtual IMaterialEntity
         {
@@ -106,8 +99,8 @@ namespace Cyclone
 
         /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
         /// <typeparam name="T"> The type of point object that is used to define the geometry of the object. </typeparam>
-        template<typename T>
-        class IRenderable3D : public virtual IRenderable<T>            
+        template<typename T> class IRenderable3D : 
+            public virtual IRenderable<T>
         {
             public:
 
