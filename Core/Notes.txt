@@ -124,7 +124,7 @@ RENDERABLE ENTITIES
     -- Color(s)
 
 - Component Entities
-    -- Some components right require different shading parameters
+    -- Some components might require different shading parameters
 
 - Geometry
     -- Bounding volume
