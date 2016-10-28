@@ -127,7 +127,6 @@
     <ClInclude Include="Controls\InterfaceControl.h" />
     <ClInclude Include="Controls\InterfaceLayer.h" />
     <ClInclude Include="Interfaces\IInterfaceControl.h" />
-    <ClInclude Include="StyleUI.h" />
     <ClInclude Include="UIAPI.h" />
   </ItemGroup>
   <ItemGroup>
