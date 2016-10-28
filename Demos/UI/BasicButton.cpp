@@ -36,36 +36,26 @@ class Program : public PathRenderer
         {
             PathRenderer::CreateSceneResources();
 
-            for (uint a = 0; a < 20; a++)
-            {
-                Button* btn = new Button();
-                btn->CornerRadius(12.5f)
-                    .Size(Vector2(128, 48))
-                    .StrokeWidth(0.01f)
+            uint nbuttons = 64;
+            Vector2 szButton(96.0f, 48.0f);
+            Vector2 szButtonArea = RenderWindow->ClientArea().Scale() / 8.0f;
+            Vector2 offset = (szButtonArea - szButton) / 2.0f;
 
-                    .Position(0.0f, a * 48.0f, 0.0f)
-                    .PrimaryColor(Color4(0.25f, 0.25f, 0.25f, 1.0f))
-                    .SecondaryColor(Color4::Transparent);
+            for (uint a = 0; a < 8; a++)
+                for (uint b = 0; b < 8; b++)
+                {
+                    Button* btn = new Button();
+                    btn->CornerRadius(12.5f)
+                        .Size(szButton)
+                        .StrokeWidth(0.01f)
 
-                ButtonControls.Append(btn);
-                PathScene->Add(*btn);
-            }
+                        .Position(a * szButtonArea.X + offset.X, b * szButtonArea.Y + offset.Y, 0.0f)
+                        .PrimaryColor(Color4(0.25f, 0.25f, 0.25f, 1.0f))
+                        .SecondaryColor(Color4::Transparent);
 
-
-
-
-            //ButtonControl
-            //    .CornerRadius(12.5f)
-            //    .Size(Vector2(256, 50))
-            //    .StrokeWidth(0.01f)
-
-            //    .Position(RenderWindow->ClientArea().Center())
-            //    .PrimaryColor(Color4(0.25f, 0.25f, 0.25f, 1.0f))
-            //    .SecondaryColor(Color4::Transparent);
-            //    //.Scale(512, 50);
-
-
-            //PathScene->Add(ButtonControl);
+                    ButtonControls.Append(btn);
+                    PathScene->Add(*btn);
+                }
         }
 
         void ProcessPointerMotion(const PointerMotionEvent& evt) override
@@ -76,10 +66,13 @@ class Program : public PathRenderer
             {
                 if (nvIsPointInFillPath(btn->ID(), ~0, PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y))
                 {
-                    btn->PrimaryColor(0.75f);
-                    PathScene->Update(*btn);
+                    if (btn->PrimaryColor().R == 0.25f)
+                    {
+                        btn->PrimaryColor(Color4::Random());
+                        PathScene->Update(*btn);
+                    }
                 }
-                else if (btn->PrimaryColor().R == 0.75f)
+                else if (btn->PrimaryColor().R != 0.25f)
                 {
                     btn->PrimaryColor(0.25f);
                     PathScene->Update(*btn);
