@@ -39,6 +39,7 @@ TODOS:
     -- JPEG textures                            (DONE)
     -- PNG textures
     -- Hit testing
+    -- Fix texture property set accessors
 
 - Buffers
     -- Vertex index buffer                      (DONE)
@@ -119,13 +120,16 @@ RENDERABLE ENTITIES
 - Appearance
     -- Material
     -- Illuminance, specularity, lighting parameters
-    -- Texture
-    -- Base Color
+    -- Texture(s)
+    -- Color(s)
 
 - Component Entities
+    -- Some components right require different shading parameters
 
 - Geometry
+    -- Bounding volume
     -- Vertices & indices
+    -- Model transformation?
     -- World transformation
     -- Vertex topology
 
@@ -173,3 +177,6 @@ GEOMETRY ORGANIZATION
 
 - Need to find out which resource type is the most expensive to switch out on the GPU
     -- My initial belief is that shader pipelines are the most expensive type of switch
+
+===============================================================================================================================
+
