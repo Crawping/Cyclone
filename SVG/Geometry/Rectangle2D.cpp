@@ -11,7 +11,7 @@ namespace Cyclone
         {
             Coordinates(0) = value.X;
             Coordinates(1) = value.Y;
-            NeedsUpdate(true);
+            PathNeedsUpdate(true);
             return *this;
         }
 
@@ -20,14 +20,14 @@ namespace Cyclone
         {
             if (value == CornerRadius()) { return *this; }
             Coordinates(4) = value;
-            NeedsUpdate(true);
+            PathNeedsUpdate(true);
             return *this;
         }
         Rectangle2D& Rectangle2D::Size(const Vector2& value)
         {
             Coordinates(2) = value.X;
             Coordinates(3) = value.Y;
-            NeedsUpdate(true);
+            PathNeedsUpdate(true);
             return *this;
         }
 

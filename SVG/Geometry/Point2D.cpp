@@ -27,7 +27,7 @@ namespace Cyclone
             Coordinates(14) = Coordinates(0);
             Coordinates(15) = value.Y;
 
-            NeedsUpdate(true);
+            PathNeedsUpdate(true);
             return *this;
         }
         Point2D& Point2D::Size(const Vector2& value)
@@ -44,7 +44,7 @@ namespace Cyclone
             Coordinates(10) = value.Y;
             Coordinates(14) = Coordinates(0);
 
-            NeedsUpdate(true);
+            PathNeedsUpdate(true);
             return *this;
         }
 

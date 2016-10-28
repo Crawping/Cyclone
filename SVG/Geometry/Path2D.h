@@ -88,9 +88,9 @@ namespace Cyclone
                 SVGAPI virtual Path2D& Add(const ICollection<ControlPoint2D>& points);
                 SVGAPI virtual void Clear();
 
-                SVGAPI virtual void Fill()          const override;
-                SVGAPI virtual void Stroke()        const override;
-                SVGAPI virtual void Update()        const override;
+                SVGAPI virtual void Fill()              const override;
+                SVGAPI virtual void Stroke()            const override;
+                SVGAPI virtual void Update()            const override;
 
             protected:
 
@@ -101,7 +101,8 @@ namespace Cyclone
 
 
                 /** PROPERTIES **/
-                void NeedsUpdate(bool value)            const { _pathNeedsUpdate = _pathNeedsUpdate ? true : value; }
+                void ParamsNeedUpdate(bool value)       const { _paramsNeedUpdate = _paramsNeedUpdate ? true : value; }
+                void PathNeedsUpdate(bool value)        const { _pathNeedsUpdate = _pathNeedsUpdate ? true : value; }
 
                 SVGAPI virtual void UpdatePath()        const;
                 SVGAPI virtual void UpdateParameters()  const;
@@ -116,8 +117,8 @@ namespace Cyclone
                 EndCaps             _initialCap;
                 JoinStyles          _joinStyle;
                 string              _path;
-                mutable bool        _pathNeedsUpdate;
                 mutable bool        _paramsNeedUpdate;
+                mutable bool        _pathNeedsUpdate;
                 float               _strokeWidth;
                 EndCaps             _terminalCap;
 
