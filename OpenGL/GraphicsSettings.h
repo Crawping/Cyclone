@@ -10,12 +10,8 @@
 
 namespace Cyclone
 {
-    using namespace Utilities;
-    namespace Utilities
-    {
-        class ITransformation3D;
-    }
-
+    namespace { using namespace Utilities; }
+    namespace Utilities { class ITransformation3D; }
 
 
     namespace OpenGL
@@ -36,7 +32,6 @@ namespace Cyclone
             ITransformation3D*  Projection;
             FrameBuffer*        Target;
             ITransformation3D*  View;
-
 
             /** CONSTRUCTOR **/
             OpenGLAPI GraphicsSettings();
