@@ -27,6 +27,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 bool IsEnabled()                const { return _isEnabled; }
+                const string& Text()            const { return _text.Text(); }
 
 
                 UIAPI Button& IsEnabled(bool value);
