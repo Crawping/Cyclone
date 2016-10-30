@@ -1,7 +1,6 @@
 #include "NVPR.h"
 #include "Geometry/DrawingPath.h"
 #include "Geometry/Point2D.h"
-//#include "Geometry/Rectangle2D.h"
 
 
 
@@ -38,8 +37,6 @@ namespace Cyclone
                 .JoinStyle(JoinStyles::Round)
                 .StrokeWidth(0)
                 .PrimaryColor(_pointColor);
-                //.Position(ptCoords)
-                //.Scale(PointSize());
 
             _components.Append(pt);
             return *this;
