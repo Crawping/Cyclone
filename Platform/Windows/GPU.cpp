@@ -25,6 +25,22 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
+        void GPU::IsStencilTestEnabled(bool value)
+        {
+            if (value == _settings.IsStencilTestEnabled) { return; }
+
+            if (!_settings.IsStencilTestEnabled && value)
+            {
+                glStencilMask(~0);
+                glEnable(GL_STENCIL_TEST);
+                glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
+                glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
+            }
+            else if (_settings.IsStencilTestEnabled && !value)
+                glDisable(GL_STENCIL_TEST);
+
+            _settings.IsStencilTestEnabled = value;
+        }
         void GPU::Pipeline(GraphicsPipeline* pipeline)
         {
             if (pipeline == _settings.Pipeline) { return; }
@@ -112,12 +128,11 @@ namespace Cyclone
                 glEnable(GL_DEPTH_CLAMP);
                 glDepthFunc(GL_LESS);
             }
-            else if (!settings.IsBlendEnabled && IsBlendEnabled())
+            else if (!settings.IsDepthTestEnabled && IsDepthTestEnabled())
             {
                 glDisable(GL_DEPTH_TEST);
                 glDisable(GL_DEPTH_CLAMP);
             }
-
 
             if (settings.CullingMode && !CullingMode())
             {
@@ -131,6 +146,7 @@ namespace Cyclone
                 _settings.CullingMode = settings.CullingMode;
             }
             
+            IsStencilTestEnabled(settings.IsStencilTestEnabled);
             Pipeline(settings.Pipeline);
             Projection(settings.Projection);
             Target(settings.Target);
