@@ -31,6 +31,9 @@ namespace Cyclone
 
                 OpenGLAPI const List<IRenderStage*>& Stages() const override;
 
+                Scene3D& IsBlendEnabled(bool value)             { _settings.IsBlendEnabled = value; return *this; }
+                Scene3D& IsDepthTestEnabled(bool value)         { _settings.IsDepthTestEnabled = value; return *this; }
+                Scene3D& IsStencilTestEnabled(bool value)       { _settings.IsStencilTestEnabled = value; return *this; }
                 Scene3D& Pipeline(GraphicsPipeline* value)      { _settings.Pipeline = value; return *this; }
                 Scene3D& Projection(ITransformation3D* value)   { _settings.Projection = value; return *this; }
                 Scene3D& Target(FrameBuffer* value)             { _settings.Target = value; return *this; }
