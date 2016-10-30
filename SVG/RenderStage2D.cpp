@@ -15,7 +15,7 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR **/
-        RenderStage2D::RenderStage2D(const DrawBuffer2D* data, const GraphicsSettings* settings) : 
+        RenderStage2D::RenderStage2D(const DrawBuffer2D* data, const GraphicsSettings* settings) :
             _data(data),
             _settings(settings)
         {
@@ -25,11 +25,6 @@ namespace Cyclone
 
         void RenderStage2D::Render()
         {
-            glStencilMask(~0);
-            glEnable(GL_STENCIL_TEST);
-            glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
-            glStencilOp(GL_KEEP, GL_KEEP, GL_ZERO);
-
             int idx = 0;
             int drawID = GetUniformID("DrawID");
             auto entities = _data->Entities();
@@ -42,10 +37,8 @@ namespace Cyclone
                 SetUniform(drawID, idx++);
                 entities(a)->Stroke();
             }
-
-            glDisable(GL_STENCIL_TEST);
         }
-        
+
 
 
         int RenderStage2D::GetUniformID(const string& name)                                   const
