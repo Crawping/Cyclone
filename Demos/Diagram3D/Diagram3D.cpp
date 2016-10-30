@@ -53,28 +53,28 @@ class Program : public PathRenderer
                 .Text("Bottom")
                 .Position(425, 288)
                 .PrimaryColor(Color4::Yellow)
-                .Scale(0.0125f, 0.0125f)
+                .Scale(2)
                 .SecondaryColor(Color4::Green);
 
             LeftLabel
                 .Text("Left")
                 .PrimaryColor(Color4::Yellow)
                 .Position(275, 433)
-                .Scale(0.0125f, 0.0125f)
+                .Scale(2)
                 .SecondaryColor(Color4::Green);
 
             RightLabel
                 .Text("Right")
                 .Position(600, 433)
                 .PrimaryColor(Color4::Yellow)
-                .Scale(0.0125f, 0.0125f)
+                .Scale(2)
                 .SecondaryColor(Color4::Green);
             
             TopLabel
                 .Text("Top")
                 .Position(440, 585)
                 .PrimaryColor(Color4::Yellow)
-                .Scale(0.0125f, 0.0125f)
+                .Scale(2)
                 .SecondaryColor(Color4::Green);
 
             PathScene->Add(Path);

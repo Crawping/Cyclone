@@ -46,7 +46,7 @@ class Program : public PathRenderer
                 .Text("Testing!")
                 .Position(224, 320)
                 .PrimaryColor(Color4::Green)
-                .Scale(0.05f, 0.05f)
+                .Scale(3.0f)
                 .SecondaryColor(Color4::Black);
 
             PathScene->Add(Text);
