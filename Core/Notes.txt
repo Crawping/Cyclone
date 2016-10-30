@@ -25,7 +25,7 @@ TODOS:
     -- Enable/disable stroking & filling        (DONE)
     -- Proper scaling of SVG elements
         > Pixels                                (DONE)
-        > Ems
+        > Ems                                   (DONE)
     -- Hit testing								(PRELIMINARY)
 
 - 3D Rendering
