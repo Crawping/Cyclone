@@ -26,6 +26,9 @@ namespace Cyclone
 
                 SVGAPI const List<IRenderStage*>& Stages()             const override;
 
+                Scene2D& IsBlendEnabled(bool value)            { _settings.IsBlendEnabled = value; return *this; }
+                Scene2D& IsDepthTestEnabled(bool value)        { _settings.IsDepthTestEnabled = value; return *this; }
+                Scene2D& IsStencilTestEnabled(bool value)      { _settings.IsStencilTestEnabled = value; return *this; }
                 Scene2D& Pipeline(GraphicsPipeline* value)     { _settings.Pipeline = value; return *this; }
                 Scene2D& Projection(ITransformation3D* value)  { _settings.Projection = value; return *this; }
                 Scene2D& Target(FrameBuffer* value)            { _settings.Target = value; return *this; }
