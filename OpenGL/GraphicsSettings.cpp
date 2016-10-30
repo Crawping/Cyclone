@@ -10,7 +10,7 @@ namespace Cyclone
         GraphicsSettings::GraphicsSettings() :
             IsBlendEnabled(true),
             IsDepthTestEnabled(true),
-            IsStencilTestEnabled(true),
+            IsStencilTestEnabled(false),
             Pipeline(nullptr),
             Projection(nullptr),
             Target(nullptr),
