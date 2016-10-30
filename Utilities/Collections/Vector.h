@@ -11,22 +11,24 @@ namespace Cyclone
 {
     namespace Utilities
     {
-
+        /// <summary> A class that represents a one-dimensional array of contiguous data. </summary>
         template<typename T, uint U = 0>
         struct Vector : public IArray<T>
         {
             public:
                 template<typename T, uint U> struct Iterator;
 
-
-
                 /** PROPERTIES **/
+                /// <summary> Gets the number of data elements present in the vector. </summary>
                 virtual uint Count()                    const override { return U; }
+                /// <summary> Gets the number of array dimensions present in the vector. </summary>
                 virtual uint Rank()                     const override { return 1; }
 
 
 
                 /** CONSTRUCTORS **/
+                /// <summary> Constructs a new stack-allocated vector of data filled with a single uniform value. </summary>
+                /// <param name="value"> The value used to initialize all data elements of the array. </param>
                 Vector(const T& value)
                 {
                     for (uint a = 0; a < Count(); a++)
