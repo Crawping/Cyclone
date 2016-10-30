@@ -15,7 +15,7 @@ namespace Renderers
     {
         IsFreeLookEnabled = false;
 
-        nvPathStencilDepthOffset(-0.05f, -1);
+        nvPathStencilDepthOffset(-0.0001f, -1.0f);
         nvPathCoverDepthFunc(GL_ALWAYS);
     }
     PathRenderer::~PathRenderer()
@@ -30,7 +30,8 @@ namespace Renderers
         AdvancedRenderer::CreateSceneResources();
 
         PathScene = new Scene2D();
-        PathScene->Pipeline(PipelineSVG)
+        PathScene->IsStencilTestEnabled(true)
+            .Pipeline(PipelineSVG)
             .Projection(&Projection)
             .Target(RenderTarget)
             .View(&View);

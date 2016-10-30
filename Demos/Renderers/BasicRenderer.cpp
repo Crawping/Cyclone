@@ -87,7 +87,8 @@ namespace Renderers
     void BasicRenderer::CreateSceneResources()
     {
         RenderScene = new Scene3D();
-        RenderScene->Pipeline(RenderPipeline)
+        RenderScene->IsStencilTestEnabled(false)
+            .Pipeline(RenderPipeline)
             .Projection(&Projection)
             .Target(RenderTarget)
             .View(&View);
