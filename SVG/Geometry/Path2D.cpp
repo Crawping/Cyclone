@@ -16,32 +16,32 @@ namespace Cyclone
         Path2D& Path2D::InitialCap(EndCaps value)
         {
             _initialCap = value;
-            _paramsNeedUpdate = true;
+            ParamsNeedUpdate(true);
             return *this;
         }
         Path2D& Path2D::JoinStyle(JoinStyles value)
         {
             _joinStyle = value;
-            _paramsNeedUpdate = true;
+            ParamsNeedUpdate(true);
             return *this;
         }
         Path2D& Path2D::Path(const string& value)
         {
             _path = value;
-            _pathNeedsUpdate = true;
+            PathNeedsUpdate(true);
             return *this;
         }
         Path2D& Path2D::StrokeColor(const Color4& value)    { Entity3D::SecondaryColor(value); return *this; }
         Path2D& Path2D::StrokeWidth(float value)
         {
             _strokeWidth = value;
-            _paramsNeedUpdate = true;
+            ParamsNeedUpdate(true);
             return *this;
         }
         Path2D& Path2D::TerminalCap(EndCaps value)
         {
             _terminalCap = value;
-            _paramsNeedUpdate = true;
+            ParamsNeedUpdate(true);
             return *this;
         }
 
@@ -71,7 +71,7 @@ namespace Cyclone
         {
             Commands.Append(point.Command);
             Coordinates.Append(point.Coordinates);
-            _pathNeedsUpdate = true;
+            PathNeedsUpdate(true);
             return *this;
         }
         Path2D& Path2D::Add(const ICollection<ControlPoint2D>& points)
@@ -85,10 +85,10 @@ namespace Cyclone
         }
         void Path2D::Clear()
         {
+            if (IsEmpty()) { return; }
             Commands.Clear();
             Coordinates.Clear();
-
-            _pathNeedsUpdate = true;
+            PathNeedsUpdate(true);
         }
 
 

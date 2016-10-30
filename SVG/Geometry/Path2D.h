@@ -101,6 +101,9 @@ namespace Cyclone
 
 
                 /** PROPERTIES **/
+                bool ParamsNeedUpdate()                 const { return _paramsNeedUpdate; }
+                bool PathNeedsUpdate()                  const { return _pathNeedsUpdate; }
+
                 void ParamsNeedUpdate(bool value)       const { _paramsNeedUpdate = _paramsNeedUpdate ? true : value; }
                 void PathNeedsUpdate(bool value)        const { _pathNeedsUpdate = _pathNeedsUpdate ? true : value; }
 
