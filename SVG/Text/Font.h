@@ -17,10 +17,16 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+
+                const Vector2& GlyphBounds()    const { return _glyphBounds; }
                 /// <summary> Gets the name of the typeface that the font object represents. </summary>
-                const string& Name()    const { return _name; }
+                const string& Name()            const { return _name; }
+                /// <summary> Gets the number of pixels per font em unit. </summary>
+                uint PixelsPerEm()              const { return _pixelsPerEm; }
                 /// <summary> Gets an enumerator representing the styling that is applied to the font when rendered. </summary>
-                FontStyles Style()      const { return _style; }
+                FontStyles Style()              const { return _style; }
+
+                SVGAPI Font& Style(FontStyles value);
 
 
 
@@ -35,12 +41,18 @@ namespace Cyclone
                 /// <summary> An empty implementation that prevents frivolously rendering an entire character collection. </summary>
                 void Fill()     const override { }
                 void Stroke()   const override { }
-                void Update()   const override { }
+
+            protected:
+
+                void UpdatePath() const override { }
+                SVGAPI void UpdateParameters() const override;
 
             private:
 
                 /** PROPERTY DATA **/
+                Vector2     _glyphBounds;
                 string      _name;
+                uint        _pixelsPerEm;
                 FontStyles  _style;
 
         };
