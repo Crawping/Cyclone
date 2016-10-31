@@ -20,17 +20,6 @@ namespace Cyclone
                 /** PROPERTIES **/
                 virtual bool IsEnabled()                const = 0;
                 virtual IInterfaceControl* Parent()     const = 0;
-
-
-
-                /** EVENT HANDLERS **/
-                virtual void ProcessButtonPress()   = 0;
-                virtual void ProcessButtonRelease() = 0;
-                virtual void ProcessKeyPress()      = 0;
-                virtual void ProcessKeyRelease()    = 0;
-                virtual void ProcessPointerHover()  = 0;
-
-
                 
                 virtual ~IInterfaceControl() { }
         };
