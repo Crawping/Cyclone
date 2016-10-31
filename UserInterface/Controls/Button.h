@@ -31,6 +31,8 @@ namespace Cyclone
 
 
                 UIAPI Button& IsEnabled(bool value);
+                UIAPI Button& Offset(const Vector2& value);
+                UIAPI Button& Size(const Vector2& value);
                 UIAPI Button& Text(const string& value);
 
 
@@ -52,11 +54,10 @@ namespace Cyclone
                 bool    _isEnabled;
                 Text2D  _text;
 
-                // BorderWidth
-                // BorderColor
-                // BackgroundColor
-                // 
-                
+
+                void UpdateTextPosition();
+
+
         };
     }
 }
