@@ -17,7 +17,7 @@ class Program : public PathRenderer
     public:
 
         Program() : 
-            PathRenderer(Area(0, 0, 1024, 960), "UI Conceptualization")
+            PathRenderer(Area(0, 0, 1024, 960), "UI - Basic Button")
         {
             Initialize();
         }
@@ -41,17 +41,22 @@ class Program : public PathRenderer
             Vector2 szButtonArea = RenderWindow->ClientArea().Scale() / 8.0f;
             Vector2 offset = (szButtonArea - szButton) / 2.0f;
 
+            uint a = 0; uint b = 0;
             for (uint a = 0; a < 8; a++)
                 for (uint b = 0; b < 8; b++)
                 {
                     Button* btn = new Button();
-                    btn->CornerRadius(12.5f)
-                        .Size(szButton)
-                        .StrokeWidth(0.01f)
+                    Vector2 posButton(a * szButtonArea.X + offset.X, b * szButtonArea.Y + offset.Y);
 
-                        .Position(a * szButtonArea.X + offset.X, b * szButtonArea.Y + offset.Y, 0.0f)
+                    btn->Text("Testing!")
+                        .Offset(posButton)
+                        .Size(szButton)
+
+                        .CornerRadius(12.5f)
+                        .StrokeWidth(0.0f)
+
                         .PrimaryColor(Color4(0.25f, 0.25f, 0.25f, 1.0f))
-                        .SecondaryColor(Color4::Transparent);
+                        .SecondaryColor(Color4::Red);
 
                     ButtonControls.Append(btn);
                     PathScene->Add(*btn);
@@ -78,11 +83,6 @@ class Program : public PathRenderer
                     PathScene->Update(*btn);
                 }
             }
-
-            //if (nvIsPointInFillPath(ButtonControl.ID(), ~0, PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y))
-            //    ButtonControl.PrimaryColor(0.75f);
-            //else
-            //    ButtonControl.PrimaryColor(0.25f);
         }
     
 };
