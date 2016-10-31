@@ -25,6 +25,7 @@ struct CoverModes : public Enumerator
     {
         /// <summary> Indicates that fragments within the bounding box of a shape should be rasterized. </summary>
         BoundingBox                             = 0x908D,
+        /// <summary> Indicates that fragments within the union of all shape bounding boxes should be rasterized. </summary>
         BoundingBoxOfBoundingBoxes              = 0x909C,
         /// <summary> Indicates that fragments within the covex hull of a shape should be rasterized. </summary>
         ConvexHull                              = 0x908B,
@@ -201,8 +202,73 @@ struct PathCommands //: public Enumerator
         };
 
         constexpr PathCommands(enum Commands c = Move) : Value(c) { }
+
+        /// <summary> Gets the number of coordinate arguments associated with a specific path command. </summary>
+        uint ArgumentCount() const
+        {
+            switch (Value)
+            {
+                case HorizontalLine:
+                case RelativeHorizontalLine:
+                case RelativeVerticalLine:          
+                case VerticalLine:                  return 1;
+
+                case Line:
+                case Move:
+                case RelativeLine:
+                case RelativeMove:
+                case RelativeSmoothQuadraticCurve:  
+                case SmoothQuadraticCurve:          return 2;
+
+                case DuplicateFirstCubicCurve:
+                case DuplicateLastCubicCurve:
+                case QuadraticCurve:
+                case Rectangle:
+                case RelativeQuadraticCurve:        
+                case RelativeRectangle:
+                case RelativeSmoothCubicCurve:
+                case SmoothCubicCurve:              return 4;
+
+                case CircularArcCCW:
+                case CircularArcCW:     
+                case CircularTangentArc:
+                case ConicCurve:
+                case LargeArcCCW:
+                case LargeArcCW:
+                case RelativeConicCurve:
+                case RelativeLargeArcCCW:
+                case RelativeLargeArcCW:
+                case RelativeRoundedRectangle:
+                case RelativeSmallArcCCW:
+                case RelativeSmallArcCW:
+                case RoundedRectangle:
+                case SmallArcCCW:
+                case SmallArcCW:                    return 5;
+
+                case CubicCurve:
+                case RelativeCubicCurve:            
+                case RelativeRoundedRectangle2:
+                case RoundedRectangle2:             return 6;
+
+                case Arc:
+                case RelativeArc:                   return 7;
+
+                case RelativeRoundedRectangle4:
+                case RoundedRectangle4:             return 8;
+
+                case RelativeRoundedRectangle8:
+                case RoundedRectangle8:             return 12;
+
+                case Close:
+                case Restart:
+                default:                            return 0;
+            }
+        }
         
         constexpr operator ubyte() const { return Value; }
+
+
+
 
     private:
         ubyte Value;
