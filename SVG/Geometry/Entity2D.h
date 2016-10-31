@@ -5,15 +5,14 @@
 #pragma once
 #include "Math/Vector2.h"
 #include "Spatial/Area.h"
+#include "Spatial/Transform.h"
 
 
 
 namespace Cyclone
 {
-    namespace
-    {
-        using namespace Utilities;
-    }
+    namespace { using namespace Utilities; }
+
     namespace SVG
     {        
 
@@ -22,9 +21,6 @@ namespace Cyclone
             public:
         
                 /** PROPERTIES **/
-                virtual const Area& DisplayArea()           const { return _displayArea; }
-                virtual bool IsVisible()                    const { return _isVisible; }
-                                                    
                 virtual float X()                           const { return _displayArea.X; }
                 virtual float Y()                           const { return _displayArea.Y; }
                                                     
@@ -46,6 +42,9 @@ namespace Cyclone
                 virtual Entity2D& Scale(const Vector2& s)             { _displayArea.Scale(s); return *this; }
                 virtual Entity2D& Scale(float w, float h)             { _displayArea.Scale(w, h); return *this; }
         
+
+
+                virtual bool IsVisible()                    const { return _isVisible; }
         
         
                 /** DESTRUCTOR **/
@@ -53,8 +52,10 @@ namespace Cyclone
                
             protected:
         
-                Area _displayArea;
-                bool _isVisible;
+                Area        _displayArea;
+                bool        _isVisible;
+                Transform   _modelTransform;
+                Transform   _worldTransform;
         
         
         
