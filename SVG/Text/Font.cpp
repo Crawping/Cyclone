@@ -1,5 +1,6 @@
 #include "NVPR.h"
 #include "Collections/Vector.h"
+#include "Spatial/Volume.h"
 #include "Text/Font.h"
 
 
@@ -23,18 +24,8 @@ namespace Cyclone
             _name(name),
             _pixelsPerEm(16)
         {
-            nvPathGlyphRange
-            (
-                ID(), 
-                GL_SYSTEM_FONT_NAME_NV, 
-                name.c_str(),
-                Style(),
-                0,
-                256,
-                GL_USE_MISSING_GLYPH_NV,
-                ID(),
-                PixelsPerEm()
-            );
+            ParamsNeedUpdate(true);
+            UpdateParameters();
 
             Vector<float, 4> metrics(0);
             nvGetPathMetricRange
@@ -45,7 +36,8 @@ namespace Cyclone
                 &metrics(0)
             );
 
-            _glyphBounds = Vector2(metrics(2) - metrics(0), metrics(3) - metrics(1));
+            _bounds.Width = metrics(2) - metrics(0);
+            _bounds.Height = metrics(3) - metrics(1);
         }
 
 
