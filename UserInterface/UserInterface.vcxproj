@@ -126,12 +126,15 @@
     <ClInclude Include="Controls\Button.h" />
     <ClInclude Include="Controls\InterfaceControl.h" />
     <ClInclude Include="Controls\InterfaceLayer.h" />
+    <ClInclude Include="Controls\Panel.h" />
+    <ClInclude Include="Interfaces\IInteractive.h" />
     <ClInclude Include="Interfaces\IInterfaceControl.h" />
     <ClInclude Include="UIAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Controls\Button.cpp" />
     <ClCompile Include="Controls\InterfaceLayer.cpp" />
+    <ClCompile Include="Controls\Panel.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
