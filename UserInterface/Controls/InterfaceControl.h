@@ -3,11 +3,10 @@
  */
 
 #pragma once
+#include "UIAPI.h"
 #include "Geometry/Path2D.h"
-//#include "Imaging/Color4.h"
 #include "Interfaces/IInterfaceControl.h"
 #include "Interfaces/IRenderable2D.h"
-//#include "Math/Vector4.h"
 #include "Spatial/Area.h"
 #include "Spatial/Border.h"
 
@@ -50,19 +49,14 @@ namespace Cyclone
                 virtual bool IsEnabled()                            const override { return _isEnabled; }
                 virtual IInterfaceControl* Parent()                 const override { return _parent; }
                 virtual Path2D* Shape()                             const = 0;
-                //virtual VertexTopologies Topology()                 const override { return _shape->Topology(); }
 
+                UIAPI virtual InterfaceControl& BackgroundColor(const Color4& value);
+                UIAPI virtual InterfaceControl& BorderColor(const Color4& value);
+                UIAPI virtual InterfaceControl& BorderRadius(const Border& value);
+                UIAPI virtual InterfaceControl& BorderWidth(const Border& value);
 
-
-                virtual InterfaceControl& BackgroundColor(const Color4& value)      { _style.BackgroundColor = value; return *this; }
-                virtual InterfaceControl& BorderColor(const Color4& value)          { _style.BorderColor = value; return *this; }
-                virtual InterfaceControl& BorderRadius(const Border& value)         { _style.BorderRadius = value; return *this; }
-                virtual InterfaceControl& BorderWidth(const Border& value)          { _style.BorderWidth = value; return *this; }
-
-                virtual InterfaceControl& IsClippingEnabled(bool value)            { _isClippingEnabled = value; return *this; }
-                virtual InterfaceControl& IsEnabled(bool value)                    { _isEnabled = value; return *this; }
-                //virtual InterfaceControl& Style(const ControlStyle& value)         { _style = value; Restyle(); return *this; }
-                //virtual InterfaceControl& Parent(InterfaceControl* value)           { _parent = value; }
+                UIAPI virtual InterfaceControl& IsClippingEnabled(bool value);
+                UIAPI virtual InterfaceControl& IsEnabled(bool value);
 
 
 
@@ -72,54 +66,28 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                virtual void Configure(const ControlStyle& style)
-                {
-                    _style = style;
-                    if (!Shape()) { return; }
+                UIAPI virtual void Configure(const ControlStyle& style) override;
 
-                    Shape()->
-                         StrokeWidth(style.BorderWidth.Left)
-                        .PrimaryColor(style.BackgroundColor)
-                        .SecondaryColor(style.BorderColor);
-                }
 
-                virtual void Fill()     const override 
-                {
-                    if (Shape())
-                        Shape()->Fill(); 
-                }
-                virtual void Stroke()   const override 
-                {
-                    if (Shape())
-                        Shape()->Stroke(); 
-                }
-                virtual void Update()   const override
-                {
-                    if (Shape())
-                        Shape()->Update();
-                }
+
+                /** RENDERING UTILITIES **/
+                UIAPI virtual void Fill()     const override;
+                UIAPI virtual void Stroke()   const override;
+                UIAPI virtual void Update()   const override;
 
             protected:
 
-                /** DATA**/
-                //Path2D*             _shape;
+                /** PROPERTY DATA**/
                 ControlStyle        _style;
 
 
-                InterfaceControl() : 
-                    _isClippingEnabled(true),
-                    _isEnabled(true),
-                    _parent(nullptr)
-                    //_shape(nullptr)
-                {
 
-                }
-
-
-                //virtual void Restyle() = 0;
+                /** CONSTRUCTOR **/
+                UIAPI InterfaceControl();
 
             private:
                 
+                /** PROPERTY DATA**/
                 bool                _isClippingEnabled;
                 bool                _isEnabled;
                 InterfaceControl*   _parent;
