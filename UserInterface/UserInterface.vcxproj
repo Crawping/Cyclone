@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Controls\Button.cpp" />
+    <ClCompile Include="Controls\InterfaceControl.cpp" />
     <ClCompile Include="Controls\InterfaceLayer.cpp" />
     <ClCompile Include="Controls\Panel.cpp" />
   </ItemGroup>
