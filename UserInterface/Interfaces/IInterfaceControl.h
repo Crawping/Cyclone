@@ -13,6 +13,8 @@ namespace Cyclone
 
     namespace UI
     {
+        struct ControlStyle;
+
         class IInterfaceControl
         {
             public:
@@ -22,6 +24,10 @@ namespace Cyclone
                 virtual IInterfaceControl* Parent()     const = 0;
                 
                 virtual ~IInterfaceControl() { }
+
+
+                /** UTILITIES **/
+                virtual void Configure(const ControlStyle& style) = 0;
         };
     }
 }
