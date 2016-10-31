@@ -1,5 +1,6 @@
 #include "GPU.h"
 #include "NVPR.h"
+#include "Utilities.h"
 #include "GL/OpenGL.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Text/Text2D.h"
@@ -12,33 +13,16 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
+        Text2D& Text2D::FontStyle(FontStyles value)
+        {
+            _font.Style(value);
+            return *this;
+        }
         Text2D& Text2D::Text(const string& value)
         {
             _text = value;
-            _kerning = Vector<float>(value.size() + 1);
-
-            _kerning(0) = 0.0f;
-            nvGetPathSpacing
-            (
-                GL_ACCUM_ADJACENT_PAIRS_NV,
-                _text.size() + 1,
-                NumericFormats::UByte,
-                _text.c_str(),
-                _font.ID(),
-                1.0f, 1.0f,
-                TransformTypes::TranslateX,
-                &_kerning(1)
-            );
-
-            nvGetPathMetricRange
-            (
-                GL_FONT_Y_MIN_BOUNDS_BIT_NV | GL_FONT_Y_MAX_BOUNDS_BIT_NV,
-                _font.ID(),
-                1,
-                2 * sizeof(float),
-                &YLimits.X
-            );
-
+            QueryKerningValues();
+            QueryTextDimensions();
             return *this;
         }
 
@@ -84,7 +68,54 @@ namespace Cyclone
         }
         void Text2D::Stroke() const
         {
+            //if (!IsVisible()) { return; }
+        }
+        void Text2D::Update() const
+        {
+            Path2D::Update();
+            _font.Update();
+        }
 
+
+
+        /** PROTECTED UTILITIES **/
+        void Text2D::QueryKerningValues()
+        {
+            _kerning = Vector<float>(Text().size() + 1);
+            _kerning(0) = 0.0f;
+
+            nvGetPathSpacing
+            (
+                GL_ACCUM_ADJACENT_PAIRS_NV,
+                Text().size() + 1,
+                NumericFormats::UByte,
+                Text().c_str(),
+                _font.ID(),
+                1.0f, 1.0f,
+                TransformTypes::TranslateX,
+                &_kerning(1)
+            );
+        }
+        void Text2D::QueryTextDimensions()
+        {
+            Vector<float> dims = Vector<float>(2 * Text().size());
+
+            nvGetPathMetrics
+            (
+                GL_GLYPH_HORIZONTAL_BEARING_ADVANCE_BIT_NV | GL_GLYPH_VERTICAL_BEARING_ADVANCE_BIT_NV,
+                Text().size(),
+                NumericFormats::UByte,
+                Text().c_str(),
+                _font.ID(),
+                0,
+                &dims(0)
+            );
+
+            for (uint a = 0; a < dims.Count(); a += 2)
+            {
+                _bounds.Width += dims(a);
+                _bounds.Height = Math::Max(_bounds.Height, dims(a + 1));
+            }
         }
 
     }
