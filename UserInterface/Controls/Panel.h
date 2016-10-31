@@ -5,6 +5,7 @@
 #pragma once
 #include "UIAPI.h"
 #include "Controls/InterfaceControl.h"
+#include "Geometry/Rectangle2D.h"
 
 
 
@@ -16,9 +17,9 @@ namespace Cyclone
         {
             public:
             
+                Path2D* Shape() const { return (Path2D*)&_shape; }
+
                 UIAPI Panel();
-
-
 
                 UIAPI void Configure(const ControlStyle& style) override;
 
@@ -26,6 +27,10 @@ namespace Cyclone
                 
             protected:
 
+
+
+            private:
+                Rectangle2D _shape;
 
         };
     }
