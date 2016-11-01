@@ -162,6 +162,7 @@
     <ClInclude Include="Buffers\VertexBuffer.h" />
     <ClInclude Include="EnumerationsGL.h" />
     <ClInclude Include="Geometry\Entity3D.h" />
+    <ClInclude Include="Geometry\GeometricEntity3D.h" />
     <ClInclude Include="Geometry\Geometry3D.h" />
     <ClInclude Include="Geometry\Line3D.h" />
     <ClInclude Include="Geometry\Mesh3D.h" />

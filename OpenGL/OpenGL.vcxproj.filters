@@ -109,6 +109,9 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="RenderStage3D.h" />
+    <ClInclude Include="Geometry\GeometricEntity3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">

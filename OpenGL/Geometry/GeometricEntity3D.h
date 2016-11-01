@@ -33,9 +33,9 @@ namespace Cyclone
                 virtual GeometricEntity3D& Z(float z)       { return Position(X(), Y(), z); }
 
                 /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
-                virtual const Vector3& Position()                                           const { return _world.Position(); }
+                virtual const Vector3& Position()                                           const { return _worldTransform.Position(); }
 		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
-                virtual GeometricEntity3D& Position(const Vector3& p)                       { _world.Position(p); return *this; }
+                virtual GeometricEntity3D& Position(const Vector3& p)                       { _worldTransform.Position(p); return *this; }
 		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
                 virtual GeometricEntity3D& Position(float x, float y, float z = 0.0f)       { return Position(Vector3(x, y, z)); }
 
@@ -43,23 +43,23 @@ namespace Cyclone
 
                 /** ROTATIONAL PROPERTIES **/
                 /// <summary> Gets the angle of rotation about the x-axis in radians. </summary>
-                virtual float Pitch()                                               const { return Orientation().X; }
+                virtual float Pitch()                       const { return Orientation().X; }
                 /// <summary> Gets the angle of rotation about the z-axis in radians. </summary>
-                virtual float Roll()                                                const { return Orientation().Z; }
+                virtual float Roll()                        const { return Orientation().Z; }
                 /// <summary> Gets the angle of rotation about the y-axis in radians. </summary>
-                virtual float Yaw()                                                 const { return Orientation().Y; }
+                virtual float Yaw()                         const { return Orientation().Y; }
 
                 /// <summary> Sets the angle of rotation about the x-axis in radians. </summary>
-                virtual GeometricEntity3D& Pitch(float p)                           { return Orientation(p, Yaw(), Roll()); }
+                virtual GeometricEntity3D& Pitch(float p)   { return Orientation(p, Yaw(), Roll()); }
                 /// <summary> Sets the angle of rotation about the z-axis in radians. </summary>
-                virtual GeometricEntity3D& Roll(float r)                            { return Orientation(Pitch(), Yaw(), r); }
+                virtual GeometricEntity3D& Roll(float r)    { return Orientation(Pitch(), Yaw(), r); }
                 /// <summary> Sets the angle of rotation about the y-axis in radians. </summary>
-                virtual GeometricEntity3D& Yaw(float y)                             { return Orientation(Pitch(), y, Roll()); }
+                virtual GeometricEntity3D& Yaw(float y)     { return Orientation(Pitch(), y, Roll()); }
 
                 /// <summary> Gets the (x, y, z) rotation angles for the entity in 3D space. </summary>
-                virtual const Vector3& Orientation()                                const { return _world.Orientation(); }
+                virtual const Vector3& Orientation()                                const { return _worldTransform.Orientation(); }
                 /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Orientation(const Vector3& value)        { _world.Orientation(value); return *this; }
+                virtual GeometricEntity3D& Orientation(const Vector3& value)        { _worldTransform.Orientation(value); return *this; }
                 /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
                 /// <param name="p"> The pitch, or rotation about the x-axis, in radians. </param>
                 /// <param name="y"> The yaw, or rotation about the y-axis, in radians. </param>
@@ -70,23 +70,23 @@ namespace Cyclone
 
                 /** SCALING PROPERTIES **/
 		        /// <summary> Gets the size of the entity along the z-axis. </summary>
-                virtual float Depth()                                               const { return Scale().Z; }
+                virtual float Depth()                       const { return Scale().Z; }
 		        /// <summary> Gets the size of the entity along the y-axis. </summary>
-                virtual float Height()                                              const { return Scale().Y; }
+                virtual float Height()                      const { return Scale().Y; }
 		        /// <summary> Gets the size of the entity along the x-axis. </summary>
-                virtual float Width()                                               const { return Scale().X; }
+                virtual float Width()                       const { return Scale().X; }
 
 		        /// <summary> Sets the size of the entity along the z-axis. </summary>
-                virtual GeometricEntity3D& Depth(float z)                           { return Scale(Width(), Height(), z); }
+                virtual GeometricEntity3D& Depth(float z)   { return Scale(Width(), Height(), z); }
 		        /// <summary> Sets the size of the entity along the y-axis. </summary>
-                virtual GeometricEntity3D& Height(float y)                          { return Scale(Width(), y, Depth()); }
+                virtual GeometricEntity3D& Height(float y)  { return Scale(Width(), y, Depth()); }
 		        /// <summary> Sets the size of the entity along the x-axis. </summary>
-                virtual GeometricEntity3D& Width(float x)                           { return Scale(x, Height(), Depth()); }
+                virtual GeometricEntity3D& Width(float x)   { return Scale(x, Height(), Depth()); }
 
                 /// <summary> Gets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual const Vector3& Scale() const                                { return _world.Scale(); }
+                virtual const Vector3& Scale() const                                { return _worldTransform.Scale(); }
                 /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Scale(const Vector3& s)                  { _world.Scale(s); return *this; }
+                virtual GeometricEntity3D& Scale(const Vector3& s)                  { _worldTransform.Scale(s); return *this; }
                 /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
                 virtual GeometricEntity3D& Scale(float x, float y, float z = 1.0f)  { return Scale(Vector3(x, y, z)); }
 
@@ -97,12 +97,22 @@ namespace Cyclone
 
                 virtual ~IGeometric() { }
 
+                virtual GeometricEntity& Offset(const Vector3& value)
+                {
+                    _modelTransform.Position(value);
+                    return *this;
+                }
                 virtual GeometricEntity& Rotate(const Vector3& value)           override 
                 { 
                     _worldTransform.Rotate(value); 
                     return *this;
                 }
                 virtual GeometricEntity& Rotate(float x, float y, float z)      { return Rotate(Vector3(x, y, z)); }
+                virtual GeometricEntity& Size(const Vector3& value)
+                {
+                    _modelTransform.Scale(value);
+                    return *this;
+                }
                 virtual GeometricEntity& Translate(const Vector3& value)        override
                 {
                     _worldTransform.Translate(value);
