@@ -128,7 +128,7 @@ namespace Cyclone
                 ///     (defined by the <see cref="Points"/> method) into its correct position in a three-dimensional environment 
                 ///     called 'world' space.
                 /// </remarks>
-                virtual const Transform& World()                            const override { return _world; }
+                virtual const Transform& WorldTransform()                   const override { return _world; }
 
 
                 virtual Entity3D& Bounds(const Volume& bounds)              { _bounds = bounds; return *this; }

@@ -31,7 +31,7 @@ namespace Cyclone
 
             for (uint a = 0; a < entities.Count(); a++)
             {
-                nvMatrixLoadf(TransformMatrices::ModelView, entities(a)->World().ToMatrix4x4().ToArray());
+                nvMatrixLoadf(TransformMatrices::ModelView, entities(a)->WorldTransform().ToMatrix4x4().ToArray());
                 SetUniform(drawID, idx++);
                 entities(a)->Fill();
                 SetUniform(drawID, idx++);

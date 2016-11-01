@@ -48,7 +48,7 @@ namespace Cyclone
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual VertexTopologies Topology()                     const = 0;
                 /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of 3D geometric shape. </summary>
-                virtual const ITransformation3D& World()                const = 0;
+                virtual const ITransformation3D& WorldTransform()       const = 0;
 
 
 
