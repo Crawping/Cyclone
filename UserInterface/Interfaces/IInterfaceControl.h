@@ -22,6 +22,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 virtual bool IsEnabled()                const = 0;
                 virtual IInterfaceControl* Parent()     const = 0;
+                virtual const ControlStyle& Style()     const = 0;
                 
                 virtual ~IInterfaceControl() { }
 
