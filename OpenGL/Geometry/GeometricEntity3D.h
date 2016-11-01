@@ -13,7 +13,7 @@ namespace Cyclone
     namespace OpenGL
     {
         template<typename T> class GeometricEntity3D : 
-            public IGeometric3D<T>
+            public virtual IGeometric3D<T>
         {
             public:
 
@@ -32,6 +32,19 @@ namespace Cyclone
 		        /// <summary> Sets the position of the entity along the world z-axis. </summary>
                 virtual GeometricEntity3D& Z(float z)       { return Position(X(), Y(), z); }
 
+
+                virtual const Vector3& Offset() const 
+                { 
+                    return _modelTransform.Position();
+                }
+
+                virtual GeometricEntity3D& Offset(const Vector3& value)
+                { 
+                    _modelTransform.Position(value);
+                    return *this;
+                }
+
+                virtual GeometricEntity3D& Offset(float x, float y, float z)                { return Offset(Vector3(x, y, z)); }
                 /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
                 virtual const Vector3& Position()                                           const { return _worldTransform.Position(); }
 		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
@@ -84,49 +97,102 @@ namespace Cyclone
                 virtual GeometricEntity3D& Width(float x)   { return Scale(x, Height(), Depth()); }
 
                 /// <summary> Gets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual const Vector3& Scale() const                                { return _worldTransform.Scale(); }
+                virtual const Vector3& Scale() const
+                { 
+                    return _worldTransform.Scale();
+                }
                 /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Scale(const Vector3& s)                  { _worldTransform.Scale(s); return *this; }
-                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Scale(float x, float y, float z = 1.0f)  { return Scale(Vector3(x, y, z)); }
-
-
-                virtual const Volume& Bounds()              const override { return _bounds; }
-                virtual const Vector<uint>& Indices()       const override { return _indices; }
-                virtual const ITransformation3D& World()    const override { return _worldTransform; }
-
-                virtual ~IGeometric() { }
-
-                virtual GeometricEntity& Offset(const Vector3& value)
-                {
-                    _modelTransform.Position(value);
+                virtual GeometricEntity3D& Scale(const Vector3& s)
+                { 
+                    _worldTransform.Scale(s);
                     return *this;
                 }
-                virtual GeometricEntity& Rotate(const Vector3& value)           override 
+                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
+                virtual GeometricEntity3D& Scale(float x, float y, float z = 1.0f)
+                { 
+                    return Scale(Vector3(x, y, z)); 
+                }
+
+                virtual const Vector3& Size() const
+                { 
+                    return _modelTransform.Scale();
+                }
+
+                virtual GeometricEntity3D& Size(const Vector3& value)
+                {
+                    _modelTransform.Scale(value); 
+                    return *this; 
+                }
+
+                virtual GeometricEntity3D& Size(float x, float y, float z)
+                { 
+                    return Size(Vector3(x, y, z));
+                }
+
+
+
+                /** GEOMETRIC PROPERTIES **/
+                virtual const Volume& Bounds()                      const override { return _bounds; }
+                /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
+                virtual const Vector<uint>& Indices()               const override { return _indices; }
+                virtual const ITransformation3D& ModelTransform()   const override { return _modelTransform; }
+                /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
+                virtual const Vector<T>& Points()                   const override { return _points; }
+                /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
+                virtual VertexTopologies Topology()                 const override { return _topology; }
+                /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
+                /// <remarks>
+                ///     The world transform defines the position, scale, and orientation of an entity in 3D space. It is typically 
+                ///     used to apply the rotation, scaling, and translation operations that place the geometry of an entity 
+                ///     (defined by the <see cref="Points"/> method) into its correct position in a three-dimensional environment 
+                ///     called 'world' space.
+                /// </remarks>
+                virtual const ITransformation3D& WorldTransform()   const override { return _worldTransform; }
+
+
+
+                /** DESTRUCTOR **/
+                virtual ~GeometricEntity3D() { }
+
+
+
+                /** UTILITIES **/
+                /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
+                virtual GeometricEntity3D& Rotate(const Vector3& value)           override 
                 { 
                     _worldTransform.Rotate(value); 
                     return *this;
                 }
-                virtual GeometricEntity& Rotate(float x, float y, float z)      { return Rotate(Vector3(x, y, z)); }
-                virtual GeometricEntity& Size(const Vector3& value)
-                {
-                    _modelTransform.Scale(value);
-                    return *this;
-                }
-                virtual GeometricEntity& Translate(const Vector3& value)        override
+                /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
+                virtual GeometricEntity3D& Rotate(float x, float y, float z)      { return Rotate(Vector3(x, y, z)); }
+                /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
+                virtual GeometricEntity3D& Translate(const Vector3& value)        override
                 {
                     _worldTransform.Translate(value);
                     return *this;
                 }
-                virtual GeometricEntity& Translate(float x, float y, float z)   { return Translate(Vector3(x, y, z)); }
+                /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
+                virtual GeometricEntity3D& Translate(float x, float y, float z)   { return Translate(Vector3(x, y, z)); }
 
             protected:
                 
-                GeometricEntity3D() { }
+                /** PROPERTIES **/
+                virtual GeometricEntity3D& Bounds(const Volume& value) { _bounds = value; return *this; }
+
+
+                /** CONSTRUCTOR **/
+                GeometricEntity3D(VertexTopologies topology, const Vector<T>& points, const Vector<uint>& indices) :
+                    _indices(indices),
+                    _points(points),
+                    _topology(topology)
+                { 
+                
+                }
 
 
             private:
 
+                /** PROPERTY DATA **/
                 Volume              _bounds;
                 Vector<uint>        _indices;
                 Transform           _modelTransform;
