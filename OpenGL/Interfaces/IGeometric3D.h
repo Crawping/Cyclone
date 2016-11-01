@@ -37,6 +37,8 @@ namespace Cyclone
                 ///     return an empty array.
                 /// </remarks>
                 virtual const Vector<uint>& Indices()                   const = 0;
+
+                virtual const ITransformation3D& ModelTransform()       const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
                 ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will
