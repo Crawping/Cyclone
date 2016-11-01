@@ -4,6 +4,7 @@
 
 #pragma once
 #include "UIAPI.h"
+#include "Controls/ControlStyle.h"
 #include "Geometry/Path2D.h"
 #include "Interfaces/IInterfaceControl.h"
 #include "Interfaces/IRenderable2D.h"
@@ -15,30 +16,13 @@
 namespace Cyclone
 {
     namespace 
-    { 
+    {
         using namespace SVG;
         using namespace Utilities; 
     }
 
     namespace UI
     {
-        struct ControlStyle
-        {
-            Area        BackgroundArea;
-            Color4      BackgroundColor;
-            Color4      BorderColor;
-            Border      BorderRadius;
-            Border      BorderWidth;
-            Color4      FontColor;
-            string      FontName;
-            float       FontSize;
-            uint        FontWeight;
-            Color4      ForegroundColor;
-            Border      Margin;
-            Border      Padding;
-        };
-
-
         class InterfaceControl : 
             public virtual IInterfaceControl,
             public virtual IRenderable2D<float>
@@ -49,6 +33,7 @@ namespace Cyclone
                 virtual bool IsEnabled()                            const override { return _isEnabled; }
                 virtual IInterfaceControl* Parent()                 const override { return _parent; }
                 virtual Path2D* Shape()                             const = 0;
+                virtual const ControlStyle& Style()                 const override { return _style; }
 
                 UIAPI virtual InterfaceControl& BackgroundColor(const Color4& value);
                 UIAPI virtual InterfaceControl& BorderColor(const Color4& value);
@@ -58,6 +43,8 @@ namespace Cyclone
                 UIAPI virtual InterfaceControl& IsClippingEnabled(bool value);
                 UIAPI virtual InterfaceControl& IsEnabled(bool value);
 
+                UIAPI virtual InterfaceControl& Style(const ControlStyle& value);
+
 
 
                 /** DESTRUCTOR **/
@@ -66,7 +53,6 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                UIAPI virtual void Configure(const ControlStyle& style) override;
 
 
 

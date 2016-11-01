@@ -38,7 +38,18 @@ namespace Cyclone
             _isEnabled = value;
             return *this; 
         }
+        InterfaceControl& InterfaceControl::Style(const ControlStyle& value)
+        {
+            _style = value;
+            if (!Shape()) { return *this; }
 
+            Shape()->
+                 StrokeWidth(value.BorderWidth.Left)
+                .PrimaryColor(value.BackgroundColor)
+                .SecondaryColor(value.BorderColor);
+
+            return *this;
+        }
 
 
         /** CONSTRUCTOR **/
@@ -53,16 +64,7 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void InterfaceControl::Configure(const ControlStyle& style)
-        {
-            _style = style;
-            if (!Shape()) { return; }
 
-            Shape()->
-                StrokeWidth(style.BorderWidth.Left)
-                .PrimaryColor(style.BackgroundColor)
-                .SecondaryColor(style.BorderColor);
-        }
 
 
 
