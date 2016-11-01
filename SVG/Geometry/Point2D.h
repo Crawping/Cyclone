@@ -16,10 +16,6 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                SVGAPI Vector2 Offset() const;
-                SVGAPI Vector2 Size() const;
-
-
                 SVGAPI Point2D& Offset(const Vector2& value);
                 SVGAPI Point2D& Size(const Vector2& value);
 

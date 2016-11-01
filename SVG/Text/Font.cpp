@@ -36,8 +36,10 @@ namespace Cyclone
                 &metrics(0)
             );
 
-            _bounds.Width = metrics(2) - metrics(0);
-            _bounds.Height = metrics(3) - metrics(1);
+            Volume newBounds = Bounds();
+            newBounds.Width = metrics(2) - metrics(0);
+            newBounds.Height = metrics(3) - metrics(1);
+            Bounds(newBounds);
         }
 
 

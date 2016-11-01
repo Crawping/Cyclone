@@ -141,7 +141,7 @@ namespace Cyclone
             .View(&View);
 
 		PlaneXZ = new Quad3D();
-		PlaneXZ->Pitch(-90).Scale(5000).Translate(0, 50);
+		PlaneXZ->Pitch(-90).Scale(5000).Translate(0, 50, 0);
 
 		Vector<uint> indices;
 		Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);

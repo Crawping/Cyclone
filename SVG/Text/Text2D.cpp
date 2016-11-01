@@ -111,11 +111,22 @@ namespace Cyclone
                 &dims(0)
             );
 
+            float width = 0.0f;
+            float height = 0.0f;
             for (uint a = 0; a < dims.Count(); a += 2)
             {
-                _bounds.Width += dims(a);
-                _bounds.Height = Math::Max(_bounds.Height, dims(a + 1));
+                width += dims(a);
+                height = Math::Max(height, dims(a + 1));
+                //_bounds.Width += dims(a);
+                //_bounds.Height = Math::Max(_bounds.Height, dims(a + 1));
             }
+
+            Volume bounds = Bounds();
+            bounds.Width = width;
+            bounds.Height = height;
+
+            Bounds(bounds);
+
         }
 
     }
