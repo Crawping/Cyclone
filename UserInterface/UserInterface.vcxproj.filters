@@ -20,6 +20,9 @@
     <ClInclude Include="Interfaces\IInteractive.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Controls\ControlStyle.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">

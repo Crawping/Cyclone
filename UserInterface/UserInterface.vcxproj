@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controls\Button.h" />
+    <ClInclude Include="Controls\ControlStyle.h" />
     <ClInclude Include="Controls\InterfaceControl.h" />
     <ClInclude Include="Controls\InterfaceLayer.h" />
     <ClInclude Include="Controls\Panel.h" />
