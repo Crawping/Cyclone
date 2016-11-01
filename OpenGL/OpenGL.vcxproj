@@ -173,6 +173,7 @@
     <ClInclude Include="Geometry\Vertex.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
+    <ClInclude Include="Interfaces\IGeometric3D.h" />
     <ClInclude Include="Interfaces\IGraphicsBuffer.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IRenderStage.h" />
