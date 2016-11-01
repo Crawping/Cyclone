@@ -13,11 +13,5 @@ namespace Cyclone
 
         }
 
-
-
-        void Panel::Configure(const ControlStyle& style)
-        {
-
-        }
     }
 }

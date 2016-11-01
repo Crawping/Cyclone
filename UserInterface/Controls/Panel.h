@@ -18,10 +18,11 @@ namespace Cyclone
             public:
             
                 Path2D* Shape() const { return (Path2D*)&_shape; }
+                
+
 
                 UIAPI Panel();
 
-                UIAPI void Configure(const ControlStyle& style) override;
 
             
                 
