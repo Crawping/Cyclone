@@ -66,16 +66,16 @@ class Program : public AdvancedRenderer
             Vector2 ctrWin = RenderWindow->ClientArea().Center();
             Vector2 szWin = RenderWindow->Size();
 
-            Cube->Scale(100, 100, 100)
-                .PrimaryColor(Color4::Yellow)
+            Cube->PrimaryColor(Color4::Yellow)
+                .Scale(100, 100, 100)
                 .Translate(Vector3(ctrWin - (szWin / 8.0f), 50));
 
             Cylinder->PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Scale(50, 125, 50)
                 .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50));
 
-            Icosahedron->Scale(100, 100, 100)
-                .PrimaryColor(Color4::Magenta)
+            Icosahedron->PrimaryColor(Color4::Magenta)
+                .Scale(100, 100, 100)
                 .Translate(Vector3(ctrWin + (szWin / 8.0f), 50));
 
             Point
