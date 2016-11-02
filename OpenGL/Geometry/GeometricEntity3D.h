@@ -132,11 +132,18 @@ namespace Cyclone
 
 
                 /** GEOMETRIC PROPERTIES **/
+                /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
                 virtual const Volume& Bounds()                      const override { return _bounds; }
                 /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
                 virtual const Vector<uint>& Indices()               const override { return _indices; }
+                /// <summary> Gets a reference to the model transformation matrix of the entity. </summary>
+                /// <remarks>
+                ///     The model matrix represents an additional affine transformation that takes place before the world transform 
+                ///     is applied to the <see cref="Points"/> of any geometry. It defines the offset, size, and rotation of an entity 
+                ///     in 3D model space.
+                /// </remarks>
                 virtual const ITransformation3D& ModelTransform()   const override { return _modelTransform; }
-                /// <summary> Gets a reference to the array of points that define the shape of an entity in 3D model space. </summary>
+                /// <summary> Gets a reference to the array of points that define the shape of the entity in 3D model space. </summary>
                 virtual const Vector<T>& Points()                   const override { return _points; }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                 const override { return _topology; }
@@ -152,6 +159,7 @@ namespace Cyclone
 
 
                 /** DESTRUCTOR **/
+                /// <summary> Destroys any specially allocated resources held by the entity. </summary>
                 virtual ~GeometricEntity3D() { }
 
 
@@ -177,7 +185,23 @@ namespace Cyclone
             protected:
                 
                 /** PROPERTIES **/
-                virtual GeometricEntity3D& Bounds(const Volume& value) { _bounds = value; return *this; }
+                /// <summary> Sets the (x, y, z) position of the back-lower-left bounding box corner in 3D space. </summary>
+                virtual GeometricEntity3D& BoundaryPosition(const Vector3& value)
+                {
+                    return Bounds(Volume(value, Bounds().Size()));
+                }
+                /// <summary> Sets the (width, height, depth) size of the bounding volume in 3D space. </summary>
+                virtual GeometricEntity3D& BoundarySize(const Vector3& value)
+                {
+                    return Bounds(Volume(Bounds().Position(), value));
+                }
+                /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
+                virtual GeometricEntity3D& Bounds(const Volume& value) 
+                { 
+                    _bounds = value; 
+                    return *this; 
+                }
+
 
 
                 /** CONSTRUCTOR **/
@@ -199,8 +223,6 @@ namespace Cyclone
                 Vector<T>           _points;
                 VertexTopologies    _topology;
                 Transform           _worldTransform;
-
-
 
         };
     }
