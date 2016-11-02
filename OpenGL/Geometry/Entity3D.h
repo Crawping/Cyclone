@@ -30,26 +30,25 @@ namespace Cyclone
 
 		        /** RENDERABLE INTERFACE METHODS **/
 
-                virtual const List<IRenderable3D<T>*>& Components()         const override { return _components; }
+                virtual const List<IRenderable3D<T>*>& Components()     const override { return _components; }
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
-                virtual bool IsVisible()                                    const override { return _isVisible; }
+                virtual bool IsVisible()                                const override { return _isVisible; }
                 /// <summary> Gets a reference to the primary color of the entity. </summary>
-                virtual const Color4& PrimaryColor()                        const override { return _primaryColor; }
+                virtual const Color4& PrimaryColor()                    const override { return _primaryColor; }
                 /// <summary> Gets a reference to the secondary color of the entity. </summary>
-                virtual const Color4& SecondaryColor()                      const override { return _secondaryColor; }
+                virtual const Color4& SecondaryColor()                  const override { return _secondaryColor; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
-		        virtual const Texture3D* Texture()                          const override { return _texture; }
+		        virtual const Texture3D* Texture()                      const override { return _texture; }
 
-                /// <summary> Sets the base color of the entity. </summary>
-                virtual Entity3D& Color(const Color4& color)                { _primaryColor = color; return *this; }
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
-                virtual Entity3D& IsVisible(bool value)                     { _isVisible = value; return *this; }
+                virtual Entity3D& IsVisible(bool value)                 { _isVisible = value; return *this; }
+                /// <summary> Sets the primary color of the entity. </summary>
+                virtual Entity3D& PrimaryColor(const Color4& value)     { _primaryColor = value; return *this; }
+                /// <summary> Sets the secondary color of the entity. </summary>
+                virtual Entity3D& SecondaryColor(const Color4& value)   { _secondaryColor = value; return *this; }
+                /// <summary> Sets the texture to be used when rendering the entity (NOT YET IMPLEMENTED). </summary>
+                virtual Entity3D& Texture(const Texture3D* value)       { _texture = value; return *this; }
 
-                virtual Entity3D& PrimaryColor(const Color4& value)         { _primaryColor = value; return *this; }
-
-                virtual Entity3D& SecondaryColor(const Color4& value)       { _secondaryColor = value; return *this; }
-
-                virtual Entity3D& Texture(const Texture3D* texture)         { _texture = texture; return *this; }
 
 
                 /** DESTRUCTOR **/
@@ -61,8 +60,8 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 bool                    _isVisible;
-
                 List<IRenderable3D<T>*> _components;
+
 
 
                 /** CONSTRUCTOR **/
