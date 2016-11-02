@@ -135,15 +135,6 @@ RENDERABLE ENTITIES
 
 ===============================================================================================================================
 
-GPU PIPELINES
-- Blend Settings
-
-- Base/Clear Color
-
-- Shader Stages
-
-===============================================================================================================================
-
 EXAMPLE SCENE RENDERING TASK
 - Make a bunch of geometric primitives
     > Points
