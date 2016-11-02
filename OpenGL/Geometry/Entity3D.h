@@ -31,13 +31,11 @@ namespace Cyclone
 		        /** RENDERABLE INTERFACE METHODS **/
 
                 virtual const List<IRenderable3D<T>*>& Components()         const override { return _components; }
-                /// <summary> Gets a reference to the base color of the entity. </summary>
-                virtual const Color4& Color()                               const override { return _primaryColor; }
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                    const override { return _isVisible; }
-
+                /// <summary> Gets a reference to the primary color of the entity. </summary>
                 virtual const Color4& PrimaryColor()                        const override { return _primaryColor; }
-
+                /// <summary> Gets a reference to the secondary color of the entity. </summary>
                 virtual const Color4& SecondaryColor()                      const override { return _secondaryColor; }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture3D* Texture()                          const override { return _texture; }
@@ -63,9 +61,6 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 bool                    _isVisible;
-                Color4                  _primaryColor;
-                Color4                  _secondaryColor;
-		        const Texture3D*		_texture;
 
                 List<IRenderable3D<T>*> _components;
 
@@ -101,6 +96,13 @@ namespace Cyclone
 		        {
 
 		        }
+
+            private:
+                
+                /** PROPERTY DATA **/
+                Color4                  _primaryColor;
+                Color4                  _secondaryColor;
+                const Texture3D*		_texture;
 
         };
     }
