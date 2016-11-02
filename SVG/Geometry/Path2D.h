@@ -78,13 +78,20 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
+                /// <summary> Constructs a new path object that can be populated with 2D control points. </summary>
+                /// <param name="count"> The number of path instances to create. </param>
                 SVGAPI Path2D(uint count = 1);
+                /// <summary> Destroys the path object(s) on the GPU. </summary>
                 SVGAPI ~Path2D();
 
 
 
                 /** UTILITIES **/
+                /// <summary> Appends a new 2D control point to the end of the path command list. </summary>
+                /// <param name="point"> A 2D control point containing some path command and its associated input arguments. </param>
                 SVGAPI virtual Path2D& Add(const ControlPoint2D& point);
+                /// <summary> Appends a collection of 2D control points to the end of the path command list. </summary>
+                /// <param name="points"> A collection of 2D control points containing the path commands and associated input arguments. </param>
                 SVGAPI virtual Path2D& Add(const ICollection<ControlPoint2D>& points);
                 SVGAPI virtual void Clear();
 
@@ -107,6 +114,9 @@ namespace Cyclone
                 void ParamsNeedUpdate(bool value)       const { _paramsNeedUpdate = _paramsNeedUpdate ? true : value; }
                 void PathNeedsUpdate(bool value)        const { _pathNeedsUpdate = _pathNeedsUpdate ? true : value; }
 
+
+
+                /** UTILITIES **/
                 SVGAPI virtual void UpdatePath()        const;
                 SVGAPI virtual void UpdateParameters()  const;
 
