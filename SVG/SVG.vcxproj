@@ -134,6 +134,7 @@
     <ClInclude Include="Geometry\Entity2D.h" />
     <ClInclude Include="Geometry\Geometry2D.h" />
     <ClInclude Include="Geometry\Path2D.h" />
+    <ClInclude Include="Geometry\PathStyle.h" />
     <ClInclude Include="Geometry\Point2D.h" />
     <ClInclude Include="Geometry\Rectangle2D.h" />
     <ClInclude Include="Geometry\Scene2D.h" />

@@ -8,7 +8,7 @@
 #include "Collections/List.h"
 #include "Geometry/ControlPoint2D.h"
 #include "Geometry/Entity3D.h"
-#include "Imaging/Color4.h"
+#include "Geometry/PathStyle.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IRenderable2D.h"
 #include "Spatial/Transform.h"
@@ -36,27 +36,27 @@ namespace Cyclone
                 /// </remarks>
                 virtual uint InstanceCount()            const { return _count; }
 
-                virtual CoverModes CoverMode()          const { return _coverMode; }
+                virtual CoverModes CoverMode()          const { return _style.CoverMode; }
                 /// <summary> Gets the color of the path's fill area. </summary>
                 virtual const Color4& FillColor()       const { return PrimaryColor(); }
 
-                virtual FillModes FillMode()            const { return _fillMode; }
+                virtual FillModes FillMode()            const { return _style.FillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
                 virtual uint ID()                       const { return _id; }
                 /// <summary> Gets the end cap style used to initiate path segments. </summary>
-                virtual EndCaps InitialCap()            const { return _initialCap; }
+                virtual EndCaps InitialCap()            const { return _style.InitialCap; }
                 /// <summary> Gets whether the path object has been terminated by a close command. </summary>
                 virtual bool IsClosed()                 const { return !Commands.IsEmpty() && (Commands(Commands.Count() - 1) == PathCommands::Close); }
                 /// <summary> Gets whether the path has any stored commands. </summary>
                 virtual bool IsEmpty()                  const { return Commands.Count() == 0; }
                 /// <summary> Gets the joint style used to connect two path segments. </summary>
-                virtual JoinStyles JoinStyle()          const { return _joinStyle; }
+                virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
                 /// <summary> Gets the color of the path's surrounding stroke. </summary>
                 virtual const Color4& StrokeColor()     const { return SecondaryColor(); }
                 /// <summary> Gets the width of the path's surrounding stroke. </summary>
-                virtual float StrokeWidth()             const { return _strokeWidth; }
+                virtual float StrokeWidth()             const { return _style.StrokeWidth; }
                 /// <summary> Gets the end cap style used to terminate path segments. </summary>
-                virtual EndCaps TerminalCap()           const { return _terminalCap; }
+                virtual EndCaps TerminalCap()           const { return _style.TerminalCap; }
 
 
                 SVGAPI virtual Path2D& CoverMode(CoverModes value);
@@ -114,16 +114,11 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 uint                _count;
-                CoverModes          _coverMode;
-                FillModes           _fillMode;
                 uint                _id;
-                EndCaps             _initialCap;
-                JoinStyles          _joinStyle;
                 string              _path;
                 mutable bool        _paramsNeedUpdate;
                 mutable bool        _pathNeedsUpdate;
-                float               _strokeWidth;
-                EndCaps             _terminalCap;
+                PathStyle           _style;
 
         };
     }

@@ -11,17 +11,25 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Path2D& Path2D::CoverMode(CoverModes value)         { _coverMode = value; return *this; }
-        Path2D& Path2D::FillMode(FillModes value)           { _fillMode = value; return *this; }
+        Path2D& Path2D::CoverMode(CoverModes value)
+        { 
+            _style.CoverMode = value; 
+            return *this; 
+        }
+        Path2D& Path2D::FillMode(FillModes value)
+        {
+            _style.FillMode = value;
+            return *this;
+        }
         Path2D& Path2D::InitialCap(EndCaps value)
         {
-            _initialCap = value;
+            _style.InitialCap = value;
             ParamsNeedUpdate(true);
             return *this;
         }
         Path2D& Path2D::JoinStyle(JoinStyles value)
         {
-            _joinStyle = value;
+            _style.JoinStyle = value;
             ParamsNeedUpdate(true);
             return *this;
         }
@@ -31,16 +39,20 @@ namespace Cyclone
             PathNeedsUpdate(true);
             return *this;
         }
-        Path2D& Path2D::StrokeColor(const Color4& value)    { Entity3D::SecondaryColor(value); return *this; }
+        Path2D& Path2D::StrokeColor(const Color4& value)
+        { 
+            Entity3D::SecondaryColor(value);
+            return *this;
+        }
         Path2D& Path2D::StrokeWidth(float value)
         {
-            _strokeWidth = value;
+            _style.StrokeWidth = value;
             ParamsNeedUpdate(true);
             return *this;
         }
         Path2D& Path2D::TerminalCap(EndCaps value)
         {
-            _terminalCap = value;
+            _style.TerminalCap = value;
             ParamsNeedUpdate(true);
             return *this;
         }
@@ -53,8 +65,7 @@ namespace Cyclone
             _count(count),
             _id(0),
             _pathNeedsUpdate(false),
-            _paramsNeedUpdate(false),
-            _strokeWidth(2.0f)
+            _paramsNeedUpdate(false)
         {
             _id = nvGenPaths(_count);
         }
