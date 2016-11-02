@@ -177,7 +177,7 @@ class Program : public PathRenderer
         {
             Text2D* text = new Text2D();
             text->
-                Color(Color4::Yellow)
+                 PrimaryColor(Color4::Yellow)
                 .Scale(0.0125f, 0.0125f)
                 .Position(PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y);
 

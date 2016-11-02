@@ -53,9 +53,9 @@ class Program : public PathRenderer
             PathRenderer::CreateSceneResources();
 
             Sphere
+                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Pitch(90)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
-                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Roll(90)
                 .Scale(100);
 
@@ -64,10 +64,11 @@ class Program : public PathRenderer
                 .JoinStyle(JoinStyles::Round)
                 .StrokeWidth(2)
 
-                .Position(Vector3(RenderWindow->ClientArea().Scale() * Vector2(0.375f, -0.5f), 0.0f))
                 .PrimaryColor(Color4::Red)
-                .Scale(1)
-                .SecondaryColor(Color4::Cyan);
+                .SecondaryColor(Color4::Cyan)
+
+                .Position(Vector3(RenderWindow->ClientArea().Scale() * Vector2(0.375f, -0.5f), 0.0f))
+                .Scale(1);
 
             RenderScene->Add(Sphere);
             PathScene->Add(Path);
