@@ -125,7 +125,7 @@ namespace Cyclone
                             U data =
                             {
                                 entity->WorldTransform().ToMatrix4x4(),
-                                entity->Color(),
+                                entity->PrimaryColor(),
                             };
                             Entities.Set(cmd.FirstInstance, data);
                         }
@@ -221,7 +221,7 @@ namespace Cyclone
                     U data =
                     {
                         entity->WorldTransform().ToMatrix4x4(),
-                        entity->Color(),
+                        entity->PrimaryColor(),
                     };
                     Entities.Add(data);
                 }
