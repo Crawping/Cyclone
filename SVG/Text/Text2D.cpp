@@ -1,8 +1,5 @@
-#include "GPU.h"
 #include "NVPR.h"
 #include "Utilities.h"
-#include "GL/OpenGL.h"
-#include "Pipelines/GraphicsPipeline.h"
 #include "Text/Text2D.h"
 
 
@@ -68,7 +65,7 @@ namespace Cyclone
         }
         void Text2D::Stroke() const
         {
-            //if (!IsVisible()) { return; }
+
         }
         void Text2D::Update() const
         {
@@ -117,16 +114,9 @@ namespace Cyclone
             {
                 width += dims(a);
                 height = Math::Max(height, dims(a + 1));
-                //_bounds.Width += dims(a);
-                //_bounds.Height = Math::Max(_bounds.Height, dims(a + 1));
             }
 
-            Volume bounds = Bounds();
-            bounds.Width = width;
-            bounds.Height = height;
-
-            Bounds(bounds);
-
+            BoundarySize(Vector3(width, height, 0.0f));
         }
 
     }

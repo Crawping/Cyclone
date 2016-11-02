@@ -9,9 +9,7 @@ namespace Cyclone
     {
         Rectangle2D& Rectangle2D::Offset(const Vector2& value)
         {
-            Volume newBounds = Bounds();
-            newBounds.Position(value);
-            Bounds(newBounds);
+            BoundaryPosition(value);
             Coordinates(0) = value.X;
             Coordinates(1) = value.Y;
             PathNeedsUpdate(true);
@@ -28,9 +26,7 @@ namespace Cyclone
         }
         Rectangle2D& Rectangle2D::Size(const Vector2& value)
         {
-            Volume newBounds = Bounds();
-            newBounds.Size(value);
-            Bounds(newBounds);
+            BoundarySize(value);
             Coordinates(2) = value.X;
             Coordinates(3) = value.Y;
             PathNeedsUpdate(true);
