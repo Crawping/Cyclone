@@ -9,7 +9,11 @@
 
 namespace Cyclone
 {
-    namespace { using namespace Utilities; }
+    namespace SVG { class Path2D; }
+    namespace { using namespace SVG; }
+    
+
+
 
     namespace UI
     {
@@ -22,6 +26,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 virtual bool IsEnabled()                const = 0;
                 virtual IInterfaceControl* Parent()     const = 0;
+                virtual const Path2D& Shape()           const = 0;
                 virtual const ControlStyle& Style()     const = 0;
                 
                 virtual ~IInterfaceControl() { }
