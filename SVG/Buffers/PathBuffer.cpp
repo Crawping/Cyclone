@@ -30,6 +30,10 @@ namespace Cyclone
         }
         void PathBuffer::Add(const ICollection<ControlPoint2D>& points)
         {
+            
+        }
+        void PathBuffer::Clear()
+        {
 
         }
         void PathBuffer::Update()

@@ -23,6 +23,8 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 uint Count()        const override { return _commands.Count(); }
+                uint ID()           const { return _id; }
+                bool IsClosed()     const { return !_commands.IsEmpty() && (_commands.Last() == PathCommands::Close); }
 
 
                 
@@ -33,9 +35,9 @@ namespace Cyclone
 
                 SVGAPI void Add(const ControlPoint2D& point);
                 SVGAPI void Add(const ICollection<ControlPoint2D>& points);
+                SVGAPI void Clear();
                 SVGAPI void Update();
-
-
+                
             private:
 
                 uint                _id;
