@@ -108,6 +108,12 @@
     <ClInclude Include="Collections\Quadtree.h">
       <Filter>Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IDataBuffer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IUpdatable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
