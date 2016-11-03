@@ -27,9 +27,13 @@ namespace Cyclone
                 /// <summary> Gets the total number of elements present in the list. </summary>
                 virtual uint Count()        const override { return _count; }
                 /// <summary> Gets a reference to the first data element in the list. </summary>
-                virtual T& First()                         { return _first->Value; }
+                virtual T& First()          { return _first->Value; }
+                /// <summary> Gets a constant reference to the first data element in the list. </summary>
+                virtual const T& First()    const { return _first->Value; }
                 /// <summary> Gets a reference to the last data element in the list. </summary>
-                virtual T& Last()                          { return _last->Value; }
+                virtual T& Last()           { return _last->Value; }
+                /// <summary> Gets a constant reference to the last data element in the list. </summary>
+                virtual const T& Last()     const { return _last->Value; }
 
 
 
