@@ -3,7 +3,7 @@
  */
 
 #pragma once
-//#include "GraphicsSettings.h"
+#include "GraphicsSettings.h"
 #include "UIAPI.h"
 #include "Interfaces/IInterfaceControl.h"
 #include "Interfaces/IRenderable.h"
@@ -41,7 +41,7 @@ namespace Cyclone
 
             private:
 
-                //GraphicsSettings _settings;
+                GraphicsSettings _settings;
 
 
 
