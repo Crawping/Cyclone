@@ -24,15 +24,16 @@ namespace Cyclone
         {
             public:
 
-                SVGAPI const List<IRenderStage*>& Stages()             const override;
+                SVGAPI const List<IRenderStage*>& Stages()              const override;
 
-                Scene2D& IsBlendEnabled(bool value)            { _settings.IsBlendEnabled = value; return *this; }
-                Scene2D& IsDepthTestEnabled(bool value)        { _settings.IsDepthTestEnabled = value; return *this; }
-                Scene2D& IsStencilTestEnabled(bool value)      { _settings.IsStencilTestEnabled = value; return *this; }
-                Scene2D& Pipeline(GraphicsPipeline* value)     { _settings.Pipeline = value; return *this; }
-                Scene2D& Projection(ITransformation3D* value)  { _settings.Projection = value; return *this; }
-                Scene2D& Target(FrameBuffer* value)            { _settings.Target = value; return *this; }
-                Scene2D& View(ITransformation3D* value)        { _settings.View = value; return *this; }
+                Scene2D& IsBlendEnabled(bool value)                     { _settings.IsBlendEnabled = value; return *this; }
+                Scene2D& IsDepthTestEnabled(bool value)                 { _settings.IsDepthTestEnabled = value; return *this; }
+                Scene2D& IsStencilTestEnabled(bool value)               { _settings.IsStencilTestEnabled = value; return *this; }
+                Scene2D& Pipeline(GraphicsPipeline* value)              { _settings.Pipeline = value; return *this; }
+                Scene2D& Projection(ITransformation3D* value)           { _settings.Projection = value; return *this; }
+                Scene2D& Target(FrameBuffer* value)                     { _settings.Target = value; return *this; }
+                Scene2D& View(ITransformation3D* value)                 { _settings.View = value; return *this; }
+
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
@@ -44,8 +45,7 @@ namespace Cyclone
                 SVGAPI void Remove(const IRenderable2D<float>& entity);
                 SVGAPI void Update() override;
                 SVGAPI void Update(const IRenderable2D<float>& entity);
-
-
+                
             private:
                 
                 GraphicsSettings    _settings;
