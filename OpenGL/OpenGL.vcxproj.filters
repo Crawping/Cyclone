@@ -56,9 +56,6 @@
     <ClInclude Include="Buffers\DrawBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\IUpdatable.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\Entity3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>

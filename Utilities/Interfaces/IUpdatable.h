@@ -3,24 +3,23 @@
  */
 
 #pragma once
-#include "GL/OpenGLAPI.h"
 
 
 
 namespace Cyclone
 {
-    namespace OpenGL
+    namespace Utilities
     {
-        class OpenGLAPI IUpdatable
+        class IUpdatable
         {
 
             public:
                 
                 virtual bool NeedsUpdate()  const = 0;
                 
-                virtual ~IUpdatable()       { }
+                virtual ~IUpdatable() { }
 
-                virtual void Update()       = 0;
+                virtual void Update() = 0;
                 
         };
     }

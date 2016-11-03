@@ -177,7 +177,6 @@
     <ClInclude Include="Interfaces\IGraphicsBuffer.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IRenderStage.h" />
-    <ClInclude Include="Interfaces\IUpdatable.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
