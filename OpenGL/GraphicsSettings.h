@@ -34,7 +34,18 @@ namespace Cyclone
             ITransformation3D*  View;
 
             /** CONSTRUCTOR **/
-            OpenGLAPI GraphicsSettings();
+            GraphicsSettings() : 
+                IsBlendEnabled(true),
+                IsDepthTestEnabled(true),
+                IsStencilTestEnabled(false),
+                Pipeline(nullptr),
+                Projection(nullptr),
+                Target(nullptr),
+                View(nullptr)
+            {
+
+            }
+
         };
     }
 }
