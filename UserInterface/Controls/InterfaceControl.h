@@ -32,8 +32,13 @@ namespace Cyclone
                 /** PROPERTIES **/
                 virtual bool IsEnabled()                            const override { return _isEnabled; }
                 virtual IInterfaceControl* Parent()                 const override { return _parent; }
-                virtual Path2D* Shape()                             const = 0;
                 virtual const ControlStyle& Style()                 const override { return _style; }
+                virtual const Path2D& Shape()                       const override = 0;
+
+                virtual const Color4& BackgroundColor()             const { return _style.BackgroundColor; }
+                virtual const Color4& BorderColor()                 const { return _style.BorderColor; }
+                virtual const Border& BorderRadius()                const { return _style.BorderRadius; }
+                virtual const Border& BorderWidth()                 const { return _style.BorderWidth; }
 
                 UIAPI virtual InterfaceControl& BackgroundColor(const Color4& value);
                 UIAPI virtual InterfaceControl& BorderColor(const Color4& value);
@@ -67,9 +72,17 @@ namespace Cyclone
                 ControlStyle        _style;
 
 
+                /** PROPERTIES **/
+                virtual Path2D& Shape() = 0;
+
+
 
                 /** CONSTRUCTOR **/
                 UIAPI InterfaceControl();
+
+
+                /** UTILITIES**/
+                UIAPI virtual void UpdateStyle();
 
             private:
                 

@@ -17,7 +17,7 @@ namespace Cyclone
         {
             public:
             
-                Path2D* Shape() const { return (Path2D*)&_shape; }
+                const Path2D& Shape()       const override { return _shape; }
                 
 
 
