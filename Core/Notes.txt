@@ -27,6 +27,10 @@ TODOS:
         > Pixels                                (DONE)
         > Ems                                   (DONE)
     -- Hit testing								(PRELIMINARY)
+    -- Separate:
+        > Path geometry
+        > Path styles                           (DONE)
+        > Path materials
 
 - 3D Rendering
 	-- Entity instancing
@@ -40,6 +44,9 @@ TODOS:
     -- PNG textures
     -- Hit testing
     -- Fix texture property set accessors
+    -- Separate:
+        > 3D geometry
+        > 3D materials
 
 - Buffers
     -- Vertex index buffer                      (DONE)
@@ -63,6 +70,7 @@ TODOS:
           length for stack vectors
     -- Trees
         > BST
+        > BVH
         > Quadtree                              (PRELIMINARY)
         > Octree
 
@@ -84,6 +92,8 @@ TODOS:
 	-- Picking & hit testing
     -- Remove OpenGL from EnumerationsGL
     -- State settings for the GPU class         (PRELIMINARY)
+    -- Define & standardize some kind of 
+       update system
 
 - Scenes
     -- Varying vertex topologies				(DONE)
@@ -98,6 +108,28 @@ TODOS:
 	-- Make 'include' directive more robust
 	-- Implement a 'define' directive
 	-- Blinn-Phong lighting						(DONE)
+
+- User Interface
+    -- Panels
+    -- Buttons
+        > Regular
+        > Toggle
+        > Checkboxes
+        > Radio
+        > Spin buttons
+    -- Menus
+        > Context
+        > Menu items
+    -- Text box
+        > Editable text box
+    -- Lists
+        > Expandable list/tree box
+    -- Progress bars
+    -- Sliders
+    -- Separate:
+        > Behaviors
+        > Geometry data
+        > Style/material data
 
 ===============================================================================================================================
 
