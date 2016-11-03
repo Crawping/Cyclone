@@ -86,7 +86,6 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>GLFW_INCLUDE_COREARB;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\CoreGL;..\CoreGL\GL;..\OpenGL;..\Platform;..\Utilities;..\Utilities\Math;..\Utilities\Spatial;</AdditionalIncludeDirectories>

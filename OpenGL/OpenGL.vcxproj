@@ -86,7 +86,6 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\CoreGL;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\Buffers;.\Interfaces;.\Pipelines;.\Textures;..\..\libjpeg\jpeg-9b;</AdditionalIncludeDirectories>
@@ -196,7 +195,6 @@
     <ClCompile Include="Geometry\Geometry3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Geometry\Scene3D.cpp" />
-    <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />

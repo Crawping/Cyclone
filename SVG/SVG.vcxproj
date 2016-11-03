@@ -71,7 +71,6 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../CoreGL;../OpenGL;../Platform;../SVG;../Utilities</AdditionalIncludeDirectories>
@@ -128,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buffers\DrawBuffer2D.h" />
+    <ClInclude Include="Buffers\PathBuffer.h" />
     <ClInclude Include="EnumerationsSVG.h" />
     <ClInclude Include="Geometry\ControlPoint2D.h" />
     <ClInclude Include="Geometry\DrawingPath.h" />
@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\DrawBuffer2D.cpp" />
+    <ClCompile Include="Buffers\PathBuffer.cpp" />
     <ClCompile Include="Geometry\DrawingPath.cpp" />
     <ClCompile Include="Geometry\Entity2D.cpp" />
     <ClCompile Include="Geometry\Geometry2D.cpp" />

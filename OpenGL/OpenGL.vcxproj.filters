@@ -159,7 +159,6 @@
     <ClCompile Include="Pipelines\ComputePipeline.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="RenderStage3D.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -43,6 +43,9 @@
     <ClInclude Include="Geometry\PathStyle.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Buffers\PathBuffer.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Geometry">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="Geometry\Point2D.cpp">
       <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffers\PathBuffer.cpp">
+      <Filter>Buffers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
