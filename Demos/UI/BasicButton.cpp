@@ -37,7 +37,7 @@ class Program : public PathRenderer
             PathRenderer::CreateSceneResources();
 
             uint nbuttons = 64;
-            Vector2 szButton(96.0f, 48.0f);
+            Vector2 szButton(96.0f, 40.0f);
             Vector2 szButtonArea = RenderWindow->ClientArea().Scale() / 8.0f;
             Vector2 offset = (szButtonArea - szButton) / 2.0f;
 
@@ -52,7 +52,7 @@ class Program : public PathRenderer
                         .Offset(posButton)
                         .Size(szButton)
 
-                        .CornerRadius(12.5f)
+                        .CornerRadius(6.25f)
                         .StrokeWidth(0.0f)
 
                         .PrimaryColor(Color4(0.25f, 0.25f, 0.25f, 1.0f))
