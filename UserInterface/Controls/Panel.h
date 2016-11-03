@@ -17,7 +17,7 @@ namespace Cyclone
         {
             public:
             
-                const Path2D& Shape()       const override { return _shape; }
+                const Rectangle2D& Shape()       const override { return _shape; }
                 
 
 
@@ -28,7 +28,7 @@ namespace Cyclone
                 
             protected:
 
-
+                Rectangle2D& Shape() override { return _shape; }
 
             private:
                 Rectangle2D _shape;
