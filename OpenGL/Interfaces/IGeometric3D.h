@@ -14,7 +14,6 @@ namespace Cyclone
     namespace { using namespace Utilities; }
     namespace Utilities
     {
-        struct Color4;
         struct ITransformation3D;
         struct Vector3;
         struct Volume;
