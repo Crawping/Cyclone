@@ -29,7 +29,6 @@ class Program : public PathRenderer
 
     protected:
 
-        Button ButtonControl;
         List<Button*> ButtonControls;
 
         void CreateSceneResources() override
@@ -52,14 +51,14 @@ class Program : public PathRenderer
                         .Offset(posButton)
                         .Size(szButton)
 
-                        .CornerRadius(6.25f)
-                        .StrokeWidth(0.0f)
-
-                        .PrimaryColor(Color4(0.25f, 0.25f, 0.25f, 1.0f))
-                        .SecondaryColor(Color4::Red);
+                        .BackgroundColor(Color4(0.25f))
+                        .BorderColor(Color4(0.0f, 0.0f, 0.0f, 0.75f))
+                        .BorderRadius(6.25f)
+                        .BorderWidth(2.5f);
 
                     ButtonControls.Append(btn);
-                    PathScene->Add(*btn);
+                    PathScene->Add(btn->Shape());
+                    PathScene->Add(*(btn->Components().First()));
                 }
         }
 
@@ -69,18 +68,18 @@ class Program : public PathRenderer
 
             for (Button* btn : ButtonControls)
             {
-                if (nvIsPointInFillPath(btn->ID(), ~0, PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y))
+                if (nvIsPointInFillPath(btn->Shape().ID(), ~0, PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y))
                 {
-                    if (btn->PrimaryColor().R == 0.25f)
+                    if (btn->BackgroundColor().R == 0.25f)
                     {
-                        btn->PrimaryColor(Color4::Random());
-                        PathScene->Update(*btn);
+                        btn->BackgroundColor(Color4::Random());
+                        PathScene->Update(btn->Shape());
                     }
                 }
-                else if (btn->PrimaryColor().R != 0.25f)
+                else if (btn->BackgroundColor().R != 0.25f)
                 {
-                    btn->PrimaryColor(0.25f);
-                    PathScene->Update(*btn);
+                    btn->BackgroundColor(0.25f);
+                    PathScene->Update(btn->Shape());
                 }
             }
         }
