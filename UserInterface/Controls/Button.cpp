@@ -8,20 +8,21 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Button& Button::IsEnabled(bool value)
+        Button& Button::BorderRadius(const Border& value)
         {
-            _isEnabled = false; 
+            InterfaceControl::BorderRadius(value);
+            _shape.CornerRadius(value.Left);
             return *this;
         }
         Button& Button::Offset(const Vector2& value)
         {
-            Rectangle2D::Offset(value);
+            _shape.Offset(value);
             UpdateTextPosition();
             return *this;
         }
         Button& Button::Size(const Vector2& value)
         {
-            Rectangle2D::Size(value);
+            _shape.Size(value);
             UpdateTextPosition();
             return *this;
         }
@@ -35,10 +36,10 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        Button::Button() :
-            _isEnabled(true)
+        Button::Button()
         {
             _text.PrimaryColor(Color4::Black);
+
             _components.Append(&_text);
         }
 
@@ -48,9 +49,9 @@ namespace Cyclone
         void Button::UpdateTextPosition()
         {
             _text
-                .X(Bounds().X + (0.5f * (Bounds().Width - _text.Bounds().Width)))
-                .Y(Bounds().Y + (0.5f * (Bounds().Height - _text.Bounds().Height)))
-                .Z(Z() + 0.02f);
+                .X(Shape().Bounds().X + (0.5f * (Shape().Bounds().Width - _text.Bounds().Width)))
+                .Y(Shape().Bounds().Y + (0.5f * (Shape().Bounds().Height - _text.Bounds().Height)))
+                .Z(Shape().Z() + 0.02f);
         }
     }
 }

@@ -5,6 +5,7 @@
 #pragma once
 #include "Event.h"
 #include "UIAPI.h"
+#include "Controls/InterfaceControl.h"
 #include "Geometry/Rectangle2D.h"
 #include "Text/Text2D.h"
 
@@ -21,38 +22,33 @@ namespace Cyclone
     namespace UI
     {
         
-        class Button : public Rectangle2D
+        class Button : public InterfaceControl
         {
             public:
 
                 /** PROPERTIES **/
-                bool IsEnabled()                const { return _isEnabled; }
+                Rectangle2D& Shape()            override { return _shape; }
+                const Rectangle2D& Shape()      const override { return _shape; }
                 const string& Text()            const { return _text.Text(); }
 
-
-                UIAPI Button& IsEnabled(bool value);
+                UIAPI Button& BorderRadius(const Border& value) override;
                 UIAPI Button& Offset(const Vector2& value);
                 UIAPI Button& Size(const Vector2& value);
                 UIAPI Button& Text(const string& value);
-
-
-
-                /** EVENTS **/
-                //Event<const Button&> OnHover;
-                //Event<const Button&> OnPress;
-                //Event<const Button&> OnRelease;
-
 
                 
                 UIAPI Button();
 
 
+            protected:
 
+                
 
             private:
 
-                bool    _isEnabled;
-                Text2D  _text;
+                Rectangle2D _shape;
+                Text2D      _text;
+
 
 
                 void UpdateTextPosition();
