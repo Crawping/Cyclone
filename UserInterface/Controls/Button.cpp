@@ -16,13 +16,13 @@ namespace Cyclone
         }
         Button& Button::Offset(const Vector2& value)
         {
-            _shape.Offset(value);
+            InterfaceControl::Offset(value);
             UpdateTextPosition();
             return *this;
         }
         Button& Button::Size(const Vector2& value)
         {
-            _shape.Size(value);
+            InterfaceControl::Size(value);
             UpdateTextPosition();
             return *this;
         }
