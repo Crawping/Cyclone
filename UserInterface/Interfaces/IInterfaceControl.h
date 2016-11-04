@@ -30,10 +30,6 @@ namespace Cyclone
                 virtual const ControlStyle& Style()     const = 0;
                 
                 virtual ~IInterfaceControl() { }
-
-
-                /** UTILITIES **/
-                virtual void Configure(const ControlStyle& style) = 0;
         };
     }
 }
