@@ -50,6 +50,8 @@ namespace Cyclone
             /** CONSTRUCTORS **/
             /// <summary> Constructs an empty border data structure. </summary>
             Border();
+            /// <summary> Constructs a border with uniform side values. </summary>
+            Border(float value);
             /// <summary> Constructs a border with the specified edge segments. </summary>
             Border(float top, float bottom, float left, float right);
 

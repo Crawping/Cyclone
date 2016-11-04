@@ -25,6 +25,14 @@ namespace Cyclone
         {
 
         }
+        Border::Border(float value) :
+            Top(value),
+            Bottom(value),
+            Left(value),
+            Right(value)
+        {
+
+        }
         Border::Border(float top, float bottom, float left, float right) :
             Top(top),
             Bottom(bottom),
