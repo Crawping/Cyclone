@@ -116,7 +116,7 @@ namespace Cyclone
                 height = Math::Max(height, dims(a + 1));
             }
 
-            BoundarySize(Vector3(width, height, 0.0f));
+            BoundarySize(Vector3(width, _font.PixelsPerEm(), 0.0f));
         }
 
     }
