@@ -10,22 +10,25 @@ namespace Cyclone
         /** PROPERTIES **/
         InterfaceControl& InterfaceControl::BackgroundColor(const Color4& value)
         {
-            _style.BackgroundColor = value; 
+            _style.BackgroundColor = value;
+            Shape().PrimaryColor(value);
             return *this;
         }
         InterfaceControl& InterfaceControl::BorderColor(const Color4& value)
         {
-            _style.BorderColor = value; 
+            _style.BorderColor = value;
+            Shape().SecondaryColor(value);
             return *this;
         }
         InterfaceControl& InterfaceControl::BorderRadius(const Border& value) 
         { 
             _style.BorderRadius = value; 
-            return *this; 
+            return *this;
         }
-        InterfaceControl& InterfaceControl::BorderWidth(const Border& value) 
+        InterfaceControl& InterfaceControl::BorderWidth(const Border& value)
         { 
             _style.BorderWidth = value; 
+            Shape().StrokeWidth(value.Left);
             return *this; 
         }
         InterfaceControl& InterfaceControl::IsClippingEnabled(bool value)
@@ -41,6 +44,10 @@ namespace Cyclone
         InterfaceControl& InterfaceControl::Style(const ControlStyle& value)
         {
             _style = value;
+            Shape()
+                .StrokeWidth(value.BorderWidth.Left)
+                .PrimaryColor(value.BackgroundColor)
+                .SecondaryColor(value.BorderColor);
             return *this;
         }
 
@@ -60,27 +67,26 @@ namespace Cyclone
         /** UTILITIES **/
         void InterfaceControl::UpdateStyle()
         {
-            Shape()
-                .StrokeWidth(BorderWidth().Left)
-                .PrimaryColor(BackgroundColor())
-                .SecondaryColor(BorderColor());
+
         }
 
 
 
         /** RENDERING UTILITIES**/
-        void InterfaceControl::Fill()     const 
-        {
-            Shape().Fill();
-        }
-        void InterfaceControl::Stroke()   const 
-        {
-            Shape().Stroke();
-        }
         void InterfaceControl::Update()   const 
         {
+            //UpdateStyle();
             Shape().Update();
         }
 
+
+
+
+        //void InterfaceControl::UpdateStyle()
+        //{
+        //    Shape()
+        //        .PrimaryColor(BackgroundColor())
+        //        .SecondaryColor(BorderColor())
+        //}
     }
 }

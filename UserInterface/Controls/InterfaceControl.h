@@ -24,12 +24,13 @@ namespace Cyclone
     namespace UI
     {
         class InterfaceControl : 
-            public virtual IInterfaceControl,
-            public virtual IRenderable2D<float>
+            public virtual IInterfaceControl
         {
             public:
                 
                 /** PROPERTIES **/
+                virtual const List<IRenderable2D<float>*>& Components() const { return _components; }
+
                 virtual bool IsEnabled()                            const override { return _isEnabled; }
                 virtual IInterfaceControl* Parent()                 const override { return _parent; }
                 virtual const ControlStyle& Style()                 const override { return _style; }
@@ -62,13 +63,12 @@ namespace Cyclone
 
 
                 /** RENDERING UTILITIES **/
-                UIAPI virtual void Fill()     const override;
-                UIAPI virtual void Stroke()   const override;
-                UIAPI virtual void Update()   const override;
+                UIAPI virtual void Update()   const;// override;
 
             protected:
 
                 /** PROPERTY DATA**/
+                List<IRenderable2D<float>*> _components;
                 ControlStyle        _style;
 
 
