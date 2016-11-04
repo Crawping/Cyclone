@@ -25,6 +25,9 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 virtual bool IsEnabled()                const = 0;
+                virtual bool IsSelected()               const = 0;
+                virtual bool IsHighlighted()            const = 0;
+
                 virtual IInterfaceControl* Parent()     const = 0;
                 virtual const Path2D& Shape()           const = 0;
                 virtual const ControlStyle& Style()     const = 0;
