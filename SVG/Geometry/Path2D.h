@@ -46,7 +46,7 @@ namespace Cyclone
                 /// <summary> Gets the end cap style used to initiate path segments. </summary>
                 virtual EndCaps InitialCap()            const { return _style.InitialCap; }
                 /// <summary> Gets whether the path object has been terminated by a close command. </summary>
-                virtual bool IsClosed()                 const { return !Commands.IsEmpty() && (Commands(Commands.Count() - 1) == PathCommands::Close); }
+                virtual bool IsClosed()                 const { return !Commands.IsEmpty() && (Commands.Last() == PathCommands::Close); }
                 /// <summary> Gets whether the path has any stored commands. </summary>
                 virtual bool IsEmpty()                  const { return Commands.Count() == 0; }
                 /// <summary> Gets the joint style used to connect two path segments. </summary>
