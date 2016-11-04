@@ -32,6 +32,9 @@ namespace Cyclone
                 virtual const List<IRenderable2D<float>*>& Components() const { return _components; }
 
                 virtual bool IsEnabled()                            const override { return _isEnabled; }
+                virtual bool IsHighlighted()                        const override { return _isHighlighted; }
+                virtual bool IsSelected()                           const override { return _isSelected; }
+
                 virtual IInterfaceControl* Parent()                 const override { return _parent; }
                 virtual const ControlStyle& Style()                 const override { return _style; }
                 virtual const Path2D& Shape()                       const override = 0;
@@ -48,6 +51,11 @@ namespace Cyclone
 
                 UIAPI virtual InterfaceControl& IsClippingEnabled(bool value);
                 UIAPI virtual InterfaceControl& IsEnabled(bool value);
+
+                UIAPI virtual InterfaceControl& Offset(const Vector3& value);
+                UIAPI virtual InterfaceControl& Orientation(const Vector3& value);
+                UIAPI virtual InterfaceControl& Position(const Vector3& value);
+                UIAPI virtual InterfaceControl& Size(const Vector3& value);
 
                 UIAPI virtual InterfaceControl& Style(const ControlStyle& value);
 
@@ -69,7 +77,7 @@ namespace Cyclone
 
                 /** PROPERTY DATA**/
                 List<IRenderable2D<float>*> _components;
-                ControlStyle        _style;
+                ControlStyle                _style;
 
 
                 /** PROPERTIES **/
@@ -89,6 +97,9 @@ namespace Cyclone
                 /** PROPERTY DATA**/
                 bool                _isClippingEnabled;
                 bool                _isEnabled;
+                bool                _isHighlighted;
+                bool                _isSelected;
+
                 InterfaceControl*   _parent;
 
 

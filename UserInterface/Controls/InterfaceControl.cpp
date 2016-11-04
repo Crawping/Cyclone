@@ -41,6 +41,26 @@ namespace Cyclone
             _isEnabled = value;
             return *this; 
         }
+        InterfaceControl& InterfaceControl::Offset(const Vector3& value)
+        {
+            Shape().Offset(value);
+            return *this;
+        }
+        InterfaceControl& InterfaceControl::Orientation(const Vector3& value)
+        {
+            Shape().Orientation(value);
+            return *this;
+        }
+        InterfaceControl& InterfaceControl::Position(const Vector3& value)
+        {
+            Shape().Position(value);
+            return *this;
+        }
+        InterfaceControl& InterfaceControl::Size(const Vector3& value)
+        {
+            Shape().Size(value);
+            return *this;
+        }
         InterfaceControl& InterfaceControl::Style(const ControlStyle& value)
         {
             _style = value;
@@ -57,6 +77,8 @@ namespace Cyclone
         InterfaceControl::InterfaceControl() : 
             _isClippingEnabled(true),
             _isEnabled(true),
+            _isHighlighted(false),
+            _isSelected(false),
             _parent(nullptr)
         {
 
