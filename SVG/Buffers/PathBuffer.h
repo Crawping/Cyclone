@@ -22,30 +22,40 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint Count()        const override { return _commands.Count(); }
-                uint ID()           const { return _id; }
-                bool IsClosed()     const { return !_commands.IsEmpty() && (_commands.Last() == PathCommands::Close); }
+                uint Count()            const override { return Data.Count(); }
+                uint ID()               const { return _id; }
+                uint InstanceCount()    const { return _instanceCount; }
+                bool IsClosed()         const { return !Data.IsEmpty() && (Data.Last().Command == PathCommands::Close); }
 
+                SVGAPI List<PathCommands> Commands() const;
+                SVGAPI List<float> Coordinates() const;
 
                 
+
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                SVGAPI PathBuffer();
+                SVGAPI PathBuffer(uint count = 1);
                 SVGAPI ~PathBuffer();
 
 
-                SVGAPI void Add(const ControlPoint2D& point);
-                SVGAPI void Add(const ICollection<ControlPoint2D>& points);
+                SVGAPI PathBuffer& Add(const ControlPoint2D& point);
+                SVGAPI PathBuffer& Add(const ICollection<ControlPoint2D>& points);
                 SVGAPI void Clear();
                 SVGAPI void Update();
+
+
+            protected:
+
+                /** PROPERTIES **/
+                void NeedsUpdate(bool value) const { _needsUpdate = _needsUpdate ? true : value; }
                 
             private:
 
                 uint                _id;
                 uint                _instanceCount;
-                bool                _needsUpdate;
+                mutable bool        _needsUpdate;
 
-                List<PathCommands>  _commands;
-                List<float>         _coordinates;
+                List<ControlPoint2D> Data;
+
         };
     }
 }

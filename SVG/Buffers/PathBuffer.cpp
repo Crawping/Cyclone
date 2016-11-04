@@ -1,3 +1,4 @@
+#include "EnumerationsGL.h"
 #include "NVPR.h"
 #include "Buffers/PathBuffer.h"
 
@@ -7,11 +8,28 @@ namespace Cyclone
 {
     namespace SVG
     {
+        /** PROPERTIES **/
+        List<PathCommands> PathBuffer::Commands() const
+        {
+            List<PathCommands> output;
+            for (const ControlPoint2D& p : Data)
+                output.Append(p.Command);
+            return output;
+        }
+        List<float> PathBuffer::Coordinates() const
+        {
+            List<float> output;
+            for (const ControlPoint2D& p : Data)
+                output.Append(p.Coordinates);
+            return output;
+        }
+
+
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        PathBuffer::PathBuffer() :
+        PathBuffer::PathBuffer(uint count) :
             _id(0),
-            _instanceCount(0),
+            _instanceCount(count),
             _needsUpdate(false)
         {
 
@@ -24,21 +42,41 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void PathBuffer::Add(const ControlPoint2D& point)
+        PathBuffer& PathBuffer::Add(const ControlPoint2D& point)
         {
-
+            Data.Append(point);
+            NeedsUpdate(true);
+            return *this;
         }
-        void PathBuffer::Add(const ICollection<ControlPoint2D>& points)
+        PathBuffer& PathBuffer::Add(const ICollection<ControlPoint2D>& points)
         {
-            
+            for (uint a = 0; a < points.Count(); a++)
+                Add(points(a));
+            return *this;
         }
         void PathBuffer::Clear()
         {
-
+            Data.Clear();
+            NeedsUpdate(true);
         }
         void PathBuffer::Update()
         {
+            if (!_needsUpdate) { return; }
 
+            auto cmds = Commands().ToVector();
+            auto coords = Coordinates().ToVector();
+
+            nvPathCommands
+            (
+                ID(),
+                cmds.Count(),
+                (const ubyte*)(cmds.ToArray()),
+                coords.Count(),
+                NumericFormats::Float,
+                coords.ToArray()
+            );
+
+            _needsUpdate = false;
         }
 
     }
