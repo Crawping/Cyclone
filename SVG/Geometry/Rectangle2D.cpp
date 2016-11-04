@@ -7,7 +7,7 @@ namespace Cyclone
 {
     namespace SVG
     {
-        Rectangle2D& Rectangle2D::Offset(const Vector2& value)
+        Rectangle2D& Rectangle2D::Offset(const Vector3& value)
         {
             BoundaryPosition(value);
             Coordinates(0) = value.X;
@@ -24,7 +24,7 @@ namespace Cyclone
             PathNeedsUpdate(true);
             return *this;
         }
-        Rectangle2D& Rectangle2D::Size(const Vector2& value)
+        Rectangle2D& Rectangle2D::Size(const Vector3& value)
         {
             BoundarySize(value);
             Coordinates(2) = value.X;

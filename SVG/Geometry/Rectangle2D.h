@@ -20,9 +20,9 @@ namespace Cyclone
 
                 SVGAPI Rectangle2D& CornerRadius(float value);
 
-                SVGAPI Rectangle2D& Offset(const Vector2& value);
+                SVGAPI Rectangle2D& Offset(const Vector3& value) override;
 
-                SVGAPI Rectangle2D& Size(const Vector2& value);
+                SVGAPI Rectangle2D& Size(const Vector3& value) override;
 
 
 
