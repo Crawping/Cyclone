@@ -17,18 +17,13 @@ namespace Cyclone
         {
             public:
             
-                const Rectangle2D& Shape()       const override { return _shape; }
-                
+                const Rectangle2D& Shape()      const override { return _shape; }
+                Rectangle2D& Shape()            override { return _shape; }
+
+                UIAPI Panel& BorderRadius(const Border& value);
 
 
                 UIAPI Panel();
-
-
-            
-                
-            protected:
-
-                Rectangle2D& Shape() override { return _shape; }
 
             private:
                 Rectangle2D _shape;
