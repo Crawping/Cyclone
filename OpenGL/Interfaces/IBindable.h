@@ -13,7 +13,7 @@ namespace Cyclone
     {
 
         /// <summary> An interface used to specify the behavior of any entity that is bindable as a GPU resource. </summary>
-        class OpenGLAPI IBindable
+        class IBindable
         {
 
             public:
@@ -47,7 +47,7 @@ namespace Cyclone
         };
 
 
-        struct OpenGLAPI GraphicsBinding
+        struct GraphicsBinding
         {
             const IBindable&    Entity;
             int                 Index;
