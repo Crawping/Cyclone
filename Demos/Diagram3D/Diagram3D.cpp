@@ -43,39 +43,41 @@ class Program : public PathRenderer
                 .Path(SVG)
                 .JoinStyle(JoinStyles::Round)
                 .StrokeWidth(2)
-
-                .Position(Vector3(RenderWindow->Size() * Vector2(0.33f, -0.5f), 0.0f))
                 .PrimaryColor(Color4::Blue)
-                .Scale(1)
-                .SecondaryColor(Color4::Black);
+                .SecondaryColor(Color4::Black)
+                .Position(Vector3(RenderWindow->Size() * Vector2(0.33f, -0.5f), 0.0f));
 
             BottomLabel
                 .Text("Bottom")
-                .Position(425, 288)
                 .PrimaryColor(Color4::Yellow)
-                .Scale(2)
-                .SecondaryColor(Color4::Green);
+                .SecondaryColor(Color4::Green)
+
+                .Position(425, 288)
+                .Scale(2);
 
             LeftLabel
                 .Text("Left")
                 .PrimaryColor(Color4::Yellow)
+                .SecondaryColor(Color4::Green)
+
                 .Position(275, 433)
-                .Scale(2)
-                .SecondaryColor(Color4::Green);
+                .Scale(2);
 
             RightLabel
                 .Text("Right")
-                .Position(600, 433)
                 .PrimaryColor(Color4::Yellow)
-                .Scale(2)
-                .SecondaryColor(Color4::Green);
+                .SecondaryColor(Color4::Green)
+
+                .Position(600, 433)
+                .Scale(2);
             
             TopLabel
                 .Text("Top")
-                .Position(440, 585)
                 .PrimaryColor(Color4::Yellow)
-                .Scale(2)
-                .SecondaryColor(Color4::Green);
+                .SecondaryColor(Color4::Green)
+
+                .Position(440, 585)
+                .Scale(2);
 
             PathScene->Add(Path);
             PathScene->Add(BottomLabel);
