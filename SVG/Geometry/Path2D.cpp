@@ -36,7 +36,6 @@ namespace Cyclone
         Path2D& Path2D::Path(const string& value)
         {
             _path = value;
-            PathNeedsUpdate(true);
             return *this;
         }
         Path2D& Path2D::StrokeColor(const Color4& value)
@@ -62,17 +61,15 @@ namespace Cyclone
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
             Entity3D(Color4::Transparent, VertexTopologies::Path, Vector<float>()),
-            _count(count),
-            _id(0),
-            _pathNeedsUpdate(false),
+            ControlPoints(count),
             _paramsNeedUpdate(false)
         {
-            _id = nvGenPaths(_count);
+
         }
 
         Path2D::~Path2D()
         {
-            if (_id) { nvDeletePaths(_id, _count); }
+
         }
 
 
@@ -80,9 +77,7 @@ namespace Cyclone
         /** UTILITIES **/
         Path2D& Path2D::Add(const ControlPoint2D& point)
         {
-            Commands.Append(point.Command);
-            Coordinates.Append(point.Coordinates);
-            PathNeedsUpdate(true);
+            ControlPoints.Add(point);
             return *this;
         }
         Path2D& Path2D::Add(const ICollection<ControlPoint2D>& points)
@@ -97,9 +92,7 @@ namespace Cyclone
         void Path2D::Clear()
         {
             if (IsEmpty()) { return; }
-            Commands.Clear();
-            Coordinates.Clear();
-            PathNeedsUpdate(true);
+            ControlPoints.Clear();
         }
 
 
@@ -119,31 +112,12 @@ namespace Cyclone
         }
         void Path2D::Update() const
         {
-            UpdatePath();
+            ControlPoints.Update();
             UpdateParameters();
         }
 
 
 
-        void Path2D::UpdatePath() const
-        {
-            if (!_pathNeedsUpdate) { return; }
-
-            if (_path.size())
-                nvPathString(ID(), PathFormats::SVG, _path.size(), _path.c_str());
-            else
-                nvPathCommands
-                (
-                    ID(),
-                    Commands.Count(),
-                    (const ubyte*)(Commands.ToVector().ToArray()),
-                    Coordinates.Count(),
-                    NumericFormats::Float,
-                    Coordinates.ToVector().ToArray()
-                );
-
-            _pathNeedsUpdate = false;
-        }
         void Path2D::UpdateParameters() const
         {
             if (!_paramsNeedUpdate) { return; }

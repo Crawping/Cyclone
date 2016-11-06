@@ -33,7 +33,7 @@ namespace Cyclone
             _instanceCount(count),
             _needsUpdate(false)
         {
-
+            _id = nvGenPaths(count);
         }
         PathBuffer::~PathBuffer()
         {
@@ -96,6 +96,24 @@ namespace Cyclone
 
             _needsUpdate = false;
         }
+        void PathBuffer::Update() const
+        {
+            if (!_needsUpdate) { return; }
 
+            auto cmds = Commands().ToVector();
+            auto crds = Coordinates().ToVector();
+
+            nvPathCommands
+            (
+                ID(),
+                cmds.Count(),
+                (const ubyte*)(cmds.ToArray()),
+                crds.Count(),
+                NumericFormats::Float,
+                crds.ToArray()
+            );
+
+            _needsUpdate = false;
+        }
     }
 }

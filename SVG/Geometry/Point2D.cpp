@@ -8,37 +8,51 @@ namespace Cyclone
     {
         Point2D& Point2D::Offset(const Vector2& value)
         {
-            Coordinates(0) = value.X + Coordinates(2);
-            Coordinates(1) = value.Y;
+            ControlPoint2D move = ControlPoints(0);
+            ControlPoint2D top = ControlPoints(1);
+            ControlPoint2D bottom = ControlPoints(2);
+            float radius = top.Coordinates(0);
 
-            Coordinates(7) = Coordinates(0) - (2.0f * Coordinates(2));
-            Coordinates(8) = value.Y;
+            Vector2 newStart(value.X + radius, value.Y);
 
-            Coordinates(14) = Coordinates(0);
-            Coordinates(15) = value.Y;
+            move.Coordinates(0) = newStart.X;
+            move.Coordinates(1) = newStart.Y;
+            ControlPoints.Set(0, move);
+
+            top.Coordinates(5) = newStart.X - (2.0f * radius);
+            top.Coordinates(6) = newStart.Y;
+            ControlPoints.Set(1, top);
+
+            bottom.Coordinates(5) = newStart.X;
+            bottom.Coordinates(6) = newStart.Y;
+            ControlPoints.Set(2, bottom);
 
             Path2D::Offset(value);
-
-            PathNeedsUpdate(true);
             return *this;
         }
         Point2D& Point2D::Size(const Vector2& value)
         {
-            Vector2 offset = Vector2(Coordinates(0) - Coordinates(2), Coordinates(1));
+            ControlPoint2D move = ControlPoints(0);
+            ControlPoint2D top = ControlPoints(1);
+            ControlPoint2D bottom = ControlPoints(2);
+            
+            Vector2 center(move.Coordinates(0) - top.Coordinates(0), move.Coordinates(1));
+            Vector2 newStart(center.X + value.X, center.Y);
 
-            Coordinates(0) = offset.X + value.X;
+            move.Coordinates(0) = newStart.X;
+            ControlPoints.Set(0, move);
 
-            Coordinates(2) = value.X;
-            Coordinates(3) = value.Y;
-            Coordinates(7) = offset.X - value.X;
+            top.Coordinates(0) = value.X;
+            top.Coordinates(1) = value.X;
+            top.Coordinates(5) = center.X - value.X;
+            ControlPoints.Set(1, top);
 
-            Coordinates(9) = value.X;
-            Coordinates(10) = value.Y;
-            Coordinates(14) = Coordinates(0);
+            bottom.Coordinates(0) = value.X;
+            bottom.Coordinates(1) = value.X;
+            bottom.Coordinates(5) = newStart.X;
+            ControlPoints.Set(2, bottom);
 
             Path2D::Size(value);
-
-            PathNeedsUpdate(true);
             return *this;
         }
 

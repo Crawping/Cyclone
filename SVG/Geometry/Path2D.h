@@ -5,6 +5,7 @@
 #pragma once
 #include "EnumerationsSVG.h"
 #include "SVGAPI.h"
+#include "Buffers/PathBuffer.h"
 #include "Collections/List.h"
 #include "Geometry/ControlPoint2D.h"
 #include "Geometry/Entity3D.h"
@@ -34,7 +35,7 @@ namespace Cyclone
                 ///     than <c>1</c> indicate the number of times that a path object is being instanced on the GPU, which
                 ///     is almost exclusively used only by text rendering.
                 /// </remarks>
-                virtual uint InstanceCount()            const { return _count; }
+                virtual uint InstanceCount()            const { return ControlPoints.InstanceCount(); }
 
                 virtual CoverModes CoverMode()          const { return _style.CoverMode; }
                 /// <summary> Gets the color of the path's fill area. </summary>
@@ -42,13 +43,13 @@ namespace Cyclone
 
                 virtual FillModes FillMode()            const { return _style.FillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
-                virtual uint ID()                       const { return _id; }
+                virtual uint ID()                       const { return ControlPoints.ID(); }
                 /// <summary> Gets the end cap style used to initiate path segments. </summary>
                 virtual EndCaps InitialCap()            const { return _style.InitialCap; }
                 /// <summary> Gets whether the path object has been terminated by a close command. </summary>
-                virtual bool IsClosed()                 const { return !Commands.IsEmpty() && (Commands.Last() == PathCommands::Close); }
+                virtual bool IsClosed()                 const { return ControlPoints.IsClosed(); }
                 /// <summary> Gets whether the path has any stored commands. </summary>
-                virtual bool IsEmpty()                  const { return Commands.Count() == 0; }
+                virtual bool IsEmpty()                  const { return ControlPoints.IsEmpty(); }
                 /// <summary> Gets the joint style used to connect two path segments. </summary>
                 virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
                 /// <summary> Gets the color of the path's surrounding stroke. </summary>
@@ -102,32 +103,25 @@ namespace Cyclone
             protected:
 
                 /** DATA **/
-                List<PathCommands>  Commands;
-                List<float>         Coordinates;
+                PathBuffer              ControlPoints;
 
 
 
                 /** PROPERTIES **/
                 bool ParamsNeedUpdate()                 const { return _paramsNeedUpdate; }
-                bool PathNeedsUpdate()                  const { return _pathNeedsUpdate; }
 
                 void ParamsNeedUpdate(bool value)       const { _paramsNeedUpdate = _paramsNeedUpdate ? true : value; }
-                void PathNeedsUpdate(bool value)        const { _pathNeedsUpdate = _pathNeedsUpdate ? true : value; }
 
 
 
                 /** UTILITIES **/
-                SVGAPI virtual void UpdatePath()        const;
                 SVGAPI virtual void UpdateParameters()  const;
 
             private:
 
                 /** PROPERTY DATA **/
-                uint                _count;
-                uint                _id;
                 string              _path;
                 mutable bool        _paramsNeedUpdate;
-                mutable bool        _pathNeedsUpdate;
                 PathStyle           _style;
 
         };

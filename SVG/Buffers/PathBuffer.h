@@ -56,6 +56,11 @@ namespace Cyclone
                 SVGAPI PathBuffer& Set(uint index, const ControlPoint2D& point);
                 /// <summary> Transfers all application-side data within the buffer over to its corresponding GPU storage. </summary>
                 SVGAPI void Update() override;
+                SVGAPI void Update() const;
+
+
+
+                const ControlPoint2D& operator ()(uint index) const { return Data(index); }
 
 
             protected:

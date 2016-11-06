@@ -10,26 +10,28 @@ namespace Cyclone
         Rectangle2D& Rectangle2D::Offset(const Vector3& value)
         {
             BoundaryPosition(value);
-            Coordinates(0) = value.X;
-            Coordinates(1) = value.Y;
-            PathNeedsUpdate(true);
+            ControlPoint2D rect = ControlPoints(0);
+            rect.Coordinates(0) = value.X;
+            rect.Coordinates(1) = value.Y;
+            ControlPoints.Set(0, rect);
             return *this;
         }
 
 
         Rectangle2D& Rectangle2D::CornerRadius(float value)
         {
-            if (value == CornerRadius()) { return *this; }
-            Coordinates(4) = value;
-            PathNeedsUpdate(true);
+            ControlPoint2D rect = ControlPoints(0);
+            rect.Coordinates(4) = value;
+            ControlPoints.Set(0, rect);
             return *this;
         }
         Rectangle2D& Rectangle2D::Size(const Vector3& value)
         {
             BoundarySize(value);
-            Coordinates(2) = value.X;
-            Coordinates(3) = value.Y;
-            PathNeedsUpdate(true);
+            ControlPoint2D rect = ControlPoints(0);
+            rect.Coordinates(2) = value.X;
+            rect.Coordinates(3) = value.Y;
+            ControlPoints.Set(0, rect);
             return *this;
         }
 

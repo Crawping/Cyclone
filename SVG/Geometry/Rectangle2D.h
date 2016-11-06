@@ -17,7 +17,7 @@ namespace Cyclone
                             
                 /** PROPERTIES **/
                 /// <summary> Gets the radius of the curvature applied to the rectangle's corners in pixels. </summary>
-                float CornerRadius() const { return Coordinates(4); }
+                float CornerRadius() const { return ControlPoints(0).Coordinates(4); }
 
                 /// <summary> Sets the radius of curvature applied to the rectangle's corners in pixels. </summary>
                 SVGAPI Rectangle2D& CornerRadius(float value);

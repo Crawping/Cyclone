@@ -42,7 +42,6 @@ namespace Cyclone
 
             protected:
 
-                void UpdatePath()               const override { }
                 SVGAPI void UpdateParameters()  const override;
 
             private:
