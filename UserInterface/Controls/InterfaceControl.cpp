@@ -64,11 +64,11 @@ namespace Cyclone
         InterfaceControl& InterfaceControl::Style(const ControlStyle& value)
         {
             _style = value;
-            Shape()
-                .StrokeWidth(value.BorderWidth.Left)
-                .PrimaryColor(value.BackgroundColor)
-                .SecondaryColor(value.BorderColor);
-            return *this;
+            return this->
+                 BackgroundColor(_style.BackgroundColor)
+                .BorderColor(_style.BorderColor)
+                .BorderRadius(_style.BorderRadius)
+                .BorderWidth(_style.BorderWidth);
         }
 
 
@@ -87,10 +87,6 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void InterfaceControl::UpdateStyle()
-        {
-
-        }
 
 
 
@@ -101,14 +97,5 @@ namespace Cyclone
             Shape().Update();
         }
 
-
-
-
-        //void InterfaceControl::UpdateStyle()
-        //{
-        //    Shape()
-        //        .PrimaryColor(BackgroundColor())
-        //        .SecondaryColor(BorderColor())
-        //}
     }
 }
