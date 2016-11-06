@@ -36,10 +36,10 @@ class Program : public PathRenderer
 
             Path
                 .StrokeWidth(0.0625f)
-                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0))
                 .PrimaryColor(Color4::Red)
-                .Scale(128)
-                .SecondaryColor(Color4::Cyan);
+                .SecondaryColor(Color4::Cyan)
+                .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0))
+                .Scale(128);
 
             PathScene->Add(Path);
         }
