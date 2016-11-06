@@ -22,10 +22,20 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the number of individual control points stored within the buffer. </summary>
                 uint Count()            const override { return Data.Count(); }
+                /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
                 uint ID()               const { return _id; }
+                /// <summary> Gets the number of individual path instances that have been allocated on the GPU. </summary>
+                /// <remarks>
+                ///     For almost all imaging-related paths, this property will return a value of <c>1</c>. Values greater
+                ///     than <c>1</c> indicate the number of times that a path object is being instanced on the GPU, which
+                ///     is almost exclusively used only by text rendering.
+                /// </remarks>
                 uint InstanceCount()    const { return _instanceCount; }
+                /// <summary> Gets whether the path object has been terminated by a close command. </summary>
                 bool IsClosed()         const { return !Data.IsEmpty() && (Data.Last().Command == PathCommands::Close); }
+                bool NeedsUpdate()      const override { return _needsUpdate; }
 
                 SVGAPI List<PathCommands> Commands() const;
                 SVGAPI List<float> Coordinates() const;
@@ -37,10 +47,15 @@ namespace Cyclone
                 SVGAPI ~PathBuffer();
 
 
+
+                /** UTILITIES **/
                 SVGAPI PathBuffer& Add(const ControlPoint2D& point);
                 SVGAPI PathBuffer& Add(const ICollection<ControlPoint2D>& points);
-                SVGAPI void Clear();
-                SVGAPI void Update();
+                SVGAPI void Clear() override;
+                SVGAPI PathBuffer& Remove(uint index);
+                SVGAPI PathBuffer& Set(uint index, const ControlPoint2D& point);
+                /// <summary> Transfers all application-side data within the buffer over to its corresponding GPU storage. </summary>
+                SVGAPI void Update() override;
 
 
             protected:

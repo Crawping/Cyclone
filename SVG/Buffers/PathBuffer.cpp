@@ -8,6 +8,7 @@ namespace Cyclone
 {
     namespace SVG
     {
+
         /** PROPERTIES **/
         List<PathCommands> PathBuffer::Commands() const
         {
@@ -41,7 +42,7 @@ namespace Cyclone
 
 
 
-        /** UTILITIES **/
+        /** BUFFER UTILITIES **/
         PathBuffer& PathBuffer::Add(const ControlPoint2D& point)
         {
             Data.Append(point);
@@ -59,21 +60,38 @@ namespace Cyclone
             Data.Clear();
             NeedsUpdate(true);
         }
+        PathBuffer& PathBuffer::Remove(uint index)
+        {
+            if (index >= Count()) { return *this; }
+            Data.Remove(index);
+            NeedsUpdate(true);
+            return *this;
+        }
+        PathBuffer& PathBuffer::Set(uint index, const ControlPoint2D& point)
+        {
+            if (index == Count())
+                return Add(point);
+            else
+                Data(index) = point;
+
+            NeedsUpdate(true);
+            return *this;
+        }
         void PathBuffer::Update()
         {
             if (!_needsUpdate) { return; }
 
             auto cmds = Commands().ToVector();
-            auto coords = Coordinates().ToVector();
+            auto crds = Coordinates().ToVector();
 
             nvPathCommands
             (
                 ID(),
                 cmds.Count(),
                 (const ubyte*)(cmds.ToArray()),
-                coords.Count(),
+                crds.Count(),
                 NumericFormats::Float,
-                coords.ToArray()
+                crds.ToArray()
             );
 
             _needsUpdate = false;
