@@ -21,10 +21,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets a numeric array that defines the spacing between individual characters of the rendered text. </summary>
                 virtual const Vector<float>& Kerning()  const { return _kerning; }
-                /// <summary>
-                /// 
-                /// </summary>
-                /// <returns></returns>
+                /// <summary> Gets the name of the font being used to render the text. </summary>
                 virtual const string& FontName()        const { return _font.Name(); }
 
                 virtual FontStyles FontStyle()          const { return _font.Style(); }
