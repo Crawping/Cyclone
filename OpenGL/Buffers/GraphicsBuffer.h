@@ -25,7 +25,7 @@ namespace Cyclone
 		        /// <summary> Determines whether this buffer contains any data. </summary>
 		        virtual bool IsEmpty()          const override { return Count() == 0; }
                 /// <summary> Gets whether this buffer has data updates queued for transfer to the GPU. </summary>
-                virtual bool NeedsUpdate()      const override { return _updateFlag || NeedsReallocation(); }
+                virtual bool NeedsUpdate()      const override { return _needsUpdate || NeedsReallocation(); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
                 virtual ulong Stride()          const = 0;
 		        /// <summary> Gets an enumerator identifying how this buffer behaves on the GPU. </summary>
@@ -60,21 +60,15 @@ namespace Cyclone
                 OpenGLAPI void UnbindEntity()           const override;
 		        /// <summary> Detaches any resources associated with this buffer from the rendering pipeline. </summary>
 		        void UnbindResources()                  const override { }
-
-
-
+                
             protected:
 
                 /** PROTECTED PROPERTIES **/
                 /// <summary> Gets whether this buffer needs to be reallocated on the GPU. </summary>
-                OpenGLAPI bool NeedsReallocation()      const { return _gpuCount != Count(); }
+                bool NeedsReallocation()                const { return _gpuCount != Count(); }
 
                 /// <summary> Sets whether this buffer needs any kind of update on the GPU side. </summary>
-                OpenGLAPI void NeedsUpdate(bool value)
-                {
-                    if (NeedsUpdate()) { return; }
-                    _updateFlag = value;
-                }
+                void NeedsUpdate(bool value)            { _needsUpdate = NeedsUpdate() ? true : value; }
 
 
 
@@ -111,14 +105,13 @@ namespace Cyclone
                 /// </remarks>
                 OpenGLAPI virtual void Unmap();
 
-
             private:
 
                 /** PROPERTY DATA **/
                 uint        _gpuCount;
                 uint        _id;
+                bool        _needsUpdate;
                 BufferTypes _type;
-                bool        _updateFlag;
 
         };
     }

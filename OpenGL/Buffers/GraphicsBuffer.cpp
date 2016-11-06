@@ -14,7 +14,7 @@ namespace Cyclone
             _gpuCount(0),
             _id(0),
             _type(type),
-            _updateFlag(false)
+            _needsUpdate(false)
         {
 
         }
@@ -29,7 +29,7 @@ namespace Cyclone
         /** PUBLIC UTILITIES **/
         void GraphicsBuffer::Clear()
         {
-            _updateFlag = true;
+            NeedsUpdate(true);
         }
 
 
@@ -70,7 +70,7 @@ namespace Cyclone
         void GraphicsBuffer::Update()
         {
             if (NeedsReallocation()) { Reallocate(); }
-            _updateFlag = false;
+            _needsUpdate = false;
         }
 
 
