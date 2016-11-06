@@ -10,7 +10,6 @@
     <ClInclude Include="GPU.h" />
     <ClInclude Include="NVPR.h" />
     <ClInclude Include="WindowEvents.h" />
-    <ClInclude Include="InputControls.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Windows">
@@ -29,6 +28,5 @@
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="NVPR.c" />
-    <ClCompile Include="InputControls.cpp" />
   </ItemGroup>
 </Project>

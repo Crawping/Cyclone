@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Enumerator.h"
-#include "PlatformAPI.h"
+#include "UtilitiesAPI.h"
 #include <bitset>
 
 
@@ -13,7 +13,7 @@ namespace Cyclone
 {
     namespace { using namespace Cyclone::Utilities; }
 
-    namespace Platform
+    namespace Utilities
     {
         struct PointerButtons : public Flag<PointerButtons>
         {
@@ -57,9 +57,9 @@ namespace Cyclone
 
             /** UTILITIES **/
             /// <summary> Creates a human-readable string containing all of the recognized values that have been set on this flag. </summary>
-            PlatformAPI string Report() const;
+            UtilitiesAPI string Report() const;
             /// <summary> Converts a single control enumerator into an equivalent string representation. </summary>
-            PlatformAPI string ToString() const;
+            UtilitiesAPI string ToString() const;
 
             PointerButtons& operator &=(const PointerButtons& other) { Value &= other.Value; return *this; }
             PointerButtons& operator |=(const PointerButtons& other) { Value |= other.Value; return *this; }
@@ -216,24 +216,24 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                PlatformAPI KeyboardKeys(enum Keys k = Nothing);
+                UtilitiesAPI KeyboardKeys(enum Keys k = Nothing);
 
 
 
                 /** UTILITIES **/
-                PlatformAPI bool IsPressed(enum Keys k) const;
-                PlatformAPI bool IsPressed(const KeyboardKeys& k) const;
-                PlatformAPI KeyboardKeys& Press(enum Keys k);
-                PlatformAPI KeyboardKeys& Press(const KeyboardKeys& k);
-                PlatformAPI KeyboardKeys& Release(enum Keys k);
-                PlatformAPI KeyboardKeys& Release(const KeyboardKeys& k);
+                UtilitiesAPI bool IsPressed(enum Keys k) const;
+                UtilitiesAPI bool IsPressed(const KeyboardKeys& k) const;
+                UtilitiesAPI KeyboardKeys& Press(enum Keys k);
+                UtilitiesAPI KeyboardKeys& Press(const KeyboardKeys& k);
+                UtilitiesAPI KeyboardKeys& Release(enum Keys k);
+                UtilitiesAPI KeyboardKeys& Release(const KeyboardKeys& k);
 
-                PlatformAPI string Report() const;
-                PlatformAPI string ToString() const;
+                UtilitiesAPI string Report() const;
+                UtilitiesAPI string ToString() const;
 
 
                 /** OPERATORS **/
-                PlatformAPI bool operator ==(const KeyboardKeys& other) const;
+                UtilitiesAPI bool operator ==(const KeyboardKeys& other) const;
                 bool operator !=(const KeyboardKeys& other) const { return !(*this == other); }
 
 

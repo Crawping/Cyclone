@@ -5,7 +5,7 @@ using std::string;
 
 namespace Cyclone
 {
-    namespace Platform
+    namespace Utilities
     {
 
         string PointerButtons::Report() const

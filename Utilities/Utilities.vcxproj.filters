@@ -39,6 +39,7 @@
     <ClCompile Include="Spatial\Camera.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="InputControls.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Interfaces\IUpdatable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="InputControls.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

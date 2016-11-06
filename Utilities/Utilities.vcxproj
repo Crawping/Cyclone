@@ -156,6 +156,7 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Imaging\Bitmap.cpp" />
     <ClCompile Include="Imaging\Color4.cpp" />
+    <ClCompile Include="InputControls.cpp" />
     <ClCompile Include="Math\Matrix4x4.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Imaging\Bitmap.h" />
     <ClInclude Include="Imaging\Color4.h" />
+    <ClInclude Include="InputControls.h" />
     <ClInclude Include="Interfaces\IArray.h" />
     <ClInclude Include="Interfaces\ICollection.h" />
     <ClInclude Include="Interfaces\IDataBuffer.h" />
