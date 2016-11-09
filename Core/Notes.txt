@@ -23,12 +23,13 @@ TODOS:
     -- Rounded rectangles                       (DONE)
     -- Color gradients
     -- Enable/disable stroking & filling        (DONE)
-    -- Proper scaling of SVG elements
+    -- Proper scaling of SVG elements           (PRELIMINARY)
         > Pixels                                (DONE)
         > Ems                                   (DONE)
+        > Convert between pixels/ems
     -- Hit testing								(PRELIMINARY)
     -- Separate:
-        > Path geometry
+        > Path geometry                         (DONE)
         > Path styles                           (DONE)
         > Path materials
 
@@ -62,7 +63,8 @@ TODOS:
 	-- Clock
 	-- Random Number Generator (RNG)
 	-- Implement ICollection interface			(PRELIMINARY)
-	-- Generalized Multidimensional Arrays
+	-- Generalized multidimensional arrays
+    -- Data streams
 	-- Lists									(DONE)
         > Efficient iteration                   (DONE)
     -- Vectors                                  (PRELIMINARY)
@@ -80,6 +82,7 @@ TODOS:
     -- Geometry             -> Geometry3D       (DONE)
 	-- Primitives Folder	-> Geometry         (DONE)
     -- Vertices             -> Vertex           (DONE)
+    -- Point2D              -> Circle2D
 
 - General
 	-- Integrate exception throws
@@ -94,6 +97,8 @@ TODOS:
     -- State settings for the GPU class         (PRELIMINARY)
     -- Define & standardize some kind of 
        update system
+    -- Refactor NVPR into SVG
+    -- Refactor InputControls into Utilities    (DONE)
 
 - Scenes
     -- Varying vertex topologies				(DONE)
