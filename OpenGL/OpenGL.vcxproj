@@ -182,6 +182,7 @@
     <ClInclude Include="Pipelines\Shader.h" />
     <ClInclude Include="Pipelines\ShaderPipeline.h" />
     <ClInclude Include="RenderStage3D.h" />
+    <ClInclude Include="Textures\GradientTexture.h" />
     <ClInclude Include="Textures\Texture.h" />
     <ClInclude Include="Textures\Texture2D.h" />
     <ClInclude Include="Textures\TextureSampler.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="Pipelines\Shader.cpp" />
     <ClCompile Include="Pipelines\ShaderPipeline.cpp" />
     <ClCompile Include="RenderStage3D.cpp" />
+    <ClCompile Include="Textures\GradientTexture.cpp" />
     <ClCompile Include="Textures\Texture.cpp" />
     <ClCompile Include="Textures\Texture2D.cpp" />
     <ClCompile Include="Textures\TextureSampler.cpp" />

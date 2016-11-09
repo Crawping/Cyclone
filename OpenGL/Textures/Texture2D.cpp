@@ -137,7 +137,7 @@ namespace Cyclone
                 offset.X,   offset.Y,   0,
                 size.X,     size.Y,     1,
                 Format().ToBaseFormat(),
-                GL_FLOAT,
+                NumericFormats::Float,
                 bmp.Length() * sizeof(Color4),
                 (void*)bmp.ToArray()
             );

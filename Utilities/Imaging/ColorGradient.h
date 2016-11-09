@@ -25,6 +25,7 @@ namespace Cyclone
         class ColorGradient
         {
             public:
+                uint Count() const { return Stops.Count(); }
                 const ColorStop& First() const { return Stops.First(); }
                 const ColorStop& Last() const { return Stops.Last(); }
 

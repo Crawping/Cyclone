@@ -59,9 +59,9 @@ namespace Cyclone
 	        /// <summary> Creates a random opaque color with channel values drawn from a uniform distribution. </summary>
             static Color4 Random();
 	        /// <summary> Converts this color structure into an array of four float values ordered as RGBA. </summary>
-            float* ToArray()                                              { return (float*)this; }
+            float* ToArray()                                              { return &R; }
 	        /// <summary> Converts this color structure into an array of four float values ordered as RGBA. </summary>
-            constexpr const float* ToArray()                        const { return (const float*)this; }
+            constexpr const float* ToArray()                        const { return &R; }
 	        /// <summary> Converts this color structure into a packed 32-bit integer containing the RGBA values. </summary>
             constexpr int ToInt()                                   const;
 	        /// <summary> Converts this color structure into a string containing the four RGBA channel values. </summary>

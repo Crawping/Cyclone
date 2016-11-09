@@ -51,10 +51,7 @@ namespace Cyclone
                 /// <summary> Gets the width of the texture in texels. </summary>
                 virtual uint Width()            const { return (uint)_size.X; }
 
-                //OpenGLAPI virtual Texture3D& Format(TextureFormats value);
-                //OpenGLAPI virtual Texture3D& MipmapCount(uint value);
                 OpenGLAPI virtual Texture3D& Size(const Vector4& value);
-                //OpenGLAPI virtual Texture3D& Target(TextureTargets value);
 
 
 
@@ -63,9 +60,9 @@ namespace Cyclone
                 /// <param name="size"> 
                 ///     The desired (x, y, z, w) size of the texture. 
                 ///     <para> </para>
-                ///     Texture size is specified as a four-element vector containing width, height, depth, 
-                ///     and count values, in that order. If a multisampled texture is being requested, then 
-                ///     the vector's 'W' component is interpretted as the sample count. Otherwise, this value 
+                ///     Texture size is specified as a four-element vector containing width, height, depth,     <para/>
+                ///     and count values, in that order. If a multisampled texture is being requested, then     <para/>
+                ///     the vector's 'W' component is interpretted as the sample count. Otherwise, this value   <para/>
                 ///     is interpretted as the desired number of mipmap levels for the texture's storage.
                 /// </param>
                 /// <param name="format"> One of the <see cref="TextureFormat"/> enumerators specifying the format of the texture's data. </param>
@@ -106,6 +103,11 @@ namespace Cyclone
 
             protected:
 
+                /** PROPERTIES **/
+                void NeedsUpdate(bool value)    const { _needsUpdate = _needsUpdate ? true : value; }
+
+
+
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty texture object that can be manually initialized by subclasses. </summary>
                 OpenGLAPI Texture3D();
@@ -133,7 +135,7 @@ namespace Cyclone
                 TextureFormats  _format;
                 ulong           _handle;
                 uint            _id;
-                bool            _needsUpdate;
+                mutable bool    _needsUpdate;
                 Vector4         _size;
                 TextureTargets  _target;
 

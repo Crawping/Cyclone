@@ -10,35 +10,14 @@ namespace Cyclone
     {
         
         /** PROPERTIES **/
-        //Texture3D& Texture3D::Format(TextureFormats value)
-        //{
-        //    if (value == Format()) { return *this; }
-        //    _format = value;
-        //    _needsUpdate = true;
-        //    return *this;
-        //}
-        //Texture3D& Texture3D::MipmapCount(uint value)
-        //{
-        //    if (value == MipmapCount()) { return *this; }
-        //    _size.W = value > 1 ? value : 1.0f;
-        //    _needsUpdate = true;
-        //    return *this;
-        //}
         Texture3D& Texture3D::Size(const Vector4& value)
         {
             if (value == Size()) { return *this; }
             
-            _size = Vector4(value.X, value.Y, value.Z, Math::Min(value.W, 1.0f));
+            _size = Vector4(value.X, value.Y, value.Z, Math::Max(value.W, 1.0f));
             _needsUpdate = true;
             return *this;
         }
-        //Texture3D& Texture3D::Target(TextureTargets value)
-        //{
-        //    if (value == Target())
-        //    _target = value;
-        //    _needsUpdate = true;
-        //    return *this;
-        //}
 
 
 
@@ -58,8 +37,10 @@ namespace Cyclone
             _size(size),
             _target(target)
         {
-            if (!IsMultisampled() && _size.W < 1.0f)
-                _size.W = 1.0f;
+            _size.X = Math::Max(_size.X, 1.0f);
+            _size.Y = Math::Max(_size.Y, 1.0f);
+            _size.Z = Math::Max(_size.Z, 1.0f);
+            _size.W = Math::Max(_size.W, 1.0f);
         }
         Texture3D::~Texture3D()
         {

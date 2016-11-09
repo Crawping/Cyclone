@@ -112,6 +112,9 @@
     <ClInclude Include="Interfaces\IGeometric3D.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Textures\GradientTexture.h">
+      <Filter>Textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -160,6 +163,9 @@
       <Filter>Pipelines</Filter>
     </ClCompile>
     <ClCompile Include="RenderStage3D.cpp" />
+    <ClCompile Include="Textures\GradientTexture.cpp">
+      <Filter>Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
