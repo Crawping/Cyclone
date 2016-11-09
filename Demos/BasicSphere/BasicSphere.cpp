@@ -29,9 +29,9 @@ class Program : public BasicRenderer
             BasicRenderer::CreateSceneResources();
 
             Sphere
+                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Pitch(90)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
-                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Roll(90)
                 .Scale(100);
 
@@ -58,7 +58,7 @@ class Program : public BasicRenderer
                 0.125f * sinf(Sphere.Roll()) + 0.875
             );
 
-            Sphere.Color(color).Rotate(0.01f);
+            Sphere.PrimaryColor(color).Rotate(0.01f);
             RenderScene->Update(Sphere);
 
             BasicRenderer::UpdateScene();
