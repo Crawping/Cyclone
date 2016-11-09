@@ -82,6 +82,7 @@
             PlatformAPI extern PFNGLPATHTEXGENNVPROC                        nvPathTexGen;
 
             PlatformAPI extern PFNGLPOINTALONGPATHNVPROC                    nvPointAlongPath;
+            PlatformAPI extern PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC       nvProgramPathFragmentInputGen;
             PlatformAPI extern PFNGLSTENCILFILLPATHNVPROC                   nvStencilFillPath;
             PlatformAPI extern PFNGLSTENCILFILLPATHINSTANCEDNVPROC          nvStencilFillPathInstanced;
             PlatformAPI extern PFNGLSTENCILSTROKEPATHNVPROC                 nvStencilStrokePath;

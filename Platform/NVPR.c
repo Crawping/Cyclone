@@ -78,6 +78,7 @@ PFNGLPATHSUBCOORDSNVPROC                     nvPathSubCoords                    
 PFNGLPATHTEXGENNVPROC                        nvPathTexGen                               = NULL;
 
 PFNGLPOINTALONGPATHNVPROC                    nvPointAlongPath                           = NULL;
+PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC       nvProgramPathFragmentInputGen              = NULL;
 PFNGLSTENCILFILLPATHNVPROC                   nvStencilFillPath                          = NULL;
 PFNGLSTENCILFILLPATHINSTANCEDNVPROC          nvStencilFillPathInstanced                 = NULL;
 PFNGLSTENCILSTROKEPATHNVPROC                 nvStencilStrokePath                        = NULL;
@@ -165,6 +166,7 @@ int nvLoadFunctions()
     nvPathTexGen                        = (PFNGLPATHTEXGENNVPROC)                       glGetFunctionPointer("glPathTexGenNV");
 
     nvPointAlongPath                    = (PFNGLPOINTALONGPATHNVPROC)                   glGetFunctionPointer("glPointAlongPathNV");
+    nvProgramPathFragmentInputGen       = (PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC)      glGetFunctionPointer("glProgramPathFragmentInputGenNV");
     nvStencilFillPath                   = (PFNGLSTENCILFILLPATHNVPROC)                  glGetFunctionPointer("glStencilFillPathNV");
     nvStencilFillPathInstanced          = (PFNGLSTENCILFILLPATHINSTANCEDNVPROC)         glGetFunctionPointer("glStencilFillPathInstancedNV");
     nvStencilStrokePath                 = (PFNGLSTENCILSTROKEPATHNVPROC)                glGetFunctionPointer("glStencilStrokePathNV");
