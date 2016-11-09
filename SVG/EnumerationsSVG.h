@@ -19,6 +19,15 @@ struct CharacterEncodings : public Enumerator
     };
 };
 
+struct ColorTargets : public Enumerator
+{
+    enum Targets
+    {
+        PrimaryColor                            = 0x852C,
+        SecondaryColor                          = 0x852D,
+    };
+};
+
 struct CoverModes : public Enumerator
 {
     enum Modes
