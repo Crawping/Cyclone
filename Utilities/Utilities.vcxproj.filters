@@ -116,6 +116,9 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="InputControls.h" />
+    <ClInclude Include="Imaging\ColorGradient.h">
+      <Filter>Imaging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

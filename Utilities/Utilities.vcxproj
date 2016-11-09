@@ -177,6 +177,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="Imaging\Bitmap.h" />
     <ClInclude Include="Imaging\Color4.h" />
+    <ClInclude Include="Imaging\ColorGradient.h" />
     <ClInclude Include="InputControls.h" />
     <ClInclude Include="Interfaces\IArray.h" />
     <ClInclude Include="Interfaces\ICollection.h" />

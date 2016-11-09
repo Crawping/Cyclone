@@ -33,9 +33,11 @@ namespace Cyclone
 
             protected:
 
-                SVGAPI int GetUniformID(const string& name) const;
-                SVGAPI void SetUniform(int id, const Color4& value) const;
-                SVGAPI void SetUniform(int id, int value) const;
+                SVGAPI int GetResourceID(const string& name)            const;
+                SVGAPI int GetUniformID(const string& name)             const;
+                SVGAPI void SetResource(int id, const Color4& value)    const;
+                SVGAPI void SetUniform(int id, const Color4& value)     const;
+                SVGAPI void SetUniform(int id, int value)               const;
 
 
             private:
