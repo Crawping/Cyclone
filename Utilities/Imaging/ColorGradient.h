@@ -3,9 +3,14 @@
  */
 
 #pragma once
+#include "Enumerator.h"
+#include "UtilitiesAPI.h"
 #include "Collections/List.h"
+#include "Collections/Vector.h"
 #include "Imaging/Color4.h"
+#include "Interfaces/IDataBuffer.h"
 #include "Math/Vector3.h"
+#include <map>
 
 
 
@@ -16,8 +21,19 @@ namespace Cyclone
 
         struct ColorStop
         {
+            float   Position;
             Color4  Color;
-            Vector3 Position;
+        };
+
+        struct GradientShapes : public Enumerator
+        {
+            enum Shapes
+            {
+                Linear,
+                Radial,
+            };
+
+            constexpr GradientShapes(enum Shapes t = Linear) : Enumerator((int)t) { }
         };
 
 
@@ -25,43 +41,41 @@ namespace Cyclone
         class ColorGradient
         {
             public:
-                uint Count() const { return Stops.Count(); }
-                const ColorStop& First() const { return Stops.First(); }
-                const ColorStop& Last() const { return Stops.Last(); }
+                
+                uint Count()                                const { return _stops.size(); }
+                bool IsEmpty()                              const { return Count() == 0; }
+                GradientShapes Shape()                      const { return _shape; }
+
+                ColorGradient& Shape(GradientShapes value)  { _shape = value; return *this; }
+                
+                
 
 
-                ColorGradient()
+                UtilitiesAPI ColorGradient();
+                UtilitiesAPI ColorGradient(std::initializer_list<ColorStop> values);
+
+
+
+
+                void Clear()                                        { _stops.clear(); }
+                void Insert(const ColorStop& color)                 { _stops[color.Position] = color.Color; }
+                void Insert(float position, const Color4& color)    { Insert({ position, color }); }
+                void Remove(float position)
                 {
-
-                }
-                ColorGradient(std::initializer_list<ColorStop> values)
-                {
-                    for (const ColorStop& s : values)
-                        Stops.Append(s);
-                }
-
-
-
-                void ToMatrix() const
-                {
-                    ColorStop first = Stops.First();
-                    ColorStop last = Stops.Last();
-
-                    //Vector<float, 12> colorTransform =
-                    //{
-                    //    sqrt(first.Position.X) * (last.Color.R - first.Color.R), sqrt(0, first.Color.R,
-                    //    sqrt(first.Position.X) * (last.Color.G - first.Color.G), sqrt(0, first.Color.G,
-                    //    sqrt(first.Position.X) * (last.Color.B - first.Color.B), sqrt(0, first.Color.B,
-                    //    sqrt(first.Position.X) * (last.Color.A - first.Color.A), sqrt(0, first.Color.A,
-                    //};
+                    if (_stops.count(position))
+                        _stops.erase(position);
                 }
 
+
+                UtilitiesAPI const Color4& operator ()(float idx) const;
+                UtilitiesAPI Vector<Color4> ToVector(uint count = 256) const;
 
 
             private:
 
-                List<ColorStop> Stops;
-
+                GradientShapes          _shape;
+                std::map<float, Color4> _stops;
+                
         };
     }
 }

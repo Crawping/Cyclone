@@ -1,0 +1,69 @@
+#include "Utilities.h"
+#include "Imaging/ColorGradient.h"
+
+
+
+namespace Cyclone
+{
+    namespace Utilities
+    {
+
+        /** CONSTRUCTORS **/
+        ColorGradient::ColorGradient()
+        {
+
+        }
+        ColorGradient::ColorGradient(std::initializer_list<ColorStop> values) :
+            ColorGradient()
+        {
+            for (const ColorStop& s : values)
+                Insert(s);
+        }
+
+
+
+        /** OPERATORS **/
+        const Color4& ColorGradient::operator()(float idx) const
+        {
+            if (IsEmpty()) { return Color4::Transparent; }                
+
+            idx = clamp(idx, 0.0f, 1.0f);            
+            if (_stops.count(idx))
+                return _stops.at(idx);
+
+            auto& lower = _stops.lower_bound(idx);
+            auto& upper = _stops.upper_bound(idx);
+
+            if (lower == _stops.begin() || upper == _stops.end())
+                return lower->second;
+            else
+                --lower;
+
+            float scale = (idx - lower->first) / (upper->first - lower->first);
+            return Color4
+            (
+                lower->second.R + abs(scale * (upper->second.R - lower->second.R)),
+                lower->second.G + abs(scale * (upper->second.G - lower->second.G)),
+                lower->second.B + abs(scale * (upper->second.B - lower->second.B)),
+                lower->second.A + abs(scale * (upper->second.A - lower->second.A))
+            );
+        }
+        Vector<Color4> ColorGradient::ToVector(uint count) const
+        {
+            Vector<Color4> output(count);
+            if (IsEmpty())
+                return output.Fill(Color4::Transparent);
+
+            count = (uint)Math::Max(count, 2);
+
+            uint idx = 0;
+            float step = 1.0f / (float)(count - 1);
+            for (float a = 0; a < 1.0f + step; a += step)
+                output(idx++) = operator ()(a);
+
+            return output;
+        }
+
+
+    }
+}

@@ -14,30 +14,12 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        struct GradientShapes : public Enumerator
-        {
-            enum Shapes
-            {
-                Linear,
-                Radial,
-            };
-
-            constexpr GradientShapes(enum Shapes t = Linear) : Enumerator((int)t) { }
-        };
-
-        struct ColorStop
-        {
-            Color4  Color;
-            float   Position;
-        };
-
         class GradientTexture : public Texture3D
         {
             public:
 
-                OpenGLAPI GradientTexture(const ColorGradient& colors);
+                OpenGLAPI GradientTexture(uint ncolors, const ColorGradient& colors);
 
-                OpenGLAPI void Add(const ColorStop& color);
                 OpenGLAPI void Update() override;
 
             protected:
@@ -45,7 +27,7 @@ namespace Cyclone
 
             private:
                 GradientShapes      _shape;
-                List<ColorStop>     _stops;
+                ColorGradient       _gradient;
 
         };
     }

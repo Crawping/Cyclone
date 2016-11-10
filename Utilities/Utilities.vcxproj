@@ -156,6 +156,7 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Imaging\Bitmap.cpp" />
     <ClCompile Include="Imaging\Color4.cpp" />
+    <ClCompile Include="Imaging\ColorGradient.cpp" />
     <ClCompile Include="InputControls.cpp" />
     <ClCompile Include="Math\Matrix4x4.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />

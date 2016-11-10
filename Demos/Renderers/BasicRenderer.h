@@ -5,6 +5,7 @@
 #pragma once
 #include "RendererAPI.h"
 #include "TypeDefinitions.h"
+#include "Window3D.h"
 #include "Imaging/Color4.h"
 #include "Spatial/Area.h"
 #include "Spatial/Camera.h"

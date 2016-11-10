@@ -40,6 +40,9 @@
       <Filter>Spatial</Filter>
     </ClCompile>
     <ClCompile Include="InputControls.cpp" />
+    <ClCompile Include="Imaging\ColorGradient.cpp">
+      <Filter>Imaging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h" />
