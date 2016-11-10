@@ -65,6 +65,7 @@ TODOS:
 	-- Implement ICollection interface			(PRELIMINARY)
 	-- Generalized multidimensional arrays
     -- Data streams
+    -- Sets
 	-- Lists									(DONE)
         > Efficient iteration                   (DONE)
     -- Vectors                                  (PRELIMINARY)
