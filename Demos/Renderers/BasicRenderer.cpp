@@ -59,8 +59,6 @@ namespace Renderers
         while (_canContinue)
         {
             RenderWindow->ProcessEvent();
-            Renderer->Clear(ClearColor);
-
             UpdateScene();
             Render();
             Renderer->Present();
@@ -101,6 +99,9 @@ namespace Renderers
     {
         CreateRenderTarget();
         CreateTransformations();
+
+        if (RenderScene)
+            RenderScene->Target(RenderTarget);
     }
     void BasicRenderer::CreateTransformations()
     {
@@ -133,6 +134,7 @@ namespace Renderers
         {
             Renderer->Scene(RenderScene);
             Renderer->Update();
+            Renderer->Clear(ClearColor);
             Renderer->Execute();
         }
         //Renderer->Execute();
