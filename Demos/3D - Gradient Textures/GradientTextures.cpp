@@ -43,23 +43,25 @@ class Program : public BasicRenderer
             ColorGradient gradient =
             {
                 { 0.00f, Color4::Blue },
-                //{ 0.25f, Color4::Gray },
+                //{ 0.875f, Color4::Gray },
                 //{ 0.50f, Color4::Cyan },
+                //{ 0.25f, Color4::Green },
+                //{ 0.50f, Color4::Red },
                 //{ 0.75f, Color4::Green },
-                { 1.00f, Color4::Red },
+                { 1.00f, Color4::Cyan },
             };
 
-            Gradient = new GradientTexture(256, gradient);
+            Gradient = new GradientTexture(8, gradient);
             Gradient->Update();
             Gradient->Bind();
 
-            Vector<Color4> g = gradient.ToVector();
+            Vector<Color4> g = gradient.ToVector(2);
             for (uint a = 0; a < g.Count(); a++)
                 Console::WriteLine(g(a).ToString());
 
             Quad
                 .Position(RenderWindow->ClientArea().Center())
-                .Scale(256, 256);
+                .Scale(512, 256);
 
             RenderScene->Add(Quad);
         }
