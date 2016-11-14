@@ -31,21 +31,20 @@ namespace Cyclone
             if (_stops.count(idx))
                 return _stops.at(idx);
 
-            auto& lower = _stops.lower_bound(idx);
-            auto& upper = _stops.upper_bound(idx);
+            auto lower = _stops.upper_bound(idx);
+            auto upper = lower;
 
             if (lower == _stops.begin() || upper == _stops.end())
                 return lower->second;
-            else
-                --lower;
 
+            --lower;
             float scale = (idx - lower->first) / (upper->first - lower->first);
             return Color4
             (
-                lower->second.R + abs(scale * (upper->second.R - lower->second.R)),
-                lower->second.G + abs(scale * (upper->second.G - lower->second.G)),
-                lower->second.B + abs(scale * (upper->second.B - lower->second.B)),
-                lower->second.A + abs(scale * (upper->second.A - lower->second.A))
+                lower->second.R + (scale * (upper->second.R - lower->second.R)),
+                lower->second.G + (scale * (upper->second.G - lower->second.G)),
+                lower->second.B + (scale * (upper->second.B - lower->second.B)),
+                lower->second.A + (scale * (upper->second.A - lower->second.A))
             );
         }
         Vector<Color4> ColorGradient::ToVector(uint count) const
@@ -58,7 +57,8 @@ namespace Cyclone
 
             uint idx = 0;
             float step = 1.0f / (float)(count - 1);
-            for (float a = 0; a < 1.0f + step; a += step)
+            float end = (--_stops.end())->first;
+            for (float a = 0; a <= end; a += step)
                 output(idx++) = operator ()(a);
 
             return output;
