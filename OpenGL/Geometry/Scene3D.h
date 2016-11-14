@@ -4,7 +4,7 @@
 
 #pragma once
 #include "GraphicsSettings.h"
-#include "Buffers/DrawBuffer.h"
+#include "Buffers/DrawBuffer3D.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
 #include "GL/OpenGLAPI.h"
@@ -65,9 +65,9 @@ namespace Cyclone
 
                 GraphicsSettings _settings;
 
-                std::map<VertexTopologies, DrawBuffer<DrawCommand>>             Buffers;
+                std::map<VertexTopologies, DrawBuffer3D<DrawCommand>>             Buffers;
 
-                std::map<VertexTopologies, DrawBuffer<IndexedDrawCommand>>      IndexedBuffers;
+                std::map<VertexTopologies, DrawBuffer3D<IndexedDrawCommand>>      IndexedBuffers;
 
                 List<IRenderStage*>                                             Stages3D;                                              
 

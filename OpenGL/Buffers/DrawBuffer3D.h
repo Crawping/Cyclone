@@ -26,7 +26,7 @@ namespace Cyclone
         /// <typeparam name="U"> The type name of the per-entity data structure used by the buffer. </typeparam>
         /// <typeparam name="V"> The type name of the vertex data structure used by the buffer. </typeparam>
         template<typename T, typename U = PerEntity, typename V = Vertex::Standard>
-        class DrawBuffer : public IGraphicsBuffer
+        class DrawBuffer3D : public IGraphicsBuffer
         {
             public:
                 
@@ -48,7 +48,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty new drawing buffer for use in rendering geometry on the GPU. </summary>
-                DrawBuffer() :
+                DrawBuffer3D() :
                     _needsReallocation(false),
                     _needsUpdate(false)
                 {

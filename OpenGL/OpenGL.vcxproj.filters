@@ -53,9 +53,6 @@
     <ClInclude Include="Buffers\MapBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Buffers\DrawBuffer.h">
-      <Filter>Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\Entity3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -114,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="Textures\GradientTexture.h">
       <Filter>Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\DrawBuffer3D.h">
+      <Filter>Buffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
