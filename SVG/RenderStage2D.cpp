@@ -44,15 +44,15 @@ namespace Cyclone
 
         int RenderStage2D::GetResourceID(const string& name) const
         {
-            if (Settings() && Settings()->Pipeline)
-                return glGetProgramResourceLocation(Settings()->Pipeline->ID(), GL_FRAGMENT_INPUT_NV, name.c_str());
+            if (Settings().Pipeline)
+                return glGetProgramResourceLocation(Settings().Pipeline->ID(), GL_FRAGMENT_INPUT_NV, name.c_str());
             else
                 return -1;
         }
         int RenderStage2D::GetUniformID(const string& name) const
         {
-            if (Settings() && Settings()->Pipeline)
-                return glGetUniformLocation(Settings()->Pipeline->ID(), name.c_str());
+            if (Settings().Pipeline)
+                return glGetUniformLocation(Settings().Pipeline->ID(), name.c_str());
             else
                 return -1;
         }
@@ -68,7 +68,7 @@ namespace Cyclone
 
             nvProgramPathFragmentInputGen
             (
-                Settings()->Pipeline->ID(),
+                Settings().Pipeline->ID(),
                 id,
                 GenerationModes::ObjectBoundingBox,
                 4,

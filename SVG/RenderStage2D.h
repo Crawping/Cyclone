@@ -23,7 +23,7 @@ namespace Cyclone
             public:
 
                 virtual const IGraphicsBuffer* Data()           const override { return (IGraphicsBuffer*)_data; }
-                virtual const GraphicsSettings* Settings()      const override { return _settings; }
+                virtual const GraphicsSettings& Settings()      const override { return *_settings; }
                 virtual VertexTopologies Topology()             const override { return VertexTopologies::Path; }
 
                 SVGAPI RenderStage2D(const DrawBuffer2D* data, const GraphicsSettings* settings);

@@ -19,7 +19,7 @@ namespace Cyclone
             public:
                 /** PROPERTIES **/
                 virtual const IGraphicsBuffer* Data()           const = 0;
-                virtual const GraphicsSettings* Settings()      const = 0;
+                virtual const GraphicsSettings& Settings()      const = 0;
                 virtual VertexTopologies Topology()             const = 0;
 
                 /** DESTRUCTOR **/
