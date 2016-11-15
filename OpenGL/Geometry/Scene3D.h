@@ -61,6 +61,10 @@ namespace Cyclone
                 OpenGLAPI void Update();
                 OpenGLAPI void Update(const IRenderable3D<Vertex::Standard>& entity);
 
+                OpenGLAPI void Add(const string& stage, const IRenderable3D<Vertex::Standard>& entity);
+                OpenGLAPI void CreateStage(const string& name);
+
+
             private:
 
                 GraphicsSettings _settings;

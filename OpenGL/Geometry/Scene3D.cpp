@@ -61,12 +61,12 @@ namespace Cyclone
             for (auto& kvp : Buffers)
             {
                 kvp.second.Update();
-                Stages3D.Append(new RenderStage3D(kvp.first, &kvp.second, &_settings));
+                Stages3D.Append(new RenderStage3D(kvp.first, &kvp.second, _settings));
             }
             for (auto& kvp : IndexedBuffers)
             {
                 kvp.second.Update();
-                Stages3D.Append(new IndexedRenderStage3D(kvp.first, &kvp.second, &_settings));
+                Stages3D.Append(new IndexedRenderStage3D(kvp.first, &kvp.second, _settings));
             }
         }
 
