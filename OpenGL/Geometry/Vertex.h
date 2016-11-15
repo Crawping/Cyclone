@@ -61,7 +61,9 @@ namespace Cyclone
         {
             struct Colored : public IVertex
             {
+                /// <summary> The (x, y, z) position of the vertex in model space. </summary>
                 Vector3 Position;
+                /// <summary> The (r, g, b, a) color of the vertex. </summary>
                 Color4 Color;
 
                 Vector<VertexAttribute> Layout() const override
