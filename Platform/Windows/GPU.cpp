@@ -169,8 +169,7 @@ namespace Cyclone
                 for (uint a = 0; a < stages.Count(); a++)
                 {
                     IRenderStage* ctStage = stages(a);
-                    //if (ctStage->Settings())
-                        Configure(ctStage->Settings());
+                    Configure(ctStage->Settings());
                     if (ctStage->Data() && ctStage->Data()->Count())
                         ctStage->Data()->Bind();
                     
