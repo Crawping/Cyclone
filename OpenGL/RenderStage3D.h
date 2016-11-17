@@ -62,6 +62,11 @@ namespace Cyclone
         {
             public:
 
+                IndexedRenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data) : 
+                    RenderStage3D(topology, data)
+                {
+
+                }
                 IndexedRenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data, const GraphicsSettings& settings) : 
                     RenderStage3D(topology, data, settings)
                 {
