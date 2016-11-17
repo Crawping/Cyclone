@@ -23,7 +23,8 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        Scene3D::Scene3D()
+        Scene3D::Scene3D() : 
+            _isVisible(true)
         {
 
         }

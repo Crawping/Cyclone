@@ -34,6 +34,8 @@ namespace Cyclone
                 Scene3D& IsBlendEnabled(bool value)             { _settings.IsBlendEnabled = value; return *this; }
                 Scene3D& IsDepthTestEnabled(bool value)         { _settings.IsDepthTestEnabled = value; return *this; }
                 Scene3D& IsStencilTestEnabled(bool value)       { _settings.IsStencilTestEnabled = value; return *this; }
+                Scene3D& IsVisible(bool value)                  { _isVisible = value; return *this; }
+
                 Scene3D& Pipeline(GraphicsPipeline* value)      { _settings.Pipeline = value; return *this; }
                 Scene3D& Projection(ITransformation3D* value)   { _settings.Projection = value; return *this; }
                 Scene3D& Target(FrameBuffer* value)             { _settings.Target = value; return *this; }
@@ -63,17 +65,19 @@ namespace Cyclone
 
                 OpenGLAPI void Add(const string& stage, const IRenderable3D<Vertex::Standard>& entity);
                 OpenGLAPI void CreateStage(const string& name);
+                OpenGLAPI void Settings(const string& stage, const GraphicsSettings& value);
 
 
             private:
 
-                GraphicsSettings _settings;
+                bool                _isVisible;
+                GraphicsSettings    _settings;
 
                 std::map<VertexTopologies, DrawBuffer3D<DrawCommand>>             Buffers;
 
                 std::map<VertexTopologies, DrawBuffer3D<IndexedDrawCommand>>      IndexedBuffers;
 
-                List<IRenderStage*>                                             Stages3D;                                              
+                List<IRenderStage*>                                             Stages3D;
 
         };
     }
