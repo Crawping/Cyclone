@@ -31,6 +31,8 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
+
+                uint CommandCount()             const { return Commands.Count(); }
                 /// <summary> Gets the number of drawing commands currently stored in this buffer. </summary>
                 uint Count()                    const override { return Commands.Count(); }
                 /// <summary> A method implemented for <see cref="IBindable"/> compatibility that has no purpose here. </summary>
@@ -41,9 +43,12 @@ namespace Cyclone
                 ///     should never be used.
                 /// </remarks>
                 uint ID()                       const override { return 0; }
+                
+                uint IndexCount()               const { return Indices.Count(); }
                 /// <summary> Gets whether this buffer has data updates queued for transfer to the GPU. </summary>
                 bool NeedsUpdate()              const override { return _needsUpdate || _needsReallocation; }
 
+                uint VertexCount()              const { return Vertices.Count(); }
 
 
                 /** CONSTRUCTOR **/
@@ -58,20 +63,37 @@ namespace Cyclone
 
 
                 /** BUFFER UTILITIES **/
+
+                void Add(const T& command, const U& entity, const ICollection<V>& vertices, const ICollection<uint>& indices)
+                {
+                    Commands.Add(command);
+                    Entities.Add(entity);
+
+                    for (uint a = 0; a < vertices.Count(); a++)
+                        Vertices.Add(vertices(a));
+
+                    for (uint a = 0; a < indices.Count(); a++)
+                        Indices.Add(indices(a));
+
+                    //_needsReallocation = true;
+                    //_needsUpdate = true;
+                }
+
+
                 /// <summary> Adds a 3D renderable entity to the drawing buffer. </summary>
                 /// <param name="entity"> A reference to the 3D renderable entity to be added to the drawing buffer. </param>
                 /// <remarks> If the inputted entity is already present, then this method has no effect on the buffer. </remarks>
                 void Add(const IRenderable3D<V>& entity)
                 {
-                    if (EntityIndices.count(&entity)) { return; }
+                    //if (EntityIndices.count(&entity)) { return; }
 
-                    const auto& components = entity.Components();
-                    for (uint a = 0; a < components.Count(); a++)
-                        Add(*components(a));
+                    //const auto& components = entity.Components();
+                    //for (uint a = 0; a < components.Count(); a++)
+                    //    Add(*components(a));
 
-                    EntityIndices[&entity] = Commands.Count();
-                    _needsReallocation = true;
-                    _needsUpdate = true;
+                    //EntityIndices[&entity] = Commands.Count();
+                    //_needsReallocation = true;
+                    //_needsUpdate = true;
                 }
                 /// <summary> Clears the contents of the drawing buffer. </summary>
                 void Clear()                                    override
@@ -91,62 +113,71 @@ namespace Cyclone
                     if (!EntityIndices.count(&entity)) { return; }
 
                     EntityIndices.erase(&entity);
-                    _needsReallocation = true;
-                    _needsUpdate = true;
+                    //_needsReallocation = true;
+                    //_needsUpdate = true;
                 }
                 void Update()                                   override
                 {
-                    if (!NeedsUpdate()) { return; }
+                    //if (!NeedsUpdate()) { return; }
 
-                    if (_needsReallocation)
-                    {
-                        ClearBuffers();
-                        for (const auto& kvp : EntityIndices)
-                        {
-                            EntityIndices[kvp.first] = Commands.Count();
+                    //if (_needsReallocation)
+                    //{
+                    //    ClearBuffers();
+                    //    for (const auto& kvp : EntityIndices)
+                    //    {
+                    //        EntityIndices[kvp.first] = Commands.Count();
 
-                            AddCommand(kvp.first);
-                            AddEntity(kvp.first);
-                            AddVertices(kvp.first);
-                        }
+                    //        AddCommand(kvp.first);
+                    //        AddEntity(kvp.first);
+                    //        AddVertices(kvp.first);
+                    //    }
 
-                        Commands.Update();
-                        Entities.Update();
-                        Vertices.Update();
-                        Indices.Update();
-                    }
-                    else
-                    {
-                        for (const auto* entity : ToUpdate)
-                        {
-                            uint idx = EntityIndices[entity];
-                            const T& cmd = Commands[idx];
+                    //    Commands.Update();
+                    //    Entities.Update();
+                    //    Vertices.Update();
+                    //    Indices.Update();
+                    //}
+                    //else
+                    //{
+                    //    for (const auto* entity : ToUpdate)
+                    //    {
+                    //        uint idx = EntityIndices[entity];
+                    //        const T& cmd = Commands[idx];
 
-                            U data =
-                            {
-                                entity->WorldTransform().ToMatrix4x4(),
-                                entity->PrimaryColor(),
-                            };
-                            Entities.Set(cmd.FirstInstance, data);
-                        }
+                    //        U data =
+                    //        {
+                    //            entity->WorldTransform().ToMatrix4x4(),
+                    //            entity->PrimaryColor(),
+                    //        };
+                    //        Entities.Set(cmd.FirstInstance, data);
+                    //    }
 
-                        Entities.Update();
-                    }
-                    
-                    ToUpdate.clear();
-                    _needsReallocation = false;
-                    _needsUpdate = false;
+                    //    Entities.Update();
+                    //}
+                    //
+                    //ToUpdate.clear();
+                    //_needsReallocation = false;
+                    //_needsUpdate = false;
+
+                    //if (!NeedsUpdate()) { return; }
+
+                    Commands.Update();
+                    Entities.Update();
+                    Vertices.Update();
+                    Indices.Update();
+
+                    //_needsUpdate = false;
                 }
                 void Update(const IRenderable3D<V>& entity)
                 {
-                    if (!EntityIndices.count(&entity)) { return; }
+                    //if (!EntityIndices.count(&entity)) { return; }
 
-                    const auto& components = entity.Components();
-                    for (uint a = 0; a < components.Count(); a++)
-                        Update(*components(a));
+                    //const auto& components = entity.Components();
+                    //for (uint a = 0; a < components.Count(); a++)
+                    //    Update(*components(a));
 
-                    ToUpdate.insert(&entity);
-                    _needsUpdate = true;
+                    //ToUpdate.insert(&entity);
+                    //_needsUpdate = true;
                 }
 
 
@@ -211,30 +242,30 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                void AddCommand(const IRenderable3D<V>* entity)
-                {
-                    uint nVertices = entity->Indices().IsEmpty() ? entity->Points().Count() : entity->Indices().Count();
-                    Commands.Add(T(nVertices, 1, Indices.Count(), Vertices.Count(), Commands.Count()));
-                }
-                void AddEntity(const IRenderable3D<V>* entity)
-                {
-                    U data =
-                    {
-                        entity->WorldTransform().ToMatrix4x4(),
-                        entity->PrimaryColor(),
-                    };
-                    Entities.Add(data);
-                }
-                void AddVertices(const IRenderable3D<V>* entity)
-                {
-                    const Vector<V>& vertices = entity->Points();
-                    for (uint a = 0; a < vertices.Count(); a++)
-                        Vertices.Add(vertices(a));
+                //void AddCommand(const IRenderable3D<V>* entity)
+                //{
+                //    uint nVertices = entity->Indices().IsEmpty() ? entity->Points().Count() : entity->Indices().Count();
+                //    Commands.Add(T(nVertices, 1, Indices.Count(), Vertices.Count(), Commands.Count()));
+                //}
+                //void AddEntity(const IRenderable3D<V>* entity)
+                //{
+                //    U data =
+                //    {
+                //        entity->WorldTransform().ToMatrix4x4(),
+                //        entity->PrimaryColor(),
+                //    };
+                //    Entities.Add(data);
+                //}
+                //void AddVertices(const IRenderable3D<V>* entity)
+                //{
+                //    const Vector<V>& vertices = entity->Points();
+                //    for (uint a = 0; a < vertices.Count(); a++)
+                //        Vertices.Add(vertices(a));
 
-                    const Vector<uint>& indices = entity->Indices();
-                    for (uint a = 0; a < indices.Count(); a++)
-                        Indices.Add(indices(a));
-                }
+                //    const Vector<uint>& indices = entity->Indices();
+                //    for (uint a = 0; a < indices.Count(); a++)
+                //        Indices.Add(indices(a));
+                //}
                 void ClearBuffers()
                 {
                     Commands.Clear();

@@ -4,6 +4,7 @@
 
 #pragma once
 #include "GraphicsSettings.h"
+#include "RenderStage3D.h"
 #include "Buffers/DrawBuffer3D.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
@@ -73,9 +74,13 @@ namespace Cyclone
                 bool                _isVisible;
                 GraphicsSettings    _settings;
 
-                std::map<VertexTopologies, DrawBuffer3D<DrawCommand>>             Buffers;
+                //std::map<VertexTopologies, DrawBuffer3D<DrawCommand>>             Buffers;
 
-                std::map<VertexTopologies, DrawBuffer3D<IndexedDrawCommand>>      IndexedBuffers;
+                //std::map<VertexTopologies, DrawBuffer3D<IndexedDrawCommand>>      IndexedBuffers;
+
+
+                std::map<VertexTopologies, RenderStage3D<DrawCommand>*>          Buffers;
+                std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>   IndexedBuffers;
 
                 List<IRenderStage*>                                             Stages3D;
 

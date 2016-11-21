@@ -5,6 +5,7 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "GraphicsSettings.h"
+#include "Buffers/DrawBuffer3D.h"
 #include "Interfaces/IRenderStage.h"
 #include <map>
 
@@ -20,62 +21,105 @@ namespace Cyclone
         class FrameBuffer;
         class GraphicsPipeline;
 
-        struct RenderStage3D : public virtual IRenderStage
+        struct RenderStage : public virtual IRenderStage
         {
             public:
 
                 /** PROPERTIES **/
-                const IGraphicsBuffer* Data()                               const override { return _data; }
+                //const IGraphicsBuffer* Data()                               const override { return _data; }
                 const GraphicsSettings& Settings()                          const override { return _settings; }
                 VertexTopologies Topology()                                 const override { return _topology; }
 
-                OpenGLAPI RenderStage3D& IsBlendEnabled(bool value);
-                OpenGLAPI RenderStage3D& IsDepthTestEnabled(bool value);
-                OpenGLAPI RenderStage3D& IsStencilTestEnabled(bool value);
-                OpenGLAPI RenderStage3D& CullingMode(CullingModes value);
-                OpenGLAPI RenderStage3D& Pipeline(GraphicsPipeline* value);
-                OpenGLAPI RenderStage3D& Projection(ITransformation3D* value);
-                OpenGLAPI RenderStage3D& Settings(const GraphicsSettings& value);
-                OpenGLAPI RenderStage3D& Target(FrameBuffer* value);
-                OpenGLAPI RenderStage3D& View(ITransformation3D* value);
-
-
-
-                /** CONSTRUCTOR **/
-                OpenGLAPI RenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data);
-                OpenGLAPI RenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data, const GraphicsSettings& settings);
-
+                OpenGLAPI RenderStage& IsBlendEnabled(bool value);
+                OpenGLAPI RenderStage& IsDepthTestEnabled(bool value);
+                OpenGLAPI RenderStage& IsStencilTestEnabled(bool value);
+                OpenGLAPI RenderStage& CullingMode(CullingModes value);
+                OpenGLAPI RenderStage& Pipeline(GraphicsPipeline* value);
+                OpenGLAPI RenderStage& Projection(ITransformation3D* value);
+                OpenGLAPI RenderStage& Settings(const GraphicsSettings& value);
+                OpenGLAPI RenderStage& Target(FrameBuffer* value);
+                OpenGLAPI RenderStage& View(ITransformation3D* value);
+                
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Render();
+                //OpenGLAPI void Render();
+
+            protected:
+
+                /** CONSTRUCTOR **/
+                OpenGLAPI RenderStage(VertexTopologies topology = VertexTopologies::Triangles);
+                OpenGLAPI RenderStage(VertexTopologies topology, const GraphicsSettings& settings);
 
             private:
 
-                const IGraphicsBuffer*  _data;
+                //const IGraphicsBuffer*  _data;
                 GraphicsSettings        _settings;
                 VertexTopologies        _topology;
 
         };
 
-        struct IndexedRenderStage3D : public RenderStage3D
+        template<typename T>
+        struct RenderStage3D : public RenderStage
         {
             public:
 
-                IndexedRenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data) : 
-                    RenderStage3D(topology, data)
+                /** PROPERTIES **/
+                const IGraphicsBuffer* Data()                               const override { return &_data; }
+
+
+
+                /** CONSTRUCTOR **/
+                RenderStage3D(VertexTopologies topology) : 
+                    RenderStage(topology)
+                { 
+                
+                }
+                RenderStage3D(VertexTopologies topology, const GraphicsSettings& settings) :
+                    RenderStage(topology, settings)
                 {
 
                 }
-                IndexedRenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data, const GraphicsSettings& settings) : 
-                    RenderStage3D(topology, data, settings)
-                {
 
-                }
 
-                OpenGLAPI void Render() override;
+
+                /** UTILITIES **/
+                OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
+
+                OpenGLAPI void Render();
+                OpenGLAPI void Update();
+
+
+            private:
+
+                DrawBuffer3D<T, PerEntity, Vertex::Standard>       _data;
+
+                std::map<const IRenderable3D<Vertex::Standard>*, uint>      EntityIndices;
+                std::set<const IRenderable3D<Vertex::Standard>*>            ToUpdate;
 
         };
+
+
+
+
+        //struct IndexedRenderStage3D : public RenderStage3D
+        //{
+        //    public:
+
+        //        IndexedRenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data) : 
+        //            RenderStage3D(topology, data)
+        //        {
+
+        //        }
+        //        IndexedRenderStage3D(VertexTopologies topology, const IGraphicsBuffer* data, const GraphicsSettings& settings) : 
+        //            RenderStage3D(topology, data, settings)
+        //        {
+
+        //        }
+
+        //        OpenGLAPI void Render() override;
+
+        //};
 
     }
 }
