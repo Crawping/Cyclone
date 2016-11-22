@@ -46,16 +46,23 @@ namespace Cyclone
                 
                 uint IndexCount()               const { return Indices.Count(); }
                 /// <summary> Gets whether this buffer has data updates queued for transfer to the GPU. </summary>
-                bool NeedsUpdate()              const override { return _needsUpdate || _needsReallocation; }
+                //bool NeedsUpdate()              const override { return _needsUpdate || _needsReallocation; }
+                bool NeedsUpdate()              const override
+                {
+                    return Commands.NeedsUpdate()   || 
+                        Entities.NeedsUpdate()      ||
+                        Indices.NeedsUpdate()       ||
+                        Vertices.NeedsUpdate();
+                }
 
                 uint VertexCount()              const { return Vertices.Count(); }
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty new drawing buffer for use in rendering geometry on the GPU. </summary>
-                DrawBuffer3D() :
-                    _needsReallocation(false),
-                    _needsUpdate(false)
+                DrawBuffer3D()
+                    //_needsReallocation(false),
+                    //_needsUpdate(false)
                 {
 
                 }
@@ -99,20 +106,20 @@ namespace Cyclone
                 void Clear()                                    override
                 {
                     ClearBuffers();
-                    EntityIndices.clear();
-                    ToUpdate.clear();
+                    //EntityIndices.clear();
+                    //ToUpdate.clear();
                 }
                 /// <summary> Determines whether the drawing buffer contains a particular 3D renderable entity. </summary>
                 /// <returns> A Boolean <c>true</c> if the entity is present in the buffer, or <c>false</c> otherwise. </returns>
-                bool Contains(const IRenderable3D<V>& entity)   const { return EntityIndices.count(&entity); }
+                //bool Contains(const IRenderable3D<V>& entity)   const { return EntityIndices.count(&entity); }
                 /// <summary> Removes a 3D renderable entity from the drawing buffer. </summary>
                 /// <param name="entity"> A reference to the 3D renderable entity to be removed from the drawing buffer. </param>
                 /// <remarks> If the inputted entity isn't already present, then this method had no effect on the buffer. </remarks>
                 void Remove(const IRenderable3D<V>& entity)
                 {
-                    if (!EntityIndices.count(&entity)) { return; }
+                    //if (!EntityIndices.count(&entity)) { return; }
 
-                    EntityIndices.erase(&entity);
+                    //EntityIndices.erase(&entity);
                     //_needsReallocation = true;
                     //_needsUpdate = true;
                 }
@@ -220,8 +227,8 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
-                bool                                        _needsReallocation;
-                bool                                        _needsUpdate;
+                //bool                                        _needsReallocation;
+                //bool                                        _needsUpdate;
 
 
 
@@ -235,9 +242,9 @@ namespace Cyclone
                 /// <summary> A collection of indices that dictate the vertex drawing order. </summary>
                 IndexBuffer                                 Indices;
 
-                std::map<const IRenderable3D<V>*, uint>     EntityIndices;
+                //std::map<const IRenderable3D<V>*, uint>     EntityIndices;
 
-                std::set<const IRenderable3D<V>*>           ToUpdate;
+                //std::set<const IRenderable3D<V>*>           ToUpdate;
 
 
 
@@ -273,8 +280,8 @@ namespace Cyclone
                     Vertices.Clear();
                     Indices.Clear();
 
-                    _needsReallocation = true;
-                    _needsUpdate = true;
+                    //_needsReallocation = true;
+                    //_needsUpdate = true;
                 }
 
         };

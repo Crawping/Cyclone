@@ -71,18 +71,38 @@ namespace Cyclone
 
             private:
 
+                struct BufferIndices
+                {
+                    uint CommandIndex;
+                    uint EntityIndex;
+                };
+
+
                 bool                _isVisible;
                 GraphicsSettings    _settings;
 
+
+                List<DrawCommand>                   Commands;
+                List<IndexedDrawCommand>            IndexedCommands;
+
+                IndexBuffer                         Indices;
+                UniformBuffer<PerEntity>            Entities;
+                VertexBuffer<Vertex::Standard>      Vertices;
+
+
                 //std::map<VertexTopologies, DrawBuffer3D<DrawCommand>>             Buffers;
-
                 //std::map<VertexTopologies, DrawBuffer3D<IndexedDrawCommand>>      IndexedBuffers;
+                std::map<const IRenderable3D<Vertex::Standard>*, BufferIndices>     EntityIndices;
 
 
-                std::map<VertexTopologies, RenderStage3D<DrawCommand>*>          Buffers;
-                std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>   IndexedBuffers;
+                //std::map<VertexTopologies, RenderStage3D<DrawCommand>*>          Buffers;
+                //std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>   IndexedBuffers;
 
                 List<IRenderStage*>                                             Stages3D;
+
+
+                void AddGeometry(const IGeometric3D<Vertex::Standard>& entity);
+                void AddIndexedGeometry(const IGeometric3D<Vertex::Standard>& entity);
 
         };
     }

@@ -57,6 +57,11 @@ namespace Cyclone
             _settings.Target = value; 
             return *this;
         }
+        RenderStage& RenderStage::Topology(VertexTopologies value)
+        {
+            _topology = value;
+            return *this;
+        }
         RenderStage& RenderStage::View(ITransformation3D* value) 
         { 
             _settings.View = value;
@@ -65,7 +70,7 @@ namespace Cyclone
 
 
 
-        /** CONSTRUCTOR **/
+        /** CONSTRUCTORS **/
         RenderStage::RenderStage(VertexTopologies topology) :
             _topology(topology)
         {
@@ -83,54 +88,85 @@ namespace Cyclone
 
 
 
-
-
-
-        template<typename T>
-        void RenderStage3D<T>::Add(const IRenderable3D<Vertex::Standard>& entity)
+        RenderStage3D& RenderStage3D::EntityData(const UniformBuffer<PerEntity>& entities)
         {
-            if (EntityIndices.count(&entity)) { return; }
-            EntityIndices[&entity] = _data.CommandCount();
-
-            uint nvertices = entity.Indices().IsEmpty() ? entity.Points().Count() : entity.Indices().Count();
-            T cmd(nvertices, 1, _data.IndexCount(), _data.VertexCount(), _data.CommandCount());
-
-            PerEntity ent = { entity.WorldTransform().ToMatrix4x4(), entity.PrimaryColor() };
-
-            _data.Add(cmd, ent, entity.Points(), entity.Indices());
+            Entities = &entities;
+            return *this;
+        }
+        RenderStage3D& RenderStage3D::IndexData(const IndexBuffer& indices)
+        {
+            Indices = &indices;
+            return *this;
+        }
+        RenderStage3D& RenderStage3D::VertexData(const VertexBuffer<Vertex::Standard>& vertices)
+        {
+            Vertices = &vertices;
+            return *this;
         }
 
-        template<typename T>
-        void RenderStage3D<T>::Render()
+        void RenderStage3D::Add(const DrawCommand& command)
         {
-            if (_data.IndexCount())
-                glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, _data.CommandCount(), 0);
-            else
-                glMultiDrawArraysIndirect(Topology(), 0, _data.CommandCount(), 0);
+            Commands.Add(command);
+        }
+        void RenderStage3D::Add(const IndexedDrawCommand& command)
+        {
+            IndexedCommands.Add(command);
+        }
+
+
+
+        //template<typename T>
+        //void RenderStage3D<T>::Add(const IRenderable3D<Vertex::Standard>& entity)
+        //{
+        //    if (EntityIndices.count(&entity)) { return; }
+        //    EntityIndices[&entity] = _data.CommandCount();
+
+        //    uint nvertices = entity.Indices().IsEmpty() ? entity.Points().Count() : entity.Indices().Count();
+        //    T cmd(nvertices, 1, _data.IndexCount(), _data.VertexCount(), _data.CommandCount());
+
+        //    PerEntity ent = { entity.WorldTransform().ToMatrix4x4(), entity.PrimaryColor() };
+
+        //    _data.Add(cmd, ent, entity.Points(), entity.Indices());
+        //}
+
+        //template<typename T>
+        void RenderStage3D::Render()
+        {
+            Entities->Bind();
+            Indices->Bind();
+            Vertices->Bind();
+            
+            if (!Commands.IsEmpty())
+            {
+                Commands.Bind();
+                glMultiDrawArraysIndirect(Topology(), 0, Commands.Count(), 0);
+            }
+
+            if (!IndexedCommands.IsEmpty())
+            {
+                IndexedCommands.Bind();
+                glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, IndexedCommands.Count(), 0);
+            }
+
+            //if (_data.IndexCount())
+            //    glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, _data.CommandCount(), 0);
+            //else
+            //    glMultiDrawArraysIndirect(Topology(), 0, _data.CommandCount(), 0);
         }
 
         template<typename T>
         void RenderStage3D<T>::Update()
         {
-            _data.Update();
+            //_data.Update();
+            Commands.Update();
+            IndexedCommands.Update();
         }
 
 
-        template class RenderStage3D<DrawCommand>;
-        template class RenderStage3D<IndexedDrawCommand>;
 
 
-
-        ///** UTILITIES **/
-        //void RenderStage::Render()
-        //{
-        //    glMultiDrawArraysIndirect(Topology(), 0, Data()->Count(), 0);
-        //}
-
-        //void IndexedRenderStage3D::Render()
-        //{
-        //    glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, Data()->Count(), 0);
-        //}
+        //template class RenderStage3D<DrawCommand>;
+        //template class RenderStage3D<IndexedDrawCommand>;
 
     }
 }
