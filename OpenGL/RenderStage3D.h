@@ -6,6 +6,7 @@
 #include "EnumerationsGL.h"
 #include "GraphicsSettings.h"
 #include "Buffers/DrawBuffer3D.h"
+#include "Buffers/UniformData.h"
 #include "Interfaces/IRenderStage.h"
 #include <map>
 
@@ -68,9 +69,14 @@ namespace Cyclone
                 /** PROPERTIES **/
                 const IGraphicsBuffer* Data()                               const override { return nullptr; }
 
-                OpenGLAPI RenderStage3D& EntityData(const UniformBuffer<PerEntity>& entities);
+                //OpenGLAPI RenderStage3D& EntityData(const UniformBuffer<PerEntity>& entities);
                 OpenGLAPI RenderStage3D& IndexData(const IndexBuffer& indices);
                 OpenGLAPI RenderStage3D& VertexData(const VertexBuffer<Vertex::Standard>& vertices);
+
+                OpenGLAPI RenderStage3D& EntityBuffer(const UniformBuffer<EntityData>& value);
+                OpenGLAPI RenderStage3D& MaterialBuffer(const UniformBuffer<MaterialData>& value);
+                OpenGLAPI RenderStage3D& TransformBuffer(const UniformBuffer<TransformData>& value);
+
 
 
                 /** CONSTRUCTORS **/
@@ -91,6 +97,7 @@ namespace Cyclone
                 //OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
                 OpenGLAPI void Add(const DrawCommand& command);
                 OpenGLAPI void Add(const IndexedDrawCommand& command);
+                OpenGLAPI void ClearCommands();
 
                 OpenGLAPI void Render();
                 OpenGLAPI void Update();
@@ -102,9 +109,13 @@ namespace Cyclone
                 CommandBuffer<DrawCommand>                          Commands;
                 CommandBuffer<IndexedDrawCommand>                   IndexedCommands;
 
-                const UniformBuffer<PerEntity>*                     Entities;
+                //const UniformBuffer<PerEntity>*                     Entities;
                 const IndexBuffer*                                  Indices;
                 const VertexBuffer<Vertex::Standard>*               Vertices;
+
+                const UniformBuffer<EntityData>*                    _entityBuffer;
+                const UniformBuffer<MaterialData>*                  _materialBuffer;
+                const UniformBuffer<TransformData>*                 _transformBuffer;
 
 
                 std::map<const IRenderable3D<Vertex::Standard>*, uint>      EntityIndices;

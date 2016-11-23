@@ -88,11 +88,11 @@ namespace Cyclone
 
 
 
-        RenderStage3D& RenderStage3D::EntityData(const UniformBuffer<PerEntity>& entities)
-        {
-            Entities = &entities;
-            return *this;
-        }
+        //RenderStage3D& RenderStage3D::EntityData(const UniformBuffer<PerEntity>& entities)
+        //{
+        //    Entities = &entities;
+        //    return *this;
+        //}
         RenderStage3D& RenderStage3D::IndexData(const IndexBuffer& indices)
         {
             Indices = &indices;
@@ -104,6 +104,25 @@ namespace Cyclone
             return *this;
         }
 
+        RenderStage3D& RenderStage3D::EntityBuffer(const UniformBuffer<EntityData>& value)
+        {
+            _entityBuffer = &value;
+            return *this;
+        }
+        RenderStage3D& RenderStage3D::MaterialBuffer(const UniformBuffer<MaterialData>& value)
+        {
+            _materialBuffer = &value;
+            return *this;
+        }
+        RenderStage3D& RenderStage3D::TransformBuffer(const UniformBuffer<TransformData>& value)
+        {
+            _transformBuffer = &value;
+            return *this;
+        }
+
+
+
+
         void RenderStage3D::Add(const DrawCommand& command)
         {
             Commands.Add(command);
@@ -112,29 +131,21 @@ namespace Cyclone
         {
             IndexedCommands.Add(command);
         }
+        void RenderStage3D::ClearCommands()
+        {
+            Commands.Clear();
+            IndexedCommands.Clear();
+        }
 
 
-
-        //template<typename T>
-        //void RenderStage3D<T>::Add(const IRenderable3D<Vertex::Standard>& entity)
-        //{
-        //    if (EntityIndices.count(&entity)) { return; }
-        //    EntityIndices[&entity] = _data.CommandCount();
-
-        //    uint nvertices = entity.Indices().IsEmpty() ? entity.Points().Count() : entity.Indices().Count();
-        //    T cmd(nvertices, 1, _data.IndexCount(), _data.VertexCount(), _data.CommandCount());
-
-        //    PerEntity ent = { entity.WorldTransform().ToMatrix4x4(), entity.PrimaryColor() };
-
-        //    _data.Add(cmd, ent, entity.Points(), entity.Indices());
-        //}
-
-        //template<typename T>
         void RenderStage3D::Render()
         {
-            Entities->Bind();
+            //Entities->Bind();
             Indices->Bind();
             Vertices->Bind();
+            _entityBuffer->Bind(2);
+            _materialBuffer->Bind(3);
+            _transformBuffer->Bind(4);
             
             if (!Commands.IsEmpty())
             {
@@ -147,26 +158,13 @@ namespace Cyclone
                 IndexedCommands.Bind();
                 glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, IndexedCommands.Count(), 0);
             }
-
-            //if (_data.IndexCount())
-            //    glMultiDrawElementsIndirect(Topology(), NumericFormats::UInt, 0, _data.CommandCount(), 0);
-            //else
-            //    glMultiDrawArraysIndirect(Topology(), 0, _data.CommandCount(), 0);
         }
 
-        template<typename T>
-        void RenderStage3D<T>::Update()
+        void RenderStage3D::Update()
         {
-            //_data.Update();
             Commands.Update();
             IndexedCommands.Update();
         }
-
-
-
-
-        //template class RenderStage3D<DrawCommand>;
-        //template class RenderStage3D<IndexedDrawCommand>;
 
     }
 }

@@ -31,10 +31,33 @@ namespace Cyclone
         /// <summary> A structure containing uniform shader data that are expected to change between every rendered object. </summary>
         struct PerEntity
         {
-            /// <summary> The world transformation matrix for an entity. </summary>
+            
             Matrix4x4   World;
-            /// <summary> The base color of an entity. </summary>
+            
             Color4      Color;
+        };
+
+
+
+        struct EntityData
+        {
+            uint        MaterialIndex;
+            uint        TransformIndex;
+        };
+
+        struct MaterialData
+        {
+            /// <summary> The base color of an entity. </summary>
+            Color4      PrimaryColor;
+            Color4      SecondaryColor;
+        };
+
+        struct TransformData
+        {
+            Matrix4x4   ModelTransform;
+            Matrix4x4   TextureTransform;
+            /// <summary> The world transformation matrix for an entity. </summary>
+            Matrix4x4   WorldTransform;
         };
 
     }

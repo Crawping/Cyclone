@@ -86,13 +86,17 @@ namespace Cyclone
                 List<IndexedDrawCommand>            IndexedCommands;
 
                 IndexBuffer                         Indices;
-                UniformBuffer<PerEntity>            Entities;
                 VertexBuffer<Vertex::Standard>      Vertices;
+
+                UniformBuffer<EntityData>           EntityBuffer;
+                UniformBuffer<MaterialData>         MaterialBuffer;
+                UniformBuffer<TransformData>        TransformBuffer;
 
 
                 //std::map<VertexTopologies, DrawBuffer3D<DrawCommand>>             Buffers;
                 //std::map<VertexTopologies, DrawBuffer3D<IndexedDrawCommand>>      IndexedBuffers;
                 std::map<const IRenderable3D<Vertex::Standard>*, BufferIndices>     EntityIndices;
+                std::map<VertexTopologies, RenderStage3D*>                          RenderStages;
 
 
                 //std::map<VertexTopologies, RenderStage3D<DrawCommand>*>          Buffers;
@@ -101,9 +105,8 @@ namespace Cyclone
                 List<IRenderStage*>                                             Stages3D;
 
 
-                void AddGeometry(const IGeometric3D<Vertex::Standard>& entity);
-                void AddIndexedGeometry(const IGeometric3D<Vertex::Standard>& entity);
-
+                void Add(const IGeometric3D<Vertex::Standard>& entity);
+                void Add(const IMaterialEntity& entity);
         };
     }
 }
