@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Console.h"
 #include "EnumerationsGL.h"
 #include "Buffers/ArrayBuffer.h"
 
@@ -18,7 +19,12 @@ namespace Cyclone
             public:
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                UniformBuffer() : ArrayBuffer<T>(BufferTypes::Uniform) { }
+                UniformBuffer() : 
+                    ArrayBuffer<T>(BufferTypes::Uniform) 
+                { 
+                    if (Stride() % 16 != 0)
+                        Console::WriteLine("WARNING: A uniform buffer is being created with a type that is not aligned to a 16 byte boundary.");
+                }
                 ~UniformBuffer() { }
 
 
