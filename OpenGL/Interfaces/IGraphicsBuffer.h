@@ -29,5 +29,11 @@ namespace Cyclone
                 virtual void Clear()        = 0;
 
         };
+
+        struct BufferBinding
+        {
+            const IGraphicsBuffer*  Buffer;
+            uint                    Slot;
+        };
     }
 }
