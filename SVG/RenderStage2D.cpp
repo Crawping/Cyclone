@@ -14,6 +14,13 @@ namespace Cyclone
     namespace SVG
     {
 
+
+        List<BufferBinding> RenderStage2D::Buffers() const
+        {
+            return { { *_data, 0 } };
+        }
+
+
         /** CONSTRUCTOR **/
         RenderStage2D::RenderStage2D(const DrawBuffer2D* data, const GraphicsSettings* settings) :
             _data(data),
@@ -23,7 +30,7 @@ namespace Cyclone
         }
 
 
-        void RenderStage2D::Render()
+        void RenderStage2D::Render() const
         {
             int idx = 0;
             int drawID = GetUniformID("DrawID");
