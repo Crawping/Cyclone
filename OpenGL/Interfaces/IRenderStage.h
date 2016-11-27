@@ -4,6 +4,7 @@
 
 #pragma once
 #include "EnumerationsGL.h"
+#include "Interfaces/IGraphicsBuffer.h"
 
 
 
@@ -11,14 +12,14 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class IGraphicsBuffer;
         struct GraphicsSettings;
 
         class IRenderStage
         {
             public:
+
                 /** PROPERTIES **/
-                virtual const IGraphicsBuffer* Data()           const = 0;
+                virtual List<BufferBinding> Buffers()           const = 0;
                 virtual const GraphicsSettings& Settings()      const = 0;
                 virtual VertexTopologies Topology()             const = 0;
 
@@ -26,7 +27,7 @@ namespace Cyclone
                 virtual ~IRenderStage() { }
 
                 /** UTILITIES **/
-                virtual void Render() = 0;
+                virtual void Render()                           const = 0;
         };
 
     }
