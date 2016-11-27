@@ -7,7 +7,7 @@ namespace Cyclone
     namespace UI
     {
         /** PROPERTIES **/
-        const List<IRenderStage*>& InterfaceLayer::Stages() const
+        List<IRenderStage*> InterfaceLayer::Stages() const
         {
             return List<IRenderStage*>();
         }

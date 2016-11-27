@@ -8,7 +8,7 @@ namespace Cyclone
     namespace SVG
     {
 
-        const List<IRenderStage*>& Scene2D::Stages() const
+        List<IRenderStage*> Scene2D::Stages() const
         {
             return Stages2D;
         }

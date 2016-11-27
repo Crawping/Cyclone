@@ -69,7 +69,7 @@ namespace Cyclone
         {
             public:
 
-                virtual const ICollection<IRenderStage*>& Stages()              const = 0;
+                virtual List<IRenderStage*> Stages() const = 0;
 
                 virtual ~IRenderableScene() { }
 

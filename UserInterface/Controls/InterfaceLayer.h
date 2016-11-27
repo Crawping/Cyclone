@@ -21,7 +21,7 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                UIAPI const List<IRenderStage*>& Stages()       const override;
+                UIAPI List<IRenderStage*> Stages()       const override;
 
 
                         

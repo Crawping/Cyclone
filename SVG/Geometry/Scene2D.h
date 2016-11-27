@@ -24,7 +24,7 @@ namespace Cyclone
         {
             public:
 
-                SVGAPI const List<IRenderStage*>& Stages()              const override;
+                SVGAPI List<IRenderStage*> Stages()                     const override;
 
                 Scene2D& IsBlendEnabled(bool value)                     { _settings.IsBlendEnabled = value; return *this; }
                 Scene2D& IsDepthTestEnabled(bool value)                 { _settings.IsDepthTestEnabled = value; return *this; }
