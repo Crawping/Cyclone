@@ -25,9 +25,57 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        void GPU::IsStencilTestEnabled(bool value)
+        GPU& GPU::CullingMode(CullingModes value)
         {
-            if (value == _settings.IsStencilTestEnabled) { return; }
+            if (value == CullingMode())         { return *this; }
+
+            if (value && CullingMode())
+                glCullFace(value);
+            else if (!value && CullingMode())
+                glDisable(GL_CULL_FACE);
+            else
+            {
+                glEnable(GL_CULL_FACE);
+                glCullFace(value);
+            }
+            
+            _settings.CullingMode = value;
+            return *this;
+        }
+        GPU& GPU::IsBlendEnabled(bool value)
+        {
+            if (value == IsBlendEnabled())          { return *this; }
+            else if (!value && IsBlendEnabled())    { glDisable(GL_BLEND); }
+            else
+            {
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            }
+
+            _settings.IsBlendEnabled = value;
+            return *this;
+        }
+        GPU& GPU::IsDepthTestEnabled(bool value)
+        {
+            if (value == IsDepthTestEnabled())      { return *this; }
+            else if (!value && IsDepthTestEnabled())
+            {
+                glDisable(GL_DEPTH_TEST);
+                glDisable(GL_DEPTH_CLAMP);
+            }
+            else
+            {
+                glEnable(GL_DEPTH_TEST);
+                glEnable(GL_DEPTH_CLAMP);
+                glDepthFunc(GL_LESS);
+            }
+
+            _settings.IsDepthTestEnabled = value;
+            return *this;
+        }
+        GPU& GPU::IsStencilTestEnabled(bool value)
+        {
+            if (value == _settings.IsStencilTestEnabled) { return *this; }
 
             if (!_settings.IsStencilTestEnabled && value)
             {
@@ -40,6 +88,7 @@ namespace Cyclone
                 glDisable(GL_STENCIL_TEST);
 
             _settings.IsStencilTestEnabled = value;
+            return *this;
         }
         void GPU::Pipeline(GraphicsPipeline* pipeline)
         {
@@ -109,43 +158,10 @@ namespace Cyclone
             }
         }
         void GPU::Configure(const GraphicsSettings& settings)
-        {
-            if (settings.IsBlendEnabled && !IsBlendEnabled())
-            {
-                glEnable(GL_BLEND);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                _settings.IsBlendEnabled = settings.IsBlendEnabled;
-            }
-            else if (!settings.IsBlendEnabled && IsBlendEnabled())
-            {
-                glDisable(GL_BLEND);
-                _settings.IsBlendEnabled = settings.IsBlendEnabled;
-            }
-            
-            if (settings.IsDepthTestEnabled && !IsDepthTestEnabled())
-            {
-                glEnable(GL_DEPTH_TEST);
-                glEnable(GL_DEPTH_CLAMP);
-                glDepthFunc(GL_LESS);
-            }
-            else if (!settings.IsDepthTestEnabled && IsDepthTestEnabled())
-            {
-                glDisable(GL_DEPTH_TEST);
-                glDisable(GL_DEPTH_CLAMP);
-            }
-
-            if (settings.CullingMode && !CullingMode())
-            {
-                glEnable(GL_CULL_FACE);
-                glCullFace(settings.CullingMode);
-                _settings.CullingMode = settings.CullingMode;
-            }
-            else if (!settings.CullingMode && CullingMode())
-            {
-                glDisable(GL_CULL_FACE);
-                _settings.CullingMode = settings.CullingMode;
-            }
-            
+        {            
+            CullingMode(settings.CullingMode);
+            IsBlendEnabled(settings.IsBlendEnabled);
+            IsDepthTestEnabled(settings.IsDepthTestEnabled);
             IsStencilTestEnabled(settings.IsStencilTestEnabled);
             Pipeline(settings.Pipeline);
             Projection(settings.Projection);
@@ -170,8 +186,9 @@ namespace Cyclone
                 {
                     IRenderStage* ctStage = stages(a);
                     Configure(ctStage->Settings());
-                    if (ctStage->Data() && ctStage->Data()->Count())
-                        ctStage->Data()->Bind();
+
+                    for (BufferBinding b : ctStage->Buffers())
+                        b.Buffer.Bind(b.Slot);
                     
                     ctStage->Render();
                 }

@@ -57,7 +57,12 @@ namespace Cyclone
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* Window()                    const { return _renderWindow; }
 
-                PlatformAPI void IsStencilTestEnabled(bool value);
+
+
+                PlatformAPI GPU& CullingMode(CullingModes value);
+                PlatformAPI GPU& IsBlendEnabled(bool value);
+                PlatformAPI GPU& IsDepthTestEnabled(bool value);
+                PlatformAPI GPU& IsStencilTestEnabled(bool value);
 
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
                 PlatformAPI void Pipeline(GraphicsPipeline* pipeline);
