@@ -95,7 +95,7 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-		        virtual const T& operator [](int index)        { return Data[index]; }
+		        virtual const T& operator ()(int index)        const { return Data[index]; }
 
 
 
