@@ -13,6 +13,8 @@
 
 namespace Cyclone
 {
+    using namespace Utilities;
+
     namespace OpenGL
     {
         /// <summary> A structure containing uniform shader data that are expected to change between every rendered frame. </summary>
@@ -43,6 +45,12 @@ namespace Cyclone
         {
             uint        MaterialIndex;
             uint        TransformIndex;
+            Vector2     _0;
+
+            constexpr bool operator ==(const EntityData& other) const
+            {
+                return (MaterialIndex == other.MaterialIndex) && (TransformIndex == other.TransformIndex);
+            }
         };
 
         struct MaterialData
@@ -50,6 +58,11 @@ namespace Cyclone
             /// <summary> The base color of an entity. </summary>
             Color4      PrimaryColor;
             Color4      SecondaryColor;
+
+            constexpr bool operator ==(const MaterialData& other) const
+            {
+                return (PrimaryColor == other.PrimaryColor) && (SecondaryColor == other.SecondaryColor);
+            }
         };
 
         struct TransformData
@@ -58,6 +71,14 @@ namespace Cyclone
             Matrix4x4   TextureTransform;
             /// <summary> The world transformation matrix for an entity. </summary>
             Matrix4x4   WorldTransform;
+
+            bool operator ==(const TransformData& other) const
+            {
+                return 
+                    (ModelTransform == other.ModelTransform) && 
+                    (TextureTransform == other.TextureTransform) && 
+                    (WorldTransform == other.WorldTransform);
+            }
         };
 
     }
