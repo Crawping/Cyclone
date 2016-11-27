@@ -32,7 +32,7 @@ namespace Cyclone
 
         struct BufferBinding
         {
-            const IGraphicsBuffer*  Buffer;
+            const IGraphicsBuffer&  Buffer;
             uint                    Slot;
         };
     }
