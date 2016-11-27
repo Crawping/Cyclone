@@ -122,6 +122,12 @@
     <ClInclude Include="Imaging\ColorGradient.h">
       <Filter>Imaging</Filter>
     </ClInclude>
+    <ClInclude Include="Collections\BST.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Collections\Registry.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

@@ -173,6 +173,11 @@
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BST.cpp">
+      <FileType>CppHeader</FileType>
+    </ClCompile>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

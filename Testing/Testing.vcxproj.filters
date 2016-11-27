@@ -50,6 +50,9 @@
     <ClCompile Include="Quadtree.cpp">
       <Filter>Utilities\Collections</Filter>
     </ClCompile>
+    <ClCompile Include="BST.cpp">
+      <Filter>Utilities\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
