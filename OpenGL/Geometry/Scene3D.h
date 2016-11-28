@@ -7,10 +7,12 @@
 #include "RenderStage3D.h"
 #include "Buffers/DrawBuffer3D.h"
 #include "Buffers/UniformData.h"
+#include "Buffers/UniformMap.h"
 #include "Collections/List.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IUpdatable.h"
+#include "Libraries/ResourceLibrary.h"
 
 #include <map>
 #include <set>
@@ -30,7 +32,7 @@ namespace Cyclone
 
             public:
 
-                OpenGLAPI const List<IRenderStage*>& Stages() const override;
+                OpenGLAPI List<IRenderStage*> Stages() const override;
 
                 Scene3D& IsBlendEnabled(bool value)             { _settings.IsBlendEnabled = value; return *this; }
                 Scene3D& IsDepthTestEnabled(bool value)         { _settings.IsDepthTestEnabled = value; return *this; }
@@ -73,40 +75,44 @@ namespace Cyclone
 
                 struct BufferIndices
                 {
-                    uint CommandIndex;
                     uint EntityIndex;
+                    uint IndicesCount;
+                    uint IndicesIndex;
+                    uint MaterialIndex;
+                    uint TransformIndex;
+                    uint VertexCount;
+                    uint VertexIndex;
                 };
 
 
+
+                /** PROPERTY DATA **/
                 bool                _isVisible;
                 GraphicsSettings    _settings;
 
 
-                List<DrawCommand>                   Commands;
-                List<IndexedDrawCommand>            IndexedCommands;
 
+                /** BUFFERED DATA **/
+                UniformBuffer<EntityData>           Entities;
                 IndexBuffer                         Indices;
+                ResourceLibrary<MaterialData>       Materials;
+                ResourceLibrary<TransformData>      Transforms;
                 VertexBuffer<Vertex::Standard>      Vertices;
 
-                UniformBuffer<EntityData>           EntityBuffer;
-                UniformBuffer<MaterialData>         MaterialBuffer;
-                UniformBuffer<TransformData>        TransformBuffer;
 
 
-                //std::map<VertexTopologies, DrawBuffer3D<DrawCommand>>             Buffers;
-                //std::map<VertexTopologies, DrawBuffer3D<IndexedDrawCommand>>      IndexedBuffers;
+                /** BUFFER & STAGE MAPPINGS **/
                 std::map<const IRenderable3D<Vertex::Standard>*, BufferIndices>     EntityIndices;
-                std::map<VertexTopologies, RenderStage3D*>                          RenderStages;
+                std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>      IndexedStages;
+                std::map<VertexTopologies, RenderStage3D<DrawCommand>*>             RenderStages;
 
 
-                //std::map<VertexTopologies, RenderStage3D<DrawCommand>*>          Buffers;
-                //std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>   IndexedBuffers;
 
-                List<IRenderStage*>                                             Stages3D;
+                /** UTILITIES **/
+                int Add(const IGeometric3D<Vertex::Standard>& entity);
+                int Add(const IMaterialEntity& entity);
+                void CreateStage(VertexTopologies topology, bool isIndexed);
 
-
-                void Add(const IGeometric3D<Vertex::Standard>& entity);
-                void Add(const IMaterialEntity& entity);
         };
     }
 }
