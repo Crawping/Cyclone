@@ -13,11 +13,11 @@ layout(location = 2) in vec2 UV;
 
 out PixelShaderInput
 {
-    int     EntityIndex;
-    vec2    TexUV;
-    vec3    ToEye;
-    vec3    ToLight;
-    vec3    WorldNormal;
+    flat int    EntityIndex;
+    vec2        TexUV;
+    vec3        ToEye;
+    vec3        ToLight;
+    vec3        WorldNormal;
 } Output;
 
 
@@ -26,16 +26,14 @@ uniform vec3 LightPosition = vec3(-100, 100, 20);
 
 void main(void)
 {
-    EntityData ids = Entities[gl_DrawIDARB];
+    EntityData ids = Entities[gl_BaseInstanceARB];
 
     mat4 worldViewTransform = PerFrameData[0].View * Transformations[ids.TransformIndex].WorldTransform;
 
-
-    //mat4 worldViewTransform = PerFrameData[0].View * PerEntityData[gl_DrawIDARB].World;
     vec4 viewPosition = worldViewTransform * vec4(Position, 1.0);
     vec4 lightPosition = PerFrameData[0].View * vec4(LightPosition, 1.0);
     
-    Output.EntityIndex  = gl_DrawIDARB;
+    Output.EntityIndex  = gl_BaseInstanceARB;
     Output.ToEye        = -viewPosition.xyz;
     Output.ToLight      = LightPosition.xyz - viewPosition.xyz;
     Output.TexUV        = UV;

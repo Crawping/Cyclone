@@ -17,8 +17,11 @@ out vec2    TexUV;
 
 void main(void)
 {
-    EntityIndex = gl_DrawIDARB;
+    EntityIndex = gl_BaseInstanceARB;
     TexUV = UV;
+ 
+    EntityData ids = Entities[gl_BaseInstanceARB];
+    mat4 world = Transformations[ids.TransformIndex].WorldTransform;
 
-    gl_Position = PerFrameData[0].Projection * PerFrameData[0].View * PerEntityData[gl_DrawIDARB].World * vec4(Position, 1.0);
+    gl_Position = PerFrameData[0].Projection * PerFrameData[0].View * world * vec4(Position, 1.0);
 }
