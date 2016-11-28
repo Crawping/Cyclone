@@ -115,6 +115,15 @@
     <ClInclude Include="Buffers\DrawBuffer3D.h">
       <Filter>Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="Buffers\RenderStage.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MaterialLibrary.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\ResourceLibrary.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -166,6 +175,12 @@
     <ClCompile Include="Textures\GradientTexture.cpp">
       <Filter>Textures</Filter>
     </ClCompile>
+    <ClCompile Include="Buffers\RenderStage.cpp">
+      <Filter>Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MaterialLibrary.cpp">
+      <Filter>Libraries</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
@@ -188,6 +203,9 @@
     </Filter>
     <Filter Include="Geometry">
       <UniqueIdentifier>{2d05a31c-b066-46f0-9eac-9aa4b599bb67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries">
+      <UniqueIdentifier>{9789cb84-c487-45ae-8eef-510390c6e0e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
