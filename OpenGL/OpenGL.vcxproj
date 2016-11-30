@@ -148,12 +148,12 @@
   <ItemGroup>
     <ClInclude Include="..\CoreGL\GL\OpenGL.h" />
     <ClInclude Include="Buffers\CommandBuffer.h" />
-    <ClInclude Include="Buffers\DrawBuffer3D.h" />
     <ClInclude Include="Buffers\FrameBuffer.h" />
     <ClInclude Include="Buffers\ArrayBuffer.h" />
     <ClInclude Include="Buffers\GraphicsBuffer.h" />
     <ClInclude Include="Buffers\IndexBuffer.h" />
     <ClInclude Include="Buffers\MapBuffer.h" />
+    <ClInclude Include="Buffers\RegistryBuffer.h" />
     <ClInclude Include="Buffers\RenderStage.h" />
     <ClInclude Include="Buffers\UniformBuffer.h" />
     <ClInclude Include="Buffers\UniformData.h" />
@@ -178,7 +178,6 @@
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IRenderStage.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
-    <ClInclude Include="Libraries\MaterialLibrary.h" />
     <ClInclude Include="Libraries\ResourceLibrary.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
@@ -200,7 +199,6 @@
     <ClCompile Include="Geometry\Geometry3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Geometry\Scene3D.cpp" />
-    <ClCompile Include="Libraries\MaterialLibrary.cpp" />
     <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />

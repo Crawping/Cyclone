@@ -112,17 +112,14 @@
     <ClInclude Include="Textures\GradientTexture.h">
       <Filter>Textures</Filter>
     </ClInclude>
-    <ClInclude Include="Buffers\DrawBuffer3D.h">
-      <Filter>Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\RenderStage.h">
       <Filter>Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\MaterialLibrary.h">
-      <Filter>Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\ResourceLibrary.h">
       <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers\RegistryBuffer.h">
+      <Filter>Buffers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +174,6 @@
     </ClCompile>
     <ClCompile Include="Buffers\RenderStage.cpp">
       <Filter>Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\MaterialLibrary.cpp">
-      <Filter>Libraries</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
