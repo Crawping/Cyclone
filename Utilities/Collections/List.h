@@ -343,8 +343,7 @@ namespace Cyclone
 
                         bool operator ==(const ICollectionIterator<T>& other) const override
                         {
-                            auto node = dynamic_cast<const Iterator<T>*>(&other);
-                            if (node)
+                            if (auto node = dynamic_cast<const Iterator<T>*>(&other))
                                 return (Index() == node->Index()) && (Element == node->Element);
                             else
                                 return false;
