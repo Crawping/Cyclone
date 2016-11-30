@@ -37,7 +37,7 @@ namespace Cyclone
                 
 
 
-                /** CONSTRUCTOR **/
+                /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs a new self-balancing binary search tree (BST) that is initially empty. </summary>
                 BST() :
                     Root(nullptr)
@@ -318,6 +318,9 @@ namespace Cyclone
                                     newRoot = Right->Min();
                                     newRoot->Right = Right->SeverMin();
                                     newRoot->Left = Left;
+
+                                    Left = nullptr;
+                                    Right = nullptr;
 
                                     delete this;
                                     newRoot = newRoot->Rebalance();
