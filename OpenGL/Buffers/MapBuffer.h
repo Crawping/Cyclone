@@ -76,7 +76,6 @@ namespace Cyclone
 
             protected:
 
-                //const std::map<T, U>& Data()        const { return _data; }
                 const BST<T, U>& Data() const { return _data; }
 
                 /** CONSTRUCTOR **/
@@ -87,7 +86,6 @@ namespace Cyclone
             private:
 
                 /** DATA **/
-                //std::map<T, U>  _data;
                 BST<T, U>   _data;
         };
     }
