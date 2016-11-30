@@ -47,24 +47,28 @@ namespace Cyclone
         {
             if (EntityIndices.count(&entity)) { return; }
 
+            uint idxEntities    = Entities.Count();
+            uint nIndices       = entity.Indices().Count();
+            uint idxIndices     = Indices.Count();
+            uint nVertices      = entity.Points().Count();
+            uint idxVertices    = Vertices.Count();
+
             BufferIndices ids =
             {
-                Entities.Count(),
-                entity.Indices().Count(),
-                Indices.Count(),
-                0, 0,
-                entity.Points().Count(),
-                Vertices.Count(),
+                idxEntities,
+                nIndices,
+                idxIndices,
+                Add( (const IMaterialEntity&)entity ),
+                Add( (const IGeometric3D<Vertex::Standard>&)entity ),
+                nVertices,
+                idxVertices,
             };
-
-            ids.MaterialIndex = Add( (const IMaterialEntity&)entity );
-            ids.TransformIndex = Add( (const IGeometric3D<Vertex::Standard>&)entity );
             EntityIndices[&entity] = ids;
 
             EntityData data =
             {
-                ids.MaterialIndex,
-                ids.TransformIndex,
+                ids.MaterialIndex.Index(),
+                ids.TransformIndex.Index(),
             };
             Entities.Add(data);
         }
@@ -112,13 +116,9 @@ namespace Cyclone
                 kvp.second->Update();
 
         }
-
         void Scene3D::Update(const IRenderable3D<Vertex::Standard>& entity)
         {
             if (!EntityIndices.count(&entity)) { return; }
-
-            BufferIndices ids = EntityIndices[&entity];
-            EntityData data = Entities(ids.EntityIndex);
 
             TransformData transforms =
             {
@@ -133,14 +133,15 @@ namespace Cyclone
                 entity.SecondaryColor(),
             };
 
-            Transforms.Set(data.TransformIndex, transforms);
-            Materials.Set(data.MaterialIndex, material);
+            BufferIndices ids = EntityIndices[&entity];
+            Transforms.Set(ids.TransformIndex, transforms);
+            Materials.Set(ids.MaterialIndex, material);
         }
 
 
 
         /** PRIVATE UTILITIES **/
-        int Scene3D::Add(const IGeometric3D<Vertex::Standard>& entity)
+        RegistryKey<TransformData> Scene3D::Add(const IGeometric3D<Vertex::Standard>& entity)
         {
             const auto& vertices = entity.Points();
             const auto& indices = entity.Indices();
@@ -158,9 +159,9 @@ namespace Cyclone
                 entity.WorldTransform().ToMatrix4x4(),
             };
 
-            return Transforms.Add(transforms);
+            return Transforms.Register(transforms);
         }
-        int Scene3D::Add(const IMaterialEntity& entity)
+        RegistryKey<MaterialData> Scene3D::Add(const IMaterialEntity& entity)
         {
             MaterialData material =
             {
@@ -168,7 +169,7 @@ namespace Cyclone
                 entity.SecondaryColor(),
             };
 
-            return Materials.Add(material);
+            return Materials.Register(material);
         }
         void Scene3D::CreateStage(VertexTopologies topology, bool isIndexed)
         {
@@ -180,16 +181,16 @@ namespace Cyclone
                 { Transforms,   4 },
             };
 
-            RenderStage* baseStage = nullptr;
+            RenderStage* stage = nullptr;
             if (isIndexed)
             {
                 bindings.Insert(1, { Indices, 0 });
-                baseStage = IndexedStages[topology] = new RenderStage3D<IndexedDrawCommand>();
+                stage = IndexedStages[topology] = new RenderStage3D<IndexedDrawCommand>();
             }
             else
-                baseStage = RenderStages[topology] = new RenderStage3D<DrawCommand>();
+                stage = RenderStages[topology] = new RenderStage3D<DrawCommand>();
 
-            baseStage->
+            stage->
                  Settings(_settings)
                 .Topology(topology)
                 .Add(bindings);

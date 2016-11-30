@@ -5,17 +5,18 @@
 #pragma once
 #include "GraphicsSettings.h"
 #include "RenderStage3D.h"
-#include "Buffers/DrawBuffer3D.h"
+#include "Buffers/IndexBuffer.h"
 #include "Buffers/UniformData.h"
-#include "Buffers/UniformMap.h"
+#include "Buffers/UniformBuffer.h"
+#include "Buffers/VertexBuffer.h"
 #include "Collections/List.h"
+#include "Geometry/Vertex.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IUpdatable.h"
 #include "Libraries/ResourceLibrary.h"
 
 #include <map>
-#include <set>
 
 
 
@@ -78,8 +79,8 @@ namespace Cyclone
                     uint EntityIndex;
                     uint IndicesCount;
                     uint IndicesIndex;
-                    uint MaterialIndex;
-                    uint TransformIndex;
+                    RegistryKey<MaterialData> MaterialIndex;
+                    RegistryKey<TransformData> TransformIndex;
                     uint VertexCount;
                     uint VertexIndex;
                 };
@@ -109,8 +110,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                int Add(const IGeometric3D<Vertex::Standard>& entity);
-                int Add(const IMaterialEntity& entity);
+                RegistryKey<TransformData> Add(const IGeometric3D<Vertex::Standard>& entity);
+                RegistryKey<MaterialData> Add(const IMaterialEntity& entity);
                 void CreateStage(VertexTopologies topology, bool isIndexed);
 
         };
