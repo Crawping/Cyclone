@@ -13,72 +13,132 @@ namespace Cyclone
     {
         
 
-
         template<typename T> struct RegistryKey
         {
-
             public:
-                int Index()     const { return Collection->IndexOf(_key); }
+                int Index()     const { return Registry->IndexOf(_key); }
                 int Key()       const { return _key; }
 
-                RegistryKey(int key, const Registry<T>* collection) :
+                RegistryKey() :
+                    _key(-1),
+                    Registry(nullptr)
+                {
+
+                }
+                RegistryKey(int key, const BST<int, T>* registry) :
                     _key(key),
-                    Collection(collection)
+                    Registry(registry)
+                {
+
+                }
+                RegistryKey(RegistryKey<T>&& other) : 
+                    _key(other._key),
+                    Registry(other.Registry)
+                {
+                    other._key = -1;
+                    other.Registry = nullptr;
+                }
+                RegistryKey(const RegistryKey<T>& other) : 
+                    _key(other._key),
+                    Registry(other.Registry)
                 {
 
                 }
 
+                bool operator ==(const RegistryKey<T>& other) const
+                {
+                    return (Registry == other.Registry) && (Key() == other.Key());
+                }
+                bool operator !=(const RegistryKey<T>& other) const { return !(*this == other); }
+
+                RegistryKey& operator =(RegistryKey<T>&& other)
+                {
+                    _key = other._key;
+                    Registry = other.Registry;
+
+                    other._key = -1;
+                    other.Registry = nullptr;
+
+                    return *this;
+                }
+                RegistryKey& operator =(const RegistryKey<T>& other)
+                {
+                    _key = other._key;
+                    Registry = other.Registry;
+                    return *this;
+                }
 
             private:
                 int _key;
-                const Registry<T>* Collection;
+                const BST<int, T>* Registry;
         };
-
 
 
         template<typename T>
-        class Registry : public BST<RegistryKey<T>*, T>
+        class Registry : public ICollection<T>
         {
-
             public:
+                
+                /** PROPERTIES **/
+                virtual uint Count()        const { return Data.Count(); }
+                virtual List<T> Values()    const { return Data.Values(); }
 
-                ~Registry()
+
+
+                /** CONSTRUCTOR **/
+                Registry() { }
+
+
+
+                /** UTILITIES **/
+                virtual void Clear()                                        { Data.Clear(); }
+                virtual bool Contains(const RegistryKey<T>& key)            const { return Data.Contains(key.Key()); }
+                virtual RegistryKey<T> Register(const T& value)
                 {
-                    for (auto* k : Keys())
-                        delete k;
+                    int key = FindValue(value);
+                    if (key < 0)
+                    {
+                        key = CreateKey();
+                        Data.Insert(key, value);
+                    }
+
+                    return RegistryKey<T>(key, &Data);
                 }
+                virtual void Remove(const RegistryKey<T>& key)              { Data.Remove(key.Key()); }
 
 
-                const RegistryKey<T>& Register(const T& value)
+
+                /** OPERATORS **/
+                virtual T& operator [](const RegistryKey<T>& key)           { return Data[key.Key()]; }
+                virtual const T& operator [](const RegistryKey<T>& key)     const { return Data[key.Key()]; }
+                virtual const T& operator ()(uint index)                    const { return Data(index); }
+                
+            private:
+
+                /** DATA **/
+                BST<int, T>     Data;
+
+                
+
+                /** UTILITIES **/
+                int CreateKey() const
                 {
-                    uint idx = 0;
-                    List<T> values = Values();
+                    int key = 0;
+                    while (Data.Contains(key)) { key++; }
+                    return key;
+                }
+                int FindValue(const T& value) const
+                {
+                    int idx = 0;
+                    auto values = Data.Values();
                     for (const T& v : values)
-                        if (v == value)
-                            return *(Keys()(idx));
-                        else
-                            idx++;
+                        if (v == value) { return Data.Keys()(idx); }
+                        else            { idx++; }
 
-                    idx = 0;
-                    List<RegistryKey<T>*> keys = Keys();
-                    for (const auto* k : keys)
-                        if (k->Key() == idx)
-                            idx++
-                        else
-                        {
-                            RegistryKey<T>* key = new RegistryKey<T>(idx, this);
-                            Set(key, value);
-                            return *key;
-                        }
-
-                    RegistryKey<T>* key = new RegistryKey<T>(++idx, this);
-                    Set(key, value));
-                    return *key;
-                }
-
-
-
+                    return -1;
+                }                
 
         };
+
     }
 }
