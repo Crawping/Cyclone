@@ -16,21 +16,32 @@ namespace Cyclone
         template<typename T> struct RegistryKey
         {
             public:
+                /// <summary> Gets the numeric index of the corresponding data element within the registry. </summary>
                 int Index()     const { return Registry->IndexOf(_key); }
+                /// <summary> Gets the integer key used to index into the registry's search tree. </summary>
                 int Key()       const { return _key; }
 
+
+
+                /** CONSTRUCTORS **/
+                /// <summary> Constructs a new default null registry key. </summary>
                 RegistryKey() :
                     _key(-1),
                     Registry(nullptr)
                 {
 
                 }
+                /// <summary> Constructs a new registry key that corresponds with a particular value stored in a registry. </summary>
+                /// <param name="key"> The integer key used to index into the registry's search tree. </param>
+                /// <param name="registry"> The registry instance in which the value corresponding with the <paramref name="key"/> is stored. </param>
                 RegistryKey(int key, const BST<int, T>* registry) :
                     _key(key),
                     Registry(registry)
                 {
 
                 }
+                /// <summary> Constructs a new registry key containing the uncopied contents transferred from another key. </summary>
+                /// <param name="other"> A pre-existing registry key whose contents are to be moved over into the new key. </param>
                 RegistryKey(RegistryKey<T>&& other) : 
                     _key(other._key),
                     Registry(other.Registry)
@@ -38,6 +49,8 @@ namespace Cyclone
                     other._key = -1;
                     other.Registry = nullptr;
                 }
+                /// <summary> Constructs a new registry key that is an identical deep copy of another key. </summary>
+                /// <param name="other"> A pre-existing registry key whose contents are to be copied into the new key. </param>
                 RegistryKey(const RegistryKey<T>& other) : 
                     _key(other._key),
                     Registry(other.Registry)
@@ -45,6 +58,9 @@ namespace Cyclone
 
                 }
 
+
+
+                /** OPERATORS **/
                 bool operator ==(const RegistryKey<T>& other) const
                 {
                     return (Registry == other.Registry) && (Key() == other.Key());
@@ -80,19 +96,29 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
+                /// <summary> Gets the number of data elements that stored within the registry. </summary>
                 virtual uint Count()        const { return Data.Count(); }
+                /// <summary> Gets a list of all data elements stored within the registry. </summary>
                 virtual List<T> Values()    const { return Data.Values(); }
 
 
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs a new empty registry that can be populated with data elements. </summary>
                 Registry() { }
 
 
 
                 /** UTILITIES **/
+                /// <summary> Removes all data elements stored within the registry. </summary>
                 virtual void Clear()                                        { Data.Clear(); }
+                /// <summary> Determines whether any data associated with a specific key is stored within the registry. </summary>
+                /// <param name="key"> The specific key to be tested. </param>
+                /// <returns> A Boolean <c>true</c> if the registry contains data associated with the inputted <paramref name="key"/>, or <c>false</c> otherwise. </returns>
                 virtual bool Contains(const RegistryKey<T>& key)            const { return Data.Contains(key.Key()); }
+                /// <summary> Inserts a new data element into the registry, if an identical element isn't already stored. </summary>
+                /// <param name="value"> A new data element to be registered. </param>
+                /// <returns> A special key unique to the inputted <paramref name="value"/> that can be used to index into the registry. </returns>
                 virtual RegistryKey<T> Register(const T& value)
                 {
                     int key = FindValue(value);
@@ -104,6 +130,8 @@ namespace Cyclone
 
                     return RegistryKey<T>(key, &Data);
                 }
+                /// <summary> Removes the data associated with a specific key from the registry. </summary>
+                /// <param name="key"> A registry key for which any corresponding data should be removed. </param>
                 virtual void Remove(const RegistryKey<T>& key)              { Data.Remove(key.Key()); }
 
 

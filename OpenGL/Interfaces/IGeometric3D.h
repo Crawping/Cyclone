@@ -36,7 +36,7 @@ namespace Cyclone
                 ///     return an empty array.
                 /// </remarks>
                 virtual const Vector<uint>& Indices()                   const = 0;
-
+                /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of the model. </summary>
                 virtual const ITransformation3D& ModelTransform()       const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>

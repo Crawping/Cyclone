@@ -14,7 +14,7 @@ namespace Cyclone
     {
         /// <summary> A class that represents a self-balancing binary search tree (BST) of keys and their corresponding values. </summary>
         /// <typeparam name="T"> The type name of the keys used to index values within the tree. </typeparam>
-        /// <typeparam name="U"> The type name of the data elements stored within the tree. </typeparam>
+        /// <typeparam name="U"> The type name of the data element values stored within the tree. </typeparam>
         template<typename T, typename U>
         class BST : public ICollection<U>
         {
@@ -30,9 +30,9 @@ namespace Cyclone
                 ///     distal leaf node in its subtrees.
                 /// </remarks>
                 virtual uint Height()       const { return Root ? Root->Height : 0; }
-                /// <summary> Gets a list of all of the keys that index into the tree. </summary>
+                /// <summary> Gets a list of all of the keys that index values within the tree. </summary>
                 virtual List<T> Keys()      const { return Root ? Root->Keys() : List<T>(); }
-                /// <summary> Gets a list of all values contained in the tree. </summary>
+                /// <summary> Gets a list of all data element values contained in the tree. </summary>
                 virtual List<U> Values()    const { return Root ? Root->Values() : List<U>(); }
                 
 
@@ -74,7 +74,10 @@ namespace Cyclone
                 ///     This method will either create a new node with the inputted key-value pair (if one does not exist within the 
                 ///     BST) or overwrite the value of any node whose key matches the 'key' input argument.
                 /// </remarks>
-                virtual void Insert(const T& key, const U& value) { Root = Root ? Root->Insert(key, value) : new Node<T, U>(key, value);   }
+                virtual void Insert(const T& key, const U& value) 
+                { 
+                    Root = Root ? Root->Insert(key, value) : new Node<T, U>(key, value);
+                }
                 /// <summary> Removes the specified node from the binary search tree. </summary>
                 /// <param name="key"> The key of the node to be removed. </param>
                 virtual void Remove(const T& key)
@@ -115,9 +118,9 @@ namespace Cyclone
                 {
                     public:
                         /** DATA **/
-                        /// <summary> A reference to the left child node and subtree of this node. This value can be null. </summary>
+                        /// <summary> A pointer to the left child node and subtree of this node. This value can be null. </summary>
                         Node<T, U>* Left;
-                        /// <summary> A reference to the right child node and subtree of this node. This value can be null. </summary>
+                        /// <summary> A pointer to the right child node and subtree of this node. This value can be null. </summary>
                         Node<T, U>* Right;
 
                         /// <summary> Gets the balance of the subtree for which this node is the root. </summary>
@@ -134,7 +137,7 @@ namespace Cyclone
                         ///     distal leaf node in its subtree.
                         /// </remarks>
                         int Height;
-                        /// <summary> Gets the key used to index this node within a tree. </summary>
+                        /// <summary> Gets the key used to index this node within the search tree. </summary>
                         T Key;
                         /// <summary> Gets the value held by this node. </summary>
                         U Value;
@@ -185,6 +188,7 @@ namespace Cyclone
                         {
 
                         }
+                        /// <summary> Destroys this node and all other nodes within the subtree rooted by it. </summary>
                         ~Node()
                         {
                             if (Left)   { delete Left; }
@@ -254,7 +258,7 @@ namespace Cyclone
 
                             return Rebalance();
                         }                
-                        /// <summary> Identifies a node within the subtree whose key is greater than or equal to the inputted key. </summary>
+                        /// <summary> Finds a node within the subtree whose key is greater than or equal to the inputted key. </summary>
                         /// <param name="key"> The key for which a greater-keyed node is to be found. </param>
                         /// <returns> A node whose key is greater than or equal to the input, or 'null' if one cannot be found. </returns>
                         /// <remarks>
@@ -272,9 +276,9 @@ namespace Cyclone
                                 return this;
                         }
                         const Node<T, U>* Ceiling(const T& key) const { return Ceiling(key); }
-                        /// <summary> Identifies a node within the subtree whose key is either less than or equal to the inputted key. </summary>
+                        /// <summary> Finds a node within the subtree whose key is either less than or equal to the inputted key. </summary>
                         /// <param name="key"> The key for which a lesser-keyed node is to be found. </param>
-                        /// <returns> A node whose key is less than or equal to the input, or 'null' if one cannot be found. </returns>
+                        /// <returns> A node whose key is less than or equal to the input, or <c>nullptr</c> if no such node exists. </returns>
                         /// <remarks>
                         ///     This method searches a subtree for the 'next lower' node, which is defined here as the node whose key is 
                         ///     the maximum of all keys that are less than or equal to the 'key' input argument. If such a node cannot be 
@@ -290,7 +294,9 @@ namespace Cyclone
                                 return this;
                         }
                         const Node<T, U>* Floor(const T& key)   const { return Floor(key); }
-
+                        /// <summary> Finds the node within the subtree that corresponds with a specific key, if it exists. </summary>
+                        /// <param name="key"> A key for which the corresponding node is to be found. </param>
+                        /// <returns> A node whose key matches the input, or <c>nullptr</c> if no such node exists. </returns>
                         Node<T, U>* Find(const T& key)
                         {
                             if (key < Key)
@@ -301,7 +307,9 @@ namespace Cyclone
                                 return this;
                         }
                         const Node<T, U>* Find(const T& key)    const { return Find(key); }
-
+                        /// <summary> Removes the node within the subtree that corresponds with a specific key, if it exists. </summary>
+                        /// <param name="key"> A key for which the corresponding node is to be removed. </param>
+                        /// <returns> The new root node of the subtree. </returns>
                         Node<T, U>* Remove(const T& key)
                         {
                             if (key < Key)
