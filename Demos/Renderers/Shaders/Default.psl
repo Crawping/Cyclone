@@ -17,5 +17,4 @@ void main(void)
     EntityData ids = Entities[EntityIndex];
 
     OutputColor = Materials[ids.MaterialIndex].PrimaryColor;
-    //OutputColor = PerEntityData[EntityIndex].Color;
 }
