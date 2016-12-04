@@ -14,6 +14,7 @@ out vec4 OutputColor;
 
 void main(void)
 {
-    OutputColor = PerEntityData[EntityIndex].Color - gl_FragCoord.z * 0.75;
+    EntityData ids = Entities[EntityIndex];
+    OutputColor = Materials[ids.MaterialIndex].PrimaryColor - gl_FragCoord.z * 0.75;
     OutputColor = normalize(OutputColor);
 }
