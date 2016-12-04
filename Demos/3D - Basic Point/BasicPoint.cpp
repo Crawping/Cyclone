@@ -28,8 +28,8 @@ class Program : public BasicRenderer
             BasicRenderer::CreateSceneResources();
 
             Point
-                .Position(RenderWindow->ClientArea().Center())
                 .PrimaryColor(Color4::Blue)
+                .Position(RenderWindow->ClientArea().Center())
                 .Scale(100);
 
             RenderScene->Add(Point);

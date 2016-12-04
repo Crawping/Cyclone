@@ -10,8 +10,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicTriangle", "BasicTrian
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderers", "Renderers\Renderers.vcxproj", "{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicPoint", "BasicPoint\BasicPoint.vcxproj", "{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RotatingCube", "RotatingCube\RotatingCube.vcxproj", "{8239AE3C-59FC-4C3B-A55A-662BD0C73D81}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RotatingIcosahedron", "RotatingIcosahedron\RotatingIcosahedron.vcxproj", "{2B7A9000-AEC5-4FD6-8F9C-A02C3C156A63}"
@@ -21,8 +19,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MixedTopologies", "MixedTopologies\MixedTopologies.vcxproj", "{7C64132F-E44C-4ECE-AE5D-8C886EE03F18}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicSphere", "BasicSphere\BasicSphere.vcxproj", "{BF4F1269-FC02-4560-B6A4-724E05D3A81D}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BasicLine", "BasicLine\BasicLine.vcxproj", "{49727D33-6A72-490A-ABAE-5ECE28C6EC77}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExtensionSupport", "ExtensionSupport\ExtensionSupport.vcxproj", "{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}"
 EndProject
@@ -54,7 +50,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI - Basic Panel", "UI - Ba
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3D - Gradient Textures", "3D - Gradient Textures\3D - Gradient Textures.vcxproj", "{C25CDBBF-111B-435C-8A12-1340F8402454}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3D - NavigableScene", "3D - Navigable Scene\3D - Navigable Scene.vcxproj", "{A6183C6C-5B00-4784-9DB4-C20B5400F2A4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3D - Navigable Scene", "3D - Navigable Scene\3D - Navigable Scene.vcxproj", "{A6183C6C-5B00-4784-9DB4-C20B5400F2A4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3D - Basic Line", "3D - Basic Line\3D - Basic Line.vcxproj", "{49727D33-6A72-490A-ABAE-5ECE28C6EC77}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3D - Basic Point", "3D - Basic Point\3D - Basic Point.vcxproj", "{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,14 +80,6 @@ Global
 		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Release|x64.Build.0 = Release|x64
 		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Release|x86.ActiveCfg = Release|Win32
 		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Release|x86.Build.0 = Release|Win32
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x64.ActiveCfg = Debug|x64
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x64.Build.0 = Debug|x64
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x86.ActiveCfg = Debug|Win32
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x86.Build.0 = Debug|Win32
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x64.ActiveCfg = Release|x64
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x64.Build.0 = Release|x64
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x86.ActiveCfg = Release|Win32
-		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x86.Build.0 = Release|Win32
 		{8239AE3C-59FC-4C3B-A55A-662BD0C73D81}.Debug|x64.ActiveCfg = Debug|x64
 		{8239AE3C-59FC-4C3B-A55A-662BD0C73D81}.Debug|x64.Build.0 = Debug|x64
 		{8239AE3C-59FC-4C3B-A55A-662BD0C73D81}.Debug|x86.ActiveCfg = Debug|Win32
@@ -128,14 +120,6 @@ Global
 		{BF4F1269-FC02-4560-B6A4-724E05D3A81D}.Release|x64.Build.0 = Release|x64
 		{BF4F1269-FC02-4560-B6A4-724E05D3A81D}.Release|x86.ActiveCfg = Release|Win32
 		{BF4F1269-FC02-4560-B6A4-724E05D3A81D}.Release|x86.Build.0 = Release|Win32
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x64.ActiveCfg = Debug|x64
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x64.Build.0 = Debug|x64
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x86.ActiveCfg = Debug|Win32
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x86.Build.0 = Debug|Win32
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x64.ActiveCfg = Release|x64
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x64.Build.0 = Release|x64
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x86.ActiveCfg = Release|Win32
-		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x86.Build.0 = Release|Win32
 		{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}.Debug|x64.ActiveCfg = Debug|x64
 		{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}.Debug|x64.Build.0 = Debug|x64
 		{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}.Debug|x86.ActiveCfg = Debug|Win32
@@ -264,6 +248,22 @@ Global
 		{A6183C6C-5B00-4784-9DB4-C20B5400F2A4}.Release|x64.Build.0 = Release|x64
 		{A6183C6C-5B00-4784-9DB4-C20B5400F2A4}.Release|x86.ActiveCfg = Release|Win32
 		{A6183C6C-5B00-4784-9DB4-C20B5400F2A4}.Release|x86.Build.0 = Release|Win32
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x64.ActiveCfg = Debug|x64
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x64.Build.0 = Debug|x64
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x86.ActiveCfg = Debug|Win32
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Debug|x86.Build.0 = Debug|Win32
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x64.ActiveCfg = Release|x64
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x64.Build.0 = Release|x64
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x86.ActiveCfg = Release|Win32
+		{49727D33-6A72-490A-ABAE-5ECE28C6EC77}.Release|x86.Build.0 = Release|Win32
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x64.ActiveCfg = Debug|x64
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x64.Build.0 = Debug|x64
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x86.ActiveCfg = Debug|Win32
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Debug|x86.Build.0 = Debug|Win32
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x64.ActiveCfg = Release|x64
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x64.Build.0 = Release|x64
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x86.ActiveCfg = Release|Win32
+		{95FB594E-165A-4CE5-BBDE-02CB7A2AC36A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

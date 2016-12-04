@@ -19,7 +19,6 @@ class Program : public BasicRenderer
             Icosahedron(Geometry3D::Icosahedron())
         {
             Initialize();
-            glEnable(GL_CULL_FACE);
         }
 
     protected:
@@ -29,13 +28,14 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateSceneResources();
             Icosahedron
-                .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .PrimaryColor(Color4::Cyan)
+                .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
                 .Roll(90)
                 .Scale(100, 100, 100);
 
             RenderScene->Add(Icosahedron);
+            RenderScene->CullingMode(CullingModes::Back);
         }
 
         void CreateSizedResources() override

@@ -14,6 +14,5 @@ layout (binding = 0) uniform sampler2D InputTexture;
 
 void main(void)
 {
-    //OutputColor = texture(InputTexture, TexUV).argb;
     OutputColor = texture(InputTexture, TexUV);
 }

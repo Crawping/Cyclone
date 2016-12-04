@@ -28,10 +28,11 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Line.Scale(256)
-                .Color(Color4(0.0f, 0.75f, 1.0f))
+            Line
+                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
+                .Scale(256)
                 .Roll(90);
 
             RenderScene->Add(Line);
@@ -57,7 +58,7 @@ class Program : public BasicRenderer
                 0.125f * sinf(Line.Roll()) + 0.875
             );
 
-            Line.Color(color).Rotate(0.01f);
+            Line.PrimaryColor(color).Rotate(0.01f);
             RenderScene->Update(Line);
 
             BasicRenderer::UpdateScene();

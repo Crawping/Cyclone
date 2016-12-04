@@ -37,10 +37,11 @@ class Program : public BasicRenderer
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Cube->Scale(100, 100, 100)
+            Cube->
+                 PrimaryColor(Color4::Green)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), -50))
-                .PrimaryColor(Color4::Green)
                 .Pitch(90)
+                .Scale(100, 100, 100)
                 .Roll(90);
             RenderScene->Add(*Cube);
         }
@@ -65,8 +66,9 @@ class Program : public BasicRenderer
                 0.125f * sinf(Cube->Roll()) + 0.875f
             );
 
-            Cube->Rotate(Vector3(0.01f, 0.05f, 0.01f))
-                .PrimaryColor(color);
+            Cube->
+                 PrimaryColor(color)
+                .Rotate(Vector3(0.01f, 0.05f, 0.01f));
             RenderScene->Update(*Cube);
 
             BasicRenderer::UpdateScene();

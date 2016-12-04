@@ -43,7 +43,7 @@ class Program : public AdvancedRenderer
         {
             AdvancedRenderer::CreateSceneResources();
 
-            Image = new Texture2D("../ImageDisplay/World (21600x10800).jpg");
+            Image = new Texture2D("../3D - Image Display/World (21600x10800).jpg");
             //Image = new Texture2D("../ImageDisplay/Dorset Durdle (6400x4000).jpg");
             //Image = new Texture2D("../ImageDisplay/Scottish Beach (1080x1920).jpg");
             //Image = new Texture2D("../ImageDisplay/Solar System (12000x7000).jpg");
@@ -61,7 +61,7 @@ class Program : public AdvancedRenderer
         }
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../ImageDisplay/TexturedShading.psl");
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Image Display/TexturedShading.psl");
         }
 
 };
