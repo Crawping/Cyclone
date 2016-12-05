@@ -17,11 +17,18 @@ namespace Cyclone
         {
             public:
 
+                /** PROPERTIES **/
+                /// <summary> Gets the number of data elements stored with the buffer. </summary>
                 virtual uint Count()        const override { return _data.Count(); }
                 virtual ulong Stride()      const override { return sizeof(T); }
                 virtual List<T> Values()    const { return _data.Values(); }
 
 
+
+                /** UTILITIES **/
+                /// <summary> Determines whether the buffer contains a data element that corresponds with a specific key. </summary>
+                /// <param name="key"> The specific key to be tested. </param>
+                /// <returns> A Boolean <c>true</c> if the key exists within the buffer, or <c>false</c> otherwise. </returns>
                 virtual bool Contains(const RegistryKey<T>& key) const { return _data.Contains(key); }
                 virtual void Clear()        override
                 {
