@@ -121,6 +121,9 @@
     <ClInclude Include="Buffers\RegistryBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\Material3D.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">

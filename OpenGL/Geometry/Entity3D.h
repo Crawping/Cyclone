@@ -8,6 +8,7 @@
 #include "GL/OpenGLAPI.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
+#include "Libraries/Material3D.h"
 #include "Spatial/Transform.h"
 #include "Spatial/Volume.h"
 
@@ -34,20 +35,20 @@ namespace Cyclone
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                const override { return _isVisible; }
                 /// <summary> Gets a reference to the primary color of the entity. </summary>
-                virtual const Color4& PrimaryColor()                    const override { return _primaryColor; }
+                virtual const Color4& PrimaryColor()                    const override { return _material.PrimaryColor(); }
                 /// <summary> Gets a reference to the secondary color of the entity. </summary>
-                virtual const Color4& SecondaryColor()                  const override { return _secondaryColor; }
+                virtual const Color4& SecondaryColor()                  const override { return _material.SecondaryColor(); }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
-		        virtual const Texture3D* Texture()                      const override { return _texture; }
+		        virtual const Texture3D* Texture()                      const override { return _material.Texture(); }
 
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
                 virtual Entity3D& IsVisible(bool value)                 { _isVisible = value; return *this; }
                 /// <summary> Sets the primary color of the entity. </summary>
-                virtual Entity3D& PrimaryColor(const Color4& value)     { _primaryColor = value; return *this; }
+                virtual Entity3D& PrimaryColor(const Color4& value)     { _material.PrimaryColor(value); return *this; }
                 /// <summary> Sets the secondary color of the entity. </summary>
-                virtual Entity3D& SecondaryColor(const Color4& value)   { _secondaryColor = value; return *this; }
+                virtual Entity3D& SecondaryColor(const Color4& value)   { _material.SecondaryColor(value); return *this; }
                 /// <summary> Sets the texture to be used when rendering the entity (NOT YET IMPLEMENTED). </summary>
-                virtual Entity3D& Texture(const Texture3D* value)       { _texture = value; return *this; }
+                virtual Entity3D& Texture(const Texture3D* value)       { _material.Texture(value); return *this; }
 
 
 
@@ -89,19 +90,15 @@ namespace Cyclone
                 /// <param name="points"> The array of points that define the geometry of this entity. </param>
                 Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& points, const Vector<uint>& indices) :
                     GeometricEntity3D(topology, points, indices),
-			        _primaryColor(color),
-                    _isVisible(true),
-                    _texture(nullptr)
+                    _isVisible(true)
 		        {
-
+                    _material.PrimaryColor(color);
 		        }
 
             private:
                 
                 /** PROPERTY DATA **/
-                Color4                  _primaryColor;
-                Color4                  _secondaryColor;
-                const Texture3D*		_texture;
+                Material3D              _material;
 
         };
     }

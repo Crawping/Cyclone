@@ -178,6 +178,7 @@
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IRenderStage.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
+    <ClInclude Include="Libraries\Material3D.h" />
     <ClInclude Include="Libraries\ResourceLibrary.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
