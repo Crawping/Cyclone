@@ -40,6 +40,7 @@ namespace Cyclone
                 Scene3D& IsStencilTestEnabled(bool value)       { _settings.IsStencilTestEnabled = value; return *this; }
                 Scene3D& IsVisible(bool value)                  { _isVisible = value; return *this; }
 
+                Scene3D& CullingMode(CullingModes value)        { _settings.CullingMode = value; return *this; }
                 Scene3D& Pipeline(GraphicsPipeline* value)      { _settings.Pipeline = value; return *this; }
                 Scene3D& Projection(ITransformation3D* value)   { _settings.Projection = value; return *this; }
                 Scene3D& Target(FrameBuffer* value)             { _settings.Target = value; return *this; }
