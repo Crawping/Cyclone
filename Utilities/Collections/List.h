@@ -196,11 +196,11 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                Iterator<T> begin() const //override
+                Iterator<T> begin() const
                 {
                     return Iterator<T>(0, _first);
                 }
-                Iterator<T> end() const //override
+                Iterator<T> end() const
                 {
                     return Iterator<T>(Count(), nullptr);
                 }

@@ -31,6 +31,7 @@ namespace Cyclone
                 virtual List<U> Values()        const { return _data.Values(); }
 
 
+
                 /** UTILITIES **/
 
                 virtual bool Contains(const T& key)             const { return _data.Contains(key); }
@@ -44,7 +45,6 @@ namespace Cyclone
 
                 virtual void Set(const T& key, const U& value)
                 {
-                    //_data[key] = value;
                     _data.Insert(key, value);
                     NeedsUpdate(true);
                 }
@@ -53,7 +53,6 @@ namespace Cyclone
                 {
                     if (Contains(key))
                     {
-                        //_data.erase(key);
                         _data.Remove(key);
                         NeedsUpdate(true);
                     }
