@@ -39,7 +39,7 @@ namespace Cyclone
 
                 virtual CoverModes CoverMode()          const { return _style.CoverMode; }
                 /// <summary> Gets the color of the path's fill area. </summary>
-                virtual const Color4& FillColor()       const { return PrimaryColor(); }
+                virtual const Color4& FillColor()       const { return Material().PrimaryColor(); }
 
                 virtual FillModes FillMode()            const { return _style.FillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
@@ -53,7 +53,7 @@ namespace Cyclone
                 /// <summary> Gets the joint style used to connect two path segments. </summary>
                 virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
                 /// <summary> Gets the color of the path's surrounding stroke. </summary>
-                virtual const Color4& StrokeColor()     const { return SecondaryColor(); }
+                virtual const Color4& StrokeColor()     const { return Material().SecondaryColor(); }
                 /// <summary> Gets the width of the path's surrounding stroke. </summary>
                 virtual float StrokeWidth()             const { return _style.StrokeWidth; }
                 /// <summary> Gets the end cap style used to terminate path segments. </summary>

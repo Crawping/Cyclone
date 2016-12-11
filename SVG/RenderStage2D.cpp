@@ -4,6 +4,7 @@
 #include "RenderStage2D.h"
 #include "Buffers/DrawBuffer2D.h"
 #include "Interfaces/IGraphicsBuffer.h"
+#include "Interfaces/IMaterial.h"
 #include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
 
@@ -40,7 +41,7 @@ namespace Cyclone
             for (uint a = 0; a < entities.Count(); a++)
             {
                 nvMatrixLoadf(TransformMatrices::ModelView, entities(a)->WorldTransform().ToMatrix4x4().ToArray());
-                SetResource(colorID, entities(a)->PrimaryColor());
+                SetResource(colorID, entities(a)->Material().PrimaryColor());
                 SetUniform(drawID, idx++);
                 entities(a)->Fill();
                 SetUniform(drawID, idx++);

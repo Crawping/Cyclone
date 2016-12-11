@@ -34,15 +34,20 @@ namespace Cyclone
                 virtual const List<IRenderable3D<T>*>& Components()     const override { return _components; }
                 /// <summary> Gets whether this entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                const override { return _isVisible; }
+
+                virtual const Material3D& Material()                    const override { return _material; }
                 /// <summary> Gets a reference to the primary color of the entity. </summary>
-                virtual const Color4& PrimaryColor()                    const override { return _material.PrimaryColor(); }
+                virtual const Color4& PrimaryColor()                    const { return _material.PrimaryColor(); }
                 /// <summary> Gets a reference to the secondary color of the entity. </summary>
-                virtual const Color4& SecondaryColor()                  const override { return _material.SecondaryColor(); }
+                virtual const Color4& SecondaryColor()                  const { return _material.SecondaryColor(); }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
-		        virtual const Texture3D* Texture()                      const override { return _material.Texture(); }
+		        virtual const Texture3D* Texture()                      const { return _material.Texture(); }
+
 
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
                 virtual Entity3D& IsVisible(bool value)                 { _isVisible = value; return *this; }
+
+                virtual Entity3D& Material(const Material3D& value)     { _material = value; return *this; }
                 /// <summary> Sets the primary color of the entity. </summary>
                 virtual Entity3D& PrimaryColor(const Color4& value)     { _material.PrimaryColor(value); return *this; }
                 /// <summary> Sets the secondary color of the entity. </summary>
@@ -60,7 +65,6 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
-                bool                    _isVisible;
                 List<IRenderable3D<T>*> _components;
 
 
@@ -98,6 +102,7 @@ namespace Cyclone
             private:
                 
                 /** PROPERTY DATA **/
+                bool                    _isVisible;
                 Material3D              _material;
 
         };

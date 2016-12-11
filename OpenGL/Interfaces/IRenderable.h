@@ -5,7 +5,6 @@
 #pragma once
 #include "Collections/List.h"
 #include "Interfaces/IGeometric3D.h"
-#include "Interfaces/IMaterial.h"
 
 
 
@@ -13,6 +12,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {        
+        class IMaterial;
         class IRenderStage;
 
         template <typename T> 

@@ -1,4 +1,5 @@
 #include "Buffers/DrawBuffer2D.h"
+#include "Interfaces/IMaterial.h"
 
 
 
@@ -71,8 +72,8 @@ namespace Cyclone
                 for (const auto& kvp : EntityIndices)
                 {
                     EntityIndices[kvp.first] = ColorBuffer.Count();
-                    ColorBuffer.Add(kvp.first->PrimaryColor());
-                    ColorBuffer.Add(kvp.first->SecondaryColor());
+                    ColorBuffer.Add(kvp.first->Material().PrimaryColor());
+                    ColorBuffer.Add(kvp.first->Material().SecondaryColor());
                 }
             }
             else
@@ -80,8 +81,8 @@ namespace Cyclone
                 for (const auto* entity : ToUpdate)
                 {
                     uint idx = EntityIndices[entity];
-                    ColorBuffer.Set(idx, entity->PrimaryColor());
-                    ColorBuffer.Set(idx + 1, entity->SecondaryColor());
+                    ColorBuffer.Set(idx, entity->Material().PrimaryColor());
+                    ColorBuffer.Set(idx + 1, entity->Material().SecondaryColor());
                 }
             }
 

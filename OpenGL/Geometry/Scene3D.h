@@ -112,7 +112,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 RegistryKey<TransformData> Add(const IGeometric3D<Vertex::Standard>& entity);
-                RegistryKey<MaterialData> Add(const IMaterialEntity& entity);
+                RegistryKey<MaterialData> Add(const IMaterial& entity);
                 void CreateStage(VertexTopologies topology, bool isIndexed);
 
         };

@@ -1,5 +1,6 @@
 #include "RenderStage3D.h"
 #include "Collections/List.h"
+#include "Interfaces/IMaterial.h"
 #include "Interfaces/IRenderable.h"
 #include "Geometry/Scene3D.h"
 #include "Spatial/Transform.h"
@@ -58,7 +59,7 @@ namespace Cyclone
                 idxEntities,
                 nIndices,
                 idxIndices,
-                Add( (const IMaterialEntity&)entity ),
+                Add( entity.Material() ),
                 Add( (const IGeometric3D<Vertex::Standard>&)entity ),
                 nVertices,
                 idxVertices,
@@ -129,8 +130,8 @@ namespace Cyclone
             
             MaterialData material =
             {
-                entity.PrimaryColor(),
-                entity.SecondaryColor(),
+                entity.Material().PrimaryColor(),
+                entity.Material().SecondaryColor(),
             };
 
             BufferIndices ids = EntityIndices[&entity];
@@ -161,7 +162,7 @@ namespace Cyclone
 
             return Transforms.Register(transforms);
         }
-        RegistryKey<MaterialData> Scene3D::Add(const IMaterialEntity& entity)
+        RegistryKey<MaterialData> Scene3D::Add(const IMaterial& entity)
         {
             MaterialData material =
             {

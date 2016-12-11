@@ -12,9 +12,9 @@ namespace Cyclone
 
         /** PROPERTIES **/
         Path2D& Path2D::CoverMode(CoverModes value)
-        { 
-            _style.CoverMode = value; 
-            return *this; 
+        {
+            _style.CoverMode = value;
+            return *this;
         }
         Path2D& Path2D::FillMode(FillModes value)
         {
@@ -39,8 +39,10 @@ namespace Cyclone
             return *this;
         }
         Path2D& Path2D::StrokeColor(const Color4& value)
-        { 
-            Entity3D::SecondaryColor(value);
+        {
+            Material3D mat = Material();
+            mat.SecondaryColor(value);
+            Material(mat);
             return *this;
         }
         Path2D& Path2D::StrokeWidth(float value)
