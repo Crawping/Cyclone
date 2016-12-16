@@ -15,22 +15,17 @@ namespace Cyclone
     {
         
 
-        class Mesh3D : public Entity3D<Vertex::Standard>
+        class Mesh3D : public Entity3D<Vector3>
         {
             public:
-                Mesh3D(const Vector<Vertex::Standard>& vertices) : Entity3D(vertices) { }
 
-                Mesh3D(const Vector<Vertex::Standard>& vertices, const Vector<uint>& indices) :
-                    Entity3D(vertices, indices)
-                {
+                Mesh3D(const Geometry3D& geometry) : Entity3D(geometry) { }
 
-                }
-
-                void Add(const Vertex::Standard& vertex)
+                void Add(const Vector3& vertex)
                 {
                     Vertices.Append(vertex);
                 }
-                void Add(const IArray<Vertex::Standard>& vertices)
+                void Add(const IArray<Vector3>& vertices)
                 {
                     Vertices.Append(vertices);
                 }
@@ -38,7 +33,7 @@ namespace Cyclone
 
             private:
                 
-                List<Vertex::Standard> Vertices;
+                List<Vector3> Vertices;
         };
     }
 }

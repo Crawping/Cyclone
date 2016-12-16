@@ -14,7 +14,6 @@ namespace Cyclone
     namespace { using namespace Utilities; }
     namespace Utilities
     {
-        struct ITransformation3D;
         struct Vector3;
         struct Volume;
     }
@@ -23,7 +22,7 @@ namespace Cyclone
     {
         /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
         /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
-        template<typename T> class IGeometric3D
+        template<typename T> class IGeometric
         {
             public:
 
@@ -36,8 +35,10 @@ namespace Cyclone
                 ///     return an empty array.
                 /// </remarks>
                 virtual const Vector<uint>& Indices()                   const = 0;
-                /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of the model. </summary>
-                virtual const ITransformation3D& ModelTransform()       const = 0;
+
+                virtual const Vector<T>& Mapping()                      const = 0;
+
+                virtual const Vector<T>& Normals()                      const = 0;                
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
                 ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will
@@ -48,19 +49,17 @@ namespace Cyclone
                 virtual const Vector<T>& Points()                       const = 0;
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual VertexTopologies Topology()                     const = 0;
-                /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of 3D geometric shape. </summary>
-                virtual const ITransformation3D& WorldTransform()       const = 0;
 
 
 
                 /** DESTRUCTOR **/
-                virtual ~IGeometric3D() { }
+                virtual ~IGeometric() { }
 
 
 
                 /** UTILITIES **/
-                virtual IGeometric3D& Rotate(const Vector3& value)      = 0;
-                virtual IGeometric3D& Translate(const Vector3& value)   = 0;
+                //virtual IGeometric3D& Rotate(const Vector3& value)      = 0;
+                //virtual IGeometric3D& Translate(const Vector3& value)   = 0;
         };
     }
 }

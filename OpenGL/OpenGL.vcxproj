@@ -198,6 +198,7 @@
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\RenderStage.cpp" />
     <ClCompile Include="Buffers\VertexArray.cpp" />
+    <ClCompile Include="Geometry\GeometricEntity3D.cpp" />
     <ClCompile Include="Geometry\Geometry3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Geometry\Scene3D.cpp" />

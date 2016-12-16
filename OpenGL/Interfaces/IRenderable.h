@@ -10,18 +10,27 @@
 
 namespace Cyclone
 {
+    namespace { using namespace Utilities; }
+    namespace Utilities
+    {
+        struct ITransformation3D;
+    }
+
     namespace OpenGL
     {        
         class IMaterial;
         class IRenderStage;
 
         template <typename T> 
-        class IRenderable : public virtual IGeometric3D<T>
+        class IRenderable
         {
             public:
                 /// <summary> Gets whether a renderable entity is currently visible in a scene. </summary>
                 virtual bool IsVisible()                            const = 0;
                 virtual const IMaterial& Material()                 const = 0;
+                virtual const ITransformation3D& ModelTransform()   const = 0;
+                virtual const IGeometric<T>& Geometry()             const = 0;
+                virtual const ITransformation3D& WorldTransform()   const = 0;
 
                 virtual ~IRenderable() { }
         };

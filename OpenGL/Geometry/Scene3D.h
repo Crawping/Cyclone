@@ -63,12 +63,12 @@ namespace Cyclone
                 ///     be updated. Otherwise, this method generates a new entry in the scene's data collection to hold the
                 ///     necessary rendering information for the entity.
                 /// </param>
-                OpenGLAPI void Add(const IRenderable3D<Vertex::Standard>& entity);
-                OpenGLAPI void Remove(const IRenderable3D<Vertex::Standard>& entity);
+                OpenGLAPI void Add(const IRenderable3D<Vector3>& entity);
+                OpenGLAPI void Remove(const IRenderable3D<Vector3>& entity);
                 OpenGLAPI void Update();
-                OpenGLAPI void Update(const IRenderable3D<Vertex::Standard>& entity);
+                OpenGLAPI void Update(const IRenderable3D<Vector3>& entity);
 
-                OpenGLAPI void Add(const string& stage, const IRenderable3D<Vertex::Standard>& entity);
+                OpenGLAPI void Add(const string& stage, const IRenderable3D<Vector3>& entity);
                 OpenGLAPI void CreateStage(const string& name);
                 OpenGLAPI void Settings(const string& stage, const GraphicsSettings& value);
 
@@ -104,14 +104,14 @@ namespace Cyclone
 
 
                 /** BUFFER & STAGE MAPPINGS **/
-                std::map<const IRenderable3D<Vertex::Standard>*, BufferIndices>     EntityIndices;
+                std::map<const IRenderable3D<Vector3>*, BufferIndices>     EntityIndices;
                 std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>      IndexedStages;
                 std::map<VertexTopologies, RenderStage3D<DrawCommand>*>             RenderStages;
 
 
 
                 /** UTILITIES **/
-                RegistryKey<TransformData> Add(const IGeometric3D<Vertex::Standard>& entity);
+                void Add(const IGeometric<Vector3>& entity);
                 RegistryKey<MaterialData> Add(const IMaterial& entity);
                 void CreateStage(VertexTopologies topology, bool isIndexed);
 

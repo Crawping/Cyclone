@@ -3,8 +3,11 @@
  */
 
 #pragma once
-#include "Interfaces/IRenderable.h"
+//#include "Interfaces/IRenderable.h"
+#include "Interfaces/IGeometric3D.h"
+#include "Collections/Vector.h"
 #include "Spatial/Transform.h"
+#include "Spatial/Volume.h"
 
 
 
@@ -12,217 +15,149 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        template<typename T> class GeometricEntity3D : 
-            public virtual IGeometric3D<T>
+        class Geometry3D : public virtual IGeometric<Vector3>
         {
             public:
-
-                /** POSITIONAL PROPERTIES **/
-                /// <summary> Gets the position of the entity along the world x-axis. </summary>
-                virtual float X()                           const { return Position().X; }
-		        /// <summary> Gets the position of the entity along the world y-axis. </summary>
-                virtual float Y()                           const { return Position().Y; }
-		        /// <summary> Gets the position of the entity along the world z-axis. </summary>
-                virtual float Z()                           const { return Position().Z; }
-
-		        /// <summary> Sets the position of the entity along the world x-axis. </summary>
-                virtual GeometricEntity3D& X(float x)       { return Position(x, Y(), Z()); }
-		        /// <summary> Sets the position of the entity along the world y-axis. </summary>
-                virtual GeometricEntity3D& Y(float y)       { return Position(X(), y, Z()); }
-		        /// <summary> Sets the position of the entity along the world z-axis. </summary>
-                virtual GeometricEntity3D& Z(float z)       { return Position(X(), Y(), z); }
-
-
-                virtual const Vector3& Offset() const 
-                { 
-                    return _modelTransform.Position();
-                }
-
-                virtual GeometricEntity3D& Offset(const Vector3& value)
-                { 
-                    _modelTransform.Position(value);
-                    return *this;
-                }
-
-                virtual GeometricEntity3D& Offset(float x, float y, float z)                { return Offset(Vector3(x, y, z)); }
-                /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
-                virtual const Vector3& Position()                                           const { return _worldTransform.Position(); }
-		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
-                virtual GeometricEntity3D& Position(const Vector3& p)                       { _worldTransform.Position(p); return *this; }
-		        /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
-                virtual GeometricEntity3D& Position(float x, float y, float z = 0.0f)       { return Position(Vector3(x, y, z)); }
-
-
-
-                /** ROTATIONAL PROPERTIES **/
-                /// <summary> Gets the angle of rotation about the x-axis in radians. </summary>
-                virtual float Pitch()                       const { return Orientation().X; }
-                /// <summary> Gets the angle of rotation about the z-axis in radians. </summary>
-                virtual float Roll()                        const { return Orientation().Z; }
-                /// <summary> Gets the angle of rotation about the y-axis in radians. </summary>
-                virtual float Yaw()                         const { return Orientation().Y; }
-
-                /// <summary> Sets the angle of rotation about the x-axis in radians. </summary>
-                virtual GeometricEntity3D& Pitch(float p)   { return Orientation(p, Yaw(), Roll()); }
-                /// <summary> Sets the angle of rotation about the z-axis in radians. </summary>
-                virtual GeometricEntity3D& Roll(float r)    { return Orientation(Pitch(), Yaw(), r); }
-                /// <summary> Sets the angle of rotation about the y-axis in radians. </summary>
-                virtual GeometricEntity3D& Yaw(float y)     { return Orientation(Pitch(), y, Roll()); }
-
-                /// <summary> Gets the (x, y, z) rotation angles for the entity in 3D space. </summary>
-                virtual const Vector3& Orientation()                                const { return _worldTransform.Orientation(); }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Orientation(const Vector3& value)        { _worldTransform.Orientation(value); return *this; }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
-                /// <param name="p"> The pitch, or rotation about the x-axis, in radians. </param>
-                /// <param name="y"> The yaw, or rotation about the y-axis, in radians. </param>
-                /// <param name="r"> The roll, or rotation about the z-axis, in radians. </param>
-                virtual GeometricEntity3D& Orientation(float p, float y, float r)   { return Orientation(Vector3(p, y, r)); }
-
-
-
-                /** SCALING PROPERTIES **/
-		        /// <summary> Gets the size of the entity along the z-axis. </summary>
-                virtual float Depth()                       const { return Scale().Z; }
-		        /// <summary> Gets the size of the entity along the y-axis. </summary>
-                virtual float Height()                      const { return Scale().Y; }
-		        /// <summary> Gets the size of the entity along the x-axis. </summary>
-                virtual float Width()                       const { return Scale().X; }
-
-		        /// <summary> Sets the size of the entity along the z-axis. </summary>
-                virtual GeometricEntity3D& Depth(float z)   { return Scale(Width(), Height(), z); }
-		        /// <summary> Sets the size of the entity along the y-axis. </summary>
-                virtual GeometricEntity3D& Height(float y)  { return Scale(Width(), y, Depth()); }
-		        /// <summary> Sets the size of the entity along the x-axis. </summary>
-                virtual GeometricEntity3D& Width(float x)   { return Scale(x, Height(), Depth()); }
-
-                /// <summary> Gets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual const Vector3& Scale() const
-                { 
-                    return _worldTransform.Scale();
-                }
-                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Scale(const Vector3& s)
-                { 
-                    _worldTransform.Scale(s);
-                    return *this;
-                }
-                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Scale(float x, float y, float z = 1.0f)
-                { 
-                    return Scale(Vector3(x, y, z)); 
-                }
-
-                virtual const Vector3& Size() const
-                { 
-                    return _modelTransform.Scale();
-                }
-
-                virtual GeometricEntity3D& Size(const Vector3& value)
-                {
-                    _modelTransform.Scale(value); 
-                    return *this; 
-                }
-
-                virtual GeometricEntity3D& Size(float x, float y, float z)
-                { 
-                    return Size(Vector3(x, y, z));
-                }
-
-
 
                 /** GEOMETRIC PROPERTIES **/
                 /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
                 virtual const Volume& Bounds()                      const override { return _bounds; }
                 /// <summary> Gets a reference to the array of indices that specify the vertex rendering order. </summary>
                 virtual const Vector<uint>& Indices()               const override { return _indices; }
-                /// <summary> Gets a reference to the model transformation matrix of the entity. </summary>
-                /// <remarks>
-                ///     The model matrix represents an additional affine transformation that takes place before the world transform 
-                ///     is applied to the <see cref="Points"/> of any geometry. It defines the offset, size, and rotation of an entity 
-                ///     in 3D model space.
-                /// </remarks>
-                virtual const ITransformation3D& ModelTransform()   const override { return _modelTransform; }
+
+                virtual const Vector<Vector3>& Mapping()            const override { return _mapping; }
+
+                virtual const Vector<Vector3>& Normals()            const override { return _normals; }
                 /// <summary> Gets a reference to the array of points that define the shape of the entity in 3D model space. </summary>
-                virtual const Vector<T>& Points()                   const override { return _points; }
+                virtual const Vector<Vector3>& Points()             const override { return _points; }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                 const override { return _topology; }
-                /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
-                /// <remarks>
-                ///     The world transform defines the position, scale, and orientation of an entity in 3D space. It is typically 
-                ///     used to apply the rotation, scaling, and translation operations that place the geometry of an entity 
-                ///     (defined by the <see cref="Points"/> method) into its correct position in a three-dimensional environment 
-                ///     called 'world' space.
-                /// </remarks>
-                virtual const ITransformation3D& WorldTransform()   const override { return _worldTransform; }
+
+                virtual Geometry3D& Indices(const Vector<uint>& value)
+                {
+                    _indices = value;
+                    return *this;
+                }
+                virtual Geometry3D& Mapping(const Vector<Vector3>& value)
+                {
+                    _mapping = value;
+                    return *this;
+                }
+                virtual Geometry3D& Normals(const Vector<Vector3>& value)
+                {
+                    _normals = value;
+                    return *this;
+                }
+                virtual Geometry3D& Points(const Vector<Vector3>& value)
+                {
+                    _points = value;
+                    return *this;
+                }
+                virtual Geometry3D& Topology(VertexTopologies value)
+                {
+                    _topology = value;
+                    return *this;
+                }
 
 
 
-                /** DESTRUCTOR **/
+                /** CONSTRUCTOR & DESTRUCTOR **/
+
+                Geometry3D() { }
                 /// <summary> Destroys any specially allocated resources held by the entity. </summary>
-                virtual ~GeometricEntity3D() { }
+                virtual ~Geometry3D() { }
+
+
+
+                /** STATIC CONSTRUCTORS **/
+                /// <summary> A cube with unit dimensions spanning the coordinates (-0.5, -0.5, -0.5) to (0.5, 0.5, 0.5). </summary>
+                /// <returns> An array of standard vertices that define a cube in 3D space. </returns>
+                /// <remarks> The vertices of this cube are not shared and are wound counter-clockwise. </remarks>
+                OpenGLAPI static Geometry3D Cube(bool isIndexed = false);
+                /// <summary> A cylinder with unit radius and height centered on the origin (0, 0, 0). </summary>
+                /// <returns> An array of standard vertices that define a cylinder in 3D space. </returns>
+                /// <param name="nfaces"> 
+                ///     The desired number of quad faces that make up the cylinder.
+                ///     <para> </para>
+                ///     This number cannot be less than 3, as the cylinder would then be degenerate.
+                /// </param>
+                /// <remarks> The vertices of this cylinder are not shared and are wound counter-clockwise. </remarks>
+                OpenGLAPI static Geometry3D Cylinder(uint nfaces, bool isIndexed = false);
+                /// <summary> A regular icosahedron with a unit radius centered on the origin (0, 0, 0). </summary>
+                /// <returns> An array of standard vertices that define a regular icosahedron in 3D space. </returns>
+                /// <remarks> The vertices of this icosahedron are not shared and are wound counter-clockwise. </remarks>
+                OpenGLAPI static Geometry3D Icosahedron(bool isIndexed = false);
+                /// <summary> A line with unit length spanning the coordinates (-0.5, 0, 0) to (0.5, 0, 0). </summary>
+                OpenGLAPI static Geometry3D Line();
+                /// <summary> A single point in three dimensional space at the coordinates (0, 0, 0). </summary>
+                OpenGLAPI static Geometry3D Point();
+                /// <summary> A unit quad in the XY plane spanning the coordinates (-0.5, -0.5, -0.5) to (0.5, 0.5, 0.5). </summary>
+                /// <remarks> The vertices of this quad are not shared and are wound counter-clockwise. </remarks>
+                OpenGLAPI static Geometry3D Quad(bool isIndexed = false);
+                /// <summary> A sphere with unit radius centered on the origin (0, 0, 0). </summary>
+                /// <returns> An array of standard vertices that define a sphere in 3D space. </returns>
+                /// <param name="n"> 
+                ///     The number of times the vertices of a regular icosahedron are tessellated to approximate the sphere.
+                /// </param>
+                OpenGLAPI static Geometry3D Sphere(uint n);
+                /// <summary> A right-triangle in the XY plane whose hypotenuse spans the coordinates (1, 0, 0) to (0, 1, 0). </summary>
+                /// <returns> An array of standard vertices that define a triangle in 3D space. </returns>
+                /// <remarks> The vertices of this triangle are wound counter-clockwise. </remarks>
+                OpenGLAPI static Geometry3D Triangle();
 
 
 
                 /** UTILITIES **/
-                /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
-                virtual GeometricEntity3D& Rotate(const Vector3& value)           override 
-                { 
-                    _worldTransform.Rotate(value); 
-                    return *this;
-                }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
-                virtual GeometricEntity3D& Rotate(float x, float y, float z)      { return Rotate(Vector3(x, y, z)); }
-                /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
-                virtual GeometricEntity3D& Translate(const Vector3& value)        override
-                {
-                    _worldTransform.Translate(value);
-                    return *this;
-                }
-                /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
-                virtual GeometricEntity3D& Translate(float x, float y, float z)   { return Translate(Vector3(x, y, z)); }
+                /// <summary> Estimates the normal vectors for a list of non-indexed triangles in model space. </summary>
+                OpenGLAPI void CalculateNormals();
+                /// <summary> Divides inputted triangles into smaller ones with unshared vertices. </summary>
+                /// <returns> 
+                ///     An array of standard vertices defining the same geometry as the input, but with an increased triangle count. 
+                /// </returns>
+                /// <param name="vertices"> An array of unshared vertices that define the triangles to be tessellated. </param>
+                /// <param name="n"> 
+                ///     The number of times tessellation will be recursively performed on the inputted gometry.
+                ///     <para> </para>
+                ///     Note that each tessellation step returns 12 times the number of inputted vertices.
+                /// </param>
+                OpenGLAPI void Tessellate(uint n);
 
             protected:
                 
                 /** PROPERTIES **/
                 /// <summary> Sets the (x, y, z) position of the back-lower-left bounding box corner in 3D space. </summary>
-                virtual GeometricEntity3D& BoundaryPosition(const Vector3& value)
+                virtual Geometry3D& BoundaryPosition(const Vector3& value)
                 {
                     return Bounds(Volume(value, Bounds().Size()));
                 }
                 /// <summary> Sets the (width, height, depth) size of the bounding volume in 3D space. </summary>
-                virtual GeometricEntity3D& BoundarySize(const Vector3& value)
+                virtual Geometry3D& BoundarySize(const Vector3& value)
                 {
                     return Bounds(Volume(Bounds().Position(), value));
                 }
                 /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
-                virtual GeometricEntity3D& Bounds(const Volume& value) 
+                virtual Geometry3D& Bounds(const Volume& value) 
                 { 
                     _bounds = value; 
                     return *this; 
                 }
 
-
-
-                /** CONSTRUCTOR **/
-                GeometricEntity3D(VertexTopologies topology, const Vector<T>& points, const Vector<uint>& indices) :
-                    _indices(indices),
-                    _points(points),
-                    _topology(topology)
-                { 
-                
+                virtual void Add(const Vector3& position, const Vector3& normal = Vector3(), const Vector3& mapping = Vector3())
+                {
+                    _points.Append(position);
+                    _normals.Append(normal);
+                    _mapping.Append(mapping);
                 }
-
 
             private:
 
                 /** PROPERTY DATA **/
                 Volume              _bounds;
                 Vector<uint>        _indices;
-                Transform           _modelTransform;
-                Vector<T>           _points;
+                Vector<Vector3>     _mapping;
+                Vector<Vector3>     _normals;
+                Vector<Vector3>     _points;
                 VertexTopologies    _topology;
-                Transform           _worldTransform;
 
         };
     }

@@ -44,15 +44,26 @@ namespace Cyclone
         
 
         /** PUBLIC UTILITIES **/
-        void Scene3D::Add(const IRenderable3D<Vertex::Standard>& entity)
+        void Scene3D::Add(const IRenderable3D<Vector3>& entity)
         {
             if (EntityIndices.count(&entity)) { return; }
 
+            const auto& geometry = entity.Geometry();
+
             uint idxEntities    = Entities.Count();
-            uint nIndices       = entity.Indices().Count();
+            uint nIndices       = geometry.Indices().Count();
             uint idxIndices     = Indices.Count();
-            uint nVertices      = entity.Points().Count();
+            uint nVertices      = geometry.Points().Count();
             uint idxVertices    = Vertices.Count();
+
+            Add(geometry);
+
+            TransformData transforms =
+            {
+                entity.ModelTransform().ToMatrix4x4(),
+                Matrix4x4::Identity,
+                entity.WorldTransform().ToMatrix4x4(),
+            };
 
             BufferIndices ids =
             {
@@ -60,7 +71,7 @@ namespace Cyclone
                 nIndices,
                 idxIndices,
                 Add( entity.Material() ),
-                Add( (const IGeometric3D<Vertex::Standard>&)entity ),
+                Transforms.Register(transforms),
                 nVertices,
                 idxVertices,
             };
@@ -73,7 +84,7 @@ namespace Cyclone
             };
             Entities.Add(data);
         }
-        void Scene3D::Remove(const IRenderable3D<Vertex::Standard>& entity)
+        void Scene3D::Remove(const IRenderable3D<Vector3>& entity)
         {
             
         }
@@ -91,21 +102,20 @@ namespace Cyclone
             uint idx = 0;
             for (auto& kvp : EntityIndices)
             {
-                VertexTopologies topology = kvp.first->Topology();
-                bool isIndexed = !kvp.first->Indices().IsEmpty();
+                VertexTopologies topology = kvp.first->Geometry().Topology();
                 BufferIndices ids = kvp.second;
 
-                if (isIndexed)
+                if (ids.IndicesCount)
                 {
                     if (!IndexedStages.count(topology))
-                        CreateStage(topology, isIndexed);
+                        CreateStage(topology, true);
 
                     IndexedStages[topology]->Add(IndexedDrawCommand(ids.IndicesCount, 1, ids.IndicesIndex, ids.VertexIndex, ids.EntityIndex));
                 }
                 else
                 {
                     if (!RenderStages.count(topology))
-                        CreateStage(topology, isIndexed);
+                        CreateStage(topology, false);
 
                     RenderStages[topology]->Add(DrawCommand(ids.VertexCount, 1, 0, ids.VertexIndex, ids.EntityIndex));
                 }
@@ -117,7 +127,7 @@ namespace Cyclone
                 kvp.second->Update();
 
         }
-        void Scene3D::Update(const IRenderable3D<Vertex::Standard>& entity)
+        void Scene3D::Update(const IRenderable3D<Vector3>& entity)
         {
             if (!EntityIndices.count(&entity)) { return; }
 
@@ -142,35 +152,28 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        RegistryKey<TransformData> Scene3D::Add(const IGeometric3D<Vertex::Standard>& entity)
+        void Scene3D::Add(const IGeometric<Vector3>& entity)
         {
-            const auto& vertices = entity.Points();
             const auto& indices = entity.Indices();
+            const auto& mapping = entity.Mapping();
+            const auto& normals = entity.Normals();
+            const auto& vertices = entity.Points();
 
             for (uint a = 0; a < indices.Count(); a++)
                 Indices.Add(indices(a));
 
             for (uint a = 0; a < vertices.Count(); a++)
-                Vertices.Add(vertices(a));
-
-            TransformData transforms =
-            {
-                entity.ModelTransform().ToMatrix4x4(),
-                Matrix4x4::Identity,
-                entity.WorldTransform().ToMatrix4x4(),
-            };
-
-            return Transforms.Register(transforms);
+                Vertices.Add(Vertex::Standard(vertices(a), normals(a), (Vector2)mapping(a)));
         }
-        RegistryKey<MaterialData> Scene3D::Add(const IMaterial& entity)
+        RegistryKey<MaterialData> Scene3D::Add(const IMaterial& material)
         {
-            MaterialData material =
+            MaterialData mat =
             {
-                entity.PrimaryColor(),
-                entity.SecondaryColor(),
+                material.PrimaryColor(),
+                material.SecondaryColor(),
             };
 
-            return Materials.Register(material);
+            return Materials.Register(mat);
         }
         void Scene3D::CreateStage(VertexTopologies topology, bool isIndexed)
         {

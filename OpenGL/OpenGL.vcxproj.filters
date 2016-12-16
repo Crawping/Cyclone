@@ -181,6 +181,9 @@
     <ClCompile Include="Buffers\RenderStage.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
+    <ClCompile Include="Geometry\GeometricEntity3D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
