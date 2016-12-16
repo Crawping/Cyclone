@@ -10,7 +10,7 @@
 #include "Geometry/Quad3D.h"
 #include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
-#include "Geometry/Geometry3D.h"
+//#include "Geometry/Geometry3D.h"
 
 
 
@@ -141,12 +141,16 @@ namespace Cyclone
             .View(&View);
 
 		PlaneXZ = new Quad3D();
-		PlaneXZ->Pitch(-90).Scale(5000).Translate(0, 50, 0);
+		PlaneXZ->
+            Pitch(-90)
+            .PrimaryColor(Color4::Blue)
+            .Scale(5000).Translate(0, 50, 0);
 
-		Vector<uint> indices;
-		Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
-		TestShape = new Mesh3D(vertices, indices);
-		TestShape->Scale(Vector3(50, 50, 50)).Translate(250, 250, -10);
+        TestShape = new Mesh3D(Geometry3D::Sphere(3));
+		TestShape->
+             PrimaryColor(Color4::Gray)
+            .Scale(Vector3(50, 50, 50))
+            .Translate(250, 250, -10);
 
 		RenderScene->Add(*TestShape);
 		RenderScene->Add(*PlaneXZ);

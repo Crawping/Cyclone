@@ -161,6 +161,13 @@ RENDERABLE ENTITIES
     -- Texture(s)
     -- Color(s)
 
+- Behaviors
+    -- HID interactions
+    -- Entity interactions
+    
+- Graphics Settings
+
+
 - Component Entities
     -- Some components might require different shading parameters
 
