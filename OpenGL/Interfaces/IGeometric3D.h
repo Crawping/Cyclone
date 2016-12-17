@@ -35,10 +35,14 @@ namespace Cyclone
                 ///     return an empty array.
                 /// </remarks>
                 virtual const Vector<uint>& Indices()                   const = 0;
-
+                /// <summary> Gets an array of values that map each geometric point onto some other external resource. </summary>
+                /// <remarks>
+                ///     Typically, these values will be used to map the points of some shape onto textures, although use of other
+                ///     resources such as buffers is possible as well.
+                /// </remarks>
                 virtual const Vector<T>& Mapping()                      const = 0;
-
-                virtual const Vector<T>& Normals()                      const = 0;                
+                /// <summary> Gets an array of normal vectors associated with each point of the geometric shape. </summary>
+                virtual const Vector<T>& Normals()                      const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
                 ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will
