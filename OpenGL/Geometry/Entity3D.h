@@ -4,7 +4,7 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "Geometry/GeometricEntity3D.h"
+#include "Geometry/Geometry3D.h"
 #include "GL/OpenGLAPI.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
@@ -80,6 +80,7 @@ namespace Cyclone
 
                 
                 /** BATCH SPATIAL PROPERTIES **/
+
                 virtual const Vector3& Offset()             const { return _modelTransform.Position(); }
                 /// <summary> Gets the (x, y, z) rotation angles for the entity in 3D space. </summary>
                 virtual const Vector3& Orientation()        const { return _worldTransform.Orientation(); }
@@ -152,8 +153,7 @@ namespace Cyclone
                 virtual Entity3D& Texture(const Texture3D* value)           { _material.Texture(value); return *this; }
 
 
-
-
+                
                 /** RENDERABLE INTERFACE PROPERTIES **/
 
                 virtual const List<IRenderable3D<T>*>& Components()     const override { return _components; }
@@ -184,8 +184,8 @@ namespace Cyclone
 
                 virtual Entity3D& Geometry(const Geometry3D& value)    { _geometry = value; return *this; }
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
-                virtual Entity3D& IsVisible(bool value)                     { _isVisible = value; return *this; }
-                virtual Entity3D& Material(const Material3D& value)         { _material = value; return *this; }
+                virtual Entity3D& IsVisible(bool value)                { _isVisible = value; return *this; }
+                virtual Entity3D& Material(const Material3D& value)    { _material = value; return *this; }
 
 
 

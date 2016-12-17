@@ -4,7 +4,6 @@
 
 #pragma once
 #include "Geometry/Entity3D.h"
-//#include "Geometry/Geometry3D.h"
 
 
 

@@ -89,9 +89,6 @@
     <ClInclude Include="Buffers\IndexBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Geometry3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Pipelines\ComputePipeline.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
@@ -103,9 +100,6 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="RenderStage3D.h" />
-    <ClInclude Include="Geometry\GeometricEntity3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IGeometric3D.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -126,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="Interfaces\IMaterial.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Geometry3D.h">
+      <Filter>Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -168,9 +165,6 @@
     <ClCompile Include="Buffers\VertexArray.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Geometry3D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Pipelines\ComputePipeline.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
@@ -181,7 +175,7 @@
     <ClCompile Include="Buffers\RenderStage.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\GeometricEntity3D.cpp">
+    <ClCompile Include="Geometry\Geometry3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
