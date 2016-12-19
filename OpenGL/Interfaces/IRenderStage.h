@@ -19,6 +19,7 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets a list of binding configurations for the GPU resource buffers used by the rendering stage. </summary>
                 virtual List<BufferBinding> Buffers()           const = 0;
                 virtual const GraphicsSettings& Settings()      const = 0;
                 virtual VertexTopologies Topology()             const = 0;

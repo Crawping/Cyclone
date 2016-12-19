@@ -20,9 +20,9 @@ namespace Cyclone
         class IMaterial
         {
             public:
-                /// <summary> Gets a reference to the primary color of the material. </summary>
+                /// <summary> Gets the primary color of the material. </summary>
                 virtual const Color4& PrimaryColor()                const = 0;
-                /// <summary> Gets a reference to the secondary color of the material. </summary>
+                /// <summary> Gets the secondary color of the material. </summary>
                 virtual const Color4& SecondaryColor()              const = 0;
                 /// <summary> Gets a pointer to the texture used to render the visible surface of a material. </summary>
                 /// <remarks>
