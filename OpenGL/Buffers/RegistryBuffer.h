@@ -27,9 +27,10 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 /// <summary> Determines whether the buffer contains a data element that corresponds with a specific key. </summary>
-                /// <param name="key"> The specific key to be tested. </param>
+                /// <param name="key"> The specific registry key to be tested. </param>
                 /// <returns> A Boolean <c>true</c> if the key exists within the buffer, or <c>false</c> otherwise. </returns>
                 virtual bool Contains(const RegistryKey<T>& key) const { return _data.Contains(key); }
+                /// <summary> Removes all of the data currently stored within the buffer. </summary>
                 virtual void Clear()        override
                 {
                     if (IsEmpty()) { return; }
@@ -45,9 +46,7 @@ namespace Cyclone
                 {
                     uint count = Count();
                     RegistryKey<T> key = _data.Register(value);
-                    if (Count() != count)
-                        NeedsUpdate(true);
-
+                    NeedsUpdate(Count() != count);
                     return key;
                 }
                 virtual void Remove(const RegistryKey<T>& key)
