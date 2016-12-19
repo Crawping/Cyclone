@@ -6,8 +6,6 @@
 #include "EnumerationsGL.h"
 #include "TypeDefinitions.h"
 #include "Interfaces/IVertex.h"
-#include "Imaging/Color4.h"
-#include "Math/Array.h"
 #include "Math/Vector3.h"
 
 
@@ -59,46 +57,6 @@ namespace Cyclone
         /// <summary> A collection of standardized vertex definitions. </summary>
         namespace Vertex
         {
-            struct Colored : public IVertex
-            {
-                /// <summary> The (x, y, z) position of the vertex in model space. </summary>
-                Vector3 Position;
-                /// <summary> The (r, g, b, a) color of the vertex. </summary>
-                Color4 Color;
-
-                Vector<VertexAttribute> Layout() const override
-                {
-                    return
-                    {
-                        VertexAttribute(3, NumericFormats::Float, "Position", offsetof(Colored, Position)),
-                        VertexAttribute(4, NumericFormats::Float, "Color", offsetof(Colored, Color)),
-                    };
-                }
-
-                constexpr Colored() { }
-                constexpr Colored(const Vector3& position, const Color4& color)                     : Position(position), Color(color) { }
-                constexpr Colored(float x, float y, float z, float r, float g, float b, float a)    : Position(x, y, z), Color(r, g, b, a) { }
-            };
-
-            /// <summary> A structure defining a vertex with positional and texture data only. </summary>
-            struct Simple : public IVertex
-            {   
-
-                /** DATA **/
-                /// <summary> The (x, y, z) position of the vertex in model space. </summary>
-                Vector3 Position;
-                
-                Vector<VertexAttribute> Layout() const override
-                {
-                    return { VertexAttribute(3, NumericFormats::Float, "Position", offsetof(Simple, Position)) };
-                }
-                
-                constexpr Simple()                              : Position(0.0f) { }
-                constexpr Simple(const Vector3& position)       : Position(position) { }
-                constexpr Simple(float x, float y, float z)     : Position(x, y, z) { }
-
-            };
-
             /// <summary> A structure that defines a vertex consisting of positional, normal, and texture data. </summary>
             struct Standard : public IVertex
             {
@@ -153,29 +111,6 @@ namespace Cyclone
                 }
 
             };
-
-            struct Textured : public IVertex
-            {
-                /** DATA **/
-                /// <summary> The (x, y, z) position of the vertex in model space. </summary>
-                Vector3 Position;
-                /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
-                Vector2 UV;
-
-                Vector<VertexAttribute> Layout() const override
-                {
-                    return
-                    {
-                        VertexAttribute(3, NumericFormats::Float, "Position", offsetof(Textured, Position)),
-                        VertexAttribute(2, NumericFormats::Float, "UV", offsetof(Textured, UV)),
-                    };
-                }
-
-                constexpr Textured() : Position(0.0f), UV(0.0f) { }
-                constexpr Textured(const Vector3& position, const Vector2& uv)                  : Position(position), UV(uv) { }
-                constexpr Textured(float x, float y, float z, float u = 0.0f, float v = 0.0f)   : Position(x, y, z), UV(u, v) { }
-            };
-            
 
         }
 
