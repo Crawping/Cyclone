@@ -85,6 +85,10 @@ namespace Cyclone
             };
             Entities.Add(data);
         }
+        void Scene3D::Add(const string& stage, const IRenderable3D<Vector3>& entity)
+        {
+
+        }
         void Scene3D::Remove(const IRenderable3D<Vector3>& entity)
         {
             
@@ -192,6 +196,9 @@ namespace Cyclone
                 .Topology(topology)
                 .Add(bindings);
         }
+        void Scene3D::CreateLayer(VertexTopologies topology)
+        {
 
+        }
     }
 }

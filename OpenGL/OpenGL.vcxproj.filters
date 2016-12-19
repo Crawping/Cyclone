@@ -126,6 +126,15 @@
     <ClInclude Include="Scenes\RenderStage.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\SceneLayer3D.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IScene.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SceneStage3D.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -180,6 +189,12 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\RenderStage.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SceneLayer3D.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SceneStage3D.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>

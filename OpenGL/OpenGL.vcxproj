@@ -175,6 +175,7 @@
     <ClInclude Include="Interfaces\IMaterial.h" />
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IRenderStage.h" />
+    <ClInclude Include="Interfaces\IScene.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
     <ClInclude Include="Libraries\Material3D.h" />
     <ClInclude Include="Libraries\ResourceLibrary.h" />
@@ -185,6 +186,8 @@
     <ClInclude Include="Scenes\RenderStage.h" />
     <ClInclude Include="Scenes\RenderStage3D.h" />
     <ClInclude Include="Scenes\Scene3D.h" />
+    <ClInclude Include="Scenes\SceneLayer3D.h" />
+    <ClInclude Include="Scenes\SceneStage3D.h" />
     <ClInclude Include="Textures\GradientTexture.h" />
     <ClInclude Include="Textures\Texture.h" />
     <ClInclude Include="Textures\Texture2D.h" />
@@ -205,6 +208,8 @@
     <ClCompile Include="Scenes\RenderStage.cpp" />
     <ClCompile Include="Scenes\RenderStage3D.cpp" />
     <ClCompile Include="Scenes\Scene3D.cpp" />
+    <ClCompile Include="Scenes\SceneLayer3D.cpp" />
+    <ClCompile Include="Scenes\SceneStage3D.cpp" />
     <ClCompile Include="Textures\GradientTexture.cpp" />
     <ClCompile Include="Textures\Texture.cpp" />
     <ClCompile Include="Textures\Texture2D.cpp" />

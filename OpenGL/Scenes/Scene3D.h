@@ -15,6 +15,7 @@
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IUpdatable.h"
 #include "Libraries/ResourceLibrary.h"
+#include "Scenes/SceneLayer3D.h"
 
 #include <map>
 
@@ -25,6 +26,20 @@ namespace Cyclone
     namespace OpenGL
     {
         class IRenderStage;
+
+
+        struct BufferIndices
+        {
+            uint EntityIndex;
+            uint IndicesCount;
+            uint IndicesIndex;
+            uint TransformIndex;
+            uint VertexCount;
+            uint VertexIndex;
+
+            RegistryKey<MaterialData> MaterialKey;
+        };
+
 
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
@@ -75,20 +90,6 @@ namespace Cyclone
 
             private:
 
-                struct BufferIndices
-                {
-                    uint EntityIndex;
-                    uint IndicesCount;
-                    uint IndicesIndex;
-                    uint TransformIndex;
-                    uint VertexCount;
-                    uint VertexIndex;
-
-                    RegistryKey<MaterialData> MaterialKey;
-                };
-
-
-
                 /** PROPERTY DATA **/
                 bool                _isVisible;
                 GraphicsSettings    _settings;
@@ -105,6 +106,9 @@ namespace Cyclone
 
 
                 /** BUFFER & STAGE MAPPINGS **/
+                std::map<VertexTopologies, SceneLayer3D*>                           Layers;
+
+
                 std::map<const IRenderable3D<Vector3>*, BufferIndices>              EntityIndices;
                 std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>      IndexedStages;
                 std::map<VertexTopologies, RenderStage3D<DrawCommand>*>             RenderStages;
@@ -114,6 +118,7 @@ namespace Cyclone
                 /** UTILITIES **/
                 void Add(const IGeometric<Vector3>& entity);
                 void CreateStage(VertexTopologies topology, bool isIndexed);
+                void CreateLayer(VertexTopologies topology);
 
         };
     }
