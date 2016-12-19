@@ -30,17 +30,8 @@ namespace Cyclone
             uint        Time;
         };
 
+
         /// <summary> A structure containing uniform shader data that are expected to change between every rendered object. </summary>
-        struct PerEntity
-        {
-            
-            Matrix4x4   World;
-            
-            Color4      Color;
-        };
-
-
-
         struct EntityData
         {
             uint        MaterialIndex;
