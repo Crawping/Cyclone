@@ -163,21 +163,19 @@ namespace Cyclone
                 virtual bool IsVisible()                                const override { return _isVisible; }
 
                 virtual const Material3D& Material()                    const override { return _material; }
-                /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of the model. </summary>
-                /// <summary> Gets a reference to the model transformation matrix of the entity. </summary>
+                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in model space. </summary>
                 /// <remarks>
                 ///     The model matrix represents an additional affine transformation that takes place before the world transform 
-                ///     is applied to the <see cref="Points"/> of any geometry. It defines the offset, size, and rotation of an entity 
-                ///     in 3D model space.
+                ///     is applied to any geometry. It defines the offset, size, and rotation of an entity in 3D model space.
                 /// </remarks>
                 virtual const Transform& ModelTransform()               const override { return _modelTransform; }
-                /// <summary> Gets a transformation data structure representing the orientation, position, and scaling of 3D geometric shape. </summary>
-                /// <summary> Gets a reference to the world transformation matrix of an entity. </summary>
+
+                virtual const Transform& TextureTransform()             const override { return _textureTransform; }
+                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in world space. </summary>
                 /// <remarks>
                 ///     The world transform defines the position, scale, and orientation of an entity in 3D space. It is typically 
                 ///     used to apply the rotation, scaling, and translation operations that place the geometry of an entity 
-                ///     (defined by the <see cref="Points"/> method) into its correct position in a three-dimensional environment 
-                ///     called 'world' space.
+                ///     into its correct position in a three-dimensional environment called 'world' space.
                 /// </remarks>
                 virtual const Transform& WorldTransform()               const override { return _worldTransform; }
 
@@ -261,6 +259,7 @@ namespace Cyclone
                 bool            _isVisible;
                 Material3D      _material;
                 Transform       _modelTransform;
+                Transform       _textureTransform;
                 Transform       _worldTransform;
 
         };

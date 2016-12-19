@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Interfaces/IGeometric3D.h"
+#include "Interfaces/IGeometric.h"
 #include "Collections/Vector.h"
 #include "Spatial/Transform.h"
 #include "Spatial/Volume.h"
@@ -21,7 +21,7 @@ namespace Cyclone
                 /** GEOMETRIC PROPERTIES **/
                 /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
                 virtual const Volume& Bounds()                      const override { return _bounds; }
-                /// <summary> Gets a reference to the array of indices that specify the order in which geometric points are rendered. </summary>
+                /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
                 virtual const Vector<uint>& Indices()               const override { return _indices; }
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
                 virtual const Vector<Vector3>& Mapping()            const override { return _mapping; }
@@ -32,11 +32,13 @@ namespace Cyclone
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()                 const override { return _topology; }
 
+                /// <summary> Sets the array of indices that specify the order in which points of the geometric shape are to be rendered. </summary>
                 virtual Geometry3D& Indices(const Vector<uint>& value)
                 {
                     _indices = value;
                     return *this;
                 }
+                /// <summary> Sets the array of values that map each point of the geometric shape onto some other external resource. </summary>
                 virtual Geometry3D& Mapping(const Vector<Vector3>& value)
                 {
                     _mapping = value;
@@ -61,7 +63,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-
+                /// <summary> Constructs a new empty 3D geometric object. </summary>
                 Geometry3D() { }
                 /// <summary> Destroys any specially allocated resources held by the entity. </summary>
                 virtual ~Geometry3D() { }
