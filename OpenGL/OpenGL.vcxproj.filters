@@ -68,9 +68,6 @@
     <ClInclude Include="Geometry\Quad3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Scene3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\ArrayBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
@@ -99,15 +96,8 @@
     <ClInclude Include="Interfaces\IRenderStage.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="RenderStage3D.h" />
-    <ClInclude Include="Interfaces\IGeometric3D.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Textures\GradientTexture.h">
       <Filter>Textures</Filter>
-    </ClInclude>
-    <ClInclude Include="Buffers\RenderStage.h">
-      <Filter>Buffers</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\ResourceLibrary.h">
       <Filter>Libraries</Filter>
@@ -123,6 +113,18 @@
     </ClInclude>
     <ClInclude Include="Geometry\Geometry3D.h">
       <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IGeometric.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\RenderStage3D.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Scene3D.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\RenderStage.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -156,9 +158,6 @@
     <ClCompile Include="Buffers\CommandBuffer.cpp">
       <Filter>Buffers</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Scene3D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\Point3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
@@ -168,15 +167,20 @@
     <ClCompile Include="Pipelines\ComputePipeline.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
-    <ClCompile Include="RenderStage3D.cpp" />
     <ClCompile Include="Textures\GradientTexture.cpp">
       <Filter>Textures</Filter>
     </ClCompile>
-    <ClCompile Include="Buffers\RenderStage.cpp">
-      <Filter>Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\Geometry3D.cpp">
       <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\RenderStage3D.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\Scene3D.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\RenderStage.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +207,9 @@
     </Filter>
     <Filter Include="Libraries">
       <UniqueIdentifier>{9789cb84-c487-45ae-8eef-510390c6e0e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{f9bd0721-10e0-4621-8413-9203fa719a4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

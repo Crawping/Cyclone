@@ -4,7 +4,7 @@
 
 #pragma once
 #include "GraphicsSettings.h"
-#include "RenderStage3D.h"
+#include "Scenes/RenderStage3D.h"
 #include "Buffers/IndexBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/UniformBuffer.h"
@@ -80,10 +80,11 @@ namespace Cyclone
                     uint EntityIndex;
                     uint IndicesCount;
                     uint IndicesIndex;
-                    RegistryKey<MaterialData> MaterialIndex;
-                    RegistryKey<TransformData> TransformIndex;
+                    uint TransformIndex;
                     uint VertexCount;
                     uint VertexIndex;
+
+                    RegistryKey<MaterialData> MaterialKey;
                 };
 
 
@@ -98,13 +99,13 @@ namespace Cyclone
                 UniformBuffer<EntityData>           Entities;
                 IndexBuffer                         Indices;
                 ResourceLibrary<MaterialData>       Materials;
-                ResourceLibrary<TransformData>      Transforms;
+                UniformBuffer<TransformData>        Transforms;
                 VertexBuffer<Vertex::Standard>      Vertices;
 
 
 
                 /** BUFFER & STAGE MAPPINGS **/
-                std::map<const IRenderable3D<Vector3>*, BufferIndices>     EntityIndices;
+                std::map<const IRenderable3D<Vector3>*, BufferIndices>              EntityIndices;
                 std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>      IndexedStages;
                 std::map<VertexTopologies, RenderStage3D<DrawCommand>*>             RenderStages;
 
@@ -112,7 +113,6 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 void Add(const IGeometric<Vector3>& entity);
-                RegistryKey<MaterialData> Add(const IMaterial& entity);
                 void CreateStage(VertexTopologies topology, bool isIndexed);
 
         };

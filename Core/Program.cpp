@@ -8,9 +8,8 @@
 #include "Buffers/FrameBuffer.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Quad3D.h"
-#include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
-//#include "Geometry/Geometry3D.h"
+#include "Scenes/Scene3D.h"
 
 
 

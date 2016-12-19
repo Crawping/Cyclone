@@ -1,8 +1,8 @@
-#include "RenderStage3D.h"
 #include "Collections/List.h"
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IRenderable.h"
-#include "Geometry/Scene3D.h"
+#include "Scenes/Scene3D.h"
+#include "Scenes/RenderStage3D.h"
 #include "Spatial/Transform.h"
 
 
@@ -49,38 +49,39 @@ namespace Cyclone
             if (EntityIndices.count(&entity)) { return; }
 
             const auto& geometry = entity.Geometry();
-
-            uint idxEntities    = Entities.Count();
-            uint nIndices       = geometry.Indices().Count();
-            uint idxIndices     = Indices.Count();
-            uint nVertices      = geometry.Points().Count();
-            uint idxVertices    = Vertices.Count();
+            BufferIndices ids =
+            {
+                Entities.Count(),
+                geometry.Indices().Count(),
+                Indices.Count(),
+                Transforms.Count(),
+                geometry.Points().Count(),
+                Vertices.Count(),
+            };
 
             Add(geometry);
+
+            MaterialData material =
+            {
+                entity.Material().PrimaryColor(),
+                entity.Material().SecondaryColor(),
+            };
 
             TransformData transforms =
             {
                 entity.ModelTransform().ToMatrix4x4(),
-                Matrix4x4::Identity,
+                entity.TextureTransform().ToMatrix4x4(),
                 entity.WorldTransform().ToMatrix4x4(),
             };
+            Transforms.Add(transforms);
 
-            BufferIndices ids =
-            {
-                idxEntities,
-                nIndices,
-                idxIndices,
-                Add( entity.Material() ),
-                Transforms.Register(transforms),
-                nVertices,
-                idxVertices,
-            };
+            ids.MaterialKey = Materials.Register(material);
             EntityIndices[&entity] = ids;
 
             EntityData data =
             {
-                ids.MaterialIndex.Index(),
-                ids.TransformIndex.Index(),
+                ids.MaterialKey.Index(),
+                ids.TransformIndex,
             };
             Entities.Add(data);
         }
@@ -134,7 +135,7 @@ namespace Cyclone
             TransformData transforms =
             {
                 entity.ModelTransform().ToMatrix4x4(),
-                Matrix4x4::Identity,
+                entity.TextureTransform().ToMatrix4x4(),
                 entity.WorldTransform().ToMatrix4x4(),
             };
             
@@ -146,7 +147,9 @@ namespace Cyclone
 
             BufferIndices ids = EntityIndices[&entity];
             Transforms.Set(ids.TransformIndex, transforms);
-            Materials.Set(ids.MaterialIndex, material);
+
+            ids.MaterialKey = Materials.Register(material);
+            EntityIndices[&entity] = ids;
         }
 
 
@@ -164,16 +167,6 @@ namespace Cyclone
 
             for (uint a = 0; a < vertices.Count(); a++)
                 Vertices.Add(Vertex::Standard(vertices(a), normals(a), (Vector2)mapping(a)));
-        }
-        RegistryKey<MaterialData> Scene3D::Add(const IMaterial& material)
-        {
-            MaterialData mat =
-            {
-                material.PrimaryColor(),
-                material.SecondaryColor(),
-            };
-
-            return Materials.Register(mat);
         }
         void Scene3D::CreateStage(VertexTopologies topology, bool isIndexed)
         {

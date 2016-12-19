@@ -6,13 +6,13 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Buffers/VertexBuffer.h"
-#include "Geometry/Scene3D.h"
 #include "Interfaces/IBindable.h"
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IRenderStage.h"
 #include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
+#include "Scenes/Scene3D.h"
 #include "Windows/WGL.h"
 
 
