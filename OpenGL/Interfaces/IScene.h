@@ -18,15 +18,17 @@ namespace Cyclone
         class IRenderStage;
 
 
-        class ISceneStage : public virtual IUpdatable
+        class ISceneComponent : public virtual IUpdatable
         {
             public:
 
+                virtual List<ISceneComponent&> Components() const = 0;
                 virtual const string& Name()                const = 0;
-                virtual const GraphicsSettings& Settings()  const = 0;
-                virtual List<const IRenderStage&> Stages()  const = 0;
+                virtual const GraphicsSettings* Settings()  const = 0;
+                virtual List<IRenderStage&> Stages()        const = 0;
 
-                virtual ~ISceneStage() { }
+
+                virtual ~ISceneComponent() { }
         };
 
 
@@ -35,11 +37,12 @@ namespace Cyclone
             public:
 
                 virtual const string& Name()                const = 0;
-                virtual List<ISceneStage&> Stages()         const = 0;
+                virtual List<ISceneComponent&> Stages()     const = 0;
 
                 virtual ~ISceneLayer() { }
         };
 
+        
 
         class IScene : public virtual IUpdatable
         {

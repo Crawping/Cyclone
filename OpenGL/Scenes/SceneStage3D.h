@@ -21,16 +21,16 @@ namespace Cyclone
 
 
 
-        class SceneStage3D : public virtual ISceneStage
+        class SceneStage3D
         {
             public:
 
                 /** PROPERTIES **/
-                OpenGLAPI virtual List<const IRenderStage&> Stages()    const override;
+                OpenGLAPI virtual List<const IRenderStage&> Stages()    const;
 
-                const string& Name()                                    const override { return _name; }
-                bool NeedsUpdate()                                      const override { return _needsUpdate; }
-                const GraphicsSettings& Settings()                      const override { return Stage.Settings(); }
+                const string& Name()                                    const { return _name; }
+                bool NeedsUpdate()                                      const { return _needsUpdate; }
+                const GraphicsSettings& Settings()                      const { return Stage.Settings(); }
 
                 SceneStage3D& Name(const string& value)                 { _name = value; return *this; }
                 SceneStage3D& Settings(const GraphicsSettings& value)   
@@ -52,7 +52,7 @@ namespace Cyclone
                 OpenGLAPI void Add(const BufferIndices& indices);
                 OpenGLAPI bool Contains(const BufferIndices& indices) const;
                 OpenGLAPI void Remove(const BufferIndices& indices);
-                OpenGLAPI void Update() override;
+                OpenGLAPI void Update();
 
             private:
 
