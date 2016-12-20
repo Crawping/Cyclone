@@ -1,47 +1,29 @@
 TODOS:
 
 - Events
-	-- Fix event structures						(DONE)
     -- Implement support for return variables
 	-- Implement events in Window3D
-		> OnButtonPress                         (DONE)
-		> OnButtonRelease                       (DONE)
-		> OnClose 								(DONE)
 		> OnDefocus
 		> OnFocus
-		> OnKeyPress							(DONE)
-		> OnKeyRelease							(DONE)
 		> OnMinimize
-		> OnPointerMotion                       (DONE)
-		> OnResize								(DONE)
 
 - 2D Rendering
 	-- Fonts & text                             (PRELIMINARY)
 	-- SVG images                               
         > Path string parsing
         > XML file parsing
-    -- Rounded rectangles                       (DONE)
     -- Color gradients
-    -- Enable/disable stroking & filling        (DONE)
     -- Proper scaling of SVG elements           (PRELIMINARY)
-        > Pixels                                (DONE)
-        > Ems                                   (DONE)
         > Convert between pixels/ems
     -- Hit testing								(PRELIMINARY)
     -- Separate:
-        > Path geometry                         (DONE)
-        > Path styles                           (DONE)
         > Path materials
 
 - 3D Rendering
 	-- Entity instancing
-	-- Indexed rendering                        (DONE)
 	-- Patch entities
-	-- Implement IUpdatable Interface           (DONE)
-	-- Customizable vertex layouts              (DONE)
 	-- Proper texture samplers
     -- BMP textures 
-    -- JPEG textures                            (DONE)
     -- PNG textures
     -- Hit testing
     -- Fix texture property set accessors
@@ -50,59 +32,44 @@ TODOS:
         > 3D materials
 
 - Buffers
-    -- Vertex index buffer                      (DONE)
     -- Element subset updates                   (PRELIMINARY)
     -- Persistently mapped buffers				(PRELIMINARY)
-    -- Customizable access intents				(DONE)
     -- Direct storage access & manipulation
-    -- Configurable MSAA counts for FBOs        (DONE)
 
 - Primitive Types
 	-- Arbitrary precision numbers
-	-- Camera class 							(DONE)
 	-- Clock
 	-- Random Number Generator (RNG)
 	-- Implement ICollection interface			(PRELIMINARY)
 	-- Generalized multidimensional arrays
     -- Data streams
     -- Sets
-	-- Lists									(DONE)
-        > Efficient iteration                   (DONE)
     -- Vectors                                  (PRELIMINARY)
         > Static checking of initializer list
           length for stack vectors
     -- Trees
-        > BST
+        > BST                                   (PRELIMINARY)
         > BVH
         > Quadtree                              (PRELIMINARY)
         > Octree
 
 - Rename
-	-- GraphicsArray		-> ArrayBuffer      (DONE)
-	-- GraphicsMap			-> MapBuffer		(DONE)
-    -- Geometry             -> Geometry3D       (DONE)
-	-- Primitives Folder	-> Geometry         (DONE)
-    -- Vertices             -> Vertex           (DONE)
     -- Point2D              -> Circle2D
 
 - General
 	-- Integrate exception throws
     -- Implement HID control interface			(DONE)
         > Fix character input recognition
-    -- MSAA										(DONE)
     -- Display3D class for monitor info
 	-- Copy prevention for critical resources
-	-- Fix multithreaded compilation            (DONE)
 	-- Picking & hit testing
     -- Remove OpenGL from EnumerationsGL
     -- State settings for the GPU class         (PRELIMINARY)
     -- Define & standardize some kind of 
        update system
     -- Refactor NVPR into SVG
-    -- Refactor InputControls into Utilities    (DONE)
 
 - Scenes
-    -- Varying vertex topologies				(DONE)
     -- Varying vertex layouts                   (PRELIMINARY)
     -- Varying shader pipelines
         > Compute                               (PRELIMINARY)
@@ -113,7 +80,6 @@ TODOS:
 - Shaders
 	-- Make 'include' directive more robust
 	-- Implement a 'define' directive
-	-- Blinn-Phong lighting						(DONE)
 
 - User Interface
     -- Panels
@@ -140,6 +106,27 @@ TODOS:
 ===============================================================================================================================
 
 SCENE ORGANIZATION
+- Scene
+    -- Collections of scene layers
+    
+    -- Scene Layers
+        > Collections of scene components
+            >> 
+    
+        > Scene Components
+            >> Collections of rendering stages
+                x Topology-specific stages
+                x Indexed/non-indexed stages
+                
+            >> Rendering Stages
+                x Collections of rendering data and associated logic
+                    xx Graphics Settings
+                    xx Buffer Configuration
+                    xx Rendering Topology
+                    xx Rendering Logic
+
+
+
 - Per-pipeline buffers
     -- Per-topology geometry buffers
         > Per-vertex-layout draw buffers
