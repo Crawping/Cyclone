@@ -31,6 +31,7 @@ namespace Cyclone
                 const string& Name()                                    const { return _name; }
                 bool NeedsUpdate()                                      const { return _needsUpdate; }
                 const GraphicsSettings& Settings()                      const { return Stage.Settings(); }
+                VertexTopologies Topology()                             const { return Stage.Topology(); }
 
                 SceneStage3D& Name(const string& value)                 { _name = value; return *this; }
                 SceneStage3D& Settings(const GraphicsSettings& value)   
@@ -39,7 +40,12 @@ namespace Cyclone
                     Stage.Settings(value);
                     return *this;
                 }
-
+                SceneStage3D& Topology(VertexTopologies value)
+                {
+                    IndexedStage.Topology(value);
+                    Stage.Topology(value);
+                    return *this;
+                }
 
 
                 /** CONSTRUCTOR **/
