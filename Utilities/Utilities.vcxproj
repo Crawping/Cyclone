@@ -175,6 +175,7 @@
     <ClInclude Include="Collections\Octree.h" />
     <ClInclude Include="Collections\Quadtree.h" />
     <ClInclude Include="Collections\Registry.h" />
+    <ClInclude Include="Collections\Set.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Enumerator.h" />
     <ClInclude Include="Event.h" />

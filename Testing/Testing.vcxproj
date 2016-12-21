@@ -159,6 +159,7 @@
     <ClCompile Include="Matrix4x4.cpp" />
     <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Registry.cpp" />
+    <ClCompile Include="Set.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Vector.cpp" />
