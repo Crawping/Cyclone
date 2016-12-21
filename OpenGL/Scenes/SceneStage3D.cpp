@@ -35,17 +35,17 @@ namespace Cyclone
         void SceneStage3D::Add(const BufferIndices& indices)
         {
             if (Contains(indices)) { return; }
-            EntityIndices.insert(&indices);
+            EntityIndices.Insert(&indices);
             _needsUpdate = true;
         }
         bool SceneStage3D::Contains(const BufferIndices& indices) const
         {
-            return EntityIndices.count(&indices);
+            return EntityIndices.Contains(&indices);
         }
         void SceneStage3D::Remove(const BufferIndices& indices)
         {
             if (!Contains(indices)) { return; }
-            EntityIndices.erase(&indices);
+            EntityIndices.Remove(&indices);
             _needsUpdate = true;
         }
         void SceneStage3D::Update()

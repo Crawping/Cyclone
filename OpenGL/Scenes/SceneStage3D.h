@@ -5,7 +5,7 @@
 #pragma once
 #include "GraphicsSettings.h"
 #include "TypeDefinitions.h"
-#include "Collections/List.h"
+#include "Collections/Set.h"
 #include "Interfaces/IScene.h"
 #include "Scenes/RenderStage3D.h"
 #include "Scenes/Scene3D.h"
@@ -70,7 +70,7 @@ namespace Cyclone
 
 
                 /** COLLECTIONS **/
-                std::set<const BufferIndices*>      EntityIndices;
+                Set<const BufferIndices*>      EntityIndices;
                 RenderStage3D<IndexedDrawCommand>   IndexedStage;
                 RenderStage3D<DrawCommand>          Stage;
         };

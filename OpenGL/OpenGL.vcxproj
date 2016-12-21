@@ -186,6 +186,7 @@
     <ClInclude Include="Scenes\RenderStage.h" />
     <ClInclude Include="Scenes\RenderStage3D.h" />
     <ClInclude Include="Scenes\Scene3D.h" />
+    <ClInclude Include="Scenes\SceneComponent3D.h" />
     <ClInclude Include="Scenes\SceneLayer3D.h" />
     <ClInclude Include="Scenes\SceneStage3D.h" />
     <ClInclude Include="Textures\GradientTexture.h" />

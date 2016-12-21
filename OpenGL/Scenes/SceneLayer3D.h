@@ -26,7 +26,7 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
-                OpenGLAPI List<ISceneStage&> Stages()                   const override;
+                //OpenGLAPI List<ISceneStage&> Stages()                   const override;
                 virtual const string& Name()                            const override { return _name; }
                 virtual bool NeedsUpdate()                              const override { return _needsUpdate; }
 

@@ -16,6 +16,7 @@ namespace Cyclone
     namespace OpenGL
     {
         class IRenderStage;
+        struct BufferIndices;
 
 
         class ISceneComponent : public virtual IUpdatable

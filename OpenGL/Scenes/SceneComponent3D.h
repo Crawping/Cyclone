@@ -7,6 +7,7 @@
 #include "Collections/BST.h"
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IScene.h"
+#include "Scenes/SceneStage3D.h"
 
 
 
@@ -39,7 +40,7 @@ namespace Cyclone
 
             private:
 
-                BST<string, RenderStage3D> _stages;
+                BST<string, SceneStage3D> _stages;
         };
     }
 }

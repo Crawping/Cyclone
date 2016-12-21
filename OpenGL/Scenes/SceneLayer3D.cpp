@@ -9,10 +9,10 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        List<ISceneStage&> SceneLayer3D::Stages() const
-        {
-            return List<ISceneStage&>();
-        }
+        //List<ISceneStage&> SceneLayer3D::Stages() const
+        //{
+        //    return List<ISceneStage&>();
+        //}
 
 
 
