@@ -180,6 +180,12 @@ namespace Cyclone
                     _count--;
                 }
 
+                void Swap(uint idxFirst, uint idxSecond)
+                {
+                    if (idxFirst >= Count() || idxSecond >= Count()) { return; }
+                    std::swap(Index(idxFirst)->Value, Index(idxSecond)->Value);
+                }
+
                 Vector<T> ToVector() const
                 {
                     Vector<T> output(Count());
