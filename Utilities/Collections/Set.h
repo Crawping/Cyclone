@@ -59,6 +59,8 @@ namespace Cyclone
                 }
 
 
+
+                /** UTILITIES **/
                 int Ceiling(const T& value)         const
                 {
                     return -1;
@@ -83,6 +85,8 @@ namespace Cyclone
                 }
 
 
+
+                /** OPERATORS **/
                 Iterator begin() const              { return Data.begin(); }
                 Iterator end() const                { return Data.end(); }
                 T& operator ()(uint index)          { return Data(index); }
@@ -90,8 +94,11 @@ namespace Cyclone
 
             protected:
 
+                /** UTILITIES **/
                 virtual uint Find(const T& value) const
                 {
+                    if (!Count()) { return 0; }
+
                     uint idx = 0, idxLower = 0, idxUpper = Count();
                     while (idxLower < idxUpper)
                     {
