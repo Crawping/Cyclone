@@ -48,6 +48,7 @@ namespace Cyclone
                 }
 
 
+
                 /** CONSTRUCTOR **/
                 OpenGLAPI SceneStage3D(const string& name = "");
                 virtual ~SceneStage3D() { }
@@ -70,7 +71,7 @@ namespace Cyclone
 
 
                 /** COLLECTIONS **/
-                Set<const BufferIndices*>      EntityIndices;
+                Set<const BufferIndices*>           EntityIndices;
                 RenderStage3D<IndexedDrawCommand>   IndexedStage;
                 RenderStage3D<DrawCommand>          Stage;
         };
