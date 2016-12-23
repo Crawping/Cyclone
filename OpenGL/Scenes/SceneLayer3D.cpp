@@ -26,7 +26,7 @@ namespace Cyclone
 
 
 
-        void SceneLayer3D::Add(const BufferIndices& indices)
+        void SceneLayer3D::Add(const ResourceMapping& indices)
         {
 
         }

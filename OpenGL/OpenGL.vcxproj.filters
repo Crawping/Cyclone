@@ -135,13 +135,16 @@
     <ClInclude Include="Scenes\StageGroup3D.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Pipelines\RenderLayer.h">
-      <Filter>Pipelines</Filter>
-    </ClInclude>
     <ClInclude Include="Pipelines\RenderStage.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
     <ClInclude Include="Pipelines\RenderStage3D.h">
+      <Filter>Pipelines</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IRenderLayer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipelines\RenderLayer3D.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
   </ItemGroup>
@@ -207,6 +210,9 @@
       <Filter>Pipelines</Filter>
     </ClCompile>
     <ClCompile Include="Pipelines\RenderStage3D.cpp">
+      <Filter>Pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipelines\RenderLayer3D.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
   </ItemGroup>

@@ -32,17 +32,17 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void SceneStage3D::Add(const BufferIndices& indices)
+        void SceneStage3D::Add(const ResourceMapping& indices)
         {
             if (Contains(indices)) { return; }
             EntityIndices.Insert(&indices);
             _needsUpdate = true;
         }
-        bool SceneStage3D::Contains(const BufferIndices& indices) const
+        bool SceneStage3D::Contains(const ResourceMapping& indices) const
         {
             return EntityIndices.Contains(&indices);
         }
-        void SceneStage3D::Remove(const BufferIndices& indices)
+        void SceneStage3D::Remove(const ResourceMapping& indices)
         {
             if (!Contains(indices)) { return; }
             EntityIndices.Remove(&indices);
@@ -55,7 +55,7 @@ namespace Cyclone
             IndexedStage.ClearCommands();
             Stage.ClearCommands();
 
-            for (const BufferIndices* ids : EntityIndices)
+            for (const ResourceMapping* ids : EntityIndices)
                 if (ids->IndicesCount)
                     IndexedStage.Add(IndexedDrawCommand(ids->IndicesCount, 1, ids->IndicesIndex, ids->VertexIndex, ids->EntityIndex));
                 else

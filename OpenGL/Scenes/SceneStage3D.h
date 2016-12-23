@@ -17,7 +17,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        struct BufferIndices;
+        struct ResourceMapping;
 
 
 
@@ -56,9 +56,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Add(const BufferIndices& indices);
-                OpenGLAPI bool Contains(const BufferIndices& indices) const;
-                OpenGLAPI void Remove(const BufferIndices& indices);
+                OpenGLAPI void Add(const ResourceMapping& indices);
+                OpenGLAPI bool Contains(const ResourceMapping& indices) const;
+                OpenGLAPI void Remove(const ResourceMapping& indices);
                 OpenGLAPI void Update();
 
             private:
@@ -71,7 +71,7 @@ namespace Cyclone
 
 
                 /** COLLECTIONS **/
-                Set<const BufferIndices*>           EntityIndices;
+                Set<const ResourceMapping*>           EntityIndices;
                 RenderStage3D<IndexedDrawCommand>   IndexedStage;
                 RenderStage3D<DrawCommand>          Stage;
         };

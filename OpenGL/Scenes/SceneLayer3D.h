@@ -16,7 +16,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        struct BufferIndices;
+        struct ResourceMapping;
 
 
 
@@ -26,7 +26,6 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
-                //OpenGLAPI List<ISceneStage&> Stages()                   const override;
                 virtual const string& Name()                            const override { return _name; }
                 virtual bool NeedsUpdate()                              const override { return _needsUpdate; }
 
@@ -34,14 +33,14 @@ namespace Cyclone
 
 
 
-                /** CONSTRUCTOR **/
+                /** CONSTRUCTOR & DESTRUCTOR **/
                 OpenGLAPI SceneLayer3D(const string& name = "");
                 virtual ~SceneLayer3D() { }
 
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Add(const BufferIndices& indices);
+                OpenGLAPI void Add(const ResourceMapping& indices);
                 OpenGLAPI void Update() override;
 
             private:
@@ -54,7 +53,7 @@ namespace Cyclone
 
 
                 /** COLLECTIONS **/
-                std::set<const BufferIndices*>      EntityIndices;
+                std::set<const ResourceMapping*>      EntityIndices;
                 BST<string, SceneStage3D*>           _stages;
 
 

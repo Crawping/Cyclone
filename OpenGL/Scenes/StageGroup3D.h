@@ -33,8 +33,8 @@ namespace Cyclone
 
                 
                 /** UTILITIES **/
-                OpenGLAPI void Add(VertexTopologies topology, const BufferIndices& indices);
-                OpenGLAPI void Remove(VertexTopologies topology, const BufferIndices& indices);
+                OpenGLAPI void Add(VertexTopologies topology, const ResourceMapping& indices);
+                OpenGLAPI void Remove(VertexTopologies topology, const ResourceMapping& indices);
                 OpenGLAPI void Update();
 
             private:

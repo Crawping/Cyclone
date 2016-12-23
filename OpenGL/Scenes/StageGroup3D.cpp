@@ -44,14 +44,14 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void StageGroup3D::Add(VertexTopologies topology, const BufferIndices& indices)
+        void StageGroup3D::Add(VertexTopologies topology, const ResourceMapping& indices)
         {
             SceneStage3D* stage = _stages.Contains(topology) ?
                 _stages[topology] : new SceneStage3D(Name());
 
             stage->Add(indices);
         }
-        void StageGroup3D::Remove(VertexTopologies topology, const BufferIndices& indices)
+        void StageGroup3D::Remove(VertexTopologies topology, const ResourceMapping& indices)
         {
             _stages[topology]->Remove(indices);
         }
