@@ -49,7 +49,7 @@ namespace Cyclone
             if (EntityIndices.count(&entity)) { return; }
 
             const auto& geometry = entity.Geometry();
-            BufferIndices ids =
+            ResourceMapping ids =
             {
                 Entities.Count(),
                 geometry.Indices().Count(),
@@ -108,7 +108,7 @@ namespace Cyclone
             for (auto& kvp : EntityIndices)
             {
                 VertexTopologies topology = kvp.first->Geometry().Topology();
-                BufferIndices ids = kvp.second;
+                ResourceMapping ids = kvp.second;
 
                 if (ids.IndicesCount)
                 {
@@ -149,7 +149,7 @@ namespace Cyclone
                 entity.Material().SecondaryColor(),
             };
 
-            BufferIndices ids = EntityIndices[&entity];
+            ResourceMapping ids = EntityIndices[&entity];
             Transforms.Set(ids.TransformIndex, transforms);
 
             ids.MaterialKey = Materials.Register(material);

@@ -28,7 +28,7 @@ namespace Cyclone
         class IRenderStage;
 
 
-        struct BufferIndices
+        struct ResourceMapping
         {
             uint EntityIndex;
             uint IndicesCount;
@@ -37,7 +37,8 @@ namespace Cyclone
             uint VertexCount;
             uint VertexIndex;
 
-            RegistryKey<MaterialData> MaterialKey;
+            RegistryKey<MaterialData>   MaterialKey;
+            VertexTopologies            Topology;
         };
 
 
@@ -109,7 +110,7 @@ namespace Cyclone
                 //std::map<VertexTopologies, SceneLayer3D*>                           Layers;
 
 
-                std::map<const IRenderable3D<Vector3>*, BufferIndices>              EntityIndices;
+                std::map<const IRenderable3D<Vector3>*, ResourceMapping>              EntityIndices;
                 std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>      IndexedStages;
                 std::map<VertexTopologies, RenderStage3D<DrawCommand>*>             RenderStages;
 
