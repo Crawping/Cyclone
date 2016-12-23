@@ -65,6 +65,7 @@ namespace Cyclone
                 {
                     return -1;
                 }
+                void Clear()                        { Data.Clear(); }
                 bool Contains(const T& value)       const { return IndexOf(value) > -1; }
                 int Floor(const T& value)           const
                 {
