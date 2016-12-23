@@ -7,7 +7,7 @@
 #include "TypeDefinitions.h"
 #include "Collections/Set.h"
 #include "Interfaces/IScene.h"
-#include "Scenes/RenderStage3D.h"
+#include "Pipelines/RenderStage3D.h"
 #include "Scenes/Scene3D.h"
 #include <set>
 

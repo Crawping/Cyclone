@@ -28,7 +28,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 OpenGLAPI StageGroup3D(const string& name = "");
-                OpenGLAPI virtual ~StageGroup3D() { }
+                OpenGLAPI virtual ~StageGroup3D();
 
 
                 

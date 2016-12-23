@@ -1,8 +1,8 @@
 #include "Collections/List.h"
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IRenderable.h"
+#include "Pipelines/RenderStage3D.h"
 #include "Scenes/Scene3D.h"
-#include "Scenes/RenderStage3D.h"
 #include "Spatial/Transform.h"
 
 

@@ -6,7 +6,7 @@
 #include "Collections/BST.h"
 #include "GraphicsSettings.h"
 #include "Interfaces/IScene.h"
-#include "Scenes/RenderStage3D.h"
+#include "Pipelines/RenderStage3D.h"
 #include "Scenes/SceneStage3D.h"
 #include <set>
 

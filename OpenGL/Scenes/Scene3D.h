@@ -4,7 +4,6 @@
 
 #pragma once
 #include "GraphicsSettings.h"
-#include "Scenes/RenderStage3D.h"
 #include "Buffers/IndexBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/UniformBuffer.h"
@@ -15,6 +14,7 @@
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IUpdatable.h"
 #include "Libraries/ResourceLibrary.h"
+#include "Pipelines/RenderStage3D.h"
 //#include "Scenes/SceneLayer3D.h"
 
 #include <map>
