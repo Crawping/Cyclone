@@ -126,9 +126,6 @@
     <ClInclude Include="Interfaces\IScene.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\SceneStage3D.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Scenes\SceneComponent3D.h">
       <Filter>Scenes</Filter>
     </ClInclude>
@@ -189,9 +186,6 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\SceneLayer3D.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenes\SceneStage3D.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Pipelines\RenderStage.cpp">
