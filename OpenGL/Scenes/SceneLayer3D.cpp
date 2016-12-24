@@ -9,32 +9,61 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        //List<ISceneStage&> SceneLayer3D::Stages() const
-        //{
-        //    return List<ISceneStage&>();
-        //}
+        List<ISceneComponent&> SceneLayer3D::Components() const
+        {
+            List<ISceneComponent&> components;
+            components.Append((ISceneComponent&)*this);
+
+            for (auto& component : _components.Values())
+                components.Append(component);
+
+            return components;
+        }
+        List<IRenderStage&> SceneLayer3D::Stages() const
+        {
+            List<IRenderStage&> stages = SceneComponent3D::Stages();
+
+            for (auto& stage : _components.Values())
+                stages.Append(stage.Stages());
+
+            return stages;
+        }
 
 
 
-        /** CONSTRUCTOR **/
-        SceneLayer3D::SceneLayer3D(const string& name) :
-            _name(name),
-            _needsUpdate(false)
+        /** CONSTRUCTOR & DESTRUCTOR **/
+        SceneLayer3D::SceneLayer3D()
         {
 
         }
 
 
 
-        void SceneLayer3D::Add(const ResourceMapping& indices)
+        /** UTILITIES **/
+        void SceneLayer3D::Insert(const string& name, ISceneComponent& stage)
         {
-
+            _components.Insert(name, stage);
+        }
+        void SceneLayer3D::Associate(const string& name, const ResourceMapping& resource)
+        {
+            if (!_components.Contains(name)) { return; }
+            _components[name].Insert(resource);
+        }
+        void SceneLayer3D::Dissociate(const string& name, const ResourceMapping& resource)
+        {
+            if (!_components.Contains(name)) { return; }
+            _components[name].Remove(resource);
+        }
+        void SceneLayer3D::Remove(const string& name)
+        {
+            _components.Remove(name);
         }
         void SceneLayer3D::Update()
         {
-
+            SceneComponent3D::Update();
+            for (auto& c : _components.Values())
+                c.Update();
         }
-
 
     }
 }

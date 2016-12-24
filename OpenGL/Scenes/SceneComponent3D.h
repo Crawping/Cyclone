@@ -5,9 +5,8 @@
 #pragma once
 #include "GraphicsSettings.h"
 #include "Collections/BST.h"
-#include "Interfaces/IGraphicsBuffer.h"
+#include "Collections/Set.h"
 #include "Interfaces/IScene.h"
-#include "Scenes/SceneStage3D.h"
 
 
 
@@ -16,31 +15,47 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        class SceneComponent : public virtual ISceneComponent
+        class StageGroup3D;
+
+        class SceneComponent3D : public virtual ISceneComponent
         {
+
             public:
+
+                OpenGLAPI List<IRenderStage&> Stages()          const override;
                 
-                virtual const string& Name()                        const override { return _name; }
+                bool NeedsUpdate()                              const override { return _needsUpdate; }
+                const GraphicsSettings& Settings()              const { return _settings; }
 
-                virtual SceneComponent& Name(const string& value)   { _name = value; return *this; }
 
+                OpenGLAPI SceneComponent3D& Settings(const GraphicsSettings& value);
+
+
+
+
+                OpenGLAPI SceneComponent3D();
+                OpenGLAPI ~SceneComponent3D();
+
+
+
+                OpenGLAPI void Insert(const ResourceMapping& resource)  override;
+                OpenGLAPI void ClearCommands();
+                OpenGLAPI void ClearMappings();
+                OpenGLAPI void Remove(const ResourceMapping& resource)  override;
+                OpenGLAPI void Update()                                 override;
 
             private:
 
-                string _name;
-
-        };
-
-
-        class SceneComponent3D : public virtual SceneComponent
-        {
-
-            public:
+                bool                _isVisible;
+                bool                _needsUpdate;
+                GraphicsSettings    _settings;
 
 
-            private:
+                Set<const ResourceMapping*>             Resources;
+                BST<VertexTopologies, StageGroup3D*>    Staging;
 
-                BST<string, SceneStage3D> _stages;
+                StageGroup3D* CreateStage(VertexTopologies topology);
+                
         };
     }
 }

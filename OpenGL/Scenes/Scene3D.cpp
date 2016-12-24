@@ -12,14 +12,17 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        List<IRenderStage*> Scene3D::Stages() const
+        List<IRenderStage&> Scene3D::Stages() const
         {
-            List<IRenderStage*> stages;
+            List<IRenderStage&> stages;
             for (auto& kvp : RenderStages)
-                stages.Append(kvp.second);
+                stages.Append(*(kvp.second));
 
             for (auto& kvp : IndexedStages)
-                stages.Append(kvp.second);
+                stages.Append(*(kvp.second));
+
+            for (auto& c : Components.Values())
+                stages.Append(c.Stages());
 
             return stages;
         }
@@ -85,10 +88,6 @@ namespace Cyclone
             };
             Entities.Add(data);
         }
-        void Scene3D::Add(const string& stage, const IRenderable3D<Vector3>& entity)
-        {
-
-        }
         void Scene3D::Remove(const IRenderable3D<Vector3>& entity)
         {
             
@@ -131,6 +130,9 @@ namespace Cyclone
             for (auto& kvp : IndexedStages)
                 kvp.second->Update();
 
+            for (auto& c : Components.Values())
+                c.Update();
+
         }
         void Scene3D::Update(const IRenderable3D<Vector3>& entity)
         {
@@ -154,6 +156,62 @@ namespace Cyclone
 
             ids.MaterialKey = Materials.Register(material);
             EntityIndices[&entity] = ids;
+        }
+
+
+        void Scene3D::Insert(const string& name, ISceneComponent& component)
+        {
+            Components.Insert(name, component);
+        }
+        void Scene3D::Associate(const string& name, const IRenderable3D<Vector3>& entity)
+        {
+            if (EntityIndices.count(&entity))   { return; }
+            if (TempIndices.Contains(&entity))  { return; }
+            if (!Components.Contains(name))     { return; }
+
+            const auto& geometry = entity.Geometry();
+            ResourceMapping ids =
+            {
+                Entities.Count(),
+                geometry.Indices().Count(),
+                Indices.Count(),
+                Transforms.Count(),
+                geometry.Points().Count(),
+                Vertices.Count(),
+                RegistryKey<MaterialData>(),
+                geometry.Topology(),
+            };
+            
+            Add(geometry);
+
+            MaterialData material =
+            {
+                entity.Material().PrimaryColor(),
+                entity.Material().SecondaryColor(),
+            };
+
+            TransformData transforms =
+            {
+                entity.ModelTransform().ToMatrix4x4(),
+                entity.TextureTransform().ToMatrix4x4(),
+                entity.WorldTransform().ToMatrix4x4(),
+            };
+            Transforms.Add(transforms);
+
+            ids.MaterialKey = Materials.Register(material);
+            
+            //EntityIndices[&entity] = ids;
+            TempIndices.Insert(&entity, ids);
+            //TempIndices[&entity] = ids;
+
+            EntityData data =
+            {
+                ids.MaterialKey.Index(),
+                ids.TransformIndex,
+            };
+            Entities.Add(data);
+
+            Components[name].Insert(TempIndices[&entity]);
         }
 
 

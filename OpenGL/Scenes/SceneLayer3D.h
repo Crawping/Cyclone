@@ -7,8 +7,8 @@
 #include "GraphicsSettings.h"
 #include "Interfaces/IScene.h"
 #include "Pipelines/RenderStage3D.h"
-#include "Scenes/SceneStage3D.h"
-#include <set>
+#include "Scenes/SceneComponent3D.h"
+
 
 
 
@@ -20,41 +20,44 @@ namespace Cyclone
 
 
 
-        class SceneLayer3D : public virtual ISceneLayer
+        class SceneLayer3D : 
+            public SceneComponent3D,
+            public virtual ISceneLayer
         {
 
             public:
                 
                 /** PROPERTIES **/
-                virtual const string& Name()                            const override { return _name; }
-                virtual bool NeedsUpdate()                              const override { return _needsUpdate; }
+                OpenGLAPI List<ISceneComponent&> Components()           const override;
+                OpenGLAPI List<IRenderStage&> Stages()                  const override;
 
-                SceneLayer3D& Name(const string& value)                 { _name = value; return *this; }
+                virtual bool NeedsUpdate()                              const override { return _needsUpdate; }
 
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                OpenGLAPI SceneLayer3D(const string& name = "");
+                OpenGLAPI SceneLayer3D();
                 virtual ~SceneLayer3D() { }
 
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Add(const ResourceMapping& indices);
-                OpenGLAPI void Update() override;
+                OpenGLAPI void Insert(const string& name, ISceneComponent& stage)               override;
+                OpenGLAPI void Associate(const string& name, const ResourceMapping& resource)   override;
+                OpenGLAPI void Dissociate(const string& name, const ResourceMapping& resource)  override;
+                OpenGLAPI void Remove(const string& name)                                       override;
+                OpenGLAPI void Update()                                                         override;
 
             private:
 
                 /** PROPERTY DATA **/
                 bool                _isVisible;
                 bool                _needsUpdate;
-                string              _name;
 
 
 
                 /** COLLECTIONS **/
-                std::set<const ResourceMapping*>      EntityIndices;
-                BST<string, SceneStage3D*>           _stages;
+                BST<string, ISceneComponent&> _components;
 
 
 

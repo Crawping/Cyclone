@@ -102,7 +102,7 @@ namespace Cyclone
         {
             _settings.Projection = projection;
         }
-        void GPU::Scene(IRenderableScene* scene, int slot)
+        void GPU::Scene(IScene* scene, int slot)
         {
             _renderScene = scene;
         }
@@ -184,13 +184,13 @@ namespace Cyclone
                 const auto& stages = _renderScene->Stages();
                 for (uint a = 0; a < stages.Count(); a++)
                 {
-                    IRenderStage* ctStage = stages(a);
-                    Configure(ctStage->Settings());
+                    IRenderStage& ctStage = stages(a);
+                    Configure(ctStage.Settings());
 
-                    for (BufferBinding b : ctStage->Buffers())
+                    for (BufferBinding b : ctStage.Buffers())
                         b.Buffer.Bind(b.Slot);
                     
-                    ctStage->Render();
+                    ctStage.Render();
                 }
             }
         }

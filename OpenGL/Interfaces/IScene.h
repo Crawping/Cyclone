@@ -23,31 +23,37 @@ namespace Cyclone
         {
             public:
 
-                virtual const string& Name()                                        const = 0;
                 virtual List<IRenderStage&> Stages()                                const = 0;
+                virtual const GraphicsSettings& Settings()                          const = 0;
+
+                virtual ISceneComponent& Settings(const GraphicsSettings& value)    = 0;
 
                 virtual ~ISceneComponent() { }
 
-                virtual void Add(const string& name, const IRenderStage& stage)           = 0;
-                virtual void Add(const string& stage, const ResourceMapping& entity)      = 0;
-                virtual void Remove(const string& name, const IRenderStage& stage)        = 0;
-                virtual void Remove(const string& stage, const ResourceMapping& entity)   = 0;
-
-                virtual IRenderStage& operator [](const string& index)                    = 0;
-                virtual const IRenderStage& operator [](const string& index)        const = 0;
+                virtual void Insert(const ResourceMapping& resources)               = 0;
+                virtual void Remove(const ResourceMapping& stage)                   = 0;
 
         };
 
 
 
-        class ISceneLayer : public virtual IUpdatable
+        class ISceneLayer : public virtual ISceneComponent
         {
             public:
 
                 virtual List<ISceneComponent&> Components() const = 0;
-                virtual const string& Name()                const = 0;
 
                 virtual ~ISceneLayer() { }
+
+
+                virtual void Insert(const string& name, ISceneComponent& component)             = 0;
+                virtual void Associate(const string& name, const ResourceMapping& entity)       = 0;
+                virtual void Dissociate(const string& name, const ResourceMapping& entity)      = 0;
+                virtual void Remove(const string& name)                                         = 0;
+
+
+                virtual ISceneComponent& operator [](const string& index)                       = 0;
+                virtual const ISceneComponent& operator[](const string& index)                  const = 0;
         };
 
         
@@ -56,7 +62,7 @@ namespace Cyclone
         {
             public:
 
-                virtual List<ISceneLayer&> Layers() const = 0;
+                virtual List<IRenderStage&> Stages() const = 0;
 
                 virtual ~IScene() { }
         };

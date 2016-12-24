@@ -15,7 +15,7 @@
 #include "Interfaces/IUpdatable.h"
 #include "Libraries/ResourceLibrary.h"
 #include "Pipelines/RenderStage3D.h"
-//#include "Scenes/SceneLayer3D.h"
+#include "Scenes/SceneLayer3D.h"
 
 #include <map>
 
@@ -44,12 +44,15 @@ namespace Cyclone
 
 
         /// <summary> A 3D scene representing a collection of renderable objects. </summary>
-        class Scene3D : public IRenderableScene
+        class Scene3D : public IScene
         {
 
             public:
 
-                OpenGLAPI List<IRenderStage*> Stages() const override;
+                OpenGLAPI List<IRenderStage&> Stages() const override;
+
+                bool NeedsUpdate()                              const { return true; }
+                const GraphicsSettings& Settings()              const { return _settings; }
 
                 Scene3D& IsBlendEnabled(bool value)             { _settings.IsBlendEnabled = value; return *this; }
                 Scene3D& IsDepthTestEnabled(bool value)         { _settings.IsDepthTestEnabled = value; return *this; }
@@ -84,9 +87,13 @@ namespace Cyclone
                 OpenGLAPI void Update();
                 OpenGLAPI void Update(const IRenderable3D<Vector3>& entity);
 
-                OpenGLAPI void Add(const string& stage, const IRenderable3D<Vector3>& entity);
-                OpenGLAPI void CreateStage(const string& name);
-                OpenGLAPI void Settings(const string& stage, const GraphicsSettings& value);
+                //OpenGLAPI void Add(const string& stage, const IRenderable3D<Vector3>& entity);
+                //OpenGLAPI void CreateStage(const string& name);
+                //OpenGLAPI void Settings(const string& stage, const GraphicsSettings& value);
+
+
+                OpenGLAPI void Insert(const string& name, ISceneComponent& component);
+                OpenGLAPI void Associate(const string& name, const IRenderable3D<Vector3>& entity);
 
 
             private:
@@ -108,9 +115,11 @@ namespace Cyclone
 
                 /** BUFFER & STAGE MAPPINGS **/
                 //std::map<VertexTopologies, SceneLayer3D*>                           Layers;
+                BST<string, ISceneComponent&>       Components;
+                BST<const IRenderable3D<Vector3>*, ResourceMapping> TempIndices;
 
 
-                std::map<const IRenderable3D<Vector3>*, ResourceMapping>              EntityIndices;
+                std::map<const IRenderable3D<Vector3>*, ResourceMapping>            EntityIndices;
                 std::map<VertexTopologies, RenderStage3D<IndexedDrawCommand>*>      IndexedStages;
                 std::map<VertexTopologies, RenderStage3D<DrawCommand>*>             RenderStages;
 
