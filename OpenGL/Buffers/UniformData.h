@@ -3,7 +3,6 @@
  */
 
 #pragma once
-#include "Imaging/Color4.h"
 #include "TypeDefinitions.h"
 #include "Math/Matrix4x4.h"
 #include "Math/Vector2.h"
@@ -41,18 +40,6 @@ namespace Cyclone
             constexpr bool operator ==(const EntityData& other) const
             {
                 return (MaterialIndex == other.MaterialIndex) && (TransformIndex == other.TransformIndex);
-            }
-        };
-
-        struct MaterialData
-        {
-            /// <summary> The base color of an entity. </summary>
-            Color4      PrimaryColor;
-            Color4      SecondaryColor;
-
-            constexpr bool operator ==(const MaterialData& other) const
-            {
-                return (PrimaryColor == other.PrimaryColor) && (SecondaryColor == other.SecondaryColor);
             }
         };
 

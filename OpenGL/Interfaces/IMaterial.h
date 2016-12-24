@@ -14,12 +14,16 @@ namespace Cyclone
 
     namespace OpenGL
     {        
+        struct MaterialData;
         class Texture3D;
+
 
         /// <summary> An interface used to specify the material properties of an entity. </summary>
         class IMaterial
         {
             public:
+
+                virtual const MaterialData& Data()                  const = 0;
                 /// <summary> Gets the primary color of the material. </summary>
                 virtual const Color4& PrimaryColor()                const = 0;
                 /// <summary> Gets the secondary color of the material. </summary>
