@@ -51,17 +51,5 @@ namespace Cyclone
                 virtual ~IRenderable3D() { }
         };
 
-
-        class IRenderableScene
-        {
-            public:
-
-                virtual List<IRenderStage*> Stages() const = 0;
-
-                virtual ~IRenderableScene() { }
-
-                virtual void Update() = 0;
-        };
-
     }
 }
