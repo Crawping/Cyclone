@@ -4,8 +4,10 @@
 
 #pragma once
 #include "Buffers/VertexBuffer.h"
+#include "Geometry/Mesh3D.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
+#include "Scenes/SceneComponent3D.h"
 
 
 
@@ -61,6 +63,10 @@ namespace Cyclone
             Mesh3D*         TestShape;
 
             Quad3D*         PlaneXZ;
+
+            SceneComponent3D    TestComponent;
+
+            Mesh3D*         TestComponentShape;
             
 
 

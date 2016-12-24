@@ -38,7 +38,8 @@ namespace Cyclone
         RenderTarget(nullptr),
         RenderWindow(nullptr),
         RenderPipeline(nullptr),
-        TestShape(nullptr)
+        TestShape(nullptr),
+        TestComponentShape(nullptr)
     {
         ParseInputArguments(nargs, args);
 
@@ -58,6 +59,7 @@ namespace Cyclone
     }
     Program::~Program()
     {
+        if (TestComponentShape) { delete TestComponentShape; }
         if (TestShape)          { delete TestShape; }
         if (PlaneXZ)            { delete PlaneXZ; }
         if (RenderTarget)       { delete RenderTarget; }
@@ -150,6 +152,18 @@ namespace Cyclone
              PrimaryColor(Color4::Gray)
             .Scale(Vector3(50, 50, 50))
             .Translate(250, 250, -10);
+
+        TestComponent
+            .Settings(RenderScene->Settings());
+
+        TestComponentShape = new Mesh3D(Geometry3D::Icosahedron());
+        TestComponentShape->
+             PrimaryColor(Color4::Red)
+            .Scale(Vector3(50, 50, 50))
+            .Translate(750, 250, -10);
+
+        RenderScene->Insert("Test", TestComponent);
+        RenderScene->Associate("Test", *TestComponentShape);
 
 		RenderScene->Add(*TestShape);
 		RenderScene->Add(*PlaneXZ);
