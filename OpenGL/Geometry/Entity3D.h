@@ -21,9 +21,8 @@ namespace Cyclone
         class Texture3D;
 
 
-        template<typename T>
         class Entity3D : 
-            public virtual IRenderable3D<T>
+            public virtual IRenderable
         {
 
             public:
@@ -157,7 +156,7 @@ namespace Cyclone
                 
                 /** RENDERABLE INTERFACE PROPERTIES **/
 
-                virtual const List<IRenderable3D<T>*>& Components()     const override { return _components; }
+                //virtual const List<IRenderable3D<T>*>& Components()     const override { return _components; }
 
                 virtual const Geometry3D& Geometry()                    const override { return _geometry; }
                 /// <summary> Gets whether the entity is visible in the rendered world. </summary>
@@ -217,7 +216,7 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA **/
-                List<IRenderable3D<T>*> _components;
+                //List<IRenderable3D<T>*> _components;
 
 
 

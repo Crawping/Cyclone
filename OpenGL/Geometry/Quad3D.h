@@ -11,7 +11,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Quad3D : public Entity3D<Vector3>
+        class Quad3D : public Entity3D
         {
 
             public:

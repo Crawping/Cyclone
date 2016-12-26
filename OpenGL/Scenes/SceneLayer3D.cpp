@@ -81,7 +81,7 @@ namespace Cyclone
             for (auto& c : _components.Values())
                 c.Update();
         }
-        void SceneLayer3D::Update(const IRenderable<Vector3>& entity)
+        void SceneLayer3D::Update(const IRenderable& entity)
         {
             if (!Mappings.Contains(&entity)) { return; }
 
@@ -101,7 +101,7 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        ResourceMapping& SceneLayer3D::Register(const IRenderable<Vector3>& entity)
+        ResourceMapping& SceneLayer3D::Register(const IRenderable& entity)
         {
             if (Mappings.Contains(&entity)) { return Mappings[&entity]; }
 
@@ -131,7 +131,7 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        void SceneLayer3D::Register(ResourceMapping& map, const IGeometric<Vector3>& entity)
+        void SceneLayer3D::Register(ResourceMapping& map, const IGeometric& entity)
         {
             const auto& indices = entity.Indices();
             const auto& mapping = entity.Mapping();
@@ -157,7 +157,7 @@ namespace Cyclone
                 material.SecondaryColor(),
             });
         }
-        void SceneLayer3D(ResourceMapping& map, const IRenderable<Vector3>& entity)
+        void SceneLayer3D(ResourceMapping& map, const IRenderable& entity)
         {
             
         }

@@ -18,12 +18,11 @@ namespace Cyclone
         class IMaterial;
         class IRenderStage;
 
-        template <typename T> 
         class IRenderable
         {
             public:
                 /// <summary> Gets the geometric data that define the shape of a renderable entity. </summary>
-                virtual const IGeometric<T>& Geometry()             const = 0;
+                virtual const IGeometric& Geometry()                const = 0;
                 /// <summary> Gets whether the renderable entity is currently visible in a scene. </summary>
                 virtual bool IsVisible()                            const = 0;
                 /// <summary> Gets the material associated with the renderable entity. </summary>
@@ -36,19 +35,6 @@ namespace Cyclone
                 virtual const ITransformation3D& WorldTransform()   const = 0;
 
                 virtual ~IRenderable() { }
-        };
-
-
-        /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
-        /// <typeparam name="T"> The type of point object that is used to define the geometry of the object. </typeparam>
-        template<typename T> 
-        class IRenderable3D : public virtual IRenderable<T>
-        {
-            public:
-
-                virtual const ICollection< IRenderable3D<T>* >& Components()    const = 0;
-                
-                virtual ~IRenderable3D() { }
         };
 
     }

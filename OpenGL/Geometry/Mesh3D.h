@@ -15,7 +15,7 @@ namespace Cyclone
     {
         
 
-        class Mesh3D : public Entity3D<Vector3>
+        class Mesh3D : public Entity3D
         {
             public:
 

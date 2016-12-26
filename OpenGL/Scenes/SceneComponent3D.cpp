@@ -48,7 +48,7 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void SceneComponent3D::Insert(const IRenderable<Vector3>& entity)
+        void SceneComponent3D::Insert(const IRenderable& entity)
         {
             ResourceMapping& map = Register(entity);
             Resources.Insert(&map);

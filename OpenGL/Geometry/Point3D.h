@@ -13,7 +13,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Point3D : public Entity3D<Vector3>
+        class Point3D : public Entity3D
         {
 	        public:
                 using Entity3D::Depth;

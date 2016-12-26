@@ -50,8 +50,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI virtual bool Contains(const IRenderable<Vector3>& entity) const override;
-                OpenGLAPI virtual void Insert(const IRenderable<Vector3>& entity)   override;
+                OpenGLAPI virtual bool Contains(const IRenderable& entity) const override;
+                OpenGLAPI virtual void Insert(const IRenderable& entity)   override;
                 OpenGLAPI virtual void Update()                                     override;
 
             protected:
@@ -60,9 +60,6 @@ namespace Cyclone
 
 
                 OpenGLAPI SceneComponent(const string& name, ISceneLayer& parent);
-
-
-                //OpenGLAPI ResourceMapping& Register(const IRenderable<Vector3>& entity)                   override;
 
             private:
 
@@ -74,7 +71,7 @@ namespace Cyclone
                 GraphicsSettings    _settings;
 
                 //BST<const IRenderable<Vector3>*, ResourceMapping> Entities;
-                Set<const IRenderable<Vector3>*> Entities;
+                Set<const IRenderable*> Entities;
 
         };
 

@@ -45,11 +45,11 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        bool SceneComponent::Contains(const IRenderable<Vector3>& entity) const
+        bool SceneComponent::Contains(const IRenderable& entity) const
         {
             return Entities.Contains(&entity);
         }
-        void SceneComponent::Insert(const IRenderable<Vector3>& entity)
+        void SceneComponent::Insert(const IRenderable& entity)
         {
             Entities.Insert(&entity);
             NeedsUpdate(true);

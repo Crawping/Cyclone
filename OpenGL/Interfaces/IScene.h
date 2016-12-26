@@ -21,7 +21,7 @@ namespace Cyclone
         struct BufferBinding;
         struct ResourceMapping;
 
-        template<typename T> class IRenderable;
+        class IRenderable;
 
 
 
@@ -44,15 +44,15 @@ namespace Cyclone
                 virtual ~ISceneComponent() { }
 
                 /** UTILITIES **/
-                virtual bool Contains(const IRenderable<Vector3>& entity)           const = 0;
-                virtual void Insert(const IRenderable<Vector3>& entity)             = 0;
+                virtual bool Contains(const IRenderable& entity)                    const = 0;
+                virtual void Insert(const IRenderable& entity)                      = 0;
                 virtual void Update()                                               = 0;
-                virtual void Update(const IRenderable<Vector3>& entity)             = 0;
+                virtual void Update(const IRenderable& entity)                      = 0;
 
 
             protected:
 
-                virtual ResourceMapping& Register(const IRenderable<Vector3>& entity)
+                virtual ResourceMapping& Register(const IRenderable& entity)
                 {
                     return ((ISceneComponent&)Parent()).Register(entity);
                 }

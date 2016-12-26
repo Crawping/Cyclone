@@ -22,7 +22,7 @@ namespace Cyclone
     {
         /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
         /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
-        template<typename T> class IGeometric
+        class IGeometric
         {
             public:
 
@@ -40,9 +40,9 @@ namespace Cyclone
                 ///     Typically, these values will be used to map the points of some shape onto textures, although use of other
                 ///     resources such as buffers is possible as well.
                 /// </remarks>
-                virtual const Vector<T>& Mapping()                      const = 0;
+                virtual const Vector<Vector3>& Mapping()                const = 0;
                 /// <summary> Gets an array of normal vectors associated with each point of the geometric shape. </summary>
-                virtual const Vector<T>& Normals()                      const = 0;
+                virtual const Vector<Vector3>& Normals()                const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
                 ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will
@@ -50,7 +50,7 @@ namespace Cyclone
                 ///     for rendering. However, it may also refer to the control points of either a 3D patch object or 2D path object
                 ///     (note the lack of a 'c' in the latter; though similarly named, the two are very different things).
                 /// </remarks>
-                virtual const Vector<T>& Points()                       const = 0;
+                virtual const Vector<Vector3>& Points()                 const = 0;
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual VertexTopologies Topology()                     const = 0;
 

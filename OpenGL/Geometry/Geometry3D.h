@@ -14,7 +14,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Geometry3D : public virtual IGeometric<Vector3>
+        class Geometry3D : public virtual IGeometric
         {
             public:
 

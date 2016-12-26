@@ -52,11 +52,11 @@ namespace Cyclone
                 OpenGLAPI void Insert(const string& name, ISceneComponent& stage)               override;
                 OpenGLAPI void Remove(const string& name)                                       override;
                 OpenGLAPI void Update()                                                         override;
-                OpenGLAPI void Update(const IRenderable<Vector3>& entity)                       override;
+                OpenGLAPI void Update(const IRenderable& entity)                       override;
 
             protected:
                 
-                ResourceMapping& Register(const IRenderable<Vector3>& entity)                   override;
+                ResourceMapping& Register(const IRenderable& entity)                   override;
 
             private:
 
@@ -71,14 +71,14 @@ namespace Cyclone
 
                 /** COLLECTIONS **/
                 BST<string, ISceneComponent&>                       _components;
-                BST<const IRenderable<Vector3>*, ResourceMapping>   Mappings;
+                BST<const IRenderable*, ResourceMapping>   Mappings;
 
 
 
                 /** UTILITIES **/
-                void Register(ResourceMapping& map, const IGeometric<Vector3>& entity);
+                void Register(ResourceMapping& map, const IGeometric& entity);
                 void Register(ResourceMapping& map, const IMaterial& material);
-                void Register(ResourceMapping& map, const IRenderable<Vector3>& entity);
+                void Register(ResourceMapping& map, const IRenderable& entity);
 
         };
     }
