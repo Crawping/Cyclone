@@ -12,7 +12,7 @@ namespace Cyclone
     namespace Utilities
     {
         
-
+        /// <summary> A class that represents a specialized key used to index into a registry of data. </summary>
         template<typename T> struct RegistryKey
         {
             public:
@@ -85,11 +85,13 @@ namespace Cyclone
                 }
 
             private:
-                int _key;
-                const BST<int, T>* Registry;
+
+                int                 _key;
+                const BST<int, T>*  Registry;
         };
 
-
+        /// <summary> A class that represents a collection of unique elements that are associated with automatically generated indexing keys. </summary>
+        /// <typeparam name="T"> The type name of the data elements held by the registry. </typeparam>
         template<typename T>
         class Registry : public ICollection<T>
         {

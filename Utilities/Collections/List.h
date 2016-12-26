@@ -91,7 +91,7 @@ namespace Cyclone
                 /// <summary> Adds a new data value to the end of the list. </summary>
                 /// <param name="value"> The data element that will copied and added to the list. </param>
                 void Append(const T& value)                                         { Insert(Count(), value); }
-                /// <summary> Adds the contents of another collection to the end of the list.
+                /// <summary> Adds the contents of another collection to the end of the list. </summary>
                 /// <param name="values"> An array-like collection containing the data elements to be copied and added to the list. </param>
                 /// <remarks> Appending an element to this class of linked list is an O(1) operation. </remarks>
                 void Append(const ICollection<T>& values)                           { Insert(Count(), values); }
