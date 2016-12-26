@@ -18,35 +18,22 @@ namespace Cyclone
         {
             public:
 
-                /** PROPERTIES **/
-                List<BufferBinding> Buffers() const override
-                {
-                    List<BufferBinding> buffers = RenderStage::Buffers();
-                    buffers.Prepend({ Commands, 0 });
-                    return buffers;
-                }
-
-
-
                 /** CONSTRUCTORS **/
-                RenderStage3D()
-                {
+                OpenGLAPI RenderStage3D();
 
-                }
-                
 
 
                 /** UTILITIES **/
-                void Add(const T& command)  { Commands.Add(command); }
-                void ClearCommands()        { Commands.Clear(); }
-                void Update()               { Commands.Update(); }
-
-                OpenGLAPI void Render() const;
-
+                OpenGLAPI void Add(const T& command);
+                OpenGLAPI void ClearBuffers()           override;
+                OpenGLAPI void ClearCommands();
+                OpenGLAPI void Render()                 const override;
+                OpenGLAPI void Update();
 
             private:
 
-                CommandBuffer<T>                          Commands;
+                /** DATA **/
+                CommandBuffer<T> Commands;
 
         };
 

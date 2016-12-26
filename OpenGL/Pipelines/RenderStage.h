@@ -58,10 +58,10 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Adds a new buffer to the list of those used by the rendering stage. </summary>
                 /// <param name="binding"> A binding configuration containing the buffer and its associated attachment point. </param>
-                OpenGLAPI void Add(const BufferBinding& binding);
+                OpenGLAPI void Add(const BufferBinding& binding)            override;
                 /// <summary> Adds a collection of buffers to the list of those used by the rendering stage. </summary>
                 /// <param name="bindings"> A list of binding configurations containing the buffers and their associated attachment points. </param>
-                OpenGLAPI void Add(const List<BufferBinding>& bindings);
+                OpenGLAPI void Add(const List<BufferBinding>& bindings)     override;
                 /// <summary> Clears the list of buffers used by the rendering stage. </summary>
                 OpenGLAPI void ClearBuffers();
 
@@ -73,7 +73,7 @@ namespace Cyclone
 
             private:
 
-                /** DATA **/
+                /** PROPERTY DATA **/
                 List<BufferBinding>     _buffers;
                 GraphicsSettings        _settings;
                 VertexTopologies        _topology;
