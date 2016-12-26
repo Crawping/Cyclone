@@ -147,14 +147,11 @@ namespace Cyclone
             .PrimaryColor(Color4::Blue)
             .Scale(5000).Translate(0, 50, 0);
 
-        TestShape = new Mesh3D(Geometry3D::Sphere(3));
+        TestShape = new Mesh3D(Geometry3D::Cube(true));
 		TestShape->
              PrimaryColor(Color4::Gray)
             .Scale(Vector3(50, 50, 50))
             .Translate(250, 250, -10);
-
-        TestComponent
-            .Settings(RenderScene->Settings());
 
         TestComponentShape = new Mesh3D(Geometry3D::Icosahedron());
         TestComponentShape->
@@ -162,11 +159,9 @@ namespace Cyclone
             .Scale(Vector3(50, 50, 50))
             .Translate(750, 250, -10);
 
-        RenderScene->Insert("Test", TestComponent);
-        RenderScene->Associate("Test", *TestComponentShape);
-
-		RenderScene->Add(*TestShape);
-		RenderScene->Add(*PlaneXZ);
+        RenderScene->Insert(*TestComponentShape);
+        RenderScene->Insert(*TestShape);
+        RenderScene->Insert(*PlaneXZ);
 
         Renderer->Scene(RenderScene);
 	}

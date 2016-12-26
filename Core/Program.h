@@ -64,7 +64,6 @@ namespace Cyclone
 
             Quad3D*         PlaneXZ;
 
-            SceneComponent3D    TestComponent;
 
             Mesh3D*         TestComponentShape;
             
