@@ -5,7 +5,14 @@
 #pragma once
 #include "Collections/BST.h"
 #include "GraphicsSettings.h"
+#include "Buffers/IndexBuffer.h"
+#include "Buffers/UniformBuffer.h"
+#include "Buffers/UniformData.h"
+#include "Buffers/VertexBuffer.h"
+#include "Interfaces/IGeometric.h"
 #include "Interfaces/IScene.h"
+#include "Libraries/Material3D.h"
+#include "Libraries/ResourceLibrary.h"
 #include "Pipelines/RenderStage3D.h"
 #include "Scenes/SceneComponent3D.h"
 
@@ -28,38 +35,50 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
+                OpenGLAPI List<BufferBinding> Buffers()                 const;
                 OpenGLAPI List<ISceneComponent&> Components()           const override;
                 OpenGLAPI List<IRenderStage&> Stages()                  const override;
-
-                virtual bool NeedsUpdate()                              const override { return _needsUpdate; }
 
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                OpenGLAPI SceneLayer3D();
+                OpenGLAPI SceneLayer3D(const string& name, ISceneLayer& parent);
                 virtual ~SceneLayer3D() { }
 
 
 
                 /** UTILITIES **/
+                using SceneComponent3D::Insert;
                 OpenGLAPI void Insert(const string& name, ISceneComponent& stage)               override;
-                OpenGLAPI void Associate(const string& name, const ResourceMapping& resource)   override;
-                OpenGLAPI void Dissociate(const string& name, const ResourceMapping& resource)  override;
                 OpenGLAPI void Remove(const string& name)                                       override;
                 OpenGLAPI void Update()                                                         override;
+                OpenGLAPI void Update(const IRenderable<Vector3>& entity)                       override;
+
+            protected:
+                
+                ResourceMapping& Register(const IRenderable<Vector3>& entity)                   override;
 
             private:
 
-                /** PROPERTY DATA **/
-                bool                _isVisible;
-                bool                _needsUpdate;
+                /** BUFFERS **/
+                ResourceLibrary<EntityData>         Entities;
+                IndexBuffer                         Indices;
+                ResourceLibrary<MaterialData>       Materials;
+                UniformBuffer<TransformData>        Transforms;
+                VertexBuffer<Vertex::Standard>      Vertices;
 
 
 
                 /** COLLECTIONS **/
-                BST<string, ISceneComponent&> _components;
+                BST<string, ISceneComponent&>                       _components;
+                BST<const IRenderable<Vector3>*, ResourceMapping>   Mappings;
 
 
+
+                /** UTILITIES **/
+                void Register(ResourceMapping& map, const IGeometric<Vector3>& entity);
+                void Register(ResourceMapping& map, const IMaterial& material);
+                void Register(ResourceMapping& map, const IRenderable<Vector3>& entity);
 
         };
     }

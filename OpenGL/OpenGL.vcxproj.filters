@@ -135,6 +135,9 @@
     <ClInclude Include="Pipelines\RenderStage3D.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
+    <ClInclude Include="Scenes\SceneComponent.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -195,6 +198,9 @@
       <Filter>Pipelines</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\SceneComponent3D.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SceneComponent.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>

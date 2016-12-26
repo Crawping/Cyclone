@@ -20,6 +20,8 @@ namespace Cyclone
         List<IRenderStage&> SceneComponent3D::Stages() const
         {
             List<IRenderStage&> stages;
+            if (!IsVisible()) { return stages; }
+
             for (auto* group : Staging.Values())
             {
                 stages.Append(group->Indexed);
@@ -29,17 +31,11 @@ namespace Cyclone
             return stages;
         }
 
-        SceneComponent3D& SceneComponent3D::Settings(const GraphicsSettings& value) 
-        { 
-            _settings = value; 
-            return *this; 
-        }
-
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        SceneComponent3D::SceneComponent3D() :
-            _needsUpdate(false)
+        SceneComponent3D::SceneComponent3D(const string& name, ISceneLayer& parent) :
+            SceneComponent(name, parent)
         {
 
         }
@@ -52,30 +48,11 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void SceneComponent3D::Insert(const ResourceMapping& indices)
+        void SceneComponent3D::Insert(const IRenderable<Vector3>& entity)
         {
-            Resources.Insert(&indices);
-            _needsUpdate = true;
-        }
-        void SceneComponent3D::ClearCommands()
-        {
-            for (auto* stage : Staging.Values())
-            {
-                stage->Indexed.ClearCommands();
-                stage->NonIndexed.ClearCommands();
-            }
-
-            _needsUpdate = true;
-        }
-        void SceneComponent3D::ClearMappings()
-        {
-            Resources.Clear();
-            _needsUpdate = true;
-        }
-        void SceneComponent3D::Remove(const ResourceMapping& indices)
-        {
-            Resources.Remove(&indices);
-            _needsUpdate = true;
+            ResourceMapping& map = Register(entity);
+            Resources.Insert(&map);
+            SceneComponent::Insert(entity);
         }
         void SceneComponent3D::Update()
         {
@@ -92,9 +69,9 @@ namespace Cyclone
                     stage = CreateStage(ids->Topology);
 
                 if (ids->IndicesCount)
-                    stage->Indexed.Add(IndexedDrawCommand(ids->IndicesCount, 1, ids->IndicesIndex, ids->VertexIndex, ids->EntityIndex));
+                    stage->Indexed.Add(IndexedDrawCommand(ids->IndicesCount, 1, ids->IndicesIndex, ids->VertexIndex, ids->EntityKey.Index()));
                 else
-                    stage->NonIndexed.Add(DrawCommand(ids->VertexCount, 1, 0, ids->VertexIndex, ids->EntityIndex));
+                    stage->NonIndexed.Add(DrawCommand(ids->VertexCount, 1, 0, ids->VertexIndex, ids->EntityKey.Index()));
             }
 
             for (auto* stage : Staging.Values())
@@ -103,10 +80,27 @@ namespace Cyclone
                 stage->NonIndexed.Update();
             }
 
-            _needsUpdate = false;
+            SceneComponent::Update();
         }
 
 
+
+        /** PRIVATE UTILITIES **/
+        void SceneComponent3D::ClearCommands()
+        {
+            for (auto* stage : Staging.Values())
+            {
+                stage->Indexed.ClearCommands();
+                stage->NonIndexed.ClearCommands();
+            }
+
+            NeedsUpdate(true);
+        }
+        void SceneComponent3D::ClearMappings()
+        {
+            Resources.Clear();
+            NeedsUpdate(true);
+        }
         StageGroup3D* SceneComponent3D::CreateStage(VertexTopologies topology)
         {
             StageGroup3D* stage = new StageGroup3D();
@@ -119,9 +113,11 @@ namespace Cyclone
                 .Topology(topology);
 
             Staging.Insert(topology, stage);
-            //Staging[topology] = stage;
             return stage;
         }
         
+
+
+
     }
 }

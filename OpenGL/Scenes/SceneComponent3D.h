@@ -3,10 +3,9 @@
  */
 
 #pragma once
-#include "GraphicsSettings.h"
 #include "Collections/BST.h"
 #include "Collections/Set.h"
-#include "Interfaces/IScene.h"
+#include "Scenes/SceneComponent.h"
 
 
 
@@ -17,43 +16,38 @@ namespace Cyclone
 
         class StageGroup3D;
 
-        class SceneComponent3D : public virtual ISceneComponent
+        class SceneComponent3D : public SceneComponent
         {
 
             public:
 
-                OpenGLAPI List<IRenderStage&> Stages()          const override;
-                
-                bool NeedsUpdate()                              const override { return _needsUpdate; }
-                const GraphicsSettings& Settings()              const { return _settings; }
-
-
-                OpenGLAPI SceneComponent3D& Settings(const GraphicsSettings& value);
+                /** PROPERTIES **/
+                /// <summary> Gets a list of all rendering stages that must be executed when displaying the contents of the scene component. </summary>
+                OpenGLAPI List<IRenderStage&> Stages()                              const override;
 
 
 
-
-                OpenGLAPI SceneComponent3D();
+                /** CONSTRUCTOR & DESTRUCTOR **/
+                OpenGLAPI SceneComponent3D(const string& name, ISceneLayer& parent);
                 OpenGLAPI ~SceneComponent3D();
 
 
 
-                OpenGLAPI void Insert(const ResourceMapping& resource)  override;
-                OpenGLAPI void ClearCommands();
-                OpenGLAPI void ClearMappings();
-                OpenGLAPI void Remove(const ResourceMapping& resource)  override;
-                OpenGLAPI void Update()                                 override;
+                /** UTILITIES **/
+                OpenGLAPI void Insert(const IRenderable<Vector3>& entity)           override;
+                OpenGLAPI void Update()                                             override;
 
             private:
 
-                bool                _isVisible;
-                bool                _needsUpdate;
-                GraphicsSettings    _settings;
-
-
+                /** COLLECTIONS **/
                 Set<const ResourceMapping*>             Resources;
                 BST<VertexTopologies, StageGroup3D*>    Staging;
 
+
+
+                /** UTILITIES **/
+                void ClearCommands();
+                void ClearMappings();
                 StageGroup3D* CreateStage(VertexTopologies topology);
                 
         };
