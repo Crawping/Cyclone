@@ -88,6 +88,7 @@ namespace Cyclone
                 virtual const Vector3& Position()           const { return _worldTransform.Position(); }
                 /// <summary> Gets the (x, y, z) scaling of the entity in 3D space. </summary>
                 virtual const Vector3& Scale()              const { return _worldTransform.Scale(); }
+
                 virtual const Vector3& Size()               const { return _modelTransform.Scale(); }
 		        
 
@@ -159,7 +160,7 @@ namespace Cyclone
                 virtual const List<IRenderable3D<T>*>& Components()     const override { return _components; }
 
                 virtual const Geometry3D& Geometry()                    const override { return _geometry; }
-                /// <summary> Gets whether this entity is visible in the rendered world. </summary>
+                /// <summary> Gets whether the entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                const override { return _isVisible; }
 
                 virtual const Material3D& Material()                    const override { return _material; }
@@ -229,27 +230,6 @@ namespace Cyclone
                 {
 
                 }
-
-                /// <summary> Constructs a new 3D renderable entity composed of white triangles. </summary>
-                /// <param name="points"> The array of points that define the geometry of this entity. </param>
-		        //Entity3D(const Vector<T>& points) :
-          //          Entity3D(points, Vector<uint>(0))
-		        //{
-
-		        //}
-		        /// <summary> Constructs a new 3D renderable entity. </summary>
-                /// <param name="color"> The base color of this entity's geometry. </param>
-                /// <param name="topology"> The type of primitive that the vertices of this entity define. </param>
-                /// <param name="points"> The array of points that define the geometry of this entity. </param>
-          //      Entity3D(const Color4& color, VertexTopologies topology, const Vector<T>& points, const Vector<uint>& indices) :
-          //          _isVisible(true)
-		        //{
-          //          _material.PrimaryColor(color);
-		        //}
-
-
-
-
 
 
             private:
