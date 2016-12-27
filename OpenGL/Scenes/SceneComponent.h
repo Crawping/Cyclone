@@ -50,8 +50,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI virtual bool Contains(const IRenderable& entity) const override;
-                OpenGLAPI virtual void Insert(const IRenderable& entity)   override;
+                OpenGLAPI virtual bool Contains(const IRenderable& entity)          const override;
+                OpenGLAPI virtual void Insert(const IRenderable& entity)            override;
                 OpenGLAPI virtual void Update()                                     override;
 
             protected:

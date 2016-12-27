@@ -40,11 +40,7 @@ namespace Cyclone
         {
 
             public:
-                
-                bool NeedsUpdate()                              const override { return true; }
-
-
-
+            
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
                 OpenGLAPI Scene3D(const string& name = "");

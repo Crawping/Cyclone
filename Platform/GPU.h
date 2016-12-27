@@ -8,6 +8,7 @@
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Collections/List.h"
+#include "Imaging/Color4.h"
 #include "Interfaces/IReportable.h"
 #include "Interfaces/IScene.h"
 #include "Pipelines/GraphicsPipeline.h"

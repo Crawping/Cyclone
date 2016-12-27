@@ -34,7 +34,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Insert(const IRenderable& entity)           override;
+                OpenGLAPI void Insert(const IRenderable& entity)                    override;
                 OpenGLAPI void Update()                                             override;
 
             private:

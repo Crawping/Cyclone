@@ -38,7 +38,7 @@ namespace Cyclone
                 glEnable(GL_CULL_FACE);
                 glCullFace(value);
             }
-            
+
             _settings.CullingMode = value;
             return *this;
         }
@@ -158,7 +158,7 @@ namespace Cyclone
             }
         }
         void GPU::Configure(const GraphicsSettings& settings)
-        {            
+        {
             CullingMode(settings.CullingMode);
             IsBlendEnabled(settings.IsBlendEnabled);
             IsDepthTestEnabled(settings.IsDepthTestEnabled);
@@ -179,6 +179,8 @@ namespace Cyclone
         }
         void GPU::Execute()
         {
+            if (!_renderScene) { return; }
+
             if (_renderScene)
             {
                 const auto& stages = _renderScene->Stages();
@@ -189,7 +191,7 @@ namespace Cyclone
 
                     for (BufferBinding b : ctStage.Buffers())
                         b.Buffer.Bind(b.Slot);
-                    
+
                     ctStage.Render();
                 }
             }
