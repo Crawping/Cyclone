@@ -31,5 +31,5 @@ void main(void)
     vec3 diffuse    = max(dot(normal, toLight), 0.25) * Materials[ids.MaterialIndex].PrimaryColor.rgb;
     vec3 specular   = SpecularBlinnPhong(normal, toLight, toEye, 200) * vec3(0.25);
 
-    OutputColor = vec4(diffuse + specular, 1.0);
+    OutputColor = vec4(diffuse + specular, Materials[ids.MaterialIndex].PrimaryColor.a);
 }
