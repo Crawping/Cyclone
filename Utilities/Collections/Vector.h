@@ -29,7 +29,7 @@ namespace Cyclone
                 /** CONSTRUCTORS **/
                 /// <summary> Constructs a new stack-allocated vector of data filled with a single uniform value. </summary>
                 /// <param name="value"> The value used to initialize all data elements of the array. </param>
-                Vector(const T& value)
+                Vector(const T& value = T())
                 {
                     for (uint a = 0; a < Count(); a++)
                         Data[a] = value;
