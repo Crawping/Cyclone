@@ -16,7 +16,11 @@ namespace Cyclone
 
             public:
                 /** CONSTRUCTOR **/
-                Quad3D() : Entity3D(Geometry3D::Quad()) { }
+                Quad3D(bool isIndexed = false) : 
+                    Entity3D(Geometry3D::Quad(isIndexed)) 
+                { 
+                
+                }
 
         };
     }
