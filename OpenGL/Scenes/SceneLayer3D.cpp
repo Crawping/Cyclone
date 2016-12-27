@@ -140,6 +140,7 @@ namespace Cyclone
 
             map.IndicesCount = indices.Count();
             map.IndicesIndex = Indices.Count();
+            map.Topology = entity.Topology();
             map.VertexCount = points.Count();
             map.VertexIndex = Vertices.Count();
 

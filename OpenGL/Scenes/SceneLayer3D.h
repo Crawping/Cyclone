@@ -49,14 +49,14 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 using SceneComponent3D::Insert;
-                OpenGLAPI void Insert(const string& name, ISceneComponent& stage)               override;
-                OpenGLAPI void Remove(const string& name)                                       override;
-                OpenGLAPI void Update()                                                         override;
+                OpenGLAPI void Insert(const string& name, ISceneComponent& stage)      override;
+                OpenGLAPI void Remove(const string& name)                              override;
+                OpenGLAPI void Update()                                                override;
                 OpenGLAPI void Update(const IRenderable& entity)                       override;
 
             protected:
                 
-                ResourceMapping& Register(const IRenderable& entity)                   override;
+                OpenGLAPI ResourceMapping& Register(const IRenderable& entity)          override;
 
             private:
 
@@ -70,7 +70,7 @@ namespace Cyclone
 
 
                 /** COLLECTIONS **/
-                BST<string, ISceneComponent&>                       _components;
+                BST<string, ISceneComponent&>               _components;
                 BST<const IRenderable*, ResourceMapping>   Mappings;
 
 
