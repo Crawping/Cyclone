@@ -21,6 +21,8 @@ namespace Cyclone
         class IRenderable
         {
             public:
+
+                virtual List<IRenderable&> Components()             const = 0;
                 /// <summary> Gets the geometric data that define the shape of a renderable entity. </summary>
                 virtual const IGeometric& Geometry()                const = 0;
                 /// <summary> Gets whether the renderable entity is currently visible in a scene. </summary>
