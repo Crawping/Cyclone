@@ -70,15 +70,15 @@ namespace Cyclone
 
             if (isIndexed)
             {
-                geometry.Indices
-                ({
+                geometry._indices = 
+                {
                      0,  1,  2,  2,  1,  3,
                      4,  5,  6,  6,  5,  7,
                      8,  9, 10, 10,  9, 11,
                     12, 13, 14, 14, 13, 15,
                     16, 17, 18, 18, 17, 19,
                     20, 21, 22, 22, 21, 23,
-                });
+                };
 
                 // Front
                 geometry.Add({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f });
@@ -308,6 +308,7 @@ namespace Cyclone
         Geometry3D Geometry3D::Line()
         {
             Geometry3D geometry;
+            geometry.Topology(VertexTopologies::Lines);
             geometry.Add({ -0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             geometry.Add({  0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             return geometry;
@@ -315,6 +316,7 @@ namespace Cyclone
         Geometry3D Geometry3D::Point()
         {
             Geometry3D geometry;
+            geometry.Topology(VertexTopologies::Points);
             geometry.Add({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             return geometry;
         }
@@ -324,7 +326,16 @@ namespace Cyclone
 
             if (isIndexed)
             {
+                geometry._indices =
+                {
+                    0, 1, 2,
+                    2, 1, 3,
+                };
 
+                geometry.Add({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Add({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Add({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Add({  0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
             }
             else
             {
