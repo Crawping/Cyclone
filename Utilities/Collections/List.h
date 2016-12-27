@@ -243,6 +243,15 @@ namespace Cyclone
 
                     return *this;
                 }
+
+                List& operator =(const List<T>& values)
+                {
+                    Clear();
+                    for (const T& v : values)
+                        Insert(Count(), v);
+                    
+                    return *this;
+                }
                 /// <summary> Clears the list of any stored data and copies the contents of another list into it. </summary>
                 /// <param name="values"> An array-like collection of data elements to be copied. </param>
                 /// <returns> A reference to the new list object that contains the copied contents of the other one. </returns>
