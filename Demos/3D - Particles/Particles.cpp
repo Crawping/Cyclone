@@ -3,6 +3,7 @@
  */
 
 #include "AdvancedRenderer.h"
+#include "Collections/Vector.h"
 #include "Geometry/Point3D.h"
 
 using namespace Renderers;
@@ -17,9 +18,11 @@ class PointCloud : public Point3D
             Geometry().Topology(VertexTopologies::Points);
         }
 
-        virtual void Add(const Vector3& position, const Vector3& normal = 0, const Vector3& mapping = 0)
+        void Add(const Vector<Vector3>& points)
         {
-            Geometry().Add(position, normal, mapping);
+            Geometry().Points(points);
+            Geometry().Normals(Vector<Vector3>(points.Count()).Fill(Vector3::UnitZ));
+            Geometry().Mapping(Vector<Vector3>(points.Count()).Fill(0));
         }
 
 };
@@ -43,13 +46,17 @@ class Program : public AdvancedRenderer
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
+            Vector3 szPoints = Vector3(512);
+            uint npts = 500000;
+            Vector<Vector3> vertices = Vector<Vector3>(npts);
 
-            for (uint a = 0; a < 10000; a++)
+            for (uint a = 0; a < npts; a++)
             {
                 Color4 color = Color4::Random();
-                Points.Add(Vector3(color.R * 128, color.G * 96, color.B * 100), Vector3::UnitZ);
+                vertices(a) = (Vector3(color.R, color.G, color.B) * szPoints) - (szPoints / 2.0f);
             }
 
+            Points.Add(vertices);
             Points
                 .PrimaryColor(Color4::Blue)
                 .Scale(10);
@@ -59,8 +66,16 @@ class Program : public AdvancedRenderer
 
         void UpdateScene() override
         {
+            Color4 color
+            (
+                0.5f * sinf(Points.Yaw()) + 0.5f,
+                0.25f * cosf(Points.Yaw()) + 0.75f,
+                0.125f * sinf(Points.Yaw()) + 0.875,
+                0.25f
+            );
+
             Points
-                .PrimaryColor(Color4::Random())
+                .PrimaryColor(color)
                 .Rotate(0.0f, 0.01f, 0.0f);
 
             RenderScene->Update(Points);
