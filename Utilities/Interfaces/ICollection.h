@@ -18,11 +18,11 @@ namespace Cyclone
         class ICollection
         {
             public:
-                /// <summary> Gets the total number of elements present in a collection. </summary>
+                /// <summary> Gets the total number of elements present in the collection. </summary>
                 virtual uint Count()    const = 0;
-                /// <summary> Gets whether a collection is currently empty. </summary>
+                /// <summary> Gets whether the collection is currently empty. </summary>
                 virtual bool IsEmpty()  const { return Count() == 0; }
-                /// <summary> Destroys any resources that are specially allocated by a collection. </summary>
+                /// <summary> Destroys any resources that are specially allocated by the collection. </summary>
                 virtual ~ICollection() { }
 
 
