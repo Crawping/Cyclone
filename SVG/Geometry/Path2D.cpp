@@ -62,7 +62,6 @@ namespace Cyclone
 
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
-            Entity3D(Color4::Transparent, VertexTopologies::Path, Vector<float>()),
             ControlPoints(count),
             _paramsNeedUpdate(false)
         {

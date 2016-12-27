@@ -9,7 +9,7 @@ namespace Cyclone
     {
         Rectangle2D& Rectangle2D::Offset(const Vector3& value)
         {
-            BoundaryPosition(value);
+            //BoundaryPosition(value);
             ControlPoint2D rect = ControlPoints(0);
             rect.Coordinates(0) = value.X;
             rect.Coordinates(1) = value.Y;
@@ -27,7 +27,7 @@ namespace Cyclone
         }
         Rectangle2D& Rectangle2D::Size(const Vector3& value)
         {
-            BoundarySize(value);
+            //BoundarySize(value);
             ControlPoint2D rect = ControlPoints(0);
             rect.Coordinates(2) = value.X;
             rect.Coordinates(3) = value.Y;

@@ -18,8 +18,8 @@ namespace Cyclone
         }
         DrawingPath::~DrawingPath()
         {
-            for (uint a = 0; a < _components.Count(); a++)
-                delete _components(a);
+            //for (uint a = 0; a < _components.Count(); a++)
+            //    delete _components(a);
         }
 
 
@@ -38,22 +38,22 @@ namespace Cyclone
                 .StrokeWidth(0)
                 .PrimaryColor(_pointColor);
 
-            _components.Append(pt);
+            //_components.Append(pt);
             return *this;
         }
 
         void DrawingPath::Clear()
         {
             Path2D::Clear();
-            for (uint a = 0; a < _components.Count(); a++)
-                delete _components(a);
-            _components.Clear();
+            //for (uint a = 0; a < _components.Count(); a++)
+            //    delete _components(a);
+            //_components.Clear();
         }
 
         DrawingPath& DrawingPath::Translate(const Vector3& t)
         {
-            for (uint a = 0; a < _components.Count(); a++)
-                _components(a)->Translate(t);
+            //for (uint a = 0; a < _components.Count(); a++)
+            //    _components(a)->Translate(t);
 
             Path2D::Translate(t);
             return *this;

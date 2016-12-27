@@ -23,8 +23,8 @@ namespace Cyclone
         using namespace OpenGL;
 
         class Path2D :
-            public Entity3D<float>,
-            public virtual IRenderable2D<float>
+            public Entity3D,
+            public virtual IRenderable2D
         {
             public:
 

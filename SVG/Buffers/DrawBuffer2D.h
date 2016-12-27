@@ -21,7 +21,7 @@ namespace Cyclone
         {
             public:
                 
-                List<const IRenderable2D<float>*> Entities() const;
+                List<const IRenderable2D*> Entities() const;
 
                 
                 /** PROPERTIES **/
@@ -45,9 +45,9 @@ namespace Cyclone
 
 
                 /** BUFFER UTILITIES **/
-                SVGAPI void Add(const IRenderable2D<float>& entity);
+                SVGAPI void Add(const IRenderable2D& entity);
                 SVGAPI void Clear() override;
-                SVGAPI void Remove(const IRenderable2D<float>& entity);
+                SVGAPI void Remove(const IRenderable2D& entity);
 
 
 
@@ -61,7 +61,7 @@ namespace Cyclone
                 SVGAPI void UnbindResources()           const override { ColorBuffer.UnbindResources(); }
 
                 SVGAPI void Update()                    override;
-                SVGAPI void Update(const IRenderable2D<float>& entity);
+                SVGAPI void Update(const IRenderable2D& entity);
 
             private:
             
@@ -70,14 +70,14 @@ namespace Cyclone
                 bool _needsUpdate;
 
                 UniformBuffer<Color4>                           ColorBuffer;
-                std::map<const IRenderable2D<float>*, uint>     EntityIndices;
-                std::set<const IRenderable2D<float>*>           ToUpdate;
+                std::map<const IRenderable2D*, uint>     EntityIndices;
+                std::set<const IRenderable2D*>           ToUpdate;
 
 
 
                 /** UTILITIES **/
-                void Add(const IRenderable3D<float>* entity);
-                void Update(const IRenderable3D<float>* entity);
+                void Add(const IRenderable* entity);
+                void Update(const IRenderable* entity);
                 
 
 

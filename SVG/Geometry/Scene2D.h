@@ -10,6 +10,8 @@
 #include "Buffers/UniformBuffer.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable2D.h"
+#include "Interfaces/IScene.h"
+#include "Scenes/Scene3D.h"
 #include <set>
 
 
@@ -20,19 +22,20 @@ namespace Cyclone
     namespace SVG
     {
 
-        class Scene2D : public IRenderableScene
+        class Scene2D : 
+            public Scene3D
         {
             public:
 
-                SVGAPI List<IRenderStage*> Stages()                     const override;
+                //SVGAPI List<IRenderStage*> Stages()                     const override;
 
-                Scene2D& IsBlendEnabled(bool value)                     { _settings.IsBlendEnabled = value; return *this; }
-                Scene2D& IsDepthTestEnabled(bool value)                 { _settings.IsDepthTestEnabled = value; return *this; }
-                Scene2D& IsStencilTestEnabled(bool value)               { _settings.IsStencilTestEnabled = value; return *this; }
-                Scene2D& Pipeline(GraphicsPipeline* value)              { _settings.Pipeline = value; return *this; }
-                Scene2D& Projection(ITransformation3D* value)           { _settings.Projection = value; return *this; }
-                Scene2D& Target(FrameBuffer* value)                     { _settings.Target = value; return *this; }
-                Scene2D& View(ITransformation3D* value)                 { _settings.View = value; return *this; }
+                //Scene2D& IsBlendEnabled(bool value)                     { _settings.IsBlendEnabled = value; return *this; }
+                //Scene2D& IsDepthTestEnabled(bool value)                 { _settings.IsDepthTestEnabled = value; return *this; }
+                //Scene2D& IsStencilTestEnabled(bool value)               { _settings.IsStencilTestEnabled = value; return *this; }
+                //Scene2D& Pipeline(GraphicsPipeline* value)              { _settings.Pipeline = value; return *this; }
+                //Scene2D& Projection(ITransformation3D* value)           { _settings.Projection = value; return *this; }
+                //Scene2D& Target(FrameBuffer* value)                     { _settings.Target = value; return *this; }
+                //Scene2D& View(ITransformation3D* value)                 { _settings.View = value; return *this; }
 
 
 
@@ -41,17 +44,17 @@ namespace Cyclone
                 SVGAPI ~Scene2D();
 
 
-                SVGAPI void Add(const IRenderable2D<float>& entity);
-                SVGAPI void Remove(const IRenderable2D<float>& entity);
-                SVGAPI void Update() override;
-                SVGAPI void Update(const IRenderable2D<float>& entity);
+                //SVGAPI void Add(const IRenderable2D<float>& entity);
+                //SVGAPI void Remove(const IRenderable2D<float>& entity);
+                //SVGAPI void Update() override;
+                //SVGAPI void Update(const IRenderable2D<float>& entity);
                 
             private:
                 
                 GraphicsSettings    _settings;
 
-                DrawBuffer2D        Buffers;
-                List<IRenderStage*> Stages2D;
+                //DrawBuffer2D        Buffers;
+                //List<IRenderStage*> Stages2D;
 
         };
     }

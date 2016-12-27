@@ -46,7 +46,7 @@ namespace Cyclone
                 const DrawBuffer2D*             _data;
                 const GraphicsSettings*         _settings;
 
-                const std::set< const IRenderable2D<float>* >* Entities;
+                const std::set< const IRenderable2D* >* Entities;
         };
     }
 }

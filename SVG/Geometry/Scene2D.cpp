@@ -8,24 +8,24 @@ namespace Cyclone
     namespace SVG
     {
 
-        List<IRenderStage*> Scene2D::Stages() const
+ /*       List<IRenderStage*> Scene2D::Stages() const
         {
             return Stages2D;
         }
-
+*/
 
         Scene2D::Scene2D()
         {
-            Stages2D.Append( new RenderStage2D(&Buffers, &_settings) );
+            //Stages2D.Append( new RenderStage2D(&Buffers, &_settings) );
         }
         Scene2D::~Scene2D()
         {
-            for (uint a = 0; a < Stages2D.Count(); a++)
-                delete Stages2D(a);
+          /*  for (uint a = 0; a < Stages2D.Count(); a++)
+                delete Stages2D(a);*/
         }
 
 
-        void Scene2D::Add(const IRenderable2D<float>& entity)
+        /*void Scene2D::Add(const IRenderable2D<float>& entity)
         {
             Buffers.Add(entity);
         }
@@ -43,6 +43,6 @@ namespace Cyclone
         {
             Buffers.Update(entity);
         }
-
+*/
     }
 }

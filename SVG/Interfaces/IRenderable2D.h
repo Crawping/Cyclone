@@ -13,15 +13,10 @@ namespace Cyclone
     namespace SVG
     {
 
-        template<typename T> class IRenderable2D :
-            public virtual IRenderable3D<T>
+        class IRenderable2D : public virtual IRenderable
         {
             public:
                 
-                /** PROPERTIES **/
-                //virtual Vector2 Offset()    const = 0;
-                //virtual Vector2 Size()      const = 0;
-
                 virtual ~IRenderable2D() { }
 
                 virtual void Fill()         const = 0;
