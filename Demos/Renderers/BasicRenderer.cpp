@@ -5,8 +5,8 @@
 
 #include "Buffers/FrameBuffer.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
 #include "Spatial/Camera.h"
 
 

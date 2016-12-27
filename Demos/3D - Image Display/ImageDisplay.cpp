@@ -9,7 +9,6 @@
 #include "Window3D.h"
 
 #include "Geometry/Quad3D.h"
-#include "Geometry/Scene3D.h"
 #include "Imaging/Bitmap.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Textures/Texture2D.h"
@@ -57,7 +56,7 @@ class Program : public AdvancedRenderer
                 .Position(RenderWindow->ClientArea().Center())
                 .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f);
 
-            RenderScene->Add(Quad);
+            RenderScene->Insert(Quad);
         }
         void CreateShaderPipeline() override
         {

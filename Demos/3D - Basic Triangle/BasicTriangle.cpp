@@ -5,8 +5,8 @@
 #include "BasicRenderer.h"
 #include "Window3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Scene3D.h"
 #include "Geometry/Geometry3D.h"
+#include "Scenes/Scene3D.h"
 
 using namespace Renderers;
 using namespace Cyclone::OpenGL;
@@ -35,7 +35,7 @@ class Program : public BasicRenderer
                 .Position(RenderWindow->ClientArea().Center())
                 .Scale(100);
 
-            RenderScene->Add(Triangle);
+            RenderScene->Insert(Triangle);
         }
 };
 

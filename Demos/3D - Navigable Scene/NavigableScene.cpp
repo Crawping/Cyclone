@@ -11,10 +11,10 @@
 #include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Point3D.h"
-#include "Geometry/Scene3D.h"
 #include "Geometry/Vertex.h"
 #include "Math/Constants.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
 #include "Spatial/Camera.h"
 
 using namespace Renderers;
@@ -31,21 +31,14 @@ class Program : public AdvancedRenderer
         {
             Initialize();
         }
-        ~Program()
-        {
-            if (Cylinder) { delete Cylinder; }
-            if (Icosahedron) { delete Icosahedron; }
-            if (Cube) { delete Cube; }
-        }
-
 
 
 
     protected:
 
-        Mesh3D* Cube;
-        Mesh3D* Cylinder;
-        Mesh3D* Icosahedron;
+        Mesh3D  Cube;
+        Mesh3D  Cylinder;
+        Mesh3D  Icosahedron;
         Point3D Point;
 
 
@@ -53,28 +46,25 @@ class Program : public AdvancedRenderer
         {
             AdvancedRenderer::CreateSceneResources();
 
-            Vector<uint> indices;
-            Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
-            Cube = new Mesh3D(vertices, indices);
-
-            vertices = Geometry3D::Icosahedron();
-            Icosahedron = new Mesh3D(vertices);
-
-            vertices = Geometry3D::Cylinder(64);
-            Cylinder = new Mesh3D(vertices);
-
+            Cube = Mesh3D(Geometry3D::Cube(true));
+            Icosahedron = Mesh3D(Geometry3D::Icosahedron());
+            Cylinder = Mesh3D(Geometry3D::Cylinder(64));
+        
             Vector2 ctrWin = RenderWindow->ClientArea().Center();
             Vector2 szWin = RenderWindow->Size();
 
-            Cube->PrimaryColor(Color4::Yellow)
+            Cube
+                .PrimaryColor(Color4::Yellow)
                 .Scale(100, 100, 100)
                 .Translate(Vector3(ctrWin - (szWin / 8.0f), 50));
 
-            Cylinder->PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
+            Cylinder
+                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Scale(50, 125, 50)
                 .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50));
 
-            Icosahedron->PrimaryColor(Color4::Magenta)
+            Icosahedron
+                .PrimaryColor(Color4::Magenta)
                 .Scale(100, 100, 100)
                 .Translate(Vector3(ctrWin + (szWin / 8.0f), 50));
 
@@ -83,21 +73,21 @@ class Program : public AdvancedRenderer
                 .Scale(100, 100, 1)
                 .Translate(Vector3(ctrWin + (szWin / Vector2(-8.0f, 8.0f))));
 
-            RenderScene->Add(*Cube);
-            RenderScene->Add(*Cylinder);
-            RenderScene->Add(*Icosahedron);
-            RenderScene->Add(Point);
+            RenderScene->Insert(Cube);
+            RenderScene->Insert(Cylinder);
+            RenderScene->Insert(Icosahedron);
+            RenderScene->Insert(Point);
         }
         void UpdateScene() override
         {
-            Cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
-            Cylinder->Rotate(Vector3(0.0f, 0.0f, 0.01f));
-            Icosahedron->Rotate(Vector3(0.01f, 0.0f, 0.0f));
+            Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
+            Cylinder.Rotate(Vector3(0.0f, 0.0f, 0.01f));
+            Icosahedron.Rotate(Vector3(0.01f, 0.0f, 0.0f));
             Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated, so this has no effect.
 
-            RenderScene->Update(*Cube);
-            RenderScene->Update(*Cylinder);
-            RenderScene->Update(*Icosahedron);
+            RenderScene->Update(Cube);
+            RenderScene->Update(Cylinder);
+            RenderScene->Update(Icosahedron);
             RenderScene->Update(Point);
 
             AdvancedRenderer::UpdateScene();

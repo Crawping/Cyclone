@@ -8,8 +8,8 @@
 #include "Window3D.h"
 #include "WindowEvents.h"
 
-#include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 

@@ -7,8 +7,8 @@
 #include "Console.h"
 #include "BasicRenderer.h"
 #include "Geometry/Quad3D.h"
-#include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
 #include "Textures/GradientTexture.h"
 using namespace Renderers;
 
@@ -63,7 +63,7 @@ class Program : public BasicRenderer
                 .Position(RenderWindow->ClientArea().Center())
                 .Scale(512, 256);
 
-            RenderScene->Add(Quad);
+            RenderScene->Insert(Quad);
         }
 
         void CreateShaderPipeline() override
