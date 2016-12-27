@@ -12,7 +12,7 @@ namespace Cyclone
         void Geometry3D::CalculateNormals()
         {
             const auto& vertices = Points();
-            _normals = Vector<Vector3>(vertices.Count());
+            _data.Normals = Vector<Vector3>(vertices.Count());
 
             for (uint a = 0; a < vertices.Count(); a += 3)
             {
@@ -20,9 +20,9 @@ namespace Cyclone
                 Vector3 diff2 = vertices(a + 2) - vertices(a);
                 Vector3 diff3 = vertices(a + 2) - vertices(a + 1);
    
-                _normals(a)     = Math::Cross(diff1, diff2).Normalize();
-                _normals(a + 1) = Math::Cross(diff3, -diff1).Normalize();
-                _normals(a + 2) = Math::Cross(-diff2, -diff3).Normalize();
+                _data.Normals(a)     = Math::Cross(diff1, diff2).Normalize();
+                _data.Normals(a + 1) = Math::Cross(diff3, -diff1).Normalize();
+                _data.Normals(a + 2) = Math::Cross(-diff2, -diff3).Normalize();
             }
         }
         void Geometry3D::Tessellate(uint n)
@@ -34,7 +34,7 @@ namespace Cyclone
             Vector<Vector3> vertices = Points();
             uint nvertices = vertices.Count() * 12;
 
-            _points = Vector<Vector3>(nvertices);
+            _data.Points = Vector<Vector3>(nvertices);
 
             uint idx = 0;
             for (uint a = 0; a < vertices.Count(); a += 3)
@@ -43,21 +43,21 @@ namespace Cyclone
                 Vector3 midpt2 = vertices(a) + ((vertices(a + 2) - vertices(a)) * 0.5f);
                 Vector3 midpt3 = vertices(a + 1) + ((vertices(a + 2) - vertices(a + 1)) * 0.5f);
 
-                _points(idx++) = vertices(a);
-                _points(idx++) = midpt1;
-                _points(idx++) = midpt2;
+                _data.Points(idx++) = vertices(a);
+                _data.Points(idx++) = midpt1;
+                _data.Points(idx++) = midpt2;
 
-                _points(idx++) = midpt1;
-                _points(idx++) = vertices(a + 1);
-                _points(idx++) = midpt3;
+                _data.Points(idx++) = midpt1;
+                _data.Points(idx++) = vertices(a + 1);
+                _data.Points(idx++) = midpt3;
                 
-                _points(idx++) = midpt2;
-                _points(idx++) = midpt1;
-                _points(idx++) = midpt3;
-
-                _points(idx++) = midpt2;
-                _points(idx++) = midpt3;
-                _points(idx++) = vertices(a + 2);
+                _data.Points(idx++) = midpt2;
+                _data.Points(idx++) = midpt1;
+                _data.Points(idx++) = midpt3;
+                
+                _data.Points(idx++) = midpt2;
+                _data.Points(idx++) = midpt3;
+                _data.Points(idx++) = vertices(a + 2);
             }
         }
 
@@ -70,7 +70,7 @@ namespace Cyclone
 
             if (isIndexed)
             {
-                geometry._indices = 
+                geometry._data.Indices =
                 {
                      0,  1,  2,  2,  1,  3,
                      4,  5,  6,  6,  5,  7,
@@ -326,7 +326,7 @@ namespace Cyclone
 
             if (isIndexed)
             {
-                geometry._indices =
+                geometry._data.Indices =
                 {
                     0, 1, 2,
                     2, 1, 3,
