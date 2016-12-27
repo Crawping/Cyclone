@@ -13,27 +13,14 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        
+
 
         class Mesh3D : public Entity3D
         {
             public:
 
-                Mesh3D(const Geometry3D& geometry) : Entity3D(geometry) { }
-
-                void Add(const Vector3& vertex)
-                {
-                    Vertices.Append(vertex);
-                }
-                void Add(const IArray<Vector3>& vertices)
-                {
-                    Vertices.Append(vertices);
-                }
-
-
-            private:
-                
-                List<Vector3> Vertices;
+                Mesh3D() { }
+                Mesh3D(const Geometry3D& geometry) : Entity3D(geometry) { }                
         };
     }
 }
