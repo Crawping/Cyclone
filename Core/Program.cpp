@@ -32,14 +32,11 @@ namespace Cyclone
         _debug(false),
         _display(0),
         _showHelp(false),
-        PlaneXZ(nullptr),
         Renderer(nullptr),
         RenderScene(nullptr),
         RenderTarget(nullptr),
         RenderWindow(nullptr),
-        RenderPipeline(nullptr),
-        TestShape(nullptr),
-        TestComponentShape(nullptr)
+        RenderPipeline(nullptr)
     {
         ParseInputArguments(nargs, args);
 
@@ -59,9 +56,9 @@ namespace Cyclone
     }
     Program::~Program()
     {
-        if (TestComponentShape) { delete TestComponentShape; }
-        if (TestShape)          { delete TestShape; }
-        if (PlaneXZ)            { delete PlaneXZ; }
+        //if (TestComponentShape) { delete TestComponentShape; }
+        //if (TestShape)          { delete TestShape; }
+        //if (PlaneXZ)            { delete PlaneXZ; }
         if (RenderTarget)       { delete RenderTarget; }
         if (RenderScene)        { delete RenderScene; }
         if (RenderPipeline)     { delete RenderPipeline; }
@@ -81,18 +78,21 @@ namespace Cyclone
             if (!RenderWindow->ProcessEvent())
                 break;
 
-            TestShape->Rotate(Vector3(0.01f, 0.01f, 0.01f));
-            RenderScene->Update(*TestShape);
+            TestShape.Rotate(Vector3(0.01f, 0.01f, 0.01f));
+            TestIcosahedron.Rotate(-0.01f);
+            RenderScene->Update(TestShape);
+            RenderScene->Update(TestIcosahedron);
+
 
             Console::WriteLine("1. " + Renderer->Report());
             Renderer->Clear(Color4(0.5f));
-            Console::WriteLine("2. " + Renderer->Report());
+            //Console::WriteLine("2. " + Renderer->Report());
             Renderer->Update();
-            Console::WriteLine("3. " + Renderer->Report());
+            //Console::WriteLine("3. " + Renderer->Report());
             Renderer->Execute();
-            Console::WriteLine("4. " + Renderer->Report());
+            //Console::WriteLine("4. " + Renderer->Report());
             Renderer->Present();           
-            Console::WriteLine("5. " + Renderer->Report());
+            //Console::WriteLine("5. " + Renderer->Report());
         }
     }
 
@@ -141,27 +141,27 @@ namespace Cyclone
             .Target(RenderTarget)
             .View(&View);
 
-		PlaneXZ = new Quad3D();
-		PlaneXZ->
-            Pitch(-90)
+		PlaneXZ = Quad3D(true);
+		PlaneXZ
+            .Pitch(-90)
             .PrimaryColor(Color4::Blue)
             .Scale(5000).Translate(0, 50, 0);
 
-        TestShape = new Mesh3D(Geometry3D::Cube(true));
-		TestShape->
-             PrimaryColor(Color4::Gray)
+        TestShape = Mesh3D(Geometry3D::Cube(true));
+		TestShape
+            .PrimaryColor(Color4::Gray)
             .Scale(Vector3(50, 50, 50))
             .Translate(250, 250, -10);
 
-        TestComponentShape = new Mesh3D(Geometry3D::Icosahedron());
-        TestComponentShape->
-             PrimaryColor(Color4::Red)
+        TestIcosahedron = Mesh3D(Geometry3D::Icosahedron());
+        TestIcosahedron
+            .PrimaryColor(Color4::Red)
             .Scale(Vector3(50, 50, 50))
             .Translate(750, 250, -10);
 
-        RenderScene->Insert(*TestComponentShape);
-        RenderScene->Insert(*TestShape);
-        RenderScene->Insert(*PlaneXZ);
+        RenderScene->Insert(TestIcosahedron);
+        RenderScene->Insert(TestShape);
+        RenderScene->Insert(PlaneXZ);
 
         Renderer->Scene(RenderScene);
 	}
