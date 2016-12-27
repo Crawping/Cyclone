@@ -3,8 +3,8 @@
  */
 
 #pragma once
+#include "Collections/List.h"
 #include "Interfaces/IGeometric.h"
-#include "Collections/Vector.h"
 #include "Spatial/Transform.h"
 #include "Spatial/Volume.h"
 
@@ -20,17 +20,17 @@ namespace Cyclone
 
                 /** GEOMETRIC PROPERTIES **/
                 /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
-                virtual const Volume& Bounds()                      const override { return _bounds; }
+                virtual const Volume& Bounds()      const override { return _bounds; }
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
-                virtual const Vector<uint>& Indices()               const override { return _indices; }
+                virtual Vector<uint> Indices()      const override { return _indices; }
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
-                virtual const Vector<Vector3>& Mapping()            const override { return _mapping; }
+                virtual Vector<Vector3> Mapping()   const override { return _mapping; }
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>
-                virtual const Vector<Vector3>& Normals()            const override { return _normals; }
+                virtual Vector<Vector3> Normals()   const override { return _normals; }
                 /// <summary> Gets an array of points that define the prototypical shape of some geometry in 3D space. </summary>
-                virtual const Vector<Vector3>& Points()             const override { return _points; }
+                virtual Vector<Vector3> Points()    const override { return _points; }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
-                virtual VertexTopologies Topology()                 const override { return _topology; }
+                virtual VertexTopologies Topology() const override { return _topology; }
 
                 /// <summary> Sets the array of indices that specify the order in which points of the geometric shape are to be rendered. </summary>
                 virtual Geometry3D& Indices(const Vector<uint>& value)
@@ -123,6 +123,13 @@ namespace Cyclone
                 /// </param>
                 OpenGLAPI void Tessellate(uint n);
 
+                virtual void Add(const Vector3& position, const Vector3& normal = 0, const Vector3& mapping = 0)
+                {
+                    _points.Append(position);
+                    _normals.Append(normal);
+                    _mapping.Append(mapping);
+                }
+
             protected:
                 
                 /** PROPERTIES **/
@@ -146,12 +153,6 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                virtual void Add(const Vector3& position, const Vector3& normal = Vector3(), const Vector3& mapping = Vector3())
-                {
-                    _points.Append(position);
-                    _normals.Append(normal);
-                    _mapping.Append(mapping);
-                }
 
             private:
 
