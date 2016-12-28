@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="Particles.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Points.psl" />
+  </ItemGroup>
 </Project>

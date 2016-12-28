@@ -46,8 +46,9 @@ class Program : public AdvancedRenderer
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
-            Vector3 szPoints = Vector3(512);
-            uint npts = 500000;
+            Vector3 szPoints = Vector3(256);
+            //uint npts = 1000000;
+            uint npts = 100000;
             Vector<Vector3> vertices = Vector<Vector3>(npts);
 
             for (uint a = 0; a < npts; a++)
@@ -59,9 +60,14 @@ class Program : public AdvancedRenderer
             Points.Add(vertices);
             Points
                 .PrimaryColor(Color4::Blue)
-                .Scale(10);
+                .Scale(16);
 
             RenderScene->Insert(Points);
+            RenderScene->IsDepthTestEnabled(true);
+        }
+        void CreateShaderPipeline() override
+        {
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Particles/Points.psl");
         }
 
         void UpdateScene() override

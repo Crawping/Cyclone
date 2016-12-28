@@ -122,6 +122,9 @@
       <Project>{0e5c9560-1acc-4ff7-b6a9-afc6e48b98f7}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Points.psl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

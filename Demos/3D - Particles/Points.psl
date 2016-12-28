@@ -1,0 +1,26 @@
+/* CHANGELOG
+ * Written by Josh Grooms on 20161227
+ */
+
+#version 450 core
+#include "../Renderers/Shaders/Default.hsl"
+
+
+flat in int EntityIndex;
+out vec4 OutputColor;
+
+
+
+void main(void)
+{
+    EntityData ids = Entities[EntityIndex];
+
+    vec2 position = gl_PointCoord * 2.0 - 1.0;
+    float dist = dot(position, position);
+    if (dist > 1.0)
+        discard;
+
+    //OutputColor = vec4(Materials[ids.MaterialIndex].PrimaryColor.rgba);
+    OutputColor = Materials[ids.MaterialIndex].PrimaryColor;
+    OutputColor.a = max(0.0, 1.0 - dist);
+}
