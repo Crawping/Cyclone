@@ -22,6 +22,7 @@ namespace Renderers
         protected:
 
             bool            IsFreeLookEnabled;
+            KeyboardKeys    KeyboardState;
             float           MoveSpeed;
             Vector2         PointerPosition;
             Vector3         WalkingDirection;
@@ -50,6 +51,8 @@ namespace Renderers
             /** RENDERING UTILITIES **/
 
             RendererAPI virtual void UpdateScene() override;
+
+            RendererAPI virtual void UpdateWalkingDirection();
 
     };
 }

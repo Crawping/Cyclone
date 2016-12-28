@@ -41,27 +41,35 @@ namespace Renderers
 
         BasicRenderer::UpdateScene();
     }
+    void AdvancedRenderer::UpdateWalkingDirection()
+    {
+        WalkingDirection = Vector3::Zero;
+        if (KeyboardState.Count() == 0) { return; }
 
+        if (KeyboardState.IsPressed(KeyboardKeys::A))
+            WalkingDirection += View.Left();
+        if (KeyboardState.IsPressed(KeyboardKeys::D))
+            WalkingDirection += View.Right();
+        if (KeyboardState.IsPressed(KeyboardKeys::S))
+            WalkingDirection += View.Backward();
+        if (KeyboardState.IsPressed(KeyboardKeys::W))
+            WalkingDirection += View.Forward();
+
+        WalkingDirection.Y = 0.0f;
+
+        if (KeyboardState.IsPressed(KeyboardKeys::Shift))
+            WalkingDirection -= Vector3::UnitY;
+        if (KeyboardState.IsPressed(KeyboardKeys::Space))
+            WalkingDirection += Vector3::UnitY;
+    }
+
+
+
+    /** EVENT HANDLERS **/
     void AdvancedRenderer::ProcessKeyPress(const KeyboardEvent& evt)
     {
-        Vector3 dir;
-        if (evt.Key == KeyboardKeys::A)
-            dir = View.Left();
-        else if (evt.Key == KeyboardKeys::D)
-            dir = View.Right();
-        else if (evt.Key == KeyboardKeys::S)
-            dir = View.Backward();
-        else if (evt.Key == KeyboardKeys::W)
-            dir = View.Forward();
-
-        dir.Y = 0.0f;
-
-        if (evt.Key == KeyboardKeys::Shift)
-            dir = -Vector3::UnitY;
-        else if (evt.Key == KeyboardKeys::Space)
-            dir = Vector3::UnitY;
-
-        WalkingDirection += dir;
+        KeyboardState = evt.State;
+        UpdateWalkingDirection();
 
         if (evt.Key == KeyboardKeys::F1)
             CreateTransformations();
@@ -73,33 +81,11 @@ namespace Renderers
     }
     void AdvancedRenderer::ProcessKeyRelease(const KeyboardEvent& evt)
     {
-        if (evt.State.Count() == 0)
-        {
-            WalkingDirection = Vector3::Zero;
-            return;
-        }
-
-        Vector3 dir;
-        if (evt.Key == KeyboardKeys::A)
-            dir = View.Left();
-        else if (evt.Key == KeyboardKeys::D)
-            dir = View.Right();
-        else if (evt.Key == KeyboardKeys::S)
-            dir = View.Backward();
-        else if (evt.Key == KeyboardKeys::W)
-            dir = View.Forward();
-
-        dir.Y = 0.0f;
-
-        if (evt.Key == KeyboardKeys::Shift)
-            dir = -Vector3::UnitY;
-        else if (evt.Key == KeyboardKeys::Space)
-            dir = Vector3::UnitY;
+        KeyboardState = evt.State;
+        UpdateWalkingDirection();
 
         if (evt.Key == KeyboardKeys::Control)
             MoveSpeed *= 4.0f;
-
-        WalkingDirection -= dir;
     }
     void AdvancedRenderer::ProcessPointerMotion(const PointerMotionEvent& evt)
     {
@@ -110,6 +96,8 @@ namespace Renderers
             float yaw = evt.Delta.X * Constants::TwoPi * 2.0f / RenderWindow->ClientArea().Width;
             View.Rotate(Vector3(pitch, yaw, 0.0f));
             Renderer->View(&View);
+
+            UpdateWalkingDirection();
         }
     }
 
