@@ -47,11 +47,10 @@ class Program : public AdvancedRenderer
         {
             AdvancedRenderer::CreateSceneResources();
             Vector3 szPoints = Vector3(256);
-            //uint npts = 1000000;
-            uint npts = 100000;
+            uint npts = 1000000;
             Vector<Vector3> vertices = Vector<Vector3>(npts);
 
-            for (uint a = 0; a < npts; a++)
+            for (uint a = 0; a < vertices.Count(); a++)
             {
                 Color4 color = Color4::Random();
                 vertices(a) = (Vector3(color.R, color.G, color.B) * szPoints) - (szPoints / 2.0f);
