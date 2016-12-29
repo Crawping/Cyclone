@@ -134,6 +134,8 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Estimates the normal vectors for a list of non-indexed triangles in model space. </summary>
                 OpenGLAPI void CalculateNormals();
+
+                OpenGLAPI void Clear();
                 /// <summary> Divides inputted triangles into smaller ones with unshared vertices. </summary>
                 /// <returns> 
                 ///     An array of standard vertices defining the same geometry as the input, but with an increased triangle count. 

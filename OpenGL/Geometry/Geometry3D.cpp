@@ -25,6 +25,13 @@ namespace Cyclone
                 _data.Normals(a + 2) = Math::Cross(-diff2, -diff3).Normalize();
             }
         }
+        void Geometry3D::Clear()
+        {
+            _data.Indices.Clear();
+            _data.Mapping.Clear();
+            _data.Normals.Clear();
+            _data.Points.Clear();
+        }
         void Geometry3D::Tessellate(uint n)
         {
 
