@@ -5,11 +5,11 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "Geometry/Geometry3D.h"
+#include "Geometry/Transform3D.h"
 #include "GL/OpenGLAPI.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
 #include "Libraries/Material3D.h"
-#include "Spatial/Transform.h"
 #include "Spatial/Volume.h"
 
 
@@ -19,9 +19,9 @@ namespace Cyclone
     namespace OpenGL
     {
         class Texture3D;
-
-
-        class Entity3D : public virtual IRenderable
+    
+        class Entity3D : 
+            public virtual IRenderable
         {
 
             public:
@@ -79,27 +79,27 @@ namespace Cyclone
                 
                 /** BATCH SPATIAL PROPERTIES **/
 
-                virtual const Vector3& Offset()             const { return _modelTransform.Position(); }
+                virtual const Vector3& Offset()             const { return _transforms.Position(); }
                 /// <summary> Gets the (x, y, z) rotation angles for the entity in 3D space. </summary>
-                virtual const Vector3& Orientation()        const { return _worldTransform.Orientation(); }
+                virtual const Vector3& Orientation()        const { return _transforms.Orientation(); }
                 /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
-                virtual const Vector3& Position()           const { return _worldTransform.Position(); }
+                virtual const Vector3& Position()           const { return _transforms.Position(); }
                 /// <summary> Gets the (x, y, z) scaling of the entity in 3D space. </summary>
-                virtual const Vector3& Scale()              const { return _worldTransform.Scale(); }
+                virtual const Vector3& Scale()              const { return _transforms.Scale(); }
 
-                virtual const Vector3& Size()               const { return _modelTransform.Scale(); }
+                virtual const Vector3& Size()               const { return _transforms.Scale(); }
 		        
 
                 virtual Entity3D& Offset(const Vector3& value)
                 {
-                    _modelTransform.Position(value);
+                    _transforms.Position(value);
                     return *this;
                 }
                 virtual Entity3D& Offset(float x, float y, float z)             { return Offset(Vector3(x, y, z)); }
                 /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
                 virtual Entity3D& Orientation(const Vector3& value)
                 {
-                    _worldTransform.Orientation(value); 
+                    _transforms.Orientation(value);
                     return *this;
                 }
                 /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
@@ -110,7 +110,7 @@ namespace Cyclone
                 /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
                 virtual Entity3D& Position(const Vector3& p)
                 {
-                    _worldTransform.Position(p);
+                    _transforms.Position(p);
                     return *this;
                 }
                 /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
@@ -118,22 +118,21 @@ namespace Cyclone
                 /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
                 virtual Entity3D& Scale(const Vector3& s)
                 {
-                    _worldTransform.Scale(s);
+                    _transforms.Scale(s);
                     return *this;
                 }
                 /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
                 virtual Entity3D& Scale(float x, float y, float z = 1.0f)       { return Scale(Vector3(x, y, z)); }
                 virtual Entity3D& Size(const Vector3& value)
                 {
-                    _modelTransform.Scale(value);
+                    _transforms.Scale(value);
                     return *this;
                 }
                 virtual Entity3D& Size(float x, float y, float z)
                 {
                     return Size(Vector3(x, y, z));
                 }
-
-
+                
 
 
                 /** MATERIAL PROPERTIES **/
@@ -145,11 +144,23 @@ namespace Cyclone
 		        virtual const Texture3D* Texture()                      const { return _material.Texture(); }
 
                 /// <summary> Sets the primary color of the entity. </summary>
-                virtual Entity3D& PrimaryColor(const Color4& value)         { _material.PrimaryColor(value); return *this; }
+                virtual Entity3D& PrimaryColor(const Color4& value)
+                { 
+                    _material.PrimaryColor(value);
+                    return *this;
+                }
                 /// <summary> Sets the secondary color of the entity. </summary>
-                virtual Entity3D& SecondaryColor(const Color4& value)       { _material.SecondaryColor(value); return *this; }
+                virtual Entity3D& SecondaryColor(const Color4& value)
+                {
+                    _material.SecondaryColor(value);
+                    return *this;
+                }
                 /// <summary> Sets the texture to be used when rendering the entity (NOT YET IMPLEMENTED). </summary>
-                virtual Entity3D& Texture(const Texture3D* value)           { _material.Texture(value); return *this; }
+                virtual Entity3D& Texture(const Texture3D* value)
+                {
+                    _material.Texture(value);
+                    return *this;
+                }
 
 
                 
@@ -160,29 +171,34 @@ namespace Cyclone
                 virtual const Geometry3D& Geometry()                    const override { return _geometry; }
                 /// <summary> Gets whether the entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                const override { return _isVisible; }
-
+                /// <summary> Gets the material used to style the entity during rendering. </summary>
                 virtual const Material3D& Material()                    const override { return _material; }
-                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in model space. </summary>
-                /// <remarks>
-                ///     The model matrix represents an additional affine transformation that takes place before the world transform 
-                ///     is applied to any geometry. It defines the offset, size, and rotation of an entity in 3D model space.
-                /// </remarks>
-                virtual const Transform& ModelTransform()               const override { return _modelTransform; }
 
-                virtual const Transform& TextureTransform()             const override { return _textureTransform; }
-                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in world space. </summary>
-                /// <remarks>
-                ///     The world transform defines the position, scale, and orientation of an entity in 3D space. It is typically 
-                ///     used to apply the rotation, scaling, and translation operations that place the geometry of an entity 
-                ///     into its correct position in a three-dimensional environment called 'world' space.
-                /// </remarks>
-                virtual const Transform& WorldTransform()               const override { return _worldTransform; }
+                virtual const Transform3D& Transforms()                 const override { return _transforms; }
 
 
-                virtual Entity3D& Geometry(const Geometry3D& value)    { _geometry = value; return *this; }
+                virtual Entity3D& Geometry(const Geometry3D& value)    
+                { 
+                    _geometry = value; 
+                    return *this;
+                }
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
-                virtual Entity3D& IsVisible(bool value)                { _isVisible = value; return *this; }
-                virtual Entity3D& Material(const Material3D& value)    { _material = value; return *this; }
+                virtual Entity3D& IsVisible(bool value)
+                {
+                    _isVisible = value;
+                    return *this;
+                }
+                /// <summary> Sets the material used to style the entity during rendering. </summary>
+                virtual Entity3D& Material(const Material3D& value)
+                { 
+                    _material = value;
+                    return *this;
+                }
+                virtual Entity3D& Transforms(const Transform3D& value)
+                {
+                    _transforms = value;
+                    return *this;
+                }
 
 
 
@@ -193,12 +209,11 @@ namespace Cyclone
 
 
 
-
                 /** UTILITIES **/
                 /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
                 virtual Entity3D& Rotate(const Vector3& value)           //override
                 {
-                    _worldTransform.Rotate(value);
+                    _transforms.Rotate(value);
                     return *this;
                 }
                 /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
@@ -206,7 +221,7 @@ namespace Cyclone
                 /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
                 virtual Entity3D& Translate(const Vector3& value)        //override
                 {
-                    _worldTransform.Translate(value);
+                    _transforms.Translate(value);
                     return *this;
                 }
                 /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
@@ -215,7 +230,9 @@ namespace Cyclone
             protected:
 
                 /** PROPERTIES **/
-                virtual Geometry3D& Geometry() { return _geometry; }
+                virtual Geometry3D& Geometry()      { return _geometry; }
+                virtual Material3D& Material()      { return _material; }
+                virtual Transform3D& Transforms()   { return _transforms; }
 
 
 
@@ -236,9 +253,7 @@ namespace Cyclone
                 Geometry3D      _geometry;
                 bool            _isVisible;
                 Material3D      _material;
-                Transform       _modelTransform;
-                Transform       _textureTransform;
-                Transform       _worldTransform;
+                Transform3D     _transforms;
 
         };
     }

@@ -11,7 +11,6 @@
 #include "Buffers/VertexBuffer.h"
 #include "Interfaces/IGeometric.h"
 #include "Interfaces/IScene.h"
-#include "Libraries/Material3D.h"
 #include "Libraries/ResourceLibrary.h"
 #include "Pipelines/RenderStage3D.h"
 #include "Scenes/SceneComponent3D.h"
@@ -23,6 +22,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        class ITransformable;
         struct ResourceMapping;
 
 
@@ -78,7 +78,7 @@ namespace Cyclone
                 /** UTILITIES **/
                 void Register(ResourceMapping& map, const IGeometric& entity);
                 void Register(ResourceMapping& map, const IMaterial& material);
-                void Register(ResourceMapping& map, const IRenderable& entity);
+                void Register(ResourceMapping& map, const ITransformable& entity);
 
         };
     }

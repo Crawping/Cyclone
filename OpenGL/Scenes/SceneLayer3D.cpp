@@ -1,5 +1,7 @@
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/ITransformable.h"
 #include "Interfaces/ITransformation3D.h"
+#include "Libraries/Material3D.h"
 #include "Scenes/SceneLayer3D.h"
 #include "Scenes/Scene3D.h"
 
@@ -87,11 +89,13 @@ namespace Cyclone
 
             ResourceMapping& map = Mappings[&entity];
 
+            const ITransformable& temp = entity.Transforms();
+
             TransformData transforms =
             {
-                entity.ModelTransform().ToMatrix4x4(),
-                entity.TextureTransform().ToMatrix4x4(),
-                entity.WorldTransform().ToMatrix4x4(),
+                temp.Model().ToMatrix4x4(),
+                temp.Texture().ToMatrix4x4(),
+                temp.World().ToMatrix4x4(),
             };
 
             Transforms.Set(map.TransformIndex, transforms);
@@ -110,14 +114,7 @@ namespace Cyclone
 
             Register(map, entity.Geometry());
             Register(map, entity.Material());
-
-            map.TransformIndex = Transforms.Count();
-            Transforms.Add
-            ({
-                entity.ModelTransform().ToMatrix4x4(),
-                entity.TextureTransform().ToMatrix4x4(),
-                entity.WorldTransform().ToMatrix4x4(),
-            });
+            Register(map, entity.Transforms());
 
             map.EntityKey = Entities.Register
             ({
@@ -158,9 +155,17 @@ namespace Cyclone
                 material.SecondaryColor(),
             });
         }
-        void SceneLayer3D(ResourceMapping& map, const IRenderable& entity)
+        void SceneLayer3D::Register(ResourceMapping& map, const ITransformable& entity)
         {
-            
+            if (!map.TransformIndex) { map.TransformIndex = Transforms.Count(); }
+
+            TransformData transforms =
+            {
+                entity.Model().ToMatrix4x4(),
+                entity.Texture().ToMatrix4x4(),
+                entity.World().ToMatrix4x4(),
+            };
+            Transforms.Set(map.TransformIndex, transforms);
         }
 
     }
