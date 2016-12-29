@@ -17,7 +17,6 @@ namespace Cyclone
 
             /** DATA **/
             CoverModes          CoverMode;
-            Color4              FillColor;
             FillModes           FillMode;
             EndCaps             InitialCap;
             JoinStyles          JoinStyle;
