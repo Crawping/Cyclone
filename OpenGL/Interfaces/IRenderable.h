@@ -17,6 +17,7 @@ namespace Cyclone
     {        
         class IMaterial;
         class IRenderStage;
+        class ITransformable;
 
         class IRenderable
         {
@@ -29,12 +30,8 @@ namespace Cyclone
                 virtual bool IsVisible()                            const = 0;
                 /// <summary> Gets the material associated with the renderable entity. </summary>
                 virtual const IMaterial& Material()                 const = 0;
-                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in model space. </summary>
-                virtual const ITransformation3D& ModelTransform()   const = 0;
-
-                virtual const ITransformation3D& TextureTransform() const = 0;
-                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in world space. </summary>
-                virtual const ITransformation3D& WorldTransform()   const = 0;
+                /// <summary> Gets the transformation matrices used to orient, position, and scale a renderable entity within a scene. </summary>
+                virtual const ITransformable& Transforms()          const = 0;
 
                 virtual ~IRenderable() { }
         };
