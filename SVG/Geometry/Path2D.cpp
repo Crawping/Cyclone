@@ -40,9 +40,7 @@ namespace Cyclone
         }
         Path2D& Path2D::StrokeColor(const Color4& value)
         {
-            Material3D mat = Material();
-            mat.SecondaryColor(value);
-            Material(mat);
+            Material().SecondaryColor(value);
             return *this;
         }
         Path2D& Path2D::StrokeWidth(float value)

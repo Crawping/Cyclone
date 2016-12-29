@@ -8,7 +8,8 @@
 #include "Buffers/PathBuffer.h"
 #include "Collections/List.h"
 #include "Geometry/ControlPoint2D.h"
-#include "Geometry/Entity3D.h"
+#include "Geometry/Entity2D.h"
+#include "Geometry/Geometry2D.h"
 #include "Geometry/PathStyle.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IRenderable2D.h"
@@ -21,10 +22,9 @@ namespace Cyclone
     namespace SVG
     {
         using namespace OpenGL;
+        
 
-        class Path2D :
-            public Entity3D,
-            public virtual IRenderable2D
+        class Path2D : public Entity2D
         {
             public:
 
@@ -37,44 +37,44 @@ namespace Cyclone
                 /// </remarks>
                 virtual uint InstanceCount()            const { return ControlPoints.InstanceCount(); }
 
-                virtual CoverModes CoverMode()          const { return _style.CoverMode; }
+                //virtual CoverModes CoverMode()          const { return _style.CoverMode; }
                 /// <summary> Gets the color of the path's fill area. </summary>
-                virtual const Color4& FillColor()       const { return Material().PrimaryColor(); }
+                //virtual const Color4& FillColor()       const { return Material().PrimaryColor(); }
 
-                virtual FillModes FillMode()            const { return _style.FillMode; }
+                //virtual FillModes FillMode()            const { return _style.FillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
                 virtual uint ID()                       const { return ControlPoints.ID(); }
-                /// <summary> Gets the end cap style used to initiate path segments. </summary>
-                virtual EndCaps InitialCap()            const { return _style.InitialCap; }
-                /// <summary> Gets whether the path object has been terminated by a close command. </summary>
-                virtual bool IsClosed()                 const { return ControlPoints.IsClosed(); }
-                /// <summary> Gets whether the path has any stored commands. </summary>
-                virtual bool IsEmpty()                  const { return ControlPoints.IsEmpty(); }
-                /// <summary> Gets the joint style used to connect two path segments. </summary>
-                virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
-                /// <summary> Gets the color of the path's surrounding stroke. </summary>
-                virtual const Color4& StrokeColor()     const { return Material().SecondaryColor(); }
-                /// <summary> Gets the width of the path's surrounding stroke. </summary>
-                virtual float StrokeWidth()             const { return _style.StrokeWidth; }
-                /// <summary> Gets the end cap style used to terminate path segments. </summary>
-                virtual EndCaps TerminalCap()           const { return _style.TerminalCap; }
+                ///// <summary> Gets the end cap style used to initiate path segments. </summary>
+                //virtual EndCaps InitialCap()            const { return _style.InitialCap; }
+                ///// <summary> Gets whether the path object has been terminated by a close command. </summary>
+                //virtual bool IsClosed()                 const { return ControlPoints.IsClosed(); }
+                ///// <summary> Gets whether the path has any stored commands. </summary>
+                //virtual bool IsEmpty()                  const { return ControlPoints.IsEmpty(); }
+                ///// <summary> Gets the joint style used to connect two path segments. </summary>
+                //virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
+                ///// <summary> Gets the color of the path's surrounding stroke. </summary>
+                ////virtual const Color4& StrokeColor()     const { return Material().SecondaryColor(); }
+                ///// <summary> Gets the width of the path's surrounding stroke. </summary>
+                //virtual float StrokeWidth()             const { return _style.StrokeWidth; }
+                ///// <summary> Gets the end cap style used to terminate path segments. </summary>
+                //virtual EndCaps TerminalCap()           const { return _style.TerminalCap; }
 
 
-                SVGAPI virtual Path2D& CoverMode(CoverModes value);
+                //SVGAPI virtual Path2D& CoverMode(CoverModes value);
 
-                SVGAPI virtual Path2D& FillMode(FillModes value);
-                /// <summary> Sets the end cap style used to initiate path segments. </summary>
-                SVGAPI virtual Path2D& InitialCap(EndCaps value);
-                /// <summary> Sets the joint style used to connect two path segments. </summary>
-                SVGAPI virtual Path2D& JoinStyle(JoinStyles value);
+                //SVGAPI virtual Path2D& FillMode(FillModes value);
+                ///// <summary> Sets the end cap style used to initiate path segments. </summary>
+                //SVGAPI virtual Path2D& InitialCap(EndCaps value);
+                ///// <summary> Sets the joint style used to connect two path segments. </summary>
+                //SVGAPI virtual Path2D& JoinStyle(JoinStyles value);
 
-                SVGAPI virtual Path2D& Path(const string& value);
-                /// <summary> Sets the color of the path's surrounding stroke. </summary>
-                SVGAPI virtual Path2D& StrokeColor(const Color4& value);
-                /// <summary> Sets the width of the path's surrounding stroke. </summary>
-                SVGAPI virtual Path2D& StrokeWidth(float value);
-                /// <summary> Sets the end cap style used to terminate path segments.  </summary>
-                SVGAPI virtual Path2D& TerminalCap(EndCaps value);
+                //SVGAPI virtual Path2D& Path(const string& value);
+                ///// <summary> Sets the color of the path's surrounding stroke. </summary>
+                //SVGAPI virtual Path2D& StrokeColor(const Color4& value);
+                ///// <summary> Sets the width of the path's surrounding stroke. </summary>
+                //SVGAPI virtual Path2D& StrokeWidth(float value);
+                ///// <summary> Sets the end cap style used to terminate path segments.  </summary>
+                //SVGAPI virtual Path2D& TerminalCap(EndCaps value);
 
 
 
@@ -82,6 +82,8 @@ namespace Cyclone
                 /// <summary> Constructs a new path object that can be populated with 2D control points. </summary>
                 /// <param name="count"> The number of path instances to create. </param>
                 SVGAPI Path2D(uint count = 1);
+
+                
                 /// <summary> Destroys the path object(s) on the GPU. </summary>
                 SVGAPI ~Path2D();
 
@@ -122,7 +124,7 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 string              _path;
                 mutable bool        _paramsNeedUpdate;
-                PathStyle           _style;
+                //PathStyle           _style;
 
         };
     }

@@ -7,6 +7,30 @@ namespace Cyclone
     namespace SVG
     {
 
+        Vector<PathCommands> GeometrySVG::Commands() const
+        {
+            Vector<PathCommands> cmds = Vector<PathCommands>(ControlPoints.Count());
+            for (uint a = 0; a < ControlPoints.Count(); a++)
+                cmds(a) = ControlPoints(a).Command;
+            return cmds;
+        }
+        bool GeometrySVG::IsClosed() const
+        {
+            return !IsEmpty() && ControlPoints.Last().Command == PathCommands::Close;
+        }
+        bool GeometrySVG::IsEmpty() const
+        {
+            return ControlPoints.IsEmpty();
+        }
+        Vector<float> GeometrySVG::Parameters() const
+        {
+            Vector<float> params;
+            for (uint a = 0; a < ControlPoints.Count(); a++)
+                params.Append(ControlPoints(a).Coordinates);
+            return params;
+        }
+
+
         Vector<ControlPoint2D> Geometry2D::Line()
         {
             return

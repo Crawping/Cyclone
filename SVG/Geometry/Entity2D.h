@@ -3,68 +3,91 @@
  */
 
 #pragma once
-#include "Math/Vector2.h"
-#include "Spatial/Area.h"
-#include "Spatial/Transform.h"
+#include "SVGAPI.h"
+#include "Geometry/Entity3D.h"
+#include "Geometry/Geometry2D.h"
+#include "Geometry/PathStyle.h"
+#include "Interfaces/IRenderable2D.h"
+//#include "Math/Vector2.h"
+//#include "Spatial/Area.h"
+//#include "Spatial/Transform.h"
 
 
 
 namespace Cyclone
 {
-    namespace { using namespace Utilities; }
+    namespace 
+    { 
+        using namespace OpenGL;
+        using namespace Utilities; 
+    }
 
     namespace SVG
     {        
 
-        class Entity2D
+        class Entity2D : 
+            public Entity3D,
+            public virtual IRenderable2D
         {
+
             public:
         
-                /** PROPERTIES **/
-                virtual float X()                           const { return _displayArea.X; }
-                virtual float Y()                           const { return _displayArea.Y; }
-                                                    
-                virtual void X(float x)                           { _displayArea.X = x; }
-                virtual void Y(float y)                           { _displayArea.Y = y; }
-                                                    
-                virtual float Height()                      const { return _displayArea.Height; }
-                virtual float Width()                       const { return _displayArea.Width; }
-                                                    
-                virtual void Height(float h)                      { _displayArea.Height = h; }
-                virtual void Width(float w)                       { _displayArea.Width = w; }
-                                            
-                                            
-                virtual Vector2 Position()                      const { return _displayArea.Position(); }
-                virtual Entity2D& Position(const Vector2& p)          { _displayArea.Position(p); return *this; }
-                virtual Entity2D& Position(float x, float y)          { _displayArea.Position(x, y); return *this; }
-                                            
-                virtual Vector2 Scale()                         const { return _displayArea.Scale(); }
-                virtual Entity2D& Scale(const Vector2& s)             { _displayArea.Scale(s); return *this; }
-                virtual Entity2D& Scale(float w, float h)             { _displayArea.Scale(w, h); return *this; }
-        
+                /** STYLE PROPERTIES **/
+                virtual CoverModes CoverMode()          const { return _style.CoverMode; }
+
+                virtual FillModes FillMode()            const { return _style.FillMode; }
+                /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
+                //virtual uint ID()                       const { return ControlPoints.ID(); }
+                /// <summary> Gets the end cap style used to initiate path segments. </summary>
+                virtual EndCaps InitialCap()            const { return _style.InitialCap; }
+                /// <summary> Gets whether the path object has been terminated by a close command. </summary>
+                virtual bool IsClosed()                 const { return Geometry().IsClosed(); }
+                /// <summary> Gets whether the path has any stored commands. </summary>
+                virtual bool IsEmpty()                  const { return Geometry().IsEmpty(); }
+                /// <summary> Gets the joint style used to connect two path segments. </summary>
+                virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
+                /// <summary> Gets the width of the path's surrounding stroke. </summary>
+                virtual float StrokeWidth()             const { return _style.StrokeWidth; }
+
+                virtual const PathStyle& Style()        const { return _style; }
+                /// <summary> Gets the end cap style used to terminate path segments. </summary>
+                virtual EndCaps TerminalCap()           const { return _style.TerminalCap; }
 
 
-                virtual bool IsVisible()                    const { return _isVisible; }
+                SVGAPI virtual Entity2D& CoverMode(CoverModes value);
+
+                SVGAPI virtual Entity2D& FillMode(FillModes value);
+                /// <summary> Sets the end cap style used to initiate path segments. </summary>
+                SVGAPI virtual Entity2D& InitialCap(EndCaps value);
+                /// <summary> Sets the joint style used to connect two path segments. </summary>
+                SVGAPI virtual Entity2D& JoinStyle(JoinStyles value);
+                /// <summary> Sets the width of the path's surrounding stroke. </summary>
+                SVGAPI virtual Entity2D& StrokeWidth(float value);
+
+                SVGAPI virtual Entity2D& Style(const PathStyle& value);
+                /// <summary> Sets the end cap style used to terminate path segments.  </summary>
+                SVGAPI virtual Entity2D& TerminalCap(EndCaps value);
+
+
+
+                virtual const GeometrySVG& Geometry()   const override { return (GeometrySVG&)Entity3D::Geometry(); }
+                
         
-        
-                /** DESTRUCTOR **/
-                virtual ~Entity2D() { }
-               
             protected:
+
+                virtual GeometrySVG& Geometry()         override { return (GeometrySVG&)Entity3D::Geometry(); }
+                virtual PathStyle& Style()              { return _style; }
+
+                Entity2D() { }
+                Entity2D(const GeometrySVG& geometry) :
+                    Entity3D(geometry)
+                {
+
+                }
         
-                Area        _displayArea;
-                bool        _isVisible;
-                Transform   _modelTransform;
-                Transform   _worldTransform;
-        
-        
-        
-                /** CONSTRUCTOR **/
-                Entity2D();
-        
-        
-        
-        
+            private:
+
+                PathStyle _style;
         
         };
     }
