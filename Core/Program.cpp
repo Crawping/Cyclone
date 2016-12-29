@@ -42,7 +42,7 @@ namespace Cyclone
 
         Renderer = new GPU();
 
-		CreateRenderingWindow();		
+		CreateRenderingWindow();
 
         if (!cglLoadAPI())
         {
@@ -51,14 +51,11 @@ namespace Cyclone
         }
 
 		CreateRenderingPipeline();
-        CreateSizedResources();        
+        CreateSizedResources();
 		CreateSceneResources();
     }
     Program::~Program()
     {
-        //if (TestComponentShape) { delete TestComponentShape; }
-        //if (TestShape)          { delete TestShape; }
-        //if (PlaneXZ)            { delete PlaneXZ; }
         if (RenderTarget)       { delete RenderTarget; }
         if (RenderScene)        { delete RenderScene; }
         if (RenderPipeline)     { delete RenderPipeline; }
@@ -91,7 +88,7 @@ namespace Cyclone
             //Console::WriteLine("3. " + Renderer->Report());
             Renderer->Execute();
             //Console::WriteLine("4. " + Renderer->Report());
-            Renderer->Present();           
+            Renderer->Present();
             //Console::WriteLine("5. " + Renderer->Report());
         }
     }
@@ -168,7 +165,7 @@ namespace Cyclone
     void Program::CreateSizedResources()
     {
 		CreateRenderingTarget();
-		CreateTransformations();        
+		CreateTransformations();
     }
 	void Program::CreateTransformations()
 	{
