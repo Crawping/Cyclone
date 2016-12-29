@@ -167,6 +167,7 @@
     <ClInclude Include="Geometry\Point3D.h" />
     <ClInclude Include="Geometry\Quad3D.h" />
     <ClInclude Include="Geometry\Space3D.h" />
+    <ClInclude Include="Geometry\Transform3D.h" />
     <ClInclude Include="Geometry\Vertex.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="Interfaces\IBindable.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IRenderStage.h" />
     <ClInclude Include="Interfaces\IScene.h" />
+    <ClInclude Include="Interfaces\ITransformable.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
     <ClInclude Include="Libraries\Material3D.h" />
     <ClInclude Include="Libraries\ResourceLibrary.h" />

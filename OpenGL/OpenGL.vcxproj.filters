@@ -138,6 +138,12 @@
     <ClInclude Include="Scenes\SceneComponent.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\ITransformable.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Transform3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
