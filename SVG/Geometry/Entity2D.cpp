@@ -7,6 +7,7 @@ namespace Cyclone
     namespace SVG
     {
         
+        /** PROPERTIES **/
         Entity2D& Entity2D::CoverMode(CoverModes value)
         {
             _style.CoverMode = value;

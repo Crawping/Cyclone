@@ -23,6 +23,7 @@ namespace Cyclone
     namespace OpenGL
     {
         class ITransformable;
+        struct MaterialData;
         struct ResourceMapping;
 
 
@@ -55,8 +56,13 @@ namespace Cyclone
                 OpenGLAPI void Update(const IRenderable& entity)                       override;
 
             protected:
-                
+
+                /** UTILITIES **/
                 OpenGLAPI ResourceMapping& Register(const IRenderable& entity)          override;
+
+                OpenGLAPI virtual void Register(ResourceMapping& map, const IGeometric& entity);
+                OpenGLAPI virtual void Register(ResourceMapping& map, const IMaterial& material);
+                OpenGLAPI virtual void Register(ResourceMapping& map, const ITransformable& entity);
 
             private:
 
@@ -75,10 +81,7 @@ namespace Cyclone
 
 
 
-                /** UTILITIES **/
-                void Register(ResourceMapping& map, const IGeometric& entity);
-                void Register(ResourceMapping& map, const IMaterial& material);
-                void Register(ResourceMapping& map, const ITransformable& entity);
+                
 
         };
     }

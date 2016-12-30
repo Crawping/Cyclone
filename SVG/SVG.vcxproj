@@ -139,7 +139,9 @@
     <ClInclude Include="Geometry\Rectangle2D.h" />
     <ClInclude Include="Geometry\Scene2D.h" />
     <ClInclude Include="Interfaces\IRenderable2D.h" />
-    <ClInclude Include="RenderStage2D.h" />
+    <ClInclude Include="Pipelines\RenderStage2D.h" />
+    <ClInclude Include="Scenes\SceneComponent2D.h" />
+    <ClInclude Include="Scenes\SceneLayer2D.h" />
     <ClInclude Include="SVGAPI.h" />
     <ClInclude Include="Text\Font.h" />
     <ClInclude Include="Text\Text2D.h" />
@@ -154,7 +156,7 @@
     <ClCompile Include="Geometry\Point2D.cpp" />
     <ClCompile Include="Geometry\Rectangle2D.cpp" />
     <ClCompile Include="Geometry\Scene2D.cpp" />
-    <ClCompile Include="RenderStage2D.cpp" />
+    <ClCompile Include="Pipelines\RenderStage2D.cpp" />
     <ClCompile Include="Text\Font.cpp" />
     <ClCompile Include="Text\Text2D.cpp" />
   </ItemGroup>

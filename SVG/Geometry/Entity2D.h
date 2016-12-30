@@ -8,9 +8,6 @@
 #include "Geometry/Geometry2D.h"
 #include "Geometry/PathStyle.h"
 #include "Interfaces/IRenderable2D.h"
-//#include "Math/Vector2.h"
-//#include "Spatial/Area.h"
-//#include "Spatial/Transform.h"
 
 
 
@@ -75,9 +72,13 @@ namespace Cyclone
         
             protected:
 
+                /** PROPERTIES **/
                 virtual GeometrySVG& Geometry()         override { return (GeometrySVG&)Entity3D::Geometry(); }
                 virtual PathStyle& Style()              { return _style; }
 
+
+
+                /** CONSTRUCTORS **/
                 Entity2D() { }
                 Entity2D(const GeometrySVG& geometry) :
                     Entity3D(geometry)
@@ -87,6 +88,7 @@ namespace Cyclone
         
             private:
 
+                /** PROPERTY DATA **/
                 PathStyle _style;
         
         };

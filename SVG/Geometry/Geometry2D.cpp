@@ -7,6 +7,7 @@ namespace Cyclone
     namespace SVG
     {
 
+        /** PROPERTIES **/
         Vector<PathCommands> GeometrySVG::Commands() const
         {
             Vector<PathCommands> cmds = Vector<PathCommands>(ControlPoints.Count());
@@ -31,6 +32,8 @@ namespace Cyclone
         }
 
 
+
+        /** GEOMETRY GENERATING FUNCTIONS **/
         Vector<ControlPoint2D> Geometry2D::Line()
         {
             return
@@ -40,7 +43,6 @@ namespace Cyclone
                 { PathCommands::Close,  { } },
             };
         }
-
         Vector<ControlPoint2D> Geometry2D::Point()
         {
             return
@@ -59,7 +61,6 @@ namespace Cyclone
                 { PathCommands::Close,      { } },
             };
         }
-
         Vector<ControlPoint2D> Geometry2D::RoundedRectangle()
         {
             return
@@ -68,7 +69,6 @@ namespace Cyclone
                 { PathCommands::Close,              { } },
             };
         }
-
         Vector<ControlPoint2D> Geometry2D::Star()
         {
             return
@@ -81,5 +81,6 @@ namespace Cyclone
                 { PathCommands::Close,  { } },
             };
         }
+
     }
 }

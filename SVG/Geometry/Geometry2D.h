@@ -24,10 +24,10 @@ namespace Cyclone
             public:
 
                 /** SVG PROPERTIES **/
-                SVGAPI Vector<PathCommands> Commands()      const; //{ return Vector<PathCommands>(); }
-                SVGAPI bool IsClosed()                      const; //{ return true; }
+                SVGAPI Vector<PathCommands> Commands()      const;
+                SVGAPI bool IsClosed()                      const;
                 SVGAPI bool IsEmpty()                       const;
-                SVGAPI Vector<float> Parameters()           const; // { return Vector<float>(); }
+                SVGAPI Vector<float> Parameters()           const;
 
 
 
