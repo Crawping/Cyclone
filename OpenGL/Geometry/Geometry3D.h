@@ -37,6 +37,8 @@ namespace Cyclone
                 virtual const Volume& Bounds()      const override { return _data.Bounds; }
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
                 virtual Vector<uint> Indices()      const override { return _data.Indices; }
+                /// <summary> Gets whether the geometry is currently defined by any geometric points. </summary>
+                virtual bool IsEmpty()              const override { return _data.Points.Count(); }
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
                 virtual Vector<Vector3> Mapping()   const override { return _data.Mapping; }
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>

@@ -24,6 +24,7 @@ namespace Cyclone
         /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
         class IGeometric
         {
+
             public:
 
                 /** PROPERTIES **/
@@ -35,6 +36,8 @@ namespace Cyclone
                 ///     return an empty array.
                 /// </remarks>
                 virtual Vector<uint> Indices()      const = 0;
+                /// <summary> Gets whether the 3D geometric shape is currently defined by any points. </summary>
+                virtual bool IsEmpty()              const = 0;
                 /// <summary> Gets an array of values that map each geometric point onto some other external resource. </summary>
                 /// <remarks>
                 ///     Typically, these values will be used to map the points of some shape onto textures, although use of other
@@ -59,11 +62,6 @@ namespace Cyclone
                 /** DESTRUCTOR **/
                 virtual ~IGeometric() { }
 
-
-
-                /** UTILITIES **/
-                //virtual IGeometric3D& Rotate(const Vector3& value)      = 0;
-                //virtual IGeometric3D& Translate(const Vector3& value)   = 0;
         };
     }
 }
