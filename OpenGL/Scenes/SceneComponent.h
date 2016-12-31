@@ -22,30 +22,36 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-
-                bool IsVisible()                                                    const override { return _isVisible; }
+                virtual CullingModes CullingMode()                                  const { return _settings.CullingMode; }
+                virtual bool IsBlendEnabled()                                       const { return _settings.IsBlendEnabled; }
+                virtual bool IsDepthTestEnabled()                                   const { return _settings.IsDepthTestEnabled; }
+                virtual bool IsStencilTestEnabled()                                 const { return _settings.IsStencilTestEnabled; }
+                virtual bool IsVisible()                                            const override { return _isVisible; }
                 /// <summary> Gets whether the component has any updates queued. </summary>
-                bool NeedsUpdate()                                                  const override { return _needsUpdate; }
+                virtual bool NeedsUpdate()                                          const override { return _needsUpdate; }
 
-                const string& Name()                                                const override { return _name; }
+                virtual const string& Name()                                        const override { return _name; }
                 /// <summary> Gets the parent scene layer to which the component belongs. </summary>
-                ISceneLayer& Parent()                                               const override { return _parent; }
+                virtual ISceneLayer& Parent()                                       const override { return _parent; }
+                virtual const GraphicsPipeline* Pipeline()                          const { return _settings.Pipeline; }
+                virtual const ITransformation3D* Projection()                       const { return _settings.Projection; }
                 /// <summary> Gets the GPU configuration used to render the contents of the scene component. </summary>
-                const GraphicsSettings& Settings()                                  const { return _settings; }
+                virtual const GraphicsSettings& Settings()                          const { return _settings; }
+                virtual const FrameBuffer* Target()                                 const { return _settings.Target; }
+                virtual const ITransformation3D* View()                             const { return _settings.View; }
 
                 
-                OpenGLAPI SceneComponent& CullingMode(CullingModes value);
-                OpenGLAPI SceneComponent& IsBlendEnabled(bool value);
-                OpenGLAPI SceneComponent& IsDepthTestEnabled(bool value);
-                OpenGLAPI SceneComponent& IsStencilTestEnabled(bool value);
-                OpenGLAPI SceneComponent& IsVisible(bool value)                     override;
-                OpenGLAPI SceneComponent& Pipeline(GraphicsPipeline* value);
-                OpenGLAPI SceneComponent& Projection(ITransformation3D* value);
+                OpenGLAPI virtual SceneComponent& CullingMode(CullingModes value);
+                OpenGLAPI virtual SceneComponent& IsBlendEnabled(bool value);
+                OpenGLAPI virtual SceneComponent& IsDepthTestEnabled(bool value);
+                OpenGLAPI virtual SceneComponent& IsStencilTestEnabled(bool value);
+                OpenGLAPI virtual SceneComponent& IsVisible(bool value)                     override;
+                OpenGLAPI virtual SceneComponent& Pipeline(GraphicsPipeline* value);
+                OpenGLAPI virtual SceneComponent& Projection(ITransformation3D* value);
                 /// <summary> Sets the GPU configuration used to render the contents of the scene component. </summary>
-                OpenGLAPI SceneComponent& Settings(const GraphicsSettings& value)   override;
-                OpenGLAPI SceneComponent& Target(FrameBuffer* value);
-                OpenGLAPI SceneComponent& View(ITransformation3D* value);
-
+                OpenGLAPI virtual SceneComponent& Settings(const GraphicsSettings& value)   override;
+                OpenGLAPI virtual SceneComponent& Target(FrameBuffer* value);
+                OpenGLAPI virtual SceneComponent& View(ITransformation3D* value);
 
 
 
