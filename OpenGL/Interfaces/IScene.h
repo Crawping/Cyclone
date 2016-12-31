@@ -5,7 +5,6 @@
 #pragma once
 #include "Collections/List.h"
 #include "Interfaces/IUpdatable.h"
-#include "Math/Vector3.h"
 #include <string>
 
 
@@ -16,12 +15,15 @@ namespace Cyclone
 
     namespace OpenGL
     {
+
+        /** FORWARD DECLARATIONS **/
+        class IRenderable;
         class IRenderStage;
         class ISceneLayer;
         struct BufferBinding;
+        struct GraphicsSettings;
         struct ResourceMapping;
 
-        class IRenderable;
 
 
 
