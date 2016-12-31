@@ -18,6 +18,8 @@ namespace Cyclone
             public:
                 /// <summary> Gets the numeric index of the corresponding data element within the registry. </summary>
                 int Index()     const { return Registry->IndexOf(_key); }
+                /// <summary> Gets whether the key is valid for use. </summary>
+                bool IsValid()  const { return (_key >= 0) && Registry; }
                 /// <summary> Gets the integer key used to index into the registry's search tree. </summary>
                 int Key()       const { return _key; }
 
@@ -90,7 +92,9 @@ namespace Cyclone
                 const BST<int, T>*  Registry;
         };
 
-        /// <summary> A class that represents a collection of unique elements that are associated with automatically generated indexing keys. </summary>
+
+
+        /// <summary> A class that represents a collection of elements that are associated with automatically generated indexing keys. </summary>
         /// <typeparam name="T"> The type name of the data elements held by the registry. </typeparam>
         template<typename T>
         class Registry : public ICollection<T>
@@ -99,7 +103,7 @@ namespace Cyclone
                 
                 /** PROPERTIES **/
                 /// <summary> Gets the number of data elements that stored within the registry. </summary>
-                virtual uint Count()        const { return Data.Count(); }
+                virtual uint Count()        const override { return Data.Count(); }
                 /// <summary> Gets a list of all data elements stored within the registry. </summary>
                 virtual List<T> Values()    const { return Data.Values(); }
 
@@ -118,18 +122,13 @@ namespace Cyclone
                 /// <param name="key"> The specific key to be tested. </param>
                 /// <returns> A Boolean <c>true</c> if the registry contains data associated with the inputted <paramref name="key"/>, or <c>false</c> otherwise. </returns>
                 virtual bool Contains(const RegistryKey<T>& key)            const { return Data.Contains(key.Key()); }
-                /// <summary> Inserts a new data element into the registry, if an identical element isn't already stored. </summary>
+                /// <summary> Inserts a new data element into the registry. </summary>
                 /// <param name="value"> A new data element to be registered. </param>
                 /// <returns> A special key unique to the inputted <paramref name="value"/> that can be used to index into the registry. </returns>
                 virtual RegistryKey<T> Register(const T& value)
                 {
-                    int key = FindValue(value);
-                    if (key < 0)
-                    {
-                        key = CreateKey();
-                        Data.Insert(key, value);
-                    }
-
+                    int key = CreateKey();
+                    Data.Insert(key, value);
                     return RegistryKey<T>(key, &Data);
                 }
                 /// <summary> Removes the data associated with a specific key from the registry. </summary>
