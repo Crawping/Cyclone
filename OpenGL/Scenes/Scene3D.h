@@ -22,13 +22,13 @@ namespace Cyclone
         {
             uint IndicesCount;
             uint IndicesIndex;
-            uint TransformIndex;
             uint VertexCount;
             uint VertexIndex;
 
             RegistryKey<EntityData>     EntityKey;
             RegistryKey<MaterialData>   MaterialKey;
             VertexTopologies            Topology;
+            RegistryKey<TransformData>  TransformKey;
         };
 
 

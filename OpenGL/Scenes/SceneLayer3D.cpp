@@ -2,6 +2,7 @@
 #include "Interfaces/ITransformable.h"
 #include "Interfaces/ITransformation3D.h"
 #include "Libraries/Material3D.h"
+#include "Pipelines/RenderStage3D.h"
 #include "Scenes/SceneLayer3D.h"
 #include "Scenes/Scene3D.h"
 
@@ -88,18 +89,9 @@ namespace Cyclone
             if (!Mappings.Contains(&entity)) { return; }
 
             ResourceMapping& map = Mappings[&entity];
-
-            const ITransformable& temp = entity.Transforms();
-
-            TransformData transforms =
-            {
-                temp.Model().ToMatrix4x4(),
-                temp.Texture().ToMatrix4x4(),
-                temp.World().ToMatrix4x4(),
-            };
-
-            Transforms.Set(map.TransformIndex, transforms);
-            Materials.Set(map.MaterialKey, entity.Material().Data());
+            Register(map, entity.Material());
+            Register(map, entity.Transforms());
+            Register(map, entity);
         }
 
 
@@ -115,12 +107,7 @@ namespace Cyclone
             Register(map, entity.Geometry());
             Register(map, entity.Material());
             Register(map, entity.Transforms());
-
-            map.EntityKey = Entities.Register
-            ({
-                (uint)map.MaterialKey.Index(),
-                map.TransformIndex,
-            });
+            Register(map, entity);
 
             return map;
         }
@@ -149,23 +136,37 @@ namespace Cyclone
         }
         void SceneLayer3D::Register(ResourceMapping& map, const IMaterial& material)
         {
-            map.MaterialKey = Materials.Register
-            ({
-                material.PrimaryColor(),
-                material.SecondaryColor(),
-            });
+            if (map.MaterialKey.IsValid())
+                Materials.Set(map.MaterialKey, material.Data());
+            else
+                map.MaterialKey = Materials.Register(material.Data());
+        }
+        void SceneLayer3D::Register(ResourceMapping& map, const IRenderable& entity)
+        {
+            EntityData data =
+            {
+                (uint)map.MaterialKey.Index(),
+                (uint)map.TransformKey.Index(),
+            };
+
+            if (map.EntityKey.IsValid())
+                Entities.Set(map.EntityKey, data);
+            else
+                map.EntityKey = Entities.Register(data);
         }
         void SceneLayer3D::Register(ResourceMapping& map, const ITransformable& entity)
         {
-            if (!map.TransformIndex) { map.TransformIndex = Transforms.Count(); }
-
             TransformData transforms =
             {
                 entity.Model().ToMatrix4x4(),
                 entity.Texture().ToMatrix4x4(),
                 entity.World().ToMatrix4x4(),
             };
-            Transforms.Set(map.TransformIndex, transforms);
+
+            if (map.TransformKey.IsValid())
+                Transforms.Set(map.TransformKey, transforms);
+            else
+                map.TransformKey = Transforms.Register(transforms);
         }
 
     }

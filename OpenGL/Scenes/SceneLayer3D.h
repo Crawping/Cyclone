@@ -4,15 +4,11 @@
 
 #pragma once
 #include "Collections/BST.h"
-#include "GraphicsSettings.h"
 #include "Buffers/IndexBuffer.h"
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
-#include "Interfaces/IGeometric.h"
-#include "Interfaces/IScene.h"
 #include "Libraries/ResourceLibrary.h"
-#include "Pipelines/RenderStage3D.h"
 #include "Scenes/SceneComponent3D.h"
 
 
@@ -22,6 +18,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        class IGeometric;
+        class IMaterial;
         class ITransformable;
         struct MaterialData;
         struct ResourceMapping;
@@ -62,6 +60,7 @@ namespace Cyclone
 
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IGeometric& entity);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IMaterial& material);
+                OpenGLAPI virtual void Register(ResourceMapping& map, const IRenderable& entity);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const ITransformable& entity);
 
             private:
@@ -70,7 +69,7 @@ namespace Cyclone
                 ResourceLibrary<EntityData>         Entities;
                 IndexBuffer                         Indices;
                 ResourceLibrary<MaterialData>       Materials;
-                UniformBuffer<TransformData>        Transforms;
+                ResourceLibrary<TransformData>      Transforms;
                 VertexBuffer<Vertex::Standard>      Vertices;
 
 
