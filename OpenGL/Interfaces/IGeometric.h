@@ -30,7 +30,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the bounding volume of the 3D geometric shape. </summary>
                 virtual const Volume& Bounds()      const = 0;
-
+                /// <summary> Gets the number of points that are used to define the 3D geometric shape. </summary>
                 virtual uint Count()                const = 0;
                 /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
                 /// <remarks>
