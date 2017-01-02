@@ -8,6 +8,7 @@
 #include "Collections/Set.h"
 #include "Interfaces/IScene.h"
 #include "Interfaces/IGraphicsBuffer.h"
+#include "Interfaces/ITransformation3D.h"
 
 
 
@@ -40,7 +41,7 @@ namespace Cyclone
                 virtual const FrameBuffer* Target()                                 const { return _settings.Target; }
                 virtual const ITransformation3D* View()                             const { return _settings.View; }
 
-                
+
                 OpenGLAPI virtual SceneComponent& CullingMode(CullingModes value);
                 OpenGLAPI virtual SceneComponent& IsBlendEnabled(bool value);
                 OpenGLAPI virtual SceneComponent& IsDepthTestEnabled(bool value);
@@ -58,6 +59,7 @@ namespace Cyclone
                 /** UTILITIES **/
                 OpenGLAPI virtual bool Contains(const IRenderable& entity)          const override;
                 OpenGLAPI virtual void Insert(const IRenderable& entity)            override;
+                OpenGLAPI virtual void Remove(const IRenderable& entity);
                 OpenGLAPI virtual void Update()                                     override;
 
             protected:
@@ -66,6 +68,8 @@ namespace Cyclone
 
 
                 OpenGLAPI SceneComponent(const string& name, ISceneLayer& parent);
+
+                ResourceMapping& Register(const IRenderable& entity) override { return Parent().Register(entity); }
 
             private:
 

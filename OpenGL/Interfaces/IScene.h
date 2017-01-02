@@ -30,6 +30,7 @@ namespace Cyclone
         /// <summary> An interface that represents elements of a renderable scene with common rendering settings. </summary>
         class ISceneComponent : public virtual IUpdatable
         {
+
             public:
             
                 /** PROPERTIES **/
@@ -51,13 +52,7 @@ namespace Cyclone
                 virtual void Update()                                               = 0;
                 virtual void Update(const IRenderable& entity)                      = 0;
 
-
-            protected:
-
-                virtual ResourceMapping& Register(const IRenderable& entity)
-                {
-                    return ((ISceneComponent&)Parent()).Register(entity);
-                }
+                virtual ResourceMapping& Register(const IRenderable& entity)        = 0;
 
         };
 

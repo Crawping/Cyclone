@@ -54,6 +54,11 @@ namespace Cyclone
             Entities.Insert(&entity);
             NeedsUpdate(true);
         }
+        void SceneComponent::Remove(const IRenderable& entity)
+        {
+            Entities.Remove(&entity);
+            NeedsUpdate(true);
+        }
         void SceneComponent::Update()
         {
             _needsUpdate = false;
