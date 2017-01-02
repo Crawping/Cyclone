@@ -352,7 +352,7 @@ namespace Cyclone
 
 
                         /** OPERATORS **/
-                        const T& operator *()       const override { return Element->Value; }
+                        T& operator *()             const override { return Element->Value; }
                         Iterator& operator++()      override { Element = Element->Next; _index++; return *this; }
                         Iterator& operator++(int)   override { Element = Element->Next; _index++; return *this; }
 

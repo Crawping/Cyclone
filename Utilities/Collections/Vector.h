@@ -77,7 +77,7 @@ namespace Cyclone
                             else
                                 return false;
                         }
-                        const T& operator *()                                   const override { return (*Collection)(Index()); }
+                        T& operator *()                                         const override { return (*Collection)(Index()); }
                         Iterator& operator ++()                                 override { _index++; return *this; }
 
                     private:
@@ -298,7 +298,7 @@ namespace Cyclone
                             else
                                 return false;
                         }
-                        const T& operator *()                                   const override { return (*Collection)(Index()); }
+                        T& operator *()                                         const override { return (*Collection)(Index()); }
                         Iterator& operator ++()                                 override { _index++; return *this; }
 
                     private:

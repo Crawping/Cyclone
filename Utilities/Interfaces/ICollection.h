@@ -66,7 +66,7 @@ namespace Cyclone
                 virtual bool operator ==(const ICollectionIterator<T>& other)   const = 0;
                 virtual bool operator !=(const ICollectionIterator<T>& other)   const { return !operator ==(other); }
 
-                virtual const T& operator *()                                   const = 0;
+                virtual T& operator *()                                         const = 0;
 
                 virtual ICollectionIterator& operator ++()                      = 0;
                 virtual ICollectionIterator& operator ++(int)                   { return operator ++(); }
