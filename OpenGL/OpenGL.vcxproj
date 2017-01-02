@@ -203,6 +203,7 @@
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexArray.cpp" />
     <ClCompile Include="Geometry\Geometry3D.cpp" />
+    <ClCompile Include="Geometry\Mesh3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />

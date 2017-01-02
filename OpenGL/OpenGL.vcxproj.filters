@@ -209,6 +209,9 @@
     <ClCompile Include="Scenes\SceneComponent.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Geometry\Mesh3D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
