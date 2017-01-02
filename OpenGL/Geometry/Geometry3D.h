@@ -1,4 +1,4 @@
-/* CHANGELOG 
+/* CHANGELOG
  * Written by Josh Grooms on 20161031
  */
 
@@ -35,10 +35,10 @@ namespace Cyclone
                 /** GEOMETRIC PROPERTIES **/
                 /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
                 virtual const Volume& Bounds()      const override { return _data.Bounds; }
+
+                virtual uint Count()                const override { return _data.Points.Count(); }
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
                 virtual Vector<uint> Indices()      const override { return _data.Indices; }
-                /// <summary> Gets whether the geometry is currently defined by any geometric points. </summary>
-                virtual bool IsEmpty()              const override { return _data.Points.Count(); }
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
                 virtual Vector<Vector3> Mapping()   const override { return _data.Mapping; }
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>
@@ -102,7 +102,7 @@ namespace Cyclone
                 OpenGLAPI static Geometry3D Cube(bool isIndexed = false);
                 /// <summary> A cylinder with unit radius and height centered on the origin (0, 0, 0). </summary>
                 /// <returns> An array of standard vertices that define a cylinder in 3D space. </returns>
-                /// <param name="nfaces"> 
+                /// <param name="nfaces">
                 ///     The desired number of quad faces that make up the cylinder.
                 ///     <para> </para>
                 ///     This number cannot be less than 3, as the cylinder would then be degenerate.
@@ -122,7 +122,7 @@ namespace Cyclone
                 OpenGLAPI static Geometry3D Quad(bool isIndexed = false);
                 /// <summary> A sphere with unit radius centered on the origin (0, 0, 0). </summary>
                 /// <returns> An array of standard vertices that define a sphere in 3D space. </returns>
-                /// <param name="n"> 
+                /// <param name="n">
                 ///     The number of times the vertices of a regular icosahedron are tessellated to approximate the sphere.
                 /// </param>
                 OpenGLAPI static Geometry3D Sphere(uint n);
@@ -139,11 +139,11 @@ namespace Cyclone
 
                 OpenGLAPI void Clear();
                 /// <summary> Divides inputted triangles into smaller ones with unshared vertices. </summary>
-                /// <returns> 
-                ///     An array of standard vertices defining the same geometry as the input, but with an increased triangle count. 
+                /// <returns>
+                ///     An array of standard vertices defining the same geometry as the input, but with an increased triangle count.
                 /// </returns>
                 /// <param name="vertices"> An array of unshared vertices that define the triangles to be tessellated. </param>
-                /// <param name="n"> 
+                /// <param name="n">
                 ///     The number of times tessellation will be recursively performed on the inputted gometry.
                 ///     <para> </para>
                 ///     Note that each tessellation step returns 12 times the number of inputted vertices.
@@ -158,8 +158,7 @@ namespace Cyclone
                 }
 
             protected:
-                
-                /** PROPERTIES **/
+
                 /// <summary> Sets the (x, y, z) position of the back-lower-left bounding box corner in 3D space. </summary>
                 virtual Geometry3D& BoundaryPosition(const Vector3& value)
                 {
@@ -171,10 +170,10 @@ namespace Cyclone
                     return Bounds(Volume(Bounds().Position(), value));
                 }
                 /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
-                virtual Geometry3D& Bounds(const Volume& value) 
-                { 
-                    _data.Bounds = value; 
-                    return *this; 
+                virtual Geometry3D& Bounds(const Volume& value)
+                {
+                    _data.Bounds = value;
+                    return *this;
                 }
 
             private:
