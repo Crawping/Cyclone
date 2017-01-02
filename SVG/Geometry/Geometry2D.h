@@ -3,10 +3,11 @@
  */
 
 #pragma once
+#include "SVGAPI.h"
 #include "Collections/Vector.h"
 #include "Geometry/Geometry3D.h"
 #include "Geometry/ControlPoint2D.h"
-#include "SVGAPI.h"
+#include "Interfaces/IGeometric2D.h"
 
 
 
@@ -18,53 +19,58 @@ namespace Cyclone
     namespace SVG
     {
 
-        class GeometrySVG : public Geometry3D
+        class Geometry2D : public virtual IGeometric2D
         {
 
             public:
 
-                /** SVG PROPERTIES **/
-                SVGAPI Vector<PathCommands> Commands()      const;
-                SVGAPI bool IsClosed()                      const;
-                SVGAPI bool IsEmpty()                       const;
-                SVGAPI Vector<float> Parameters()           const;
+                /** PROPERTIES **/
+                const Volume& Bounds()                      const override { return _bounds; }
+                SVGAPI Vector<PathCommands> Commands()      const override;
+                uint Count()                                const override { return ControlPoints.Count(); }
+                SVGAPI Vector<uint> Indices()               const override;
+                SVGAPI bool IsClosed()                      const override;
+                SVGAPI bool IsEmpty()                       const override;
+                SVGAPI Vector<Vector3> Mapping()            const override;
+                SVGAPI Vector<Vector3> Normals()            const override;
+                SVGAPI Vector<Vector3> Points()             const override;
+                SVGAPI Vector<float> Parameters()           const override;
+                VertexTopologies Topology()                 const override { return _topology; }
+                
+                SVGAPI Geometry2D& Bounds(const Volume& value);
+                SVGAPI Geometry2D& Topology(VertexTopologies value);
 
 
 
-                /** 3D GEOMETRY PROPERTIES **/
-                Vector<uint> Indices()              const override { return Vector<uint>(); }
-                Vector<Vector3> Mapping()           const override { return Vector<Vector3>(); }
-                Vector<Vector3> Normals()           const override { return Vector<Vector3>(); }
-                Vector<Vector3> Points()            const override { return Vector<Vector3>(); }
-                //VertexTopologies Topology()         const override { return VertexTopologies::Path; }
+                /** CONSTRUCTOR **/
+                SVGAPI Geometry2D();
 
 
 
+                /** STATIC CONSTRUCTORS **/
+                SVGAPI static Geometry2D Line();
+                SVGAPI static Geometry2D Point();
+                SVGAPI static Geometry2D Rectangle();
+                SVGAPI static Geometry2D RoundedRectangle();
+                SVGAPI static Geometry2D Star();
+                SVGAPI static Geometry2D Triangle();
+
+
+
+                /** UTILITIES **/
+                SVGAPI void Append(const ControlPoint2D& point);
+                //SVGAPI void Insert(uint index, const ControlPoint2D& point);
+                SVGAPI void Set(uint index, const ControlPoint2D& point);
+                SVGAPI void Remove(uint index);
+                SVGAPI void Clear();
 
             private:
 
-                Vector<ControlPoint2D> ControlPoints;
+                Volume                  _bounds;
+                VertexTopologies        _topology;
+                Vector<ControlPoint2D>  ControlPoints;
 
         };
 
-
-        namespace Geometry2D
-        {
-
-            //SVGAPI Vector<ControlPoint2D> Circle();
-
-            SVGAPI Vector<ControlPoint2D> Line();
-
-            SVGAPI Vector<ControlPoint2D> Point();
-
-            SVGAPI Vector<ControlPoint2D> Rectangle();
-
-            SVGAPI Vector<ControlPoint2D> RoundedRectangle();
-            
-            SVGAPI Vector<ControlPoint2D> Star();
-
-            SVGAPI Vector<ControlPoint2D> Triangle();
-
-        }
     }
 }

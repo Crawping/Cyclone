@@ -22,9 +22,9 @@ namespace Cyclone
                 /// <summary> Gets the number of pixels per font em unit. </summary>
                 uint PixelsPerEm()              const { return _pixelsPerEm; }
                 /// <summary> Gets an enumerator representing the styling that is applied to the font when rendered. </summary>
-                FontStyles Style()              const { return _style; }
+                FontStyles FontStyle()          const { return _fontStyle; }
 
-                SVGAPI Font& Style(FontStyles value);
+                SVGAPI Font& FontStyle(FontStyles value);
 
 
 
@@ -39,17 +39,20 @@ namespace Cyclone
                 /// <summary> An empty implementation that prevents frivolously rendering an entire character collection. </summary>
                 void Fill()                     const override { }
                 void Stroke()                   const override { }
+                SVGAPI void Update()            const override;
 
             protected:
 
-                SVGAPI void UpdateParameters()  const override;
+                SVGAPI void UpdateGlyphs()      const;
 
             private:
 
                 /** PROPERTY DATA **/
-                string      _name;
-                uint        _pixelsPerEm;
-                FontStyles  _style;
+                FontStyles      _fontStyle;
+                string          _name;
+                uint            _pixelsPerEm;
+
+                mutable bool    NeedsUpdate;
 
         };
     }

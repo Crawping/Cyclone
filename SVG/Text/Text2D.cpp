@@ -12,7 +12,7 @@ namespace Cyclone
         /** PROPERTIES **/
         Text2D& Text2D::FontStyle(FontStyles value)
         {
-            _font.Style(value);
+            _font.FontStyle(value);
             return *this;
         }
         Text2D& Text2D::Text(const string& value)
@@ -36,33 +36,6 @@ namespace Cyclone
 
 
         /** RENDERING UTILITIES **/
-        void Text2D::Fill() const
-        {
-            if (!IsVisible()) { return; }
-
-            nvStencilFillPathInstanced
-            (
-                _text.size(),
-                NumericFormats::UByte,
-                _text.c_str(),
-                _font.ID(),
-                FillMode(),
-                ~0,
-                TransformTypes::TranslateX,
-                _kerning.ToArray()
-            );
-
-            nvCoverFillPathInstanced
-            (
-                _text.size(),
-                NumericFormats::UByte,
-                _text.c_str(),
-                _font.ID(),
-                CoverMode(),
-                TransformTypes::TranslateX,
-                _kerning.ToArray()
-            );
-        }
         void Text2D::Stroke() const
         {
 
@@ -76,6 +49,19 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
+        void Text2D::CoverFill()                const
+        {
+            nvCoverFillPathInstanced
+            (
+                _text.size(),
+                NumericFormats::UByte,
+                _text.c_str(),
+                _font.ID(),
+                CoverMode(),
+                TransformTypes::TranslateX,
+                _kerning.ToArray()
+            );
+        }
         void Text2D::QueryKerningValues()
         {
             _kerning = Vector<float>(Text().size() + 1);
@@ -116,8 +102,23 @@ namespace Cyclone
                 height = Math::Max(height, dims(a + 1));
             }
 
-            //Geometry().
-            //BoundarySize(Vector3(width, _font.PixelsPerEm(), 0.0f));
+            Volume bounds = Geometry().Bounds();
+            bounds.Size(width, _font.PixelsPerEm(), 0.0f);
+            Geometry().Bounds(bounds);
+        }
+        void Text2D::StencilFill()              const
+        {
+            nvStencilFillPathInstanced
+            (
+                _text.size(),
+                NumericFormats::UByte,
+                _text.c_str(),
+                _font.ID(),
+                FillMode(),
+                ~0,
+                TransformTypes::TranslateX,
+                _kerning.ToArray()
+            );
         }
 
     }

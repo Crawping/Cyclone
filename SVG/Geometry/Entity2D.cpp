@@ -1,4 +1,5 @@
-#include "Entity2D.h"
+#include "NVPR.h"
+#include "Geometry/Entity2D.h"
 
 
 
@@ -21,16 +22,19 @@ namespace Cyclone
         Entity2D& Entity2D::InitialCap(EndCaps value)
         {
             _style.InitialCap = value;
+            NeedsUpdate = true;
             return *this;
         }
         Entity2D& Entity2D::JoinStyle(JoinStyles value)
         {
             _style.JoinStyle = value;
+            NeedsUpdate = true;
             return *this;
         }
         Entity2D& Entity2D::StrokeWidth(float value)
         {
             _style.StrokeWidth = value;
+            NeedsUpdate = true;
             return *this;
         }
         Entity2D& Entity2D::Style(const PathStyle& value)
@@ -46,7 +50,72 @@ namespace Cyclone
         Entity2D& Entity2D::TerminalCap(EndCaps value)
         {
             _style.TerminalCap = value;
+            NeedsUpdate = true;
             return *this;
+        }
+
+
+
+        /** CONSTRUCTORS & DESTRUCTOR **/
+        Entity2D::Entity2D(uint count) : 
+            _id(nvGenPaths(count)),
+            _instanceCount(count),
+            NeedsUpdate(true)
+        {
+
+        }
+        Entity2D::~Entity2D()
+        {
+            if (_id) { nvDeletePaths(_id, _instanceCount); }
+        }
+
+
+
+        /** UTILITIES **/
+        void Entity2D::Fill() const
+        {
+            if (!IsVisible()) { return; }
+            StencilFill();
+            CoverFill();
+        }
+        void Entity2D::Stroke() const
+        {
+            if (!IsVisible()) { return; }
+            StencilStroke();
+            CoverStroke();
+        }
+        void Entity2D::Update() const
+        {
+            if (!NeedsUpdate) { return; }
+            UpdateParameters();
+            NeedsUpdate = false;
+        }
+
+
+
+        /** PROTECTED UTILITIES **/
+        void Entity2D::CoverFill()          const
+        {
+            nvCoverFillPath(ID(), CoverMode());
+        }
+        void Entity2D::CoverStroke()        const
+        {
+            nvCoverStrokePath(ID(), CoverMode());
+        }
+        void Entity2D::StencilFill()        const
+        {
+            nvStencilFillPath(ID(), FillMode(), 0x1F);
+        }
+        void Entity2D::StencilStroke()      const
+        {
+            nvStencilStrokePath(ID(), 0x1, ~0);
+        }
+        void Entity2D::UpdateParameters()   const
+        {
+            nvPathParameteri(ID(), PathParameters::JoinStyle, JoinStyle());
+            nvPathParameteri(ID(), PathParameters::InitialEndCap, InitialCap());
+            nvPathParameterf(ID(), PathParameters::StrokeWidth, StrokeWidth());
+            nvPathParameteri(ID(), PathParameters::TerminalEndCap, TerminalCap());
         }
 
     }

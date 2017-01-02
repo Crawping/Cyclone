@@ -10,10 +10,10 @@ namespace Cyclone
     namespace SVG
     {
         /** PROPERTIES **/
-        Font& Font::Style(FontStyles value)
+        Font& Font::FontStyle(FontStyles value)
         {
-            _style = value;
-            ParamsNeedUpdate(true);
+            _fontStyle = value;
+            NeedsUpdate = true;
             return *this;
         }
 
@@ -22,10 +22,10 @@ namespace Cyclone
         Font::Font(const string& name) :
             Path2D(256),
             _name(name),
-            _pixelsPerEm(16)
+            _pixelsPerEm(16),
+            NeedsUpdate(true)
         {
-            ParamsNeedUpdate(true);
-            UpdateParameters();
+            UpdateGlyphs();
 
             Vector<float, 4> metrics(0);
             nvGetPathMetricRange
@@ -36,25 +36,30 @@ namespace Cyclone
                 &metrics(0)
             );
 
-            //Volume newBounds = Bounds();
-            //newBounds.Width = metrics(2) - metrics(0);
-            //newBounds.Height = metrics(3) - metrics(1);
-            //Bounds(newBounds);
+            Volume newBounds = Geometry().Bounds();
+            newBounds.Width = metrics(2) - metrics(0);
+            newBounds.Height = metrics(3) - metrics(1);
+            Geometry().Bounds(newBounds);
         }
 
 
-
-
-        void Font::UpdateParameters() const
+        void Font::Update() const
         {
-            if (!ParamsNeedUpdate()) { return; }
+            if (NeedsUpdate)
+                UpdateGlyphs();
 
+            NeedsUpdate = false;
+            Path2D::Update();
+        }
+
+        void Font::UpdateGlyphs() const
+        {
             nvPathGlyphRange
             (
                 ID(),
                 GL_SYSTEM_FONT_NAME_NV,
                 Name().c_str(),
-                Style(),
+                FontStyle(),
                 0,
                 256,
                 GL_USE_MISSING_GLYPH_NV,

@@ -5,13 +5,11 @@
 #pragma once
 #include "EnumerationsSVG.h"
 #include "SVGAPI.h"
-#include "Buffers/PathBuffer.h"
 #include "Collections/List.h"
 #include "Geometry/ControlPoint2D.h"
 #include "Geometry/Entity2D.h"
 #include "Geometry/Geometry2D.h"
 #include "Geometry/PathStyle.h"
-#include "Interfaces/IRenderable.h"
 #include "Interfaces/IRenderable2D.h"
 #include "Spatial/Transform.h"
 
@@ -29,15 +27,15 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                /// <summary> Gets the number of individual path instances that have been allocated on the GPU. </summary>
-                /// <remarks>
-                ///     For almost all imaging-related paths, this property will return a value of <c>1</c>. Values greater
-                ///     than <c>1</c> indicate the number of times that a path object is being instanced on the GPU, which
-                ///     is almost exclusively used only by text rendering.
-                /// </remarks>
-                virtual uint InstanceCount()            const { return ControlPoints.InstanceCount(); }
+                virtual const Volume& Bounds()          const { return _geometry.Bounds(); }
+                virtual const Geometry2D& Geometry()    const override { return _geometry; }
+                /// <summary> Gets whether the path object has been terminated by a close command. </summary>
+                virtual bool IsClosed()                 const { return Geometry().IsClosed(); }
+                /// <summary> Gets whether the path has any stored commands. </summary>
+                virtual bool IsEmpty()                  const { return Geometry().IsEmpty(); }
 
-                virtual uint ID()                       const { return ControlPoints.ID(); }
+                SVGAPI virtual Path2D& Size(const Vector3& value)       override;
+                SVGAPI virtual Path2D& Offset(const Vector3& value)     override;
 
 
 
@@ -46,7 +44,7 @@ namespace Cyclone
                 /// <param name="count"> The number of path instances to create. </param>
                 SVGAPI Path2D(uint count = 1);
 
-                
+                SVGAPI Path2D(const Geometry2D& geometry);
                 /// <summary> Destroys the path object(s) on the GPU. </summary>
                 SVGAPI ~Path2D();
 
@@ -60,33 +58,23 @@ namespace Cyclone
                 /// <param name="points"> A collection of 2D control points containing the path commands and associated input arguments. </param>
                 SVGAPI virtual Path2D& Add(const ICollection<ControlPoint2D>& points);
                 SVGAPI virtual void Clear();
-
-                SVGAPI virtual void Fill()              const override;
-                SVGAPI virtual void Stroke()            const override;
-                SVGAPI virtual void Update()            const override;
+                SVGAPI virtual void Update() const override;
 
             protected:
 
-                /** DATA **/
-                PathBuffer              ControlPoints;
-
-
-
                 /** PROPERTIES **/
-                bool ParamsNeedUpdate()                 const { return _paramsNeedUpdate; }
-
-                void ParamsNeedUpdate(bool value)       const { _paramsNeedUpdate = _paramsNeedUpdate ? true : value; }
-
-
+                Geometry2D& Geometry()                 { return _geometry; }
 
                 /** UTILITIES **/
-                SVGAPI virtual void UpdateParameters()  const;
+                SVGAPI virtual void UpdateGeometry()    const;
 
             private:
 
                 /** PROPERTY DATA **/
-                string              _path;
+                Geometry2D          _geometry;
                 mutable bool        _paramsNeedUpdate;
+
+                mutable bool        NeedsUpdate;
 
         };
     }

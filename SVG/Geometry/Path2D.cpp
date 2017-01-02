@@ -11,48 +11,16 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Path2D& Path2D::CoverMode(CoverModes value)
+        Path2D& Path2D::Offset(const Vector3& value)
         {
-            _style.CoverMode = value;
+            Entity2D::Offset(value);
+            NeedsUpdate = true;
             return *this;
         }
-        Path2D& Path2D::FillMode(FillModes value)
+        Path2D& Path2D::Size(const Vector3& value)
         {
-            _style.FillMode = value;
-            return *this;
-        }
-        Path2D& Path2D::InitialCap(EndCaps value)
-        {
-            _style.InitialCap = value;
-            ParamsNeedUpdate(true);
-            return *this;
-        }
-        Path2D& Path2D::JoinStyle(JoinStyles value)
-        {
-            _style.JoinStyle = value;
-            ParamsNeedUpdate(true);
-            return *this;
-        }
-        Path2D& Path2D::Path(const string& value)
-        {
-            _path = value;
-            return *this;
-        }
-        Path2D& Path2D::StrokeColor(const Color4& value)
-        {
-            Material().SecondaryColor(value);
-            return *this;
-        }
-        Path2D& Path2D::StrokeWidth(float value)
-        {
-            _style.StrokeWidth = value;
-            ParamsNeedUpdate(true);
-            return *this;
-        }
-        Path2D& Path2D::TerminalCap(EndCaps value)
-        {
-            _style.TerminalCap = value;
-            ParamsNeedUpdate(true);
+            Entity2D::Size(value);
+            NeedsUpdate = true;
             return *this;
         }
 
@@ -60,12 +28,19 @@ namespace Cyclone
 
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
-            ControlPoints(count),
-            _paramsNeedUpdate(false)
+            Entity2D(count),
+            _paramsNeedUpdate(false),
+            NeedsUpdate(true)
         {
 
         }
+        Path2D::Path2D(const Geometry2D& geometry) :
+            _geometry(geometry),
+            _paramsNeedUpdate(false),
+            NeedsUpdate(true)
+        {
 
+        }
         Path2D::~Path2D()
         {
 
@@ -76,57 +51,52 @@ namespace Cyclone
         /** UTILITIES **/
         Path2D& Path2D::Add(const ControlPoint2D& point)
         {
-            ControlPoints.Add(point);
+            Geometry().Append(point);
+            NeedsUpdate = true;
             return *this;
         }
         Path2D& Path2D::Add(const ICollection<ControlPoint2D>& points)
         {
-            if (points.IsEmpty()) { return *this; }
-
             for (uint a = 0; a < points.Count(); a++)
                 Add(points(a));
-
+            NeedsUpdate = true;
             return *this;
         }
         void Path2D::Clear()
         {
             if (IsEmpty()) { return; }
-            ControlPoints.Clear();
-        }
-
-
-
-        /** RENDERING UTILITIES **/
-        void Path2D::Fill() const
-        {
-            if (!IsVisible()) { return; }
-            nvStencilFillPath(ID(), FillMode(), 0x1F);
-            nvCoverFillPath(ID(), CoverMode());
-        }
-        void Path2D::Stroke() const
-        {
-            if (!IsVisible()) { return; }
-            nvStencilStrokePath(ID(), 0x1, ~0);
-            nvCoverStrokePath(ID(), CoverMode());
+            Geometry().Clear();
+            NeedsUpdate = true;
         }
         void Path2D::Update() const
         {
-            ControlPoints.Update();
-            UpdateParameters();
+            if (NeedsUpdate)
+                UpdateGeometry();
+
+            NeedsUpdate = false;
+            Entity2D::Update();
         }
 
 
 
-        void Path2D::UpdateParameters() const
+        /** PROTECTED UTILITIES **/
+        void Path2D::UpdateGeometry() const
         {
-            if (!_paramsNeedUpdate) { return; }
+            auto cmds = Geometry().Commands();
+            auto crds = Geometry().Parameters();
 
-            nvPathParameteri(ID(), PathParameters::JoinStyle, JoinStyle());
-            nvPathParameteri(ID(), PathParameters::InitialEndCap, InitialCap());
-            nvPathParameterf(ID(), PathParameters::StrokeWidth, StrokeWidth());
-            nvPathParameteri(ID(), PathParameters::TerminalEndCap, TerminalCap());
+            nvPathCommands
+            (
+                ID(),
+                cmds.Count(),
+                (const ubyte*)(cmds.ToArray()),
+                crds.Count(),
+                NumericFormats::Float,
+                crds.ToArray()
+            );
 
-            _paramsNeedUpdate = false;
+            nvTransformPath(ID(), ID(), TransformTypes::TransposeAffine3D, Transforms().Model().ToArray());
         }
+
     }
 }

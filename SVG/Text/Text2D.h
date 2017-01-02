@@ -5,7 +5,6 @@
 #pragma once
 #include "Collections/Vector.h"
 #include "Geometry/Path2D.h"
-#include "Math/Vector2.h"
 #include "Text/Font.h"
 
 
@@ -24,7 +23,7 @@ namespace Cyclone
                 /// <summary> Gets the name of the font being used to render the text. </summary>
                 virtual const string& FontName()        const { return _font.Name(); }
 
-                virtual FontStyles FontStyle()          const { return _font.Style(); }
+                virtual FontStyles FontStyle()          const { return _font.FontStyle(); }
                 /// <summary> Gets the string of text that is being rendered. </summary>
                 virtual const string& Text()            const { return _text; }
 
@@ -40,15 +39,15 @@ namespace Cyclone
 
 
                 /** RENDERING UTILITIES **/
-                SVGAPI void Fill() const override;
                 SVGAPI void Stroke() const override;
                 SVGAPI void Update() const override;
 
             protected:
 
+                SVGAPI void CoverFill()             const override;
                 SVGAPI void QueryKerningValues();
                 SVGAPI void QueryTextDimensions();
-
+                SVGAPI void StencilFill()           const override;
 
             private:
                 Font            _font;

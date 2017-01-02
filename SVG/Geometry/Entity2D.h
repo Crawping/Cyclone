@@ -29,18 +29,21 @@ namespace Cyclone
 
             public:
         
-                /** STYLE PROPERTIES **/
+                /** PROPERTIES **/
                 virtual CoverModes CoverMode()          const { return _style.CoverMode; }
 
                 virtual FillModes FillMode()            const { return _style.FillMode; }
                 /// <summary> Gets the unique numeric identifier for the path object on the GPU. </summary>
-                //virtual uint ID()                       const { return ControlPoints.ID(); }
+                virtual uint ID()                       const { return _id; }
                 /// <summary> Gets the end cap style used to initiate path segments. </summary>
                 virtual EndCaps InitialCap()            const { return _style.InitialCap; }
-                /// <summary> Gets whether the path object has been terminated by a close command. </summary>
-                virtual bool IsClosed()                 const { return Geometry().IsClosed(); }
-                /// <summary> Gets whether the path has any stored commands. </summary>
-                virtual bool IsEmpty()                  const { return Geometry().IsEmpty(); }
+                /// <summary> Gets the number of individual path instances that have been allocated on the GPU. </summary>
+                /// <remarks>
+                ///     For almost all imaging-related paths, this property will return a value of <c>1</c>. Values greater
+                ///     than <c>1</c> indicate the number of times that a path object is being instanced on the GPU, which
+                ///     is almost exclusively used only by text rendering.
+                /// </remarks>
+                virtual uint InstanceCount()            const { return _instanceCount; }
                 /// <summary> Gets the joint style used to connect two path segments. </summary>
                 virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
                 /// <summary> Gets the width of the path's surrounding stroke. </summary>
@@ -67,29 +70,43 @@ namespace Cyclone
 
 
 
-                virtual const GeometrySVG& Geometry()   const override { return (GeometrySVG&)Entity3D::Geometry(); }
-                
+                /** DESTRUCTOR **/
+                SVGAPI virtual ~Entity2D();
+
+
+
+                /** UTILITIES **/
+                SVGAPI virtual void Fill()              const override;
+                SVGAPI virtual void Stroke()            const override;
+                SVGAPI virtual void Update()            const override;
         
             protected:
 
                 /** PROPERTIES **/
-                virtual GeometrySVG& Geometry()         override { return (GeometrySVG&)Entity3D::Geometry(); }
                 virtual PathStyle& Style()              { return _style; }
 
 
 
                 /** CONSTRUCTORS **/
-                Entity2D() { }
-                Entity2D(const GeometrySVG& geometry) :
-                    Entity3D(geometry)
-                {
+                SVGAPI Entity2D(uint count = 1);
 
-                }
+
+
+                /** UTILITIES **/
+                SVGAPI virtual void CoverFill()         const;
+                SVGAPI virtual void CoverStroke()       const;
+                SVGAPI virtual void StencilFill()       const;
+                SVGAPI virtual void StencilStroke()     const;
+                SVGAPI virtual void UpdateParameters()  const;
         
             private:
 
                 /** PROPERTY DATA **/
-                PathStyle _style;
+                uint            _id;
+                uint            _instanceCount;
+                PathStyle       _style;
+
+                mutable bool    NeedsUpdate;
         
         };
     }

@@ -1,3 +1,4 @@
+#include "Collections/Vector.h"
 #include "Geometry/Geometry2D.h"
 
 
@@ -8,22 +9,23 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Vector<PathCommands> GeometrySVG::Commands() const
+        Vector<PathCommands> Geometry2D::Commands()     const
         {
             Vector<PathCommands> cmds = Vector<PathCommands>(ControlPoints.Count());
             for (uint a = 0; a < ControlPoints.Count(); a++)
                 cmds(a) = ControlPoints(a).Command;
             return cmds;
         }
-        bool GeometrySVG::IsClosed() const
+        Vector<uint> Geometry2D::Indices()              const { return Vector<uint>(); }
+        bool Geometry2D::IsClosed() const
         {
             return !IsEmpty() && ControlPoints.Last().Command == PathCommands::Close;
         }
-        bool GeometrySVG::IsEmpty() const
-        {
-            return ControlPoints.IsEmpty();
-        }
-        Vector<float> GeometrySVG::Parameters() const
+        bool Geometry2D::IsEmpty()                      const { return ControlPoints.IsEmpty(); }
+        Vector<Vector3> Geometry2D::Mapping()           const { return Vector<Vector3>(); }
+        Vector<Vector3> Geometry2D::Normals()           const { return Vector<Vector3>(); }
+        Vector<Vector3> Geometry2D::Points()            const { return Vector<Vector3>(); }
+        Vector<float> Geometry2D::Parameters()          const
         {
             Vector<float> params;
             for (uint a = 0; a < ControlPoints.Count(); a++)
@@ -31,47 +33,100 @@ namespace Cyclone
             return params;
         }
 
+        Geometry2D& Geometry2D::Bounds(const Volume& value)
+        {
+            _bounds = value;
+            return *this;
+        }
+        Geometry2D& Geometry2D::Topology(VertexTopologies value)
+        {
+            _topology = value;
+            return *this;
+        }
+
+
+
+        /** CONSTRUCTOR **/
+        Geometry2D::Geometry2D()
+        {
+            Topology(VertexTopologies::Path);
+        }
+
+
+
+        /** UTILITIES **/
+        void Geometry2D::Append(const ControlPoint2D& point)    { ControlPoints.Append(point); }
+        //void Geometry2D::Insert(uint index, const ControlPoint2D& point)
+        //{ 
+        //    ControlPoints
+        //}
+        void Geometry2D::Set(uint index, const ControlPoint2D& point)
+        {
+            ControlPoints(index) = point;
+        }
+        void Geometry2D::Remove(uint index)
+        {
+            
+        }
+        void Geometry2D::Clear()
+        {
+            ControlPoints.Clear();
+        }
+
 
 
         /** GEOMETRY GENERATING FUNCTIONS **/
-        Vector<ControlPoint2D> Geometry2D::Line()
+        Geometry2D Geometry2D::Line()
         {
-            return
+            Geometry2D geometry;
+            geometry.ControlPoints =
             {
                 { PathCommands::Move,   { -0.5f, 0.0f } },
                 { PathCommands::Line,   {  0.5f, 0.0f } },
                 { PathCommands::Close,  { } },
             };
+
+            return geometry;
         }
-        Vector<ControlPoint2D> Geometry2D::Point()
+        Geometry2D Geometry2D::Point()
         {
-            return
+            Geometry2D geometry;
+            geometry.ControlPoints =
             {
                 { PathCommands::Move,   { 0.5f, 0.0f } },
                 { PathCommands::Arc,    { 0.5f, 0.5f, 0.0f, 1.0f, 1.0f, -0.5f, 0.0f } },
                 { PathCommands::Arc,    { 0.5f, 0.5f, 0.0f, 1.0f, 1.0f,  0.5f, 0.0f } },
                 { PathCommands::Close,  { } },
             };
+            
+            return geometry;
         }
-        Vector<ControlPoint2D> Geometry2D::Rectangle()
+        Geometry2D Geometry2D::Rectangle()
         {
-            return
+            Geometry2D geometry;
+            geometry.ControlPoints =
             {
                 { PathCommands::Rectangle,  { -0.5f, -0.5f, 1.0f, 1.0f } },
                 { PathCommands::Close,      { } },
             };
+
+            return geometry;
         }
-        Vector<ControlPoint2D> Geometry2D::RoundedRectangle()
+        Geometry2D Geometry2D::RoundedRectangle()
         {
-            return
+            Geometry2D geometry;
+            geometry.ControlPoints = 
             {
-                { PathCommands::RoundedRectangle,   { -0.5f, -0.5f, 1.0f, 1.0f, 0.25f } },
-                { PathCommands::Close,              { } },
+                { PathCommands::RoundedRectangle, { -0.5f, -0.5f, 1.0f, 1.0f, 0.25f } },
+                { PathCommands::Close, { } },
             };
+
+            return geometry;
         }
-        Vector<ControlPoint2D> Geometry2D::Star()
+        Geometry2D Geometry2D::Star()
         {
-            return
+            Geometry2D geometry;
+            geometry.ControlPoints = 
             {
                 { PathCommands::Move,   {  40,  10 } },
                 { PathCommands::Line,   { 100, 180 } },
@@ -80,6 +135,20 @@ namespace Cyclone
                 { PathCommands::Line,   { 190, 120 } },
                 { PathCommands::Close,  { } },
             };
+
+            return geometry;
+        }
+        Geometry2D Geometry2D::Triangle()
+        {
+            Geometry2D geometry;
+            geometry.ControlPoints =
+            {
+                { PathCommands::Line,   { 0.0f, 1.0f } },
+                { PathCommands::Line,   { 1.0f, 0.0f } },
+                { PathCommands::Close,  { } },
+            };
+
+            return geometry;
         }
 
     }
