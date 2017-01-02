@@ -30,20 +30,11 @@
     <ClInclude Include="Interfaces\IRenderable2D.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Buffers\DrawBuffer2D.h">
-      <Filter>Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry\Scene2D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\Entity2D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\PathStyle.h">
       <Filter>Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Buffers\PathBuffer.h">
-      <Filter>Buffers</Filter>
     </ClInclude>
     <ClInclude Include="Pipelines\RenderStage2D.h">
       <Filter>Pipelines</Filter>
@@ -51,8 +42,8 @@
     <ClInclude Include="Scenes\SceneComponent2D.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\SceneLayer2D.h">
-      <Filter>Scenes</Filter>
+    <ClInclude Include="Interfaces\IGeometric2D.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,23 +85,17 @@
     <ClCompile Include="Geometry\DrawingPath.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Buffers\DrawBuffer2D.cpp">
-      <Filter>Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry\Scene2D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\Entity2D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Geometry\Point2D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Buffers\PathBuffer.cpp">
-      <Filter>Buffers</Filter>
-    </ClCompile>
     <ClCompile Include="Pipelines\RenderStage2D.cpp">
       <Filter>Pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SceneComponent2D.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

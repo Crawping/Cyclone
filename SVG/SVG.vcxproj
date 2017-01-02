@@ -126,8 +126,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Buffers\DrawBuffer2D.h" />
-    <ClInclude Include="Buffers\PathBuffer.h" />
     <ClInclude Include="EnumerationsSVG.h" />
     <ClInclude Include="Geometry\ControlPoint2D.h" />
     <ClInclude Include="Geometry\DrawingPath.h" />
@@ -137,26 +135,23 @@
     <ClInclude Include="Geometry\PathStyle.h" />
     <ClInclude Include="Geometry\Point2D.h" />
     <ClInclude Include="Geometry\Rectangle2D.h" />
-    <ClInclude Include="Geometry\Scene2D.h" />
+    <ClInclude Include="Interfaces\IGeometric2D.h" />
     <ClInclude Include="Interfaces\IRenderable2D.h" />
     <ClInclude Include="Pipelines\RenderStage2D.h" />
     <ClInclude Include="Scenes\SceneComponent2D.h" />
-    <ClInclude Include="Scenes\SceneLayer2D.h" />
     <ClInclude Include="SVGAPI.h" />
     <ClInclude Include="Text\Font.h" />
     <ClInclude Include="Text\Text2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Buffers\DrawBuffer2D.cpp" />
-    <ClCompile Include="Buffers\PathBuffer.cpp" />
     <ClCompile Include="Geometry\DrawingPath.cpp" />
     <ClCompile Include="Geometry\Entity2D.cpp" />
     <ClCompile Include="Geometry\Geometry2D.cpp" />
     <ClCompile Include="Geometry\Path2D.cpp" />
     <ClCompile Include="Geometry\Point2D.cpp" />
     <ClCompile Include="Geometry\Rectangle2D.cpp" />
-    <ClCompile Include="Geometry\Scene2D.cpp" />
     <ClCompile Include="Pipelines\RenderStage2D.cpp" />
+    <ClCompile Include="Scenes\SceneComponent2D.cpp" />
     <ClCompile Include="Text\Font.cpp" />
     <ClCompile Include="Text\Text2D.cpp" />
   </ItemGroup>
