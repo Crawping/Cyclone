@@ -114,7 +114,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BasicRoundedRectangle.cpp" />
+    <ClCompile Include="RoundedRectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Renderers\Renderers.vcxproj">

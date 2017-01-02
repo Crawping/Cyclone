@@ -4,8 +4,8 @@
 
 #include "PathRenderer.h"
 #include "Geometry/Rectangle2D.h"
-#include "Geometry/Scene3D.h"
 #include "Imaging/Color4.h"
+#include "Scenes/Scene3D.h"
 
 using namespace Cyclone::SVG;
 using namespace Cyclone::Utilities;
@@ -41,7 +41,7 @@ class Program : public PathRenderer
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0))
                 .Scale(128);
 
-            PathScene->Add(Path);
+            PathScene->Insert(Path);
         }
         void UpdateScene() override
         {

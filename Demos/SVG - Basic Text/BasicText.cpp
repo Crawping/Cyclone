@@ -10,12 +10,10 @@
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
-#include "Collections/Vector.h"
-#include "Geometry/Geometry2D.h"
-#include "Geometry/Scene3D.h"
-#include "Geometry/Path2D.h"
 #include "Imaging/Color4.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
+#include "Text/Text2D.h"
 
 using namespace Cyclone::Platform;
 using namespace Cyclone::SVG;
@@ -29,41 +27,39 @@ class Program : public PathRenderer
     public:
 
         Program() :
-            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Path Rendering")
-        {            
-			Initialize();
+            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Text Rendering")
+        {
+            Initialize();
         }
-        
+
     protected:
 
-        Path2D          Path;
+        Text2D Text;
 
 
-
-        void CreateSceneResources() override
+		
+		void CreateSceneResources() override
         {
             PathRenderer::CreateSceneResources();
 
-            Path
-                .Add(Geometry2D::Star())
-                .JoinStyle(JoinStyles::Round)
-                .StrokeWidth(6.5f)
-
-                .Position(Vector3(RenderWindow->ClientArea().Scale() / Vector2(2.0f, 3.0f), -100))
-                .PrimaryColor(Color4::Blue)
-                .Scale(2)
+            Text
+                .FontStyle(FontStyles::Italic)
+                .Text("Testing!")
+                .Position(224, 320)
+                .PrimaryColor(Color4::Green)
+                .Scale(3.0f)
                 .SecondaryColor(Color4::Black);
 
-            PathScene->Add(Path);
+            PathScene->Insert(Text);
         }
         void UpdateScene() override
         {
             static float count = 0.0f;
-            Path.Z(-225 * sin(count));
-            Path.Yaw(count);
+            Text.Z(-1024 * sin(count) - 1024);
+            Text.Yaw(count);
             count += 0.02f;
 
-            PathScene->Update(Path);
+            PathScene->Update(Text);
 
             PathRenderer::UpdateScene();
         }
