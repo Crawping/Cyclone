@@ -4,8 +4,7 @@
 
 #pragma once
 #include "AdvancedRenderer.h"
-#include "Geometry/Scene2D.h"
-
+#include "Scenes/SceneComponent2D.h"
 
 
 namespace Renderers
@@ -19,8 +18,8 @@ namespace Renderers
 
         protected:
 
-            Scene2D*        PathScene;
-            ShaderPipeline* PipelineSVG;
+            SceneComponent2D*   PathScene;
+            ShaderPipeline*     PipelineSVG;
 
 
 
@@ -36,7 +35,6 @@ namespace Renderers
 
 
             /** RENDERING UTILITIES **/
-            RendererAPI virtual void Render() override;
             RendererAPI virtual void UpdateScene() override;
 
     };

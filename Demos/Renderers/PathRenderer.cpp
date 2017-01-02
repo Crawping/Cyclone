@@ -15,12 +15,13 @@ namespace Renderers
     {
         IsFreeLookEnabled = false;
 
-        nvPathStencilDepthOffset(-0.0001f, -1.0f);
+        nvPathStencilDepthOffset(-0.001f, -1.0f);
         nvPathCoverDepthFunc(GL_ALWAYS);
     }
     PathRenderer::~PathRenderer()
     {
-        if (PathScene) { delete PathScene; }
+        if (PathScene)      { delete PathScene; }
+        if (PipelineSVG)    { delete PipelineSVG; }
     }
 
 
@@ -29,12 +30,17 @@ namespace Renderers
     {
         AdvancedRenderer::CreateSceneResources();
 
-        PathScene = new Scene2D();
-        PathScene->IsStencilTestEnabled(true)
+        //PathScene = new Scene2D();
+        PathScene = new SceneComponent2D("Path", *RenderScene);
+        PathScene->
+             IsStencilTestEnabled(true)
             .Pipeline(PipelineSVG)
             .Projection(&Projection)
             .Target(RenderTarget)
             .View(&View);
+
+        RenderScene->Insert("Path", *PathScene);
+
     }
     void PathRenderer::CreateShaderPipeline()
     {
@@ -45,16 +51,6 @@ namespace Renderers
 
 
     /** RENDERING UTILITIES **/
-    void PathRenderer::Render()
-    {
-        AdvancedRenderer::Render();
-        if (PathScene)
-        {
-            Renderer->Scene(PathScene);
-            Renderer->Update();
-            Renderer->Execute();
-        }
-    }
     void PathRenderer::UpdateScene()
     {
         const Matrix4x4& projection = Projection.ToMatrix4x4();
