@@ -30,6 +30,8 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the bounding volume of the 3D geometric shape. </summary>
                 virtual const Volume& Bounds()      const = 0;
+
+                virtual uint Count()                const = 0;
                 /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
                 /// <remarks>
                 ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will
@@ -37,7 +39,7 @@ namespace Cyclone
                 /// </remarks>
                 virtual Vector<uint> Indices()      const = 0;
                 /// <summary> Gets whether the 3D geometric shape is currently defined by any points. </summary>
-                virtual bool IsEmpty()              const = 0;
+                virtual bool IsEmpty()              const { return Count() == 0; }
                 /// <summary> Gets an array of values that map each geometric point onto some other external resource. </summary>
                 /// <remarks>
                 ///     Typically, these values will be used to map the points of some shape onto textures, although use of other
