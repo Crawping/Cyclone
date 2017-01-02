@@ -56,9 +56,11 @@ class Program : public PathRenderer
                         .BorderRadius(6.25f)
                         .BorderWidth(2.5f);
 
+                    btn->Update();
                     ButtonControls.Append(btn);
-                    PathScene->Add(btn->Shape());
-                    PathScene->Add(*(btn->Components().First()));
+                    PathScene->Insert(btn->Shape());
+
+                    PathScene->Insert(btn->Components().First());
                 }
         }
 
