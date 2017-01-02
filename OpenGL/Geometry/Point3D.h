@@ -4,8 +4,7 @@
 
 #pragma once
 #include "Imaging/Color4.h"
-#include "Geometry/Entity3D.h"
-//#include "Geometry/Geometry3D.h"
+#include "Geometry/Mesh3D.h"
 
 
 
@@ -13,7 +12,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Point3D : public Entity3D
+        class Point3D : public Mesh3D
         {
 	        public:
                 using Entity3D::Depth;
@@ -69,7 +68,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new white-colored point at the origin in 3D space. </summary>
-                Point3D() : Entity3D(Geometry3D::Point()) { }
+                Point3D() : Mesh3D(Geometry3D::Point()) { }
         };
     }
 }

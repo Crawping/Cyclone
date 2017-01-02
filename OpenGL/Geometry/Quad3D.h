@@ -3,7 +3,8 @@
  */
 
 #pragma once
-#include "Geometry/Entity3D.h"
+//#include "Geometry/Entity3D.h"
+#include "Geometry/Mesh3D.h"
 
 
 
@@ -11,13 +12,13 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Quad3D : public Entity3D
+        class Quad3D : public Mesh3D
         {
 
             public:
                 /** CONSTRUCTOR **/
                 Quad3D(bool isIndexed = false) : 
-                    Entity3D(Geometry3D::Quad(isIndexed)) 
+                    Mesh3D(Geometry3D::Quad(isIndexed)) 
                 { 
                 
                 }

@@ -166,9 +166,7 @@ namespace Cyclone
                 
                 /** RENDERABLE INTERFACE PROPERTIES **/
 
-                virtual List<IRenderable&> Components()                 const override { return List<IRenderable&>(); }
-
-                virtual const Geometry3D& Geometry()                    const override { return _geometry; }
+                virtual List<IRenderable&> Components()                 override { return List<IRenderable&>(); }
                 /// <summary> Gets whether the entity is visible in the rendered world. </summary>
                 virtual bool IsVisible()                                const override { return _isVisible; }
                 /// <summary> Gets the material used to style the entity during rendering. </summary>
@@ -176,12 +174,6 @@ namespace Cyclone
 
                 virtual const Transform3D& Transforms()                 const override { return _transforms; }
 
-
-                virtual Entity3D& Geometry(const Geometry3D& value)    
-                { 
-                    _geometry = value; 
-                    return *this;
-                }
                 /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
                 virtual Entity3D& IsVisible(bool value)
                 {
@@ -230,27 +222,21 @@ namespace Cyclone
             protected:
 
                 /** PROPERTIES **/
-                virtual Geometry3D& Geometry()      { return _geometry; }
                 virtual Material3D& Material()      { return _material; }
                 virtual Transform3D& Transforms()   { return _transforms; }
 
 
 
                 /** CONSTRUCTOR **/
-                Entity3D() { }
-
-                Entity3D(const Geometry3D& geometry) :
-                    _geometry(geometry),
+                Entity3D() : 
                     _isVisible(true)
                 {
-
+                    
                 }
-
 
             private:
                 
                 /** PROPERTY DATA **/
-                Geometry3D      _geometry;
                 bool            _isVisible;
                 Material3D      _material;
                 Transform3D     _transforms;

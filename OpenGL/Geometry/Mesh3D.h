@@ -19,8 +19,25 @@ namespace Cyclone
         {
             public:
 
-                Mesh3D() { }
-                Mesh3D(const Geometry3D& geometry) : Entity3D(geometry) { }                
+                /** PROPERTIES **/
+                const Geometry3D& Geometry()        const override { return _geometry; }
+
+                OpenGLAPI virtual Mesh3D& Geometry(const Geometry3D& value);
+
+
+
+                /** CONSTRUCTORS **/
+                OpenGLAPI Mesh3D();
+                OpenGLAPI Mesh3D(const Geometry3D& geometry);
+
+            protected:
+            
+                virtual Geometry3D& Geometry()      { return _geometry; }
+
+
+            private:
+                
+                Geometry3D  _geometry;
         };
     }
 }
