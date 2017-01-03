@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Collections/List.h"
+#include "Geometry/Vertex.h"
 #include "Interfaces/IGeometric.h"
 #include "Spatial/Transform.h"
 #include "Spatial/Volume.h"
@@ -15,17 +16,6 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        struct GeometryData
-        {
-            Volume              Bounds;
-            Vector<uint>        Indices;
-            Vector<Vector3>     Mapping;
-            Vector<Vector3>     Normals;
-            Vector<Vector3>     Points;
-            VertexTopologies    Topology;
-        };
-
-
 
         /// <summary> A class that holds and manages data related to 3D geometric shapes. </summary>
         class Geometry3D : public virtual IGeometric
@@ -34,50 +24,30 @@ namespace Cyclone
 
                 /** GEOMETRIC PROPERTIES **/
                 /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
-                virtual const Volume& Bounds()      const override { return _data.Bounds; }
+                virtual const Volume& Bounds()                  const override { return _bounds; }
+                /// <summary> Gets the number of points that are used to define the 3D geometric shape. </summary>
+                virtual uint Count()                            const override { return Vertices.Count(); }
 
-                virtual uint Count()                const override { return _data.Points.Count(); }
+                OpenGLAPI virtual GeometryData Data()           const override;
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
-                virtual Vector<uint> Indices()      const override { return _data.Indices; }
+                OpenGLAPI virtual Vector<uint> Indices()        const override;
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
-                virtual Vector<Vector3> Mapping()   const override { return _data.Mapping; }
+                OpenGLAPI virtual Vector<Vector3> Mapping()     const override;
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>
-                virtual Vector<Vector3> Normals()   const override { return _data.Normals; }
+                OpenGLAPI virtual Vector<Vector3> Normals()     const override;
                 /// <summary> Gets an array of points that define the prototypical shape of some geometry in 3D space. </summary>
-                virtual Vector<Vector3> Points()    const override { return _data.Points; }
+                OpenGLAPI virtual Vector<Vector3> Points()      const override;
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
-                virtual VertexTopologies Topology() const override { return _data.Topology; }
+                virtual VertexTopologies Topology()             const override { return _topology; }
 
-                /// <summary> Sets the array of indices that specify the order in which points of the geometric shape are to be rendered. </summary>
-                virtual Geometry3D& Indices(const Vector<uint>& value)
-                {
-                    _data.Indices = value;
-                    return *this;
-                }
-                /// <summary> Sets the array of values that map each point of the geometric shape onto some other external resource. </summary>
-                virtual Geometry3D& Mapping(const Vector<Vector3>& value)
-                {
-                    _data.Mapping = value;
-                    return *this;
-                }
-                /// <summary> Sets the array of normal vectors associated with each point of the geometry. </summary>
-                virtual Geometry3D& Normals(const Vector<Vector3>& value)
-                {
-                    _data.Normals = value;
-                    return *this;
-                }
-                /// <summary> Sets the array of points that define the prototypical shape of some geometry. </summary>
-                virtual Geometry3D& Points(const Vector<Vector3>& value)
-                {
-                    _data.Points = value;
-                    return *this;
-                }
+                /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
+                OpenGLAPI virtual Geometry3D& Bounds(const Volume& value);
+
+                OpenGLAPI virtual Geometry3D& Data(const GeometryData& value);
+
+                OpenGLAPI virtual Geometry3D& Indices(const Vector<uint>& value);
                 /// <summary> Sets the type of primitive that the points of the geometry construct. </summary>
-                virtual Geometry3D& Topology(VertexTopologies value)
-                {
-                    _data.Topology = value;
-                    return *this;
-                }
+                OpenGLAPI virtual Geometry3D& Topology(VertexTopologies value);
 
 
 
@@ -85,10 +55,9 @@ namespace Cyclone
                 /// <summary> Constructs a new empty 3D geometric object. </summary>
                 Geometry3D() { }
 
-                Geometry3D(const GeometryData& data) :
-                    _data(data)
+                Geometry3D(const GeometryData& data)
                 {
-
+                    Data(data);
                 }
                 /// <summary> Destroys any specially allocated resources held by the entity. </summary>
                 virtual ~Geometry3D() { }
@@ -134,6 +103,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                OpenGLAPI void Append(const Vertex& vertex);
+
+                OpenGLAPI void Append(const ICollection<Vertex>& vertices);
                 /// <summary> Estimates the normal vectors for a list of non-indexed triangles in model space. </summary>
                 OpenGLAPI void CalculateNormals();
 
@@ -150,11 +122,9 @@ namespace Cyclone
                 /// </param>
                 OpenGLAPI void Tessellate(uint n);
 
-                virtual void Add(const Vector3& position, const Vector3& normal = 0, const Vector3& mapping = 0)
+                virtual void Append(const Vector3& position, const Vector3& normal, const Vector3& mapping)
                 {
-                    _data.Points.Append(position);
-                    _data.Normals.Append(normal);
-                    _data.Mapping.Append(mapping);
+                    Append(Vertex(position, normal, (Vector2)mapping));
                 }
 
             protected:
@@ -169,17 +139,15 @@ namespace Cyclone
                 {
                     return Bounds(Volume(Bounds().Position(), value));
                 }
-                /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
-                virtual Geometry3D& Bounds(const Volume& value)
-                {
-                    _data.Bounds = value;
-                    return *this;
-                }
 
             private:
 
                 /** PROPERTY DATA **/
-                GeometryData        _data;
+                Volume              _bounds;
+                Vector<uint>        _indices;
+                VertexTopologies    _topology;
+
+                Vector<Vertex>      Vertices;
 
         };
     }

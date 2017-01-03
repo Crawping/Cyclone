@@ -3,34 +3,136 @@
 #include "Geometry/Geometry3D.h"
 
 
+
 namespace Cyclone
 {
     namespace OpenGL
     {
 
+        /** HELPER FUNCTIONS**/
+        constexpr Vector3 midpoint(const Vector3& u, const Vector3& v)
+        {
+            return (v - u) * 0.5f + u;
+        }
+        Vertex midpoint(const Vertex& u, const Vertex& v)
+        {
+            return Vertex
+            (
+                midpoint(u.Position, v.Position),
+                midpoint(u.Normal, v.Normal),
+                (Vector2)midpoint(u.UV, v.UV)
+            );
+        }
+
+
+
+        /** PROPERTIES **/
+        GeometryData Geometry3D::Data()             const
+        {
+            GeometryData data =
+            {
+                _bounds,
+                _indices,
+                Vector<Vector3>(Count()),
+                Vector<Vector3>(Count()),
+                Vector<Vector3>(Count()),
+                _topology,
+            };
+
+            for (uint a = 0; a < Vertices.Count(); a++)
+            {
+                Vertex v = Vertices(a);
+                data.Mapping(a) = v.UV;
+                data.Normals(a) = v.Normal;
+                data.Points(a) = v.Position;
+            }
+
+            return data;
+        }
+        Vector<uint> Geometry3D::Indices()          const
+        {
+            return _indices;
+        }
+        Vector<Vector3> Geometry3D::Mapping()       const
+        {
+            Vector<Vector3> mapping(Count());
+            for (uint a = 0; a < Vertices.Count(); a++)
+                mapping(a) = Vertices(a).UV;
+
+            return mapping;
+        }
+        Vector<Vector3> Geometry3D::Normals()       const
+        {
+            Vector<Vector3> normals(Count());
+            for (uint a = 0; a < Vertices.Count(); a++)
+                normals(a) = Vertices(a).Normal;
+            
+            return normals;
+        }
+        Vector<Vector3> Geometry3D::Points()        const
+        {
+            Vector<Vector3> points(Count());
+            for (uint a = 0; a < Vertices.Count(); a++)
+                points(a) = Vertices(a).Position;
+
+            return points;
+        }
+
+        Geometry3D& Geometry3D::Bounds(const Volume& value)
+        {
+            _bounds = value;
+            return *this;
+        }
+        Geometry3D& Geometry3D::Data(const GeometryData& value)
+        {
+            Vector<Vertex> newVertices(value.Points.Count());
+            for (uint a = 0; a < newVertices.Count(); a++)
+                newVertices(a) = Vertex(value.Points(a), value.Normals(a), (Vector2)value.Mapping(a));
+
+            Vertices = newVertices;
+            return Bounds(value.Bounds)
+                .Indices(value.Indices)
+                .Topology(value.Topology);
+        }
+        Geometry3D& Geometry3D::Indices(const Vector<uint>& value)
+        {
+            _indices = value;
+            return *this;
+        }
+        Geometry3D& Geometry3D::Topology(VertexTopologies value)
+        {
+            _topology = value;
+            return *this;
+        }
+
+
+
         /** UTILITIES **/
+        void Geometry3D::Append(const Vertex& vertex)
+        {
+            Vertices.Append(vertex);
+        }
+        void Geometry3D::Append(const ICollection<Vertex>& vertices)
+        {
+            Vertices.Append(vertices);
+        }
         void Geometry3D::CalculateNormals()
         {
-            const auto& vertices = Points();
-            _data.Normals = Vector<Vector3>(vertices.Count());
-
-            for (uint a = 0; a < vertices.Count(); a += 3)
+            for (uint a = 0; a < Vertices.Count(); a += 3)
             {
-                Vector3 diff1 = vertices(a + 1) - vertices(a);
-                Vector3 diff2 = vertices(a + 2) - vertices(a);
-                Vector3 diff3 = vertices(a + 2) - vertices(a + 1);
+                Vector3 diff1 = Vertices(a + 1).Position - Vertices(a).Position;
+                Vector3 diff2 = Vertices(a + 2).Position - Vertices(a).Position;
+                Vector3 diff3 = Vertices(a + 2).Position - Vertices(a + 1).Position;
    
-                _data.Normals(a)     = Math::Cross(diff1, diff2).Normalize();
-                _data.Normals(a + 1) = Math::Cross(diff3, -diff1).Normalize();
-                _data.Normals(a + 2) = Math::Cross(-diff2, -diff3).Normalize();
+                Vertices(a).Normal     = Math::Cross(diff1, diff2).Normalize();
+                Vertices(a + 1).Normal = Math::Cross(diff3, -diff1).Normalize();
+                Vertices(a + 2).Normal = Math::Cross(-diff2, -diff3).Normalize();
             }
         }
         void Geometry3D::Clear()
         {
-            _data.Indices.Clear();
-            _data.Mapping.Clear();
-            _data.Normals.Clear();
-            _data.Points.Clear();
+            _indices.Clear();
+            Vertices.Clear();
         }
         void Geometry3D::Tessellate(uint n)
         {
@@ -38,34 +140,33 @@ namespace Cyclone
             if (n > 1)
                 Geometry3D::Tessellate(n - 1);
 
-            Vector<Vector3> vertices = Points();
-            uint nvertices = vertices.Count() * 12;
-
-            _data.Points = Vector<Vector3>(nvertices);
+            uint nNewVertices = Vertices.Count() * 12;
+            Vector<Vertex> newVertices = Vector<Vertex>(nNewVertices);
 
             uint idx = 0;
-            for (uint a = 0; a < vertices.Count(); a += 3)
+            for (uint a = 0; a < Vertices.Count(); a += 3)
             {
-                Vector3 midpt1 = vertices(a) + ((vertices(a + 1) - vertices(a)) * 0.5f);
-                Vector3 midpt2 = vertices(a) + ((vertices(a + 2) - vertices(a)) * 0.5f);
-                Vector3 midpt3 = vertices(a + 1) + ((vertices(a + 2) - vertices(a + 1)) * 0.5f);
+                Vertex v1 = Vertices(a), v2 = Vertices(a + 1), v3 = Vertices(a + 2);
+                Vertex m1 = midpoint(v1, v2), m2 = midpoint(v1, v3), m3 = midpoint(v2, v3);
 
-                _data.Points(idx++) = vertices(a);
-                _data.Points(idx++) = midpt1;
-                _data.Points(idx++) = midpt2;
+                newVertices(idx++) = v1;
+                newVertices(idx++) = m1;
+                newVertices(idx++) = m2;
 
-                _data.Points(idx++) = midpt1;
-                _data.Points(idx++) = vertices(a + 1);
-                _data.Points(idx++) = midpt3;
+                newVertices(idx++) = m1;
+                newVertices(idx++) = v2;
+                newVertices(idx++) = m3;
                 
-                _data.Points(idx++) = midpt2;
-                _data.Points(idx++) = midpt1;
-                _data.Points(idx++) = midpt3;
+                newVertices(idx++) = m2;
+                newVertices(idx++) = m1;
+                newVertices(idx++) = m3;
                 
-                _data.Points(idx++) = midpt2;
-                _data.Points(idx++) = midpt3;
-                _data.Points(idx++) = vertices(a + 2);
+                newVertices(idx++) = m2;
+                newVertices(idx++) = m3;
+                newVertices(idx++) = v3;
             }
+
+            Vertices = newVertices;
         }
 
 
@@ -77,7 +178,7 @@ namespace Cyclone
 
             if (isIndexed)
             {
-                geometry._data.Indices =
+                geometry._indices =
                 {
                      0,  1,  2,  2,  1,  3,
                      4,  5,  6,  6,  5,  7,
@@ -88,96 +189,96 @@ namespace Cyclone
                 };
 
                 // Front
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Top
-                geometry.Add({ -0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Bottom
-                geometry.Add({ -0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Left
-                geometry.Add({ -0.5f, -0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Right
-                geometry.Add({  0.5f, -0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Back
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 1.0f, 0.0f });
             }
             else
             {
                 // Front
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f });
 
-                geometry.Add({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Top
-                geometry.Add({ -0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
 
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Bottom
-                geometry.Add({ -0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
 
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Left
-                geometry.Add({ -0.5f, -0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
 
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Right
-                geometry.Add({  0.5f, -0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
 
-                geometry.Add({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
                 // Back
-                geometry.Add({  0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
 
-                geometry.Add({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 1.0f, 0.0f });
             }
 
             return geometry;
@@ -207,12 +308,12 @@ namespace Cyclone
                     float x2 = cosf(ntAngle);
                     float z2 = -sinf(ntAngle);
 
-                    geometry.Add({ x1, -0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Add({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Add({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Add({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Add({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Add({ x2,  0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
+                    geometry.Append({ x1, -0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
+                    geometry.Append({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
+                    geometry.Append({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
+                    geometry.Append({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
+                    geometry.Append({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
+                    geometry.Append({ x2,  0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
                 }
             }
 
@@ -228,85 +329,85 @@ namespace Cyclone
             }
             else
             {
-                geometry.Add({  0.525731f,          0,  0.850651f }); // 1
-                geometry.Add({          0,  0.850651f,  0.525731f }); // 4
-                geometry.Add({ -0.525731f,          0,  0.850651f }); // 0
+                geometry.Append({  0.525731f,          0,  0.850651f }); // 1
+                geometry.Append({          0,  0.850651f,  0.525731f }); // 4
+                geometry.Append({ -0.525731f,          0,  0.850651f }); // 0
 
-                geometry.Add({          0,  0.850651f,  0.525731f }); // 4
-                geometry.Add({ -0.850651f,  0.525731f,          0 }); // 9
-                geometry.Add({ -0.525731f,          0,  0.850651f }); // 0
+                geometry.Append({          0,  0.850651f,  0.525731f }); // 4
+                geometry.Append({ -0.850651f,  0.525731f,          0 }); // 9
+                geometry.Append({ -0.525731f,          0,  0.850651f }); // 0
 
-                geometry.Add({          0,  0.850651f,  0.525731f }); // 4
-                geometry.Add({          0,  0.850651f, -0.525731f }); // 5
-                geometry.Add({ -0.850651f,  0.525731f,          0 }); // 9
+                geometry.Append({          0,  0.850651f,  0.525731f }); // 4
+                geometry.Append({          0,  0.850651f, -0.525731f }); // 5
+                geometry.Append({ -0.850651f,  0.525731f,          0 }); // 9
 
-                geometry.Add({  0.850651f,  0.525731f,          0 }); // 8
-                geometry.Add({          0,  0.850651f, -0.525731f }); // 5
-                geometry.Add({          0,  0.850651f,  0.525731f }); // 4
+                geometry.Append({  0.850651f,  0.525731f,          0 }); // 8
+                geometry.Append({          0,  0.850651f, -0.525731f }); // 5
+                geometry.Append({          0,  0.850651f,  0.525731f }); // 4
 
-                geometry.Add({  0.525731f,          0,  0.850651f }); // 1
-                geometry.Add({  0.850651f,  0.525731f,          0 }); // 8
-                geometry.Add({          0,  0.850651f,  0.525731f }); // 4
+                geometry.Append({  0.525731f,          0,  0.850651f }); // 1
+                geometry.Append({  0.850651f,  0.525731f,          0 }); // 8
+                geometry.Append({          0,  0.850651f,  0.525731f }); // 4
 
-                geometry.Add({  0.525731f,          0,  0.850651f }); // 1
-                geometry.Add({  0.850651f, -0.525731f,          0 }); // 10
-                geometry.Add({  0.850651f,  0.525731f,          0 }); // 8
+                geometry.Append({  0.525731f,          0,  0.850651f }); // 1
+                geometry.Append({  0.850651f, -0.525731f,          0 }); // 10
+                geometry.Append({  0.850651f,  0.525731f,          0 }); // 8
 
-                geometry.Add({  0.850651f, -0.525731f,          0 }); // 10
-                geometry.Add({  0.525731f,          0, -0.850651f }); // 3
-                geometry.Add({  0.850651f,  0.525731f,          0 }); // 8
+                geometry.Append({  0.850651f, -0.525731f,          0 }); // 10
+                geometry.Append({  0.525731f,          0, -0.850651f }); // 3
+                geometry.Append({  0.850651f,  0.525731f,          0 }); // 8
 
-                geometry.Add({  0.850651f,  0.525731f,          0 }); // 8
-                geometry.Add({  0.525731f,          0, -0.850651f }); // 3
-                geometry.Add({          0,  0.850651f, -0.525731f }); // 5
+                geometry.Append({  0.850651f,  0.525731f,          0 }); // 8
+                geometry.Append({  0.525731f,          0, -0.850651f }); // 3
+                geometry.Append({          0,  0.850651f, -0.525731f }); // 5
 
-                geometry.Add({  0.525731f,          0, -0.850651f }); // 3
-                geometry.Add({ -0.525731f,          0, -0.850651f }); // 2
-                geometry.Add({          0,  0.850651f, -0.525731f }); // 5
+                geometry.Append({  0.525731f,          0, -0.850651f }); // 3
+                geometry.Append({ -0.525731f,          0, -0.850651f }); // 2
+                geometry.Append({          0,  0.850651f, -0.525731f }); // 5
 
-                geometry.Add({  0.525731f,          0, -0.850651f }); // 3
-                geometry.Add({          0, -0.850651f, -0.525731f }); // 7
-                geometry.Add({ -0.525731f,          0, -0.850651f }); // 2
+                geometry.Append({  0.525731f,          0, -0.850651f }); // 3
+                geometry.Append({          0, -0.850651f, -0.525731f }); // 7
+                geometry.Append({ -0.525731f,          0, -0.850651f }); // 2
 
-                geometry.Add({  0.525731f,          0, -0.850651f }); // 3
-                geometry.Add({  0.850651f, -0.525731f,          0 }); // 10
-                geometry.Add({          0, -0.850651f, -0.525731f }); // 7
+                geometry.Append({  0.525731f,          0, -0.850651f }); // 3
+                geometry.Append({  0.850651f, -0.525731f,          0 }); // 10
+                geometry.Append({          0, -0.850651f, -0.525731f }); // 7
 
-                geometry.Add({  0.850651f, -0.525731f,          0 }); // 10
-                geometry.Add({          0, -0.850651f,  0.525731f }); // 6
-                geometry.Add({          0, -0.850651f, -0.525731f }); // 7
+                geometry.Append({  0.850651f, -0.525731f,          0 }); // 10
+                geometry.Append({          0, -0.850651f,  0.525731f }); // 6
+                geometry.Append({          0, -0.850651f, -0.525731f }); // 7
 
-                geometry.Add({          0, -0.850651f,  0.525731f }); // 6
-                geometry.Add({ -0.850651f, -0.525731f,          0 }); // 11
-                geometry.Add({          0, -0.850651f, -0.525731f }); // 7
+                geometry.Append({          0, -0.850651f,  0.525731f }); // 6
+                geometry.Append({ -0.850651f, -0.525731f,          0 }); // 11
+                geometry.Append({          0, -0.850651f, -0.525731f }); // 7
 
-                geometry.Add({          0, -0.850651f,  0.525731f }); // 6
-                geometry.Add({ -0.525731f,          0,  0.850651f }); // 0
-                geometry.Add({ -0.850651f, -0.525731f,          0 }); // 11
+                geometry.Append({          0, -0.850651f,  0.525731f }); // 6
+                geometry.Append({ -0.525731f,          0,  0.850651f }); // 0
+                geometry.Append({ -0.850651f, -0.525731f,          0 }); // 11
 
-                geometry.Add({          0, -0.850651f,  0.525731f }); // 6
-                geometry.Add({  0.525731f,          0,  0.850651f }); // 1
-                geometry.Add({ -0.525731f,          0,  0.850651f }); // 0
+                geometry.Append({          0, -0.850651f,  0.525731f }); // 6
+                geometry.Append({  0.525731f,          0,  0.850651f }); // 1
+                geometry.Append({ -0.525731f,          0,  0.850651f }); // 0
 
-                geometry.Add({  0.850651f, -0.525731f,          0 }); // 10
-                geometry.Add({  0.525731f,          0,  0.850651f }); // 1
-                geometry.Add({          0, -0.850651f,  0.525731f }); // 6
+                geometry.Append({  0.850651f, -0.525731f,          0 }); // 10
+                geometry.Append({  0.525731f,          0,  0.850651f }); // 1
+                geometry.Append({          0, -0.850651f,  0.525731f }); // 6
 
-                geometry.Add({ -0.850651f, -0.525731f,          0 }); // 11
-                geometry.Add({ -0.525731f,          0,  0.850651f }); // 0
-                geometry.Add({ -0.850651f,  0.525731f,          0 }); // 9
+                geometry.Append({ -0.850651f, -0.525731f,          0 }); // 11
+                geometry.Append({ -0.525731f,          0,  0.850651f }); // 0
+                geometry.Append({ -0.850651f,  0.525731f,          0 }); // 9
 
-                geometry.Add({ -0.525731f,          0, -0.850651f }); // 2
-                geometry.Add({ -0.850651f, -0.525731f,          0 }); // 11
-                geometry.Add({ -0.850651f,  0.525731f,          0 }); // 9
+                geometry.Append({ -0.525731f,          0, -0.850651f }); // 2
+                geometry.Append({ -0.850651f, -0.525731f,          0 }); // 11
+                geometry.Append({ -0.850651f,  0.525731f,          0 }); // 9
 
-                geometry.Add({          0,  0.850651f, -0.525731f }); // 5
-                geometry.Add({ -0.525731f,          0, -0.850651f }); // 2
-                geometry.Add({ -0.850651f,  0.525731f,          0 }); // 9
+                geometry.Append({          0,  0.850651f, -0.525731f }); // 5
+                geometry.Append({ -0.525731f,          0, -0.850651f }); // 2
+                geometry.Append({ -0.850651f,  0.525731f,          0 }); // 9
 
-                geometry.Add({ -0.850651f, -0.525731f,          0 }); // 11
-                geometry.Add({ -0.525731f,          0, -0.850651f }); // 2
-                geometry.Add({          0, -0.850651f, -0.525731f }); // 7
+                geometry.Append({ -0.850651f, -0.525731f,          0 }); // 11
+                geometry.Append({ -0.525731f,          0, -0.850651f }); // 2
+                geometry.Append({          0, -0.850651f, -0.525731f }); // 7
             }
 
             geometry.CalculateNormals();
@@ -316,15 +417,15 @@ namespace Cyclone
         {
             Geometry3D geometry;
             geometry.Topology(VertexTopologies::Lines);
-            geometry.Add({ -0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Add({  0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+            geometry.Append({ -0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+            geometry.Append({  0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             return geometry;
         }
         Geometry3D Geometry3D::Point()
         {
             Geometry3D geometry;
             geometry.Topology(VertexTopologies::Points);
-            geometry.Add({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+            geometry.Append({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             return geometry;
         }
         Geometry3D Geometry3D::Quad(bool isIndexed)
@@ -333,25 +434,25 @@ namespace Cyclone
 
             if (isIndexed)
             {
-                geometry._data.Indices =
+                geometry._indices =
                 {
                     0, 1, 2,
                     2, 1, 3,
                 };
 
-                geometry.Add({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
             }
             else
             {
-                geometry.Add({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-                geometry.Add({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
-                geometry.Add({  0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+                geometry.Append({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
+                geometry.Append({  0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
             }
 
             return geometry;
@@ -361,30 +462,23 @@ namespace Cyclone
             Geometry3D geometry = Geometry3D::Icosahedron();
             geometry.Tessellate(n);
 
-            Vector<Vector3> points = geometry.Points();
-            Vector<Vector3> normals = Vector<Vector3>(points.Count());
-            Vector<Vector3> mapping = Vector<Vector3>(points.Count());
-
-            for (uint a = 0; a < points.Count(); a++)
-            {
-                points(a).Normalize();
-                normals(a) = points(a);
-                mapping(a) = Vector3::Zero;
-            }
-
-            geometry
-                .Mapping(mapping)
-                .Normals(normals)
-                .Points(points);
+            auto& vertices = geometry.Vertices;
+            for (uint a = 0; a < vertices.Count(); a++)
+                vertices(a) = Vertex
+                (
+                    vertices(a).Position.Normalize(),
+                    vertices(a).Position,
+                    Vector2::Zero
+                );
 
             return geometry;
         }
         Geometry3D Geometry3D::Triangle()
         {
             Geometry3D geometry;
-            geometry.Add({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Add({ 1.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
-            geometry.Add({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
+            geometry.Append({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+            geometry.Append({ 1.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
+            geometry.Append({ 0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
             return geometry;
         }
 
