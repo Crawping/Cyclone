@@ -1,17 +1,11 @@
-/* CHANGELOG 
+/* CHANGELOG
  * Written by Josh Grooms on 20160916
  */
 
 #version 440 core
+#include "Default.hsl"
 
 out vec4 OutputColor;
-in vec4 InputColor;
-
-layout(binding = 0, std140) uniform ColorBuffer
-{
-    vec4 ColorData[1024];
-};
-
 
 uniform int DrawID;
 
@@ -19,6 +13,11 @@ uniform int DrawID;
 
 void main(void)
 {
-    OutputColor = ColorData[DrawID];
-    OutputColor.a = InputColor.a;
+    EntityData ids = Entities[DrawID / 2];
+    MaterialData mat = Materials[ids.MaterialIndex];
+
+    if (DrawID % 2 == 0)
+        OutputColor = mat.PrimaryColor;
+    else
+        OutputColor = mat.SecondaryColor;
 }
