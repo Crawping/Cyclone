@@ -79,7 +79,7 @@ namespace Cyclone
                 
                 /** BATCH SPATIAL PROPERTIES **/
 
-                virtual const Vector3& Offset()             const { return _transforms.Position(); }
+                virtual const Vector3& Offset()             const { return _transforms.Offset(); }
                 /// <summary> Gets the (x, y, z) rotation angles for the entity in 3D space. </summary>
                 virtual const Vector3& Orientation()        const { return _transforms.Orientation(); }
                 /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
@@ -92,7 +92,7 @@ namespace Cyclone
 
                 virtual Entity3D& Offset(const Vector3& value)
                 {
-                    _transforms.Position(value);
+                    _transforms.Offset(value);
                     return *this;
                 }
                 virtual Entity3D& Offset(float x, float y, float z)             { return Offset(Vector3(x, y, z)); }
@@ -125,7 +125,7 @@ namespace Cyclone
                 virtual Entity3D& Scale(float x, float y, float z = 1.0f)       { return Scale(Vector3(x, y, z)); }
                 virtual Entity3D& Size(const Vector3& value)
                 {
-                    _transforms.Scale(value);
+                    _transforms.Size(value);
                     return *this;
                 }
                 virtual Entity3D& Size(float x, float y, float z)
