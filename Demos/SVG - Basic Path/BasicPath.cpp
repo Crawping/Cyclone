@@ -49,6 +49,7 @@ class Program : public PathRenderer
                 .JoinStyle(JoinStyles::Round)
                 .StrokeWidth(6.5f)
 
+                .Offset(-200.0f, 0.0f, 0.0f)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / Vector2(2.0f, 3.0f), -100))
                 .PrimaryColor(Color4::Blue)
                 .Scale(2)
@@ -64,7 +65,6 @@ class Program : public PathRenderer
             count += 0.02f;
 
             PathScene->Update(Path);
-            Path.Update();
             PathRenderer::UpdateScene();
         }
 

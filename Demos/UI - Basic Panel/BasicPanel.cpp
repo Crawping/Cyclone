@@ -32,15 +32,17 @@ class Program : public PathRenderer
         void CreateSceneResources() override
         {
             PathRenderer::CreateSceneResources();
+            Vector3 szPanel = RenderWindow->ClientArea().Scale() / 2.0f;
 
             PanelControl
                 .BackgroundColor(Color4(0.25f))
                 .BorderColor(0.125f)
                 .BorderRadius(12.5f)
-                .Offset(25.0f)
-                .Size(RenderWindow->ClientArea().Scale() - 50.0f);
+                .Offset(szPanel)
+                .Size(szPanel);
 
-            PathScene->Add(PanelControl.Shape());
+            PanelControl.Update();
+            PathScene->Insert(PanelControl.Shape());
         }
 
 };

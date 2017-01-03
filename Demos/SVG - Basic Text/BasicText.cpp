@@ -45,6 +45,8 @@ class Program : public PathRenderer
             Text
                 .FontStyle(FontStyles::Italic)
                 .Text("Testing!")
+
+                .Offset(1000.0f, 0.0f, 0.0f)
                 .Position(224, 320)
                 .PrimaryColor(Color4::Green)
                 .Scale(3.0f)

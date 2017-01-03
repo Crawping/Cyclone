@@ -37,17 +37,19 @@ class Program : public PathRenderer
 
             uint nbuttons = 64;
             Vector2 szButton(96.0f, 40.0f);
-            Vector2 szButtonArea = RenderWindow->ClientArea().Scale() / 8.0f;
-            Vector2 offset = (szButtonArea - szButton) / 2.0f;
+            Vector2 szBtnArea = RenderWindow->ClientArea().Scale() / 8.0f;
+            Vector2 offset = szBtnArea / 2.0f;
 
             uint a = 0; uint b = 0;
             for (uint a = 0; a < 8; a++)
                 for (uint b = 0; b < 8; b++)
                 {
                     Button* btn = new Button();
-                    Vector2 posButton(a * szButtonArea.X + offset.X, b * szButtonArea.Y + offset.Y);
+                    Vector2 posButton(a * szBtnArea.X + offset.X, b * szBtnArea.Y + offset.Y);
 
-                    btn->Text("Testing!")
+                    btn->
+                         Text("Testing!")
+                        .TextColor(Color4::Random())
                         .Offset(posButton)
                         .Size(szButton)
 
@@ -75,12 +77,14 @@ class Program : public PathRenderer
                     if (btn->BackgroundColor().R == 0.25f)
                     {
                         btn->BackgroundColor(Color4::Random());
+                        btn->Update();
                         PathScene->Update(btn->Shape());
                     }
                 }
                 else if (btn->BackgroundColor().R != 0.25f)
                 {
                     btn->BackgroundColor(0.25f);
+                    btn->Update();
                     PathScene->Update(btn->Shape());
                 }
             }

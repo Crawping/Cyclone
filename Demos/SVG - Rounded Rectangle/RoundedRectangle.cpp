@@ -18,8 +18,7 @@ class Program : public PathRenderer
     public:
 
         Program() :
-            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering"),
-            Path(0.25f)
+            PathRenderer(Area(0, 0, 1024, 960), "NVIDIA Basic Rounded Rectangle Rendering")
         {
             Initialize();
         }
@@ -35,11 +34,14 @@ class Program : public PathRenderer
             PathRenderer::CreateSceneResources();
 
             Path
+                .CornerRadius(0.25f)
                 .StrokeWidth(0.0625f)
+
                 .PrimaryColor(Color4::Red)
-                .SecondaryColor(Color4::Cyan)
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 3.0f, 0))
-                .Scale(128);
+                .SecondaryColor(Color4::Cyan)
+                .Scale(128)
+                .Size(2.0f, 1.0f, 1.0f);
 
             PathScene->Insert(Path);
         }
