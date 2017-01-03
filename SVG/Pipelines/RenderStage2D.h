@@ -4,10 +4,11 @@
 
 #pragma once
 #include "SVGAPI.h"
-#include "Collections/Set.h"
+#include "Collections/BST.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IRenderable2D.h"
 #include "Pipelines/RenderStage.h"
+
 
 
 namespace Cyclone
@@ -29,7 +30,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 SVGAPI void ClearEntities();
-                SVGAPI void Insert(const IRenderable2D& entity);
+                SVGAPI void Insert(uint drawID, const IRenderable2D& entity);
                 SVGAPI void Remove(const IRenderable2D& entity);
                 SVGAPI void Render()                        const override;
                 SVGAPI void Update();
@@ -45,8 +46,7 @@ namespace Cyclone
 
 
             private:
-                
-                Set<const IRenderable2D*> Entities;
+                BST<const IRenderable2D*, uint> Entities;
 
         };
     }

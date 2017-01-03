@@ -8,6 +8,7 @@
 #include "Interfaces/ITransformation3D.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Pipelines/RenderStage2D.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -29,9 +30,9 @@ namespace Cyclone
         {
             Entities.Clear();
         }
-        void RenderStage2D::Insert(const IRenderable2D& entity)
+        void RenderStage2D::Insert(uint drawID, const IRenderable2D& entity)
         {
-            Entities.Insert(&entity);
+            Entities.Insert(&entity, drawID);
         }
         void RenderStage2D::Remove(const IRenderable2D& entity)
         {
@@ -43,16 +44,19 @@ namespace Cyclone
             int drawID = GetUniformID("DrawID");
             int colorID = GetResourceID("InputColor");
 
+            auto keys = Entities.Keys();
+            auto vals = Entities.Values();
+
             for (uint a = 0; a < Entities.Count(); a++)
             {
-                const auto& world = Entities(a)->Transforms().World();
+                const auto& world = keys(a)->Transforms().World();
                 nvMatrixLoadf(TransformMatrices::ModelView, world.ToMatrix4x4().ToArray());
 
-                SetResource(colorID, Entities(a)->Material().PrimaryColor());
-                SetUniform(drawID, idx++);
-                Entities(a)->Fill();
-                SetUniform(drawID, idx++);
-                Entities(a)->Stroke();
+                SetResource(colorID, keys(a)->Material().PrimaryColor());
+                SetUniform(drawID, 2 * vals(a));
+                keys(a)->Fill();
+                SetUniform(drawID, 2 * vals(a) + 1);
+                keys(a)->Stroke();
             }
         }
         void RenderStage2D::Update()

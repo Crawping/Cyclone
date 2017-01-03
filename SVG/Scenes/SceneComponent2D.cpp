@@ -34,7 +34,7 @@ namespace Cyclone
 
             ResourceMapping& map = SceneComponent::Register(entity);
             for (auto& s : _stages)
-                s.Insert(*entity2D);
+                s.Insert(map.EntityKey.Index(), *entity2D);
         }
         void SceneComponent2D::Remove(const IRenderable& entity)
         {
@@ -55,6 +55,7 @@ namespace Cyclone
         }
         void SceneComponent2D::Update(const IRenderable& entity)
         {
+            Parent().Update(entity);
             const IRenderable2D* entity2D = dynamic_cast<const IRenderable2D*>(&entity);
             if (entity2D)
                 entity2D->Update();
