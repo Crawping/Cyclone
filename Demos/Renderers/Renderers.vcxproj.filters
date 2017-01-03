@@ -47,5 +47,8 @@
     <None Include="Shaders\BlitMS.psl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\Passthrough.vsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

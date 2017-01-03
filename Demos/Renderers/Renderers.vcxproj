@@ -158,6 +158,7 @@
     <None Include="Shaders\Default.vsl" />
     <None Include="Shaders\Depth.psl" />
     <None Include="Shaders\Lighting.hsl" />
+    <None Include="Shaders\Passthrough.vsl" />
     <None Include="Shaders\SVG.psl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
