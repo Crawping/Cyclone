@@ -51,6 +51,8 @@ namespace Cyclone
         /** PROTECTED UTILITIES **/
         void Text2D::CoverFill()                const
         {
+            Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+
             nvCoverFillPathInstanced
             (
                 _text.size(),
@@ -102,9 +104,9 @@ namespace Cyclone
                 height = Math::Max(height, dims(a + 1));
             }
 
-            Volume bounds = Geometry().Bounds();
+            Volume bounds = _geometry.Bounds();
             bounds.Size(width, _font.PixelsPerEm(), 0.0f);
-            Geometry().Bounds(bounds);
+            _geometry.Bounds(bounds);
         }
         void Text2D::StencilFill()              const
         {
@@ -119,6 +121,11 @@ namespace Cyclone
                 TransformTypes::TranslateX,
                 _kerning.ToArray()
             );
+        }
+        void Text2D::UpdateGeometry()           const
+        {
+            Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+            nvTransformPath(ID(), ID(), TransformTypes::TransposeAffine3D, model.Transpose().ToArray());
         }
 
     }

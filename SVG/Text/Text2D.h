@@ -44,10 +44,12 @@ namespace Cyclone
 
             protected:
 
+                /** UTILITIES **/
                 SVGAPI void CoverFill()             const override;
                 SVGAPI void QueryKerningValues();
                 SVGAPI void QueryTextDimensions();
                 SVGAPI void StencilFill()           const override;
+                SVGAPI void UpdateGeometry()        const override;
 
             private:
                 Font            _font;
