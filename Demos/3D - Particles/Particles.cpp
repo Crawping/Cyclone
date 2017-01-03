@@ -20,9 +20,11 @@ class PointCloud : public Point3D
 
         void Add(const Vector<Vector3>& points)
         {
-            Geometry().Points(points);
-            Geometry().Normals(Vector<Vector3>(points.Count()).Fill(Vector3::UnitZ));
-            Geometry().Mapping(Vector<Vector3>(points.Count()).Fill(0));
+            GeometryData data = Geometry().Data();
+            data.Points.Append(points);
+            data.Mapping.Append(Vector<Vector3>(points.Count()));
+            data.Normals.Append(Vector<Vector3>(points.Count()));
+            Geometry().Data(data);
         }
 
 };
