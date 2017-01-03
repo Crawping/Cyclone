@@ -16,6 +16,20 @@ namespace Cyclone
                 cmds(a) = ControlPoints(a).Command;
             return cmds;
         }
+        GeometryData Geometry2D::Data()                 const
+        {
+            GeometryData data =
+            {
+                _bounds,
+                Vector<uint>(),
+                Vector<Vector3>(Count()),
+                Vector<Vector3>(Count()),
+                Vector<Vector3>(Count()),
+                _topology,
+            };
+            
+            return data;
+        }
         Vector<uint> Geometry2D::Indices()              const { return Vector<uint>(); }
         bool Geometry2D::IsClosed() const
         {
@@ -55,9 +69,10 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void Geometry2D::Append(const ControlPoint2D& point)    { ControlPoints.Append(point); }
+        void Geometry2D::Append(const ControlPoint2D& point)                    { ControlPoints.Append(point); }
+        void Geometry2D::Append(const ICollection<ControlPoint2D>& points)      { ControlPoints.Append(points); }
         //void Geometry2D::Insert(uint index, const ControlPoint2D& point)
-        //{ 
+        //{
         //    ControlPoints
         //}
         void Geometry2D::Set(uint index, const ControlPoint2D& point)
@@ -66,7 +81,7 @@ namespace Cyclone
         }
         void Geometry2D::Remove(uint index)
         {
-            
+
         }
         void Geometry2D::Clear()
         {
@@ -98,7 +113,7 @@ namespace Cyclone
                 { PathCommands::Arc,    { 0.5f, 0.5f, 0.0f, 1.0f, 1.0f,  0.5f, 0.0f } },
                 { PathCommands::Close,  { } },
             };
-            
+
             return geometry;
         }
         Geometry2D Geometry2D::Rectangle()
@@ -112,12 +127,13 @@ namespace Cyclone
 
             return geometry;
         }
-        Geometry2D Geometry2D::RoundedRectangle()
+        Geometry2D Geometry2D::RoundedRectangle(const Vector2& position, const Vector2& size, float cornerRadius)
         {
             Geometry2D geometry;
-            geometry.ControlPoints = 
+            geometry.Bounds(Volume(position, size));
+            geometry.ControlPoints =
             {
-                { PathCommands::RoundedRectangle, { -0.5f, -0.5f, 1.0f, 1.0f, 0.25f } },
+                { PathCommands::RoundedRectangle, { position.X, position.Y, size.X, size.Y, cornerRadius } },
                 { PathCommands::Close, { } },
             };
 
@@ -126,7 +142,7 @@ namespace Cyclone
         Geometry2D Geometry2D::Star()
         {
             Geometry2D geometry;
-            geometry.ControlPoints = 
+            geometry.ControlPoints =
             {
                 { PathCommands::Move,   {  40,  10 } },
                 { PathCommands::Line,   { 100, 180 } },

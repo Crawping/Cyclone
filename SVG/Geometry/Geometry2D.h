@@ -28,6 +28,7 @@ namespace Cyclone
                 const Volume& Bounds()                      const override { return _bounds; }
                 SVGAPI Vector<PathCommands> Commands()      const override;
                 uint Count()                                const override { return ControlPoints.Count(); }
+                SVGAPI GeometryData Data()                  const override;
                 SVGAPI Vector<uint> Indices()               const override;
                 SVGAPI bool IsClosed()                      const override;
                 SVGAPI bool IsEmpty()                       const override;
@@ -51,7 +52,7 @@ namespace Cyclone
                 SVGAPI static Geometry2D Line();
                 SVGAPI static Geometry2D Point();
                 SVGAPI static Geometry2D Rectangle();
-                SVGAPI static Geometry2D RoundedRectangle();
+                SVGAPI static Geometry2D RoundedRectangle(const Vector2& position = -0.5f, const Vector2& size = 1.0f, float cornerRadius = 0.0f);
                 SVGAPI static Geometry2D Star();
                 SVGAPI static Geometry2D Triangle();
 
@@ -59,10 +60,14 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 SVGAPI void Append(const ControlPoint2D& point);
+                SVGAPI void Append(const ICollection<ControlPoint2D>& points);
                 //SVGAPI void Insert(uint index, const ControlPoint2D& point);
                 SVGAPI void Set(uint index, const ControlPoint2D& point);
                 SVGAPI void Remove(uint index);
                 SVGAPI void Clear();
+
+                ControlPoint2D& operator ()(uint index)         { return ControlPoints(index); }
+                const ControlPoint2D& operator ()(uint index)   const { return ControlPoints(index); }
 
             private:
 
