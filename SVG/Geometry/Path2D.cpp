@@ -29,14 +29,12 @@ namespace Cyclone
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
             Entity2D(count),
-            _paramsNeedUpdate(false),
             NeedsUpdate(true)
         {
 
         }
         Path2D::Path2D(const Geometry2D& geometry) :
             _geometry(geometry),
-            _paramsNeedUpdate(false),
             NeedsUpdate(true)
         {
 
@@ -49,23 +47,22 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        Path2D& Path2D::Add(const ControlPoint2D& point)
+        Path2D& Path2D::Append(const ControlPoint2D& point)
         {
-            Geometry().Append(point);
+            _geometry.Append(point);
             NeedsUpdate = true;
             return *this;
         }
-        Path2D& Path2D::Add(const ICollection<ControlPoint2D>& points)
+        Path2D& Path2D::Append(const ICollection<ControlPoint2D>& points)
         {
-            for (uint a = 0; a < points.Count(); a++)
-                Add(points(a));
+            _geometry.Append(points);
             NeedsUpdate = true;
             return *this;
         }
         void Path2D::Clear()
         {
             if (IsEmpty()) { return; }
-            Geometry().Clear();
+            _geometry.Clear();
             NeedsUpdate = true;
         }
         void Path2D::Update() const
@@ -95,7 +92,8 @@ namespace Cyclone
                 crds.ToArray()
             );
 
-            nvTransformPath(ID(), ID(), TransformTypes::TransposeAffine3D, Transforms().Model().ToArray());
+            Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+            nvTransformPath(ID(), ID(), TransformTypes::TransposeAffine3D, model.Transpose().ToArray());
         }
 
     }

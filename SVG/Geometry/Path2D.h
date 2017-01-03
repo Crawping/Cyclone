@@ -27,6 +27,10 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                using Entity2D::Offset;
+                using Entity2D::Size;
+
+
                 virtual const Volume& Bounds()          const { return _geometry.Bounds(); }
                 virtual const Geometry2D& Geometry()    const override { return _geometry; }
                 /// <summary> Gets whether the path object has been terminated by a close command. </summary>
@@ -51,28 +55,27 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                /// <summary> Appends a new 2D control point to the end of the path command list. </summary>
-                /// <param name="point"> A 2D control point containing some path command and its associated input arguments. </param>
-                SVGAPI virtual Path2D& Add(const ControlPoint2D& point);
-                /// <summary> Appends a collection of 2D control points to the end of the path command list. </summary>
-                /// <param name="points"> A collection of 2D control points containing the path commands and associated input arguments. </param>
-                SVGAPI virtual Path2D& Add(const ICollection<ControlPoint2D>& points);
                 SVGAPI virtual void Clear();
                 SVGAPI virtual void Update() const override;
 
             protected:
 
-                /** PROPERTIES **/
-                Geometry2D& Geometry()                 { return _geometry; }
+                Geometry2D          _geometry;
+
+
 
                 /** UTILITIES **/
+                /// <summary> Appends a new 2D control point to the end of the path command list. </summary>
+                /// <param name="point"> A 2D control point containing some path command and its associated input arguments. </param>
+                SVGAPI virtual Path2D& Append(const ControlPoint2D& point);
+                /// <summary> Appends a collection of 2D control points to the end of the path command list. </summary>
+                /// <param name="points"> A collection of 2D control points containing the path commands and associated input arguments. </param>
+                SVGAPI virtual Path2D& Append(const ICollection<ControlPoint2D>& points);
                 SVGAPI virtual void UpdateGeometry()    const;
 
             private:
 
                 /** PROPERTY DATA **/
-                Geometry2D          _geometry;
-                mutable bool        _paramsNeedUpdate;
 
                 mutable bool        NeedsUpdate;
 
