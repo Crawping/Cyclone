@@ -132,7 +132,7 @@ namespace Cyclone
                 Indices.Add(indices(a));
 
             for (uint a = 0; a < points.Count(); a++)
-                Vertices.Add(Vertex::Standard(points(a), normals(a), (Vector2)mapping(a)));
+                Vertices.Add(Vertex(points(a), normals(a), (Vector2)mapping(a)));
         }
         void SceneLayer3D::Register(ResourceMapping& map, const IMaterial& material)
         {

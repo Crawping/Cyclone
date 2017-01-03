@@ -10,15 +10,13 @@ class _Vertex : public testing::Test
 {
     protected:
         
-        //Vertex::Simple _v0;
         Vector<VertexAttribute> _a1;
         Vector<VertexAttribute> _a2;
 
 
 
         _Vertex() : 
-            //_a1(Vertex::Simple().Layout()),
-            _a2(Vertex::Standard().Layout())
+            _a2(Vertex().Layout())
         {
 
         }
@@ -44,8 +42,8 @@ TEST_F(_Vertex, VertexLayouts)
     ASSERT_EQ(_a2.Count(), 3);
     ASSERT_EQ(_a2(0).Count, 3);
     ASSERT_EQ(_a2(0).Format, NumericFormats::Float);
-    ASSERT_EQ(_a2(0).Offset, offsetof(Vertex::Standard, Position));
+    ASSERT_EQ(_a2(0).Offset, offsetof(Vertex, Position));
 
     ASSERT_EQ(_a2(1).Count, 3);
-    ASSERT_EQ(_a2(1).Offset, offsetof(Vertex::Standard, Normal));
+    ASSERT_EQ(_a2(1).Offset, offsetof(Vertex, Normal));
 }

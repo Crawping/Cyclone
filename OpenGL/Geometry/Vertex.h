@@ -54,66 +54,60 @@ namespace Cyclone
         };
 
         
-        /// <summary> A collection of standardized vertex definitions. </summary>
-        namespace Vertex
+        /// <summary> A structure that defines a vertex consisting of positional, normal, and texture data. </summary>
+        struct Vertex : public IVertex
         {
-            /// <summary> A structure that defines a vertex consisting of positional, normal, and texture data. </summary>
-            struct Standard : public IVertex
+            /** DATA **/
+            /// <summary> The (x, y, z) position of the vertex in model space. </summary>
+            Vector3 Position;
+            /// <summary> The (x, y, z) direction of a vector that is perpendicular to the surface surrounding the vertex. </summary>
+            Vector3 Normal;
+            /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
+            Vector2 UV;
+
+            Vector<VertexAttribute> Layout() const override
             {
-                /** DATA **/
-                /// <summary> The (x, y, z) position of the vertex in model space. </summary>
-                Vector3 Position;
-                /// <summary> The (x, y, z) direction of a vector that is perpendicular to the surface surrounding the vertex. </summary>
-                Vector3 Normal;
-                /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
-                Vector2 UV;
-
-                Vector<VertexAttribute> Layout() const override
+                return
                 {
-                    return
-                    {
-                        VertexAttribute(3, NumericFormats::Float, "Position", offsetof(Standard, Position)),
-                        VertexAttribute(3, NumericFormats::Float, "Normal", offsetof(Standard, Normal)),
-                        VertexAttribute(2, NumericFormats::Float, "UV", offsetof(Standard, UV)),
-                    };
-                }
+                    VertexAttribute(3, NumericFormats::Float, "Position", offsetof(Vertex, Position)),
+                    VertexAttribute(3, NumericFormats::Float, "Normal", offsetof(Vertex, Normal)),
+                    VertexAttribute(2, NumericFormats::Float, "UV", offsetof(Vertex, UV)),
+                };
+            }
 
-                constexpr Standard() :
-                    Position(0.0f),
-                    Normal(0.0f),
-                    UV(0.0f)
-                {
+            constexpr Vertex() :
+                Position(0.0f),
+                Normal(0.0f),
+                UV(0.0f)
+            {
 
-                }
+            }
 
-                constexpr Standard(const Vector3& position, const Vector3& normal, const Vector2& uv) :
-                    Position(position),
-                    Normal(normal),
-                    UV(uv)
-                {
+            constexpr Vertex(const Vector3& position, const Vector3& normal, const Vector2& uv) :
+                Position(position),
+                Normal(normal),
+                UV(uv)
+            {
 
-                }
+            }
 
-                constexpr Standard(float x, float y, float z, float nx, float ny, float nz, float u, float v) :
-                    Position(x, y, z),
-                    Normal(nx, ny, nz),
-                    UV(u, v)
-                {
+            constexpr Vertex(float x, float y, float z, float nx, float ny, float nz, float u, float v) :
+                Position(x, y, z),
+                Normal(nx, ny, nz),
+                UV(u, v)
+            {
 
-                }
+            }
 
-                constexpr Standard(float x, float y, float z, float u = 0.0f, float v = 0.0f) :
-                    Position(x, y, z),
-                    Normal(0.0f),
-                    UV(u, v)
-                {
+            constexpr Vertex(float x, float y, float z, float u = 0.0f, float v = 0.0f) :
+                Position(x, y, z),
+                Normal(0.0f),
+                UV(u, v)
+            {
 
-                }
+            }
 
-            };
-
-        }
-
+        };
 
     }
 }

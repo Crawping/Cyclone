@@ -70,7 +70,7 @@ namespace Cyclone
                 IndexBuffer                         Indices;
                 ResourceLibrary<MaterialData>       Materials;
                 ResourceLibrary<TransformData>      Transforms;
-                VertexBuffer<Vertex::Standard>      Vertices;
+                VertexBuffer<Vertex>                Vertices;
 
 
 
