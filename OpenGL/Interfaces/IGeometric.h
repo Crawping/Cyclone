@@ -5,6 +5,7 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "Collections/Vector.h"
+#include "Spatial/Volume.h"
 
 
 
@@ -12,14 +13,22 @@ namespace Cyclone
 {
     /** FORWARD DECLARATIONS **/
     namespace { using namespace Utilities; }
-    namespace Utilities
-    {
-        struct Vector3;
-        struct Volume;
-    }
 
     namespace OpenGL
     {
+
+        struct GeometryData
+        {
+            Volume              Bounds;
+            Vector<uint>        Indices;
+            Vector<Vector3>     Mapping;
+            Vector<Vector3>     Normals;
+            Vector<Vector3>     Points;
+            VertexTopologies    Topology;
+        };
+
+
+
         /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
         /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
         class IGeometric
@@ -32,6 +41,8 @@ namespace Cyclone
                 virtual const Volume& Bounds()      const = 0;
                 /// <summary> Gets the number of points that are used to define the 3D geometric shape. </summary>
                 virtual uint Count()                const = 0;
+
+                virtual GeometryData Data()         const = 0;
                 /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
                 /// <remarks>
                 ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will
