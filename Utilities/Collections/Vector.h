@@ -162,7 +162,7 @@ namespace Cyclone
                     Data = newData;
                     return *this;
                 }
-                Vector& Append(const IArray<T>& values)
+                Vector& Append(const ICollection<T>& values)
                 {
                     if (values.IsEmpty()) { return *this; }
 
