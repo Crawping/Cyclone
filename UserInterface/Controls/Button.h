@@ -27,20 +27,25 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                UIAPI List<IRenderable&> Components()       override; 
                 /// <summary> Gets a reference to the button's shape data. </summary>
-                Rectangle2D& Shape()            override { return _shape; }
+                Rectangle2D& Shape()                        override { return _shape; }
                 /// <summary> Gets a constant reference to the button's shape data. </summary>
-                const Rectangle2D& Shape()      const override { return _shape; }
+                const Rectangle2D& Shape()                  const override { return _shape; }
                 /// <summary> Gets the string of text displayed within the button. </summary>
-                const string& Text()            const { return _text.Text(); }
+                const string& Text()                        const { return _text.Text(); }
 
                 UIAPI Button& BorderRadius(const Border& value) override;
                 UIAPI Button& Offset(const Vector2& value);
                 UIAPI Button& Size(const Vector2& value);
                 UIAPI Button& Text(const string& value);
+                UIAPI Button& TextColor(const Color4& value);
 
                 
                 UIAPI Button();
+
+
+                UIAPI void Update();
 
 
             protected:

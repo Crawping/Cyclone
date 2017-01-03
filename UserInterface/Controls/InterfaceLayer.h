@@ -16,35 +16,35 @@ namespace Cyclone
 
     namespace UI
     {
-        class InterfaceLayer : public IRenderableScene
-        {
-            public:
+    //    class InterfaceLayer : public IRenderableScene
+    //    {
+    //        public:
 
-                /** PROPERTIES **/
-                UIAPI List<IRenderStage*> Stages()       const override;
-
-
-                        
-                /** CONSTRUCTOR **/
-                UIAPI InterfaceLayer();
+    //            /** PROPERTIES **/
+    //            UIAPI List<IRenderStage*> Stages()       const override;
 
 
+    //                    
+    //            /** CONSTRUCTOR **/
+    //            UIAPI InterfaceLayer();
 
-                /** UTILITIES **/
-                UIAPI void Add(const IInterfaceControl& control);
-                UIAPI void Update() override;
 
 
+    //            /** UTILITIES **/
+    //            UIAPI void Add(const IInterfaceControl& control);
+    //            UIAPI void Update() override;
 
 
 
 
-            private:
-
-                GraphicsSettings _settings;
 
 
+    //        private:
 
-        };
+    //            GraphicsSettings _settings;
+
+
+
+    //    };
     }
 }

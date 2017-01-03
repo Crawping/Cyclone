@@ -18,6 +18,7 @@ namespace Cyclone
             public:
             
                 /** PROPERTIES **/
+                List<IRenderable&> Components() override { return List<IRenderable&>(); }
                 const Rectangle2D& Shape()      const override { return _shape; }
                 Rectangle2D& Shape()            override { return _shape; }
 

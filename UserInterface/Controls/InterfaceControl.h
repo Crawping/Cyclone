@@ -4,6 +4,7 @@
 
 #pragma once
 #include "UIAPI.h"
+#include "Collections/List.h"
 #include "Controls/ControlStyle.h"
 #include "Geometry/Path2D.h"
 #include "Interfaces/IInterfaceControl.h"
@@ -29,7 +30,7 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
-                virtual const List<IRenderable2D<float>*>& Components() const { return _components; }
+                virtual List<IRenderable&> Components()             = 0;
 
                 virtual bool IsEnabled()                            const override { return _isEnabled; }
                 virtual bool IsHighlighted()                        const override { return _isHighlighted; }
@@ -88,7 +89,7 @@ namespace Cyclone
             protected:
 
                 /** PROPERTY DATA**/
-                List<IRenderable2D<float>*> _components;
+                //List<IRenderable&> _components;
 
 
 

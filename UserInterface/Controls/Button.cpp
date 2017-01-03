@@ -1,4 +1,5 @@
 #include "Controls/Button.h"
+#include "Text/Text2D.h"
 
 
 
@@ -8,6 +9,12 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
+        List<IRenderable&> Button::Components()
+        {
+            List<IRenderable&> components;
+            components.Append(_text);
+            return components;
+        }
         Button& Button::BorderRadius(const Border& value)
         {
             InterfaceControl::BorderRadius(value);
@@ -32,6 +39,11 @@ namespace Cyclone
             UpdateTextPosition();
             return *this;
         }
+        Button& Button::TextColor(const Color4& value)
+        {
+            _text.PrimaryColor(value);
+            return *this;
+        }
 
 
 
@@ -39,19 +51,23 @@ namespace Cyclone
         Button::Button()
         {
             _text.PrimaryColor(Color4::Black);
-
-            _components.Append(&_text);
         }
 
 
 
+        void Button::Update()
+        {
+            _shape.Update();
+            _text.Update();
+        }
 
         void Button::UpdateTextPosition()
         {
-            _text
-                .X(Shape().Bounds().X + (0.5f * (Shape().Bounds().Width - _text.Bounds().Width)))
-                .Y(Shape().Bounds().Y + (0.5f * (Shape().Bounds().Height - _text.Bounds().Height)))
-                .Z(Shape().Z() + 0.02f);
+            const Volume& bounds = Shape().Bounds();
+            Vector3 offShape(Shape().Offset());
+
+            _text.Position( offShape - (_text.Bounds().Size()) * 0.5f );
+            _text.Z( Shape().Z() + 0.01f );
         }
     }
 }
