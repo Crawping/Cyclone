@@ -119,8 +119,8 @@ namespace Cyclone
         Matrix4x4& Matrix4x4::Transpose()
         {
             for (int a = 0; a < 4; a++)
-                for (int b = 0; b < a; a++)
-                    std::swap(operator ()(a, b), operator ()(b, a));
+                for (int b = 0; b < a; b++)
+                    std::swap(Data[sub2ind(4, 4, a, b)], Data[sub2ind(4, 4, b, a)]);
             return *this;
         }
 
