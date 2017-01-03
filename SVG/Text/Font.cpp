@@ -39,7 +39,7 @@ namespace Cyclone
             Volume newBounds = Geometry().Bounds();
             newBounds.Width = metrics(2) - metrics(0);
             newBounds.Height = metrics(3) - metrics(1);
-            Geometry().Bounds(newBounds);
+            _geometry.Bounds(newBounds);
         }
 
 
