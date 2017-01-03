@@ -35,6 +35,12 @@ namespace Cyclone
                 virtual Geometry3D& Geometry()      { return _geometry; }
 
 
+
+                /** UTILITIES **/
+                OpenGLAPI void Append(const Vertex& vertices);
+                OpenGLAPI void Append(const ICollection<Vertex>& vertices);
+
+
             private:
                 
                 Geometry3D  _geometry;
