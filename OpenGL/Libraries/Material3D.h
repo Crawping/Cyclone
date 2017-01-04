@@ -13,31 +13,13 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        struct MaterialData
-        {
-            /// <summary> The base color of an entity. </summary>
-            Color4      PrimaryColor;
-            Color4      SecondaryColor;
-
-            constexpr bool operator ==(const MaterialData& other) const
-            {
-                return (PrimaryColor == other.PrimaryColor) && (SecondaryColor == other.SecondaryColor);
-            }
-        };
-
-
         class Material3D : public IMaterial
         {
             
-            private:
-                
-                /** PROPERTY DATA **/
-                MaterialData        _data;
-                const Texture3D*    _texture;
-
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets a structure containing all of the data needed to render the material. </summary>
                 const MaterialData& Data()                          const override { return _data; }
                 /// <summary> Gets the primary color of the material. </summary>
                 const Color4& PrimaryColor()                        const override { return _data.PrimaryColor; }
@@ -46,21 +28,46 @@ namespace Cyclone
                 /// <summary> Gets a pointer to the texture of a material. </summary>
                 const Texture3D* Texture()                          const override { return _texture; }
 
+                /// <summary> Summarily sets all of the data needed to render the material. </summary>
+                Material3D& Data(const MaterialData& value)
+                {
+                    _data = value;
+                    return *this;
+                }
                 /// <summary> Sets the primary color of the material. </summary>
-                Material3D& PrimaryColor(const Color4& value)       { _data.PrimaryColor = value; return *this; }
+                Material3D& PrimaryColor(const Color4& value)       
+                { 
+                    _data.PrimaryColor = value; 
+                    return *this;
+                }
                 /// <summary> Sets the secondary color of the material. </summary>
-                Material3D& SecondaryColor(const Color4& value)     { _data.SecondaryColor = value; return *this; }
+                Material3D& SecondaryColor(const Color4& value)
+                { 
+                    _data.SecondaryColor = value;
+                    return *this;
+                }
                 /// <summary> Sets the texture of a material. </summary>
-                Material3D& Texture(const Texture3D* value)         { _texture = value; return *this; }
+                Material3D& Texture(const Texture3D* value)
+                {
+                    _texture = value;
+                    return *this;
+                }
 
 
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs a new black textureless material that can be used to style renderable objects. </summary>
                 Material3D() :
                     _texture(nullptr)
                 {
 
                 }
+
+            private:
+                
+                /** PROPERTY DATA **/
+                MaterialData        _data;
+                const Texture3D*    _texture;
 
         };
     }
