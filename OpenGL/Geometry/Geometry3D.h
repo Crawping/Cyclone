@@ -27,7 +27,7 @@ namespace Cyclone
                 virtual const Volume& Bounds()                  const override { return _bounds; }
                 /// <summary> Gets the number of points that are used to define the 3D geometric shape. </summary>
                 virtual uint Count()                            const override { return Vertices.Count(); }
-
+                /// <summary> Gets a structure containing all of the data needed to render the 3D geometric shape. </summary>
                 OpenGLAPI virtual GeometryData Data()           const override;
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
                 OpenGLAPI virtual Vector<uint> Indices()        const override;
@@ -42,9 +42,9 @@ namespace Cyclone
 
                 /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
                 OpenGLAPI virtual Geometry3D& Bounds(const Volume& value);
-
+                /// <summary> Summarily sets all of the data needed to render the 3D geometric shape. </summary>
                 OpenGLAPI virtual Geometry3D& Data(const GeometryData& value);
-
+                /// <summary> Sets the array of indices that specify the order in which geometric points are rendered. </summary>
                 OpenGLAPI virtual Geometry3D& Indices(const Vector<uint>& value);
                 /// <summary> Sets the type of primitive that the points of the geometry construct. </summary>
                 OpenGLAPI virtual Geometry3D& Topology(VertexTopologies value);
@@ -54,13 +54,11 @@ namespace Cyclone
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs a new empty 3D geometric object. </summary>
                 Geometry3D() { }
-
+                /// <summary> Constructs a new 3D geometric object that is initialized with externally defined data. </summary>
                 Geometry3D(const GeometryData& data)
                 {
                     Data(data);
                 }
-                /// <summary> Destroys any specially allocated resources held by the entity. </summary>
-                virtual ~Geometry3D() { }
 
 
 
@@ -103,12 +101,15 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                /// <summary> Inserts a new vertex at the end of the list of data that defines the 3D geometric shape. </summary>
+                /// <param name="vertex"></param>
                 OpenGLAPI void Append(const Vertex& vertex);
-
+                /// <summary> Inserts a collection of vertices at the end of the list of data that defines the 3D geometric shape. </summary>
+                /// <param name="vertices"></param>
                 OpenGLAPI void Append(const ICollection<Vertex>& vertices);
                 /// <summary> Estimates the normal vectors for a list of non-indexed triangles in model space. </summary>
                 OpenGLAPI void CalculateNormals();
-
+                /// <summary> Removes all of the data used to define the 3D geometric shape. </summary>
                 OpenGLAPI void Clear();
                 /// <summary> Divides inputted triangles into smaller ones with unshared vertices. </summary>
                 /// <returns>

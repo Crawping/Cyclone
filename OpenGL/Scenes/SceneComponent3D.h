@@ -22,7 +22,7 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                /// <summary> Gets a list of all rendering stages that must be executed when displaying the contents of the scene component. </summary>
+                /// <summary> Gets a list of all rendering stages that must be executed to display the scene component. </summary>
                 OpenGLAPI List<IRenderStage&> Stages()                              const override;
 
 

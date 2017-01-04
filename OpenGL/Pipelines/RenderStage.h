@@ -19,7 +19,7 @@ namespace Cyclone
         class FrameBuffer;
         class GraphicsPipeline;
 
-
+        /// <summary> A base structure that holds and manages the GPU settings needed to execute some rendering procedure. </summary>
         struct RenderStage : public virtual IRenderStage
         {
             public:

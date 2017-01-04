@@ -48,7 +48,7 @@ namespace Cyclone
                 virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
                 /// <summary> Gets the width of the path's surrounding stroke. </summary>
                 virtual float StrokeWidth()             const { return _style.StrokeWidth; }
-
+                /// <summary> Gets a structure containing all of the styling data used to render the entity. </summary>
                 virtual const PathStyle& Style()        const { return _style; }
                 /// <summary> Gets the end cap style used to terminate path segments. </summary>
                 virtual EndCaps TerminalCap()           const { return _style.TerminalCap; }
@@ -63,7 +63,7 @@ namespace Cyclone
                 SVGAPI virtual Entity2D& JoinStyle(JoinStyles value);
                 /// <summary> Sets the width of the path's surrounding stroke. </summary>
                 SVGAPI virtual Entity2D& StrokeWidth(float value);
-
+                /// <summary> Summarily sets all of the styling data used to render the entity. </summary>
                 SVGAPI virtual Entity2D& Style(const PathStyle& value);
                 /// <summary> Sets the end cap style used to terminate path segments.  </summary>
                 SVGAPI virtual Entity2D& TerminalCap(EndCaps value);

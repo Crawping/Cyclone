@@ -38,7 +38,7 @@ namespace Cyclone
         {
             Entities.Remove(&entity);
         }
-        void RenderStage2D::Render() const
+        void RenderStage2D::Render()                                    const
         {
             int idx = 0;
             int drawID = GetUniformID("DrawID");
