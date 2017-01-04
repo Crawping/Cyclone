@@ -37,6 +37,7 @@ class Program : public AdvancedRenderer
         Program() : 
             AdvancedRenderer(Area(0, 0, 1024, 960), "Particle Rendering")
         {
+            ClearColor = Color4::Black;
             Initialize();
         }        
 
@@ -78,7 +79,7 @@ class Program : public AdvancedRenderer
                 0.5f * sinf(Points.Yaw()) + 0.5f,
                 0.25f * cosf(Points.Yaw()) + 0.75f,
                 0.125f * sinf(Points.Yaw()) + 0.875,
-                0.25f
+                0.375f
             );
 
             Points
