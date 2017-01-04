@@ -4,8 +4,8 @@
 #include "Window3D.h"
 #include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
 
 using namespace Renderers;
 using namespace Cyclone::OpenGL;
@@ -37,7 +37,7 @@ class Program : public BasicRenderer
                 .Roll(90)
                 .Scale(100, 100, 100);
 
-            RenderScene->Add(Cube);
+            RenderScene->Insert(Cube);
         }
 
         void CreateSizedResources() override

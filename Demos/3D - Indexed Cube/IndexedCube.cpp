@@ -4,8 +4,8 @@
 #include "Window3D.h"
 #include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Scene3D.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
 
 using namespace Renderers;
 using namespace Cyclone::OpenGL;
@@ -17,39 +17,30 @@ class Program : public BasicRenderer
     public:
         Program() :
             BasicRenderer(Area(0, 0, 1024, 960), "Indexed Cube"),
-            Cube(nullptr)
+            Cube(Geometry3D::Cube(true))
         {
-            Vector<uint> indices;
-            Vector<Vertex::Standard> vertices = Geometry3D::Cube(indices);
-            Cube = new Mesh3D(vertices, indices);
-
             Initialize();
-            glEnable(GL_CULL_FACE);
-        }
-        ~Program()
-        {
-            if (Cube) { delete Cube; }
         }
 
     protected:
-        Mesh3D* Cube;
+        Mesh3D Cube;
 
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Cube->
-                 PrimaryColor(Color4::Green)
+            Cube
+                .PrimaryColor(Color4::Green)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), -50))
                 .Pitch(90)
                 .Scale(100, 100, 100)
                 .Roll(90);
-            RenderScene->Add(*Cube);
+            RenderScene->Insert(Cube);
         }
 
         void CreateSizedResources() override
         {
             BasicRenderer::CreateSizedResources();
-            Cube->Position(Vector3(RenderWindow->ClientArea().Center(), -50));
+            Cube.Position(Vector3(RenderWindow->ClientArea().Center(), -50));
         }
 
         void CreateShaderPipeline() override
@@ -61,15 +52,15 @@ class Program : public BasicRenderer
         {
             Color4 color
             (
-                0.5f * sinf(Cube->Pitch()) + 0.5f,
-                0.25f * cosf(Cube->Yaw()) + 0.75f,
-                0.125f * sinf(Cube->Roll()) + 0.875f
+                0.5f * sinf(Cube.Pitch()) + 0.5f,
+                0.25f * cosf(Cube.Yaw()) + 0.75f,
+                0.125f * sinf(Cube.Roll()) + 0.875f
             );
 
-            Cube->
-                 PrimaryColor(color)
+            Cube
+                .PrimaryColor(color)
                 .Rotate(Vector3(0.01f, 0.05f, 0.01f));
-            RenderScene->Update(*Cube);
+            RenderScene->Update(Cube);
 
             BasicRenderer::UpdateScene();
         }
