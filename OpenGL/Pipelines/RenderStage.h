@@ -32,14 +32,14 @@ namespace Cyclone
                 /// <summary> Gets the primitive topology of the points that are used by the rendering stage. </summary>
                 VertexTopologies Topology()                                 const override { return _topology; }
 
+                /// <summary> Sets the type of geometric face culling to be used by the rendering stage. </summary>
+                OpenGLAPI RenderStage& CullingMode(CullingModes value);
                 /// <summary> Sets whether alpha blending is enabled for the rendering stage. </summary>
                 OpenGLAPI RenderStage& IsBlendEnabled(bool value);
                 /// <summary> Sets whether depth testing is enabled for the rendering stage. </summary>
                 OpenGLAPI RenderStage& IsDepthTestEnabled(bool value);
                 /// <summary> Sets whether stencil testing is enabled for the rendering stage. </summary>
                 OpenGLAPI RenderStage& IsStencilTestEnabled(bool value);
-                /// <summary> Sets the type of geometric face culling to be used by the rendering stage. </summary>
-                OpenGLAPI RenderStage& CullingMode(CullingModes value);
                 /// <summary> Sets the OpenGL rendering pipeline to be used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& Pipeline(GraphicsPipeline* value);
                 /// <summary> Sets the perspective projection transformation to be used by the rendering stage. </summary>
