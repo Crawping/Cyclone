@@ -12,12 +12,12 @@ TODOS:
 	-- SVG images                               
         > Path string parsing
         > XML file parsing
-    -- Color gradients
+    -- Color gradients                          (PRELIMINARY)
     -- Proper scaling of SVG elements           (PRELIMINARY)
         > Convert between pixels/ems
     -- Hit testing								(PRELIMINARY)
     -- Separate:
-        > Path materials
+        > Path materials                        (DONE)
 
 - 3D Rendering
 	-- Entity instancing
@@ -43,7 +43,7 @@ TODOS:
 	-- Implement ICollection interface			(PRELIMINARY)
 	-- Generalized multidimensional arrays
     -- Data streams
-    -- Sets
+    -- Sets                                     (DONE)
     -- Vectors                                  (PRELIMINARY)
         > Static checking of initializer list
           length for stack vectors
@@ -70,7 +70,7 @@ TODOS:
     -- Refactor NVPR into SVG
 
 - Scenes
-    -- Varying vertex layouts                   (PRELIMINARY)
+    -- Varying vertex layouts                   (REMOVED)
     -- Varying shader pipelines
         > Compute                               (PRELIMINARY)
         > Deferred
