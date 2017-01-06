@@ -462,3 +462,16 @@ struct VSyncModes : public Enumerator
 
     constexpr VSyncModes(enum Modes m = Enable) : Enumerator((int)m) { }
 };
+
+
+struct WindingOrders : public Enumerator
+{
+    enum Orders
+    {
+        None                        = 0,
+        Clockwise                   = 1,
+        CounterClockwise            = 2,
+    };
+
+    constexpr WindingOrders(enum Orders o = None) : Enumerator((int)o) { }
+};

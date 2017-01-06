@@ -40,6 +40,8 @@ namespace Cyclone
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
                 virtual VertexTopologies Topology()             const override { return _topology; }
 
+                virtual WindingOrders Winding()                 const { return _winding; }
+
                 /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
                 OpenGLAPI virtual Geometry3D& Bounds(const Volume& value);
                 /// <summary> Summarily sets all of the data needed to render the 3D geometric shape. </summary>
@@ -63,9 +65,9 @@ namespace Cyclone
 
 
                 /** STATIC CONSTRUCTORS **/
-                /// <summary> A cube with unit dimensions spanning the coordinates (-0.5, -0.5, -0.5) to (0.5, 0.5, 0.5). </summary>
-                /// <returns> An array of standard vertices that define a cube in 3D space. </returns>
-                /// <remarks> The vertices of this cube are not shared and are wound counter-clockwise. </remarks>
+                /// <summary> Constructs a cube with unit dimensions spanning the coordinates (-0.5, -0.5, -0.5) to (0.5, 0.5, 0.5). </summary>
+                /// <param name="isIndexed"> Indicates whether the vertices of the cube should be indexed or shared. </param>
+                /// <remarks> The vertices of this cube are wound counter-clockwise and are shared only if indexed. </remarks>
                 OpenGLAPI static Geometry3D Cube(bool isIndexed = false);
                 /// <summary> A cylinder with unit radius and height centered on the origin (0, 0, 0). </summary>
                 /// <returns> An array of standard vertices that define a cylinder in 3D space. </returns>
@@ -80,12 +82,13 @@ namespace Cyclone
                 /// <returns> An array of standard vertices that define a regular icosahedron in 3D space. </returns>
                 /// <remarks> The vertices of this icosahedron are not shared and are wound counter-clockwise. </remarks>
                 OpenGLAPI static Geometry3D Icosahedron(bool isIndexed = false);
-                /// <summary> A line with unit length spanning the coordinates (-0.5, 0, 0) to (0.5, 0, 0). </summary>
+                /// <summary> Constructs a line with unit length spanning the coordinates (-0.5, 0, 0) to (0.5, 0, 0). </summary>
                 OpenGLAPI static Geometry3D Line();
-                /// <summary> A single point in three dimensional space at the coordinates (0, 0, 0). </summary>
+                /// <summary> Constructs a single point in three dimensional space at the coordinates (0, 0, 0). </summary>
                 OpenGLAPI static Geometry3D Point();
-                /// <summary> A unit quad in the XY plane spanning the coordinates (-0.5, -0.5, -0.5) to (0.5, 0.5, 0.5). </summary>
-                /// <remarks> The vertices of this quad are not shared and are wound counter-clockwise. </remarks>
+                /// <summary> Constructs a unit quad in the XY plane spanning the coordinates (-0.5, -0.5, -0.5) to (0.5, 0.5, 0.5). </summary>
+                /// <remarks> The vertices of this quad are wound counter-clockwise and are shared only if indexed. </remarks>
+                /// <param name="isIndexed"> Indicates whether the vertices of the quad should be indexed or shared. </param>
                 OpenGLAPI static Geometry3D Quad(bool isIndexed = false);
                 /// <summary> A sphere with unit radius centered on the origin (0, 0, 0). </summary>
                 /// <returns> An array of standard vertices that define a sphere in 3D space. </returns>
@@ -93,8 +96,7 @@ namespace Cyclone
                 ///     The number of times the vertices of a regular icosahedron are tessellated to approximate the sphere.
                 /// </param>
                 OpenGLAPI static Geometry3D Sphere(uint n);
-                /// <summary> A right-triangle in the XY plane whose hypotenuse spans the coordinates (1, 0, 0) to (0, 1, 0). </summary>
-                /// <returns> An array of standard vertices that define a triangle in 3D space. </returns>
+                /// <summary> Constructs a right-triangle in the xy-plane whose hypotenuse spans the coordinates (1, 0, 0) to (0, 1, 0). </summary>
                 /// <remarks> The vertices of this triangle are wound counter-clockwise. </remarks>
                 OpenGLAPI static Geometry3D Triangle();
 
@@ -147,6 +149,7 @@ namespace Cyclone
                 Volume              _bounds;
                 Vector<uint>        _indices;
                 VertexTopologies    _topology;
+                WindingOrders       _winding;
 
                 Vector<Vertex>      Vertices;
 
