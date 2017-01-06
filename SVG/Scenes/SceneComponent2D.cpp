@@ -39,9 +39,12 @@ namespace Cyclone
         void SceneComponent2D::Remove(const IRenderable& entity)
         {
             if (!Contains(entity)) { return; }
+
             SceneComponent::Remove(entity);
+            const IRenderable2D& entity2D = dynamic_cast<const IRenderable2D&>(entity);
+
             for (auto& s : _stages)
-                s.Remove(dynamic_cast<const IRenderable2D&>(entity));
+                s.Remove(entity2D);
         }
         void SceneComponent2D::Remove(uint index)
         {

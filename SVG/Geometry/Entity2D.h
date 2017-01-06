@@ -30,6 +30,7 @@ namespace Cyclone
             public:
         
                 /** PROPERTIES **/
+
                 virtual CoverModes CoverMode()          const { return _style.CoverMode; }
 
                 virtual FillModes FillMode()            const { return _style.FillMode; }
