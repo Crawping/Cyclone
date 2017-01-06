@@ -33,6 +33,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets whether the scene component is visible in the rendered environment. </summary>
                 virtual bool IsVisible()                                            const = 0;
+
                 virtual const string& Name()                                        const = 0;
                 /// <summary> Gets the parent layer that contains the scene component. </summary>
                 virtual ISceneLayer& Parent()                                       const = 0;
@@ -46,14 +47,21 @@ namespace Cyclone
                 /// <summary> Summarily sets all of the GPU settings needed to render the scene component. </summary>
                 virtual ISceneComponent& Settings(const GraphicsSettings& value)    = 0;
 
+
+
                 /** DESTRUCTOR **/
                 virtual ~ISceneComponent() { }
+
+
 
                 /** UTILITIES **/
                 /// <summary> Determines whether the scene component contains a specific renderable entity. </summary>
                 virtual bool Contains(const IRenderable& entity)                    const = 0;
+                /// <summary> Adds a renderable object to the scene component. </summary>
                 virtual void Insert(const IRenderable& entity)                      = 0;
+
                 virtual void Update()                                               = 0;
+
                 virtual void Update(const IRenderable& entity)                      = 0;
 
                 virtual ResourceMapping& Register(const IRenderable& entity)        = 0;

@@ -11,12 +11,10 @@
 
 namespace Cyclone
 {
-    /** FORWARD DECLARATIONS **/
     namespace { using namespace Utilities; }
-
     namespace OpenGL
     {
-
+        /** FORWARD DECLARATIONS **/
         struct GeometryData
         {
             Volume              Bounds;
@@ -29,8 +27,7 @@ namespace Cyclone
 
 
 
-        /// <summary> An interface used to specify the properties of any three-dimensional geometric shape. </summary>
-        /// <typeparam name="T"> The type of point object used to define a 3D geometric shape. </typeparam>
+        /// <summary> An interface that represents a generalized three-dimensional geometric shape. </summary>
         class IGeometric
         {
 
