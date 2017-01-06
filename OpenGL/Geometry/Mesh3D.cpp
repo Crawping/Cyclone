@@ -8,7 +8,6 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-
         Mesh3D& Mesh3D::Geometry(const Geometry3D& value)
         {
             _geometry = value;
@@ -25,16 +24,5 @@ namespace Cyclone
 
         }
 
-
-
-        /** UTILITIES **/
-        void Mesh3D::Append(const Vertex& vertex)
-        {
-            _geometry.Append(vertex);
-        }
-        void Mesh3D::Append(const ICollection<Vertex>& vertices)
-        {
-            _geometry.Append(vertices);
-        }
     }
 }

@@ -20,8 +20,11 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                virtual const Volume& Bounds()              const { return _geometry.Bounds(); }
                 /// <summary> Gets the geometric data that define the shape of the mesh. </summary>
-                const Geometry3D& Geometry()        const override { return _geometry; }
+                virtual const Geometry3D& Geometry()        const override { return _geometry; }
+
+                virtual bool IsEmpty()                      const { return _geometry.IsEmpty(); }
 
                 /// <summary> Sets the geometric data that define the shape of the mesh. </summary>
                 OpenGLAPI virtual Mesh3D& Geometry(const Geometry3D& value);
@@ -39,12 +42,6 @@ namespace Cyclone
             
                 /** DATA **/
                 Geometry3D  _geometry;
-
-
-
-                /** UTILITIES **/
-                OpenGLAPI void Append(const Vertex& vertices);
-                OpenGLAPI void Append(const ICollection<Vertex>& vertices);
 
         };
     }

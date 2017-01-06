@@ -15,16 +15,16 @@ class PointCloud : public Point3D
 
         PointCloud() 
         {
-            Geometry().Topology(VertexTopologies::Points);
+            _geometry.Topology(VertexTopologies::Points);
         }
 
         void Add(const Vector<Vector3>& points)
         {
-            GeometryData data = Geometry().Data();
+            GeometryData data = _geometry.Data();
             data.Points.Append(points);
             data.Mapping.Append(Vector<Vector3>(points.Count()));
             data.Normals.Append(Vector<Vector3>(points.Count()));
-            Geometry().Data(data);
+            _geometry.Data(data);
         }
 
 };

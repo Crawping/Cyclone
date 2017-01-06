@@ -47,24 +47,6 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        Path2D& Path2D::Append(const ControlPoint2D& point)
-        {
-            _geometry.Append(point);
-            NeedsUpdate = true;
-            return *this;
-        }
-        Path2D& Path2D::Append(const ICollection<ControlPoint2D>& points)
-        {
-            _geometry.Append(points);
-            NeedsUpdate = true;
-            return *this;
-        }
-        void Path2D::Clear()
-        {
-            if (IsEmpty()) { return; }
-            _geometry.Clear();
-            NeedsUpdate = true;
-        }
         void Path2D::Update() const
         {
             if (NeedsUpdate)
