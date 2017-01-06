@@ -7,10 +7,10 @@
 #include "Spatial/Transform.h"
 
 
+
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-
     namespace OpenGL
     {      
 
@@ -37,96 +37,108 @@ namespace Cyclone
 
 
                 /** ROTATIONAL PROPERTIES **/
-                /// <summary> Gets the angle of rotation about the x-axis in radians. </summary>
+                /// <summary> Gets the angle of rotation about the world x-axis in radians. </summary>
                 virtual float Pitch()                       const { return Orientation().X; }
-                /// <summary> Gets the angle of rotation about the z-axis in radians. </summary>
+                /// <summary> Gets the angle of rotation about the world z-axis in radians. </summary>
                 virtual float Roll()                        const { return Orientation().Z; }
-                /// <summary> Gets the angle of rotation about the y-axis in radians. </summary>
+                /// <summary> Gets the angle of rotation about the world y-axis in radians. </summary>
                 virtual float Yaw()                         const { return Orientation().Y; }
 
-                /// <summary> Sets the angle of rotation about the x-axis in radians. </summary>
+                /// <summary> Sets the angle of rotation about the world x-axis in radians. </summary>
                 virtual Transform3D& Pitch(float p)               { return Orientation(p, Yaw(), Roll()); }
-                /// <summary> Sets the angle of rotation about the z-axis in radians. </summary>
+                /// <summary> Sets the angle of rotation about the world z-axis in radians. </summary>
                 virtual Transform3D& Roll(float r)                { return Orientation(Pitch(), Yaw(), r); }
-                /// <summary> Sets the angle of rotation about the y-axis in radians. </summary>
+                /// <summary> Sets the angle of rotation about the world y-axis in radians. </summary>
                 virtual Transform3D& Yaw(float y)                 { return Orientation(Pitch(), y, Roll()); }
 
 
 
                 /** SCALING PROPERTIES **/
-		        /// <summary> Gets the size of the entity along the z-axis. </summary>
+		        /// <summary> Gets the size of the entity along the world z-axis. </summary>
                 virtual float Depth()                       const { return Scale().Z; }
-		        /// <summary> Gets the size of the entity along the y-axis. </summary>
+		        /// <summary> Gets the size of the entity along the world y-axis. </summary>
                 virtual float Height()                      const { return Scale().Y; }
-		        /// <summary> Gets the size of the entity along the x-axis. </summary>
+		        /// <summary> Gets the size of the entity along the world x-axis. </summary>
                 virtual float Width()                       const { return Scale().X; }
 
-		        /// <summary> Sets the size of the entity along the z-axis. </summary>
+		        /// <summary> Sets the size of the entity along the world z-axis. </summary>
                 virtual Transform3D& Depth(float z)               { return Scale(Width(), Height(), z); }
-		        /// <summary> Sets the size of the entity along the y-axis. </summary>
+		        /// <summary> Sets the size of the entity along the world y-axis. </summary>
                 virtual Transform3D& Height(float y)              { return Scale(Width(), y, Depth()); }
-		        /// <summary> Sets the size of the entity along the x-axis. </summary>
+		        /// <summary> Sets the size of the entity along the world x-axis. </summary>
                 virtual Transform3D& Width(float x)               { return Scale(x, Height(), Depth()); }
 
 
                 
                 /** BATCH SPATIAL PROPERTIES **/
-
+                /// <summary> Gets the (x, y, z) position of the entity in model space. </summary>
                 virtual const Vector3& Offset()             const { return _model.Position(); }
-                /// <summary> Gets the (x, y, z) rotation angles for the entity in 3D space. </summary>
+                /// <summary> Gets the (x, y, z) rotation angles for the entity in world space. </summary>
                 virtual const Vector3& Orientation()        const { return _world.Orientation(); }
-                /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
+                /// <summary> Gets the (x, y, z) position of the entity in world space. </summary>
                 virtual const Vector3& Position()           const { return _world.Position(); }
-                /// <summary> Gets the (x, y, z) scaling of the entity in 3D space. </summary>
+                /// <summary> Gets the (x, y, z) scaling of the entity in world space. </summary>
                 virtual const Vector3& Scale()              const { return _world.Scale(); }
-
+                /// <summary> Gets the (x, y, z) scaling of the entity in model space. </summary>
                 virtual const Vector3& Size()               const { return _model.Scale(); }
 		        
-
+                /// <summary> Sets the (x, y, z) position of the entity in model space. </summary>
                 virtual Transform3D& Offset(const Vector3& value)
                 {
                     _model.Position(value);
                     return *this;
                 }
+                /// <summary> Sets the (x, y, z) position of the entity in model space. </summary>
                 virtual Transform3D& Offset(float x, float y, float z)             { return Offset(Vector3(x, y, z)); }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) rotation angles for the entity in world space. </summary>
                 virtual Transform3D& Orientation(const Vector3& value)
                 {
                     _world.Orientation(value);
                     return *this;
                 }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) rotation angles for the entity in world space. </summary>
                 /// <param name="p"> The pitch, or rotation about the x-axis, in radians. </param>
                 /// <param name="y"> The yaw, or rotation about the y-axis, in radians. </param>
                 /// <param name="r"> The roll, or rotation about the z-axis, in radians. </param>
                 virtual Transform3D& Orientation(float p, float y, float r)        { return Orientation(Vector3(p, y, r)); }
-                /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
+                /// <summary> Sets the (x, y, z) position of the entity in world space. </summary>
                 virtual Transform3D& Position(const Vector3& p)
                 {
                     _world.Position(p);
                     return *this;
                 }
-                /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
+                /// <summary> Sets the (x, y, z) position of the entity in world space. </summary>
                 virtual Transform3D& Position(float x, float y, float z = 0.0f)    { return Position(Vector3(x, y, z)); }
-                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) scaling of the entity in world space. </summary>
                 virtual Transform3D& Scale(const Vector3& s)
                 {
                     _world.Scale(s);
                     return *this;
                 }
-                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) scaling of the entity in world space. </summary>
                 virtual Transform3D& Scale(float x, float y, float z = 1.0f)       { return Scale(Vector3(x, y, z)); }
+                /// <summary> Sets the (x, y, z) scaling of the entity in model space. </summary>
                 virtual Transform3D& Size(const Vector3& value)
                 {
                     _model.Scale(value);
                     return *this;
                 }
+                /// <summary> Sets the (x, y, z) scaling of the entity in model space. </summary>
                 virtual Transform3D& Size(float x, float y, float z)
                 {
                     return Size(Vector3(x, y, z));
                 }
 
 
+                virtual const TransformData& Data()         const override
+                {
+                    return
+                    {
+                        _model.ToMatrix4x4(),
+                        _texture.ToMatrix4x4(),
+                        _world.ToMatrix4x4(),
+                    };
+                }
                 /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in model space. </summary>
                 /// <remarks>
                 ///     The model matrix represents an additional affine transformation that takes place before the world transform 
@@ -163,26 +175,27 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
+                /// <summary> Sets the (x, y, z) rotation angles for the entity in world space relative to their current values. </summary>
                 virtual Transform3D& Rotate(const Vector3& value)
                 {
                     _world.Rotate(value);
                     return *this;
                 }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity relative to their current values. </summary>
+                /// <summary> Sets the (x, y, z) rotation angles for the entity in world space relative to their current values. </summary>
                 virtual Transform3D& Rotate(float x, float y, float z) { return Rotate(Vector3(x, y, z)); }
-                /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
+                /// <summary> Sets the (x, y, z) position of the entity in world space relative to its current position. </summary>
                 virtual Transform3D& Translate(const Vector3& value)
                 {
                     _world.Translate(value);
                     return *this;
                 }
-                /// <summary> Sets the position of the entity in 3D space relative to its current position. </summary>
+                /// <summary> Sets the (x, y, z) position of the entity in world space relative to its current position. </summary>
                 virtual Transform3D& Translate(float x, float y, float z) { return Translate(Vector3(x, y, z)); }
 
 
             private:
 
+                /** PROPERTY DATA **/
                 Transform _model;
                 Transform _texture;
                 Transform _world;

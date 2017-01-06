@@ -43,21 +43,5 @@ namespace Cyclone
             }
         };
 
-        struct TransformData
-        {
-            Matrix4x4   ModelTransform;
-            Matrix4x4   TextureTransform;
-            /// <summary> The world transformation matrix for an entity. </summary>
-            Matrix4x4   WorldTransform;
-
-            bool operator ==(const TransformData& other) const
-            {
-                return 
-                    (ModelTransform == other.ModelTransform) && 
-                    (TextureTransform == other.TextureTransform) && 
-                    (WorldTransform == other.WorldTransform);
-            }
-        };
-
     }
 }

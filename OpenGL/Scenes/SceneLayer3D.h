@@ -3,11 +3,12 @@
  */
 
 #pragma once
-#include "Collections/BST.h"
 #include "Buffers/IndexBuffer.h"
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
+#include "Collections/BST.h"
+#include "Interfaces/ITransformable.h"
 #include "Libraries/ResourceLibrary.h"
 #include "Scenes/SceneComponent3D.h"
 
@@ -18,6 +19,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        /** FORWARD DECLARATIONS **/
         class IGeometric;
         class IMaterial;
         class ITransformable;
@@ -25,14 +27,13 @@ namespace Cyclone
         struct ResourceMapping;
 
 
-
-        class SceneLayer3D : 
+        class SceneLayer3D :
             public SceneComponent3D,
             public virtual ISceneLayer
         {
 
             public:
-                
+
                 /** PROPERTIES **/
                 OpenGLAPI List<BufferBinding> Buffers()                 const;
                 OpenGLAPI List<ISceneComponent&> Components()           const override;
@@ -80,7 +81,7 @@ namespace Cyclone
 
 
 
-                
+
 
         };
     }
