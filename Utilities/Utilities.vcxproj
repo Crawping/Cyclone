@@ -179,6 +179,7 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="Enumerator.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="Imaging\Bitmap.h" />
     <ClInclude Include="Imaging\Color4.h" />
     <ClInclude Include="Imaging\ColorGradient.h" />

@@ -131,6 +131,7 @@
     <ClInclude Include="Collections\Set.h">
       <Filter>Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Functions.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

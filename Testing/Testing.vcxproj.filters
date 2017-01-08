@@ -59,6 +59,9 @@
     <ClCompile Include="Set.cpp">
       <Filter>Utilities\Collections</Filter>
     </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">

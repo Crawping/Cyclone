@@ -151,6 +151,7 @@
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="Enumerator.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Geometry3D.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Main.cpp" />
