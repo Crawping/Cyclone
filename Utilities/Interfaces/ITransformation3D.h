@@ -49,6 +49,8 @@ namespace Cyclone
                 virtual ITransformation3D& Rotate(const Vector3& rotation)            = 0;
                 /// <summary> Converts the transformation data structure into an equivalent 4x4 transformation matrix. </summary>
                 virtual const Matrix4x4& ToMatrix4x4()                          const = 0;
+                /// <summary> Converts the transformation data structure into an equivalent native vector of values. </summary>
+                virtual const float* ToArray()                                  const = 0;
 
         };
     }

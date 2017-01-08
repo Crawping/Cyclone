@@ -88,7 +88,7 @@ namespace Cyclone
                 virtual Transform& Scale(const Vector3& s)                    override { UpdateFlag(_size != s); _size = s; return *this; }
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
                 virtual Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
-                                
+
 
 
                 /** CONSTRUCTORS **/
@@ -160,23 +160,25 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                UtilitiesAPI Matrix4x4 Inverse() const;
+
+                UtilitiesAPI Matrix4x4 Inverse()                                    const;
+
                 UtilitiesAPI Transform& Invert();
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI virtual string Report()                                const;
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Rotate(const Vector3& angles)                          override { return Orientation(_orientation + angles); }
+                virtual Transform& Rotate(const Vector3& angles)                    override { return Orientation(_orientation + angles); }
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Rotate(float p, float y, float r)                      { return Rotate(Vector3(p, y, r)); }
+                virtual Transform& Rotate(float p, float y, float r)                { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
-                UtilitiesAPI virtual const float* ToArray()                         const { UpdateState(); return State.ToArray(); }
+                virtual const float* ToArray()                                      const override { UpdateState(); return State.ToArray(); }
                 /// <summary> Converts a transformation data structure into an ordinary 4x4 transformation matrix. </summary>
                 /// <returns> A reference to the transformation matrix that performs the desired rotation, scaling, and translation operations. </returns>
-                UtilitiesAPI virtual const Matrix4x4& ToMatrix4x4()                 const override { UpdateState(); return State; }
+                virtual const Matrix4x4& ToMatrix4x4()                              const override { UpdateState(); return State; }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Translate(const Vector3& t)                            override { return Position(_position + t); }
+                virtual Transform& Translate(const Vector3& t)                      override { return Position(_position + t); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Translate(float x, float y, float z)                   { return Translate(Vector3(x, y, z)); }
+                virtual Transform& Translate(float x, float y, float z)             { return Translate(Vector3(x, y, z)); }
 
 
 
@@ -187,7 +189,7 @@ namespace Cyclone
                 /// <summary> Determines whether one transformation is not equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
                 virtual bool operator !=(const Transform& other)                    const { return !(*this == other); }
-                
+
                 virtual Vector4 operator *(const Vector4& right)                    const { return ToMatrix4x4() * right; }
 
 

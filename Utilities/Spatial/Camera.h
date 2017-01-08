@@ -83,9 +83,14 @@ namespace Cyclone
                 UtilitiesAPI Camera& Rotate(const Vector3& r)                   override;
                 /// <summary> Sets the (x, y, z) translation components of the transformation matrix relative to their current values. </summary>
                 UtilitiesAPI Camera& Translate(const Vector3& t)                override;
+                /// <summary> Converts the camera transformation structure into an equivalent native vector of values. </summary>
+                const float* ToArray()                                          const override { Update(); return State.ToArray(); }
                 /// <summary> Converts the camera transformation structure into an ordinary 4x4 transformation matrix. </summary>
                 /// <returns> A reference to the transformation matrix that performs the camera's translation, scaling, and rotation operations. </returns>
-                UtilitiesAPI const Matrix4x4& ToMatrix4x4()                     const override { Update(); return State; }
+                const Matrix4x4& ToMatrix4x4()                                  const override { Update(); return State; }
+
+
+
 
             private:
 
