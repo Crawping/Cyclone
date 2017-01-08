@@ -179,13 +179,16 @@ namespace Cyclone
                     delete toRemove;
                     _count--;
                 }
-
+                /// <summary> Swaps the values of two separate list elements. </summary>
+                /// <param name="idxFirst"> The position of the first list element to be swapped. </param>
+                /// <param name="idxSecond"> The position of the second list element to be swapped. </param>
                 void Swap(uint idxFirst, uint idxSecond)
                 {
                     if (idxFirst >= Count() || idxSecond >= Count()) { return; }
                     std::swap(Index(idxFirst)->Value, Index(idxSecond)->Value);
                 }
-
+                /// <summary> Converts the linked list into an equivalent vector of contiguous data elements. </summary>
+                /// <returns> A <see cref="Vector"/> containing copies of all data elements stored in the list. </returns>
                 Vector<T> ToVector() const
                 {
                     Vector<T> output(Count());
