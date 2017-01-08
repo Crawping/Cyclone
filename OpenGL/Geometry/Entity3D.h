@@ -78,56 +78,59 @@ namespace Cyclone
 
                 
                 /** BATCH SPATIAL PROPERTIES **/
-
+                /// <summary> Gets the (x, y, z) position of the entity in model space. </summary>
                 virtual const Vector3& Offset()             const { return _transforms.Offset(); }
-                /// <summary> Gets the (x, y, z) rotation angles for the entity in 3D space. </summary>
+                /// <summary> Gets the (x, y, z) rotation angles for the entity in world space. </summary>
                 virtual const Vector3& Orientation()        const { return _transforms.Orientation(); }
-                /// <summary> Gets the position of the entity in 3D world coordinates. </summary>
+                /// <summary> Gets the (x, y, z) position of the entity in world space. </summary>
                 virtual const Vector3& Position()           const { return _transforms.Position(); }
-                /// <summary> Gets the (x, y, z) scaling of the entity in 3D space. </summary>
+                /// <summary> Gets the (x, y, z) scaling of the entity in world space. </summary>
                 virtual const Vector3& Scale()              const { return _transforms.Scale(); }
-
+                /// <summary> Gets the (x, y, z) scaling of the entity in model space. </summary>
                 virtual const Vector3& Size()               const { return _transforms.Scale(); }
 		        
-
+                /// <summary> Sets the (x, y, z) position of the entity in model space. </summary>
                 virtual Entity3D& Offset(const Vector3& value)
                 {
                     _transforms.Offset(value);
                     return *this;
                 }
+                /// <summary> Sets the (x, y, z) position of the entity in model space. </summary>
                 virtual Entity3D& Offset(float x, float y, float z)             { return Offset(Vector3(x, y, z)); }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) rotation of for the entity in world space. </summary>
                 virtual Entity3D& Orientation(const Vector3& value)
                 {
                     _transforms.Orientation(value);
                     return *this;
                 }
-                /// <summary> Sets the (x, y, z) rotation angles for the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) rotation angles of the entity in world space. </summary>
                 /// <param name="p"> The pitch, or rotation about the x-axis, in radians. </param>
                 /// <param name="y"> The yaw, or rotation about the y-axis, in radians. </param>
                 /// <param name="r"> The roll, or rotation about the z-axis, in radians. </param>
                 virtual Entity3D& Orientation(float p, float y, float r)        { return Orientation(Vector3(p, y, r)); }
-                /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
+                /// <summary> Sets the (x, y, z) position of the entity in world space. </summary>
                 virtual Entity3D& Position(const Vector3& p)
                 {
                     _transforms.Position(p);
                     return *this;
                 }
-                /// <summary> Sets the position of the entity in 3D world coordinates. </summary>
+                /// <summary> Sets the (x, y, z) position of the entity in world space. </summary>
                 virtual Entity3D& Position(float x, float y, float z = 0.0f)    { return Position(Vector3(x, y, z)); }
-                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) scaling of the entity in world space. </summary>
                 virtual Entity3D& Scale(const Vector3& s)
                 {
                     _transforms.Scale(s);
                     return *this;
                 }
-                /// <summary> Sets the (x, y, z) scaling of the entity in 3D space. </summary>
+                /// <summary> Sets the (x, y, z) scaling of the entity in world space. </summary>
                 virtual Entity3D& Scale(float x, float y, float z = 1.0f)       { return Scale(Vector3(x, y, z)); }
+                /// <summary> Sets the (x, y, z) scaling of the entity in model space. </summary>
                 virtual Entity3D& Size(const Vector3& value)
                 {
                     _transforms.Size(value);
                     return *this;
                 }
+                /// <summary> Sets the (x, y, z) scaling of the entity in model space. </summary>
                 virtual Entity3D& Size(float x, float y, float z)
                 {
                     return Size(Vector3(x, y, z));
@@ -165,27 +168,28 @@ namespace Cyclone
 
                 
                 /** RENDERABLE INTERFACE PROPERTIES **/
-
+                /// <summary> Gets a list of other renderable components that comprise or are associated with the entity. </summary>
                 virtual List<IRenderable&> Components()                 override { return List<IRenderable&>(); }
-                /// <summary> Gets whether the entity is visible in the rendered world. </summary>
+                /// <summary> Gets whether the entity is visible in the rendered environment. </summary>
                 virtual bool IsVisible()                                const override { return _isVisible; }
-                /// <summary> Gets the material used to style the entity during rendering. </summary>
+                /// <summary> Gets the material used to style the entity in the rendered environment. </summary>
                 virtual const Material3D& Material()                    const override { return _material; }
-
+                /// <summary> Gets the spatial transformations used to place the entity in the rendered environment. </summary>
                 virtual const Transform3D& Transforms()                 const override { return _transforms; }
 
-                /// <summary> Sets whether the entity is visible in a rendered scene. </summary>
+                /// <summary> Sets whether the entity is visible in a rendered environment. </summary>
                 virtual Entity3D& IsVisible(bool value)
                 {
                     _isVisible = value;
                     return *this;
                 }
-                /// <summary> Sets the material used to style the entity during rendering. </summary>
+                /// <summary> Sets the material used to style the entity in the rendered environment. </summary>
                 virtual Entity3D& Material(const Material3D& value)
                 { 
                     _material = value;
                     return *this;
                 }
+                /// <summary> Sets the spatial transformations used to place the entity in the rendered environment. </summary>
                 virtual Entity3D& Transforms(const Transform3D& value)
                 {
                     _transforms = value;
