@@ -44,7 +44,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
 
-                virtual const TransformData& Data()         const = 0;
+                virtual TransformData Data()                const = 0;
                 /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in model space. </summary>
                 virtual const ITransformation3D& Model()    const = 0;
                 /// <summary> Gets the transformation data that define the orientation, position, and scaling of texture mapping coordinates. </summary>

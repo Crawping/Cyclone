@@ -130,7 +130,7 @@ namespace Cyclone
                 }
 
 
-                virtual const TransformData& Data()         const override
+                virtual TransformData Data()                const override
                 {
                     return
                     {
