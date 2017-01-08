@@ -11,7 +11,7 @@
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-    namespace Utilities { class ITransformation3D; }
+    namespace Utilities { class ISpatialTransform; }
 
 
     namespace OpenGL
@@ -29,9 +29,9 @@ namespace Cyclone
 
             CullingModes        CullingMode;
             GraphicsPipeline*   Pipeline;
-            ITransformation3D*  Projection;
+            ISpatialTransform*  Projection;
             FrameBuffer*        Target;
-            ITransformation3D*  View;
+            ISpatialTransform*  View;
 
             /** CONSTRUCTOR **/
             GraphicsSettings() : 

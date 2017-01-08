@@ -100,9 +100,6 @@
     <ClInclude Include="Spatial\Camera.h">
       <Filter>Spatial</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\ITransformation3D.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IReportable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -132,6 +129,9 @@
       <Filter>Collections</Filter>
     </ClInclude>
     <ClInclude Include="Functions.h" />
+    <ClInclude Include="Interfaces\ISpatialTransform.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

@@ -11,7 +11,7 @@
 
 namespace Cyclone
 {
-    namespace Utilities { struct ITransformation3D; }
+    namespace Utilities { struct ISpatialTransform; }
 
     namespace OpenGL
     {
@@ -43,7 +43,7 @@ namespace Cyclone
                 /// <summary> Sets the OpenGL rendering pipeline to be used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& Pipeline(GraphicsPipeline* value);
                 /// <summary> Sets the perspective projection transformation to be used by the rendering stage. </summary>
-                OpenGLAPI RenderStage& Projection(ITransformation3D* value);
+                OpenGLAPI RenderStage& Projection(ISpatialTransform* value);
                 /// <summary> Sets the overall GPU configuration settings that are used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& Settings(const GraphicsSettings& value);
                 /// <summary> Sets the target framebuffer object to be used by the rendering stage. </summary>
@@ -51,7 +51,7 @@ namespace Cyclone
                 /// <summary> Sets the primitive topology of the points that are used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& Topology(VertexTopologies value);
                 /// <summary> Sets the view transformation to be used by the rendering stage. </summary>
-                OpenGLAPI RenderStage& View(ITransformation3D* value);
+                OpenGLAPI RenderStage& View(ISpatialTransform* value);
 
 
 

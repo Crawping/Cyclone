@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Interfaces/ITransformation3D.h"
+#include "Interfaces/ISpatialTransform.h"
 #include "Math/Matrix4x4.h"
 #include "Math/Vector3.h"
 
@@ -16,9 +16,11 @@ namespace Cyclone
         struct Volume;
 
         /// <summary> A data structure representing a 4x4 transformation matrix used to translate, scale, and rotate entities in 3D space. </summary>
-        struct Transform : public ITransformation3D
+        struct Transform : public ISpatialTransform
         {
+
             public:
+                
                 /** POSITIONAL PROPERTIES **/
                 /// <summary> Gets the translation along the x-axis. </summary>
                 virtual float X()                                       const { return _position.X; }
@@ -33,13 +35,6 @@ namespace Cyclone
                 virtual Transform& Y(float y)                                 { return Position(X(), y, Z()); }
                 /// <summary> Sets the translation along the z-axis. </summary>
                 virtual Transform& Z(float z)                                 { return Position(X(), Y(), z); }
-
-                /// <summary> Gets the (x, y, z) translation components of the transformation matrix. </summary>
-                virtual const Vector3& Position()                       const override { return _position; }
-                /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
-                virtual Transform& Position(const Vector3& p)                 override { UpdateFlag(_position != p); _position = p; return *this; }
-                /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
-                virtual Transform& Position(float x, float y, float z)        { return Position(Vector3(x, y, z)); }
 
 
 
@@ -58,14 +53,7 @@ namespace Cyclone
                 /// <summary> Sets the angle of rotation about the y-axis in radians. </summary>
                 virtual Transform& Yaw(float y)                               { return Orientation(Pitch(), y, Roll()); }
 
-                /// <summary> Gets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                virtual const Vector3& Orientation()                    const override { return _orientation; }
-                /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                virtual Transform& Orientation(const Vector3& o)              override { UpdateFlag(_orientation != o); _orientation = o; return *this; }
-                /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                virtual Transform& Orientation(float p, float y, float r)     { return Orientation(Vector3(p, y, r)); }
-
-
+                
 
                 /** SCALING PROPERTIES **/
                 /// <summary> Gets the scaling factor along the x-axis. </summary>
@@ -82,12 +70,28 @@ namespace Cyclone
                 /// <summary> Sets the z-axis scaling component of the transformation matrix. </summary>
                 virtual Transform& ScaleZ(float z)                            { return Scale(ScaleX(), ScaleY(), z); }
 
+
+
+                /** BATCH SPATIAL PROPERTIES **/
+                /// <summary> Gets the angles of rotation about the (x, y, z) axes in radians. </summary>
+                virtual const Vector3& Orientation()                    const override { return _orientation; }
+                /// <summary> Gets the (x, y, z) translation components of the transformation matrix. </summary>
+                virtual const Vector3& Position()                       const override { return _position; }
                 /// <summary> Gets the (x, y, z) scaling components of the transformation matrix. </summary>
                 virtual const Vector3& Scale()                          const override { return _size; }
+
+                /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
+                virtual Transform& Orientation(float p, float y, float r)           { return Orientation(Vector3(p, y, r)); }
+                /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
+                UtilitiesAPI virtual Transform& Orientation(const Vector3& value)   override;
+                /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
+                virtual Transform& Position(float x, float y, float z)              { return Position(Vector3(x, y, z)); }
+                /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
+                UtilitiesAPI virtual Transform& Position(const Vector3& value)      override;
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
-                virtual Transform& Scale(const Vector3& s)                    override { UpdateFlag(_size != s); _size = s; return *this; }
+                virtual Transform& Scale(float x, float y, float z)                 { return Scale(Vector3(x, y, z)); }
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
-                virtual Transform& Scale(float x, float y, float z)           { return Scale(Vector3(x, y, z)); }
+                UtilitiesAPI virtual Transform& Scale(const Vector3& value)         override;
 
 
 
@@ -171,10 +175,10 @@ namespace Cyclone
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
                 virtual Transform& Rotate(float p, float y, float r)                { return Rotate(Vector3(p, y, r)); }
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
-                virtual const float* ToArray()                                      const override { UpdateState(); return State.ToArray(); }
+                UtilitiesAPI virtual const float* ToArray()                         const override; 
                 /// <summary> Converts a transformation data structure into an ordinary 4x4 transformation matrix. </summary>
                 /// <returns> A reference to the transformation matrix that performs the desired rotation, scaling, and translation operations. </returns>
-                virtual const Matrix4x4& ToMatrix4x4()                              const override { UpdateState(); return State; }
+                UtilitiesAPI virtual const Matrix4x4& ToMatrix4x4()                 const override;
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
                 virtual Transform& Translate(const Vector3& t)                      override { return Position(_position + t); }
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
@@ -196,17 +200,11 @@ namespace Cyclone
 
             private:
 
-                /** PRIVATE PROPERTIES **/
-                /// <summary> Protects the update flag from being changed to 'false' in the time between matrix recalculations. </summary>
-                void UpdateFlag(bool condition)                             const { _updateFlag = _updateFlag ? true : condition; }
-
-
-
                 /** PROPERTY DATA **/
+                mutable bool    _needsUpdate;
                 Vector3         _orientation;
                 Vector3         _position;
                 Vector3         _size;
-                mutable bool    _updateFlag;
 
 
 
@@ -222,11 +220,13 @@ namespace Cyclone
 
 
                 /** PRIVATE UTILITIES **/
-                void UpdateState() const;
+                void Update() const;
+
         };
 
 
         /// <summary> Performs matrix multiplication for two 4x4 transformation matrices. </summary>
         UtilitiesAPI Transform operator *(Transform left, Transform right);
+
     }
 }

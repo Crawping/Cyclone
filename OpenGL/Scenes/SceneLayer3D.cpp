@@ -1,6 +1,6 @@
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/ITransformable.h"
-#include "Interfaces/ITransformation3D.h"
+#include "Interfaces/ISpatialTransform.h"
 #include "Libraries/Material3D.h"
 #include "Pipelines/RenderStage3D.h"
 #include "Scenes/SceneLayer3D.h"
@@ -156,17 +156,10 @@ namespace Cyclone
         }
         void SceneLayer3D::Register(ResourceMapping& map, const ITransformable& entity)
         {
-            TransformData transforms =
-            {
-                entity.Model().ToMatrix4x4(),
-                entity.Texture().ToMatrix4x4(),
-                entity.World().ToMatrix4x4(),
-            };
-
             if (map.TransformKey.IsValid())
-                Transforms.Set(map.TransformKey, transforms);
+                Transforms.Set(map.TransformKey, entity.Data());
             else
-                map.TransformKey = Transforms.Register(transforms);
+                map.TransformKey = Transforms.Register(entity.Data());
         }
 
     }

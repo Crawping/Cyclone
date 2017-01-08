@@ -25,7 +25,7 @@ namespace Cyclone
         class FrameBuffer;
         class Scene3D;
     }
-    namespace Utilities { class ITransformation3D; }
+    namespace Utilities { class ISpatialTransform; }
 
 
 
@@ -49,13 +49,13 @@ namespace Cyclone
                 bool IsStencilTestEnabled()                 const { return _settings.IsStencilTestEnabled; }
 
                 /// <summary> Gets a pointer to the projection transformation being used by the rendering pipeline. </summary>
-                const ITransformation3D* Projection()       const { return _settings.Projection; }
+                const ISpatialTransform* Projection()       const { return _settings.Projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
                 const GraphicsPipeline* Pipeline()          const { return _settings.Pipeline; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
                 const FrameBuffer* Target()                 const { return _settings.Target; }
                 /// <summary> Gets a pointer to the view transformation being used by the rendering pipeline. </summary>
-                const ITransformation3D* View()             const { return _settings.View; }
+                const ISpatialTransform* View()             const { return _settings.View; }
                 /// <summary> Gets a pointer to the window currently being used to display the render target. </summary>
                 const Window3D* Window()                    const { return _renderWindow; }
 
@@ -69,13 +69,13 @@ namespace Cyclone
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
                 PlatformAPI void Pipeline(GraphicsPipeline* pipeline);
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
-                PlatformAPI void Projection(ITransformation3D* projection);
+                PlatformAPI void Projection(ISpatialTransform* projection);
                 /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>
                 PlatformAPI void Scene(IScene* scene, int slot = 0);
                 /// <summary> Sets the framebuffer to which all subsequent rendering will occur. </summary>
                 PlatformAPI void Target(FrameBuffer* framebuffer, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
-                PlatformAPI void View(ITransformation3D* view);
+                PlatformAPI void View(ISpatialTransform* view);
                 /// <summary> Sets the window that will be used to display the images in the render target. </summary>
                 PlatformAPI void Window(Window3D* window);
 
@@ -145,7 +145,7 @@ namespace Cyclone
                 /** UNIFORM DATA ACCESSORS **/
                 PlatformAPI int GetUniformID(const string& name)                                const;
                 PlatformAPI void SetUniform(const string& name, const Color4& value)            const;
-                PlatformAPI void SetUniform(const string& name, const ITransformation3D& value) const;
+                PlatformAPI void SetUniform(const string& name, const ISpatialTransform& value) const;
 
             private:
 

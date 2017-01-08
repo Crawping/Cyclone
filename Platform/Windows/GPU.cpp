@@ -10,7 +10,7 @@
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IRenderStage.h"
-#include "Interfaces/ITransformation3D.h"
+#include "Interfaces/ISpatialTransform.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Scenes/Scene3D.h"
 #include "Windows/WGL.h"
@@ -98,7 +98,7 @@ namespace Cyclone
             if (_settings.Pipeline)
                 _settings.Pipeline->Bind();
         }
-        void GPU::Projection(ITransformation3D* projection)
+        void GPU::Projection(ISpatialTransform* projection)
         {
             _settings.Projection = projection;
         }
@@ -114,7 +114,7 @@ namespace Cyclone
             if (_settings.Target)
                 _settings.Target->Bind(slot);
         }
-        void GPU::View(ITransformation3D* view)
+        void GPU::View(ISpatialTransform* view)
         {
             _settings.View = view;
         }
@@ -250,7 +250,7 @@ namespace Cyclone
             if (varID != -1)
                 glUniform4f(varID, value.R, value.G, value.B, value.A);
         }
-        void GPU::SetUniform(const string& name, const ITransformation3D& value)    const
+        void GPU::SetUniform(const string& name, const ISpatialTransform& value)    const
         {
             int varID = GetUniformID(name);
             if (varID != -1)

@@ -15,37 +15,56 @@ namespace Cyclone
 {
     namespace Utilities
     {
+
+        /** PROPERTIES **/
+        Transform& Transform::Orientation(const Vector3& value)
+        {
+            _orientation = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        Transform& Transform::Position(const Vector3& value)
+        {
+            _position = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        Transform& Transform::Scale(const Vector3& value)
+        {
+            _size = value;
+            _needsUpdate = true;
+            return *this;
+        }
+
+
+
         /** CONSTRUCTORS **/
         Transform::Transform() :
-            _size(Vector3::One),
-            _updateFlag(false)
+            Transform(0.0f, 1.0f, 0.0f)
         {
 
         }
         Transform::Transform(const Transform& other) :
+            _needsUpdate(other._needsUpdate),
             _orientation(other._orientation),
             _position(other._position),
             _size(other._size),
-            _updateFlag(other._updateFlag),
             State(other.State)
         {
 
         }
         Transform::Transform(const float* m) :
-            _position(m[12], m[13], m[14]),
-            _size(m[0], m[5], m[10]),
-            _updateFlag(false),
-            State(m)
+            Transform(Vector3(m[12], m[13], m[14]), Vector3(m[0], m[5], m[10]), 0.0f)
         {
 
         }
         Transform::Transform(const Vector3& position, const Vector3& size, const Vector3& angles) :
+            _needsUpdate(true),
             _orientation(angles),
             _position(position),
-            _size(size),
-            _updateFlag(true)
+            _size(size)
         {
-            UpdateState();
+            Update();
         }
 
 
@@ -147,19 +166,27 @@ namespace Cyclone
 
             return *this;
         }
-
         Matrix4x4 Transform::Inverse() const
         {
             return State.Inverse();
         }
         string Transform::Report() const
         {
-            UpdateState();
+            Update();
             std::stringstream msg;
             msg << "Transformation Matrix Details:\n" << State.ToString();
             return msg.str();
         }
-
+        const float* Transform::ToArray() const
+        {
+            Update();
+            return State.ToArray();
+        }
+        const Matrix4x4& Transform::ToMatrix4x4() const
+        {
+            Update();
+            return State;
+        }
 
 
         /** OPERATORS **/
@@ -212,9 +239,9 @@ namespace Cyclone
         ///
         ///     The equations used in this method were derived using MATLAB.
         /// </remarks>
-        void Transform::UpdateState() const
+        void Transform::Update() const
         {
-            if (!_updateFlag) { return; }
+            if (!_needsUpdate) { return; }
 
             float cr, cp, cy, sr, sp, sy, w, h, d, x, y, z;
             w = _size.X; h = _size.Y; d = _size.Z;
@@ -238,7 +265,7 @@ namespace Cyclone
             State(13) = y;
             State(14) = z;
 
-            _updateFlag = false;
+            _needsUpdate = false;
         }
 
     }

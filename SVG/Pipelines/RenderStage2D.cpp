@@ -5,7 +5,7 @@
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IRenderable2D.h"
 #include "Interfaces/ITransformable.h"
-#include "Interfaces/ITransformation3D.h"
+#include "Interfaces/ISpatialTransform.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Pipelines/RenderStage2D.h"
 #include "Spatial/Transform.h"

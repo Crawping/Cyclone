@@ -188,7 +188,7 @@
     <ClInclude Include="Interfaces\ICollection.h" />
     <ClInclude Include="Interfaces\IDataBuffer.h" />
     <ClInclude Include="Interfaces\IReportable.h" />
-    <ClInclude Include="Interfaces\ITransformation3D.h" />
+    <ClInclude Include="Interfaces\ISpatialTransform.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
     <ClInclude Include="Math\Array.h" />
     <ClInclude Include="Math\Constants.h" />

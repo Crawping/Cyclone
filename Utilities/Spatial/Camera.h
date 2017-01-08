@@ -4,7 +4,7 @@
 
 #pragma once
 #include "UtilitiesAPI.h"
-#include "Interfaces/ITransformation3D.h"
+#include "Interfaces/ISpatialTransform.h"
 #include "Math/Matrix4x4.h"
 
 
@@ -13,7 +13,7 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        class Camera : public ITransformation3D
+        class Camera : public ISpatialTransform
         {
             public:
                 /// <summary> Gets the translation of the camera along the x-axis. </summary>

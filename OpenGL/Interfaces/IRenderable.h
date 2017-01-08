@@ -11,7 +11,6 @@
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-    namespace Utilities { struct ITransformation3D; }
     namespace OpenGL
     {        
         /** FORWARD DECLARATIONS **/

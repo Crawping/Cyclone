@@ -33,7 +33,7 @@ namespace Cyclone
             _settings.Pipeline = value;
             return *this;
         }
-        RenderStage& RenderStage::Projection(ITransformation3D* value) 
+        RenderStage& RenderStage::Projection(ISpatialTransform* value) 
         { 
             _settings.Projection = value;
             return *this;
@@ -60,7 +60,7 @@ namespace Cyclone
             _topology = value;
             return *this;
         }
-        RenderStage& RenderStage::View(ITransformation3D* value) 
+        RenderStage& RenderStage::View(ISpatialTransform* value) 
         { 
             _settings.View = value;
             return *this;
