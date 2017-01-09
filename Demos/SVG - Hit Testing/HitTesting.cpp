@@ -28,8 +28,6 @@ class Program : public PathRenderer
             RenderWindow->OnButtonRelease.Register(this, &Program::ProcessButtonRelease);
 
             Initialize();
-
-            //glEnable(GL_CULL_FACE);
         }
         ~Program()
         {
@@ -89,7 +87,7 @@ class Program : public PathRenderer
                     IsShapeMoving = true;
                 else
                 {
-                    Vector2 pt = GetSurfacePoint(Vector2(PointerPosition));
+                    Vector2 pt = CalculatePointerInWorld(-PointerWorldRay(0).Z);
                     PathCommands cmd = ( WorkingPath->IsEmpty() || WorkingPath->IsClosed() ) ? PathCommands::Move : PathCommands::Line;
                     Insert(cmd, { pt.X, pt.Y });
                 }
@@ -108,7 +106,8 @@ class Program : public PathRenderer
         {
             if (evt.Key == KeyboardKeys::C)
             {
-                Vector2 pt = GetSurfacePoint(Vector2(PointerPosition));
+                //Vector2 pt = GetSurfacePoint(Vector2(PointerPosition));
+                Vector2 pt = CalculatePointerInWorld(-PointerWorldRay(0).Z);
                 Insert(PathCommands::SmoothQuadraticCurve, { pt.X, pt.Y });
             }
             else if (evt.Key == KeyboardKeys::E)
@@ -125,7 +124,7 @@ class Program : public PathRenderer
         {
             PathRenderer::ProcessPointerMotion(evt);
 
-            Vector2 pt = GetSurfacePoint(evt.Position);
+            Vector2 pt = CalculatePointerInWorld(-PointerWorldRay(0).Z);
             for (auto* p : Paths)
                 if (nvIsPointInFillPath(p->ID(), ~0, pt.X, pt.Y))
                 {
@@ -135,29 +134,6 @@ class Program : public PathRenderer
                 else if (p->PrimaryColor() == Color4::Green)
                     p->PrimaryColor(Color4::Blue);
         }
-
-        Vector2 GetSurfacePoint(const Vector2& point)
-        {
-            Area clArea(RenderWindow->ClientArea());
-            Matrix4x4 invViewProj = (Projection.ToMatrix4x4() * View.ToMatrix4x4()).Inverse();
-
-            Vector4 pt1 = Vector4(point.X, clArea.Height - point.Y, -1, 1);
-            pt1.X = (2.0f * pt1.X / clArea.Width) - 1.0f;
-            pt1.Y = (2.0f * pt1.Y / clArea.Height) - 1.0f;
-
-            Vector4 pt2 = pt1;
-            pt2.Z = -pt1.Z;
-
-            pt1 = invViewProj * pt1;
-            pt2 = invViewProj * pt2;
-
-            pt1 /= pt1.W;
-            pt2 /= pt2.W;
-
-            float scale = -pt1.Z / (pt2.Z - pt1.Z);
-            return Vector2(scale * (pt2.X - pt1.X) + pt1.X, scale * (pt2.Y - pt1.Y) + pt1.Y);
-        }
-
         void UpdateScene() override
         {
             for (auto* p : Paths)
