@@ -118,6 +118,7 @@ namespace Cyclone
             /// <returns> A Boolean <c>true</c> if both vectors contain different values, or <c>false</c> otherwise. </returns>
             constexpr bool operator !=(const Vector4& v)            const { return !(*this == v); }
 
+            Vector4& operator /=(float v)                           { X /= v; Y /= v; Z /= v; W /= v; return *this; }
         };
     }
 }
