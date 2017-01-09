@@ -1,5 +1,6 @@
 #include "NVPR.h"
 #include "Geometry/Point2D.h"
+#include "Geometry/DrawingPath.h"
 
 
 
@@ -8,55 +9,68 @@ namespace Cyclone
     namespace SVG
     {
 
-        ///** CONSTRUCTOR & DESTRUCTOR **/
-        //DrawingPath::DrawingPath() : 
-        //    _pointColor(Color4::Black),
-        //    _pointSize(2 * Path2D::StrokeWidth())
-        //{
-        //
-        //}
-        //DrawingPath::~DrawingPath()
-        //{
-        //    //for (uint a = 0; a < _components.Count(); a++)
-        //    //    delete _components(a);
-        //}
+        /** PROPERTIES **/
+        List<const IRenderable&> DrawingPath::Components() const
+        {
+            List<const IRenderable&> components;
+            for (auto& p : Points)
+                components.Append(*p);
+
+            return components;
+        }
+
+
+        /** CONSTRUCTOR & DESTRUCTOR **/
+        DrawingPath::DrawingPath() : 
+            _pointColor(Color4::Black),
+            _pointSize(2 * StrokeWidth()),
+            _needsUpdate(false)
+        {
+        
+        }
+        DrawingPath::~DrawingPath()
+        {
+            for (Path2D* p : Points)
+                delete p;
+        }
 
 
 
-        ///** UTILITIES **/
-        //DrawingPath& DrawingPath::Add(const ControlPoint2D& point)
-        //{
-        //    Path2D::Add(point);
-        //    Vector2 ptCoords(point.Coordinates(0), point.Coordinates(1));
-        //    Point2D* pt = new Point2D();
+        /** UTILITIES **/
+        DrawingPath& DrawingPath::Append(const ControlPoint2D& point)
+        {
+            _geometry.Append(point);
+            Vector2 ptCoords(point.Coordinates(0), point.Coordinates(1));
+            Path2D* pt = new Path2D(Geometry2D::Point());
 
-        //    pt->Offset(ptCoords)
-        //        .Size(PointSize())
+            pt->
+                Offset(ptCoords)
+                .Size(PointSize())
 
-        //        .JoinStyle(JoinStyles::Round)
-        //        .StrokeWidth(0)
-        //        .PrimaryColor(_pointColor);
+                .JoinStyle(JoinStyles::Round)
+                .StrokeWidth(0)
+                .PrimaryColor(_pointColor)
+                .Z(Z() + 0.01f);
 
-        //    //_components.Append(pt);
-        //    return *this;
-        //}
+            Points.Append(pt);
+            _needsUpdate = true;
+            return *this;
+        }
 
-        //void DrawingPath::Clear()
-        //{
-        //    Path2D::Clear();
-        //    //for (uint a = 0; a < _components.Count(); a++)
-        //    //    delete _components(a);
-        //    //_components.Clear();
-        //}
+        void DrawingPath::Clear()
+        {
+            _geometry.Clear();
+            for (auto* p : Points) { delete p; }
+            Points.Clear();
+        }
+        void DrawingPath::Update() const
+        {
+            for (auto* p : Points) { p->Update(); }
+            if (_needsUpdate && !Path2D::NeedsUpdate())
+                UpdateGeometry();
 
-        //DrawingPath& DrawingPath::Translate(const Vector3& t)
-        //{
-        //    //for (uint a = 0; a < _components.Count(); a++)
-        //    //    _components(a)->Translate(t);
-
-        //    Path2D::Translate(t);
-        //    return *this;
-        //}
+            Path2D::Update();
+        }
 
     }
 }
