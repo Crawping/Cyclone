@@ -36,8 +36,9 @@ class Program : public PathRenderer
 
             PanelControl
                 .BackgroundColor(Color4(0.25f))
-                .BorderColor(0.125f)
+                .BorderColor(Color4(0.75f, 0.75f, 0.75f, 0.375f))
                 .BorderRadius(12.5f)
+                .BorderWidth(10)
                 .Offset(szPanel)
                 .Size(szPanel);
 
