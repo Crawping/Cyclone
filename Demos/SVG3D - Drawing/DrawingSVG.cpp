@@ -93,7 +93,7 @@ class Program : public PathRenderer
             if (evt.Button == PointerButtons::Button001)
             {
                 LastClickPosition = PointerPosition;
-                Vector2 pt = GetSurfacePoint(Vector2(PointerPosition));
+                Vector2 pt = CalculatePointerInWorld(-PointerWorldRay(0).Z);
                 ControlPoint2D newPt =
                 {
                     PathCommands::Line,
@@ -131,7 +131,7 @@ class Program : public PathRenderer
             }
             if (evt.Key == KeyboardKeys::C)
             {
-                Vector2 pt = GetSurfacePoint(Vector2(PointerPosition));
+                Vector2 pt = CalculatePointerInWorld(-PointerWorldRay(0).Z);
                 Path.Append({ PathCommands::SmoothQuadraticCurve, { pt.X, pt.Y } });
             }
             else if (evt.Key == KeyboardKeys::E)
@@ -154,7 +154,6 @@ class Program : public PathRenderer
                 PathScene->Remove(Path);
                 Path.Clear();
                 PathScene->Insert(Path);
-                //PathScene->Update(Path);
             }
 
             AdvancedRenderer::ProcessKeyPress(evt);
@@ -183,29 +182,6 @@ class Program : public PathRenderer
 
             TextBoxes.Append(text);
             PathScene->Insert(*text);
-        }
-
-
-        Vector2 GetSurfacePoint(const Vector2& point)
-        {
-            Area clArea(RenderWindow->ClientArea());
-            Matrix4x4 invViewProj = (Projection.ToMatrix4x4() * View.ToMatrix4x4()).Inverse();
-
-            Vector4 pt1 = Vector4(point.X, clArea.Height - point.Y, -1, 1);
-            pt1.X = (2.0f * pt1.X / clArea.Width) - 1.0f;
-            pt1.Y = (2.0f * pt1.Y / clArea.Height) - 1.0f;
-
-            Vector4 pt2 = pt1;
-            pt2.Z = -pt1.Z;
-
-            pt1 = invViewProj * pt1;
-            pt2 = invViewProj * pt2;
-
-            pt1 /= pt1.W;
-            pt2 /= pt2.W;
-
-            float scale = -pt1.Z / (pt2.Z - pt1.Z);
-            return Vector2(scale * (pt2.X - pt1.X) + pt1.X, scale * (pt2.Y - pt1.Y) + pt1.Y);
         }
 
 };
