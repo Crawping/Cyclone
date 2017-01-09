@@ -60,11 +60,11 @@ namespace Cyclone
                 /// <summary> Adds a renderable object to the scene component. </summary>
                 virtual void Insert(const IRenderable& entity)                      = 0;
 
+                virtual void Remove(const IRenderable& entity)                      = 0;
+
                 virtual void Update()                                               = 0;
 
                 virtual void Update(const IRenderable& entity)                      = 0;
-
-                virtual ResourceMapping& Register(const IRenderable& entity)        = 0;
 
         };
 
@@ -81,6 +81,7 @@ namespace Cyclone
                 virtual ~ISceneLayer() { }
 
                 virtual void Insert(const string& name, ISceneComponent& component) = 0;
+                virtual ResourceMapping& Register(const IRenderable& entity)        = 0;
                 virtual void Remove(const string& name)                             = 0;
         };
 
