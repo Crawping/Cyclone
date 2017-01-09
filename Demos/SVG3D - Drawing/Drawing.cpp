@@ -32,21 +32,13 @@ class Program : public PathRenderer
             IsEnteringText(false)
         {
             Initialize();
-
             RenderWindow->OnButtonPress.Register(this, &Program::ProcessButtonPress);
             RenderWindow->OnButtonRelease.Register(this, &Program::ProcessButtonRelease);
-
-            nvPathStencilDepthOffset(-0.05f, -1);
-            nvPathCoverDepthFunc(GL_ALWAYS);
-
-			glEnable(GL_CULL_FACE);
         }
         ~Program()
         {
-            for (uint a = 0; a < TextBoxes.Count(); a++)
-                delete TextBoxes(a);
-
-            if (Image)          { delete Image; }
+            for (auto* t : TextBoxes)   { delete t; }
+            if (Image)                  { delete Image; }
         }
 
     protected:
@@ -59,6 +51,7 @@ class Program : public PathRenderer
 
 
 
+        /** INITIALIZATION **/
         void CreateSceneResources() override
         {
             PathRenderer::CreateSceneResources();
@@ -88,6 +81,7 @@ class Program : public PathRenderer
 
 
 
+        /** EVENT HANDLERS **/
         void ProcessButtonPress(const PointerClickEvent& evt)
         {
             if (evt.Button == PointerButtons::Button001)
@@ -114,7 +108,6 @@ class Program : public PathRenderer
             if (evt.Button == PointerButtons::Button003)
                 IsFreeLookEnabled = false;
         }
-
         void ProcessKeyPress(const KeyboardEvent& evt) override
         {
             if (evt.Key == KeyboardKeys::Enter && IsEnteringText)
@@ -160,7 +153,8 @@ class Program : public PathRenderer
         }
 
 
-
+        
+        /** RENDERING **/
         void UpdateScene() override
         {
             RenderScene->Update(Quad);
