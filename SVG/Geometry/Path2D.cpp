@@ -14,13 +14,13 @@ namespace Cyclone
         Path2D& Path2D::Offset(const Vector3& value)
         {
             Entity2D::Offset(value);
-            NeedsUpdate = true;
+            _needsUpdate = true;
             return *this;
         }
         Path2D& Path2D::Size(const Vector3& value)
         {
             Entity2D::Size(value);
-            NeedsUpdate = true;
+            _needsUpdate = true;
             return *this;
         }
 
@@ -29,13 +29,13 @@ namespace Cyclone
         /** CONSTRUCTORS & DESTRUCTOR **/
         Path2D::Path2D(uint count) :
             Entity2D(count),
-            NeedsUpdate(true)
+            _needsUpdate(true)
         {
 
         }
         Path2D::Path2D(const Geometry2D& geometry) :
             _geometry(geometry),
-            NeedsUpdate(true)
+            _needsUpdate(true)
         {
 
         }
@@ -49,10 +49,10 @@ namespace Cyclone
         /** UTILITIES **/
         void Path2D::Update() const
         {
-            if (NeedsUpdate)
+            if (_needsUpdate)
                 UpdateGeometry();
 
-            NeedsUpdate = false;
+            _needsUpdate = false;
             Entity2D::Update();
         }
 

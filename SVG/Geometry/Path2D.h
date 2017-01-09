@@ -11,7 +11,6 @@
 #include "Geometry/Geometry2D.h"
 #include "Geometry/PathStyle.h"
 #include "Interfaces/IRenderable2D.h"
-//#include "Spatial/Transform.h"
 
 
 
@@ -36,6 +35,8 @@ namespace Cyclone
                 virtual bool IsClosed()                 const { return _geometry.IsClosed(); }
                 /// <summary> Gets whether the path has any stored commands. </summary>
                 virtual bool IsEmpty()                  const { return _geometry.IsEmpty(); }
+
+                virtual bool NeedsUpdate()              const override { return _needsUpdate || Entity2D::NeedsUpdate(); }
 
                 SVGAPI virtual Path2D& Size(const Vector3& value)       override;
                 SVGAPI virtual Path2D& Offset(const Vector3& value)     override;
@@ -69,7 +70,7 @@ namespace Cyclone
             private:
 
                 /** PROPERTY DATA **/
-                mutable bool        NeedsUpdate;
+                mutable bool        _needsUpdate;
 
         };
     }
