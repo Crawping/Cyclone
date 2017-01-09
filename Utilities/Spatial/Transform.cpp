@@ -192,23 +192,12 @@ namespace Cyclone
         /** OPERATORS **/
         Transform operator *(Transform left, Transform right)
         {
-            int idxM, idxN, idxR = 0;
-            float result[16];
-            const float* leftState = left.ToArray();
-            const float* rightState = right.ToArray();
-
-            for (int a = 0; a < 16; a++)
-            {
-                idxM = a % 4;
-                idxN = a / 4;
-                idxR = idxN * 4;
-
-                result[a] = 0;
-                for (int b = 0; b < 4; b++)
-                    result[a] += leftState[idxM + (b * 4)] * rightState[idxR + b];
-            }
-
-            return Transform(result);
+            return Transform
+            (
+                left.Position() + right.Position(),
+                left.Scale() * right.Scale(),
+                left.Orientation() + right.Orientation()
+            );
         }
 
         bool Transform::operator ==(const Transform& other) const
