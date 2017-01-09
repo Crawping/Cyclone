@@ -49,9 +49,11 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        Camera::Camera() :
+        Camera::Camera(const Vector3& position, const Vector3& scale, const Vector3& orientation) :
             _needsUpdate(false),
-            _scale(1.0f)
+            _orientation(orientation),
+            _position(position),
+            _scale(scale)
         {
 
         }

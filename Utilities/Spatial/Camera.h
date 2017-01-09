@@ -74,7 +74,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                UtilitiesAPI Camera();
+                UtilitiesAPI Camera(const Vector3& position = 0.0f, const Vector3& scale = 1.0f, const Vector3& orientation = 0.0f);
 
 
 
