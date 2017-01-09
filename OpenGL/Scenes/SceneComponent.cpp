@@ -8,15 +8,59 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        SceneComponent& SceneComponent::CullingMode(CullingModes value)         { _settings.CullingMode = value; return *this; }
-        SceneComponent& SceneComponent::IsBlendEnabled(bool value)              { _settings.IsBlendEnabled = value; return *this; }
-        SceneComponent& SceneComponent::IsDepthTestEnabled(bool value)          { _settings.IsDepthTestEnabled = value; return *this; }
-        SceneComponent& SceneComponent::IsStencilTestEnabled(bool value)        { _settings.IsStencilTestEnabled = value; return *this; }
-        SceneComponent& SceneComponent::IsVisible(bool value)                   { _isVisible = value; return *this; }
-        SceneComponent& SceneComponent::Pipeline(GraphicsPipeline* value)       { _settings.Pipeline = value; return *this; }
-        SceneComponent& SceneComponent::Projection(ITransformation3D* value)    { _settings.Projection = value; return *this; }
-        SceneComponent& SceneComponent::Target(FrameBuffer* value)              { _settings.Target = value; return *this; }
-        SceneComponent& SceneComponent::View(ITransformation3D* value)          { _settings.View = value; return *this; }
+        SceneComponent& SceneComponent::CullingMode(CullingModes value)
+        {
+            _settings.CullingMode = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        SceneComponent& SceneComponent::IsBlendEnabled(bool value)
+        {
+            _settings.IsBlendEnabled = value;
+            _needsUpdate = true;
+            return *this; }
+        SceneComponent& SceneComponent::IsDepthTestEnabled(bool value)
+        {
+            _settings.IsDepthTestEnabled = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        SceneComponent& SceneComponent::IsStencilTestEnabled(bool value)
+        {
+            _settings.IsStencilTestEnabled = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        SceneComponent& SceneComponent::IsVisible(bool value)
+        {
+            _isVisible = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        SceneComponent& SceneComponent::Pipeline(GraphicsPipeline* value)
+        {
+            _settings.Pipeline = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        SceneComponent& SceneComponent::Projection(ISpatialTransform* value)
+        {
+            _settings.Projection = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        SceneComponent& SceneComponent::Target(FrameBuffer* value)
+        {
+            _settings.Target = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        SceneComponent& SceneComponent::View(ISpatialTransform* value)
+        {
+            _settings.View = value;
+            _needsUpdate = true;
+            return *this;
+        }
 
         SceneComponent& SceneComponent::Settings(const GraphicsSettings& value)
         {
@@ -33,7 +77,7 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        SceneComponent::SceneComponent(const string& name, ISceneLayer& parent) : 
+        SceneComponent::SceneComponent(const string& name, ISceneLayer& parent) :
             _isVisible(true),
             _name(name),
             _needsUpdate(false),
@@ -45,24 +89,11 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        bool SceneComponent::Contains(const IRenderable& entity) const
-        {
-            return Entities.Contains(&entity);
-        }
-        void SceneComponent::Insert(const IRenderable& entity)
-        {
-            Entities.Insert(&entity);
-            NeedsUpdate(true);
-        }
-        void SceneComponent::Remove(const IRenderable& entity)
-        {
-            Entities.Remove(&entity);
-            NeedsUpdate(true);
-        }
         void SceneComponent::Update()
         {
             _needsUpdate = false;
         }
+
 
     }
 }

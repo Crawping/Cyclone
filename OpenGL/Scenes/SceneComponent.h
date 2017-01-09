@@ -6,9 +6,9 @@
 #include "GraphicsSettings.h"
 #include "Collections/BST.h"
 #include "Collections/Set.h"
-#include "Interfaces/IScene.h"
 #include "Interfaces/IGraphicsBuffer.h"
-#include "Interfaces/ITransformation3D.h"
+#include "Interfaces/IScene.h"
+#include "Interfaces/ISpatialTransform.h"
 
 
 
@@ -35,11 +35,11 @@ namespace Cyclone
                 /// <summary> Gets the parent scene layer to which the component belongs. </summary>
                 virtual ISceneLayer& Parent()                                       const override { return _parent; }
                 virtual const GraphicsPipeline* Pipeline()                          const { return _settings.Pipeline; }
-                virtual const ITransformation3D* Projection()                       const { return _settings.Projection; }
+                virtual const ISpatialTransform* Projection()                       const { return _settings.Projection; }
                 /// <summary> Gets the GPU configuration used to render the contents of the scene component. </summary>
                 virtual const GraphicsSettings& Settings()                          const { return _settings; }
                 virtual const FrameBuffer* Target()                                 const { return _settings.Target; }
-                virtual const ITransformation3D* View()                             const { return _settings.View; }
+                virtual const ISpatialTransform* View()                             const { return _settings.View; }
 
 
                 OpenGLAPI virtual SceneComponent& CullingMode(CullingModes value);
@@ -48,28 +48,20 @@ namespace Cyclone
                 OpenGLAPI virtual SceneComponent& IsStencilTestEnabled(bool value);
                 OpenGLAPI virtual SceneComponent& IsVisible(bool value)                     override;
                 OpenGLAPI virtual SceneComponent& Pipeline(GraphicsPipeline* value);
-                OpenGLAPI virtual SceneComponent& Projection(ITransformation3D* value);
+                OpenGLAPI virtual SceneComponent& Projection(ISpatialTransform* value);
                 /// <summary> Sets the GPU configuration used to render the contents of the scene component. </summary>
                 OpenGLAPI virtual SceneComponent& Settings(const GraphicsSettings& value)   override;
                 OpenGLAPI virtual SceneComponent& Target(FrameBuffer* value);
-                OpenGLAPI virtual SceneComponent& View(ITransformation3D* value);
+                OpenGLAPI virtual SceneComponent& View(ISpatialTransform* value);
 
 
 
                 /** UTILITIES **/
-                OpenGLAPI virtual bool Contains(const IRenderable& entity)          const override;
-                OpenGLAPI virtual void Insert(const IRenderable& entity)            override;
-                OpenGLAPI virtual void Remove(const IRenderable& entity);
-                OpenGLAPI virtual void Update()                                     override;
+                OpenGLAPI virtual void Update() override;
 
             protected:
 
-                void NeedsUpdate(bool value) { _needsUpdate = _needsUpdate ? true : value; }
-
-
                 OpenGLAPI SceneComponent(const string& name, ISceneLayer& parent);
-
-                ResourceMapping& Register(const IRenderable& entity) override { return Parent().Register(entity); }
 
             private:
 
@@ -79,9 +71,6 @@ namespace Cyclone
                 bool                _needsUpdate;
                 ISceneLayer&        _parent;
                 GraphicsSettings    _settings;
-
-                //BST<const IRenderable<Vector3>*, ResourceMapping> Entities;
-                Set<const IRenderable*> Entities;
 
         };
 
