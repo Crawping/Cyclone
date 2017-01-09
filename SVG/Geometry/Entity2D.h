@@ -47,6 +47,8 @@ namespace Cyclone
                 virtual uint InstanceCount()            const { return _instanceCount; }
                 /// <summary> Gets the joint style used to connect two path segments. </summary>
                 virtual JoinStyles JoinStyle()          const { return _style.JoinStyle; }
+
+                virtual bool NeedsUpdate()              const { return _needsUpdate; }
                 /// <summary> Gets the width of the path's surrounding stroke. </summary>
                 virtual float StrokeWidth()             const { return _style.StrokeWidth; }
                 /// <summary> Gets a structure containing all of the styling data used to render the entity. </summary>
@@ -90,6 +92,8 @@ namespace Cyclone
 
                 /** CONSTRUCTORS **/
                 SVGAPI Entity2D(uint count = 1);
+                SVGAPI Entity2D(Entity2D&& other);
+                Entity2D(const Entity2D& other)         = delete;
 
 
 
@@ -105,9 +109,9 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 uint            _id;
                 uint            _instanceCount;
+                mutable bool    _needsUpdate;
                 PathStyle       _style;
 
-                mutable bool    NeedsUpdate;
         
         };
     }

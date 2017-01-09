@@ -22,19 +22,19 @@ namespace Cyclone
         Entity2D& Entity2D::InitialCap(EndCaps value)
         {
             _style.InitialCap = value;
-            NeedsUpdate = true;
+            _needsUpdate = true;
             return *this;
         }
         Entity2D& Entity2D::JoinStyle(JoinStyles value)
         {
             _style.JoinStyle = value;
-            NeedsUpdate = true;
+            _needsUpdate = true;
             return *this;
         }
         Entity2D& Entity2D::StrokeWidth(float value)
         {
             _style.StrokeWidth = value;
-            NeedsUpdate = true;
+            _needsUpdate = true;
             return *this;
         }
         Entity2D& Entity2D::Style(const PathStyle& value)
@@ -50,7 +50,7 @@ namespace Cyclone
         Entity2D& Entity2D::TerminalCap(EndCaps value)
         {
             _style.TerminalCap = value;
-            NeedsUpdate = true;
+            _needsUpdate = true;
             return *this;
         }
 
@@ -60,9 +60,18 @@ namespace Cyclone
         Entity2D::Entity2D(uint count) : 
             _id(nvGenPaths(count)),
             _instanceCount(count),
-            NeedsUpdate(true)
+            _needsUpdate(true)
         {
 
+        }
+        Entity2D::Entity2D(Entity2D&& other) :
+            _id(other._id),
+            _instanceCount(other._instanceCount),
+            _needsUpdate(other._needsUpdate)
+        {
+            other._id = 0;
+            other._instanceCount = 0;
+            other._needsUpdate = false;
         }
         Entity2D::~Entity2D()
         {
@@ -86,9 +95,9 @@ namespace Cyclone
         }
         void Entity2D::Update() const
         {
-            if (!NeedsUpdate) { return; }
+            if (!_needsUpdate) { return; }
             UpdateParameters();
-            NeedsUpdate = false;
+            _needsUpdate = false;
         }
 
 
