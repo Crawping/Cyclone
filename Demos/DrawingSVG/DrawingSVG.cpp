@@ -8,9 +8,9 @@
 #include "Window3D.h"
 #include "Geometry/DrawingPath.h"
 #include "Geometry/Quad3D.h"
-#include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
 #include "Pipelines/ShaderPipeline.h"
+#include "Scenes/Scene3D.h"
 #include "Text/Text2D.h"
 #include "Textures/Texture2D.h"
 
@@ -63,25 +63,26 @@ class Program : public PathRenderer
         {
             PathRenderer::CreateSceneResources();
 
-            Image = new Texture2D("../ImageDisplay/House (11250x8627).jpg");
+            Image = new Texture2D("../3D - Image Display/House (11250x8627).jpg");
             Image->Bind();
 
             Quad
-                .Position(RenderWindow->ClientArea().Scale() / 2.0f)
+                .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
                 .Scale(Vector3(RenderWindow->ClientArea().Scale(), 0.0f));
 
             Path
+                .PointSize(5)
                 .JoinStyle(JoinStyles::Round)
                 .StrokeWidth(2)
                 .PrimaryColor(Color4(0.0f, 0.0f, 1.0f, 0.75f))
                 .SecondaryColor(Color4(1.0f, 0.0f, 0.0f, 0.875f));
 
-            RenderScene->Add(Quad);
-            PathScene->Add(Path);
+            RenderScene->Insert(Quad);
+            PathScene->Insert(Path);
         }
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../ImageDisplay/TexturedShading.psl");
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Image Display/TexturedShading.psl");
             PipelineSVG = new ShaderPipeline("../Renderers/Shaders/SVG.psl");
         }
 
@@ -92,16 +93,18 @@ class Program : public PathRenderer
             if (evt.Button == PointerButtons::Button001)
             {
                 LastClickPosition = PointerPosition;
+                Vector2 pt = GetSurfacePoint(Vector2(PointerPosition));
                 ControlPoint2D newPt =
                 {
                     PathCommands::Line,
-                    { PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y }
+                    { pt.X, pt.Y }
                 };
 
                 if (Path.IsEmpty() || Path.IsClosed())
                     newPt.Command = PathCommands::Move;
 
-                Path.Add(newPt);
+                Path.Append(newPt);
+                PathScene->Update(Path);
             }
             else if (evt.Button == PointerButtons::Button003)
                 IsFreeLookEnabled = true;
@@ -127,17 +130,12 @@ class Program : public PathRenderer
                 return;
             }
             if (evt.Key == KeyboardKeys::C)
-                Path.Add
-                ({ 
-                    PathCommands::SmoothQuadraticCurve, 
-                    { 
-                        PointerPosition.X, 
-                        RenderWindow->ClientArea().Height - PointerPosition.Y,
-                    }
-                });
-
+            {
+                Vector2 pt = GetSurfacePoint(Vector2(PointerPosition));
+                Path.Append({ PathCommands::SmoothQuadraticCurve, { pt.X, pt.Y } });
+            }
             else if (evt.Key == KeyboardKeys::E)
-                Path.Add({ PathCommands::Close, { } });
+                Path.Append({ PathCommands::Close, { } });
             else if (evt.Key == KeyboardKeys::T)
             {
                 IsEnteringText = true;
@@ -153,8 +151,10 @@ class Program : public PathRenderer
                 }
 
                 TextBoxes.Clear();
+                PathScene->Remove(Path);
                 Path.Clear();
-                PathScene->Update(Path);
+                PathScene->Insert(Path);
+                //PathScene->Update(Path);
             }
 
             AdvancedRenderer::ProcessKeyPress(evt);
@@ -182,7 +182,30 @@ class Program : public PathRenderer
                 .Position(PointerPosition.X, RenderWindow->ClientArea().Height - PointerPosition.Y);
 
             TextBoxes.Append(text);
-            PathScene->Add(*text);
+            PathScene->Insert(*text);
+        }
+
+
+        Vector2 GetSurfacePoint(const Vector2& point)
+        {
+            Area clArea(RenderWindow->ClientArea());
+            Matrix4x4 invViewProj = (Projection.ToMatrix4x4() * View.ToMatrix4x4()).Inverse();
+
+            Vector4 pt1 = Vector4(point.X, clArea.Height - point.Y, -1, 1);
+            pt1.X = (2.0f * pt1.X / clArea.Width) - 1.0f;
+            pt1.Y = (2.0f * pt1.Y / clArea.Height) - 1.0f;
+
+            Vector4 pt2 = pt1;
+            pt2.Z = -pt1.Z;
+
+            pt1 = invViewProj * pt1;
+            pt2 = invViewProj * pt2;
+
+            pt1 /= pt1.W;
+            pt2 /= pt2.W;
+
+            float scale = -pt1.Z / (pt2.Z - pt1.Z);
+            return Vector2(scale * (pt2.X - pt1.X) + pt1.X, scale * (pt2.Y - pt1.Y) + pt1.Y);
         }
 
 };
