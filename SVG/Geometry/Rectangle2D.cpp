@@ -35,6 +35,8 @@ namespace Cyclone
         }
 
 
+
+        /** CONSTRUCTOR **/
         Rectangle2D::Rectangle2D() : 
             Path2D(Geometry2D::RoundedRectangle()),
             NeedsUpdate(true)
