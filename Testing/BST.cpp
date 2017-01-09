@@ -13,12 +13,17 @@ class _BST : public testing::Test
 {
     protected:
         
+        Vector<uint, 6>     _k1;
+        Vector<uint, 6>     _v1;
+
         BST<int, int>       _b0;
         BST<int, int>       _b1;
         BST<int, int>       _b2;
 
 
-        _BST() 
+        _BST() :
+            _k1({ 0, 1, 2, 3, 4, 5 }),
+            _v1({ 0, 10, 20, 30, 40, 50  })
         {
             _b2.Insert(2, 20);
             _b2.Insert(1, 10);
@@ -73,6 +78,12 @@ TEST_F(_BST, IndexResolution)
 
 
 /** OPERATOR TESTS **/
+TEST_F(_BST, Iteration)
+{
+    uint idx = 0;
+    for (auto& kvp : _b2)
+        ASSERT_EQ(kvp.Key, _k1(idx++));
+}
 TEST_F(_BST, KeyIndexing)
 {
     for (uint a = 0; a < 6; a++)

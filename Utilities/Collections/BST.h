@@ -19,6 +19,7 @@ namespace Cyclone
         class BST : public ICollection<U>
         {
             public:
+                struct Iterator;
                 template<typename T, typename U> struct Node;
 
                 /** PROPERTIES **/
@@ -88,6 +89,14 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                Iterator begin() const
+                {
+                    return Iterator(0, Root);
+                }
+                Iterator end() const
+                {
+                    return Iterator(Count(), nullptr);
+                }
                 /// <summary> Gets the value corresponding with an inputted key from the tree. </summary>
                 /// <param name="key"> The key that corresponds with a desired value in the tree. </param>
                 /// <returns> A reference to the value that corresponds with the inputted key. </returns>
@@ -339,7 +348,7 @@ namespace Cyclone
     
                             return Rebalance();
                         }
-                
+               
                     private:
 
                         /** UTILITIES **/
@@ -414,6 +423,36 @@ namespace Cyclone
 
                 };
 
+
+
+                struct Iterator // : public ICollectionIterator<U>
+                {
+                    public:
+
+
+                        Iterator(uint idx, Node<T, U>* root) : 
+                            Index(idx),
+                            Root(root)
+                        {
+
+                        }
+
+
+                        Node<T, U>& operator *()    const { return *(Root->Index(Index)); }
+                        Iterator& operator ++()     { Index++; return *this; }
+                        Iterator& operator ++(int)  { Index++; return *this; }
+                        
+                        bool operator ==(const Iterator& other) const
+                        {
+                            return Index == other.Index;
+                        }
+                        bool operator !=(const Iterator& other) const { return !(operator ==(other)); }
+
+                    private:
+
+                        uint        Index;
+                        Node<T, U>* Root;
+                };
         };
     }
 }
