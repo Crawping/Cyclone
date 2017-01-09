@@ -59,10 +59,6 @@ namespace Cyclone
                 keys(a)->Stroke();
             }
         }
-        void RenderStage2D::Update()
-        {
-
-        }
 
         int RenderStage2D::GetResourceID(const string& name)            const
         {

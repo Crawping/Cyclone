@@ -32,8 +32,7 @@ namespace Cyclone
                 SVGAPI void ClearEntities();
                 SVGAPI void Insert(uint drawID, const IRenderable2D& entity);
                 SVGAPI void Remove(const IRenderable2D& entity);
-                SVGAPI void Render()                        const override;
-                SVGAPI void Update();
+                SVGAPI void Render()                                    const override;
 
             protected:
                 
