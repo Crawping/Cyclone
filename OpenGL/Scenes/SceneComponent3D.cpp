@@ -35,7 +35,8 @@ namespace Cyclone
 
         /** CONSTRUCTOR & DESTRUCTOR **/
         SceneComponent3D::SceneComponent3D(const string& name, ISceneLayer& parent) :
-            SceneComponent(name, parent)
+            SceneComponent(name, parent),
+            NeedsUpdate(false)
         {
 
         }
@@ -48,19 +49,28 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        bool SceneComponent3D::Contains(const IRenderable& entity) const
+        {
+            return Resources.Contains(&entity);
+        }
         void SceneComponent3D::Insert(const IRenderable& entity)
         {
-            ResourceMapping& map = Register(entity);
-            Resources.Insert(&map);
-            SceneComponent::Insert(entity);
+            ResourceMapping& map = Parent().Register(entity);
+            Resources.Insert(&entity, &map);
+            NeedsUpdate = true;
+        }
+        void SceneComponent3D::Remove(const IRenderable& entity)
+        {
+            Resources.Remove(&entity);
+            NeedsUpdate = true;
         }
         void SceneComponent3D::Update()
         {
-            if (!NeedsUpdate()) { return; }
+            if (!NeedsUpdate) { return; }
 
             ClearCommands();
 
-            for (const auto* ids : Resources)
+            for (const auto* ids : Resources.Values())
             {
                 StageGroup3D* stage;
                 if (Staging.Contains(ids->Topology))
@@ -80,7 +90,13 @@ namespace Cyclone
                 stage->NonIndexed.Update();
             }
 
-            SceneComponent::Update();
+            NeedsUpdate = false;
+        }
+        void SceneComponent3D::Update(const IRenderable& entity)
+        {
+            if (!Contains(entity)) { return; }
+            Parent().Update(entity);
+            Resources.Insert( &entity, &(Parent().Register(entity)) );
         }
 
 
@@ -94,12 +110,12 @@ namespace Cyclone
                 stage->NonIndexed.ClearCommands();
             }
 
-            NeedsUpdate(true);
+            NeedsUpdate = true;
         }
         void SceneComponent3D::ClearMappings()
         {
             Resources.Clear();
-            NeedsUpdate(true);
+            NeedsUpdate = true;
         }
         StageGroup3D* SceneComponent3D::CreateStage(VertexTopologies topology)
         {
@@ -116,8 +132,5 @@ namespace Cyclone
             return stage;
         }
         
-
-
-
     }
 }

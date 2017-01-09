@@ -23,7 +23,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 /// <summary> Gets a list of all rendering stages that must be executed to display the scene component. </summary>
-                OpenGLAPI List<IRenderStage&> Stages()                              const override;
+                OpenGLAPI List<IRenderStage&> Stages()                  const override;
 
 
 
@@ -34,14 +34,19 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Insert(const IRenderable& entity)                    override;
-                OpenGLAPI void Update()                                             override;
+                OpenGLAPI bool Contains(const IRenderable& entity)      const override;
+                OpenGLAPI void Insert(const IRenderable& entity)        override;
+                OpenGLAPI void Remove(const IRenderable& entity)        override;
+                OpenGLAPI void Update()                                 override;
+                OpenGLAPI void Update(const IRenderable& entity)        override;
 
             private:
 
+                bool NeedsUpdate;
+
                 /** COLLECTIONS **/
-                Set<const ResourceMapping*>             Resources;
-                BST<VertexTopologies, StageGroup3D*>    Staging;
+                BST<const IRenderable*, const ResourceMapping*>     Resources;
+                BST<VertexTopologies, StageGroup3D*>                Staging;
 
 
 
