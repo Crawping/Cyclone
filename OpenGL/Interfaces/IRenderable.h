@@ -26,7 +26,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 /// <summary> Gets a list of other entities that comprise or are associated with the renderable entity. </summary>
-                virtual List<IRenderable&> Components()             = 0;
+                virtual List<const IRenderable&> Components()       const = 0;
                 /// <summary> Gets the geometric data that define the shape of a renderable entity. </summary>
                 virtual const IGeometric& Geometry()                const = 0;
                 /// <summary> Gets whether the renderable entity is currently visible in a scene. </summary>

@@ -169,7 +169,7 @@ namespace Cyclone
                 
                 /** RENDERABLE INTERFACE PROPERTIES **/
                 /// <summary> Gets a list of other renderable components that comprise or are associated with the entity. </summary>
-                virtual List<IRenderable&> Components()                 override { return List<IRenderable&>(); }
+                virtual List<const IRenderable&> Components()           const override { return List<const IRenderable&>(); }
                 /// <summary> Gets whether the entity is visible in the rendered environment. </summary>
                 virtual bool IsVisible()                                const override { return _isVisible; }
                 /// <summary> Gets the material used to style the entity in the rendered environment. </summary>
