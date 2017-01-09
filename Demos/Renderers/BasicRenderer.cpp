@@ -140,7 +140,6 @@ namespace Renderers
             Renderer->Clear(ClearColor);
             Renderer->Execute();
         }
-        //Renderer->Execute();
     }
     void BasicRenderer::UpdateScene()
     {

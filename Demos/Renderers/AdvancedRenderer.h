@@ -21,11 +21,14 @@ namespace Renderers
     {
         protected:
 
-            bool            IsFreeLookEnabled;
-            KeyboardKeys    KeyboardState;
-            float           MoveSpeed;
-            Vector2         PointerPosition;
-            Vector3         WalkingDirection;
+            bool                IsFreeLookEnabled;
+            KeyboardKeys        KeyboardState;
+            float               MoveSpeed;
+            Vector2             PointerPosition;
+            Vector<Vector3, 2>  PointerWorldRay;
+            Matrix4x4           ViewProjection;
+            Matrix4x4           ViewProjectionInv;
+            Vector3             WalkingDirection;
 
             
             /** CONSTRUCTOR **/
@@ -36,6 +39,8 @@ namespace Renderers
             /** INITIALIZATION UTILITIES **/
             /// <summary> Creates a rendering pipeline using the Blinn-Phong shader programs. </summary>
             RendererAPI virtual void CreateShaderPipeline() override;
+
+            RendererAPI virtual void CreateTransformations() override;
 
 
 
@@ -49,8 +54,13 @@ namespace Renderers
 
 
             /** RENDERING UTILITIES **/
+            RendererAPI virtual Vector2 CalculatePointerInWorld(float z);
+
+            RendererAPI virtual void UpdatePointerWorldRay();
 
             RendererAPI virtual void UpdateScene() override;
+
+            RendererAPI virtual void UpdateViewProjection();
 
             RendererAPI virtual void UpdateWalkingDirection();
 

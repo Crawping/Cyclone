@@ -27,19 +27,55 @@ namespace Renderers
 
 
 	/** PROTECTED UTILITIES **/
+    Vector2 AdvancedRenderer::CalculatePointerInWorld(float depth)
+    {
+        Vector3 pt1 = PointerWorldRay(0), pt2 = PointerWorldRay(1);
+        float scale = depth / (pt2.Z - pt1.Z);
+        return Vector2( scale * (pt2.X - pt1.X) + pt1.X, scale * (pt2.Y - pt1.Y) + pt1.Y );
+    }
     void AdvancedRenderer::CreateShaderPipeline()
     {
         RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
-    }    
+    }
+    void AdvancedRenderer::CreateTransformations()
+    {
+        BasicRenderer::CreateTransformations();
+        UpdateViewProjection();
+    }
+    void AdvancedRenderer::UpdatePointerWorldRay()
+    {
+        Area clArea(RenderWindow->ClientArea());
+        
+        Vector4 pt1 = Vector4(PointerPosition.X, clArea.Height - PointerPosition.Y, -1, 1);
+        pt1.X = (2.0f * pt1.X / clArea.Width) - 1.0f;
+        pt1.Y = (2.0f * pt1.Y / clArea.Height) - 1.0f;
+
+        Vector4 pt2 = pt1;
+        pt2.Z = -pt1.Z;
+
+        pt1 = ViewProjectionInv * pt1;
+        pt2 = ViewProjectionInv * pt2;
+
+        pt1 /= pt1.W;
+        pt2 /= pt2.W;
+
+        PointerWorldRay = { Vector3(pt1), Vector3(pt2) };
+    }
     void AdvancedRenderer::UpdateScene()
     {
         if (WalkingDirection != Vector3::Zero)
         {
             Vector3 dir = WalkingDirection;
             View.Translate(dir.Normalize() * MoveSpeed);
+            UpdateViewProjection();
         }
 
         BasicRenderer::UpdateScene();
+    }
+    void AdvancedRenderer::UpdateViewProjection()
+    {
+        ViewProjection = Projection.ToMatrix4x4() * View.ToMatrix4x4();
+        ViewProjectionInv = ViewProjection.Inverse();
     }
     void AdvancedRenderer::UpdateWalkingDirection()
     {
@@ -95,10 +131,12 @@ namespace Renderers
             float pitch = (evt.Delta.Y * Constants::Pi / RenderWindow->ClientArea().Height);
             float yaw = evt.Delta.X * Constants::TwoPi * 2.0f / RenderWindow->ClientArea().Width;
             View.Rotate(Vector3(pitch, yaw, 0.0f));
-            Renderer->View(&View);
-
+            
+            UpdateViewProjection();
             UpdateWalkingDirection();
         }
+
+        UpdatePointerWorldRay();
     }
 
 }
