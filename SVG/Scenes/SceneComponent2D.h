@@ -19,7 +19,7 @@ namespace Cyclone
         {
 
             public:
-                
+
                 /** PROPERTIES **/
                 SVGAPI List<IRenderStage&> Stages()             const override;
 
@@ -27,21 +27,25 @@ namespace Cyclone
 
                 /** CONSTRUCTOR **/
                 SVGAPI SceneComponent2D(const string& name, ISceneLayer& parent);
+                SVGAPI ~SceneComponent2D();
 
 
 
                 /** UTILITIES **/
-                SVGAPI void Insert(uint index, const RenderStage2D& stage);
+                SVGAPI bool Contains(const IRenderable& entity) const override;
                 SVGAPI void Insert(const IRenderable& entity)   override;
-                SVGAPI void Remove(uint index);
-                SVGAPI void Remove(const IRenderable& entity);
+                SVGAPI void Remove(const IRenderable& entity)   override;
                 SVGAPI void Update()                            override;
                 SVGAPI void Update(const IRenderable& entity)   override;
 
             private:
 
-                Set<const ResourceMapping*>     Resources;
-                List<RenderStage2D>             _stages;
+                struct ComponentData;
+
+                bool            _needsUpdate;
+                RenderStage2D   _stage;
+
+                BST<const IRenderable2D*, ComponentData*> Resources;
 
         };
     }
