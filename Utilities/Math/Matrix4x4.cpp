@@ -64,43 +64,43 @@ namespace Cyclone
         {
             const Matrix4x4& state = *this;
 
-            float s0 = state(0, 0) * state(1, 1) - state(1, 0) * state(0, 1);
-            float s1 = state(0, 0) * state(1, 2) - state(1, 0) * state(0, 2);
-            float s2 = state(0, 0) * state(1, 3) - state(1, 0) * state(0, 3);
-            float s3 = state(0, 1) * state(1, 2) - state(1, 1) * state(0, 2);
-            float s4 = state(0, 1) * state(1, 3) - state(1, 1) * state(0, 3);
-            float s5 = state(0, 2) * state(1, 3) - state(1, 2) * state(0, 3);
+            float s0 = (state(0, 0) * state(1, 1)) - (state(1, 0) * state(0, 1));
+            float s1 = (state(0, 0) * state(1, 2)) - (state(1, 0) * state(0, 2));
+            float s2 = (state(0, 0) * state(1, 3)) - (state(1, 0) * state(0, 3));
+            float s3 = (state(0, 1) * state(1, 2)) - (state(1, 1) * state(0, 2));
+            float s4 = (state(0, 1) * state(1, 3)) - (state(1, 1) * state(0, 3));
+            float s5 = (state(0, 2) * state(1, 3)) - (state(1, 2) * state(0, 3));
 
-            float c5 = state(2, 2) * state(3, 3) - state(3, 2) * state(2, 3);
-            float c4 = state(2, 1) * state(3, 3) - state(3, 1) * state(2, 3);
-            float c3 = state(2, 1) * state(3, 2) - state(3, 1) * state(2, 2);
-            float c2 = state(2, 0) * state(3, 3) - state(3, 0) * state(2, 3);
-            float c1 = state(2, 0) * state(3, 2) - state(3, 0) * state(2, 2);
-            float c0 = state(2, 0) * state(3, 1) - state(3, 0) * state(2, 1);
+            float c5 = (state(2, 2) * state(3, 3)) - (state(3, 2) * state(2, 3));
+            float c4 = (state(2, 1) * state(3, 3)) - (state(3, 1) * state(2, 3));
+            float c3 = (state(2, 1) * state(3, 2)) - (state(3, 1) * state(2, 2));
+            float c2 = (state(2, 0) * state(3, 3)) - (state(3, 0) * state(2, 3));
+            float c1 = (state(2, 0) * state(3, 2)) - (state(3, 0) * state(2, 2));
+            float c0 = (state(2, 0) * state(3, 1)) - (state(3, 0) * state(2, 1));
 
             float invdet = 1.0f / (s0 * c5 - s1 * c4 + s2 * c3 + s3 * c2 - s4 * c1 + s5 * c0);
 
             Matrix4x4 inverse;
 
-            inverse(0, 0) = ( state(1, 1) * c5 - state(1, 2) * c4 + state(1, 3) * c3) * invdet;
-            inverse(0, 1) = (-state(0, 1) * c5 + state(0, 2) * c4 - state(0, 3) * c3) * invdet;
-            inverse(0, 2) = ( state(3, 1) * s5 - state(3, 2) * s4 + state(3, 3) * s3) * invdet;
-            inverse(0, 3) = (-state(2, 1) * s5 + state(2, 2) * s4 - state(2, 3) * s3) * invdet;
+            inverse(0, 0) = ( state(1, 1) * c5 - state(1, 2) * c4 + state(1, 3) * c3 ) * invdet;
+            inverse(0, 1) = (-state(0, 1) * c5 + state(0, 2) * c4 - state(0, 3) * c3 ) * invdet;
+            inverse(0, 2) = ( state(3, 1) * s5 - state(3, 2) * s4 + state(3, 3) * s3 ) * invdet;
+            inverse(0, 3) = (-state(2, 1) * s5 + state(2, 2) * s4 - state(2, 3) * s3 ) * invdet;
 
-            inverse(1, 0) = (-state(1, 0) * c5 + state(1, 2) * c2 - state(1, 3) * c1) * invdet;
-            inverse(1, 1) = ( state(0, 0) * c5 - state(0, 2) * c2 + state(0, 3) * c1) * invdet;
-            inverse(1, 2) = (-state(3, 0) * s5 + state(3, 2) * s2 - state(3, 3) * s1) * invdet;
-            inverse(1, 3) = ( state(2, 0) * s5 - state(2, 2) * s2 + state(2, 3) * s1) * invdet;
+            inverse(1, 0) = (-state(1, 0) * c5 + state(1, 2) * c2 - state(1, 3) * c1 ) * invdet;
+            inverse(1, 1) = ( state(0, 0) * c5 - state(0, 2) * c2 + state(0, 3) * c1 ) * invdet;
+            inverse(1, 2) = (-state(3, 0) * s5 + state(3, 2) * s2 - state(3, 3) * s1 ) * invdet;
+            inverse(1, 3) = ( state(2, 0) * s5 - state(2, 2) * s2 + state(2, 3) * s1 ) * invdet;
 
-            inverse(2, 0) = ( state(1, 0) * c4 - state(1, 1) * c2 + state(1, 3) * c0) * invdet;
-            inverse(2, 1) = (-state(0, 0) * c4 + state(0, 1) * c2 - state(0, 3) * c0) * invdet;
-            inverse(2, 2) = ( state(3, 0) * s4 - state(3, 1) * s2 + state(3, 3) * s0) * invdet;
-            inverse(2, 3) = (-state(2, 0) * s4 + state(2, 1) * s2 - state(2, 3) * s0) * invdet;
+            inverse(2, 0) = ( state(1, 0) * c4 - state(1, 1) * c2 + state(1, 3) * c0 ) * invdet;
+            inverse(2, 1) = (-state(0, 0) * c4 + state(0, 1) * c2 - state(0, 3) * c0 ) * invdet;
+            inverse(2, 2) = ( state(3, 0) * s4 - state(3, 1) * s2 + state(3, 3) * s0 ) * invdet;
+            inverse(2, 3) = (-state(2, 0) * s4 + state(2, 1) * s2 - state(2, 3) * s0 ) * invdet;
 
-            inverse(3, 0) = (-state(1, 0) * c3 + state(1, 1) * c1 - state(1, 2) * c0) * invdet;
-            inverse(3, 1) = ( state(0, 0) * c3 - state(0, 1) * c1 + state(0, 2) * c0) * invdet;
-            inverse(3, 2) = (-state(3, 0) * s3 + state(3, 1) * s1 - state(3, 2) * s0) * invdet;
-            inverse(3, 3) = ( state(2, 0) * s3 - state(2, 1) * s1 + state(2, 2) * s0) * invdet;
+            inverse(3, 0) = (-state(1, 0) * c3 + state(1, 1) * c1 - state(1, 2) * c0 ) * invdet;
+            inverse(3, 1) = ( state(0, 0) * c3 - state(0, 1) * c1 + state(0, 2) * c0 ) * invdet;
+            inverse(3, 2) = (-state(3, 0) * s3 + state(3, 1) * s1 - state(3, 2) * s0 ) * invdet;
+            inverse(3, 3) = ( state(2, 0) * s3 - state(2, 1) * s1 + state(2, 2) * s0 ) * invdet;
 
             return inverse;
         }
@@ -307,6 +307,18 @@ namespace Cyclone
             for (int a = 0; a < 16; a++)
                 Data[a] -= m.Data[a];
             return *this;
+        }
+
+
+        Vector4 operator *(const Vector4& v, const Matrix4x4& m)
+        {
+            return Vector4
+            (
+                v.X * m(0) + v.Y * m(1) + v.Z * m(2) + v.W * m(3),
+                v.X * m(4) + v.Y * m(5) + v.Z * m(6) + v.W * m(7),
+                v.X * m(8) + v.Y * m(9) + v.Z * m(10) + v.W * m(11),
+                v.X * m(12) + v.Y * m(13) + v.Z * m(14) + v.W * m(15)
+            );
         }
     }
 }

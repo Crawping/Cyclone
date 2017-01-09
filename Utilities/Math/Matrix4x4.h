@@ -147,5 +147,9 @@ namespace Cyclone
                 /// <summary> The raw native array of values held by this matrix. </summary>
                 float Data[16];
         };
+
+
+        UtilitiesAPI Vector4 operator *(const Vector4& v, const Matrix4x4& m);
+
     }
 }
