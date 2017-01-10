@@ -132,6 +132,9 @@
     <ClInclude Include="Interfaces\ISpatialTransform.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Collections\ListVector.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

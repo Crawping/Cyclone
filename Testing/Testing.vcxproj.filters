@@ -62,6 +62,9 @@
     <ClCompile Include="Functions.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="ListVector.cpp">
+      <Filter>Utilities\Collections</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">

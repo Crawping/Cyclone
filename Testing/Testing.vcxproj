@@ -154,6 +154,7 @@
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Geometry3D.cpp" />
     <ClCompile Include="List.cpp" />
+    <ClCompile Include="ListVector.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="Color4.cpp" />
