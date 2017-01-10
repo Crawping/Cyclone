@@ -20,6 +20,12 @@ namespace Cyclone
         {
             PathCommands    Command;
             Vector<float>   Coordinates;
+
+            bool operator ==(const ControlPoint2D& other) const
+            {
+                return (Command == other.Command) && (Coordinates == other.Coordinates);
+            }
+            bool operator !=(const ControlPoint2D& other) const { return !operator ==(other); }
         };
     }
 }

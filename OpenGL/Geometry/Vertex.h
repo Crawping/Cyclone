@@ -51,6 +51,17 @@ namespace Cyclone
             {
 
             }
+
+
+            bool operator ==(const VertexAttribute& other) const
+            {
+                return 
+                    (Count == other.Count)      && 
+                    (Format == other.Format)    && 
+                    (Name == other.Name)        && 
+                    (Offset == other.Offset);
+            }
+            bool operator !=(const VertexAttribute& other) const { return !operator ==(other); }
         };
 
         
@@ -106,6 +117,16 @@ namespace Cyclone
             {
 
             }
+
+
+            constexpr bool operator ==(const Vertex& other) const
+            {
+                return
+                    (Position == other.Position)    && 
+                    (Normal == other.Normal)        && 
+                    (UV == other.UV);
+            }
+            constexpr bool operator !=(const Vertex& other) const { return !operator ==(other); }
 
         };
 
