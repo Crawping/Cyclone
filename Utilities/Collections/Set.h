@@ -36,11 +36,17 @@ namespace Cyclone
 
 
                 /** PROPERTIES **/
+                /// <summary> Gets the total number of elements present in the set. </summary>
                 virtual uint Count()                const override { return Data.Count(); }
+                /// <summary> Gets a reference to the first data element in the set. </summary>
                 virtual T& First()                  { return Data.First(); }
+                /// <summary> Gets a constant reference to the first data element in the set. </summary>
                 virtual const T& First()            const { return Data.First(); }
+                /// <summary> Gets a reference to the last data element in the set. </summary>
                 virtual T& Last()                   { return Data.Last(); }
+                /// <summary> Gets a constant reference to the last data element in the set. </summary>
                 virtual const T& Last()             const { return Data.Last(); }
+
                 virtual SortOrders SortOrder()      const { return _sortOrder; }
 
 
@@ -98,9 +104,11 @@ namespace Cyclone
                 /** UTILITIES **/
                 virtual uint Find(const T& value) const
                 {
-                    if (!Count()) { return 0; }
+                    if (IsEmpty()) { return 0; }
 
                     uint idx = 0, idxLower = 0, idxUpper = Count();
+                    //Node<T>* data = Data.begin();
+
                     while (idxLower < idxUpper)
                     {
                         idx = idxLower + ((idxUpper - idxLower) / 2);

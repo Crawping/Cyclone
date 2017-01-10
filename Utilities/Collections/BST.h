@@ -438,16 +438,18 @@ namespace Cyclone
                         }
 
 
-                        Node<T, U>& operator *()    const { return *(Root->Index(Index)); }
-                        Iterator& operator ++()     { Index++; return *this; }
-                        Iterator& operator ++(int)  { Index++; return *this; }
-                        
+
+                        /** OPERATORS **/
                         bool operator ==(const Iterator& other) const
                         {
                             return Index == other.Index;
                         }
                         bool operator !=(const Iterator& other) const { return !(operator ==(other)); }
 
+                        Node<T, U>& operator *()                const { return *(Root->Index(Index)); }
+                        Iterator& operator ++()                 { Index++; return *this; }
+                        Iterator& operator ++(int)              { Index++; return *this; }
+                        
                     private:
 
                         uint        Index;
