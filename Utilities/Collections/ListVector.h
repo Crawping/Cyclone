@@ -63,45 +63,6 @@ namespace Cyclone
                         Data(_index) = value;
                     else
                         Data(_index + idx) = value;
-                    
-
-                    //if (idx < 0)
-                    //{
-                    //    if (idxData < 0)
-                    //    {
-                    //        uint newCap = 2 * Capacity();
-                    //        while ((_count - idx) >= newCap) { newCap *= 2; }
-                    //        Reallocate(newCap, -idx);
-                    //        idxData = _index;
-                    //    }
-
-                    //    _count = _count - idx;
-                    //    _index = idxData;
-                    //    Data(idxData) = value;
-                    //}
-                    //else if (idx >= _count)
-                    //{
-                    //    if (idxData >= Capacity())
-                    //    {
-                    //        uint newCap = 2 * Capacity();
-                    //        while (idxData >= newCap) { newCap *= 2; }
-                    //        Reallocate(newCap);
-                    //        idxData = _index + idx;
-                    //    }
-
-                    //    Data(idxData) = value;
-                    //    _count = idx + 1;
-                    //}
-                    //else
-                    //{
-                    //    if (_index + _count + 1 >= Capacity())
-                    //        Reallocate(2 * Capacity());
-
-                    //    uint nToMove = _count - idx;
-                    //    Move(_index + idx, nToMove, 1);
-                    //    Data(idxData) = value;
-                    //    _count++;
-                    //}
                 }
                 virtual void Insert(int idx, const ICollection<T>& values)
                 {
@@ -127,84 +88,38 @@ namespace Cyclone
 
             protected:
 
-                virtual void InsertBlock(int idx, uint n)
+                virtual void InsertBlock(uint idx, uint n)
                 {
-                    int idxData = _index + idx;
-                    uint count = 0, offset = 0;
-
-                    if (idx < 0)
-                    {
-                        count = _index - idx + n + _count;
-                        offset = _index - idx + n;
-                    }
-                    else if (idx > _count)
-                    {
-                        count = _count + idx + n;
-                    }
-                    else
-                    {
-                        count = _count + n;
-                        Move(idxData, _count - idxData, n);
-                    }
-
-                    /*needsReallocation = (count >= Capacity());*/
-                    Reallocate(count, offset);
+                    if (n == 0) { return; }
+                    uint count = _count, offset = 0;
 
 
-                    /*if (idx < 0)
-                        if (idxData < 0)
-                        {
-                            count = _index - idx + n + _count;
-                            offset = -idx;
-                        }
-                        else if (idxData)
-                        {
 
-                        }
-                        else
-                        {
-                            _index += idx;
-                            _count -= idx;
-                            return;
-                        }
-                    else if (idx >= _count)
-                        if (idxData >= Capacity())
-                            count = idx + n;
-                         else
-                        {
-                            _count = idx + n;
-                            return;
-                        }
-                    else
-                    {
-                        _count += n;
+                    if (idx < _count)
                         Move(idx, _count - idx, n);
-                        return;
-                    }*/
 
-                    //if (idxData < 0)
-                    //{
-                    //    newCount = _index - idx + _count;
-                    //    offset = -idx;
-                    //}
-                    //else if (idxData >= Capacity())
-                    //    newCount = idx - _index + n;
-                    //else
-                    //    return Move(idx, _count - idx, n);
-
-                    //if (newCount >= Capacity())
-                    //    Reallocate(nextpow2(newCount), offset);
-                    //else
-                    //    Move(_index, )
-
-                    //Reallocate(count, offset);
+                    Reallocate(count + n, offset);
                 }
 
-                virtual void Move(int idx, uint count, int n)
+                virtual void Redistribute(uint idx, uint offset)
                 {
-                    //  [ 0, 0, 0, 0, a, b, c, d, 0, 0, 0, 0 ]
 
-                    if (n == 0) { return; }
+                }
+
+
+            private:
+
+                uint _count;
+                uint _index;
+
+                Vector<T> Data;
+
+
+
+                virtual void Move(int idx, int offset)
+                {
+                    if (offset == 0) { return; }
+
                     uint idxData = _index + idx;
                     if (n > 0)
                         for (uint a = idxData + count + n - 1; a > idxData; a--)
@@ -215,10 +130,12 @@ namespace Cyclone
 
                     _count += n;
                 }
-
-                virtual void Reallocate(uint n, int offset = 0)
+                void Reallocate(uint n, uint idx = 0, uint offset = 0)
                 {
-                    if (n <= Capacity()) { return; }
+                    if (n <= Capacity())
+                        return Move(idx, offset);
+
+                    //if (n <= Capacity()) { _count = n; _index += offset; return; }
                     uint newCap = nextpow2(n);
 
                     Vector<T> newData(newCap);
@@ -231,13 +148,6 @@ namespace Cyclone
                     Data = newData;
                 }
 
-
-            private:
-
-                uint _count;
-                uint _index;
-
-                Vector<T> Data;
         };
     }
 }
