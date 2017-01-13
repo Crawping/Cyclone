@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Cyclone::OpenGL::IBindable" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEAAAAgAAAAEAAAAACIAAAAAAAAAAFAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBindable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::IGeometric" Collapsed="true">
+    <Position X="17" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAEEABgAAAAAAAAAQAAAAAABAAAAAQAAAAAgA=</HashCode>
+      <FileName>Interfaces\IGeometric.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::IGraphicsBuffer" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAEAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Interfaces\IGraphicsBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Texture3D" Collapsed="true">
+    <Position X="23" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AERBiAAEREAAgAAABEBBAGQG4EhAAEIgAAAFAAIAAEA=</HashCode>
+      <FileName>Textures\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::IMaterial" Collapsed="true">
+    <Position X="18.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAABAAAAIAAIAAAgA=</HashCode>
+      <FileName>Interfaces\IMaterial.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::IRenderStage" Collapsed="true">
+    <Position X="24" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAEAAAAgBAQgCAAAAA=</HashCode>
+      <FileName>Interfaces\IRenderStage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::ITransformable" Collapsed="true">
+    <Position X="20.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAABAAAAoAABAAAAA=</HashCode>
+      <FileName>Interfaces\ITransformable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::IRenderable" Collapsed="true">
+    <Position X="2.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEAAAAAAAAAAEIAAAAAAAAAAAgAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Interfaces\IRenderable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::ISceneLayer" Collapsed="true">
+    <Position X="9.75" Y="9.75" Width="1.5" />
+    <InheritanceLine Type="Cyclone::OpenGL::ISceneComponent" ManuallyRouted="true">
+      <Path>
+        <Point X="11.75" Y="8.941" />
+        <Point X="11.75" Y="9.362" />
+        <Point X="10.5" Y="9.362" />
+        <Point X="10.5" Y="9.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAIAAAAAAFAAAAAABAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Interfaces\IScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::ISceneComponent" Collapsed="true">
+    <Position X="11" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAEAAAAAAEAAAAAAARAQAAAAAAAAAgAgAAAAQAAA=</HashCode>
+      <FileName>Interfaces\IScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::IScene" Collapsed="true">
+    <Position X="9.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::CommandBuffer&lt;U&gt;" Collapsed="true">
+    <Position X="11.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Buffers\CommandBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::FrameBuffer" Collapsed="true">
+    <Position X="19.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAagAAABAAEgCAAAEBCAHAiYAAAAAAIAAgFAALABAA=</HashCode>
+      <FileName>Buffers\FrameBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::ArrayBuffer&lt;T&gt;" Collapsed="true">
+    <Position X="13.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAABAAAEAAABAQCAAAAARAAAAAAAABAAAA=</HashCode>
+      <FileName>Buffers\ArrayBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::GraphicsBuffer" Collapsed="true">
+    <Position X="12.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gARAiAAEABAggCQAAEBAAQQCIEBAAUAAAQAFAABAQAA=</HashCode>
+      <FileName>Buffers\GraphicsBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::IndexBuffer" Collapsed="true">
+    <Position X="16" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buffers\IndexBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::MapBuffer&lt;T, U&gt;" Collapsed="true">
+    <Position X="7" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAABABACAAABAQAAAAAARAAAAAgAABQAQA=</HashCode>
+      <FileName>Buffers\MapBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::RegistryBuffer&lt;T&gt;" Collapsed="true">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAABAAAAAAABAQAAAABAQAAAAAgAABQBAA=</HashCode>
+      <FileName>Buffers\RegistryBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::UniformBuffer&lt;T&gt;" Collapsed="true">
+    <Position X="13.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAQAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buffers\UniformBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::UniformMap&lt;T, U&gt;" Collapsed="true">
+    <Position X="7" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAE=</HashCode>
+      <FileName>Buffers\UniformMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::VertexArray" Collapsed="true">
+    <Position X="18.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAEAAAAACIABAAEAIACABAEAAAAA=</HashCode>
+      <FileName>Buffers\VertexArray.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::VertexBuffer&lt;T&gt;" Collapsed="true">
+    <Position X="18.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAABAAAAAAABAQAAAAAARAAAAAAAABAEAA=</HashCode>
+      <FileName>Buffers\VertexBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::ComputePipeline" Collapsed="true">
+    <Position X="1.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAABAEAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Pipelines\ComputePipeline.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Shader" Collapsed="true">
+    <Position X="33.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAIAAAAgAQAAABAEAAAAAAAAAAABSAAAAAADEA=</HashCode>
+      <FileName>Pipelines\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::GraphicsPipeline" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAIgAAAAEBAAAACIAAAAAAAAAAFQAAACAQ=</HashCode>
+      <FileName>Pipelines\GraphicsPipeline.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::ShaderPipeline" Collapsed="true">
+    <Position X="3.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAgAAAAAAAAAEAAABAEAAAAAAIAAAQAAAAAA=</HashCode>
+      <FileName>Pipelines\ShaderPipeline.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::GradientTexture" Collapsed="true">
+    <Position X="21.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAgAAAAEAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Textures\GradientTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Texture2D" Collapsed="true">
+    <Position X="24" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAgIgAAAAAQAAAAAAIABCA=</HashCode>
+      <FileName>Textures\Texture2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Entity3D" Collapsed="true">
+    <Position X="2.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAgQIABQAAkIEiACIAAEAAEgAAAAAgCAJEIAAA4gE=</HashCode>
+      <FileName>Geometry\Entity3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Geometry3D" Collapsed="true">
+    <Position X="17" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAgEEABhIABAAQAAAQAAEgAgZAAEAQSAAFBIgA=</HashCode>
+      <FileName>Geometry\Geometry3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Line3D" Collapsed="true">
+    <Position X="0.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\Line3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Mesh3D" Collapsed="true">
+    <Position X="2.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAggA=</HashCode>
+      <FileName>Geometry\Mesh3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Point3D" Collapsed="true">
+    <Position X="2.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIBAAAAAAAAAIAAEAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\Point3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Quad3D" Collapsed="true">
+    <Position X="5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Geometry\Quad3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Space3D" Collapsed="true">
+    <Position X="26.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAgCAgAAAQAAIAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Geometry\Space3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Transform3D" Collapsed="true">
+    <Position X="20.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABRAAgAEgAiIAAEAAEAAAABAgAApEAAAA4EE=</HashCode>
+      <FileName>Geometry\Transform3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Material3D" Collapsed="true">
+    <Position X="18.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABQAABAACAAAAAAAAAAAAABAAAAIAAAAAAgA=</HashCode>
+      <FileName>Libraries\Material3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::ResourceLibrary&lt;T&gt;" Collapsed="true">
+    <Position X="9.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Libraries\ResourceLibrary.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::Scene3D" Collapsed="true">
+    <Position X="11" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\Scene3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::SceneComponent" Collapsed="true">
+    <Position X="12.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAKAACAQAAEAAAgAAAQCQQAEABCAAAwAAAJAAQAEA=</HashCode>
+      <FileName>Scenes\SceneComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::SceneComponent3D" Collapsed="true">
+    <Position X="12.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACEBAIAAAAEAAAAAABABAKAAAAAAAAAgAAAAQAAA=</HashCode>
+      <FileName>Scenes\SceneComponent3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::OpenGL::SceneLayer3D" Collapsed="true">
+    <Position X="12.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEwAAEAAAEAAIIAAAAAABAABAgABAAAAEAkAACAAQAA=</HashCode>
+      <FileName>Scenes\SceneLayer3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::Utilities::Bitmap" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Source\Cyclone\Utilities\Imaging\Bitmap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::Utilities::ISpatialTransform" Collapsed="true">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Source\Cyclone\Utilities\Interfaces\ISpatialTransform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::Utilities::Bitmap" Collapsed="true">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Textures\Texture2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cyclone::Utilities::ISpatialTransform" Collapsed="true">
+    <Position X="31.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAgAAIAAAAAFAAAAAAAAAAEAABAAAg=</HashCode>
+      <FileName>GraphicsSettings.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Cyclone::OpenGL::GraphicsBinding" Collapsed="true">
+    <Position X="26.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBindable.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::GeometryData" Collapsed="true">
+    <Position X="33.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEEABgAAAAAAAAAAAAAAAAAAAAAAQAAAAAgA=</HashCode>
+      <FileName>Interfaces\IGeometric.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::BufferBinding" Collapsed="true">
+    <Position X="26.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgA=</HashCode>
+      <FileName>Interfaces\IGraphicsBuffer.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::MaterialData" Collapsed="true">
+    <Position X="31.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAQAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Interfaces\IMaterial.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::GraphicsSettings" Collapsed="true">
+    <Position X="28.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAQAAAAAAAAAAACAAAAABCAAAUAAAAAAQAEA=</HashCode>
+      <FileName>GraphicsSettings.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::ResourceMapping" Collapsed="true">
+    <Position X="26.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAEAAAAEEAAAAAAEAAAAAQEAAAAAE=</HashCode>
+      <FileName>Scenes\Scene3D.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::TransformData" Collapsed="true">
+    <Position X="31.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAoAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITransformable.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::VertexAttribute" Collapsed="true">
+    <Position X="28.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIQQAAAgAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Geometry\Vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::IVertex" Collapsed="true">
+    <Position X="22.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAI=</HashCode>
+      <FileName>Interfaces\IVertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::DrawCommand" Collapsed="true">
+    <Position X="28.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAAAAAAAAAABAAAAABAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buffers\CommandBuffer.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::IndexedDrawCommand" Collapsed="true">
+    <Position X="30" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAACAAAAAQABAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Buffers\CommandBuffer.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::PerFrame" Collapsed="true">
+    <Position X="33.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAABAAAAAAAAAAAQAQA=</HashCode>
+      <FileName>Buffers\UniformData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::EntityData" Collapsed="true">
+    <Position X="30" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAQAAAQAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Buffers\UniformData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::RenderStage3D&lt;T&gt;" Collapsed="true">
+    <Position X="24" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAgBAAAAAAAAAAAAAAAAAAAAEAAAAgBAAAAAAAAA=</HashCode>
+      <FileName>Pipelines\RenderStage3D.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::RenderStage" Collapsed="true">
+    <Position X="24" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAACAQAAASAAgAAAACAAAEAFCAAAwAAQACAQAEA=</HashCode>
+      <FileName>Pipelines\RenderStage.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::ErrorManagerJPEG" Collapsed="true">
+    <Position X="31.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAgAA=</HashCode>
+      <FileName>Textures\Texture2D.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::TextureSampler" Collapsed="true">
+    <Position X="30" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACgAAgAAgAAABQAIAAAAACAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Textures\TextureSampler.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::Vertex" Collapsed="true">
+    <Position X="22.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAgAAAAAQAAAAAIAAAIAIAAAAAAAAA=</HashCode>
+      <FileName>Geometry\Vertex.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::OpenGL::StageGroup3D" Collapsed="true">
+    <Position X="28.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scenes\SceneComponent3D.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::Utilities::Vector3" Collapsed="true">
+    <Position X="33.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>c:\Source\Cyclone\Utilities\Math\Vector3.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Cyclone::Utilities::Vector3" Collapsed="true">
+    <Position X="26.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIgAAAIAAAAAAGAAAQQBAAQAAAAAAAAAkAAAAYIE=</HashCode>
+      <FileName>Textures\Texture2D.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
