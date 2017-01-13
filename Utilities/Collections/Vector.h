@@ -188,6 +188,14 @@ namespace Cyclone
                         Data[a] = value;
                     return *this;
                 }
+                /// <summary> Exchanges the values of two separate vector elements. </summary>
+                /// <param name="idxFirst"> The position of the first element to be swapped. </param>
+                /// <param name="idxSecond"> The position of the second element to be swapped. </param>
+                virtual void Swap(uint idxFirst, uint idxSecond)
+                {
+                    if (idxFirst >= Count() || idxSecond >= Count()) { return; }
+                    std::swap(Data[idxFirst], Data[idxSecond]);
+                }
                 /// <summary> Gets a pointer to the underlying native storage for the array. </summary>
                 virtual const T* ToArray() const { return Data; }
 
