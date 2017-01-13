@@ -42,11 +42,10 @@ TEST_F(_Registry, NodeInsertion)
     ASSERT_EQ(_r1.Count(), 6);
 
     auto k1 = _r1.Register(3);
-    ASSERT_EQ(_r1.Count(), 6);
-    ASSERT_EQ(k1, _k1(3));
+    ASSERT_EQ(_r1.Count(), 7);
 
     auto k2 = _r1.Register(-1);
-    ASSERT_EQ(_r1.Count(), 7);
+    ASSERT_EQ(_r1.Count(), 8);
 }
 TEST_F(_Registry, NodeRemoval)
 {
