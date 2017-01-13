@@ -34,6 +34,7 @@ namespace Cyclone
 
 
 
+        /** CONSTRUCTOR & DESTRUCTOR **/
         SceneComponent2D::SceneComponent2D(const string& name, ISceneLayer& parent) :
             SceneComponent(name, parent),
             _needsUpdate(false)
@@ -45,6 +46,7 @@ namespace Cyclone
             for (auto* c : Resources.Values())
                 delete c;
         }
+
 
 
         /** UTILITIES **/
@@ -118,8 +120,7 @@ namespace Cyclone
                 Insert(cmp);
                 if (auto* c2d = Downcast(cmp))
                     data->Components.Insert(c2d);
-            }
-                
+            }   
         }
 
     }

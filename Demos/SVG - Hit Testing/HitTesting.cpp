@@ -60,10 +60,10 @@ class Program : public PathRenderer
                  PointColor(Color4::Black)
                 .PointSize(10)
 
-                .TerminalCap(EndCaps::Triangular)
                 .InitialCap(EndCaps::Triangular)
                 .JoinStyle(JoinStyles::Round)
                 .StrokeWidth(2)
+                .TerminalCap(EndCaps::Triangular)
 
                 .PrimaryColor(Color4(0.0f, 0.0f, 1.0f, 0.75f))
                 .SecondaryColor(Color4(1.0f, 0.0f, 0.0f, 0.875f))
