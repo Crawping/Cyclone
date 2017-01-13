@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Enumerator.h"
-#include "Collections/List.h"
+#include "Collections/ListVector.h"
 
 
 
@@ -31,7 +31,7 @@ namespace Cyclone
         {
             public:
                 
-                using Iterator = typename List<T>::Iterator<T>;
+                using Iterator = typename ListVector<T>::Iterator;
                 
 
 
@@ -94,8 +94,8 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                Iterator begin() const              { return Data.begin(); }
-                Iterator end() const                { return Data.end(); }
+                Iterator begin()                    { return Data.begin(); }
+                Iterator end()                      { return Data.end(); }
                 T& operator ()(uint index)          { return Data(index); }
                 const T& operator ()(uint index)    const override { return Data(index); }
 
@@ -141,10 +141,7 @@ namespace Cyclone
             private:
 
                 SortOrders  _sortOrder;
-                List<T>     Data;
-
-
-                
+                ListVector<T>     Data;
 
         };
     }
