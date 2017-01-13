@@ -20,6 +20,7 @@ namespace Cyclone
         }
 
 
+
         /** CONSTRUCTOR & DESTRUCTOR **/
         DrawingPath::DrawingPath() : 
             _pointColor(Color4::Black),
@@ -40,11 +41,13 @@ namespace Cyclone
         DrawingPath& DrawingPath::Append(const ControlPoint2D& point)
         {
             _geometry.Append(point);
+            if (point.Coordinates.IsEmpty()) { return *this; }
+
             Vector2 ptCoords(point.Coordinates(0), point.Coordinates(1));
             Path2D* pt = new Path2D(Geometry2D::Point());
 
             pt->
-                Offset(ptCoords)
+                 Offset(ptCoords)
                 .Size(PointSize())
 
                 .JoinStyle(JoinStyles::Round)
@@ -56,7 +59,6 @@ namespace Cyclone
             _needsUpdate = true;
             return *this;
         }
-
         void DrawingPath::Clear()
         {
             _geometry.Clear();
