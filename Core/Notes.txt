@@ -44,9 +44,11 @@ TODOS:
 	-- Generalized multidimensional arrays
     -- Data streams
     -- Sets                                     (DONE)
+        > Fix indexing speed issues
     -- Vectors                                  (PRELIMINARY)
         > Static checking of initializer list
           length for stack vectors
+    -- List-like vectors                        (PRELIMINARY)
     -- Trees
         > BST                                   (PRELIMINARY)
         > BVH
@@ -54,7 +56,7 @@ TODOS:
         > Octree
 
 - Rename
-    -- Point2D              -> Circle2D
+    -- Point2D -> Circle2D
 
 - General
 	-- Integrate exception throws
@@ -64,7 +66,7 @@ TODOS:
 	-- Copy prevention for critical resources
 	-- Picking & hit testing
     -- Remove OpenGL from EnumerationsGL
-    -- State settings for the GPU class         (PRELIMINARY)
+    -- State settings for the GPU class         (DONE)
     -- Define & standardize some kind of 
        update system
     -- Refactor NVPR into SVG
