@@ -114,6 +114,7 @@ namespace Cyclone
                             delete ctNode->Previous;
                         }
                         delete _last;
+                        _first = _last = nullptr;
                         _count = 0;
                     }
                 }
