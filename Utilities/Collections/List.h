@@ -5,7 +5,6 @@
 #pragma once
 #include "TypeDefinitions.h"
 #include "Collections/Vector.h"
-#include "Interfaces/ICollection.h"
 
 
 
@@ -20,7 +19,7 @@ namespace Cyclone
         {
             public:
                 template<typename T> struct Node;
-                template<typename T> struct Iterator;
+                struct Iterator;
 
 
                 /** PROPERTIES **/
@@ -90,11 +89,11 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Adds a new data value to the end of the list. </summary>
                 /// <param name="value"> The data element that will copied and added to the list. </param>
-                void Append(const T& value)                                         { Insert(Count(), value); }
+                void Append(const T& value)                             { Insert(Count(), value); }
                 /// <summary> Adds the contents of another collection to the end of the list. </summary>
                 /// <param name="values"> An array-like collection containing the data elements to be copied and added to the list. </param>
                 /// <remarks> Appending an element to this class of linked list is an O(1) operation. </remarks>
-                void Append(const ICollection<T>& values)                           { Insert(Count(), values); }
+                void Append(const ICollection<T>& values)               { Insert(Count(), values); }
                 /// <summary> Removes all data elements stored within the list. </summary>
                 /// <remarks>
                 ///     This method destroys the data nodes that make up the linked list, effectively resetting the collection to an empty state
@@ -156,10 +155,10 @@ namespace Cyclone
                 }
                 /// <summary> Adds a new data value to the beginning of the list. </summary>
                 /// <param name="value"> The data element that will be copied and added to the list. </param>
-                void Prepend(const T& value)                                        { Insert(0, value); }
+                void Prepend(const T& value)                            { Insert(0, value); }
                 /// <summary> Adds the contents of another collection to the beginning of the list. </summary>
                 /// <param name="values"> An array-like collection containing the data elements to be copied and added to the list. </param>
-                void Prepend(const ICollection<T>& values)                          { Insert(0, values); }
+                void Prepend(const ICollection<T>& values)              { Insert(0, values); }
                 /// <summary> Removes the data element found at the specified index from the list. </summary>
                 /// <param name="index"> The numeric index of the data element to be removed. </param>
                 void Remove(uint index)
@@ -206,13 +205,13 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                Iterator<T> begin() const
+                Iterator begin()                                        const
                 {
-                    return Iterator<T>(0, _first);
+                    return Iterator(0, _first);
                 }
-                Iterator<T> end() const
+                Iterator end()                                          const
                 {
-                    return Iterator<T>(Count(), nullptr);
+                    return Iterator(Count(), nullptr);
                 }
                 /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
                 /// <param name="index"> The numeric position of the desired data element within the list. </param>
@@ -221,7 +220,7 @@ namespace Cyclone
                 ///     Attempting to index into the list at an invalid position (i.e. beyond the end of the list) is an error and
                 ///     will generate a runtime exception.
                 /// </remarks>
-                T& operator ()(uint index)                                          { return Index(index)->Value; }
+                T& operator ()(uint index)                              { return Index(index)->Value; }
                 /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
                 /// <param name="index"> The numeric position of the desired data element within the list. </param>
                 /// <returns> A constant reference to the data element stored at the inputted position. </returns>
@@ -229,7 +228,7 @@ namespace Cyclone
                 ///     Attempting to index into the list at an invalid position (i.e. beyond the end of the list) is an error and
                 ///     will generate a runtime exception.
                 /// </remarks>
-                const T& operator ()(uint index)                     const override { return Index(index)->Value; }
+                const T& operator ()(uint index)                        const override { return Index(index)->Value; }
 
                 /// <summary> Clears the list of any stored data and transfers the contents of another list into it. </summary>
                 /// <param name="other"> A pre-existing list whose contents are to be moved. </param>
@@ -251,6 +250,7 @@ namespace Cyclone
                 List& operator =(const List<T>& values)
                 {
                     Clear();
+                    Insert()
                     for (const T& v : values)
                         Insert(Count(), v);
                     
@@ -334,16 +334,12 @@ namespace Cyclone
                 };
 
 
-
-                template<typename T>
-                struct Iterator : public ICollectionIterator<T>
+                struct Iterator
                 {
                     public:
 
                         /** PROPERTIES **/
-                        uint Index() const override { return _index; }
-
-
+                        uint Index()                const { return _index; }
 
                         /** CONSTRUCTOR **/
                         Iterator(uint idx, Node<T>* element) :
@@ -353,24 +349,16 @@ namespace Cyclone
 
                         }
 
-
-
                         /** OPERATORS **/
-                        T& operator *()             const override { return Element->Value; }
-                        Iterator& operator++()      override { Element = Element->Next; _index++; return *this; }
-                        Iterator& operator++(int)   override { Element = Element->Next; _index++; return *this; }
+                        T& operator *()                         { return Element->Value; }
+                        Iterator& operator++()                  { Element = Element->Next; _index++; return *this; }
+                        Iterator& operator++(int)               { Element = Element->Next; _index++; return *this; }
 
-                        bool operator ==(const ICollectionIterator<T>& other) const override
+                        bool operator ==(const Iterator& other) const 
                         {
-                            if (auto node = dynamic_cast<const Iterator<T>*>(&other))
-                                return (Index() == node->Index()) && (Element == node->Element);
-                            else
-                                return false;
+                            return (Index() == other.Index()) && (Element == other.Element);
                         }
-                        bool operator !=(const ICollectionIterator<T>& other) const override
-                        {
-                            return !operator ==(other);
-                        }
+                        bool operator !=(const Iterator& other) const { return !operator ==(other); }
 
                     private:
                         uint        _index;

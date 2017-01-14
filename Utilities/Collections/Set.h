@@ -140,8 +140,8 @@ namespace Cyclone
 
             private:
 
-                SortOrders  _sortOrder;
-                ListVector<T>     Data;
+                SortOrders      _sortOrder;
+                ListVector<T>   Data;
 
         };
     }

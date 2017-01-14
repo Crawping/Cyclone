@@ -18,8 +18,6 @@ namespace Cyclone
         {
 
             public:
-                struct Iterator;
-
 
                 /** PROPERTIES **/
                 virtual uint Capacity()         const { return Data.Count(); }
@@ -94,6 +92,7 @@ namespace Cyclone
                 {
                     Data.Swap(_index + idxFirst, _index + idxSecond);
                 }
+
 
 
                 /** OPERATORS **/
@@ -210,35 +209,6 @@ namespace Cyclone
                     _index = newCap / 4;
                     Data = newData;
                 }
-
-
-                struct Iterator //: public ICollectionIterator<T>
-                {
-                    public:
-
-                        uint Index() const { return _index; }
-
-                        Iterator(uint idx, Vector<T>* collection) : 
-                            _index(idx),
-                            Collection(collection)
-                        {
-
-                        }
-
-                        bool operator ==(const Iterator& other) const
-                        {
-                            return (Index() == other.Index()) && (Collection == other.Collection);
-                        }
-                        bool operator !=(const Iterator& other) const { return !operator ==(other); }
-                        T& operator *()                 const { return (*Collection)(Index()); }
-                        Iterator& operator ++()         { _index++; return *this; }
-
-                    private:
-
-                        uint _index;
-                        Vector<T>* Collection;
-
-                };
 
         };
     }

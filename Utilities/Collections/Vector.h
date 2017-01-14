@@ -16,7 +16,6 @@ namespace Cyclone
         struct Vector : public IArray<T>
         {
             public:
-                template<typename T, uint U> struct Iterator;
 
                 /** PROPERTIES **/
                 /// <summary> Gets the number of data elements present in the vector. </summary>
@@ -44,46 +43,15 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                virtual Iterator<T, U> begin()                    { return Iterator<T, U>(0, this); }
-                virtual Iterator<T, U> end()                      { return Iterator<T, U>(Count(), this); }
-                virtual T& operator ()(uint idx)                  { return Data[idx]; }
+                virtual Iterator begin()                    { return Iterator(0, this); }
+                virtual Iterator end()                      { return Iterator(Count(), this); }
+                virtual T& operator ()(uint idx)            { return Data[idx]; }
                 virtual const T& operator ()(uint idx)      const { return Data[idx]; }
 
             private:
+
                 T Data[U];
 
-
-                template<typename T, uint U>
-                struct Iterator : public ICollectionIterator<T>
-                {
-                    public:
-
-                        /** PROPERTIES **/
-                        uint Index() const override { return _index; }
-
-                        /** CONSTRUCTOR **/
-                        Iterator(uint idx, Vector<T, U>* collection) :
-                            _index(idx),
-                            Collection(collection)
-                        {
-
-                        }
-
-                        /** OPERATORS **/
-                        bool operator ==(const ICollectionIterator<T>& other)   const override
-                        {
-                            if (auto node = dynamic_cast<const Iterator<T, U>*>(&other))
-                                return (Index() == node->Index()) && (Collection == node->Collection);
-                            else
-                                return false;
-                        }
-                        T& operator *()                                         const override { return (*Collection)(Index()); }
-                        Iterator& operator ++()                                 override { _index++; return *this; }
-
-                    private:
-                        uint            _index;
-                        Vector<T, U>*   Collection;
-                };
         };
 
 
@@ -92,8 +60,6 @@ namespace Cyclone
         struct Vector<T, 0> : public IArray<T>
         {
             public:
-                template<typename T> struct Iterator;
-
 
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of elements present in this array. </summary>
@@ -134,7 +100,7 @@ namespace Cyclone
 			        Data(new T[other.Count()])
 		        {
                     for (uint a = 0; a < Count(); a++)
-                        Data[a] = other.Data[a];
+                        Data[a] = other(a);
 		        }
                 /// <summary> Constructs an array by copying values contained in an initializer list. </summary>
 		        Vector(std::initializer_list<T> values) :
@@ -202,8 +168,8 @@ namespace Cyclone
 
 
 		        /** OPERATORS **/
-                virtual Iterator<T> begin()                             { return Iterator<T>(0, this); }
-                virtual Iterator<T> end()                               { return Iterator<T>(Count(), this); }
+                virtual Iterator begin()                                { return Iterator(0, this); }
+                virtual Iterator end()                                  { return Iterator(Count(), this); }
 		        virtual T& operator ()(uint idx)			            { return Data[idx]; }
 
 		        virtual const T& operator ()(uint idx)	                const override { return Data[idx]; }
@@ -272,38 +238,6 @@ namespace Cyclone
 
                 uint    _count;
                 T*      Data;
-
-                template<typename T>
-                struct Iterator : public ICollectionIterator<T>
-                {
-                    public:
-                        
-                        /** PROPERTIES **/
-                        uint Index() const override { return _index; }
-
-                        /** CONSTRUCTOR **/
-                        Iterator(uint idx, Vector<T>* collection) : 
-                            _index(idx),
-                            Collection(collection)
-                        {
-
-                        }
-
-                        /** OPERATORS **/
-                        bool operator ==(const ICollectionIterator<T>& other)   const override
-                        {                            
-                            if ( auto node = dynamic_cast<const Iterator<T>*>(&other) )
-                                return (Index() == node->Index()) && (Collection == node->Collection);
-                            else
-                                return false;
-                        }
-                        T& operator *()                                         const override { return (*Collection)(Index()); }
-                        Iterator& operator ++()                                 override { _index++; return *this; }
-
-                    private:
-                        uint        _index;
-                        Vector<T>*  Collection;
-                };
                 
         };
 
