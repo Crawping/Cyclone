@@ -205,14 +205,8 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                Iterator begin()                                        const
-                {
-                    return Iterator(0, _first);
-                }
-                Iterator end()                                          const
-                {
-                    return Iterator(Count(), nullptr);
-                }
+                Iterator begin()                                        const { return Iterator(0, _first); }
+                Iterator end()                                          const { return Iterator(Count(), nullptr); }
                 /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
                 /// <param name="index"> The numeric position of the desired data element within the list. </param>
                 /// <returns> A reference to the data element stored at the inputted position. </returns>
