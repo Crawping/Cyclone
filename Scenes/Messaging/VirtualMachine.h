@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Event.h"
 #include "Collections/ListVector.h"
 #include "Messaging/Message.h"
 
@@ -16,10 +17,19 @@ namespace Cyclone
         {
             public:
 
+                /** DELEGATES **/
+                Function<Literal, Literal, Literal> Get;
+                Function<void, Literal, Literal>    Set;
+
+
+
+                /** CONSTRUCTOR & DESTRUCTOR **/
                 SceneAPI VirtualMachine();
                 SceneAPI ~VirtualMachine();
 
 
+
+                /** UTILITIES **/
                 SceneAPI void Insert(Instructions command, const Vector<LiteralTypes>& parameters);
                 SceneAPI void Execute(Vector<Instructions>& commands);
 

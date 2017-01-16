@@ -26,26 +26,41 @@ namespace Cyclone
                 switch (cmd)
                 {
                     case Instructions::Add:
+                        Push( Pop() + Pop() );
+                        break;
 
-                        Literal v1 = Pop(), v2 = Pop();
-                        if (v1.Type == v2.Type)
-                            Push( Pop() + Pop() );  
                     case Instructions::Call:
-                    case Instructions::Compare:
-                    case Instructions::Divide:
-                    case Instructions::Get:
-                    case Instructions::Insert:
-                    case Instructions::Jump:
-                    case Instructions::Move:
-                    case Instructions::Multiply:
-                    case Instructions::Remove:
-                    case Instructions::Set:
-                    case Instructions::Subtract:
 
+                    case Instructions::Compare:
+
+                    case Instructions::Divide:
+                        Push( Pop() / Pop() );
+                        break;
+                    case Instructions::Get:
+                        Push( Get.Invoke(Pop(), Pop()) );
+                        break;
+                    case Instructions::Insert:
+
+                    case Instructions::Jump:
+
+                    case Instructions::Move:
+                        
+                    case Instructions::Multiply:
+                        Push( Pop() * Pop() );
+                        break;
+                    case Instructions::Remove:
+
+                    case Instructions::Set:
+                        Set.Invoke( Pop(), Pop() );
+                        break;
+                    case Instructions::Subtract:
+                        Push( Pop() - Pop() );
+                        break;
                     case Instructions::Swap:
 
                     case Instructions::None:
                     default:
+                        break;
                 }
             }
         }
@@ -53,7 +68,7 @@ namespace Cyclone
 
         void VirtualMachine::Push(Literal parameter)
         {
-
+            Parameters.Prepend(parameter);
         }
         Literal VirtualMachine::Pop()
         {
