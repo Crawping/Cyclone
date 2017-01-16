@@ -97,7 +97,7 @@ namespace Cyclone
 
                 /** OPERATORS **/
                 virtual Iterator begin()                    { return Iterator(_index, &Data); }
-                virtual Iterator end()                      { return Iterator(Count(), &Data); }
+                virtual Iterator end()                      { return Iterator(_index + Count(), &Data); }
                 virtual T& operator ()(uint index)          { return Data(_index + index); }
                 virtual const T& operator ()(uint index)    const override { return Data(_index + index); }
 
