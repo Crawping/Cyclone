@@ -24,9 +24,6 @@
     <ClInclude Include="Geometry\DrawingPath.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Point2D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IRenderable2D.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -44,6 +41,9 @@
     </ClInclude>
     <ClInclude Include="Interfaces\IGeometric2D.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\Circle2D.h">
+      <Filter>Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,14 +88,14 @@
     <ClCompile Include="Geometry\Entity2D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Point2D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Pipelines\RenderStage2D.cpp">
       <Filter>Pipelines</Filter>
     </ClCompile>
     <ClCompile Include="Scenes\SceneComponent2D.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Circle2D.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
