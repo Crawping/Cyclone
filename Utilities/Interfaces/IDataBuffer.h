@@ -12,8 +12,7 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        class IDataBuffer : 
-            public virtual IUpdatable
+        class IDataBuffer : public virtual IUpdatable
         {
             public:
 
@@ -24,8 +23,10 @@ namespace Cyclone
                 /// <remarks> By default, this method determines whether the returned <see cref="Count"/> value is zero. </remarks>
                 virtual bool IsEmpty()      const { return Count() == 0; }
                 
+                /** DESTRUCTOR **/
                 virtual ~IDataBuffer() { }
 
+                /** UTILITIES **/
                 /// <summary> Removes all of the data stored within the buffer. </summary>
                 virtual void Clear() = 0;
         };
