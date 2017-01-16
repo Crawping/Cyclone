@@ -110,6 +110,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Interfaces\ISceneMessage.h" />
+    <ClInclude Include="Messaging\Message.h" />
+    <ClInclude Include="Messaging\VirtualMachine.h" />
+    <ClInclude Include="SceneAPI.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Messaging\Message.cpp" />
+    <ClCompile Include="Messaging\VirtualMachine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

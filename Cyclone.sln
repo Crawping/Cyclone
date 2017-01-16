@@ -34,6 +34,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SVG", "SVG\SVG.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UserInterface", "UserInterface\UserInterface.vcxproj", "{BEF6C833-AD66-4418-8FEB-56C64C1F3C57}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scenes", "Scenes\Scenes.vcxproj", "{4042B617-8E10-4137-B66A-9DBC80CEAA50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,18 @@ Global
 		{BEF6C833-AD66-4418-8FEB-56C64C1F3C57}.Release|x64.Build.0 = Release|x64
 		{BEF6C833-AD66-4418-8FEB-56C64C1F3C57}.Release|x86.ActiveCfg = Release|Win32
 		{BEF6C833-AD66-4418-8FEB-56C64C1F3C57}.Release|x86.Build.0 = Release|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Debug|ARM.ActiveCfg = Debug|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Debug|x64.ActiveCfg = Debug|x64
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Debug|x64.Build.0 = Debug|x64
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Debug|x86.ActiveCfg = Debug|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Debug|x86.Build.0 = Debug|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|Any CPU.ActiveCfg = Release|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|ARM.ActiveCfg = Release|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|x64.ActiveCfg = Release|x64
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|x64.Build.0 = Release|x64
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|x86.ActiveCfg = Release|Win32
+		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
