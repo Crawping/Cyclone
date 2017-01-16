@@ -111,6 +111,17 @@ namespace Cyclone
 
             return map;
         }
+        void SceneLayer3D::Remove(const IRenderable& entity)
+        {
+            if (!Mappings.Contains(&entity)) { return; }
+
+            ResourceMapping& map = Mappings[&entity];
+            Entities.Remove(map.EntityKey);
+            Materials.Remove(map.MaterialKey);
+            Transforms.Remove(map.TransformKey);
+
+            Mappings.Remove(&entity);
+        }
 
 
 

@@ -80,6 +80,9 @@ namespace Cyclone
 
                 virtual ~ISceneLayer() { }
 
+                /** UTILITIES **/
+                using ISceneComponent::Remove;
+
                 virtual void Insert(const string& name, ISceneComponent& component) = 0;
                 virtual ResourceMapping& Register(const IRenderable& entity)        = 0;
                 virtual void Remove(const string& name)                             = 0;

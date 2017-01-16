@@ -51,6 +51,7 @@ namespace Cyclone
                 using SceneComponent3D::Insert;
                 OpenGLAPI void Insert(const string& name, ISceneComponent& stage)      override;
                 OpenGLAPI void Remove(const string& name)                              override;
+                OpenGLAPI void Remove(const IRenderable& entity)                       override;
                 OpenGLAPI void Update()                                                override;
                 OpenGLAPI void Update(const IRenderable& entity)                       override;
 
