@@ -1,4 +1,4 @@
-#include "Geometry/Point2D.h"
+#include "Geometry/Circle2D.h"
 
 
 
@@ -57,8 +57,8 @@ namespace Cyclone
         //}
 
 
-        Point2D::Point2D() : 
-            Path2D(Geometry2D::Point())
+        Circle2D::Circle2D() : 
+            Path2D(Geometry2D::Circle())
         {
 
         }

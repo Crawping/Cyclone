@@ -1,5 +1,4 @@
 #include "NVPR.h"
-#include "Geometry/Point2D.h"
 #include "Geometry/DrawingPath.h"
 
 
@@ -38,13 +37,13 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        DrawingPath& DrawingPath::Append(const ControlPoint2D& point)
+        void DrawingPath::Append(const ControlPoint2D& point)
         {
             _geometry.Append(point);
-            if (point.Coordinates.IsEmpty()) { return *this; }
+            if (point.Coordinates.IsEmpty()) { return; }
 
             Vector2 ptCoords(point.Coordinates(0), point.Coordinates(1));
-            Path2D* pt = new Path2D(Geometry2D::Point());
+            Path2D* pt = new Path2D(Geometry2D::Circle());
 
             pt->
                  Offset(ptCoords)
@@ -57,13 +56,13 @@ namespace Cyclone
 
             Points.Append(pt);
             _needsUpdate = true;
-            return *this;
         }
         void DrawingPath::Clear()
         {
             _geometry.Clear();
             for (auto* p : Points) { delete p; }
             Points.Clear();
+            _needsUpdate = true;
         }
         void DrawingPath::Update() const
         {
@@ -72,6 +71,7 @@ namespace Cyclone
                 UpdateGeometry();
 
             Path2D::Update();
+            _needsUpdate = false;
         }
 
     }

@@ -49,8 +49,8 @@ namespace Cyclone
 
 
                 /** STATIC CONSTRUCTORS **/
+                SVGAPI static Geometry2D Circle();
                 SVGAPI static Geometry2D Line();
-                SVGAPI static Geometry2D Point();
                 SVGAPI static Geometry2D Rectangle();
                 SVGAPI static Geometry2D RoundedRectangle(const Vector2& position = -0.5f, const Vector2& size = 1.0f, float cornerRadius = 0.0f);
                 SVGAPI static Geometry2D Star();

@@ -11,16 +11,16 @@ namespace Cyclone
 {
     namespace SVG
     {
-        class Point2D : public Path2D
+        class Circle2D : public Path2D
         {
             public:
 
                 /** PROPERTIES **/
-                SVGAPI Point2D& Offset(const Vector2& value);
-                SVGAPI Point2D& Size(const Vector2& value);
+                SVGAPI Circle2D& Offset(const Vector2& value);
+                SVGAPI Circle2D& Size(const Vector2& value);
 
 
-                SVGAPI Point2D();
+                SVGAPI Circle2D();
 
         };
     }

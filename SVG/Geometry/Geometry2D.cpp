@@ -91,19 +91,7 @@ namespace Cyclone
 
 
         /** GEOMETRY GENERATING FUNCTIONS **/
-        Geometry2D Geometry2D::Line()
-        {
-            Geometry2D geometry;
-            geometry.ControlPoints =
-            {
-                { PathCommands::Move,   { -0.5f, 0.0f } },
-                { PathCommands::Line,   {  0.5f, 0.0f } },
-                { PathCommands::Close,  { } },
-            };
-
-            return geometry;
-        }
-        Geometry2D Geometry2D::Point()
+        Geometry2D Geometry2D::Circle()
         {
             Geometry2D geometry;
             geometry.ControlPoints =
@@ -111,6 +99,18 @@ namespace Cyclone
                 { PathCommands::Move,   { 0.5f, 0.0f } },
                 { PathCommands::Arc,    { 0.5f, 0.5f, 0.0f, 1.0f, 1.0f, -0.5f, 0.0f } },
                 { PathCommands::Arc,    { 0.5f, 0.5f, 0.0f, 1.0f, 1.0f,  0.5f, 0.0f } },
+                { PathCommands::Close,  { } },
+            };
+
+            return geometry;
+        }
+        Geometry2D Geometry2D::Line()
+        {
+            Geometry2D geometry;
+            geometry.ControlPoints =
+            {
+                { PathCommands::Move,   { -0.5f, 0.0f } },
+                { PathCommands::Line,   {  0.5f, 0.0f } },
                 { PathCommands::Close,  { } },
             };
 

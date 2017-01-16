@@ -37,7 +37,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                SVGAPI DrawingPath& Append(const ControlPoint2D& point);
+                SVGAPI void Append(const ControlPoint2D& point);
                 SVGAPI void Clear();
                 SVGAPI void Update() const override;
 
