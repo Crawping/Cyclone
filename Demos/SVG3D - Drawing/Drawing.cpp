@@ -126,9 +126,13 @@ class Program : public PathRenderer
             {
                 Vector2 pt = CalculatePointerInWorld(-PointerWorldRay(0).Z);
                 Path.Append({ PathCommands::SmoothQuadraticCurve, { pt.X, pt.Y } });
+                PathScene->Update(Path);
             }
             else if (evt.Key == KeyboardKeys::E)
+            {
                 Path.Append({ PathCommands::Close, { } });
+                PathScene->Update(Path);
+            }
             else if (evt.Key == KeyboardKeys::T)
             {
                 IsEnteringText = true;
@@ -157,9 +161,6 @@ class Program : public PathRenderer
         /** RENDERING **/
         void UpdateScene() override
         {
-            RenderScene->Update(Quad);
-            PathScene->Update(Path);
-
             PathRenderer::UpdateScene();
         }
         
