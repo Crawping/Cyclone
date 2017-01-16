@@ -64,6 +64,7 @@ namespace Cyclone
                 Resources[entity2D] : new ComponentData(Parent().Register(entity));
             
             Resources.Insert(entity2D, data);
+            _stage.Insert(data->Map.EntityKey.Index(), *entity2D);
 
             for (auto& c : entity2D->Components())
             {
@@ -79,15 +80,16 @@ namespace Cyclone
             const IRenderable2D* entity2D = Downcast(entity);
             if (!Resources.Contains(entity2D)) { return; }
 
-            //Parent().Remove()
+            Parent().Remove(entity);
+            _stage.Remove(*entity2D);
+
             ComponentData* data = Resources[entity2D];
-            for (auto* c : data->Components)
+            for (const auto* c : data->Components)
                 Remove(*c);
 
             delete Resources[entity2D];
             Resources.Remove(entity2D);
 
-            _stage.Remove(*entity2D);
             _needsUpdate = true;
         }
         void SceneComponent2D::Update()
@@ -99,8 +101,6 @@ namespace Cyclone
             }
 
             if (!_needsUpdate) { return; }
-
-            _stage.ClearEntities();
             for (auto& kvp : Resources)
                 _stage.Insert(kvp.Value->Map.EntityKey.Index(), (const IRenderable2D&) *(kvp.Key));
 
