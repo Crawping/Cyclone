@@ -34,9 +34,9 @@ class _Functions : public testing::Test
 
         NumberClass                                 _c0;
 
-        Function<>                                  _f1;
-        Function<int>                               _f2;
-        Function<int, float, double>                _f3;
+        Procedure<>                                 _f1;
+        Procedure<int>                              _f2;
+        Procedure<int, float, double>               _f3;
 
         Method<NumberClass>                         _m1;
         Method<NumberClass, int>                    _m2;
@@ -63,7 +63,7 @@ TEST_F(_Functions, EqualityOperator)
     ASSERT_TRUE(_f1 == _f1);
     ASSERT_TRUE(_m1 == _m1);
 
-    Function<int> fcn = Function<int>(NumberFunction);
+    Procedure<int> fcn = Procedure<int>(NumberFunction);
     ASSERT_EQ(_f2, fcn);
 
     Method<NumberClass, int> mtd = Method<NumberClass, int>(&_c0, &NumberClass::NumberMethod);

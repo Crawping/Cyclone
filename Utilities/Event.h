@@ -50,9 +50,9 @@ namespace Cyclone
                 }
                 /// <summary> Subscribes a new callback function to be executed when this event is triggered. </summary>
                 /// <param name="callback"></param>                
-                void Register(Function<T...> callback)
+                void Register(Procedure<T...> callback)
                 {
-                    Subscriptions.Append(new Function<T...>(callback));
+                    Subscriptions.Append(new Procedure<T...>(callback));
                 }
                 
                 template<typename S>
