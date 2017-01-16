@@ -88,7 +88,7 @@
       </PrecompiledHeader>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CoreGL;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;.\;.\Buffers;.\Interfaces;.\Pipelines;.\Textures;..\..\libjpeg\jpeg-9b;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\CoreGL;..\Utilities;..\..\libjpeg\jpeg-9b;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>

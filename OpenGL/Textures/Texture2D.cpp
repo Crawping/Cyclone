@@ -1,9 +1,9 @@
-#include "Bitmap.h"
-#include "Border.h"
 #include "Console.h"
-#include "Texture2D.h"
 #include "Utilities.h"
-#include "Vector3.h"
+#include "Imaging/Bitmap.h"
+#include "Math/Vector3.h"
+#include "Spatial/Border.h"
+#include "Textures/Texture2D.h"
 
 #include <sstream>
 #include <jpeglib.h>
