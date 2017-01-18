@@ -19,6 +19,8 @@ namespace Cyclone
         }
 
 
+
+        /** UTILITIES **/
         void VirtualMachine::Execute(Vector<Instructions>& commands)
         {
             for (auto cmd : commands)
@@ -31,8 +33,10 @@ namespace Cyclone
 
                     case Instructions::Call:
 
+                        break;
                     case Instructions::Compare:
 
+                        break;
                     case Instructions::Divide:
                         Push( Pop() / Pop() );
                         break;
@@ -41,15 +45,19 @@ namespace Cyclone
                         break;
                     case Instructions::Insert:
 
+                        break;
                     case Instructions::Jump:
 
+                        break;
                     case Instructions::Move:
                         
+                        break;
                     case Instructions::Multiply:
                         Push( Pop() * Pop() );
                         break;
                     case Instructions::Remove:
 
+                        break;
                     case Instructions::Set:
                         Set.Invoke( Pop(), Pop() );
                         break;
@@ -57,7 +65,9 @@ namespace Cyclone
                         Push( Pop() - Pop() );
                         break;
                     case Instructions::Swap:
-
+                        Literal v1 = Pop(), v2 = Pop();
+                        Push(v1); Push(v2);
+                        break;
                     case Instructions::None:
                     default:
                         break;
@@ -68,13 +78,13 @@ namespace Cyclone
 
         void VirtualMachine::Push(Literal parameter)
         {
-            Parameters.Prepend(parameter);
+            Workspace.Prepend(parameter);
         }
         Literal VirtualMachine::Pop()
         {
-            Literal parameter(Parameters(0));
-            Parameters.Remove(0);
-            return parameter;
+            Literal value(Workspace(0));
+            Workspace.Remove(0);
+            return value;
         }
 
     }

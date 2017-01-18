@@ -11,12 +11,21 @@
     <ClInclude Include="Messaging\VirtualMachine.h">
       <Filter>Messaging</Filter>
     </ClInclude>
+    <ClInclude Include="Messaging\Literal.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Messaging\Instructions.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Messaging\Message.cpp">
       <Filter>Messaging</Filter>
     </ClCompile>
     <ClCompile Include="Messaging\VirtualMachine.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Messaging\Literal.cpp">
       <Filter>Messaging</Filter>
     </ClCompile>
   </ItemGroup>

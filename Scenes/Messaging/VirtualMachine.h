@@ -5,7 +5,8 @@
 #pragma once
 #include "Event.h"
 #include "Collections/ListVector.h"
-#include "Messaging/Message.h"
+#include "Messaging/Literal.h"
+#include "Scripting/VirtualTable.h"
 
 
 
@@ -23,6 +24,11 @@ namespace Cyclone
 
 
 
+                /** PROPERTIES **/
+                const VirtualTable& Data() const { return _data; }
+
+
+
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 SceneAPI VirtualMachine();
                 SceneAPI ~VirtualMachine();
@@ -30,13 +36,15 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                SceneAPI void Insert(Instructions command, const Vector<LiteralTypes>& parameters);
+                void Insert(const Vector<Literal>& values)  { Workspace.Prepend(values); }
+                void Clear()                                { Workspace.Clear(); }
                 SceneAPI void Execute(Vector<Instructions>& commands);
 
             private:
 
-                ListVector<Literal> Parameters;
+                ListVector<Literal> Workspace;
 
+                VirtualTable _data;
 
                 void Push(Literal parameter);
                 Literal Pop();
