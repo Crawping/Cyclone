@@ -13,19 +13,26 @@ namespace Cyclone
     {
 
         /** ALIASES **/
-        /// <summary> An alias that represents a general parameterized function pointer with no return argument. </summary>
+        /// <summary> An alias that represents a general parameterized function pointer with one return argument. </summary>
+        /// <typeparam name="T"> The function's output argument class. </typeparam>
+        /// <typeparam name="U"> A listing of the function's input argument classes. </typeparam>
         template<typename T, typename ... U>
         using FunctionPointer = T(*)(U ... arguments);
 
         /// <summary> An alias that represents a general parameterized class method pointer with no return argument. </summary>
+        /// <typeparam name="T"> The class to which the method belongs. </typeparam>
+        /// <typeparam name="U"> A listing of the method's input argument classes. </typeparam>
         template<typename T, typename ... U>
         using MethodPointer = void (T::*)(U ... arguments);
 
+        /// <summary> An alias that represents a general parameterized procedure pointer with no output arguments. </summary>
+        /// <typeparam name="T"> A listing of the procedure's input argument classes. </typeparam>
         template<typename ... T>
         using ProcedurePointer = void(*)(T ... arguments);
 
 
 
+        /** FUNCTIONS **/
         /// <summary> An interface that represents a parameterized callback procedure. </summary>
         template<typename ... T>
         struct ICallback
@@ -38,15 +45,18 @@ namespace Cyclone
             virtual bool operator !=(const ICallback<T...>& other)  const { return !(operator ==(other)); }
         };
 
+        /// <summary> A structure that represents a pointer to an ordinary function. </summary>
         template<typename T, typename ... U>
         struct Function
         {
             private:
-
+                /// <summary> A pointer to the function that can be invoked through this structure. </summary>
                 FunctionPointer<T, U...>    _function;
 
             public:
-                
+
+                /// <summary> Constructs a new function object that refers to a specific function pointer. </summary>
+                /// <param name="function"> The specific function to be stored. </param>
                 Function(FunctionPointer<T, U...> function) : 
                     _function(function)
                 {
@@ -56,7 +66,7 @@ namespace Cyclone
                 T Invoke(U ... arguments)   const { return _function(arguments...); }
         };
 
-        /// <summary> A structure representing a pointer to an object method. </summary>
+        /// <summary> A structure that represents a pointer to a class method. </summary>
         template<typename T, typename ... U>
         struct Method : public ICallback<U...>
         {
@@ -68,6 +78,9 @@ namespace Cyclone
 
             public:
 
+                /// <summary> Constructs a new method object referring to a specific class instance function. </summary>
+                /// <param name="object"> An instance of the class on which the method will be called. </param>
+                /// <param name="method"> A specific class method to be called on the object. </param>
                 Method(T* object, MethodPointer<T, U...> method) :
                     _object(object),
                     _method(method)
@@ -84,7 +97,7 @@ namespace Cyclone
                 }
         };
 
-        /// <summary> A structure representing an ordinary procedure pointer. </summary>
+        /// <summary> A structure that represents a pointer to an ordinary procedure. </summary>
         template<typename ... T>
         struct Procedure : public ICallback<T...>
         {
@@ -95,7 +108,7 @@ namespace Cyclone
 
             public:
 
-                /// <summary> Constructs a new function object referring to a specific function pointer. </summary>
+                /// <summary> Constructs a new procedure object referring to a specific function pointer. </summary>
                 /// <param name="fcn"></param>
                 Procedure(ProcedurePointer<T...> fcn) : _procedure(fcn) { }
 
