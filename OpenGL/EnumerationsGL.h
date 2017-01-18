@@ -26,9 +26,12 @@ struct AccessIntents : public Enumerator
 {
     enum Intents
     {
-        Read                        = GL_READ_ONLY,
-        ReadWrite                   = GL_READ_WRITE,
-        Write                       = GL_WRITE_ONLY,
+        /// <remarks> Equivalent to GL_READ_ONLY. </remarks>
+        Read                        = 0x88B8,
+        /// <remarks> Equivalent to GL_READ_WRITE. </remarks>
+        ReadWrite                   = 0x88BA,
+        /// <remarks> Equivalent to GL_WRITE_ONLY. </remarks>
+        Write                       = 0x88B9,
     };
 
 	constexpr AccessIntents(enum Intents i = Read) : Enumerator((int)i) { }
@@ -50,18 +53,26 @@ struct BufferAccessIntents : public Flag<BufferAccessIntents>
     enum Intents
     {
         /// <summary> Indicates that buffer storage should be allocated on the application side rather than on the GPU. </summary>
-        Client                      = GL_CLIENT_STORAGE_BIT,
-        Coherent                    = GL_MAP_COHERENT_BIT,
+        /// <remarks> Equivalent to GL_CLIENT_STORAGE_BIT. </remarks>
+        Client                      = 0x0200,
+        /// <remarks> Equivalent to GL_MAP_COHERENT_BIT. </remarks>
+        Coherent                    = 0x0080,
         /// <summary> Indicates that the buffer will frequently undergo data updates. </summary>
-        Dynamic                     = GL_DYNAMIC_STORAGE_BIT,
-        Invalidate                  = GL_MAP_INVALIDATE_BUFFER_BIT,
-        InvalidateRange             = GL_MAP_INVALIDATE_RANGE_BIT,
+        /// <remarks> Equivalent to GL_DYNAMIC_STORAGE_BIT. </remarks>
+        Dynamic                     = 0x0100,
+        /// <remarks> Equivalent to GL_MAP_INVALIDATE_BUFFER_BIT. </remarks>
+        Invalidate                  = 0x0008,
+        /// <remarks> Equivalent to GL_MAP_INVALIDATE_RANGE_BIT. </remarks>
+        InvalidateRange             = 0x0004,
         /// <summary> Indicates that the buffer will remain mapped over a long period of time. </summary>
-        Persistent                  = GL_MAP_PERSISTENT_BIT,
+        /// <remarks> Equivalent to GL_MAP_PERSISTENT_BIT. </remarks>
+        Persistent                  = 0x0040,
         /// <summary> Indicates that data reading operations will be performed on the buffer. </summary>
-        Read                        = GL_MAP_READ_BIT,
+        /// <remarks> Equivalent to GL_MAP_READ_BIT. </remarks>
+        Read                        = 0x0001,
         /// <summary> Indicates that data writing operations will be performed on the buffer. </summary>
-        Write                       = GL_MAP_WRITE_BIT,
+        /// <remarks> Equivalent to GL_MAP_WRITE_BIT. </remarks>
+        Write                       = 0x0002,
     };
 
     constexpr BufferAccessIntents(int i = Read) : Flag<BufferAccessIntents>(i) { }
@@ -78,26 +89,40 @@ struct BufferTypes : public Enumerator
     enum Buffers
     {
         /// <summary> A buffer that is meant to hold vertex attributes. </summary>
-        Array                       = GL_ARRAY_BUFFER,
-        AtomicCounter               = GL_ATOMIC_COUNTER_BUFFER,
-        CopyRead                    = GL_COPY_READ_BUFFER,
-        CopyWrite                   = GL_COPY_WRITE_BUFFER,
+        /// <remarks> Equivalent to GL_ARRAY_BUFFER. </remarks>
+        Array                       = 0x8892,
+        /// <remarks> Equivalent to GL_ATOMIC_COUNTER_BUFFER. </remarks>
+        AtomicCounter               = 0x92C0,
+        /// <remarks> Equivalent to GL_COPY_READ_BUFFER. </remarks>
+        CopyRead                    = 0x8F36,
+        /// <remarks> Equivalent to GL_COPY_WRITE_BUFFER. </remarks>
+        CopyWrite                   = 0x8F37,
         /// <summary> A buffer that holds the commands and parameters used for indirect GPU computing. </summary>
-        DispatchIndirect            = GL_DISPATCH_INDIRECT_BUFFER,
+        /// <remarks> Equivalent to GL_DISPATCH_INDIRECT_BUFFER. </remarks>
+        DispatchIndirect            = 0x90EE,
         /// <summary> A buffer that holds the commands and parameters used for indirect rendering. </summary>
-        DrawIndirect                = GL_DRAW_INDIRECT_BUFFER,
+        /// <remarks> Equivalent to GL_DRAW_INDIRECT_BUFFER. </remarks>
+        DrawIndirect                = 0x8F3F,
         /// <summary> A buffer that holds an ordered list of indices that guide vertex rendering. </summary>
-        ElementArray                = GL_ELEMENT_ARRAY_BUFFER,
-        PixelPack                   = GL_PIXEL_PACK_BUFFER,
-        PixelUnpack                 = GL_PIXEL_UNPACK_BUFFER,
-        Query                       = GL_QUERY_BUFFER,
+        /// <remarks> Equivalent to GL_ELEMENT_ARRAY_BUFFER. </remarks>
+        ElementArray                = 0x8893,
+        /// <remarks> Equivalent to GL_PIXEL_PACK_BUFFER. </remarks>
+        PixelPack                   = 0x88EB,
+        /// <remarks> Equivalent to GL_PIXEL_UNPACK_BUFFER. </remarks>
+        PixelUnpack                 = 0x88EC,
+        /// <remarks> Equivalent to GL_QUERY_BUFFER. </remarks>
+        Query                       = 0x9192,
         /// <summary> A buffer containing data that is meant for reading and writing operations within shader programs. </summary>
-        ShaderStorage               = GL_SHADER_STORAGE_BUFFER,
+        /// <remarks> Equivalent to GL_SHADER_STORAGE_BUFFER. </remarks>
+        ShaderStorage               = 0x90D2,
         /// <summary> A buffer that is meant to hold texture data. </summary>
-        Texture                     = GL_TEXTURE_BUFFER,
-        TransformFeedback           = GL_TRANSFORM_FEEDBACK_BUFFER,
+        /// <remarks> Equivalent to GL_TEXTURE_BUFFER. </remarks>
+        Texture                     = 0x8C2A,
+        /// <remarks> Equivalent to GL_TRANSFORM_FEEDBACK_BUFFER. </remarks>
+        TransformFeedback           = 0x8C8E,
         /// <summary> A buffer that holds uniform variables for use in shader programs. </summary>
-        Uniform                     = GL_UNIFORM_BUFFER,
+        /// <remarks> Equivalent to GL_UNIFORM_BUFFER. </remarks>
+        Uniform                     = 0x8A11,
     };
 
     constexpr BufferTypes(enum Buffers b = Uniform) : Enumerator((int)b) { }
@@ -117,11 +142,14 @@ struct CullingModes : public Enumerator
         /// <summary> Prevents the culling of the front and back faces of any geometry. </summary>
         None                        = 0,
         /// <summary> Prevents the rendering of the back face of any geometry. </summary>
-        Back                        = GL_BACK,
+        /// <remarks> Equivalent to GL_BACK. </remarks>
+        Back                        = 0x0405,
         /// <summary> Prevents the rendering of the front face of any geometry. </summary>
-        Front                       = GL_FRONT,
+        /// <remarks> Equivalent to GL_FRONT. </remarks>
+        Front                       = 0x0404,
         /// <summary> Prevents the rendering of the front and back faces of any geometry. </summary>
-        FrontAndBack                = GL_FRONT_AND_BACK,
+        /// <remarks> Equivalent to GL_FRONT_AND_BACK. </remarks>
+        FrontAndBack                = 0x0408,
     };
 
     constexpr CullingModes(enum Modes m = None) : Enumerator((int)m) { }
@@ -133,27 +161,40 @@ struct NumericFormats : public Enumerator
     enum Formats
     {
         /// <summary> An 8-bit signed byte format. </summary>
-        Byte                        = GL_BYTE,
+        /// <remarks> Equivalent to GL_BYTE. </remarks>
+        Byte                        = 0x1400,
         /// <summary> A 64-bit double-precision floating point format. </summary>
-        Double                      = GL_DOUBLE,
-        Fixed                       = GL_FIXED,
+        /// <remarks> Equivalent to GL_DOUBLE. </remarks>
+        Double                      = 0x140A,
+        /// <remarks> Equivalent to GL_FIXED. </remarks>
+        Fixed                       = 0x140C,
         /// <summary> A 32-bit single-precision floating point format. </summary>
-        Float                       = GL_FLOAT,
+        /// <remarks> Equivalent to GL_FLOAT. </remarks>
+        Float                       = 0x1406,
         /// <summary> A 32-bit signed integer format. </summary>
-        Int                         = GL_INT,
-        PackedInt                   = GL_INT_2_10_10_10_REV,
-        PackedFloat                 = GL_UNSIGNED_INT_10F_11F_11F_REV,
-        PackedUInt                  = GL_UNSIGNED_INT_2_10_10_10_REV,
+        /// <remarks> Equivalent to GL_INT. </remarks>
+        Int                         = 0x1404,
+        /// <remarks> Equivalent to GL_INT_2_10_10_10_REV. </remarks>
+        PackedInt                   = 0x8D9F,
+        /// <remarks> Equivalent to GL_UNSIGNED_INT_10F_11F_11F_REV. </remarks>
+        PackedFloat                 = 0x8C3B,
+        /// <remarks> Equivalent to GL_UNSIGNED_INT_2_10_10_10_REV. </remarks>
+        PackedUInt                  = 0x8368,
         /// <summary> A 16-bit signed integer format. </summary>
-        Short                       = GL_SHORT,
+        /// <remarks> Equivalent to GL_SHORT. </remarks>
+        Short                       = 0x1402,
         /// <summary> A 16-bit half-precision floating point format. </summary>
-        ShortFloat                  = GL_HALF_FLOAT,
+        /// <remarks> Equivalent to GL_HALF_FLOAT. </remarks>
+        ShortFloat                  = 0x140B,
         /// <summary> An 8-bit unsigned byte format. </summary>
-        UByte                       = GL_UNSIGNED_BYTE,
+        /// <remarks> Equivalent to GL_UNSIGNED_BYTE. </remarks>
+        UByte                       = 0x1401,
         /// <summary> A 32-bit unsigned integer format. </summary>
-        UInt                        = GL_UNSIGNED_INT,
+        /// <remarks> Equivalent to GL_UNSIGNED_INT. </remarks>
+        UInt                        = 0x1405,
         /// <summary> A 16-bit unsigned integer format. </summary>
-        UShort                      = GL_UNSIGNED_SHORT,
+        /// <remarks> Equivalent to GL_UNSIGNED_SHORT. </remarks>
+        UShort                      = 0x1403,
     };
 
     constexpr NumericFormats(enum Formats f = UByte) : Enumerator((int)f) { }
@@ -240,56 +281,81 @@ struct TextureFormats : public Enumerator
     enum Formats
     {
         /// <summary> An 8-bit format for color buffers and textures containing one byte channel. </summary>
-        Byte1                       = GL_R8,
+        /// <remarks> Equivalent to GL_R8. </remarks>
+        Byte1                       = 0x8229,
         /// <summary> A 16-bit RG format for color buffers and textures containing two byte channels. </summary>
-        Byte2                       = GL_RG8,
+        /// <remarks> Equivalent to GL_RG8. </remarks>
+        Byte2                       = 0x822B,
         /// <summary> A 24-bit RGB format for color buffers and textures containing three byte channels. </summary>
-        Byte3                       = GL_RGB8,
+        /// <remarks> Equivalent to GL_RGB8. </remarks>
+        Byte3                       = 0x8051,
         /// <summary> A 32-bit RGBA format for color buffers and textures containing four byte channels. </summary>
-        Byte4                       = GL_RGBA8,
+        /// <remarks> Equivalent to GL_RGBA8. </remarks>
+        Byte4                       = 0x8058,
 
         /// <summary> A 32-bit format for depth buffers containing single-precision floating point values. </summary>
-        DepthFloat                  = GL_DEPTH_COMPONENT32F,
+        /// <remarks> Equivalent to GL_DEPTH_COMPONENT32F. </remarks>
+        DepthFloat                  = 0x8CAC,
         /// <summary> A 32-bit format for depth buffers containing integer values. </summary>
-        DepthInt                    = GL_DEPTH_COMPONENT32,
+        /// <remarks> Equivalent to GL_DEPTH_COMPONENT32. </remarks>
+        DepthInt                    = 0x81A7,
         /// <summary> A 16-bit format for depth buffers containing half-precision floating point values. </summary>
-        DepthShort                  = GL_DEPTH_COMPONENT16,
+        /// <remarks> Equivalent to GL_DEPTH_COMPONENT16. </remarks>
+        DepthShort                  = 0x81A5,
         /// <summary> A 32-bit format for combined depth and stencil buffers (24-bit int depth, 8-bit int stencil). </summary>
-        DepthStencil                = GL_DEPTH24_STENCIL8,
+        /// <remarks> Equivalent to GL_DEPTH24_STENCIL8. </remarks>
+        DepthStencil                = 0x88F0,
         /// <summary> A 40-bit format for combined depth and stencil buffers (32-bit float depth, 8-bit int stencil). </summary>
-        DepthStencilFloat           = GL_DEPTH32F_STENCIL8,
+        /// <remarks> Equivalent to GL_DEPTH32F_STENCIL8. </remarks>
+        DepthStencilFloat           = 0x8CAD,
 
         /// <summary> A 32-bit format for color buffers and textures containing one single-precision floating point channel. </summary>
-        Float1                      = GL_R32F,
+        /// <remarks> Equivalent to GL_R32F. </remarks>
+        Float1                      = 0x822E,
         /// <summary> A 64-bit RG format containing two single-precision floating point channels. </summary>
-        Float2                      = GL_RG32F,
+        /// <remarks> Equivalent to GL_RG32F. </remarks>
+        Float2                      = 0x8230,
         /// <summary> A 96-bit RGB format containing three single-precision floating point channels. </summary>
-        Float3                      = GL_RGB32F,
+        /// <remarks> Equivalent to GL_RGB32F. </remarks>
+        Float3                      = 0x8815,
         /// <summary> A 128-bit RGBA format containing four single-precision floating point channels. </summary>
-        Float4                      = GL_RGBA32F,
+        /// <remarks> Equivalent to GL_RGBA32F. </remarks>
+        Float4                      = 0x8814,
 
         /// <summary> A 32-bit format for color buffers and textures containing one signed integer channel. </summary>
-        Int1                        = GL_R32I,
+        /// <remarks> Equivalent to GL_R32I. </remarks>
+        Int1                        = 0x8235,
         /// <summary> A 64-bit RG format for color buffers and textures containing two signed integer channels. </summary>
-        Int2                        = GL_RG32I,
+        /// <remarks> Equivalent to GL_RG32I. </remarks>
+        Int2                        = 0x823B,
         /// <summary> A 96-bit RGB format for color buffers and textures containing three signed integer channels. </summary>
-        Int3                        = GL_RGB32I,
+        /// <remarks> Equivalent to GL_RGB32I. </remarks>
+        Int3                        = 0x8D83,
         /// <summary> A 128-bit RGBA format for color buffers and textures containing four signed integer channels. </summary>
-        Int4                        = GL_RGBA32I,
+        /// <remarks> Equivalent to GL_RGBA32I. </remarks>
+        Int4                        = 0x8D82,
 
-        Short1                      = GL_R16,
-        Short2                      = GL_RG16,
-        Short3                      = GL_RGB16,
-        Short4                      = GL_RGBA16,
+        /// <remarks> Equivalent to GL_R16. </remarks>
+        Short1                      = 0x822A,
+        /// <remarks> Equivalent to GL_RG16. </remarks>
+        Short2                      = 0x822C,
+        /// <remarks> Equivalent to GL_RGB16. </remarks>
+        Short3                      = 0x8054,
+        /// <remarks> Equivalent to GL_RGBA16. </remarks>
+        Short4                      = 0x805B,
 
         /// <summary> A 32-bit format for color buffers and textures containing one unsigned integer channel. </summary>
-        UInt1                       = GL_R32UI,
+        /// <remarks> Equivalent to GL_R32UI. </remarks>
+        UInt1                       = 0x8236,
         /// <summary> A 64-bit RG format for color buffers and textures containing two unsigned integer channels. </summary>
-        UInt2                       = GL_RG32UI,
+        /// <remarks> Equivalent to GL_RG32UI. </remarks>
+        UInt2                       = 0x823C,
         /// <summary> A 96-bit RGB format for color buffers and textures containing three unsigned integer channels. </summary>
-        UInt3                       = GL_RGB32UI,
+        /// <remarks> Equivalent to GL_RGB32UI. </remarks>
+        UInt3                       = 0x8D71,
         /// <summary> A 128-bit RGBA format for color buffers and textures containing four unsigned integer channels. </summary>
-        UInt4                       = GL_RGBA32UI,
+        /// <remarks> Equivalent to GL_RGBA32UI. </remarks>
+        UInt4                       = 0x8D70,
     };
 
     constexpr TextureFormats(enum Formats f = Byte4) : Enumerator((int)f) { }
@@ -350,15 +416,19 @@ struct TextureTargets : public Enumerator
     enum Targets
     {
         /// <summary> A one-dimensional texture storage format. </summary>
-        Texture1D                   = GL_TEXTURE_1D,
+        /// <remarks> Equivalent to GL_TEXTURE_1D. </remarks>
+        Texture1D                   = 0x0DE0,
         /// <summary> A two-dimensional texture storage format. </summary>
-        Texture2D                   = GL_TEXTURE_2D,
-
-        TextureArray2D              = GL_TEXTURE_2D_ARRAY,
+        /// <remarks> Equivalent to GL_TEXTURE_2D. </remarks>
+        Texture2D                   = 0x0DE1,
+        /// <remarks> Equivalent to GL_TEXTURE_2D_ARRAY. </remarks>
+        TextureArray2D              = 0x8C1A,
         /// <summary> A multisampled two-dimensional texture storage format. </summary>
-        Texture2DMS                 = GL_TEXTURE_2D_MULTISAMPLE,
+        /// <remarks> Equivalent to GL_TEXTURE_2D_MULTISAMPLE. </remarks>
+        Texture2DMS                 = 0x9100,
         /// <summary> A three-dimensional texture storage format. </summary>
-        Texture3D                   = GL_TEXTURE_3D,
+        /// <remarks> Equivalent to GL_TEXTURE_3D. </remarks>
+        Texture3D                   = 0x806F,
     };
 
     constexpr TextureTargets(enum Targets t = Texture2D) : Enumerator((int)t) { }
@@ -376,9 +446,14 @@ struct VertexTopologies : public Enumerator
     enum Topologies
     {
         /// <summary> Instructs the rendering pipeline to draw lines using an array of vertices. </summary>
-        Lines                       = GL_LINES,
-        LineLoop                    = GL_LINE_LOOP,
-        LineStrip                   = GL_LINE_STRIP,
+        /// <remarks> Equivalent to GL_LINES. </remarks>
+        Lines                       = 0x0001,
+        /// <summary> </summary>
+        /// <remarks> Equivalent to GL_LINE_LOOP. </remarks>
+        LineLoop                    = 0x0002,
+        /// <summary> </summary>
+        /// <remarks> Equivalent to GL_LINE_STRIP. </remarks>
+        LineStrip                   = 0x0003,
         /// <summary> Instructs the rendering pipeline to draw scalable vector graphics using an array of control points. </summary>
         /// <remarks>
         ///     This is a special enumerator inserted to support the rendering of resolution-independent paths, which is the process used 
@@ -387,13 +462,18 @@ struct VertexTopologies : public Enumerator
         /// </remarks>
         Path                        = -1,
         /// <summary> Instructs the rendering pipeline to draw individual points using an array of vertices. </summary>
-        Points                      = GL_POINTS,
-        Quads                       = GL_QUADS,
+        /// <remarks> Equivalent to GL_POINTS. </remarks>
+        Points                      = 0x0000,
+        /// <remarks> Equivalent to GL_QUADS. </remarks>
+        Quads                       = 0x0007,
         /// <summary> Instructs the rendering pipeline to draw triangles using an array of vertices. </summary>
-        Triangles                   = GL_TRIANGLES,
-        TriangleFan                 = GL_TRIANGLE_FAN,
+        /// /// <remarks> Equivalent to GL_TRIANGLES. </remarks>
+        Triangles                   = 0x0004,
+        /// <remarks> Equivalent to GL_TRIANGLE_FAN. </remarks>
+        TriangleFan                 = 0x0006,
         /// <summary> Instructs the rendering pipeline to draw a series of contiguous triangles using an array of vertices. </summary>
-        TriangleStrip               = GL_TRIANGLE_STRIP,
+        /// <remarks> Equivalent to GL_TRIANGLE_STRIP. </remarks>
+        TriangleStrip               = 0x0005,
     };
 
     constexpr VertexTopologies(enum Topologies t = Triangles) : Enumerator((int)t) { }
@@ -405,15 +485,19 @@ struct WrapModes : public Enumerator
     enum Modes
     {
         /// <summary> Constrains out-of-bounds sampling coordinates to the border of a texture. </summary>
-        ClampToBorder               = GL_CLAMP_TO_BORDER,
+        /// <remarks> Equivalent to GL_CLAMP_TO_BORDER. </remarks>
+        ClampToBorder               = 0x812D,
         /// <summary> Constrains out-of-bounds sampling coordinates to the edge of a texture. </summary>
-        ClampToEdge                 = GL_CLAMP_TO_EDGE,
-
-        MirrorClampToEdge           = GL_MIRROR_CLAMP_TO_EDGE,
+        /// <remarks> Equivalent to GL_CLAMP_TO_EDGE. </remarks>
+        ClampToEdge                 = 0x812F,
+        /// <remarks> Equivalent to GL_MIRROR_CLAMP_TO_EDGE. </remarks>
+        MirrorClampToEdge           = 0x8743,
         /// <summary> Wraps out-of-bounds sampling coordinates back across the texture. </summary>
-        MirrorRepeat                = GL_MIRRORED_REPEAT,
+        /// <remarks> Equivalent to GL_MIRRORED_REPEAT. </remarks>
+        MirrorRepeat                = 0x8370,
         /// <summary> Wraps out-of-bounds sampling coordinates to the opposite side of the texture. </summary>
-        Repeat                      = GL_REPEAT,
+        /// <remarks> Equivalent to GL_REPEAT. </remarks>
+        Repeat                      = 0x2901,
     };
 
     constexpr WrapModes(enum Modes m = Repeat) : Enumerator((int)m) { }
