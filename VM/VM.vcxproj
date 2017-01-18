@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4042B617-8E10-4137-B66A-9DBC80CEAA50}</ProjectGuid>
-    <RootNamespace>Scenes</RootNamespace>
+    <ProjectGuid>{4275937D-182C-4385-90F1-F96DFA513A09}</ProjectGuid>
+    <RootNamespace>VM</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,11 +74,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\OpenGL;..\Utilities</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Utilities;</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -114,20 +111,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Interfaces\ISceneMessage.h" />
-    <ClInclude Include="Messaging\Message.h" />
-    <ClInclude Include="SceneAPI.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Messaging\Message.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OpenGL\OpenGL.vcxproj">
-      <Project>{70fe2f0a-89ad-4b39-bd0b-1e76856b1d20}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Storage\Literal.cpp" />
+    <ClCompile Include="Storage\VirtualProperty.cpp" />
+    <ClCompile Include="VirtualMachine.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Execution\Instructions.h" />
+    <ClInclude Include="Storage\Literal.h" />
+    <ClInclude Include="Storage\VirtualProperty.h" />
+    <ClInclude Include="Storage\VirtualTable.h" />
+    <ClInclude Include="VirtualMachine.h" />
+    <ClInclude Include="VMAPI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -36,6 +36,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UserInterface", "UserInterf
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scenes", "Scenes\Scenes.vcxproj", "{4042B617-8E10-4137-B66A-9DBC80CEAA50}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VM", "VM\VM.vcxproj", "{4275937D-182C-4385-90F1-F96DFA513A09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,18 @@ Global
 		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|x64.Build.0 = Release|x64
 		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|x86.ActiveCfg = Release|Win32
 		{4042B617-8E10-4137-B66A-9DBC80CEAA50}.Release|x86.Build.0 = Release|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Debug|ARM.ActiveCfg = Debug|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Debug|x64.ActiveCfg = Debug|x64
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Debug|x64.Build.0 = Debug|x64
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Debug|x86.ActiveCfg = Debug|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Debug|x86.Build.0 = Debug|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Release|Any CPU.ActiveCfg = Release|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Release|ARM.ActiveCfg = Release|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Release|x64.ActiveCfg = Release|x64
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Release|x64.Build.0 = Release|x64
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Release|x86.ActiveCfg = Release|Win32
+		{4275937D-182C-4385-90F1-F96DFA513A09}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

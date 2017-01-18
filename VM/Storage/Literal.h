@@ -3,15 +3,15 @@
  */
 
 #pragma once
-#include "SceneAPI.h"
-#include "Messaging/Instructions.h"
+#include "VMAPI.h"
+#include "Execution/Instructions.h"
 
 
 
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-    namespace Scenes
+    namespace VM
     {
 
         struct LiteralTypes : public Enumerator
@@ -22,9 +22,9 @@ namespace Cyclone
                 Boolean     = 1,
                 Double      = 4,
                 Float       = 3,
-                Function    ,
+                Function    = 7,
                 Integer     = 2,
-                Object      ,
+                Object      = 6,
                 String      = 5,
             };
 
@@ -38,7 +38,7 @@ namespace Cyclone
                 return x >= y ? x : y;
             }
 
-            SceneAPI constexpr string ToString() const;
+            VMAPI string ToString() const;
         };
 
 
@@ -63,12 +63,12 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS **/
-                SceneAPI constexpr Literal(LiteralTypes type = LiteralTypes::Nothing, double value = 0.0);
-                SceneAPI constexpr Literal(bool value);
-                SceneAPI constexpr Literal(double value);
-                SceneAPI constexpr Literal(float value);
-                SceneAPI constexpr Literal(int value);
-                SceneAPI constexpr Literal(const string& value);
+                VMAPI constexpr Literal(LiteralTypes type = LiteralTypes::Nothing, double value = 0.0);
+                VMAPI constexpr Literal(bool value);
+                VMAPI constexpr Literal(double value);
+                VMAPI constexpr Literal(float value);
+                VMAPI constexpr Literal(int value);
+                VMAPI constexpr Literal(const string& value);
 
 
 
@@ -87,26 +87,11 @@ namespace Cyclone
                 constexpr Literal operator -(const Literal& other)  const { return Calculate(Instructions::Subtract, other); }
                 constexpr Literal operator *(const Literal& other)  const { return Calculate(Instructions::Multiply, other); }
 
-                SceneAPI Literal& operator =(Literal other);
-
+                VMAPI Literal& operator =(Literal other);
 
             private:
 
-                constexpr Literal Calculate(Instructions operation, const Literal& other) const
-                {
-                    return 
-                        ( IsString() || IsNull() ) ? 
-                            Literal() : 
-                        ( operation == Instructions::Add ) ? 
-                            Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value + other.Value) : 
-                        ( operation == Instructions::Divide ) ?
-                            Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value / other.Value) :
-                        ( operation == Instructions::Multiply ) ?
-                            Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value * other.Value) :
-                        ( operation == Instructions::Subtract ) ?
-                            Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value - other.Value) : 
-                            Literal();
-                }
+                constexpr Literal Calculate(Instructions operation, const Literal& other) const;
 
         };
     }

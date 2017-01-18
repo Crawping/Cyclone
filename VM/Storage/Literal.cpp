@@ -1,14 +1,14 @@
-#include "Messaging/Literal.h"
+#include "Storage/Literal.h"
 
 
 
 namespace Cyclone
 {
-    namespace Scenes
+    namespace VM
     {
 
         /** LITERAL TYPE UTILITIES **/
-        constexpr string LiteralTypes::ToString() const
+        string LiteralTypes::ToString() const
         {
             return
                 (Value == Boolean)  ? "Boolean" :
@@ -54,6 +54,23 @@ namespace Cyclone
         }
 
 
+        constexpr Literal Literal::Calculate(Instructions operation, const Literal& other) const
+        {
+            return 
+                ( IsString() || IsNull() ) ? 
+                    Literal() : 
+                ( operation == Instructions::Add ) ? 
+                    Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value + other.Value) : 
+                ( operation == Instructions::Divide ) ?
+                    Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value / other.Value) :
+                ( operation == Instructions::Multiply ) ?
+                    Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value * other.Value) :
+                ( operation == Instructions::Subtract ) ?
+                    Literal(LiteralTypes::MaxPrecision(Type, other.Type), Value - other.Value) : 
+                    Literal();
+        }
+
+        /** UTILITIES **/
 
         /** OPERATORS **/
         Literal& Literal::operator =(Literal other)

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{22ece7d0-0c68-4d9a-b39f-952666944f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Execution">
+      <UniqueIdentifier>{57c7b207-204c-4edd-8546-648bb6ce8f4e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="VirtualMachine.cpp" />
+    <ClCompile Include="Storage\Literal.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\VirtualProperty.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="VirtualMachine.h" />
+    <ClInclude Include="Storage\Literal.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\VirtualProperty.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\VirtualTable.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Execution\Instructions.h">
+      <Filter>Execution</Filter>
+    </ClInclude>
+    <ClInclude Include="VMAPI.h" />
+  </ItemGroup>
+</Project>

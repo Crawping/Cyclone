@@ -10,7 +10,7 @@
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-    namespace Scenes
+    namespace VM
     {
 
         struct Instructions : public Enumerator

@@ -3,15 +3,15 @@
  */
 
 #pragma once
-#include "SceneAPI.h"
+#include "VMAPI.h"
 #include "Collections/Registry.h"
-#include "Messaging/Literal.h"
+#include "Storage/Literal.h"
 
 
 
 namespace Cyclone
 {
-    namespace Scenes
+    namespace VM
     {
 
         class VirtualProperty
@@ -21,28 +21,32 @@ namespace Cyclone
                 /** PROPERTIES **/
                 uint ID()                           const { return _id; }
                 const string& Name()                const { return _name; }
+                const Literal& Value()              const { return _value; }
+                LiteralTypes Type()                 const { return _value.Type; }
+
+                VMAPI VirtualProperty& Value(const Literal& value);
 
 
 
                 /** CONSTRUCTOR **/
-                SceneAPI VirtualProperty();
+                VMAPI VirtualProperty();
 
             private:
 
-                uint        _id;
-                string      _name;
-
-                Registry<Literal> Data;
+                uint                _id;
+                Registry<Literal>   _instances;
+                string              _name;
+                Literal             _value;
         };
-
 
         class VirtualFunction
         {
             public:
 
                 uint ID()                           const { return _id; }
-                const string& Name()                const { return _name; }
                 const Vector<Instructions>& Logic() const { return _logic; }
+                const string& Name()                const { return _name; }
+                LiteralTypes Type()                 const { return LiteralTypes::Function; }
 
             private:
 
@@ -52,8 +56,6 @@ namespace Cyclone
                 Vector<Instructions> _logic;
         };
 
-
-
         class VirtualClass
         {
             public:
@@ -61,19 +63,20 @@ namespace Cyclone
                 /** PROPERTIES **/
                 uint ID()                           const { return _id; }
                 const string& Name()                const { return _name; }
+                LiteralTypes Type()                 const { return LiteralTypes::Object; }
 
 
 
                 /** UTILITIES **/
-                SceneAPI Literal Get(const Literal& target);
-                SceneAPI void Set(const Literal& target, const Literal& value);
+                VMAPI Literal Get(const Literal& object, const Literal& property);
+                VMAPI void Set(const Literal& object, const Literal& property, const Literal& value);
 
             private:
 
-                uint    _id;
-                string  _name;
-
+                uint                        _id;
+                Registry<Literal>           _instances;
                 BST<uint, VirtualFunction>  _methods;
+                string                      _name;
                 BST<uint, VirtualProperty>  _properties;
 
         };

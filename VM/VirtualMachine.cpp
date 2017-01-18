@@ -1,14 +1,22 @@
-#include "Messaging/VirtualMachine.h"
+#include "VirtualMachine.h"
 
 
 
 namespace Cyclone
 {
-    namespace Scenes
+    namespace VM
     {
 
+        /** PROPERTIES **/
+        VirtualMachine& VirtualMachine::Data(const VirtualTable* value)
+        {
+            _data = value;
+            return *this;
+        }
 
 
+
+        /** CONSTRUCTOR & DESTRUCTOR **/
         VirtualMachine::VirtualMachine()
         {
 
@@ -23,16 +31,17 @@ namespace Cyclone
         /** UTILITIES **/
         void VirtualMachine::Execute(Vector<Instructions>& commands)
         {
-            for (auto cmd : commands)
+            auto cmd = commands.begin();
+            while (cmd != commands.end())
             {
-                switch (cmd)
+                switch (*cmd)
                 {
                     case Instructions::Add:
                         Push( Pop() + Pop() );
                         break;
-
                     case Instructions::Call:
-
+                        
+                        //_data.Call( Pop(), )
                         break;
                     case Instructions::Compare:
 
@@ -41,7 +50,7 @@ namespace Cyclone
                         Push( Pop() / Pop() );
                         break;
                     case Instructions::Get:
-                        Push( Get.Invoke(Pop(), Pop()) );
+                        //Push( Get.Invoke(Pop(), Pop()) );
                         break;
                     case Instructions::Insert:
 
@@ -59,7 +68,7 @@ namespace Cyclone
 
                         break;
                     case Instructions::Set:
-                        Set.Invoke( Pop(), Pop() );
+                        //Set.Invoke( Pop(), Pop() );
                         break;
                     case Instructions::Subtract:
                         Push( Pop() - Pop() );
@@ -72,6 +81,8 @@ namespace Cyclone
                     default:
                         break;
                 }
+
+                cmd++;
             }
         }
 

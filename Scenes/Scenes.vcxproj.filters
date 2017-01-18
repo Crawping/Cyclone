@@ -8,24 +8,9 @@
     <ClInclude Include="Messaging\Message.h">
       <Filter>Messaging</Filter>
     </ClInclude>
-    <ClInclude Include="Messaging\VirtualMachine.h">
-      <Filter>Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="Messaging\Literal.h">
-      <Filter>Messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="Messaging\Instructions.h">
-      <Filter>Messaging</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Messaging\Message.cpp">
-      <Filter>Messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="Messaging\VirtualMachine.cpp">
-      <Filter>Messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="Messaging\Literal.cpp">
       <Filter>Messaging</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,6 +20,9 @@
     </Filter>
     <Filter Include="Messaging">
       <UniqueIdentifier>{22a20438-fe87-4834-a47b-9143c53c16a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{0d990689-7b0e-4fee-9ec6-cd6dfe667f3d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

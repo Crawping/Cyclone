@@ -5,47 +5,46 @@
 #pragma once
 #include "Event.h"
 #include "Collections/ListVector.h"
-#include "Messaging/Literal.h"
-#include "Scripting/VirtualTable.h"
+#include "Storage/VirtualTable.h"
 
 
 
 namespace Cyclone
 {
-    namespace Scenes
+    namespace VM
     {
         class VirtualMachine
         {
             public:
 
-                /** DELEGATES **/
-                Function<Literal, Literal, Literal> Get;
-                Function<void, Literal, Literal>    Set;
-
-
-
                 /** PROPERTIES **/
-                const VirtualTable& Data() const { return _data; }
+                const VirtualTable* Data() const { return _data; }
+
+                VMAPI VirtualMachine& Data(const VirtualTable* value);
 
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                SceneAPI VirtualMachine();
-                SceneAPI ~VirtualMachine();
+                VMAPI VirtualMachine();
+                VMAPI ~VirtualMachine();
 
 
 
                 /** UTILITIES **/
                 void Insert(const Vector<Literal>& values)  { Workspace.Prepend(values); }
                 void Clear()                                { Workspace.Clear(); }
-                SceneAPI void Execute(Vector<Instructions>& commands);
+                VMAPI void Execute(Vector<Instructions>& commands);
+                VMAPI void Pause();
+                VMAPI void Resume();
 
             private:
 
+                const VirtualTable* _data;
                 ListVector<Literal> Workspace;
 
-                VirtualTable _data;
 
+
+                /** UTILITIES **/
                 void Push(Literal parameter);
                 Literal Pop();
 
