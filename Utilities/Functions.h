@@ -4,6 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
+#include "Interfaces/ICallback.h"
 
 
 
@@ -33,19 +34,9 @@ namespace Cyclone
 
 
         /** FUNCTIONS **/
-        /// <summary> An interface that represents a parameterized callback procedure. </summary>
-        template<typename ... T>
-        struct ICallback
-        {
-            virtual ~ICallback() { }
-
-            virtual void Invoke(T ... arguments)                    const = 0;
-
-            virtual bool operator ==(const ICallback<T...>& other)  const = 0;
-            virtual bool operator !=(const ICallback<T...>& other)  const { return !(operator ==(other)); }
-        };
-
         /// <summary> A structure that represents a pointer to an ordinary function. </summary>
+        /// <typeparam name="T"> The type of the function's output argument. </typeparam>
+        /// <typeparam name="U"> A list of types that match the function's input argument signature. </typeparam>
         template<typename T, typename ... U>
         struct Function
         {
@@ -63,10 +54,15 @@ namespace Cyclone
 
                 }
 
+                /// <summary> Executes the function using the specified input arguments. </summary>
+                /// <param name="arguments"> An argument list that matches the signature of the function. </param>
+                /// <returns></returns>
                 T Invoke(U ... arguments)   const { return _function(arguments...); }
         };
 
         /// <summary> A structure that represents a pointer to a class method. </summary>
+        /// <typeparam name="T"> The name of the class to which the method belongs. </typeparam>
+        /// <typeparam name="U"> A list of types that match the class method's input argument signature. </typeparam>
         template<typename T, typename ... U>
         struct Method : public ICallback<U...>
         {
@@ -88,6 +84,8 @@ namespace Cyclone
 
                 }
 
+                /// <summary> Executes the class method using the specified input arguments. </summary>
+                /// <param name="arguments"> An argument list that matches the signature of the class method. </param>
                 void Invoke(U ... arguments)                    const override { (_object->*_method)(arguments...); }
 
                 bool operator ==(const ICallback<U...>& other)  const override
@@ -98,6 +96,7 @@ namespace Cyclone
         };
 
         /// <summary> A structure that represents a pointer to an ordinary procedure. </summary>
+        /// <typeparam name="T"> A list of types that match the procedure's input argument signature. </typeparam>
         template<typename ... T>
         struct Procedure : public ICallback<T...>
         {
@@ -110,8 +109,14 @@ namespace Cyclone
 
                 /// <summary> Constructs a new procedure object referring to a specific function pointer. </summary>
                 /// <param name="fcn"></param>
-                Procedure(ProcedurePointer<T...> fcn) : _procedure(fcn) { }
+                Procedure(ProcedurePointer<T...> fcn) : 
+                    _procedure(fcn) 
+                { 
+                
+                }
 
+                /// <summary> Executes the procedure using the specified input arguments. </summary>
+                /// <param name="arguments"> An argument list that matches the signature of the procedure. </param>
                 void Invoke(T ... arguments)                    const override { _procedure(arguments...); }
 
                 bool operator ==(const ICallback<T...>& other)  const override

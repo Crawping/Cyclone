@@ -135,6 +135,9 @@
     <ClInclude Include="Collections\ListVector.h">
       <Filter>Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\ICallback.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

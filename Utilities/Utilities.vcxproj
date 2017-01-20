@@ -186,6 +186,7 @@
     <ClInclude Include="Imaging\ColorGradient.h" />
     <ClInclude Include="InputControls.h" />
     <ClInclude Include="Interfaces\IArray.h" />
+    <ClInclude Include="Interfaces\ICallback.h" />
     <ClInclude Include="Interfaces\ICollection.h" />
     <ClInclude Include="Interfaces\IDataBuffer.h" />
     <ClInclude Include="Interfaces\IReportable.h" />
