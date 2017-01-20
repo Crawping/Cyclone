@@ -67,6 +67,9 @@ namespace Cyclone
                     case Instructions::Remove:
 
                         break;
+                    case Instructions::Return:
+
+                        break;
                     case Instructions::Set:
                         //Set.Invoke( Pop(), Pop() );
                         break;

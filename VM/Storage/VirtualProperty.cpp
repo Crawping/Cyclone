@@ -8,11 +8,6 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        VirtualProperty& VirtualProperty::Value(const Literal& value)
-        {
-            _value = value;
-            return *this;
-        }
 
 
 

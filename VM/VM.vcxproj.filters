@@ -7,6 +7,9 @@
     <Filter Include="Execution">
       <UniqueIdentifier>{57c7b207-204c-4edd-8546-648bb6ce8f4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{c8aea379-8636-4dd0-b7fc-1ba83d45bb12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VirtualMachine.cpp" />
@@ -14,6 +17,9 @@
       <Filter>Storage</Filter>
     </ClCompile>
     <ClCompile Include="Storage\VirtualProperty.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\VirtualTable.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,5 +38,8 @@
       <Filter>Execution</Filter>
     </ClInclude>
     <ClInclude Include="VMAPI.h" />
+    <ClInclude Include="Interfaces\IVirtualData.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

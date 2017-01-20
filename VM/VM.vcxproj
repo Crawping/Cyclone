@@ -118,10 +118,12 @@
   <ItemGroup>
     <ClCompile Include="Storage\Literal.cpp" />
     <ClCompile Include="Storage\VirtualProperty.cpp" />
+    <ClCompile Include="Storage\VirtualTable.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Execution\Instructions.h" />
+    <ClInclude Include="Interfaces\IVirtualData.h" />
     <ClInclude Include="Storage\Literal.h" />
     <ClInclude Include="Storage\VirtualProperty.h" />
     <ClInclude Include="Storage\VirtualTable.h" />

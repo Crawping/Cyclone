@@ -24,8 +24,8 @@ namespace Cyclone
                 Float       = 3,
                 Function    = 7,
                 Integer     = 2,
-                Object      = 6,
                 String      = 5,
+                Type        = 6,
             };
 
             constexpr LiteralTypes(enum Types t = Nothing) : Enumerator((int)t) { }

@@ -18,21 +18,38 @@ namespace Cyclone
             public:
 
                 /** UTILITIES **/
-                VMAPI void Insert(const Literal& value);
+                //VMAPI void Insert(const Literal& value);
+                //VMAPI Literal Insert(const string& name);
+                VMAPI Literal Insert(const VirtualClass& type);
+                VMAPI Literal Insert(const VirtualFunction& function);
+                VMAPI Literal Insert(const string& string);
 
-                VMAPI Literal Get(const Literal& type, const Literal& object);
+                VMAPI Literal Get(const Literal& object);
+                VMAPI Literal Get(const Literal& object, const Literal& property);
+
+                VMAPI Vector<Instructions>& Call(const Literal& function);
+                VMAPI Vector<Instructions>& Call(const Literal& object, const Literal& method);
                 
 
-                VMAPI Literal Call(const Literal& function);
-                VMAPI Literal Call(const Literal& object, const Literal& method);
+                //VMAPI Literal Call(const Literal& function);
+                //VMAPI Literal Call(const Literal& object, const Literal& method);
 
-                
+                VMAPI string FindName(uint id)          const;
+                VMAPI int FindID(const string& name)    const;
 
             private:
 
-                BST<uint, VirtualClass>     Objects;
+                BST<uint, VirtualClass>     Classes;
                 BST<uint, VirtualFunction>  Functions;
+                BST<uint, string>           Strings;
 
+                //Registry<VirtualClass>      Types;
+                //Registry<VirtualFunction>   Functions;
+                //Registry<string>            Strings;
+
+                //BST<uint, RegistryKey<VirtualClass>>    TypeIDs;
+                //BST<uint, RegistryKey<VirtualFunction>> FunctionIDs;
+                //BST<uint, RegistryKey<string>>          StringIDs;
         };
 
     }

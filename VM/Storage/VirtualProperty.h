@@ -20,11 +20,8 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 uint ID()                           const { return _id; }
-                const string& Name()                const { return _name; }
-                const Literal& Value()              const { return _value; }
-                LiteralTypes Type()                 const { return _value.Type; }
-
-                VMAPI VirtualProperty& Value(const Literal& value);
+                //const string& Name()                const { return _name; }
+                //LiteralTypes Type()                 const { return _value.Type; }
 
 
 
@@ -35,8 +32,7 @@ namespace Cyclone
 
                 uint                _id;
                 Registry<Literal>   _instances;
-                string              _name;
-                Literal             _value;
+                //string              _name;
         };
 
         class VirtualFunction
@@ -45,13 +41,13 @@ namespace Cyclone
 
                 uint ID()                           const { return _id; }
                 const Vector<Instructions>& Logic() const { return _logic; }
-                const string& Name()                const { return _name; }
+                //const string& Name()                const { return _name; }
                 LiteralTypes Type()                 const { return LiteralTypes::Function; }
 
             private:
 
                 uint    _id;
-                string  _name;
+                //string  _name;
 
                 Vector<Instructions> _logic;
         };
@@ -62,8 +58,8 @@ namespace Cyclone
                 
                 /** PROPERTIES **/
                 uint ID()                           const { return _id; }
-                const string& Name()                const { return _name; }
-                LiteralTypes Type()                 const { return LiteralTypes::Object; }
+                //const string& Name()                const { return _name; }
+                LiteralTypes Type()                 const { return LiteralTypes::Type; }
 
 
 
@@ -76,7 +72,7 @@ namespace Cyclone
                 uint                        _id;
                 Registry<Literal>           _instances;
                 BST<uint, VirtualFunction>  _methods;
-                string                      _name;
+                //string                      _name;
                 BST<uint, VirtualProperty>  _properties;
 
         };
