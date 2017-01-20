@@ -20,7 +20,6 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 uint ID()                           const { return _id; }
-                //const string& Name()                const { return _name; }
                 //LiteralTypes Type()                 const { return _value.Type; }
 
 
@@ -28,28 +27,30 @@ namespace Cyclone
                 /** CONSTRUCTOR **/
                 VMAPI VirtualProperty();
 
+
+
+                /** UTILITIES **/
+                VMAPI Literal Get(uint instance)    const;
+
             private:
 
                 uint                _id;
-                Registry<Literal>   _instances;
-                //string              _name;
+                BST<uint, Literal>  _instances;
         };
 
         class VirtualFunction
         {
             public:
 
+                /** PROPERTIES **/
                 uint ID()                           const { return _id; }
                 const Vector<Instructions>& Logic() const { return _logic; }
-                //const string& Name()                const { return _name; }
                 LiteralTypes Type()                 const { return LiteralTypes::Function; }
 
             private:
 
-                uint    _id;
-                //string  _name;
-
-                Vector<Instructions> _logic;
+                uint                    _id;
+                Vector<Instructions>    _logic;
         };
 
         class VirtualClass
@@ -58,21 +59,20 @@ namespace Cyclone
                 
                 /** PROPERTIES **/
                 uint ID()                           const { return _id; }
-                //const string& Name()                const { return _name; }
                 LiteralTypes Type()                 const { return LiteralTypes::Type; }
 
 
 
                 /** UTILITIES **/
-                VMAPI Literal Get(const Literal& object, const Literal& property);
+                VMAPI Literal Get(uint object, uint property)   const;
+                VMAPI bool IsOfType(const Literal& object)      const;
                 VMAPI void Set(const Literal& object, const Literal& property, const Literal& value);
 
             private:
 
                 uint                        _id;
-                Registry<Literal>           _instances;
+                BST<uint, Literal>          _instances;
                 BST<uint, VirtualFunction>  _methods;
-                //string                      _name;
                 BST<uint, VirtualProperty>  _properties;
 
         };

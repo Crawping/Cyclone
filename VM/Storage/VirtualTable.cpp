@@ -22,20 +22,41 @@ namespace Cyclone
         {
             return Strings.Contains(id) ? Strings[id] : "";
         }
-        Literal VirtualTable::Get(const Literal& object)
+        //Literal VirtualTable::Get(const Literal& object)
+        //{
+        //    switch (object.Type)
+        //    {
+        //        case LiteralTypes::Function:
+        //        case LiteralTypes::String:
+        //        case LiteralTypes::Type:
+        //            return object;
+        //    }
+        //}
+        Literal VirtualTable::Get(const Literal& object, const Literal& property)
         {
+            if (property.IsNull()) { return object; }
+
             switch (object.Type)
             {
-                case LiteralTypes::Function:
-                case LiteralTypes::String:
                 case LiteralTypes::Type:
-                    return object;
+                    uint typeID = object.FirstHalf();
+                    uint instance = object.SecondHalf();
+                    uint propID = property.SecondHalf();
+
+                    if (Classes.Contains(typeID))
+                        return Classes[typeID].Get(instance, propID);
+
+                    break;
+                default: 
+                    break;
             }
+
+            return Literal();
         }
         Literal VirtualTable::Insert(const VirtualClass& type)
         {
             Classes.Insert(type.ID(), type);
-            return Literal(LiteralTypes::Type, type.ID());
+            return Literal(LiteralTypes::Type, (ulong)(type.ID()) << 32);
         }
         Literal VirtualTable::Insert(const VirtualFunction& function)
         {

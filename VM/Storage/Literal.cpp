@@ -54,6 +54,8 @@ namespace Cyclone
         }
 
 
+
+        /** UTILITIES **/
         constexpr Literal Literal::Calculate(Instructions operation, const Literal& other) const
         {
             return 
@@ -70,7 +72,7 @@ namespace Cyclone
                     Literal();
         }
 
-        /** UTILITIES **/
+
 
         /** OPERATORS **/
         Literal& Literal::operator =(Literal other)
