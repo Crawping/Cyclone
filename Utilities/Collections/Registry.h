@@ -121,7 +121,9 @@ namespace Cyclone
                 /// <summary> Determines whether any data associated with a specific key is stored within the registry. </summary>
                 /// <param name="key"> The specific key to be tested. </param>
                 /// <returns> A Boolean <c>true</c> if the registry contains data associated with the inputted <paramref name="key"/>, or <c>false</c> otherwise. </returns>
-                virtual bool Contains(const RegistryKey<T>& key)            const { return Data.Contains(key.Key()); }
+                virtual bool Contains(const RegistryKey<T>& key)            const { return Contains(key.Key()); }
+
+                virtual bool Contains(int key)                              const { return Data.Contains(key); }
                 /// <summary> Inserts a new data element into the registry. </summary>
                 /// <param name="value"> A new data element to be registered. </param>
                 /// <returns> A special key unique to the inputted <paramref name="value"/> that can be used to index into the registry. </returns>
@@ -158,12 +160,8 @@ namespace Cyclone
                 }
                 int FindValue(const T& value) const
                 {
-                    int idx = 0;
-                    auto values = Data.Values();
-                    for (const T& v : values)
-                        if (v == value) { return Data.Keys()(idx); }
-                        else            { idx++; }
-
+                    for (const auto& kvp : Data)
+                        if (kvp.Value == value) { return kvp.Key; }
                     return -1;
                 }                
 
