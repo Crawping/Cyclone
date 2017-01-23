@@ -48,6 +48,14 @@ namespace Cyclone
                 virtual T& operator ()(uint idx)            { return Data[idx]; }
                 virtual const T& operator ()(uint idx)      const { return Data[idx]; }
 
+                virtual bool operator ==(const Vector<T, U>& other) const
+                {
+                    for (uint a = 0; a < U; a++)
+                        if (Data[a] != other.Data[a])
+                            return false;
+                    return true;
+                }
+
             private:
 
                 T Data[U];
