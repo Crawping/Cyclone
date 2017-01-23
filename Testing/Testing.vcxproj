@@ -90,7 +90,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>GLFW_INCLUDE_COREARB;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\;..\CoreGL;..\OpenGL;..\OpenGL\Buffers;..\OpenGL\Buffers;..\OpenGL\Interfaces;..\OpenGL\Pipelines;..\OpenGL\Primitives;..\OpenGL\Textures;..\Utilities;..\Utilities\Imaging;..\Utilities\Math;..\Utilities\Spatial;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\CoreGL;..\OpenGL;..\Utilities;..\VM;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -168,6 +168,8 @@
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Vertex.cpp" />
+    <ClCompile Include="VirtualMachine.cpp" />
+    <ClCompile Include="VirtualTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenGL\OpenGL.vcxproj">
@@ -175,6 +177,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\VM\VM.vcxproj">
+      <Project>{4275937d-182c-4385-90f1-f96dfa513a09}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

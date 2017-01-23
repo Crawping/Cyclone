@@ -65,6 +65,12 @@
     <ClCompile Include="ListVector.cpp">
       <Filter>Utilities\Collections</Filter>
     </ClCompile>
+    <ClCompile Include="VirtualMachine.cpp">
+      <Filter>VM</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualTable.cpp">
+      <Filter>VM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
@@ -90,6 +96,9 @@
     </Filter>
     <Filter Include="Utilities\Collections">
       <UniqueIdentifier>{2e60fbcf-a7e3-4136-ab5a-7db035dc9caa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VM">
+      <UniqueIdentifier>{ed543799-ce1e-44e5-9066-b323f82937d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

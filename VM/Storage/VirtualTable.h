@@ -17,18 +17,23 @@ namespace Cyclone
         {
             public:
 
+                /** CONSTRUCTOR **/
+                VirtualTable() { }
+                ~VirtualTable() { Classes.Clear(); }
+
+
                 /** UTILITIES **/
-                //VMAPI void Insert(const Literal& value);
-                //VMAPI Literal Insert(const string& name);
-                VMAPI Literal Insert(const VirtualClass& type);
-                VMAPI Literal Insert(const VirtualFunction& function);
-                VMAPI Literal Insert(const string& string);
+                VMAPI void Delete(uint id);
+                VMAPI void Insert(const VirtualClass& type);
+                VMAPI void Insert(const VirtualFunction& function);
+                VMAPI uint Insert(const string& string);
+                VMAPI uint Insert(const string& name, const Literal& value);
 
-                //VMAPI Literal Get(const Literal& object);
-                VMAPI Literal Get(const Literal& object, const Literal& property);
+                VMAPI Literal Get(uint id)  const;
+                VMAPI Literal Get(uint type, uint instance, uint property) const;
 
-                VMAPI Vector<Instructions>& Call(const Literal& function);
-                VMAPI Vector<Instructions>& Call(const Literal& object, const Literal& method);
+                VMAPI void Set(uint id, const Literal& value);
+                VMAPI void Set(uint type, uint instance, uint property, const Literal& value);
                 
                 VMAPI string FindName(uint id)          const;
                 VMAPI int FindID(const string& name)    const;
@@ -38,6 +43,7 @@ namespace Cyclone
                 BST<uint, VirtualClass>     Classes;
                 BST<uint, VirtualFunction>  Functions;
                 BST<uint, string>           Strings;
+                BST<uint, Literal>          Variables;
 
         };
 

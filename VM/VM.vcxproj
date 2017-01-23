@@ -75,6 +75,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>.\;..\Utilities;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>VM_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,6 +126,7 @@
     <ClInclude Include="Execution\Instructions.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />
     <ClInclude Include="Storage\Literal.h" />
+    <ClInclude Include="Storage\StackFrame.h" />
     <ClInclude Include="Storage\VirtualProperty.h" />
     <ClInclude Include="Storage\VirtualTable.h" />
     <ClInclude Include="VirtualMachine.h" />

@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Enumerator.h"
+#include "Collections/Vector.h"
 
 
 
@@ -19,22 +20,46 @@ namespace Cyclone
             {
                 None        = 0,
                 Add,
+                And,
                 Call,
                 Compare,
+                Decrement,
+                Delete,
                 Divide,
                 Get,
-                Insert,
+                Increment,
                 Jump,
-                Move,
+                JumpIf,
+                Load,
                 Multiply,
+                Negate,
+                Or,
                 Remove,
                 Return,
                 Set,
+                Store,
                 Subtract,
                 Swap,
+                Xor,
             };
 
             constexpr Instructions(enum Types t = None) : Enumerator((int)t) { }
+
+            //constexpr bool operator !=(Instructions other) const { return Value != other.Value; }
         };
+
+
+        struct Instruction
+        {
+            Instructions        Command;
+            Vector<uint, 3>     Operands;
+
+            bool operator ==(const Instruction& other) const
+            {
+                return (Command == other.Command) && (Operands == other.Operands);
+            }
+            bool operator !=(const Instruction& other) const { return !(operator ==(other)); }
+        };
+
     }
 }

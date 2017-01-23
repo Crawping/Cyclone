@@ -41,5 +41,8 @@
     <ClInclude Include="Interfaces\IVirtualData.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Storage\StackFrame.h">
+      <Filter>Execution</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

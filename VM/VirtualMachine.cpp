@@ -8,7 +8,7 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        VirtualMachine& VirtualMachine::Data(const VirtualTable* value)
+        VirtualMachine& VirtualMachine::Data(VirtualTable* value)
         {
             _data = value;
             return *this;
@@ -17,7 +17,8 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        VirtualMachine::VirtualMachine()
+        VirtualMachine::VirtualMachine() : 
+            _data(nullptr)
         {
 
         }
@@ -29,77 +30,83 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void VirtualMachine::Execute(Vector<Instructions>& commands)
+        /*void Insert(const Vec)*/
+        void VirtualMachine::Execute(const Vector<Instruction>& instructions)
         {
-            auto cmd = commands.begin();
-            while (cmd != commands.end())
+            uint idx = 0;
+            Literal v1, v2, v3, v4;
+
+            while (idx < instructions.Count())
             {
-                switch (*cmd)
+                if (Interrupt == Instructions::Return)
+                    break;
+
+                const auto& cmd = instructions(idx);
+                switch (cmd.Command)
                 {
                     case Instructions::Add:
-                        Push( Pop() + Pop() );
+                    case Instructions::And:
+                    case Instructions::Divide:
+                    case Instructions::Multiply:
+                    case Instructions::Negate:
+                    case Instructions::Or:
+                    case Instructions::Subtract:
+                    case Instructions::Xor:
+                        Push( Literal::Calculate(cmd.Command, Pop(), Pop()) );
                         break;
+
                     case Instructions::Call:
-                        
-                        //_data.Call( Pop(), )
+                        CallStack.Push(idx);
+                        idx = cmd.Operands(0);
                         break;
                     case Instructions::Compare:
-
+                        Push( Pop().Compare(Pop()) );
                         break;
-                    case Instructions::Divide:
-                        Push( Pop() / Pop() );
+                    case Instructions::Decrement:
+                        Workspace.First().Value--;
+                        break;
+                    case Instructions::Delete:
+                        _data->Delete(cmd.Operands(0));
                         break;
                     case Instructions::Get:
-                        //Push( Get.Invoke(Pop(), Pop()) );
+                        Push( _data->Get(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2)) );
                         break;
-                    case Instructions::Insert:
-
+                    case Instructions::Increment:
+                        Workspace.First().Value++;
                         break;
                     case Instructions::Jump:
-
+                        idx = cmd.Operands(0);
                         break;
-                    case Instructions::Move:
-                        
+                    case Instructions::JumpIf:
+                        idx = (Pop() == Pop()) ? cmd.Operands(0) : cmd.Operands(1);
                         break;
-                    case Instructions::Multiply:
-                        Push( Pop() * Pop() );
+                    case Instructions::Load:
+                        Push( _data->Get(cmd.Operands(0)) );
                         break;
                     case Instructions::Remove:
-
+                        Pop();
                         break;
                     case Instructions::Return:
-
+                        idx = CallStack.Pop();
                         break;
                     case Instructions::Set:
-                        //Set.Invoke( Pop(), Pop() );
+                        _data->Set(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop());
                         break;
-                    case Instructions::Subtract:
-                        Push( Pop() - Pop() );
+                    case Instructions::Store:
+                        _data->Set(cmd.Operands(0), Pop());
                         break;
                     case Instructions::Swap:
-                        Literal v1 = Pop(), v2 = Pop();
-                        Push(v1); Push(v2);
+                        Push({ Pop(), Pop() });
                         break;
-                    case Instructions::None:
+
                     default:
                         break;
                 }
 
-                cmd++;
+                idx++;
             }
         }
-
-
-        void VirtualMachine::Push(Literal parameter)
-        {
-            Workspace.Prepend(parameter);
-        }
-        Literal VirtualMachine::Pop()
-        {
-            Literal value(Workspace(0));
-            Workspace.Remove(0);
-            return value;
-        }
-
+        void VirtualMachine::Pause() { Interrupt = Instructions::Return; }
+        void VirtualMachine::Resume() { Interrupt = Instructions::None; }
     }
 }

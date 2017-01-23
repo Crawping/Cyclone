@@ -4,7 +4,10 @@
 
 #pragma once
 #include "Event.h"
-#include "Collections/ListVector.h"
+#include "Collections/Stack.h"
+#include "Collections/Vector.h"
+#include "Execution/Instructions.h"
+#include "Storage/Literal.h"
 #include "Storage/VirtualTable.h"
 
 
@@ -13,6 +16,13 @@ namespace Cyclone
 {
     namespace VM
     {
+        struct StackFrame
+        {
+            uint            ReturnAddress;
+            Stack<Literal>  Workspace;
+        };
+
+
         class VirtualMachine
         {
             public:
@@ -20,7 +30,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 const VirtualTable* Data() const { return _data; }
 
-                VMAPI VirtualMachine& Data(const VirtualTable* value);
+                VMAPI VirtualMachine& Data(VirtualTable* value);
 
 
 
@@ -31,22 +41,27 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                void Insert(const Vector<Literal>& values)  { Workspace.Prepend(values); }
+                void Insert(const Vector<Literal>& values)  { Workspace.Push(values); }
                 void Clear()                                { Workspace.Clear(); }
-                VMAPI void Execute(Vector<Instructions>& commands);
+
+                VMAPI void Execute(const Vector<Instruction>& commands);
                 VMAPI void Pause();
                 VMAPI void Resume();
 
             private:
 
-                const VirtualTable* _data;
-                ListVector<Literal> Workspace;
+                VirtualTable*       _data;
+
+                Stack<uint>         CallStack;
+                Instructions        Interrupt;
+                Stack<Literal>      Workspace;
 
 
 
                 /** UTILITIES **/
-                void Push(Literal parameter);
-                Literal Pop();
+                void Push(Literal value)                    { Workspace.Push(value); }
+                void Push(const Vector<Literal>& values)    { Workspace.Push(values); }
+                Literal Pop()                               { return Workspace.Pop(); }
 
         };
     }

@@ -12,7 +12,8 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        VirtualProperty::VirtualProperty()
+        VirtualProperty::VirtualProperty(uint id) :
+            _id(id)
         {
 
         }
@@ -20,6 +21,10 @@ namespace Cyclone
         Literal VirtualProperty::Get(uint instance) const
         {
             return _instances.Contains(instance) ? _instances[instance] : Literal();
+        }
+        void VirtualProperty::Set(uint instance, const Literal& value)
+        {
+            _instances.Insert(instance, value);
         }
 
 
@@ -29,9 +34,23 @@ namespace Cyclone
         {
             return _properties.Contains(property) ? _properties[property].Get(object) : Literal();
         }
+        void VirtualClass::Insert(const VirtualFunction& function)
+        {
+            _methods.Insert(function.ID(), function);
+        }
+        void VirtualClass::Insert(const VirtualProperty& property)
+        {
+            _properties.Insert(property.ID(), property);
+        }
         bool VirtualClass::IsOfType(const Literal& object) const
         {
-            return object.IsObject() && (object.FirstComponent() == ID());
+            return object.IsObject() && (object.FirstHalf() == ID());
+        }
+
+        void VirtualClass::Set(uint object, uint property, const Literal& value)
+        {
+            //if (!_properties.Contains(property)) { return; }
+            _properties[property].Set(object, value);
         }
 
     }

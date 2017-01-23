@@ -33,12 +33,13 @@ namespace Cyclone
 
 
             /** UTILITIES **/
+            VMAPI constexpr uint ByteSize() const;
+            VMAPI string ToString()         const;
+
             constexpr static LiteralTypes MaxPrecision(LiteralTypes x, LiteralTypes y)
             {
                 return x >= y ? x : y;
             }
-
-            VMAPI string ToString() const;
         };
 
 
@@ -54,12 +55,12 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 constexpr uint FirstHalf()                          const { return (uint)((ulong)Value >> 32); }
-                constexpr bool IsNull()                             const { return Type == LiteralTypes::Nothing; }
                 constexpr bool IsBoolean()                          const { return Type == LiteralTypes::Boolean; }
                 constexpr bool IsDouble()                           const { return Type == LiteralTypes::Double; }
                 constexpr bool IsFloat()                            const { return Type == LiteralTypes::Float; }
                 constexpr bool IsFunction()                         const { return Type == LiteralTypes::Function; }
                 constexpr bool IsInteger()                          const { return Type == LiteralTypes::Integer; }
+                constexpr bool IsNull()                             const { return Type == LiteralTypes::Nothing; }
                 constexpr bool IsObject()                           const { return Type == LiteralTypes::Type; }
                 constexpr bool IsString()                           const { return Type == LiteralTypes::String; }
                 constexpr uint SecondHalf()                         const { return (uint)Value; }
@@ -77,25 +78,37 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                constexpr Literal Compare(const Literal& other)     const 
+                { 
+                    return Value < other.Value ? -1 : Value > other.Value ? 1 : 0;
+                }
                 constexpr bool IsOfType(LiteralTypes type)          const { return Type == type; }
                 constexpr bool IsOfType(const Literal& other)       const { return Type == other.Type; }
 
+                VMAPI constexpr static Literal Calculate(Instructions operation, const Literal& x, const Literal& y);
 
 
                 /** OPERATORS **/
                 constexpr bool operator ==(const Literal& other)    const { return IsOfType(other) && (Value == other.Value); }
                 constexpr bool operator !=(const Literal& other)    const { return !operator ==(other); }
             
-                constexpr Literal operator +(const Literal& other)  const { return Calculate(Instructions::Add, other); }
-                constexpr Literal operator /(const Literal& other)  const { return Calculate(Instructions::Divide, other); }
-                constexpr Literal operator -(const Literal& other)  const { return Calculate(Instructions::Subtract, other); }
-                constexpr Literal operator *(const Literal& other)  const { return Calculate(Instructions::Multiply, other); }
+                constexpr Literal operator +(const Literal& other)  const { return Calculate(Instructions::Add, *this, other); }
+                constexpr Literal operator /(const Literal& other)  const { return Calculate(Instructions::Divide, *this, other); }
+                constexpr Literal operator -(const Literal& other)  const { return Calculate(Instructions::Subtract, *this, other); }
+                constexpr Literal operator *(const Literal& other)  const { return Calculate(Instructions::Multiply, *this, other); }
+                constexpr Literal operator |(const Literal& other)  const { return Calculate(Instructions::Or, *this, other); }
+
+                //Literal& operator ++()
+                //{
+                //    Value = Calculate(Instructions::Increment, Literal()).Value;
+                //    return *this;
+                //}
 
                 VMAPI Literal& operator =(Literal other);
 
             private:
 
-                constexpr Literal Calculate(Instructions operation, const Literal& other) const;
+                
 
         };
     }
