@@ -2,8 +2,8 @@
  * Written by Josh Grooms on 20160707
  */
 
+#include "Math/Vector2.h"
 #include <gtest/gtest.h>
-#include "Vector2.h"
 
 using namespace Cyclone::Utilities;
 

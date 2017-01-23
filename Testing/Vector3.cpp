@@ -1,7 +1,7 @@
 /* */
 
-#include "Constants.h"
-#include "Vector3.h"
+#include "Math/Constants.h"
+#include "Math/Vector3.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;

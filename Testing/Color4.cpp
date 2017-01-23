@@ -2,8 +2,8 @@
  * Written by Josh Grooms on 20160707
  */
 
+#include "Imaging/Color4.h"
 #include <gtest/gtest.h>
-#include "Color4.h"
 
 using namespace Cyclone::Utilities;
 

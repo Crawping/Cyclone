@@ -3,7 +3,7 @@
  */
 
 #include <gtest/gtest.h>
-#include "Array.h"
+#include "Math/Array.h"
 
 using namespace Cyclone::Utilities;
 

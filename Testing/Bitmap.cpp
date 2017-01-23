@@ -3,8 +3,8 @@
  */
 
 #include <gtest/gtest.h>
-#include "Bitmap.h"
-#include "Color4.h"
+#include "Imaging/Bitmap.h"
+#include "Imaging/Color4.h"
 
 using namespace Cyclone::Utilities;
 
