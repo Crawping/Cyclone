@@ -56,9 +56,6 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{17dd96d9-5532-4dc1-bed6-06d692d6bda1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Buffers">
-      <UniqueIdentifier>{5e23a111-5e27-4901-bdf4-4a229275c44d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Pipelines">
       <UniqueIdentifier>{c31e10de-51c0-44e7-8f75-f133619bee20}</UniqueIdentifier>
     </Filter>
