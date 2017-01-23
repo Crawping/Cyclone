@@ -138,6 +138,9 @@
     <ClInclude Include="Interfaces\ICallback.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Collections\Stack.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
