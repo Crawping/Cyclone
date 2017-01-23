@@ -20,11 +20,17 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the total number of slots that are available for storing data elements. </summary>
                 virtual uint Capacity()         const { return Data.Count(); }
+                /// <summary> Gets the number of slots that are being used to store data elements. </summary>
                 virtual uint Count()            const { return _count; }
+                /// <summary> Gets a reference to the first data element stored in the vector. </summary>
                 virtual T& First()              { return Data(_index); }
+                /// <summary> Gets a constant reference to the first data element stored in the vector. </summary>
                 virtual const T& First()        const { return Data(_index); }
+                /// <summary> Gets a reference to the last data element stored in the vector. </summary>
                 virtual T& Last()               { return Data(_index + _count - 1); }
+                /// <summary> Gets a constant reference to the last data element stored in the vector. </summary>
                 virtual const T& Last()         const { return Data(_index + _count - 1); }
 
 
