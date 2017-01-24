@@ -17,9 +17,16 @@ namespace Cyclone
         {
             public:
 
+                /** PROPERTIES **/
+                uint ClassCount()       const { return Classes.Count(); }
+                uint FunctionCount()    const { return Functions.Count(); }
+                uint VariableCount()    const { return Variables.Count(); }
+
+
+
                 /** CONSTRUCTOR **/
-                VirtualTable() { }
-                ~VirtualTable() { Classes.Clear(); }
+                VMAPI VirtualTable();
+
 
 
                 /** UTILITIES **/
@@ -30,13 +37,13 @@ namespace Cyclone
                 VMAPI uint Insert(const string& name, const Literal& value);
 
                 VMAPI Literal Get(uint id)  const;
-                VMAPI Literal Get(uint type, uint instance, uint property) const;
+                VMAPI Literal Get(uint type, uint property, uint instance) const;
 
                 VMAPI void Set(uint id, const Literal& value);
-                VMAPI void Set(uint type, uint instance, uint property, const Literal& value);
+                VMAPI void Set(uint type, uint property, uint instance, const Literal& value);
                 
                 VMAPI string FindName(uint id)          const;
-                VMAPI int FindID(const string& name)    const;
+                VMAPI uint FindID(const string& name)   const;
 
             private:
 

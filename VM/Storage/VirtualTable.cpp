@@ -7,19 +7,31 @@ namespace Cyclone
     namespace VM
     {
 
+        /** INTERNAL UTILITIES **/
         static std::hash<string> Hash;
+
+
+
+        /** CONSTRUCTOR **/
+        VirtualTable::VirtualTable()
+        {
+            Strings.Insert(0, "");
+            Variables.Insert(0, Literal());
+        }
 
 
 
         /** UTILITIES **/
         void VirtualTable::Delete(uint id)
         {
+            if (id == 0) { return; }
             Variables.Remove(id);
         }
-        int VirtualTable::FindID(const string& name)    const
+        uint VirtualTable::FindID(const string& name)    const
         {
+            if (name.empty()) { return 0; }
             uint id = Hash(name);
-            return Strings.Contains(id) ? id : -1;
+            return Strings.Contains(id) ? id : 0;
         }
         string VirtualTable::FindName(uint id)          const
         {
@@ -29,7 +41,7 @@ namespace Cyclone
         {
             return Variables.Contains(id) ? Variables[id] : Literal();
         }
-        Literal VirtualTable::Get(uint type, uint instance, uint property) const
+        Literal VirtualTable::Get(uint type, uint property, uint instance) const
         {
             return Classes.Contains(type) ? Classes[type].Get(instance, property) : Literal();
         }
@@ -43,12 +55,14 @@ namespace Cyclone
         }
         uint VirtualTable::Insert(const string& string)
         {
+            if (string.empty()) { return 0; }
             uint id = Hash(string);
             Strings.Insert(id, string);
             return id;
         }
         uint VirtualTable::Insert(const string& name, const Literal& value)
         {
+            if (name.empty()) { return 0; }
             uint id = Hash(name);
             Strings.Insert(id, name);
             Variables.Insert(id, value);
@@ -56,11 +70,12 @@ namespace Cyclone
         }
         void VirtualTable::Set(uint id, const Literal& value)
         {
-            Variables.Insert(id, value); 
+            if (id == 0) { return; }
+            Variables.Insert(id, value);
         }
-        void VirtualTable::Set(uint type, uint instance, uint property, const Literal& value)
+        void VirtualTable::Set(uint type, uint property, uint instance, const Literal& value)
         {
-            if (!Classes.Contains(type)) { return; }
+            if ((type == 0) || !Classes.Contains(type)) { return; }
             Classes[type].Set(instance, property, value);
         }
 
