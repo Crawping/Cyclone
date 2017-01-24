@@ -59,6 +59,9 @@ namespace Cyclone
                         CallStack.Push(idx);
                         idx = cmd.Operands(0);
                         break;
+                    case Instructions::Cast:
+                        Push( Pop().Cast(cmd.Operands(0)) );
+                        break;
                     case Instructions::Compare:
                         Push( Pop().Compare(Pop()) );
                         break;

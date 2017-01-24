@@ -22,6 +22,7 @@ namespace Cyclone
                 Add,
                 And,
                 Call,
+                Cast,
                 Compare,
                 Decrement,
                 Delete,
@@ -44,8 +45,6 @@ namespace Cyclone
             };
 
             constexpr Instructions(enum Types t = None) : Enumerator((int)t) { }
-
-            //constexpr bool operator !=(Instructions other) const { return Value != other.Value; }
         };
 
 
