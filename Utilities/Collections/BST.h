@@ -26,7 +26,7 @@ namespace Cyclone
                 virtual uint Count()        const override { return Root ? Root->Count : 0; }
                 /// <summary> Gets the height of this tree. </summary>
                 /// <remarks>
-                ///     The height of the tree is defined here as the distance (i.e. number of nodes) between the root and the most 
+                ///     The height of the tree is defined here as the distance (i.e. number of nodes) between the root and the most
                 ///     distal leaf node in its subtrees.
                 /// </remarks>
                 virtual uint Height()       const { return Root ? Root->Height : 0; }
@@ -34,7 +34,7 @@ namespace Cyclone
                 virtual List<T> Keys()      const { return Root ? Root->Keys() : List<T>(); }
                 /// <summary> Gets a list of all data element values contained in the tree. </summary>
                 virtual List<U> Values()    const { return Root ? Root->Values() : List<U>(); }
-                
+
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
@@ -44,10 +44,22 @@ namespace Cyclone
                 {
 
                 }
+                BST(BST&& other) :
+                    Root(other.Root)
+                {
+                    other.Root = nullptr;
+                }
+                BST(const BST& other) :
+                    Root(nullptr)
+                {
+                    for (const auto& kvp : other)
+                        Insert(kvp.Key, kvp.Value);
+                }
                 /// <summary> Destroys all of the data nodes held by the tree. </summary>
                 ~BST()
                 {
-                    if (Root) { delete Root; }
+                    if (Root)
+                        delete Root;
                 }
 
 
@@ -71,11 +83,11 @@ namespace Cyclone
                 /// <param name="key"> The key for the new node being inserted. </param>
                 /// <param name="value"> The value for the new node being inserted. </param>
                 /// <remarks>
-                ///     This method will either create a new node with the inputted key-value pair (if one does not exist within the 
+                ///     This method will either create a new node with the inputted key-value pair (if one does not exist within the
                 ///     BST) or overwrite the value of any node whose key matches the 'key' input argument.
                 /// </remarks>
-                virtual void Insert(const T& key, const U& value) 
-                { 
+                virtual void Insert(const T& key, const U& value)
+                {
                     Root = Root ? Root->Insert(key, value) : new Node<T, U>(key, value);
                 }
                 /// <summary> Removes the specified node from the binary search tree. </summary>
@@ -83,7 +95,7 @@ namespace Cyclone
                 virtual void Remove(const T& key)
                 {
                     Root = Root ? Root->Remove(key) : nullptr;
-                }        
+                }
 
 
 
@@ -106,6 +118,21 @@ namespace Cyclone
                 /// <remarks> Attempting to use an index that is not present in the tree will result in exceptions being thrown. </remarks>
                 virtual const U& operator ()(uint index)    const { return Root->Index(index)->Value; }
 
+                virtual BST& operator =(BST&& other)
+                {
+                    Clear();
+                    Root = other.Root;
+                    other.Root = nullptr;
+                    return *this;
+                }
+                virtual BST& operator =(const BST& other)
+                {
+                    Clear();
+                    for (const auto& kvp : other)
+                        Insert(kvp.Key, kvp.Value);
+                    return *this;
+                }
+
             private:
 
                 /** DATA **/
@@ -127,7 +154,7 @@ namespace Cyclone
 
                         /// <summary> Gets the balance of the subtree for which this node is the root. </summary>
                         /// <remarks>
-                        ///     The balance of any node is defined here as the difference between the heights of the right and the left 
+                        ///     The balance of any node is defined here as the difference between the heights of the right and the left
                         ///     subtrees (i.e. B = LH - RH).
                         /// </remarks>
                         int Balance;
@@ -135,7 +162,7 @@ namespace Cyclone
                         int Count;
                         /// <summary> Gets the height of this node. </summary>
                         /// <remarks>
-                        ///     The height of any node is defined here as the distance (i.e. number of nodes) between it and the most 
+                        ///     The height of any node is defined here as the distance (i.e. number of nodes) between it and the most
                         ///     distal leaf node in its subtree.
                         /// </remarks>
                         int Height;
@@ -160,7 +187,7 @@ namespace Cyclone
                         }
                         /// <summary> Gets the node possessing the minimum key from the subtree rooted in this node. </summary>
                         Node<T, U>* Min()
-                        { 
+                        {
                             return Left ? Left->Min() : this;
                         }
                         /// <summary> Gets a list containing all of the values held by the search tree. </summary>
@@ -179,7 +206,7 @@ namespace Cyclone
                         /// <summary> Constructs a new node with a specific key-value pair. </summary>
                         /// <param name="key"> The key that will be used to index the new node within a tree. </param>
                         /// <param name="value"> The value held by the node that is associated with its key. </param>
-                        Node(const T& key, const U& value) : 
+                        Node(const T& key, const U& value) :
                             Left(nullptr),
                             Right(nullptr),
                             Balance(0),
@@ -210,15 +237,15 @@ namespace Cyclone
                                     return Left->Index(index);
                                 else
                                     index -= Left->Count;
-                            
+
                             if (index == 0)
                                 return this;
                             else
                                 index--;
-                            
+
                             if (Right && index < Right->Count)
                                 return Right->Index(index);
-                            
+
                             return nullptr;
                         }
                         const Node<T, U>* Index(uint index)     const { return Index(index); }
@@ -242,8 +269,8 @@ namespace Cyclone
                         /// <param name="value"> The value for the new node being inserted. </param>
                         /// <returns> The new root node of this subtree. </returns>
                         /// <remarks>
-                        ///     If automatic tree rebalancing is applied during an insert operation, then the root node of this subtree is 
-                        ///     liable to change. Thus, the node returned by this method is useful for tracking overall tree organization 
+                        ///     If automatic tree rebalancing is applied during an insert operation, then the root node of this subtree is
+                        ///     liable to change. Thus, the node returned by this method is useful for tracking overall tree organization
                         ///     at levels higher than the node on which this method gets invoked.
                         /// </remarks>
                         Node<T, U>* Insert(const T& key, const U& value)
@@ -259,13 +286,13 @@ namespace Cyclone
                             }
 
                             return Rebalance();
-                        }                
+                        }
                         /// <summary> Finds a node within the subtree whose key is greater than or equal to the inputted key. </summary>
                         /// <param name="key"> The key for which a greater-keyed node is to be found. </param>
                         /// <returns> A node whose key is greater than or equal to the input, or 'null' if one cannot be found. </returns>
                         /// <remarks>
-                        ///     This method searches a subtree for the 'next higher' node, which is defined here as the node whose key is 
-                        ///     the minimum of all keys that are greater than or equal to the 'key' input argument. If such a node cannot 
+                        ///     This method searches a subtree for the 'next higher' node, which is defined here as the node whose key is
+                        ///     the minimum of all keys that are greater than or equal to the 'key' input argument. If such a node cannot
                         ///     be found, then this method returns 'null'.
                         /// </remarks>
                         Node<T, U>* Ceiling(const T& key)
@@ -282,8 +309,8 @@ namespace Cyclone
                         /// <param name="key"> The key for which a lesser-keyed node is to be found. </param>
                         /// <returns> A node whose key is less than or equal to the input, or <c>nullptr</c> if no such node exists. </returns>
                         /// <remarks>
-                        ///     This method searches a subtree for the 'next lower' node, which is defined here as the node whose key is 
-                        ///     the maximum of all keys that are less than or equal to the 'key' input argument. If such a node cannot be 
+                        ///     This method searches a subtree for the 'next lower' node, which is defined here as the node whose key is
+                        ///     the maximum of all keys that are less than or equal to the 'key' input argument. If such a node cannot be
                         ///     found, then this method returns 'null'.
                         /// </remarks>
                         Node<T, U>* Floor(const T& key)
@@ -338,10 +365,10 @@ namespace Cyclone
 
                                 return newRoot;
                             }
-    
+
                             return Rebalance();
                         }
-               
+
                     private:
 
                         /** UTILITIES **/
@@ -374,7 +401,7 @@ namespace Cyclone
                                 newRoot->Left = this;
                             }
 
-                            if (newRoot != this) { Update(); } 
+                            if (newRoot != this) { Update(); }
                             newRoot->Update();
                             return newRoot;
                         }
@@ -389,7 +416,7 @@ namespace Cyclone
                                 Left = Left->Rotate(false);
                             else if (!cwFlag && Right && Right->Balance > 0)
                                 Right = Right->Rotate(true);
-                    
+
                             return Rotate(cwFlag);
                         }
                         /// <summary> Updates all child-dependent data for this node (i.e. balance, height, and count). </summary>
@@ -426,7 +453,7 @@ namespace Cyclone
                         uint Index()                            const { return _index; }
 
                         /** CONSTRUCTOR **/
-                        Iterator(uint idx, Node<T, U>* root) : 
+                        Iterator(uint idx, Node<T, U>* root) :
                             _index(idx),
                             Root(root)
                         {
@@ -443,7 +470,7 @@ namespace Cyclone
                             return Index() == other.Index();
                         }
                         bool operator !=(const Iterator& other) const { return !(operator ==(other)); }
-                        
+
                     private:
 
                         uint        _index;
