@@ -49,7 +49,7 @@ namespace Cyclone
 
         void VirtualClass::Set(uint object, uint property, const Literal& value)
         {
-            //if (!_properties.Contains(property)) { return; }
+            if (!_properties.Contains(property)) { return; }
             _properties[property].Set(object, value);
         }
 

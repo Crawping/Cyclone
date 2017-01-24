@@ -17,7 +17,7 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        VirtualMachine::VirtualMachine() : 
+        VirtualMachine::VirtualMachine() :
             _data(nullptr)
         {
 

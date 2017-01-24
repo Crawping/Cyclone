@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\Utilities;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Utilities;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>VM_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>

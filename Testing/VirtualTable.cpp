@@ -57,13 +57,13 @@ TEST_F(_virtualTable, StringHashing)
 
 TEST_F(_virtualTable, VariableInsertion)
 {
-    //string name = "Testing";
-    //uint id = VT.Insert(name);
+    string name = "Testing";
+    uint id = VT.Insert(name);
 
-    //Literal v1 = 10;
-    //VT.Set(id, v1);
+    Literal v1 = 10;
+    VT.Set(id, v1);
 
-    //ASSERT_EQ(VT.Get(id), v1);
+    ASSERT_EQ(VT.Get(id), v1);
 }
 
 TEST_F(_virtualTable, ClassInsertion)

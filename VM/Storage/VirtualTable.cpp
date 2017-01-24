@@ -36,12 +36,10 @@ namespace Cyclone
         void VirtualTable::Insert(const VirtualClass& type)
         {
             Classes.Insert(type.ID(), type);
-            //return Literal(LiteralTypes::Type, (ulong)(type.ID()) << 32);
         }
         void VirtualTable::Insert(const VirtualFunction& function)
         {
             Functions.Insert(function.ID(), function);
-            //return Literal(LiteralTypes::Function, function.ID());
         }
         uint VirtualTable::Insert(const string& string)
         {
