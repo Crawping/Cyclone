@@ -7,10 +7,6 @@ namespace Cyclone
     namespace VM
     {
 
-        /** PROPERTIES **/
-
-
-
         /** CONSTRUCTOR **/
         VirtualProperty::VirtualProperty(uint id) :
             _id(id)
@@ -29,7 +25,7 @@ namespace Cyclone
 
 
 
-
+        /** UTILITIES **/
         Literal VirtualClass::Get(uint object, uint property) const
         {
             return _properties.Contains(property) ? _properties[property].Get(object) : Literal();
@@ -46,7 +42,6 @@ namespace Cyclone
         {
             return object.IsObject() && (object.FirstHalf() == ID());
         }
-
         void VirtualClass::Set(uint object, uint property, const Literal& value)
         {
             if (!_properties.Contains(property)) { return; }

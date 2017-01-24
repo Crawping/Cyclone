@@ -66,8 +66,12 @@ namespace Cyclone
                 uint ID()                           const { return _id; }
                 LiteralTypes Type()                 const { return LiteralTypes::Type; }
 
+
+
                 /** CONSTRUCTOR **/
                 VirtualClass(uint id = 0) : _id(id) { }
+
+
 
                 /** UTILITIES **/
                 VMAPI void Insert(const VirtualFunction& function);
