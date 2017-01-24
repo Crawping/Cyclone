@@ -11,82 +11,82 @@ using namespace Cyclone::Utilities;
 
 
 
-class _virtualTable : public testing::Test
+class _VirtualTable : public testing::Test
 {
     protected:
 
-        VirtualTable VT;
+        Vector<uint, 5>     _i1 = 0;
+        Vector<string, 5>   _s1 = { "Variable0", "Variable1", "Variable2", "Variable3", "Variable4" };
+        Vector<int, 5>      _v1 = { 0, 10, 20, 30, 40, 50 };
 
-        _virtualTable() { }
-        ~_virtualTable()
+        VirtualClass        _c1;
+        VirtualProperty     _p1;
+
+        VirtualTable        _t0;
+        VirtualTable        _t1;
+
+        _VirtualTable() 
         {
-            VT.Delete(0);
+            for (uint a = 0; a < _v1.Count(); a++)
+            {
+                _i1(a) = _t1.Insert(_s1(a));
+                _t1.Set(_i1(a), _v1(a));
+            }
+
+            _c1 = VirtualClass(_i1(1));
+            _p1 = VirtualProperty(_i1(2));
+            _c1.Insert(_p1);
+
+            _t1.Insert(_c1);
+            _t1.Set(_c1.ID(), _p1.ID(), _i1(3), _v1(3));
         }
 
 };
 
 
 
-TEST_F(_virtualTable, DefaultConstruction)
+TEST_F(_VirtualTable, DefaultConstruction)
 {
-    //string
-    //VT.Insert(VirtualClass())
+    ASSERT_EQ(_t0.ClassCount(),     0);
+    ASSERT_EQ(_t0.FunctionCount(),  0);
+    ASSERT_EQ(_t0.VariableCount(),  0);
 }
 
 
 
-TEST_F(_virtualTable, StringHashing)
+TEST_F(_VirtualTable, StringHashing)
 {
-    uint id = 0;
-    string t = "Testing";
+    uint id = _i1(0);
+    ASSERT_EQ(_t1.FindName(id),     _s1(0));
+    ASSERT_EQ(_t1.FindID(_s1(0)),   id);
 
-    id = VT.Insert(t);
-    ASSERT_NE(id, 0);
-    ASSERT_EQ(VT.FindName(id), t);
-    ASSERT_EQ(VT.FindID(t), id);
-
-    uint id1 = 0;
-    string t1 = "Texting";
-
-    id1 = VT.Insert(t1);
-    ASSERT_NE(id1, 0);
-    ASSERT_NE(id1, id);
-    ASSERT_EQ(VT.FindName(id1), t1);
-    ASSERT_EQ(VT.FindID(t1), id1);
+    for (uint a = 1; a < _i1.Count(); a++)
+    {
+        ASSERT_NE(_i1(a), id);
+        ASSERT_EQ(_t1.FindName(_i1(a)),     _s1(a));
+        ASSERT_EQ(_t1.FindID(_s1(a)),       _i1(a));
+        id = _i1(a);
+    }
+}
+TEST_F(_VirtualTable, VariableDeletion)
+{
+    ASSERT_EQ(_t1.VariableCount(), _v1.Count());
+    for (uint a = 0; a < _v1.Count(); a++)
+    {
+        _t1.Delete(_i1(a));
+        ASSERT_EQ(_t1.VariableCount(), _v1.Count() - a - 1);
+        ASSERT_EQ(_t1.Get(_i1(a)), Literal());
+    }
+}
+TEST_F(_VirtualTable, VariableInsertion)
+{
+    ASSERT_EQ(_t1.VariableCount(), _v1.Count());
+    for (uint a = 0; a < _v1.Count(); a++)
+        ASSERT_EQ(_t1.Get(_i1(a)), _v1(a));
 }
 
-TEST_F(_virtualTable, VariableInsertion)
+TEST_F(_VirtualTable, ClassInsertion)
 {
-    string name = "Testing";
-    uint id = VT.Insert(name);
-
-    Literal v1 = 10;
-    VT.Set(id, v1);
-
-    ASSERT_EQ(VT.Get(id), v1);
-}
-
-TEST_F(_virtualTable, ClassInsertion)
-{
-    string typeName = "TestClass";
-    string propName = "TestProperty";
-    string varName = "TestVariable";
-    string instName = "ClassInstance";
-
-    uint idt = VT.Insert(typeName);
-    uint idp = VT.Insert(propName);
-    uint idv = VT.Insert(varName);
-    uint idi = VT.Insert(instName);
-
-    VirtualClass type(idt);
-    VirtualProperty prop(idp);
-
-    type.Insert(prop);
-    VT.Insert(type);
-    VT.Set(idt, idi, idp, 10);
-
-    ASSERT_TRUE(VT.Get(idi).IsNull());
-    
-    ASSERT_EQ(VT.Get(idt, idi, idp).Value, 10);
-
+    ASSERT_EQ(_t1.Get(_i1(1)), _v1(1));
+    ASSERT_EQ(_t1.Get(_c1.ID(), _p1.ID(), _i1(3)), _v1(3));
 }
