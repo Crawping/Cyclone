@@ -59,6 +59,11 @@ namespace Cyclone
                 (x > max) ? max : x;
         }
 
+        template<typename T> constexpr int compare(const T& x, const T& y)
+        {
+            return (x < y) ? -1 : (x > y) ? 1 : 0;
+        }
+
         template<typename T> T wrap(T x, T min, T max)
         {
             float notUsed;
