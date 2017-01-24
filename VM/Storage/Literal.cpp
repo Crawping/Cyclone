@@ -8,11 +8,15 @@ namespace Cyclone
     {
 
         /** LITERAL TYPE UTILITIES **/
-        constexpr uint LiteralTypes::ByteSize() const
+        constexpr uint LiteralTypes::ByteSize()     const
         {
             return
                 (Value == Boolean)  ? 1 :
                 (Value == Double)   ? 8 : 4;
+        }
+        constexpr bool LiteralTypes::IsNumeric()    const
+        {
+            return (Value != Null) && (Value != Function) && (Value != String) && (Value != Type);
         }
         string LiteralTypes::ToString() const
         {
@@ -62,19 +66,28 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        constexpr Literal Literal::Cast(LiteralTypes type) const
+        {
+            return 
+                IsOfType(type) ?
+                    Literal(Type, Value) :
+                IsNumeric() && type.IsNumeric() ?
+                    Literal(type, Value) : Literal();
+        }
         constexpr Literal Literal::Calculate(Instructions operation, const Literal& x, const Literal& y)
         {
             return Literal
             (
                 LiteralTypes::MaxPrecision(x.Type, y.Type),
 
-                ( x.IsString() || x.IsNull() )              ? 0.0                               : 
-                ( operation == Instructions::Add )          ? x.Value + y.Value                 : 
-                ( operation == Instructions::And )          ? (ulong)x.Value & (ulong)y.Value   :
-                ( operation == Instructions::Divide )       ? x.Value / y.Value                 :
-                ( operation == Instructions::Multiply )     ? x.Value * y.Value                 :
-                ( operation == Instructions::Or )           ? (ulong)x.Value | (ulong)y.Value   :
-                ( operation == Instructions::Subtract )     ? x.Value - y.Value                 : 0.0
+                ( x.IsString() || x.IsNull() || x.IsFunction() )    ? 0.0                               : 
+                ( y.IsString() || y.IsNull() || y.IsFunction() )    ? 0.0                               : 
+                ( operation == Instructions::Add )                  ? x.Value + y.Value                 : 
+                ( operation == Instructions::And )                  ? (ulong)x.Value & (ulong)y.Value   :
+                ( operation == Instructions::Divide )               ? x.Value / y.Value                 :
+                ( operation == Instructions::Multiply )             ? x.Value * y.Value                 :
+                ( operation == Instructions::Or )                   ? (ulong)x.Value | (ulong)y.Value   :
+                ( operation == Instructions::Subtract )             ? x.Value - y.Value                 : 0.0
             );
         }
 

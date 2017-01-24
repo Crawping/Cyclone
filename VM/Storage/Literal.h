@@ -18,7 +18,7 @@ namespace Cyclone
         {
             enum Types
             {
-                Nothing     = 0,
+                Null        = 0,
                 Boolean     = 1,
                 Double      = 4,
                 Float       = 3,
@@ -28,17 +28,24 @@ namespace Cyclone
                 Type        = 6,
             };
 
-            constexpr LiteralTypes(enum Types t = Nothing) : Enumerator((int)t) { }
+
+
+            /** CONSTRUCTORS **/
+            constexpr LiteralTypes(uint type)           : Enumerator((int)type) { }
+            constexpr LiteralTypes(enum Types t = Null) : Enumerator((int)t) { }
 
 
 
             /** UTILITIES **/
-            VMAPI constexpr uint ByteSize() const;
-            VMAPI string ToString()         const;
+            VMAPI constexpr uint ByteSize()     const;
+            VMAPI constexpr bool IsNumeric()    const;
+            VMAPI string ToString()             const;
+
 
             constexpr static LiteralTypes MaxPrecision(LiteralTypes x, LiteralTypes y)
             {
-                return x >= y ? x : y;
+                return (x == Null || y == Null) ? Null : 
+                    (x >= y) ? x : y;
             }
         };
 
@@ -47,6 +54,7 @@ namespace Cyclone
         {
 
             public:
+
                 /** DATA **/
                 LiteralTypes    Type;
                 double          Value;
@@ -60,7 +68,8 @@ namespace Cyclone
                 constexpr bool IsFloat()                            const { return Type == LiteralTypes::Float; }
                 constexpr bool IsFunction()                         const { return Type == LiteralTypes::Function; }
                 constexpr bool IsInteger()                          const { return Type == LiteralTypes::Integer; }
-                constexpr bool IsNull()                             const { return Type == LiteralTypes::Nothing; }
+                constexpr bool IsNull()                             const { return Type == LiteralTypes::Null; }
+                constexpr bool IsNumeric()                          const { return Type.IsNumeric(); }
                 constexpr bool IsObject()                           const { return Type == LiteralTypes::Type; }
                 constexpr bool IsString()                           const { return Type == LiteralTypes::String; }
                 constexpr uint SecondHalf()                         const { return (uint)Value; }
@@ -68,7 +77,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS **/
-                VMAPI constexpr Literal(LiteralTypes type = LiteralTypes::Nothing, double value = 0.0);
+                VMAPI constexpr Literal(LiteralTypes type = LiteralTypes::Null, double value = 0.0);
                 VMAPI constexpr Literal(bool value);
                 VMAPI constexpr Literal(double value);
                 VMAPI constexpr Literal(float value);
@@ -78,14 +87,22 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                VMAPI constexpr Literal Cast(LiteralTypes type)     const;
                 constexpr Literal Compare(const Literal& other)     const 
                 { 
                     return Value < other.Value ? -1 : Value > other.Value ? 1 : 0;
                 }
                 constexpr bool IsOfType(LiteralTypes type)          const { return Type == type; }
-                constexpr bool IsOfType(const Literal& other)       const { return Type == other.Type; }
+                constexpr bool IsOfType(const Literal& other)       const 
+                { 
+                    return IsObject() ?
+                        other.IsObject() ? 
+                            (FirstHalf() == other.FirstHalf()) : false :
+                        (Type == other.Type);
+                }
 
                 VMAPI constexpr static Literal Calculate(Instructions operation, const Literal& x, const Literal& y);
+
 
 
                 /** OPERATORS **/
@@ -97,12 +114,6 @@ namespace Cyclone
                 constexpr Literal operator -(const Literal& other)  const { return Calculate(Instructions::Subtract, *this, other); }
                 constexpr Literal operator *(const Literal& other)  const { return Calculate(Instructions::Multiply, *this, other); }
                 constexpr Literal operator |(const Literal& other)  const { return Calculate(Instructions::Or, *this, other); }
-
-                //Literal& operator ++()
-                //{
-                //    Value = Calculate(Instructions::Increment, Literal()).Value;
-                //    return *this;
-                //}
 
                 VMAPI Literal& operator =(Literal other);
 
