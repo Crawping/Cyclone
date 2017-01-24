@@ -126,7 +126,6 @@
     <ClInclude Include="Execution\Instructions.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />
     <ClInclude Include="Storage\Literal.h" />
-    <ClInclude Include="Storage\StackFrame.h" />
     <ClInclude Include="Storage\VirtualProperty.h" />
     <ClInclude Include="Storage\VirtualTable.h" />
     <ClInclude Include="VirtualMachine.h" />
