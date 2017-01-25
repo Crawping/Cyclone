@@ -8,7 +8,7 @@
 #include "Collections/Vector.h"
 #include "Execution/Instructions.h"
 #include "Storage/Literal.h"
-#include "Storage/VirtualTable.h"
+#include "Storage/VirtualMemory.h"
 
 
 
@@ -28,9 +28,9 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                const VirtualTable* Data() const { return _data; }
+                const VirtualMemory* Data() const { return _data; }
 
-                VMAPI VirtualMachine& Data(VirtualTable* value);
+                VMAPI VirtualMachine& Data(VirtualMemory* value);
 
 
 
@@ -50,7 +50,7 @@ namespace Cyclone
 
             private:
 
-                VirtualTable*       _data;
+                VirtualMemory*       _data;
 
                 Stack<uint>         CallStack;
                 Instructions        Interrupt;

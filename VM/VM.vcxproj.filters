@@ -19,7 +19,7 @@
     <ClCompile Include="Storage\VirtualProperty.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
-    <ClCompile Include="Storage\VirtualTable.cpp">
+    <ClCompile Include="Storage\VirtualMemory.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
   </ItemGroup>
@@ -31,15 +31,15 @@
     <ClInclude Include="Storage\VirtualProperty.h">
       <Filter>Storage</Filter>
     </ClInclude>
-    <ClInclude Include="Storage\VirtualTable.h">
-      <Filter>Storage</Filter>
-    </ClInclude>
     <ClInclude Include="Execution\Instructions.h">
       <Filter>Execution</Filter>
     </ClInclude>
     <ClInclude Include="VMAPI.h" />
     <ClInclude Include="Interfaces\IVirtualData.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\VirtualMemory.h">
+      <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

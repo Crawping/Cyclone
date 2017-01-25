@@ -3,7 +3,7 @@
  */
 
 #include "TypeDefinitions.h"
-#include "Storage/VirtualTable.h"
+#include "Storage/VirtualMemory.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::VM;
@@ -15,15 +15,15 @@ class _VirtualTable : public testing::Test
 {
     protected:
 
-        Vector<uint, 5>     _i1 = 0;
+        Vector<int, 5>      _i1 = 0;
         Vector<string, 5>   _s1 = { "Variable0", "Variable1", "Variable2", "Variable3", "Variable4" };
         Vector<int, 5>      _v1 = { 0, 10, 20, 30, 40, 50 };
 
         VirtualClass        _c1;
         VirtualProperty     _p1;
 
-        VirtualTable        _t0;
-        VirtualTable        _t1;
+        VirtualMemory       _t0;
+        VirtualMemory       _t1;
 
         _VirtualTable() 
         {
@@ -57,14 +57,14 @@ TEST_F(_VirtualTable, DefaultConstruction)
 TEST_F(_VirtualTable, StringHashing)
 {
     uint id = _i1(0);
-    ASSERT_EQ(_t1.FindName(id),     _s1(0));
-    ASSERT_EQ(_t1.FindID(_s1(0)),   id);
+    ASSERT_EQ(_t1.FindName(id), _s1(0));
+    ASSERT_EQ(_t1.FindID(_s1(0)), id);
 
     for (uint a = 1; a < _i1.Count(); a++)
     {
         ASSERT_NE(_i1(a), id);
-        ASSERT_EQ(_t1.FindName(_i1(a)),     _s1(a));
-        ASSERT_EQ(_t1.FindID(_s1(a)),       _i1(a));
+        ASSERT_EQ(_t1.FindName(_i1(a)), _s1(a));
+        ASSERT_EQ(_t1.FindID(_s1(a)), _i1(a));
         id = _i1(a);
     }
 }
@@ -75,7 +75,7 @@ TEST_F(_VirtualTable, VariableDeletion)
     {
         _t1.Delete(_i1(a));
         ASSERT_EQ(_t1.VariableCount(), _v1.Count() - a - 1);
-        ASSERT_EQ(_t1.Get(_i1(a)), Literal());
+        ASSERT_EQ(_t1.Get(_i1(a)),  Literal());
     }
 }
 TEST_F(_VirtualTable, VariableInsertion)

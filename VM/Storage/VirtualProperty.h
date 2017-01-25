@@ -19,7 +19,7 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint ID()                           const { return _id; }
+                int ID()                            const { return _id; }
 
 
 
@@ -34,7 +34,7 @@ namespace Cyclone
 
             private:
 
-                uint                _id;
+                int                 _id;
                 BST<uint, Literal>  _instances;
         };
 
@@ -43,7 +43,7 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint ID()                           const { return _id; }
+                int ID()                            const { return _id; }
                 uint InputCount()                   const { return _inputCount; }
                 const Vector<Instructions>& Logic() const { return _logic; }
                 uint OutputCount()                  const { return _outputCount; }
@@ -63,7 +63,7 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/
-                uint ID()                           const { return _id; }
+                int ID()                            const { return _id; }
                 LiteralTypes Type()                 const { return LiteralTypes::Type; }
 
 
@@ -84,7 +84,7 @@ namespace Cyclone
 
             private:
 
-                uint                        _id;
+                int                         _id;
                 BST<uint, Literal>          _instances;
                 BST<uint, VirtualFunction>  _methods;
                 BST<uint, VirtualProperty>  _properties;

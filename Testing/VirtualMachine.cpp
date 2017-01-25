@@ -16,7 +16,7 @@ class _VirtualMachine : public testing::Test
 {
     protected:
 
-        Vector<uint, 5>     _i1 = 0;
+        Vector<int, 5>      _i1 = 0;
         Vector<string, 5>   _s1 = { "Variable0", "Variable1", "Variable2", "Variable3", "Variable4" };
         Vector<int, 5>      _v1 = { 0, 10, 20, 30, 40, 50 };
 
@@ -25,8 +25,8 @@ class _VirtualMachine : public testing::Test
 
         VirtualMachine      _m0;
         VirtualMachine      _m1;
-        VirtualTable        _t0;
-        VirtualTable        _t1;
+        VirtualMemory       _t0;
+        VirtualMemory       _t1;
 
 
 

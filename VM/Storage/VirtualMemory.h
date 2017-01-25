@@ -13,7 +13,7 @@ namespace Cyclone
     namespace VM
     {
 
-        class VirtualTable
+        class VirtualMemory
         {
             public:
 
@@ -25,7 +25,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                VMAPI VirtualTable();
+                VMAPI VirtualMemory();
 
 
 

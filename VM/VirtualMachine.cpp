@@ -8,7 +8,7 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        VirtualMachine& VirtualMachine::Data(VirtualTable* value)
+        VirtualMachine& VirtualMachine::Data(VirtualMemory* value)
         {
             _data = value;
             return *this;
@@ -81,6 +81,11 @@ namespace Cyclone
                         CallStack.Push(idx);
                         idx = cmd.Operands(0);
                         break;
+                    case Instructions::CallRelative:
+                        CallStack.Push(idx);
+                        idx += cmd.Operands(0);
+                        break;
+
                     case Instructions::Cast:
                         Push( Pop().Cast(cmd.Operands(0)) );
                         break;

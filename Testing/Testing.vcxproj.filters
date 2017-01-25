@@ -68,7 +68,7 @@
     <ClCompile Include="VirtualMachine.cpp">
       <Filter>VM</Filter>
     </ClCompile>
-    <ClCompile Include="VirtualTable.cpp">
+    <ClCompile Include="VirtualMemory.cpp">
       <Filter>VM</Filter>
     </ClCompile>
   </ItemGroup>
