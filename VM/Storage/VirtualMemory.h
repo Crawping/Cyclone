@@ -31,19 +31,20 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 VMAPI void Delete(uint id);
+
+                VMAPI string FindName(uint id)                              const;
+                VMAPI uint FindID(const string& name)                       const;
+                VMAPI Literal Get(uint id)                                  const;
+                VMAPI Literal Get(uint type, uint property, uint instance)  const;
+
                 VMAPI void Insert(const VirtualClass& type);
                 VMAPI void Insert(const VirtualFunction& function);
                 VMAPI uint Insert(const string& string);
                 VMAPI uint Insert(const string& name, const Literal& value);
 
-                VMAPI Literal Get(uint id)  const;
-                VMAPI Literal Get(uint type, uint property, uint instance) const;
-
                 VMAPI void Set(uint id, const Literal& value);
                 VMAPI void Set(uint type, uint property, uint instance, const Literal& value);
                 
-                VMAPI string FindName(uint id)          const;
-                VMAPI uint FindID(const string& name)   const;
 
             private:
 
