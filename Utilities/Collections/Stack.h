@@ -58,6 +58,7 @@ namespace Cyclone
 
                 /** OPERATORS **/
                 const T& operator ()(uint index)        const { return Data(index); }
+                T& operator ()(uint index)              { return Data(index); }
                 
 
             private:
