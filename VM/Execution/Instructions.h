@@ -16,35 +16,77 @@ namespace Cyclone
 
         struct Instructions : public Enumerator
         {
-            enum Types
+            enum Types : ubyte
             {
-                None        = 0,
+                None = 0,
+
                 Add,
+                AddSet,
+                AddStore,
+
                 And,
+                AndSet,
+                AndStore,
+
                 Call,
+                CallIf,
+                CallRelative,
+                CallRelativeIf,
+
                 Cast,
+                CastSet,
+                CastStore,
+
                 Compare,
                 Decrement,
+
                 Delete,
+
                 Divide,
+                DivideSet,
+                DivideStore,
+
                 Get,
+
                 Increment,
+                IncrementSet,
+                IncrementStore,
+
                 Jump,
                 JumpIf,
+                JumpRelative,
+                JumpRelativeIf,
+
                 Load,
+
                 Multiply,
+                MultiplySet,
+                MultiplyStore,
+
                 Negate,
+
                 Or,
+                OrSet,
+                OrStore,
+
                 Remove,
                 Return,
                 Set,
                 Store,
+
                 Subtract,
+                SubtractSet,
+                SubtractStore,
+
                 Swap,
+
                 Xor,
+                XorSet,
+                XorStore,
             };
 
             constexpr Instructions(enum Types t = None) : Enumerator((int)t) { }
+            constexpr Instructions(ubyte type)          : Enumerator((int)type) { }
         };
 
 
