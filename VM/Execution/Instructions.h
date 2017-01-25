@@ -29,16 +29,20 @@ namespace Cyclone
                 AndStore,
 
                 Call,
-                CallIf,
                 CallRelative,
-                CallRelativeIf,
 
                 Cast,
-                CastSet,
                 CastStore,
 
                 Compare,
+
+                Copy,
+                CopyMemory,
+
                 Decrement,
+                DecrementMemory,
+                DecrementSet,
+                DecrementStore,
 
                 Delete,
 
@@ -49,6 +53,7 @@ namespace Cyclone
                 Get,
 
                 Increment,
+                IncrementMemory,
                 IncrementSet,
                 IncrementStore,
 
@@ -64,6 +69,12 @@ namespace Cyclone
                 MultiplyStore,
 
                 Negate,
+                NegateSet,
+                NegateStore,
+
+                Not,
+                NotSet,
+                NotStore,
 
                 Or,
                 OrSet,
@@ -79,6 +90,7 @@ namespace Cyclone
                 SubtractStore,
 
                 Swap,
+                SwapMemory,
 
                 Xor,
                 XorSet,
@@ -93,7 +105,7 @@ namespace Cyclone
         struct Instruction
         {
             Instructions        Command;
-            Vector<uint, 3>     Operands;
+            Vector<int, 3>      Operands;
 
             bool operator ==(const Instruction& other) const
             {

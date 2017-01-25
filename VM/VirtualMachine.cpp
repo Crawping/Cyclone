@@ -50,6 +50,7 @@ namespace Cyclone
                     case Instructions::Divide:
                     case Instructions::Multiply:
                     case Instructions::Negate:
+                    case Instructions::Not:
                     case Instructions::Or:
                     case Instructions::Subtract:
                     case Instructions::Xor:
@@ -60,6 +61,8 @@ namespace Cyclone
                     case Instructions::AndSet:
                     case Instructions::DivideSet:
                     case Instructions::MultiplySet:
+                    case Instructions::NegateSet:
+                    case Instructions::NotSet:
                     case Instructions::OrSet:
                     case Instructions::SubtractSet:
                     case Instructions::XorSet:
@@ -71,6 +74,8 @@ namespace Cyclone
                     case Instructions::AndStore:
                     case Instructions::DivideStore:
                     case Instructions::MultiplyStore:
+                    case Instructions::NegateStore:
+                    case Instructions::NotStore:
                     case Instructions::OrStore:
                     case Instructions::SubtractStore:
                     case Instructions::XorStore:
@@ -92,15 +97,39 @@ namespace Cyclone
                     case Instructions::CastStore:
                         _data->Set( cmd.Operands(0), Pop().Cast(cmd.Operands(1)) );
                         break;
+
                     case Instructions::Compare:
                         Push( Pop().Compare(Pop()) );
                         break;
+
+                    case Instructions::Copy:
+                        Push(Workspace.First());
+                        break;
+                    case Instructions::CopyMemory:
+                        _data->Set( cmd.Operands(1), _data->Get(cmd.Operands(0)) );
+                        break;
+
                     case Instructions::Decrement:
                         Workspace.First().Value--;
                         break;
+                    case Instructions::DecrementMemory:
+                        v1 = _data->Get(cmd.Operands(0)); 
+                        v1.Value--;
+                        _data->Set( cmd.Operands(0), v1 );
+                        break;
+                    case Instructions::DecrementSet:
+                        Workspace.First().Value--;
+                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop() );
+                        break;
+                    case Instructions::DecrementStore:
+                        Workspace.First().Value--;
+                        _data->Set( cmd.Operands(0), Pop() );
+                        break;
+
                     case Instructions::Delete:
                         _data->Delete(cmd.Operands(0));
                         break;
+
                     case Instructions::Get:
                         Push( _data->Get(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2)) );
                         break;
@@ -108,13 +137,18 @@ namespace Cyclone
                     case Instructions::Increment:
                         Workspace.First().Value++;
                         break;
+                    case Instructions::IncrementMemory:
+                        v1 = _data->Get(cmd.Operands(0));
+                        v1.Value++;
+                        _data->Set( cmd.Operands(0), v1 );
+                        break;
                     case Instructions::IncrementSet:
-                        v1 = Pop(); v1.Value++;
-                        _data->Set(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), v1);
+                        Workspace.First().Value++;
+                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop() );
                         break;
                     case Instructions::IncrementStore:
-                        v1 = Pop(); v1.Value++;
-                        _data->Set(cmd.Operands(0), v1);
+                        Workspace.First().Value++;
+                        _data->Set( cmd.Operands(0), Pop() );
                         break;
 
                     case Instructions::Jump:
@@ -147,8 +181,12 @@ namespace Cyclone
                     case Instructions::Store:
                         _data->Set(cmd.Operands(0), Pop());
                         break;
+
                     case Instructions::Swap:
                         Push({ Pop(), Pop() });
+                        break;
+                    case Instructions::SwapMemory:
+
                         break;
 
                     default:

@@ -88,6 +88,20 @@ TEST_F(_VirtualMachine, Comparison)
     _m1.Execute(cmds);
     ASSERT_EQ(_t1.Get(_i1(3)), compare(_v1(1), _v1(2)));
 }
+TEST_F(_VirtualMachine, Copying)
+{
+    Vector<Instruction> cmds =
+    {
+        { Instructions::Load,           _i1(1) },
+        { Instructions::Copy,                0 },
+        { Instructions::MultiplyStore,  _i1(3) },
+        { Instructions::CopyMemory,     { _i1(2), _i1(4), 0 } },
+    };
+
+    _m1.Execute(cmds);
+    ASSERT_EQ(_t1.Get(_i1(3)), _v1(1) * _v1(1));
+    ASSERT_EQ(_t1.Get(_i1(4)), _v1(2));
+}
 TEST_F(_VirtualMachine, Decrementing)
 {
     Vector<Instruction> cmds =
