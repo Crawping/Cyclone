@@ -22,6 +22,9 @@
     <ClCompile Include="Storage\VirtualMemory.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="Storage\VirtualWorkspace.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
@@ -39,6 +42,9 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Storage\VirtualMemory.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\VirtualWorkspace.h">
       <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>

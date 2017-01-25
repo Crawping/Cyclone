@@ -120,6 +120,7 @@
     <ClCompile Include="Storage\Literal.cpp" />
     <ClCompile Include="Storage\VirtualProperty.cpp" />
     <ClCompile Include="Storage\VirtualMemory.cpp" />
+    <ClCompile Include="Storage\VirtualWorkspace.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +129,7 @@
     <ClInclude Include="Storage\Literal.h" />
     <ClInclude Include="Storage\VirtualProperty.h" />
     <ClInclude Include="Storage\VirtualMemory.h" />
+    <ClInclude Include="Storage\VirtualWorkspace.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMAPI.h" />
   </ItemGroup>
