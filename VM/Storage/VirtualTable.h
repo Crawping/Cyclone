@@ -20,7 +20,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 uint ClassCount()       const { return Classes.Count(); }
                 uint FunctionCount()    const { return Functions.Count(); }
-                uint VariableCount()    const { return Variables.Count(); }
+                uint VariableCount()    const { return Variables.Count() - 1; }
 
 
 
