@@ -22,22 +22,30 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        Literal& VirtualMemory::Access(uint id)
+        {
+            return Variables[id];
+        }
+        Literal& VirtualMemory::Access(uint type, uint property, uint instance)
+        {
+            return Classes[type].Access(instance, property);
+        }
         void VirtualMemory::Delete(uint id)
         {
             if (id == 0) { return; }
             Variables.Remove(id);
         }
-        uint VirtualMemory::FindID(const string& name)    const
+        uint VirtualMemory::FindID(const string& name)                      const
         {
             if (name.empty()) { return 0; }
             uint id = Hash(name);
             return Strings.Contains(id) ? id : 0;
         }
-        string VirtualMemory::FindName(uint id)          const
+        string VirtualMemory::FindName(uint id)                             const
         {
             return Strings.Contains(id) ? Strings[id] : "";
         }
-        Literal VirtualMemory::Get(uint id) const
+        Literal VirtualMemory::Get(uint id)                                 const
         {
             return Variables.Contains(id) ? Variables[id] : Literal();
         }

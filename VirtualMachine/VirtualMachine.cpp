@@ -106,16 +106,14 @@ namespace Cyclone
                         Push(Workspace.First());
                         break;
                     case Instructions::CopyMemory:
-                        _data->Set( cmd.Operands(1), _data->Get(cmd.Operands(0)) );
+                        _data->Set( cmd.Operands(1), _data->Access(cmd.Operands(0)) );
                         break;
 
                     case Instructions::Decrement:
                         Workspace.First().Value--;
                         break;
                     case Instructions::DecrementMemory:
-                        v1 = _data->Get(cmd.Operands(0)); 
-                        v1.Value--;
-                        _data->Set( cmd.Operands(0), v1 );
+                        _data->Access(cmd.Operands(0)).Value--;
                         break;
                     case Instructions::DecrementSet:
                         Workspace.First().Value--;
@@ -138,9 +136,7 @@ namespace Cyclone
                         Workspace.First().Value++;
                         break;
                     case Instructions::IncrementMemory:
-                        v1 = _data->Get(cmd.Operands(0));
-                        v1.Value++;
-                        _data->Set( cmd.Operands(0), v1 );
+                        _data->Access(cmd.Operands(0)).Value++;
                         break;
                     case Instructions::IncrementSet:
                         Workspace.First().Value++;
@@ -186,7 +182,7 @@ namespace Cyclone
                         Push({ Pop(), Pop() });
                         break;
                     case Instructions::SwapMemory:
-
+                        std::swap( _data->Access(cmd.Operands(0)), _data->Access(cmd.Operands(1)) );
                         break;
 
                     default:

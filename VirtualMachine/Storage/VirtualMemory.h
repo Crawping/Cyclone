@@ -30,8 +30,10 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                VMAPI void Delete(uint id);
+                VMAPI Literal& Access(uint id);
+                VMAPI Literal& Access(uint type, uint property, uint instance);
 
+                VMAPI void Delete(uint id);
                 VMAPI string FindName(uint id)                              const;
                 VMAPI uint FindID(const string& name)                       const;
                 VMAPI Literal Get(uint id)                                  const;

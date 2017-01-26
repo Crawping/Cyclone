@@ -90,7 +90,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>GLFW_INCLUDE_COREARB;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>.\;..\CoreGL;..\OpenGL;..\Utilities;..\VM;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\CoreGL;..\OpenGL;..\Utilities;..\VirtualMachine;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -178,7 +178,7 @@
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\VM\VM.vcxproj">
+    <ProjectReference Include="..\VirtualMachine\VirtualMachine.vcxproj">
       <Project>{4275937d-182c-4385-90f1-f96dfa513a09}</Project>
     </ProjectReference>
   </ItemGroup>

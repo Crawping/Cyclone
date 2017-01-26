@@ -29,6 +29,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                VMAPI Literal& Access(uint instance);
                 VMAPI Literal Get(uint instance)    const;
                 VMAPI void Set(uint instance, const Literal& value);
 
@@ -74,6 +75,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                VMAPI Literal& Access(uint instance, uint property);
                 VMAPI void Insert(const VirtualFunction& function);
                 VMAPI void Insert(const VirtualProperty& property);
                 VMAPI Literal Get(uint object, uint property)   const;

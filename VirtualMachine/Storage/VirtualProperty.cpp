@@ -14,6 +14,12 @@ namespace Cyclone
 
         }
 
+
+        /** UTILITIES **/
+        Literal& VirtualProperty::Access(uint instance)
+        {
+            return _instances[instance];
+        }
         Literal VirtualProperty::Get(uint instance) const
         {
             return _instances.Contains(instance) ? _instances[instance] : Literal();
@@ -26,6 +32,10 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        Literal& VirtualClass::Access(uint instance, uint property)
+        {
+            return _properties[property].Access(instance);
+        }
         Literal VirtualClass::Get(uint object, uint property) const
         {
             return _properties.Contains(property) ? _properties[property].Get(object) : Literal();

@@ -20,6 +20,8 @@ namespace Cyclone
             {
                 None = 0,
 
+                Abort,
+
                 Add,
                 AddSet,
                 AddStore,
