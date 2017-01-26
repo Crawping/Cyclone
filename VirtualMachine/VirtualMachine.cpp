@@ -1,3 +1,4 @@
+#include "Console.h"
 #include "VirtualMachine.h"
 
 
@@ -39,8 +40,10 @@ namespace Cyclone
 
             while (idx < instructions.Count())
             {
-                if (Interrupt == Instructions::Return)
-                    break;
+                if (Interrupt == Instructions::Return || Interrupt == Instructions::Abort)
+                    return;
+                else if (Interrupt == Instructions::Pause)
+                    continue;
 
                 const auto& cmd = instructions(idx);
                 switch (cmd.Command)
@@ -81,6 +84,9 @@ namespace Cyclone
                     case Instructions::XorStore:
                         _data->Set( cmd.Operands(0), Literal::Calculate(cmd.Command - 2, Pop(), Pop()) );
                         break;
+
+                    case Instructions::Abort:
+                        return;
 
                     case Instructions::Call:
                         CallStack.Push(idx);
@@ -165,6 +171,9 @@ namespace Cyclone
                     case Instructions::Load:
                         Push( _data->Get(cmd.Operands(0)) );
                         break;
+                    case Instructions::Print:
+
+                        break;
                     case Instructions::Remove:
                         Pop();
                         break;
@@ -192,7 +201,7 @@ namespace Cyclone
                 idx++;
             }
         }
-        void VirtualMachine::Pause() { Interrupt = Instructions::Return; }
-        void VirtualMachine::Resume() { Interrupt = Instructions::None; }
+        void VirtualMachine::Pause()    { Interrupt = Instructions::Pause; }
+        void VirtualMachine::Resume()   { Interrupt = Instructions::None; }
     }
 }

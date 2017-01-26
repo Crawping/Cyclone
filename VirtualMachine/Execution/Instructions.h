@@ -82,8 +82,11 @@ namespace Cyclone
                 OrSet,
                 OrStore,
 
+                Pause,
+                Print,
                 Remove,
                 Return,
+
                 Set,
                 Store,
 
@@ -99,8 +102,12 @@ namespace Cyclone
                 XorStore,
             };
 
-            constexpr Instructions(enum Types t = None) : Enumerator((int)t) { }
+
+
+            /** CONSTRUCTORS **/
             constexpr Instructions(ubyte type)          : Enumerator((int)type) { }
+            constexpr Instructions(enum Types t = None) : Enumerator((int)t) { }
+
         };
 
 
