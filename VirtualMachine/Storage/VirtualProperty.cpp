@@ -7,7 +7,7 @@ namespace Cyclone
     namespace VM
     {
 
-        /** CONSTRUCTOR **/
+        /** PROPERTY CONSTRUCTOR **/
         VirtualProperty::VirtualProperty(uint id) :
             _id(id)
         {
@@ -15,7 +15,8 @@ namespace Cyclone
         }
 
 
-        /** UTILITIES **/
+
+        /** PROPERTY UTILITIES **/
         Literal& VirtualProperty::Access(uint instance)
         {
             return _instances[instance];
@@ -31,7 +32,7 @@ namespace Cyclone
 
 
 
-        /** UTILITIES **/
+        /** CLASS UTILITIES **/
         Literal& VirtualClass::Access(uint instance, uint property)
         {
             return _properties[property].Access(instance);

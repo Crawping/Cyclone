@@ -45,6 +45,7 @@ class _VirtualTable : public testing::Test
 
 
 
+/** CONSTRUCTION TESTS **/
 TEST_F(_VirtualTable, DefaultConstruction)
 {
     ASSERT_EQ(_t0.ClassCount(),     0);
@@ -54,6 +55,12 @@ TEST_F(_VirtualTable, DefaultConstruction)
 
 
 
+/** UTILITY TESTS **/
+TEST_F(_VirtualTable, ClassInsertion)
+{
+    ASSERT_EQ(_t1.Get(_i1(1)), _v1(1));
+    ASSERT_EQ(_t1.Get(_c1.ID(), _p1.ID(), _i1(3)), _v1(3));
+}
 TEST_F(_VirtualTable, StringHashing)
 {
     uint id = _i1(0);
@@ -83,10 +90,4 @@ TEST_F(_VirtualTable, VariableInsertion)
     ASSERT_EQ(_t1.VariableCount(), _v1.Count());
     for (uint a = 0; a < _v1.Count(); a++)
         ASSERT_EQ(_t1.Get(_i1(a)), _v1(a));
-}
-
-TEST_F(_VirtualTable, ClassInsertion)
-{
-    ASSERT_EQ(_t1.Get(_i1(1)), _v1(1));
-    ASSERT_EQ(_t1.Get(_c1.ID(), _p1.ID(), _i1(3)), _v1(3));
 }
