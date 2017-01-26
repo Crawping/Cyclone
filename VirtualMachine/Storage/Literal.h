@@ -19,11 +19,13 @@ namespace Cyclone
             enum Types
             {
                 Null        = 0,
+                Address     = 9,
                 Boolean     = 1,
                 Double      = 4,
                 Float       = 3,
                 Function    = 7,
                 Integer     = 2,
+                Object      = 8,
                 String      = 5,
                 Type        = 6,
             };
@@ -63,6 +65,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 constexpr uint FirstHalf()                          const { return (uint)((ulong)Value >> 32); }
+                constexpr bool IsAddress()                          const { return Type == LiteralTypes::Address; }
                 constexpr bool IsBoolean()                          const { return Type == LiteralTypes::Boolean; }
                 constexpr bool IsDouble()                           const { return Type == LiteralTypes::Double; }
                 constexpr bool IsFloat()                            const { return Type == LiteralTypes::Float; }
@@ -70,8 +73,9 @@ namespace Cyclone
                 constexpr bool IsInteger()                          const { return Type == LiteralTypes::Integer; }
                 constexpr bool IsNull()                             const { return Type == LiteralTypes::Null; }
                 constexpr bool IsNumeric()                          const { return Type.IsNumeric(); }
-                constexpr bool IsObject()                           const { return Type == LiteralTypes::Type; }
+                constexpr bool IsObject()                           const { return Type == LiteralTypes::Object; }
                 constexpr bool IsString()                           const { return Type == LiteralTypes::String; }
+                constexpr bool IsType()                             const { return Type == LiteralTypes::Type; }
                 constexpr uint SecondHalf()                         const { return (uint)Value; }
 
 
