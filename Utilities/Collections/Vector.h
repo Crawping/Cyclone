@@ -208,7 +208,7 @@ namespace Cyclone
 			        return *this;
 		        }
 
-                virtual bool operator ==(const Vector<T>& other) const
+                virtual bool operator ==(const Vector<T>& other)        const
                 {
                     if (this == (const Vector<T>*)&other)
                         return true;
@@ -221,10 +221,7 @@ namespace Cyclone
 
                     return true;
                 }
-                virtual bool operator !=(const Vector<T>& other) const
-                {
-                    return !(operator==(other));
-                }
+                virtual bool operator !=(const Vector<T>& other)        const { return !(operator==(other)); }
 
             protected:
 
