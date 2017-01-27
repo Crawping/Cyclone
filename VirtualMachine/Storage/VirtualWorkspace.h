@@ -5,7 +5,7 @@
 #pragma once
 #include "VMAPI.h"
 #include "Collections/Stack.h"
-#include "Storage/Literal.h"
+#include "Storage/VirtualMemory.h"
 
 
 
@@ -19,21 +19,35 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint Count() const { return _variables.Count(); }
+                uint Count()                                const { return _workspace.Count(); }
+                Literal& First()                                  { return _workspace.First(); }
+                const Literal& First()                      const { return _workspace.First(); }
+                Literal& Last()                                   { return _workspace.Last(); }
+                const Literal& Last()                       const { return _workspace.Last(); }
+
+
+
+                /** CONSTRUCTOR **/
+                VMAPI VirtualWorkspace(const VirtualMemory& memory);
 
 
 
                 /** UTILITIES **/
-                Literal Get(uint index)                     const { return _variables(index); }
-                void Remove(uint index, uint count = 1)     { _variables.Remove(index); }
-                Literal Pop()                               { return _variables.Pop(); }
-                void Push(const Literal& value)             { _variables.Push(value); }
-                void Set(uint index, const Literal& value)  { _variables(index) = value; }
+                Literal& Access(uint index)                       { return _workspace(index); }
+                Literal Get(uint index)                     const { return _workspace(index); }
+                void Remove(uint index, uint count = 1)           { _workspace.Remove(index); }
+                Literal Pop()                                     { return _workspace.Pop(); }
+                void Push(const Literal& value)                   { _workspace.Push(value); }
+                void Set(uint index, const Literal& value)        { _workspace(index) = value; }
 
 
+                VMAPI Literal operator ()(uint index)       const;
+                
             private:
 
-                Stack<Literal>  _variables;
+                BST<uint, Literal>      _locals;
+                const VirtualMemory*    _memory;
+                Stack<Literal>          _workspace;
         };
     }
 }
