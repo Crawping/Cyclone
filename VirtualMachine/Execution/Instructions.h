@@ -116,6 +116,27 @@ namespace Cyclone
             Instructions        Command;
             Vector<int, 3>      Operands;
 
+
+            /** CONSTRUCTORS **/
+            Instruction() :
+                Command(Instructions::None)
+            {
+
+            }
+            Instruction(Instructions command, const Vector<int, 3>& operands) :
+                Command(command),
+                Operands(operands)
+            {
+
+            }
+            Instruction(Instructions command, int x = 0, int y = 0, int z = 0) :
+                Command(command),
+                Operands({ x, y, z })
+            {
+
+            }
+
+
             bool operator ==(const Instruction& other) const
             {
                 return (Command == other.Command) && (Operands == other.Operands);
