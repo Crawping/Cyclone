@@ -31,8 +31,9 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void VirtualMachine::Pause() { Interrupt = Instructions::Pause; }
-        void VirtualMachine::Resume() { Interrupt = Instructions::None; }
+        void VirtualMachine::Abort()    { Interrupt = Instructions::Abort; }
+        void VirtualMachine::Pause()    { Interrupt = Instructions::Pause; }
+        void VirtualMachine::Resume()   { Interrupt = Instructions::None; }
 
         void VirtualMachine::Execute(const Vector<Instruction>& instructions)
         {
@@ -43,7 +44,7 @@ namespace Cyclone
             while (idx < instructions.Count())
             {
                 if (Interrupt == Instructions::Return || Interrupt == Instructions::Abort)
-                    return;
+                    return Resume();
                 else if (Interrupt == Instructions::Pause)
                     continue;
 
@@ -175,7 +176,7 @@ namespace Cyclone
                         Push( _data->Get(cmd.Operands(0)) );
                         break;
                     case Instructions::Print:
-                        Console::WriteLine(_data->FindName(cmd.Operands(0)));
+                        Console::WriteLine(_data->Find(cmd.Operands(0)));
                         break;
                     case Instructions::Remove:
                         Pop();

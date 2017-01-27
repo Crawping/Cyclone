@@ -44,13 +44,14 @@ namespace Cyclone
                 void Insert(const Vector<Literal>& values)  { Workspace.Push(values); }
                 void Clear()                                { Workspace.Clear(); }
 
+                VMAPI void Abort();
                 VMAPI void Execute(const Vector<Instruction>& commands);
                 VMAPI void Pause();
                 VMAPI void Resume();
 
             private:
 
-                VirtualMemory*       _data;
+                VirtualMemory*      _data;
 
                 Stack<uint>         CallStack;
                 Instructions        Interrupt;
