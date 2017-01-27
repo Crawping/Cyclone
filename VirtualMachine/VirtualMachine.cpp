@@ -31,7 +31,9 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        /*void Insert(const Vec)*/
+        void VirtualMachine::Pause() { Interrupt = Instructions::Pause; }
+        void VirtualMachine::Resume() { Interrupt = Instructions::None; }
+
         void VirtualMachine::Execute(const Vector<Instruction>& instructions)
         {
             uint idx = 0;
@@ -164,7 +166,8 @@ namespace Cyclone
                         idx += cmd.Operands(0);
                         break;
                     case Instructions::JumpRelativeIf:
-                        n1 = Pop().Compare(Pop()).Value;
+                        v1 = Pop(); v2 = Pop();
+                        n1 = v1.Compare(v2).Value;
                         idx += cmd.Operands(n1 + 1);
                         break;
 
@@ -172,7 +175,7 @@ namespace Cyclone
                         Push( _data->Get(cmd.Operands(0)) );
                         break;
                     case Instructions::Print:
-
+                        Console::WriteLine(_data->FindName(cmd.Operands(0)));
                         break;
                     case Instructions::Remove:
                         Pop();
@@ -201,7 +204,6 @@ namespace Cyclone
                 idx++;
             }
         }
-        void VirtualMachine::Pause()    { Interrupt = Instructions::Pause; }
-        void VirtualMachine::Resume()   { Interrupt = Instructions::None; }
+
     }
 }
