@@ -164,6 +164,38 @@ TEST_F(_VirtualMachine, Incrementing)
     ASSERT_EQ(_t1.Get(_i1(3)), _v1(1) + 2);
     ASSERT_EQ(_t1.Get(_i1(2)), _v1(2) + 2);
 }
+TEST_F(_VirtualMachine, Jumping)
+{
+    string success = "Success!";
+    string failure = "Failure!";
+
+    int sid = _t1.Insert(success);
+    int fid = _t1.Insert(failure);
+
+    Vector<Instruction> cmds =
+    {
+        { Instructions::Load,               _i1(1) },
+        { Instructions::Load,               _i1(2) },
+        { Instructions::Multiply,           0 },
+
+        { Instructions::Load,               _i1(1) },
+        { Instructions::JumpRelativeIf,     { 0, 2, 2 } },
+        { Instructions::Print,              sid },
+        { Instructions::JumpRelative,       1 },
+        { Instructions::Print,              fid },
+
+        { Instructions::Load,               _i1(2) },
+        { Instructions::Divide,             0 },
+
+        { Instructions::Load,               _i1(1) },
+        { Instructions::JumpRelativeIf,     { 0, 0, 2 } },
+        { Instructions::Print,              fid },
+        { Instructions::JumpRelative,       1 },
+        { Instructions::Print,              sid },
+    };
+
+    _m1.Execute(cmds);
+}
 TEST_F(_VirtualMachine, Multiplication)
 {
     Vector<Instruction> cmds =
