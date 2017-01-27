@@ -10,6 +10,9 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{c8aea379-8636-4dd0-b7fc-1ba83d45bb12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Compiler">
+      <UniqueIdentifier>{b8ea2b5a-d94c-4e7e-969d-11339dd9558b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VirtualMachine.cpp" />
@@ -23,6 +26,9 @@
       <Filter>Storage</Filter>
     </ClCompile>
     <ClCompile Include="Storage\VirtualWorkspace.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\StringLibrary.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
   </ItemGroup>
@@ -45,6 +51,9 @@
       <Filter>Storage</Filter>
     </ClInclude>
     <ClInclude Include="Storage\VirtualWorkspace.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\StringLibrary.h">
       <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
