@@ -1,5 +1,5 @@
 #include "Storage/VirtualMemory.h"
-#include <functional>
+
 
 
 namespace Cyclone
@@ -7,25 +7,16 @@ namespace Cyclone
     namespace VM
     {
 
-        /** INTERNAL UTILITIES **/
-        static std::hash<string> Hash;
-
-
-
         /** CONSTRUCTOR **/
         VirtualMemory::VirtualMemory()
         {
-            Strings.Insert(0, "");
             Variables.Insert(0, Literal());
         }
 
 
 
         /** UTILITIES **/
-        Literal& VirtualMemory::Access(uint id)
-        {
-            return Variables[id];
-        }
+        Literal& VirtualMemory::Access(uint id)                                   { return Variables[id]; }
         Literal& VirtualMemory::Access(uint type, uint property, uint instance)
         {
             return Classes[type].Access(instance, property);
@@ -35,16 +26,8 @@ namespace Cyclone
             if (id == 0) { return; }
             Variables.Remove(id);
         }
-        uint VirtualMemory::FindID(const string& name)                      const
-        {
-            if (name.empty()) { return 0; }
-            uint id = Hash(name);
-            return Strings.Contains(id) ? id : 0;
-        }
-        string VirtualMemory::FindName(uint id)                             const
-        {
-            return Strings.Contains(id) ? Strings[id] : "";
-        }
+        uint VirtualMemory::Find(const string& name)                        const { return Strings.Find(name); }
+        const string& VirtualMemory::Find(uint id)                          const { return Strings.Find(id); }
         Literal VirtualMemory::Get(uint id)                                 const
         {
             return Variables.Contains(id) ? Variables[id] : Literal();
@@ -63,16 +46,11 @@ namespace Cyclone
         }
         uint VirtualMemory::Insert(const string& string)
         {
-            if (string.empty()) { return 0; }
-            uint id = Hash(string);
-            Strings.Insert(id, string);
-            return id;
+            return Strings.Insert(string);
         }
         uint VirtualMemory::Insert(const string& name, const Literal& value)
         {
-            if (name.empty()) { return 0; }
-            uint id = Hash(name);
-            Strings.Insert(id, name);
+            uint id = Strings.Insert(name);
             Variables.Insert(id, value);
             return id;
         }

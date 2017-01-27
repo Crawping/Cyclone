@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Collections/BST.h"
+#include "Storage/StringLibrary.h"
 #include "Storage/VirtualProperty.h"
 
 
@@ -34,8 +35,8 @@ namespace Cyclone
                 VMAPI Literal& Access(uint type, uint property, uint instance);
 
                 VMAPI void Delete(uint id);
-                VMAPI string FindName(uint id)                              const;
-                VMAPI uint FindID(const string& name)                       const;
+                VMAPI const string& Find(uint id)                           const;
+                VMAPI uint Find(const string& name)                         const;
                 VMAPI Literal Get(uint id)                                  const;
                 VMAPI Literal Get(uint type, uint property, uint instance)  const;
 
@@ -47,12 +48,11 @@ namespace Cyclone
                 VMAPI void Set(uint id, const Literal& value);
                 VMAPI void Set(uint type, uint property, uint instance, const Literal& value);
                 
-
             private:
 
                 BST<uint, VirtualClass>     Classes;
                 BST<uint, VirtualFunction>  Functions;
-                BST<uint, string>           Strings;
+                StringLibrary               Strings;
                 BST<uint, Literal>          Variables;
 
         };

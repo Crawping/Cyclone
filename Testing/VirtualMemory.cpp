@@ -64,14 +64,14 @@ TEST_F(_VirtualMemory, ClassInsertion)
 TEST_F(_VirtualMemory, StringHashing)
 {
     uint id = _i1(0);
-    ASSERT_EQ(_t1.FindName(id), _s1(0));
-    ASSERT_EQ(_t1.FindID(_s1(0)), id);
+    ASSERT_EQ(_t1.Find(id), _s1(0));
+    ASSERT_EQ(_t1.Find(_s1(0)), id);
 
     for (uint a = 1; a < _i1.Count(); a++)
     {
         ASSERT_NE(_i1(a), id);
-        ASSERT_EQ(_t1.FindName(_i1(a)), _s1(a));
-        ASSERT_EQ(_t1.FindID(_s1(a)), _i1(a));
+        ASSERT_EQ(_t1.Find(_i1(a)), _s1(a));
+        ASSERT_EQ(_t1.Find(_s1(a)), _i1(a));
         id = _i1(a);
     }
 }
