@@ -18,7 +18,7 @@ namespace Cyclone
         {
             return (Value != Null) && (Value != Function) && (Value != String) && (Value != Type);
         }
-        string LiteralTypes::ToString() const
+        string LiteralTypes::ToString()             const
         {
             return
                 (Value == Boolean)  ? "Boolean" :
@@ -66,7 +66,7 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        constexpr Literal Literal::Cast(LiteralTypes type) const
+        constexpr Literal Literal::Cast(LiteralTypes type)          const
         {
             return 
                 IsOfType(type) ?
@@ -74,6 +74,22 @@ namespace Cyclone
                 IsNumeric() && type.IsNumeric() ?
                     Literal(type, Value) : Literal();
         }
+        constexpr Literal Literal::Compare(const Literal& other)    const
+        {
+            return Value < other.Value ? -1 : Value > other.Value ? 1 : 0;
+        }
+        constexpr bool Literal::IsOfType(LiteralTypes type)         const { return Type == type; }
+        constexpr bool Literal::IsOfType(const Literal& other)      const 
+        { 
+            return IsObject() ?
+                other.IsObject() ? 
+                    (FirstHalf() == other.FirstHalf()) : false :
+                (Type == other.Type);
+        }
+
+
+
+        /** STATIC UTILITIES **/
         constexpr Literal Literal::Calculate(Instructions operation, const Literal& x, const Literal& y)
         {
             return Literal
