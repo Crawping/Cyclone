@@ -11,7 +11,7 @@ using namespace Cyclone::Utilities;
 
 
 
-class _VirtualTable : public testing::Test
+class _VirtualMemory : public testing::Test
 {
     protected:
 
@@ -25,7 +25,7 @@ class _VirtualTable : public testing::Test
         VirtualMemory       _t0;
         VirtualMemory       _t1;
 
-        _VirtualTable() 
+        _VirtualMemory() 
         {
             for (uint a = 0; a < _v1.Count(); a++)
             {
@@ -46,7 +46,7 @@ class _VirtualTable : public testing::Test
 
 
 /** CONSTRUCTION TESTS **/
-TEST_F(_VirtualTable, DefaultConstruction)
+TEST_F(_VirtualMemory, DefaultConstruction)
 {
     ASSERT_EQ(_t0.ClassCount(),     0);
     ASSERT_EQ(_t0.FunctionCount(),  0);
@@ -56,12 +56,12 @@ TEST_F(_VirtualTable, DefaultConstruction)
 
 
 /** UTILITY TESTS **/
-TEST_F(_VirtualTable, ClassInsertion)
+TEST_F(_VirtualMemory, ClassInsertion)
 {
     ASSERT_EQ(_t1.Get(_i1(1)), _v1(1));
     ASSERT_EQ(_t1.Get(_c1.ID(), _p1.ID(), _i1(3)), _v1(3));
 }
-TEST_F(_VirtualTable, StringHashing)
+TEST_F(_VirtualMemory, StringHashing)
 {
     uint id = _i1(0);
     ASSERT_EQ(_t1.FindName(id), _s1(0));
@@ -75,7 +75,7 @@ TEST_F(_VirtualTable, StringHashing)
         id = _i1(a);
     }
 }
-TEST_F(_VirtualTable, VariableDeletion)
+TEST_F(_VirtualMemory, VariableDeletion)
 {
     ASSERT_EQ(_t1.VariableCount(), _v1.Count());
     for (uint a = 0; a < _v1.Count(); a++)
@@ -85,7 +85,7 @@ TEST_F(_VirtualTable, VariableDeletion)
         ASSERT_EQ(_t1.Get(_i1(a)),  Literal());
     }
 }
-TEST_F(_VirtualTable, VariableInsertion)
+TEST_F(_VirtualMemory, VariableInsertion)
 {
     ASSERT_EQ(_t1.VariableCount(), _v1.Count());
     for (uint a = 0; a < _v1.Count(); a++)
