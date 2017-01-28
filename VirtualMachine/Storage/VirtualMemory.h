@@ -5,7 +5,7 @@
 #pragma once
 #include "Collections/BST.h"
 #include "Storage/StringLibrary.h"
-#include "Storage/VirtualProperty.h"
+#include "Storage/VirtualClass.h"
 
 
 

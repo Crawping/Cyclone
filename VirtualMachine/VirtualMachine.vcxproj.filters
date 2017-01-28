@@ -31,6 +31,9 @@
     <ClCompile Include="Storage\StringLibrary.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="Storage\VirtualClass.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
@@ -54,6 +57,9 @@
       <Filter>Storage</Filter>
     </ClInclude>
     <ClInclude Include="Storage\StringLibrary.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\VirtualClass.h">
       <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
