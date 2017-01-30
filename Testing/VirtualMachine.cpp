@@ -146,7 +146,7 @@ TEST_F(_VirtualMachine, Division)
     };
 
     _m1.Execute(cmds);
-    ASSERT_EQ((int)_t1.Get(_i1(3)).Value, _v1(1) / _v1(2));
+    ASSERT_EQ((int)_t1.Get(_i1(3)).Value(), _v1(1) / _v1(2));
 }
 TEST_F(_VirtualMachine, Incrementing)
 {
