@@ -8,19 +8,17 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR **/
-        VirtualWorkspace::VirtualWorkspace(const VirtualMemory& memory) :
-            _memory(&memory)
+        VirtualWorkspace::VirtualWorkspace()
         {
             _locals.Insert(0, Literal());
         }
 
 
 
-        /** OPERATORS **/
-        Literal VirtualWorkspace::operator ()(uint index) const
+        /** UTILITIES **/
+        void VirtualWorkspace::Set(uint id, const Literal& value)
         {
-            return (index < Count()) ? _workspace(index) : Literal();
+            if (id) { _locals.Insert(id, value); }
         }
-
     }
 }

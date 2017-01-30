@@ -30,6 +30,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 VMAPI Literal& Access(uint instance);
+                VMAPI const Literal& Access(uint instance) const;
                 VMAPI Literal Get(uint instance)    const;
                 VMAPI void Set(uint instance, const Literal& value);
 

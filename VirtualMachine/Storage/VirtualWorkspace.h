@@ -28,25 +28,24 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                VMAPI VirtualWorkspace(const VirtualMemory& memory);
+                VMAPI VirtualWorkspace();
 
 
 
                 /** UTILITIES **/
-                Literal& Access(uint index)                       { return _workspace(index); }
-                Literal Get(uint index)                     const { return _workspace(index); }
-                void Remove(uint index, uint count = 1)           { _workspace.Remove(index); }
+                Literal& Access(uint id)                          { return _locals[ _locals.Contains(id) ? id : 0 ]; }
+                const Literal& Access(uint id)              const { return _locals[ _locals.Contains(id) ? id : 0 ]; }
+                Literal Get(uint id)                        const { return Access(id); }
                 Literal Pop()                                     { return _workspace.Pop(); }
                 void Push(const Literal& value)                   { _workspace.Push(value); }
-                void Set(uint index, const Literal& value)        { _workspace(index) = value; }
-
-
-                VMAPI Literal operator ()(uint index)       const;
+                void Push(const Vector<Literal>& values)          { _workspace.Push(values); }
+                //void Remove(uint count)                           { _workspace.Remove(0); }
+                
+                VMAPI void Set(uint id, const Literal& value);
                 
             private:
 
                 BST<uint, Literal>      _locals;
-                const VirtualMemory*    _memory;
                 Stack<Literal>          _workspace;
         };
     }
