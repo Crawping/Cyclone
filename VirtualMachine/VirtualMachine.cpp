@@ -40,7 +40,9 @@ namespace Cyclone
             uint idx = 0;
             Literal v1, v2, v3, v4;
             int n1 = 0, n2 = 0, n3 = 0, n4 = 0;
+            StackFrame f1 = { instructions.Count(), { } };
 
+            _frames.Push(f1);
             while (idx < instructions.Count())
             {
                 if (Interrupt == Instructions::Return || Interrupt == Instructions::Abort)
@@ -92,11 +94,11 @@ namespace Cyclone
                         return;
 
                     case Instructions::Call:
-                        CallStack.Push(idx);
+                        _frames.Push({ idx, { } });
                         idx = cmd.Operands(0);
                         break;
                     case Instructions::CallRelative:
-                        CallStack.Push(idx);
+                        _frames.Push({ idx,  { } });
                         idx += cmd.Operands(0);
                         break;
 
@@ -112,29 +114,34 @@ namespace Cyclone
                         break;
 
                     case Instructions::Copy:
-                        Push(Workspace.First());
+                        Push(Workspace().First());
                         break;
                     case Instructions::CopyMemory:
                         _data->Set( cmd.Operands(1), _data->Access(cmd.Operands(0)) );
                         break;
 
                     case Instructions::Decrement:
-                        Workspace.First().Value--;
+                        Workspace().First()--;
                         break;
                     case Instructions::DecrementMemory:
-                        _data->Access(cmd.Operands(0)).Value--;
+                        _data->Access(cmd.Operands(0))--;
                         break;
                     case Instructions::DecrementSet:
-                        Workspace.First().Value--;
-                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop() );
+                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop()-- );
                         break;
                     case Instructions::DecrementStore:
-                        Workspace.First().Value--;
-                        _data->Set( cmd.Operands(0), Pop() );
+                        _data->Set( cmd.Operands(0), Pop()-- );
                         break;
 
                     case Instructions::Delete:
                         _data->Delete(cmd.Operands(0));
+                        break;
+
+                    case Instructions::DefineClass:
+                        _data->Insert(VirtualClass(cmd.Operands(0)));
+                        break;
+                    case Instructions::DefineProperty:
+                        _data->Insert(cmd.Operands(0), VirtualProperty(cmd.Operands(1)));
                         break;
 
                     case Instructions::Get:
@@ -142,25 +149,23 @@ namespace Cyclone
                         break;
 
                     case Instructions::Increment:
-                        Workspace.First().Value++;
+                        Workspace().First()++;
                         break;
                     case Instructions::IncrementMemory:
-                        _data->Access(cmd.Operands(0)).Value++;
+                        _data->Access(cmd.Operands(0))++;
                         break;
                     case Instructions::IncrementSet:
-                        Workspace.First().Value++;
-                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop() );
+                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop()++ );
                         break;
                     case Instructions::IncrementStore:
-                        Workspace.First().Value++;
-                        _data->Set( cmd.Operands(0), Pop() );
+                        _data->Set( cmd.Operands(0), Pop()++ );
                         break;
 
                     case Instructions::Jump:
                         idx = cmd.Operands(0);
                         break;
                     case Instructions::JumpIf:
-                        n1 = Pop().Compare(Pop()).Value;
+                        n1 = Pop().Compare(Pop()).Value();
                         idx = cmd.Operands(n1 + 1);
                         break;
                     case Instructions::JumpRelative:
@@ -168,7 +173,7 @@ namespace Cyclone
                         break;
                     case Instructions::JumpRelativeIf:
                         v1 = Pop(); v2 = Pop();
-                        n1 = v1.Compare(v2).Value;
+                        n1 = v1.Compare(v2).Value();
                         idx += cmd.Operands(n1 + 1);
                         break;
 
@@ -182,7 +187,8 @@ namespace Cyclone
                         Pop();
                         break;
                     case Instructions::Return:
-                        idx = CallStack.Pop();
+                        f1 = _frames.Pop();
+                        idx = f1.ReturnAddress;
                         break;
                     case Instructions::Set:
                         _data->Set(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop());

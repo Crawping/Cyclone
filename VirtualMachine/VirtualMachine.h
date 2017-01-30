@@ -9,6 +9,7 @@
 #include "Execution/Instructions.h"
 #include "Storage/Literal.h"
 #include "Storage/VirtualMemory.h"
+#include "Storage/VirtualWorkspace.h"
 
 
 
@@ -18,8 +19,8 @@ namespace Cyclone
     {
         struct StackFrame
         {
-            uint            ReturnAddress;
-            Stack<Literal>  Workspace;
+            uint                ReturnAddress;
+            Stack<Literal>      Workspace;
         };
 
 
@@ -41,8 +42,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                void Insert(const Vector<Literal>& values)  { Workspace.Push(values); }
-                void Clear()                                { Workspace.Clear(); }
+                //void Insert(const Vector<Literal>& values)  { Workspace().Push(values); }
+                //void Clear()                                { Workspace().Clear(); }
 
                 VMAPI void Abort();
                 VMAPI void Execute(const Vector<Instruction>& commands);
@@ -52,17 +53,22 @@ namespace Cyclone
             private:
 
                 VirtualMemory*      _data;
+                Stack<StackFrame>   _frames;
 
-                Stack<uint>         CallStack;
                 Instructions        Interrupt;
-                Stack<Literal>      Workspace;
+
+
+
+                /** PROPERTIES **/
+                Stack<Literal>& Workspace()                 { return _frames.First().Workspace; }
 
 
 
                 /** UTILITIES **/
-                void Push(Literal value)                    { Workspace.Push(value); }
-                void Push(const Vector<Literal>& values)    { Workspace.Push(values); }
-                Literal Pop()                               { return Workspace.Pop(); }
+                void Push(Literal value)                    { Workspace().Push(value); }
+                void Push(const Vector<Literal>& values)    { Workspace().Push(values); }
+                Literal Pop()                               { return Workspace().Pop(); }
+
 
         };
     }
