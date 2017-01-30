@@ -19,11 +19,11 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint Count()                                const { return _workspace.Count(); }
-                Literal& First()                                  { return _workspace.First(); }
-                const Literal& First()                      const { return _workspace.First(); }
-                Literal& Last()                                   { return _workspace.Last(); }
-                const Literal& Last()                       const { return _workspace.Last(); }
+                uint Count()                                        const { return _workspace.Count(); }
+                VirtualVariable& First()                                  { return _workspace.First(); }
+                const VirtualVariable& First()                      const { return _workspace.First(); }
+                VirtualVariable& Last()                                   { return _workspace.Last(); }
+                const VirtualVariable& Last()                       const { return _workspace.Last(); }
 
 
 
@@ -33,20 +33,20 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                Literal& Access(uint id)                          { return _locals[ _locals.Contains(id) ? id : 0 ]; }
-                const Literal& Access(uint id)              const { return _locals[ _locals.Contains(id) ? id : 0 ]; }
-                Literal Get(uint id)                        const { return Access(id); }
-                Literal Pop()                                     { return _workspace.Pop(); }
-                void Push(const Literal& value)                   { _workspace.Push(value); }
-                void Push(const Vector<Literal>& values)          { _workspace.Push(values); }
+                VirtualVariable& Access(uint id)                          { return _locals[ _locals.Contains(id) ? id : 0 ]; }
+                const VirtualVariable& Access(uint id)              const { return _locals[ _locals.Contains(id) ? id : 0 ]; }
+                VirtualVariable Get(uint id)                        const { return Access(id); }
+                VirtualVariable Pop()                                     { return _workspace.Pop(); }
+                void Push(const VirtualVariable& value)                   { _workspace.Push(value); }
+                void Push(const Vector<VirtualVariable>& values)          { _workspace.Push(values); }
                 //void Remove(uint count)                           { _workspace.Remove(0); }
-                
-                VMAPI void Set(uint id, const Literal& value);
-                
+
+                VMAPI void Set(uint id, const VirtualVariable& value);
+
             private:
 
-                BST<uint, Literal>      _locals;
-                Stack<Literal>          _workspace;
+                BST<uint, VirtualVariable>      _locals;
+                Stack<VirtualVariable>          _workspace;
         };
     }
 }

@@ -16,6 +16,7 @@ namespace Cyclone
 
         class VirtualMemory
         {
+
             public:
 
                 /** PROPERTIES **/
@@ -31,30 +32,30 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                VMAPI Literal& Access(uint id);
-                VMAPI Literal& Access(uint type, uint property, uint instance);
+                VMAPI VirtualVariable& Access(uint id);
+                VMAPI VirtualVariable& Access(uint type, uint property, uint instance);
 
                 VMAPI void Delete(uint id);
-                VMAPI const string& Find(uint id)                           const;
-                VMAPI uint Find(const string& name)                         const;
-                VMAPI Literal Get(uint id)                                  const;
-                VMAPI Literal Get(uint type, uint property, uint instance)  const;
+                VMAPI const string& Find(uint id)                                   const;
+                VMAPI uint Find(const string& name)                                 const;
+                VMAPI VirtualVariable Get(uint id)                                  const;
+                VMAPI VirtualVariable Get(uint type, uint property, uint instance)  const;
 
                 VMAPI void Insert(const VirtualClass& type);
                 VMAPI void Insert(const VirtualFunction& function);
                 VMAPI void Insert(uint type, const VirtualProperty& property);
                 VMAPI uint Insert(const string& string);
-                VMAPI uint Insert(const string& name, const Literal& value);
+                VMAPI uint Insert(const string& name, const VirtualVariable& value);
 
-                VMAPI void Set(uint id, const Literal& value);
-                VMAPI void Set(uint type, uint property, uint instance, const Literal& value);
-                
+                VMAPI void Set(uint id, const VirtualVariable& value);
+                VMAPI void Set(uint type, uint property, uint instance, const VirtualVariable& value);
+
             private:
 
                 BST<uint, VirtualClass>     Classes;
                 BST<uint, VirtualFunction>  Functions;
                 StringLibrary               Strings;
-                BST<uint, Literal>          Variables;
+                BST<uint, VirtualVariable>          Variables;
 
         };
 

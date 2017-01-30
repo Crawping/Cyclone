@@ -38,7 +38,7 @@ namespace Cyclone
         void VirtualMachine::Execute(const Vector<Instruction>& instructions)
         {
             uint idx = 0;
-            Literal v1, v2, v3, v4;
+            VirtualVariable v1, v2, v3, v4;
             int n1 = 0, n2 = 0, n3 = 0, n4 = 0;
             StackFrame f1 = { instructions.Count(), { } };
 
@@ -62,7 +62,7 @@ namespace Cyclone
                     case Instructions::Or:
                     case Instructions::Subtract:
                     case Instructions::Xor:
-                        Push( Literal::Calculate(cmd.Command, Pop(), Pop()) );
+                        Push( VirtualVariable::Calculate(cmd.Command, Pop(), Pop()) );
                         break;
 
                     case Instructions::AddSet:
@@ -74,7 +74,7 @@ namespace Cyclone
                     case Instructions::OrSet:
                     case Instructions::SubtractSet:
                     case Instructions::XorSet:
-                        v1 = Literal::Calculate(cmd.Command - 1, Pop(), Pop());
+                        v1 = VirtualVariable::Calculate(cmd.Command - 1, Pop(), Pop());
                         _data->Set(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), v1);
                         break;
 
@@ -87,7 +87,7 @@ namespace Cyclone
                     case Instructions::OrStore:
                     case Instructions::SubtractStore:
                     case Instructions::XorStore:
-                        _data->Set( cmd.Operands(0), Literal::Calculate(cmd.Command - 2, Pop(), Pop()) );
+                        _data->Set( cmd.Operands(0), VirtualVariable::Calculate(cmd.Command - 2, Pop(), Pop()) );
                         break;
 
                     case Instructions::Abort:

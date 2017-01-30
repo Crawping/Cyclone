@@ -8,15 +8,15 @@ namespace Cyclone
     {
 
         /** UTILITIES **/
-        Literal& VirtualClass::Access(uint instance, uint property)
+        VirtualVariable& VirtualClass::Access(uint instance, uint property)
         {
             return _properties[ _properties.Contains(property) ? property : 0 ].Access(instance);
         }
-        const Literal& VirtualClass::Access(uint instance, uint property) const
+        const VirtualVariable& VirtualClass::Access(uint instance, uint property)   const
         {
             return _properties[_properties.Contains(property) ? property : 0].Access(instance);
         }
-        Literal VirtualClass::Get(uint object, uint property)       const
+        VirtualVariable VirtualClass::Get(uint object, uint property)               const
         {
             return _properties[ _properties.Contains(property) ? property : 0 ].Get(object);
         }
@@ -29,12 +29,12 @@ namespace Cyclone
         {
             _properties.Insert(property.ID(), property);
         }
-        bool VirtualClass::IsMethod(uint id)                        const { return _methods.Contains(id); }
-        bool VirtualClass::IsOfType(const Literal& object)          const
+        bool VirtualClass::IsMethod(uint id)                                        const { return _methods.Contains(id); }
+        bool VirtualClass::IsOfType(const VirtualVariable& object)                  const
         {
             return object.IsObject() && (object.FirstHalf() == ID());
         }
-        void VirtualClass::Set(uint instance, uint property, const Literal& value)
+        void VirtualClass::Set(uint instance, uint property, const VirtualVariable& value)
         {
             if (!_properties.Contains(property)) { return; }
             _properties[property].Set(instance, value);

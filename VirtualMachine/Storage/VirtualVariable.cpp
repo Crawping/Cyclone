@@ -1,4 +1,4 @@
-#include "Storage/Literal.h"
+#include "Storage/VirtualVariable.h"
 
 
 
@@ -31,34 +31,34 @@ namespace Cyclone
 
 
         /** CONSTRUCTORS **/
-        constexpr Literal::Literal(LiteralTypes type, double value) :
+        constexpr VirtualVariable::VirtualVariable(LiteralTypes type, double value) :
             _type(type),
             _value(value)
         {
 
         }
-        constexpr Literal::Literal(bool value) :
-            Literal(LiteralTypes::Boolean, value)
+        constexpr VirtualVariable::VirtualVariable(bool value) :
+            VirtualVariable(LiteralTypes::Boolean, value)
         {
 
         }
-        constexpr Literal::Literal(double value) :
-            Literal(LiteralTypes::Double, value)
+        constexpr VirtualVariable::VirtualVariable(double value) :
+            VirtualVariable(LiteralTypes::Double, value)
         {
 
         }
-        constexpr Literal::Literal(float value) :
-            Literal(LiteralTypes::Float, value)
+        constexpr VirtualVariable::VirtualVariable(float value) :
+            VirtualVariable(LiteralTypes::Float, value)
         {
 
         }
-        constexpr Literal::Literal(int value) :
-            Literal(LiteralTypes::Integer, value)
+        constexpr VirtualVariable::VirtualVariable(int value) :
+            VirtualVariable(LiteralTypes::Integer, value)
         {
 
         }
-        constexpr Literal::Literal(const string& value) :
-            Literal(LiteralTypes::String)
+        constexpr VirtualVariable::VirtualVariable(const string& value) :
+            VirtualVariable(LiteralTypes::String)
         {
 
         }
@@ -66,20 +66,20 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        constexpr Literal Literal::Cast(LiteralTypes type)          const
+        constexpr VirtualVariable VirtualVariable::Cast(LiteralTypes type)          const
         {
             return 
                 IsOfType(type) ?
-                    Literal(_type, _value) :
+                    VirtualVariable(_type, _value) :
                 IsNumeric() && type.IsNumeric() ?
-                    Literal(type, _value) : Literal();
+                    VirtualVariable(type, _value) : VirtualVariable();
         }
-        constexpr Literal Literal::Compare(const Literal& other)    const
+        constexpr VirtualVariable VirtualVariable::Compare(const VirtualVariable& other)    const
         {
             return _value < other._value ? -1 : _value > other._value ? 1 : 0;
         }
-        constexpr bool Literal::IsOfType(LiteralTypes type)         const { return _type == type; }
-        constexpr bool Literal::IsOfType(const Literal& other)      const 
+        constexpr bool VirtualVariable::IsOfType(LiteralTypes type)         const { return _type == type; }
+        constexpr bool VirtualVariable::IsOfType(const VirtualVariable& other)      const 
         { 
             return IsObject() ?
                 other.IsObject() ? 
@@ -90,9 +90,9 @@ namespace Cyclone
 
 
         /** STATIC UTILITIES **/
-        constexpr Literal Literal::Calculate(Instructions operation, const Literal& x, const Literal& y)
+        constexpr VirtualVariable VirtualVariable::Calculate(Instructions operation, const VirtualVariable& x, const VirtualVariable& y)
         {
-            return Literal
+            return VirtualVariable
             (
                 LiteralTypes::MaxPrecision(x._type, y._type),
 
@@ -110,31 +110,31 @@ namespace Cyclone
 
 
         /** OPERATORS **/
-        Literal& Literal::operator =(Literal other)
+        VirtualVariable& VirtualVariable::operator =(VirtualVariable other)
         {
             _type = other._type;
             _value = other._value;
             return *this;
         }
-        Literal& Literal::operator ++()
+        VirtualVariable& VirtualVariable::operator ++()
         {
             if (IsNull()) { return *this; }
             _value++;
             return *this;
         }
-        Literal& Literal::operator ++(int)
+        VirtualVariable& VirtualVariable::operator ++(int)
         {
             if (IsNull()) { return *this; }
             _value++;
             return *this;
         }
-        Literal& Literal::operator --()
+        VirtualVariable& VirtualVariable::operator --()
         {
             if (IsNull()) { return *this; }
             _value--;
             return *this;
         }
-        Literal& Literal::operator --(int)
+        VirtualVariable& VirtualVariable::operator --(int)
         {
             if (IsNull()) { return *this; }
             _value--;

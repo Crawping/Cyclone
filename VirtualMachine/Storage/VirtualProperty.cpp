@@ -11,28 +11,28 @@ namespace Cyclone
         VirtualProperty::VirtualProperty(uint id) :
             _id(id)
         {
-            _instances.Insert(0, Literal());
+            _instances.Insert(0, VirtualVariable());
         }
 
 
 
         /** UTILITIES **/
-        Literal& VirtualProperty::Access(uint instance)
+        VirtualVariable& VirtualProperty::Access(uint instance)
         {
             return _instances[ _instances.Contains(instance) ? instance : 0 ];
         }
-        const Literal& VirtualProperty::Access(uint instance) const
+        const VirtualVariable& VirtualProperty::Access(uint instance)           const
         {
             return _instances[ _instances.Contains(instance) ? instance : 0 ];
         }
-        Literal VirtualProperty::Get(uint instance) const
+        VirtualVariable VirtualProperty::Get(uint instance)                     const
         {
-            return _instances.Contains(instance) ? _instances[instance] : Literal();
+            return _instances.Contains(instance) ? _instances[instance] : VirtualVariable();
         }
-        void VirtualProperty::Set(uint instance, const Literal& value)
+        void VirtualProperty::Set(uint instance, const VirtualVariable& value)
         {
             _instances.Insert(instance, value);
         }
-        
+
     }
 }

@@ -19,9 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VirtualMachine.cpp" />
-    <ClCompile Include="Storage\Literal.cpp">
-      <Filter>Storage</Filter>
-    </ClCompile>
     <ClCompile Include="Storage\VirtualProperty.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
@@ -37,12 +34,12 @@
     <ClCompile Include="Storage\VirtualClass.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="Storage\VirtualVariable.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
-    <ClInclude Include="Storage\Literal.h">
-      <Filter>Storage</Filter>
-    </ClInclude>
     <ClInclude Include="Storage\VirtualProperty.h">
       <Filter>Storage</Filter>
     </ClInclude>
@@ -67,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Execution\Functions.h">
       <Filter>Execution</Filter>
+    </ClInclude>
+    <ClInclude Include="Execution\Classes.h">
+      <Filter>Execution</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\VirtualVariable.h">
+      <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

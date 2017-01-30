@@ -118,7 +118,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Storage\Literal.cpp" />
+    <ClCompile Include="Storage\VirtualVariable.cpp" />
     <ClCompile Include="Storage\StringLibrary.cpp" />
     <ClCompile Include="Storage\VirtualClass.cpp" />
     <ClCompile Include="Storage\VirtualProperty.cpp" />
@@ -127,10 +127,11 @@
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Execution\Classes.h" />
     <ClInclude Include="Execution\Functions.h" />
     <ClInclude Include="Execution\Instructions.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />
-    <ClInclude Include="Storage\Literal.h" />
+    <ClInclude Include="Storage\VirtualVariable.h" />
     <ClInclude Include="Storage\StringLibrary.h" />
     <ClInclude Include="Storage\VirtualClass.h" />
     <ClInclude Include="Storage\VirtualProperty.h" />

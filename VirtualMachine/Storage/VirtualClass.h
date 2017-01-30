@@ -27,20 +27,20 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                VMAPI Literal& Access(uint instance, uint property);
-                VMAPI const Literal& Access(uint instance, uint property)   const;
-                VMAPI Literal Get(uint object, uint property)               const;
+                VMAPI VirtualVariable& Access(uint instance, uint property);
+                VMAPI const VirtualVariable& Access(uint instance, uint property)   const;
+                VMAPI VirtualVariable Get(uint object, uint property)               const;
                 VMAPI void Insert(const VirtualFunction& function);
                 VMAPI void Insert(const VirtualProperty& property);
-                VMAPI bool IsMethod(uint id)                                const;
-                VMAPI bool IsOfType(const Literal& object)                  const;
+                VMAPI bool IsMethod(uint id)                                        const;
+                VMAPI bool IsOfType(const VirtualVariable& object)                  const;
 
-                VMAPI void Set(uint object, uint property, const Literal& value);
+                VMAPI void Set(uint object, uint property, const VirtualVariable& value);
 
             private:
 
                 int                         _id;
-                BST<uint, Literal>          _instances;
+                BST<uint, VirtualVariable>          _instances;
                 BST<uint, VirtualFunction>  _methods;
                 BST<uint, VirtualProperty>  _properties;
 

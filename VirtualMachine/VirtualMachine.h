@@ -7,7 +7,7 @@
 #include "Collections/Stack.h"
 #include "Collections/Vector.h"
 #include "Execution/Instructions.h"
-#include "Storage/Literal.h"
+#include "Storage/VirtualVariable.h"
 #include "Storage/VirtualMemory.h"
 #include "Storage/VirtualWorkspace.h"
 
@@ -20,7 +20,7 @@ namespace Cyclone
         struct StackFrame
         {
             uint                ReturnAddress;
-            Stack<Literal>      Workspace;
+            Stack<VirtualVariable>      Workspace;
         };
 
 
@@ -42,8 +42,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                //void Insert(const Vector<Literal>& values)  { Workspace().Push(values); }
-                //void Clear()                                { Workspace().Clear(); }
+                void Input(const Vector<VirtualVariable>& values)   { Workspace().Push(values); }
+                void Clear()                                        { Workspace().Clear(); }
 
                 VMAPI void Abort();
                 VMAPI void Execute(const Vector<Instruction>& commands);
@@ -60,14 +60,14 @@ namespace Cyclone
 
 
                 /** PROPERTIES **/
-                Stack<Literal>& Workspace()                 { return _frames.First().Workspace; }
+                Stack<VirtualVariable>& Workspace()                 { return _frames.First().Workspace; }
 
 
 
                 /** UTILITIES **/
-                void Push(Literal value)                    { Workspace().Push(value); }
-                void Push(const Vector<Literal>& values)    { Workspace().Push(values); }
-                Literal Pop()                               { return Workspace().Pop(); }
+                void Push(VirtualVariable value)                    { Workspace().Push(value); }
+                void Push(const Vector<VirtualVariable>& values)    { Workspace().Push(values); }
+                VirtualVariable Pop()                               { return Workspace().Pop(); }
 
 
         };

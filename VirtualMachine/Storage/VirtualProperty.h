@@ -5,7 +5,7 @@
 #pragma once
 #include "VMAPI.h"
 #include "Collections/Registry.h"
-#include "Storage/Literal.h"
+#include "Storage/VirtualVariable.h"
 
 
 
@@ -29,15 +29,15 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                VMAPI Literal& Access(uint instance);
-                VMAPI const Literal& Access(uint instance) const;
-                VMAPI Literal Get(uint instance)    const;
-                VMAPI void Set(uint instance, const Literal& value);
+                VMAPI VirtualVariable& Access(uint instance);
+                VMAPI const VirtualVariable& Access(uint instance)              const;
+                VMAPI VirtualVariable Get(uint instance)                        const;
+                VMAPI void Set(uint instance, const VirtualVariable& value);
 
             private:
 
                 int                 _id;
-                BST<uint, Literal>  _instances;
+                BST<uint, VirtualVariable>  _instances;
         };
 
         class VirtualFunction

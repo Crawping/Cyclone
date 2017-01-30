@@ -131,8 +131,8 @@ TEST_F(_VirtualMachine, Deletion)
     };
 
     _m1.Execute(cmds);
-    ASSERT_EQ(_t1.Get(_i1(1)), Literal());
-    ASSERT_EQ(_t1.Get(_i1(2)), Literal());
+    ASSERT_EQ(_t1.Get(_i1(1)), VirtualVariable());
+    ASSERT_EQ(_t1.Get(_i1(2)), VirtualVariable());
     ASSERT_EQ(_t1.Get(_i1(3)), 0);
 }
 TEST_F(_VirtualMachine, Division)

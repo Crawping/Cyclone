@@ -52,7 +52,7 @@ namespace Cyclone
         };
 
 
-        struct Literal
+        struct VirtualVariable
         {
 
             public:
@@ -77,41 +77,41 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS **/
-                VMAPI constexpr Literal(LiteralTypes type = LiteralTypes::Null, double value = 0.0);
-                VMAPI constexpr Literal(bool value);
-                VMAPI constexpr Literal(double value);
-                VMAPI constexpr Literal(float value);
-                VMAPI constexpr Literal(int value);
-                VMAPI constexpr Literal(const string& value);
+                VMAPI constexpr VirtualVariable(LiteralTypes type = LiteralTypes::Null, double value = 0.0);
+                VMAPI constexpr VirtualVariable(bool value);
+                VMAPI constexpr VirtualVariable(double value);
+                VMAPI constexpr VirtualVariable(float value);
+                VMAPI constexpr VirtualVariable(int value);
+                VMAPI constexpr VirtualVariable(const string& value);
 
 
 
                 /** UTILITIES **/
-                VMAPI constexpr Literal Cast(LiteralTypes type)         const;
-                VMAPI constexpr Literal Compare(const Literal& other)   const;
+                VMAPI constexpr VirtualVariable Cast(LiteralTypes type)         const;
+                VMAPI constexpr VirtualVariable Compare(const VirtualVariable& other)   const;
                 VMAPI constexpr bool IsOfType(LiteralTypes type)        const;
-                VMAPI constexpr bool IsOfType(const Literal& other)     const;
+                VMAPI constexpr bool IsOfType(const VirtualVariable& other)     const;
                 
 
-                VMAPI constexpr static Literal Calculate(Instructions operation, const Literal& x, const Literal& y);
+                VMAPI constexpr static VirtualVariable Calculate(Instructions operation, const VirtualVariable& x, const VirtualVariable& y);
 
 
 
                 /** OPERATORS **/
-                constexpr bool operator ==(const Literal& other)    const { return IsOfType(other) && (_value == other._value); }
-                constexpr bool operator !=(const Literal& other)    const { return !operator ==(other); }
+                constexpr bool operator ==(const VirtualVariable& other)    const { return IsOfType(other) && (_value == other._value); }
+                constexpr bool operator !=(const VirtualVariable& other)    const { return !operator ==(other); }
             
-                constexpr Literal operator +(const Literal& other)  const { return Calculate(Instructions::Add, *this, other); }
-                constexpr Literal operator /(const Literal& other)  const { return Calculate(Instructions::Divide, *this, other); }
-                constexpr Literal operator -(const Literal& other)  const { return Calculate(Instructions::Subtract, *this, other); }
-                constexpr Literal operator *(const Literal& other)  const { return Calculate(Instructions::Multiply, *this, other); }
-                constexpr Literal operator |(const Literal& other)  const { return Calculate(Instructions::Or, *this, other); }
+                constexpr VirtualVariable operator +(const VirtualVariable& other)  const { return Calculate(Instructions::Add, *this, other); }
+                constexpr VirtualVariable operator /(const VirtualVariable& other)  const { return Calculate(Instructions::Divide, *this, other); }
+                constexpr VirtualVariable operator -(const VirtualVariable& other)  const { return Calculate(Instructions::Subtract, *this, other); }
+                constexpr VirtualVariable operator *(const VirtualVariable& other)  const { return Calculate(Instructions::Multiply, *this, other); }
+                constexpr VirtualVariable operator |(const VirtualVariable& other)  const { return Calculate(Instructions::Or, *this, other); }
 
-                VMAPI Literal& operator =(Literal other);
-                VMAPI Literal& operator ++();
-                VMAPI Literal& operator ++(int);
-                VMAPI Literal& operator --();
-                VMAPI Literal& operator --(int);
+                VMAPI VirtualVariable& operator =(VirtualVariable other);
+                VMAPI VirtualVariable& operator ++();
+                VMAPI VirtualVariable& operator ++(int);
+                VMAPI VirtualVariable& operator --();
+                VMAPI VirtualVariable& operator --(int);
 
             private:
 

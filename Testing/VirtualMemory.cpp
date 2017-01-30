@@ -82,7 +82,7 @@ TEST_F(_VirtualMemory, VariableDeletion)
     {
         _t1.Delete(_i1(a));
         ASSERT_EQ(_t1.VariableCount(), _v1.Count() - a - 1);
-        ASSERT_EQ(_t1.Get(_i1(a)),  Literal());
+        ASSERT_EQ(_t1.Get(_i1(a)), VirtualVariable());
     }
 }
 TEST_F(_VirtualMemory, VariableInsertion)
