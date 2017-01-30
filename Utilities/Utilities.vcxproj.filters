@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Console.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Math\Matrix4x4.cpp">
       <Filter>Math</Filter>
@@ -39,16 +38,19 @@
     <ClCompile Include="Spatial\Camera.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>
-    <ClCompile Include="InputControls.cpp" />
     <ClCompile Include="Imaging\ColorGradient.cpp">
       <Filter>Imaging</Filter>
     </ClCompile>
+    <ClCompile Include="InputControls.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Console.h" />
     <ClInclude Include="TypeDefinitions.h" />
     <ClInclude Include="Enumerator.h" />
-    <ClInclude Include="Event.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Math\Matrix4x4.h">
       <Filter>Math</Filter>
@@ -115,7 +117,6 @@
     <ClInclude Include="Interfaces\IUpdatable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="InputControls.h" />
     <ClInclude Include="Imaging\ColorGradient.h">
       <Filter>Imaging</Filter>
     </ClInclude>
@@ -128,7 +129,6 @@
     <ClInclude Include="Collections\Set.h">
       <Filter>Collections</Filter>
     </ClInclude>
-    <ClInclude Include="Functions.h" />
     <ClInclude Include="Interfaces\ISpatialTransform.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -140,6 +140,18 @@
     </ClInclude>
     <ClInclude Include="Collections\Stack.h">
       <Filter>Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="InputControls.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +169,9 @@
     </Filter>
     <Filter Include="Interfaces">
       <UniqueIdentifier>{8a4aedec-f288-455c-b549-f4f4a2c89b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{d17670c7-deae-471a-843c-ab1707925ff7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
