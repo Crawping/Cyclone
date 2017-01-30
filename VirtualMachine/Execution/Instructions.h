@@ -49,6 +49,7 @@ namespace Cyclone
                 Delete,
 
                 DefineClass,
+                DefineMethod,
                 DefineProperty,
 
                 Divide,
