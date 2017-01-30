@@ -13,6 +13,9 @@
     <Filter Include="Compiler">
       <UniqueIdentifier>{b8ea2b5a-d94c-4e7e-969d-11339dd9558b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Primitives">
+      <UniqueIdentifier>{0fa0d538-0338-4301-b775-2cbd0678d272}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VirtualMachine.cpp" />
@@ -61,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Storage\VirtualClass.h">
       <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Execution\Functions.h">
+      <Filter>Execution</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
