@@ -11,6 +11,16 @@ namespace Cyclone
 {
     namespace VM
     {
+        Vector<Instruction> Enumeration()
+        {
+            return { };
+        }
+
+        Vector<Instruction> Function()
+        {
+            return { };
+        }
+
         Vector<Instruction> Integer()
         {
             return
@@ -27,7 +37,12 @@ namespace Cyclone
             {
                 { Instructions::DefineClass,    1 },
                 { Instructions::DefineProperty, 1 },
-            }
+            };
+        }
+
+        Vector<Instruction> String()
+        {
+            return { };
         }
     }
 }
