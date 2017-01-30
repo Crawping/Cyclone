@@ -60,18 +60,31 @@ namespace Cyclone
                 /** PROPERTIES **/
                 constexpr uint FirstHalf()                          const { return (uint)((ulong)_value >> 32); }
                 constexpr bool IsAddress()                          const { return _type == VariableTypes::Address; }
+                /// <summary> Gets whether the variable is of Boolean type. </summary>
                 constexpr bool IsBoolean()                          const { return _type == VariableTypes::Boolean; }
+                /// <summary> Gets whether the variable is of double-precision floating point type. </summary>
                 constexpr bool IsDouble()                           const { return _type == VariableTypes::Double; }
+                /// <summary> Gets whether the variable is of single-precision floating point type. </summary>
                 constexpr bool IsFloat()                            const { return _type == VariableTypes::Float; }
+                /// <summary> Gets whether the variable represents a handle to a function. </summary>
                 constexpr bool IsFunction()                         const { return _type == VariableTypes::Function; }
+                /// <summary> Gets whether the variable is of single-precision signed integer type. </summary>
                 constexpr bool IsInteger()                          const { return _type == VariableTypes::Integer; }
+                /// <summary> Gets whether the variable is null. </summary>
                 constexpr bool IsNull()                             const { return _type == VariableTypes::Null; }
+                /// <summary> Gets whether the variable is of one of the numeric types. </summary>
                 constexpr bool IsNumeric()                          const { return _type.IsNumeric(); }
+                /// <summary> Gets whether the variable represents a handle to an instance of some class. </summary>
                 constexpr bool IsObject()                           const { return _type == VariableTypes::Object; }
+                /// <summary> Gets whether the variable represents a handle to a string literal. </summary>
                 constexpr bool IsString()                           const { return _type == VariableTypes::String; }
+                /// <summary> Gets whether the variable represents a handle to a type definition. </summary>
                 constexpr bool IsType()                             const { return _type == VariableTypes::Type; }
+
                 constexpr uint SecondHalf()                         const { return (uint)_value; }
+                /// <summary> Gets the type of the variable being stored. </summary>
                 constexpr VariableTypes Type()                      const { return _type; }
+                /// <summary> Gets the value or handle of the variable being stored. </summary>
                 constexpr double Value()                            const { return _value; }
 
 
@@ -82,7 +95,6 @@ namespace Cyclone
                 VMAPI constexpr VirtualVariable(double value);
                 VMAPI constexpr VirtualVariable(float value);
                 VMAPI constexpr VirtualVariable(int value);
-                VMAPI constexpr VirtualVariable(const string& value);
 
 
 

@@ -20,13 +20,17 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the number of classes that have been defined in virtual memory. </summary>
                 uint ClassCount()       const { return Classes.Count() - 1; }
+                /// <summary> Gets the number of functions that have been defined in virtual memory. </summary>
                 uint FunctionCount()    const { return Functions.Count(); }
+                /// <summary> Gets the number of variables that have been defined in virtual memory. </summary>
                 uint VariableCount()    const { return Variables.Count() - 1; }
 
 
 
                 /** CONSTRUCTOR **/
+                /// <summary> Constructs an empty virtual memory pool that can be used with virtual machines. </summary>
                 VMAPI VirtualMemory();
 
 
@@ -35,6 +39,8 @@ namespace Cyclone
                 VMAPI VirtualVariable& Access(uint id);
                 VMAPI VirtualVariable& Access(uint type, uint property, uint instance);
 
+                /// <summary> Deletes a specific variable in the virtual memory pool. </summary>
+                /// <param name="id"> The identifier of the variable to be deleted. </param>
                 VMAPI void Delete(uint id);
                 VMAPI const string& Find(uint id)                                   const;
                 VMAPI uint Find(const string& name)                                 const;
@@ -55,7 +61,7 @@ namespace Cyclone
                 BST<uint, VirtualClass>     Classes;
                 BST<uint, VirtualFunction>  Functions;
                 StringLibrary               Strings;
-                BST<uint, VirtualVariable>          Variables;
+                BST<uint, VirtualVariable>  Variables;
 
         };
 

@@ -62,16 +62,11 @@ namespace Cyclone
         {
 
         }
-        constexpr VirtualVariable::VirtualVariable(const string& value) :
-            VirtualVariable(VariableTypes::String)
-        {
-
-        }
 
 
 
         /** UTILITIES **/
-        constexpr VirtualVariable VirtualVariable::Cast(VariableTypes type)                  const
+        constexpr VirtualVariable VirtualVariable::Cast(VariableTypes type)                 const
         {
             return 
                 IsOfType(type) ?
@@ -83,7 +78,7 @@ namespace Cyclone
         {
             return _value < other._value ? -1 : _value > other._value ? 1 : 0;
         }
-        constexpr bool VirtualVariable::IsOfType(VariableTypes type)                         const { return _type == type; }
+        constexpr bool VirtualVariable::IsOfType(VariableTypes type)                        const { return _type == type; }
         constexpr bool VirtualVariable::IsOfType(const VirtualVariable& other)              const 
         { 
             return IsObject() ?
