@@ -16,7 +16,7 @@ namespace Cyclone
         }
         constexpr bool LiteralTypes::IsNumeric()    const
         {
-            return (Value != Null) && (Value != Function) && (Value != String) && (Value != Type);
+            return (Value != Null) && (Value != Function) && (Value != Object) && (Value != String) && (Value != Type);
         }
         string LiteralTypes::ToString()             const
         {
@@ -32,8 +32,8 @@ namespace Cyclone
 
         /** CONSTRUCTORS **/
         constexpr Literal::Literal(LiteralTypes type, double value) :
-            Type(type),
-            Value(value)
+            _type(type),
+            _value(value)
         {
 
         }
@@ -70,21 +70,21 @@ namespace Cyclone
         {
             return 
                 IsOfType(type) ?
-                    Literal(Type, Value) :
+                    Literal(_type, _value) :
                 IsNumeric() && type.IsNumeric() ?
-                    Literal(type, Value) : Literal();
+                    Literal(type, _value) : Literal();
         }
         constexpr Literal Literal::Compare(const Literal& other)    const
         {
-            return Value < other.Value ? -1 : Value > other.Value ? 1 : 0;
+            return _value < other._value ? -1 : _value > other._value ? 1 : 0;
         }
-        constexpr bool Literal::IsOfType(LiteralTypes type)         const { return Type == type; }
+        constexpr bool Literal::IsOfType(LiteralTypes type)         const { return _type == type; }
         constexpr bool Literal::IsOfType(const Literal& other)      const 
         { 
             return IsObject() ?
                 other.IsObject() ? 
                     (FirstHalf() == other.FirstHalf()) : false :
-                (Type == other.Type);
+                (_type == other._type);
         }
 
 
@@ -94,16 +94,16 @@ namespace Cyclone
         {
             return Literal
             (
-                LiteralTypes::MaxPrecision(x.Type, y.Type),
+                LiteralTypes::MaxPrecision(x._type, y._type),
 
                 ( x.IsString() || x.IsNull() || x.IsFunction() )    ? 0.0                               : 
                 ( y.IsString() || y.IsNull() || y.IsFunction() )    ? 0.0                               : 
-                ( operation == Instructions::Add )                  ? x.Value + y.Value                 : 
-                ( operation == Instructions::And )                  ? (ulong)x.Value & (ulong)y.Value   :
-                ( operation == Instructions::Divide )               ? x.Value / y.Value                 :
-                ( operation == Instructions::Multiply )             ? x.Value * y.Value                 :
-                ( operation == Instructions::Or )                   ? (ulong)x.Value | (ulong)y.Value   :
-                ( operation == Instructions::Subtract )             ? x.Value - y.Value                 : 0.0
+                ( operation == Instructions::Add )                  ? x._value + y._value                 : 
+                ( operation == Instructions::And )                  ? (ulong)x._value & (ulong)y._value   :
+                ( operation == Instructions::Divide )               ? x._value / y._value                 :
+                ( operation == Instructions::Multiply )             ? x._value * y._value                 :
+                ( operation == Instructions::Or )                   ? (ulong)x._value | (ulong)y._value   :
+                ( operation == Instructions::Subtract )             ? x._value - y._value                 : 0.0
             );
         }
 
@@ -112,8 +112,32 @@ namespace Cyclone
         /** OPERATORS **/
         Literal& Literal::operator =(Literal other)
         {
-            Type = other.Type;
-            Value = other.Value;
+            _type = other._type;
+            _value = other._value;
+            return *this;
+        }
+        Literal& Literal::operator ++()
+        {
+            if (IsNull()) { return *this; }
+            _value++;
+            return *this;
+        }
+        Literal& Literal::operator ++(int)
+        {
+            if (IsNull()) { return *this; }
+            _value++;
+            return *this;
+        }
+        Literal& Literal::operator --()
+        {
+            if (IsNull()) { return *this; }
+            _value--;
+            return *this;
+        }
+        Literal& Literal::operator --(int)
+        {
+            if (IsNull()) { return *this; }
+            _value--;
             return *this;
         }
 
