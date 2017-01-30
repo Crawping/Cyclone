@@ -23,7 +23,14 @@ namespace Cyclone
 
             bool operator ==(const ControlPoint2D& other) const
             {
-                return (Command == other.Command) && (Coordinates == other.Coordinates);
+                if ( (Command != other.Command) || (Coordinates.Count() != other.Coordinates.Count()) )
+                    return false;
+                
+                for (uint a = 0; a < Coordinates.Count(); a++)
+                    if (Coordinates(a) != other.Coordinates(a))
+                        return false;
+
+                return true;
             }
             bool operator !=(const ControlPoint2D& other) const { return !operator ==(other); }
         };

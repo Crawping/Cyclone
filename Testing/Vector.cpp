@@ -95,12 +95,10 @@ TEST_F(_Vector, VectorAppending)
     Vector<char> empty;
     Vector<char> _v2Copy = _v2;
     
-    _v2Copy.Append(empty);
-    ASSERT_EQ(_v2, _v2Copy);
-
     // Test appending to an empty vector
     empty.Append(_v2);
-    ASSERT_EQ(_v2, empty);
+    for (uint a = 0; a < _v2.Count(); a++)
+        ASSERT_EQ(_v2(a), empty(a));
 }
 TEST_F(_Vector, VectorFilling)
 {
@@ -115,11 +113,6 @@ TEST_F(_Vector, VectorFilling)
 
 
 /** OPERATORS **/
-TEST_F(_Vector, EqualityOperator)
-{
-    Vector<char> _v1Copy = _v1;
-    ASSERT_EQ(_v1, _v1Copy);
-}
 TEST_F(_Vector, IndexingOperator)
 {
     ASSERT_EQ(_v1(0), 'a');
@@ -127,10 +120,6 @@ TEST_F(_Vector, IndexingOperator)
     ASSERT_EQ(_v1(2), 'c');
     ASSERT_EQ(_v1(3), 'd');
     ASSERT_EQ(_v1(4), 'e');
-}
-TEST_F(_Vector, InequalityOperator)
-{
-    ASSERT_NE(_v1, _v2);
 }
 TEST_F(_Vector, RangedForLoop)
 {

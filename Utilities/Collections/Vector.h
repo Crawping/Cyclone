@@ -208,21 +208,6 @@ namespace Cyclone
 			        return *this;
 		        }
 
-                virtual bool operator ==(const Vector<T>& other)        const
-                {
-                    if (this == (const Vector<T>*)&other)
-                        return true;
-                    else if (other.Count() != Count())
-                        return false;
-
-                    for (int a = 0; a < Count(); a++)
-                        if (Data[a] != other(a))
-                            return false;
-
-                    return true;
-                }
-                virtual bool operator !=(const Vector<T>& other)        const { return !(operator==(other)); }
-
             protected:
 
                 virtual void Reallocate(uint n)
