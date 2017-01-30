@@ -26,19 +26,12 @@ namespace Cyclone
         void StringLibrary::Clear()
         {
             _ids.Clear();
-            _strings.Clear();
-
             _ids.Insert("", 0);
+            _strings.Clear();
             _strings.Insert(0, "");
         }
-        bool StringLibrary::Contains(uint id)               const
-        {
-            return _strings.Contains(id);
-        }
-        bool StringLibrary::Contains(const string& string)  const
-        {
-            return _ids.Contains(string);
-        }
+        bool StringLibrary::Contains(uint id)               const { return _strings.Contains(id); }
+        bool StringLibrary::Contains(const string& string)  const { return _ids.Contains(string); }
         const string& StringLibrary::Find(uint id)          const 
         {
             return _strings.Contains(id) ? _strings[id] : _strings[0];
