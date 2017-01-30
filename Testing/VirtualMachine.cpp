@@ -166,11 +166,8 @@ TEST_F(_VirtualMachine, Incrementing)
 }
 TEST_F(_VirtualMachine, Jumping)
 {
-    string success = "Success!";
-    string failure = "Failure!";
-
-    int sid = _t1.Insert(success);
-    int fid = _t1.Insert(failure);
+    int sid = _t1.Insert("Success!");
+    int fid = _t1.Insert("Failure!");
 
     Vector<Instruction> cmds =
     {
