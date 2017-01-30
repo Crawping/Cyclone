@@ -19,7 +19,7 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint ClassCount()       const { return Classes.Count(); }
+                uint ClassCount()       const { return Classes.Count() - 1; }
                 uint FunctionCount()    const { return Functions.Count(); }
                 uint VariableCount()    const { return Variables.Count() - 1; }
 
@@ -42,6 +42,7 @@ namespace Cyclone
 
                 VMAPI void Insert(const VirtualClass& type);
                 VMAPI void Insert(const VirtualFunction& function);
+                VMAPI void Insert(uint type, const VirtualProperty& property);
                 VMAPI uint Insert(const string& string);
                 VMAPI uint Insert(const string& name, const Literal& value);
 

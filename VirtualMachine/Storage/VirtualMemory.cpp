@@ -10,6 +10,7 @@ namespace Cyclone
         /** CONSTRUCTOR **/
         VirtualMemory::VirtualMemory()
         {
+            Classes.Insert(0, { });
             Variables.Insert(0, Literal());
         }
 
@@ -38,11 +39,24 @@ namespace Cyclone
         }
         void VirtualMemory::Insert(const VirtualClass& type)
         {
+            if (type.ID() == 0) { return; }
             Classes.Insert(type.ID(), type);
         }
         void VirtualMemory::Insert(const VirtualFunction& function)
         {
+            if (function.ID() == 0) { return; }
             Functions.Insert(function.ID(), function);
+        }
+        void VirtualMemory::Insert(uint type, const VirtualProperty& property)
+        {
+            if (type == 0) { return; }
+            else if (Classes.Contains(type)) { Classes[type].Insert(property); }
+            else
+            {
+                VirtualClass classdef(type);
+                classdef.Insert(property);
+                Classes.Insert(type, classdef);
+            }
         }
         uint VirtualMemory::Insert(const string& string)
         {
