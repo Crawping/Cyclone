@@ -14,7 +14,7 @@ namespace Cyclone
     namespace VM
     {
 
-        struct LiteralTypes : public Enumerator
+        struct VariableTypes : public Enumerator
         {
             enum Types
             {
@@ -33,8 +33,8 @@ namespace Cyclone
 
 
             /** CONSTRUCTORS **/
-            constexpr LiteralTypes(uint type)           : Enumerator((int)type) { }
-            constexpr LiteralTypes(enum Types t = Null) : Enumerator((int)t) { }
+            constexpr VariableTypes(uint type)           : Enumerator((int)type) { }
+            constexpr VariableTypes(enum Types t = Null) : Enumerator((int)t) { }
 
 
 
@@ -44,7 +44,7 @@ namespace Cyclone
             VMAPI string ToString()             const;
 
 
-            constexpr static LiteralTypes MaxPrecision(LiteralTypes x, LiteralTypes y)
+            constexpr static VariableTypes MaxPrecision(VariableTypes x, VariableTypes y)
             {
                 return (x == Null || y == Null) ? Null : 
                     (x >= y) ? x : y;
@@ -59,25 +59,25 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 constexpr uint FirstHalf()                          const { return (uint)((ulong)_value >> 32); }
-                constexpr bool IsAddress()                          const { return _type == LiteralTypes::Address; }
-                constexpr bool IsBoolean()                          const { return _type == LiteralTypes::Boolean; }
-                constexpr bool IsDouble()                           const { return _type == LiteralTypes::Double; }
-                constexpr bool IsFloat()                            const { return _type == LiteralTypes::Float; }
-                constexpr bool IsFunction()                         const { return _type == LiteralTypes::Function; }
-                constexpr bool IsInteger()                          const { return _type == LiteralTypes::Integer; }
-                constexpr bool IsNull()                             const { return _type == LiteralTypes::Null; }
+                constexpr bool IsAddress()                          const { return _type == VariableTypes::Address; }
+                constexpr bool IsBoolean()                          const { return _type == VariableTypes::Boolean; }
+                constexpr bool IsDouble()                           const { return _type == VariableTypes::Double; }
+                constexpr bool IsFloat()                            const { return _type == VariableTypes::Float; }
+                constexpr bool IsFunction()                         const { return _type == VariableTypes::Function; }
+                constexpr bool IsInteger()                          const { return _type == VariableTypes::Integer; }
+                constexpr bool IsNull()                             const { return _type == VariableTypes::Null; }
                 constexpr bool IsNumeric()                          const { return _type.IsNumeric(); }
-                constexpr bool IsObject()                           const { return _type == LiteralTypes::Object; }
-                constexpr bool IsString()                           const { return _type == LiteralTypes::String; }
-                constexpr bool IsType()                             const { return _type == LiteralTypes::Type; }
+                constexpr bool IsObject()                           const { return _type == VariableTypes::Object; }
+                constexpr bool IsString()                           const { return _type == VariableTypes::String; }
+                constexpr bool IsType()                             const { return _type == VariableTypes::Type; }
                 constexpr uint SecondHalf()                         const { return (uint)_value; }
-                constexpr LiteralTypes Type()                       const { return _type; }
+                constexpr VariableTypes Type()                      const { return _type; }
                 constexpr double Value()                            const { return _value; }
 
 
 
                 /** CONSTRUCTORS **/
-                VMAPI constexpr VirtualVariable(LiteralTypes type = LiteralTypes::Null, double value = 0.0);
+                VMAPI constexpr VirtualVariable(VariableTypes type = VariableTypes::Null, double value = 0.0);
                 VMAPI constexpr VirtualVariable(bool value);
                 VMAPI constexpr VirtualVariable(double value);
                 VMAPI constexpr VirtualVariable(float value);
@@ -87,10 +87,10 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                VMAPI constexpr VirtualVariable Cast(LiteralTypes type)         const;
+                VMAPI constexpr VirtualVariable Cast(VariableTypes type)                const;
                 VMAPI constexpr VirtualVariable Compare(const VirtualVariable& other)   const;
-                VMAPI constexpr bool IsOfType(LiteralTypes type)        const;
-                VMAPI constexpr bool IsOfType(const VirtualVariable& other)     const;
+                VMAPI constexpr bool IsOfType(VariableTypes type)                       const;
+                VMAPI constexpr bool IsOfType(const VirtualVariable& other)             const;
                 
 
                 VMAPI constexpr static VirtualVariable Calculate(Instructions operation, const VirtualVariable& x, const VirtualVariable& y);
@@ -98,8 +98,8 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                constexpr bool operator ==(const VirtualVariable& other)    const { return IsOfType(other) && (_value == other._value); }
-                constexpr bool operator !=(const VirtualVariable& other)    const { return !operator ==(other); }
+                constexpr bool operator ==(const VirtualVariable& other)            const { return IsOfType(other) && (_value == other._value); }
+                constexpr bool operator !=(const VirtualVariable& other)            const { return !operator ==(other); }
             
                 constexpr VirtualVariable operator +(const VirtualVariable& other)  const { return Calculate(Instructions::Add, *this, other); }
                 constexpr VirtualVariable operator /(const VirtualVariable& other)  const { return Calculate(Instructions::Divide, *this, other); }
@@ -116,7 +116,7 @@ namespace Cyclone
             private:
 
                 /** DATA **/
-                LiteralTypes    _type;
+                VariableTypes    _type;
                 double          _value;
 
         };

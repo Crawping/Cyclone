@@ -8,17 +8,22 @@ namespace Cyclone
     {
 
         /** LITERAL TYPE UTILITIES **/
-        constexpr uint LiteralTypes::ByteSize()     const
+        constexpr uint VariableTypes::ByteSize()     const
         {
             return
                 (Value == Boolean)  ? 1 :
                 (Value == Double)   ? 8 : 4;
         }
-        constexpr bool LiteralTypes::IsNumeric()    const
+        constexpr bool VariableTypes::IsNumeric()    const
         {
-            return (Value != Null) && (Value != Function) && (Value != Object) && (Value != String) && (Value != Type);
+            return 
+                (Value != Null)     && 
+                (Value != Function) && 
+                (Value != Object)   && 
+                (Value != String)   && 
+                (Value != Type);
         }
-        string LiteralTypes::ToString()             const
+        string VariableTypes::ToString()             const
         {
             return
                 (Value == Boolean)  ? "Boolean" :
@@ -31,34 +36,34 @@ namespace Cyclone
 
 
         /** CONSTRUCTORS **/
-        constexpr VirtualVariable::VirtualVariable(LiteralTypes type, double value) :
+        constexpr VirtualVariable::VirtualVariable(VariableTypes type, double value) :
             _type(type),
             _value(value)
         {
 
         }
         constexpr VirtualVariable::VirtualVariable(bool value) :
-            VirtualVariable(LiteralTypes::Boolean, value)
+            VirtualVariable(VariableTypes::Boolean, value)
         {
 
         }
         constexpr VirtualVariable::VirtualVariable(double value) :
-            VirtualVariable(LiteralTypes::Double, value)
+            VirtualVariable(VariableTypes::Double, value)
         {
 
         }
         constexpr VirtualVariable::VirtualVariable(float value) :
-            VirtualVariable(LiteralTypes::Float, value)
+            VirtualVariable(VariableTypes::Float, value)
         {
 
         }
         constexpr VirtualVariable::VirtualVariable(int value) :
-            VirtualVariable(LiteralTypes::Integer, value)
+            VirtualVariable(VariableTypes::Integer, value)
         {
 
         }
         constexpr VirtualVariable::VirtualVariable(const string& value) :
-            VirtualVariable(LiteralTypes::String)
+            VirtualVariable(VariableTypes::String)
         {
 
         }
@@ -66,7 +71,7 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        constexpr VirtualVariable VirtualVariable::Cast(LiteralTypes type)          const
+        constexpr VirtualVariable VirtualVariable::Cast(VariableTypes type)                  const
         {
             return 
                 IsOfType(type) ?
@@ -78,8 +83,8 @@ namespace Cyclone
         {
             return _value < other._value ? -1 : _value > other._value ? 1 : 0;
         }
-        constexpr bool VirtualVariable::IsOfType(LiteralTypes type)         const { return _type == type; }
-        constexpr bool VirtualVariable::IsOfType(const VirtualVariable& other)      const 
+        constexpr bool VirtualVariable::IsOfType(VariableTypes type)                         const { return _type == type; }
+        constexpr bool VirtualVariable::IsOfType(const VirtualVariable& other)              const 
         { 
             return IsObject() ?
                 other.IsObject() ? 
@@ -94,7 +99,7 @@ namespace Cyclone
         {
             return VirtualVariable
             (
-                LiteralTypes::MaxPrecision(x._type, y._type),
+                VariableTypes::MaxPrecision(x._type, y._type),
 
                 ( x.IsString() || x.IsNull() || x.IsFunction() )    ? 0.0                               : 
                 ( y.IsString() || y.IsNull() || y.IsFunction() )    ? 0.0                               : 

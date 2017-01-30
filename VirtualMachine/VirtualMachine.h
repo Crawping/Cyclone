@@ -7,7 +7,6 @@
 #include "Collections/Stack.h"
 #include "Collections/Vector.h"
 #include "Execution/Instructions.h"
-#include "Storage/VirtualVariable.h"
 #include "Storage/VirtualMemory.h"
 #include "Storage/VirtualWorkspace.h"
 
@@ -19,8 +18,8 @@ namespace Cyclone
     {
         struct StackFrame
         {
-            uint                ReturnAddress;
-            Stack<VirtualVariable>      Workspace;
+            uint                    ReturnAddress;
+            Stack<VirtualVariable>  Workspace;
         };
 
 

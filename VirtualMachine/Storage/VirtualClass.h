@@ -17,7 +17,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 int ID()                            const { return _id; }
-                LiteralTypes Type()                 const { return LiteralTypes::Type; }
+                VariableTypes Type()                 const { return VariableTypes::Type; }
 
 
 
