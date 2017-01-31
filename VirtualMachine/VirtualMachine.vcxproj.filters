@@ -72,4 +72,9 @@
       <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Execution\Classes.coffee">
+      <Filter>Execution</Filter>
+    </None>
+  </ItemGroup>
 </Project>
