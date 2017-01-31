@@ -19,15 +19,16 @@ namespace Cyclone
             enum Types
             {
                 Null        = 0,
-                Address     = 9,
+                Address     = 10,
+                Array       = 6,
                 Boolean     = 1,
                 Double      = 4,
                 Float       = 3,
-                Function    = 7,
+                Function    = 8,
                 Integer     = 2,
-                Object      = 8,
+                Object      = 9,
                 String      = 5,
-                Type        = 6,
+                Type        = 7,
             };
 
 
