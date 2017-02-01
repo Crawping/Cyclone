@@ -1,12 +1,13 @@
 /* CHANGELOG
  * Written by Josh Grooms on 20170130
  */
+import * as Colors from './Colors';
 export class InterfaceControl //implements IInteractive
  {
     constructor() {
-        this.BackgroundColor = [0, 0, 0, 1];
-        this.BorderColor = [0, 0, 0, 1];
-        this.BorderRadius = [0, 0, 0, 0];
+        this.BackgroundColor = Colors.Black;
+        this.BorderColor = Colors.Black;
+        //BorderRadius:       Border = { 0, 0, 0, 0 };
         this.BorderWidth = [1, 1, 1, 1];
         this.Components = [];
         this.IsClippingEnabled = true;

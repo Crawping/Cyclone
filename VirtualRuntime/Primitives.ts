@@ -4,6 +4,21 @@
 
 
 
+export class Border
+{
+    Top:        number;
+    Bottom:     number;
+    Left:       number;
+    Right:      number;
+
+    //constructor
+    constructor(values)
+    {
+        //if (typeof values == "
+        [ this.Top, this.Bottom, this.Left, this.Right ] = values;
+    }
+}
+
 export class Color
 {
     R: number;
@@ -17,8 +32,6 @@ export class Color
     //    //{ this.R, this.G, this.B, this.A } = color;
     //}
 }
-
-
 
 export class Vector2
 {

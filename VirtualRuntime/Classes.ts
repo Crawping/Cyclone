@@ -3,7 +3,8 @@
  */
 
 //import { Color } from './Primitives';
-import { Color, Vector2 } from './Primitives';
+import { Border, Color, Vector2 } from './Primitives';
+import * as Colors from './Colors'
 
 //module.exports = Classes = 
 
@@ -47,9 +48,9 @@ export interface IInteractive
 
 export class InterfaceControl //implements IInteractive
 {
-    BackgroundColor:    number[] = [ 0, 0, 0, 1 ];
-    BorderColor:        number[] = [ 0, 0, 0, 1 ];
-    BorderRadius:       number[] = [ 0, 0, 0, 0 ];
+    BackgroundColor:    Color = Colors.Black;
+    BorderColor:        Color = Colors.Black;
+    //BorderRadius:       Border = { 0, 0, 0, 0 };
     BorderWidth:        number[] = [ 1, 1, 1, 1 ];
     Components:         number[] = [ ]
     IsClippingEnabled:  boolean = true;
