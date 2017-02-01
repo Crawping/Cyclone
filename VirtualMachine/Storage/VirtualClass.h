@@ -40,7 +40,7 @@ namespace Cyclone
             private:
 
                 int                         _id;
-                BST<uint, VirtualVariable>          _instances;
+                BST<uint, VirtualVariable>  _instances;
                 BST<uint, VirtualFunction>  _methods;
                 BST<uint, VirtualProperty>  _properties;
 

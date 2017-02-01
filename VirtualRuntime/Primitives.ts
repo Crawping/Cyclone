@@ -4,7 +4,7 @@
 
 
 
-class Color
+export class Color
 {
     R: number;
     G: number;
@@ -12,28 +12,28 @@ class Color
     A: number;
 
     //constructor(r?: number, g?: number, b?:number, a?: number)
-    constructor(color: number[])
-    {
-        { this.R, this.G, this.B, this.A } = color;
-    }
+    //constructor(color: number[])
+    //{
+    //    //{ this.R, this.G, this.B, this.A } = color;
+    //}
 }
 
 
 
-class Vector2
+export class Vector2
 {
     X: number;
     Y: number;
 }
 
-class Vector3
+export class Vector3
 {
     X: number;
     Y: number;
     Z: number;
 }
 
-class Vector4
+export class Vector4
 {
     X: number;
     Y: number;

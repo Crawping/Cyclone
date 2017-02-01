@@ -2,7 +2,8 @@
  * Written by Josh Grooms on 20170130
  */
 
-
+//import { Color } from './Primitives';
+import { Color, Vector2 } from './Primitives';
 
 //module.exports = Classes = 
 
@@ -30,7 +31,7 @@
 
 
 
-interface IInteractive
+export interface IInteractive
 {
     IsInteractive:      boolean;
 
@@ -44,7 +45,7 @@ interface IInteractive
     ProcessPropertyChange(property: string);
 }
 
-class InterfaceControl //implements IInteractive
+export class InterfaceControl //implements IInteractive
 {
     BackgroundColor:    number[] = [ 0, 0, 0, 1 ];
     BorderColor:        number[] = [ 0, 0, 0, 1 ];
@@ -64,6 +65,13 @@ class InterfaceControl //implements IInteractive
     Size:               number[] = [ 1, 1, 1 ];
 
 
+    //OnHighlight:
+    //{
+    //    BackgroundColor: number[] = [ 0.5, 0.5, 0.5, 1 ];
+    //};
+
+    
+
     //OnButtonPress:      null
     //OnButtonRelease:    null
     //OnHighlight:        null
@@ -73,10 +81,10 @@ class InterfaceControl //implements IInteractive
     //OnPointerExit:      null
     //OnPropertyChange:   null
     //OnSelection:        null
-}   
+}
 
 
-class Mesh3D
+export class Mesh3D
 {
     Components:         number[] = [ ];
     IsInteractive:      boolean = false;
@@ -113,7 +121,7 @@ class Mesh3D
 //};
 
 
-class Scene3D
+export class Scene3D
 {
 
 }
