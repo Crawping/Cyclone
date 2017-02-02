@@ -4,12 +4,26 @@
 
 
 
-class List<T>
+namespace Core.Primitives
 {
 
-}
+    class List<T> : 
+        interfaces = ICollection;
+    {
+        uint Count
+        {
+            default     { return 0; }
+            public get  { return Value; }
+            private set { Value = value; }
+        }
+        bool IsEmpty    { return Count == 0; }
 
-class NamedList<T>
-{
+
+
+        @T operator [](uint index);
+        
+
+
+    }
 
 }
