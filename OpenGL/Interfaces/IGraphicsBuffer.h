@@ -30,9 +30,12 @@ namespace Cyclone
 
         };
 
+        /// <summary> A data structure that holds a graphics buffer and the slot to which it will be bound. </summary>
         struct BufferBinding
         {
+            /// <summary> A valid graphics buffer that is to be bound to the GPU for rendering. </summary>
             const IGraphicsBuffer&  Buffer;
+            /// <summary> The resource slot number to which the graphics buffer will be bound. </summary>
             uint                    Slot;
         };
     }

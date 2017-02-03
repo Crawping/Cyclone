@@ -31,12 +31,16 @@ namespace Cyclone
                 virtual List<BufferBinding> Buffers()                   const = 0;
                 /// <summary> Gets the GPU configuration used to execute the rendering stage. </summary>
                 virtual const GraphicsSettings& Settings()              const = 0;
-                /// <summary> Gets the primitive topology of the geometry to be rendered by the stage. summary>
+                /// <summary> Gets the primitive topology of the geometry to be rendered by the stage. </summary>
                 virtual VertexTopologies Topology()                     const = 0;
+
+
 
                 /** DESTRUCTOR **/
                 /// <summary> Destroys any specially allocated resources that are held by the rendering stage. </summary>
                 virtual ~IRenderStage() { }
+
+
 
                 /** UTILITIES **/
                 /// <summary> Adds a resource buffer binding to the list of those used by the rendering stage. </summary>

@@ -18,15 +18,21 @@ namespace Cyclone
         {
             enum Types
             {
+                /// <summary> A blank default variable type that is invalid in nearly all operations. </summary>
                 Null        = 0,
                 Address     = 10,
                 Array       = 6,
+                /// <summary> A binary logical variable that can only take on values of either true or false. </summary>
                 Boolean     = 1,
+                /// <summary> A 64-bit double-precision floating point number. </summary>
                 Double      = 4,
+                /// <summary> A 32-bit single-precision floating point number. </summary>
                 Float       = 3,
                 Function    = 8,
+                /// <summary> A 32-bit signed integer. </summary>
                 Integer     = 2,
                 Object      = 9,
+                /// <summary> An array of characters. </summary>
                 String      = 5,
                 Type        = 7,
             };
@@ -91,6 +97,9 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS **/
+                /// <summary> Constructs a new virtual variable representing some data to be stored in memory. </summary>
+                /// <param name="type"> The type of the data to be stored. </param>
+                /// <param name="value"> The real or representative numeric value of the data to be stored. </param>
                 VMAPI constexpr VirtualVariable(VariableTypes type = VariableTypes::Null, double value = 0.0);
                 VMAPI constexpr VirtualVariable(bool value);
                 VMAPI constexpr VirtualVariable(double value);
