@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\;..\OpenGL;..\Utilities</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\OpenGL;..\Utilities;..\VirtualMachine;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -114,8 +114,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Interfaces\IScene.h" />
+    <ClInclude Include="Interfaces\ISceneComponent.h" />
+    <ClInclude Include="Interfaces\ISceneLayer.h" />
     <ClInclude Include="Interfaces\ISceneMessage.h" />
     <ClInclude Include="Messaging\Message.h" />
+    <ClInclude Include="Scene3D.h" />
     <ClInclude Include="SceneAPI.h" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +131,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\VirtualMachine\VirtualMachine.vcxproj">
+      <Project>{4275937d-182c-4385-90f1-f96dfa513a09}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

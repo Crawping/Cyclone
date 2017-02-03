@@ -8,6 +8,16 @@
     <ClInclude Include="Messaging\Message.h">
       <Filter>Messaging</Filter>
     </ClInclude>
+    <ClInclude Include="Scene3D.h" />
+    <ClInclude Include="Interfaces\IScene.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\ISceneComponent.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\ISceneLayer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Messaging\Message.cpp">
