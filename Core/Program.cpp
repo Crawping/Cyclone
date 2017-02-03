@@ -6,8 +6,6 @@
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
-#include "Geometry/Mesh3D.h"
-#include "Geometry/Quad3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
@@ -75,10 +73,10 @@ namespace Cyclone
             if (!RenderWindow->ProcessEvent())
                 break;
 
-            TestShape.Rotate(Vector3(0.01f, 0.01f, 0.01f));
-            TestIcosahedron.Rotate(-0.01f);
-            RenderScene->Update(TestShape);
-            RenderScene->Update(TestIcosahedron);
+            Cube.Rotate(Vector3(0.01f, 0.01f, 0.01f));
+            Icosahedron.Rotate(-0.01f);
+            RenderScene->Update(Cube);
+            RenderScene->Update(Icosahedron);
 
 
             Console::WriteLine("1. " + Renderer->Report());
@@ -138,26 +136,26 @@ namespace Cyclone
             .Target(RenderTarget)
             .View(&View);
 
-		PlaneXZ = Quad3D(true);
 		PlaneXZ
+            .Geometry(Geometry3D::Quad(true))
             .Pitch(-90)
             .PrimaryColor(Color4::Blue)
             .Scale(5000).Translate(0, 50, 0);
 
-        TestShape = Mesh3D(Geometry3D::Cube(true));
-		TestShape
+        Cube
+            .Geometry(Geometry3D::Cube(true))
             .PrimaryColor(Color4::Gray)
             .Scale(Vector3(50, 50, 50))
             .Translate(250, 250, -10);
 
-        TestIcosahedron = Mesh3D(Geometry3D::Icosahedron());
-        TestIcosahedron
+        Icosahedron
+            .Geometry(Geometry3D::Icosahedron())
             .PrimaryColor(Color4::Red)
             .Scale(Vector3(50, 50, 50))
             .Translate(750, 250, -10);
 
-        RenderScene->Insert(TestIcosahedron);
-        RenderScene->Insert(TestShape);
+        RenderScene->Insert(Icosahedron);
+        RenderScene->Insert(Cube);
         RenderScene->Insert(PlaneXZ);
 
         Renderer->Scene(RenderScene);
