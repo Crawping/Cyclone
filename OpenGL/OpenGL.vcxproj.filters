@@ -56,16 +56,10 @@
     <ClInclude Include="Geometry\Entity3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Line3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\Mesh3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\Point3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry\Quad3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Buffers\ArrayBuffer.h">
@@ -88,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="Pipelines\ComputePipeline.h">
       <Filter>Pipelines</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry\Space3D.h">
-      <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="Interfaces\IRenderStage.h">

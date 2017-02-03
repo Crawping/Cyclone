@@ -162,11 +162,8 @@
     <ClInclude Include="EnumerationsGL.h" />
     <ClInclude Include="Geometry\Entity3D.h" />
     <ClInclude Include="Geometry\Geometry3D.h" />
-    <ClInclude Include="Geometry\Line3D.h" />
     <ClInclude Include="Geometry\Mesh3D.h" />
     <ClInclude Include="Geometry\Point3D.h" />
-    <ClInclude Include="Geometry\Quad3D.h" />
-    <ClInclude Include="Geometry\Space3D.h" />
     <ClInclude Include="Geometry\Transform3D.h" />
     <ClInclude Include="Geometry\Vertex.h" />
     <ClInclude Include="GraphicsSettings.h" />
