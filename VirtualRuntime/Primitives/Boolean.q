@@ -21,11 +21,10 @@ namespace Core.Primitives
     }
 
 
-    class Boolean :
+    class Boolean:
         alias       = bool;
         base        = internal bool;
         interface   = ILogical;
-        literals    = true, false;
     {
         
         literals
@@ -35,8 +34,10 @@ namespace Core.Primitives
         }
         
 
+        Boolean(
+        Boolean(INumeric value):                    base(value) {  }
 
-        bool operator ==(bool other) { return false; }
+        bool operator ==(bool other):               override { return false; }
         
         
 

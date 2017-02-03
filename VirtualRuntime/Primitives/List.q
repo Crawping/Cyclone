@@ -8,7 +8,8 @@ namespace Core.Primitives
 {
 
     class List<T> : 
-        interfaces = ICollection;
+        interfaces  = ICollection;
+        T           = IDefaultable;
     {
         uint Count
         {

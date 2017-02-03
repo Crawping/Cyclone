@@ -16,8 +16,10 @@ namespace Core.Primitives
         INumeric operator *(const @INumeric other);
         INumeric operator -(const @INumeric other);
 
-        @INumeric operator +=(const @INumeric other);
-        @INumeric operator -=(const @INumeric other);
+        operator +=(const @INumeric other);
+        operator /=(const @INumeric other);
+        operator *=(const @INumeric other);
+        operator -=(const @INumeric other);
     }
 
 
@@ -35,56 +37,60 @@ namespace Core.Primitives
 
     }
     class Float64:
-        alias   = double;
-        base    = internal double;
+        alias       = double;
+        base        = internal double;
+        interface   = INumeric;
     {
 
     }
     class Integer8:
-        alias   = byte;
-        base    = internal byte;
+        alias       = byte;
+        base        = internal byte;
+        interface   = INumeric;
     {
 
     }
     class Integer16:
-        alias   = short;
-        base    = internal short;
+        alias       = short;
+        base        = internal short;
+        interface   = INumeric;
     {
 
     }
     class Integer32:
-        alias   = int;
-        base    = internal int;
+        alias       = int;
+        base        = internal int;
+        interface   = INumeric;
     {
 
     }
     class Integer64:
-        alias   = long;
-        base    = internal long;
+        alias       = long;
+        base        = internal long;
     {
 
     }
     class UnsignedInteger8:
-        alias   = ubyte;
-        base    = internal ubyte;
+        alias       = ubyte;
+        base        = internal ubyte;
     {
 
     }
     class UnsignedInteger16:
-        alias   = ushort;
-        base    = internal ushort;
+        alias       = ushort;
+        base        = internal ushort;
     {
 
     }
     class UnsignedInteger32:
-        alias   = uint;
-        base    = internal uint;
+        alias       = uint;
+        base        = internal uint;
     {
 
     }
     class UnsignedInteger64:
-        alias   = ulong;
-        base    = internal ulong;
+        alias       = ulong;
+        base        = internal ulong;
     {
 
     }
