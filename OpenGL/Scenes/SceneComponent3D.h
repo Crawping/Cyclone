@@ -14,7 +14,7 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        class StageGroup3D;
+        struct StageGroup3D;
 
         class SceneComponent3D : public SceneComponent
         {

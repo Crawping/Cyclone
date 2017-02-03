@@ -16,10 +16,10 @@ namespace Core.Primitives
         INumeric operator *(const @INumeric other);
         INumeric operator -(const @INumeric other);
 
-        operator +=(const @INumeric other);
-        operator /=(const @INumeric other);
-        operator *=(const @INumeric other);
-        operator -=(const @INumeric other);
+        @INumeric operator +=(const @INumeric other);
+        @INumeric operator /=(const @INumeric other);
+        @INumeric operator *=(const @INumeric other);
+        @INumeric operator -=(const @INumeric other);
     }
 
 
