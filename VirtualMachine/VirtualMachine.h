@@ -16,12 +16,6 @@ namespace Cyclone
 {
     namespace VM
     {
-        struct StackFrame
-        {
-            uint                    ReturnAddress;
-            Stack<VirtualVariable>  Workspace;
-        };
-
 
         class VirtualMachine
         {
@@ -50,6 +44,12 @@ namespace Cyclone
                 VMAPI void Resume();
 
             private:
+
+                struct StackFrame
+                {
+                    uint                    ReturnAddress;
+                    Stack<VirtualVariable>  Workspace;
+                };
 
                 VirtualMemory*      _data;
                 Stack<StackFrame>   _frames;

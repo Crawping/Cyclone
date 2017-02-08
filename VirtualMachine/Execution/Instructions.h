@@ -25,47 +25,62 @@ namespace Cyclone
                 Abort,
 
                 Add,
-                AddSet,
-                AddStore,
+                AddArrays,
+                AddVariables,
 
                 And,
-                AndSet,
-                AndStore,
+                AndArrays,
+                AndVariables,
 
                 Call,
+                CallMethod,
                 CallRelative,
 
                 Cast,
-                CastStore,
 
                 Compare,
+                CompareArrays,
+                CompareVariables,
+
+                Concatenate,
 
                 Copy,
-                CopyMemory,
+                CopyArray,
+                CopyObject,
+                CopyVariable,
 
                 Decrement,
-                DecrementMemory,
-                DecrementSet,
-                DecrementStore,
+                DecrementObject,
+                DecrementVariable,
 
                 /// <summary> Deletes a variable from memory. </summary>
                 Delete,
+                DeleteArray,
+                DeleteObject,
+                DeleteStructure,
+                DeleteVariable,
 
-                DefineClass,
+                DefineArray,
                 DefineMethod,
+                DefineObject,
                 DefineProperty,
+                DefineStructure,
+                DefineType,
+                DefineVariable,
 
                 Divide,
-                DivideSet,
-                DivideStore,
+                DivideArrays,
+                DivideVariables,
 
                 /// <summary> Pushes an object property value onto the working variable stack. </summary>
                 Get,
+                GetArray,
+                GetObject,
+                GetVariable,
 
                 Increment,
-                IncrementMemory,
-                IncrementSet,
-                IncrementStore,
+                IncrementObject,
+                IncrementVariable,
 
                 /// <summary> Sets the absolute position of the instruction pointer. </summary>
                 Jump,
@@ -76,22 +91,24 @@ namespace Cyclone
 
                 /// <summary> Pushes a value from memory onto the working variable stack. </summary>
                 Load,
+                LoadArray,
+                LoadObject,
 
                 Multiply,
-                MultiplySet,
-                MultiplyStore,
+                MultiplyArrays,
+                MultiplyVariables,
 
                 Negate,
-                NegateSet,
-                NegateStore,
+                NegateArray,
+                NegateVariable,
 
                 Not,
-                NotSet,
-                NotStore,
+                NotArray,
+                NotVariable,
 
                 Or,
-                OrSet,
-                OrStore,
+                OrArrays,
+                OrVariables,
 
                 /// <summary> Prevents any further execution of instructions until a resume command is received. </summary>
                 Pause,
@@ -103,20 +120,23 @@ namespace Cyclone
                 Return,
 
                 Set,
-                Store,
+                SetArray,
+                SetObject,
+                SetVariable,
 
                 Subtract,
-                SubtractSet,
-                SubtractStore,
+                SubtractArrays,
+                SubtractVariables,
 
                 /// <summary> Exchanges the positions of the two leading variables on the stack. </summary>
                 Swap,
+                SwapArray,
                 /// <summary> Exchanges the variables found at two memory locations. </summary>
-                SwapMemory,
+                SwapVariables,
 
                 Xor,
-                XorSet,
-                XorStore,
+                XorArrays,
+                XorVariables,
             };
 
 

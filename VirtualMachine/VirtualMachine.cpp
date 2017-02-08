@@ -65,29 +65,18 @@ namespace Cyclone
                         Push( VirtualVariable::Calculate(cmd.Command, Pop(), Pop()) );
                         break;
 
-                    case Instructions::AddSet:
-                    case Instructions::AndSet:
-                    case Instructions::DivideSet:
-                    case Instructions::MultiplySet:
-                    case Instructions::NegateSet:
-                    case Instructions::NotSet:
-                    case Instructions::OrSet:
-                    case Instructions::SubtractSet:
-                    case Instructions::XorSet:
-                        v1 = VirtualVariable::Calculate(cmd.Command - 1, Pop(), Pop());
-                        _data->Set(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), v1);
-                        break;
-
-                    case Instructions::AddStore:
-                    case Instructions::AndStore:
-                    case Instructions::DivideStore:
-                    case Instructions::MultiplyStore:
-                    case Instructions::NegateStore:
-                    case Instructions::NotStore:
-                    case Instructions::OrStore:
-                    case Instructions::SubtractStore:
-                    case Instructions::XorStore:
-                        _data->Set( cmd.Operands(0), VirtualVariable::Calculate(cmd.Command - 2, Pop(), Pop()) );
+                    case Instructions::AddVariables:
+                    case Instructions::AndVariables:
+                    case Instructions::DivideVariables:
+                    case Instructions::MultiplyVariables:
+                    case Instructions::NegateVariable:
+                    case Instructions::NotVariable:
+                    case Instructions::OrVariables:
+                    case Instructions::SubtractVariables:
+                    case Instructions::XorVariables:
+                        v1 = _data->GetVariable(cmd.Operands(1)); 
+                        v2 = _data->GetVariable(cmd.Operands(2));
+                        _data->SetVariable( cmd.Operands(0), VirtualVariable::Calculate(cmd.Command - 2, v1, v2) );
                         break;
 
                     case Instructions::Abort:
@@ -105,60 +94,85 @@ namespace Cyclone
                     case Instructions::Cast:
                         Push( Pop().Cast(cmd.Operands(0)) );
                         break;
-                    case Instructions::CastStore:
-                        _data->Set( cmd.Operands(0), Pop().Cast(cmd.Operands(1)) );
-                        break;
 
                     case Instructions::Compare:
                         Push( Pop().Compare(Pop()) );
+                        break;
+                    case Instructions::CompareArrays:
+
+                        break;
+                    case Instructions::CompareVariables:
+                        v1 = _data->GetVariable(cmd.Operands(1));
+                        _data->SetVariable( cmd.Operands(0), v1.Compare(_data->GetVariable(cmd.Operands(2))) );
                         break;
 
                     case Instructions::Copy:
                         Push(Workspace().First());
                         break;
-                    case Instructions::CopyMemory:
-                        _data->Set( cmd.Operands(1), _data->Access(cmd.Operands(0)) );
+                    case Instructions::CopyArray:
+                        _data->CopyArray( cmd.Operands(0), cmd.Operands(1) );
+                        break;
+                    case Instructions::CopyObject:
+
+                        break;
+                    case Instructions::CopyVariable:
+                        _data->SetVariable( cmd.Operands(1), _data->GetVariable(cmd.Operands(0)) );
                         break;
 
                     case Instructions::Decrement:
                         Workspace().First()--;
                         break;
-                    case Instructions::DecrementMemory:
-                        _data->Access(cmd.Operands(0))--;
+                    case Instructions::DecrementObject:
+                        _data->GetObject(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2))--;
                         break;
-                    case Instructions::DecrementSet:
-                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop()-- );
-                        break;
-                    case Instructions::DecrementStore:
-                        _data->Set( cmd.Operands(0), Pop()-- );
+                    case Instructions::DecrementVariable:
+                        _data->GetVariable(cmd.Operands(0))--;
                         break;
 
                     case Instructions::Delete:
-                        _data->Delete(cmd.Operands(0));
+                        _data->Delete(Pop());
+                        break;
+                    case Instructions::DeleteArray:
+                        _data->DeleteArray(cmd.Operands(0));
+                        break;
+                    case Instructions::DeleteObject:
+                        _data->DeleteObject(cmd.Operands(0), cmd.Operands(1));
+                        break;
+                    case Instructions::DeleteStructure:
+
+                        break;
+                    case Instructions::DeleteVariable:
+                        _data->DeleteVariable(cmd.Operands(0));
                         break;
 
-                    case Instructions::DefineClass:
-                        _data->Insert(VirtualClass(cmd.Operands(0)));
-                        break;
-                    case Instructions::DefineProperty:
-                        _data->Insert(cmd.Operands(0), VirtualProperty(cmd.Operands(1)));
-                        break;
+                    //case Instructions::DefineType:
+                    //    _data->Insert(VirtualClass(cmd.Operands(0)));
+                    //    break;
+                    //case Instructions::DefineProperty:
+                    //    _data->Insert(cmd.Operands(0), VirtualProperty(cmd.Operands(1)));
+                    //    break;
 
                     case Instructions::Get:
-                        Push( _data->Get(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2)) );
+                        Push( _data->Get(Pop(), Pop()) );
+                        break;
+                    case Instructions::GetArray:
+                        Push( _data->GetArray(cmd.Operands(0), cmd.Operands(1)) );
+                        break;
+                    case Instructions::GetObject:
+                        Push( _data->GetObject(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2)) );
+                        break;
+                    case Instructions::GetVariable:
+                        Push( _data->GetVariable(cmd.Operands(0)) );
                         break;
 
                     case Instructions::Increment:
                         Workspace().First()++;
                         break;
-                    case Instructions::IncrementMemory:
-                        _data->Access(cmd.Operands(0))++;
+                    case Instructions::IncrementObject:
+                        _data->GetObject(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2))++;
                         break;
-                    case Instructions::IncrementSet:
-                        _data->Set( cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop()++ );
-                        break;
-                    case Instructions::IncrementStore:
-                        _data->Set( cmd.Operands(0), Pop()++ );
+                    case Instructions::IncrementVariable:
+                        _data->GetVariable(cmd.Operands(0))++;
                         break;
 
                     case Instructions::Jump:
@@ -178,8 +192,15 @@ namespace Cyclone
                         break;
 
                     case Instructions::Load:
-                        Push( _data->Get(cmd.Operands(0)) );
+                        Push( _data->Get(Pop(), Pop()) );
                         break;
+                    case Instructions::LoadArray:
+                        Push( VirtualVariable(VariableTypes::Array, cmd.Operands(0)) );
+                        break;
+                    case Instructions::LoadObject:
+                        Push( VirtualVariable(VariableTypes::Object, cmd.Operands(0), cmd.Operands(1)) );
+                        break;
+
                     case Instructions::Print:
                         Console::WriteLine(_data->Find(cmd.Operands(0)));
                         break;
@@ -190,18 +211,28 @@ namespace Cyclone
                         f1 = _frames.Pop();
                         idx = f1.ReturnAddress;
                         break;
+
                     case Instructions::Set:
-                        _data->Set(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop());
+                        _data->Set( Pop(), Pop(), Pop() );
                         break;
-                    case Instructions::Store:
-                        _data->Set(cmd.Operands(0), Pop());
+                    case Instructions::SetArray:
+                        _data->SetArray(cmd.Operands(0), cmd.Operands(1), Pop());
+                        break;
+                    case Instructions::SetObject:
+                        _data->SetObject(cmd.Operands(0), cmd.Operands(1), cmd.Operands(2), Pop());
+                        break;
+                    case Instructions::SetVariable:
+                        _data->SetVariable(cmd.Operands(0), Pop());
                         break;
 
                     case Instructions::Swap:
                         Push({ Pop(), Pop() });
                         break;
-                    case Instructions::SwapMemory:
-                        std::swap( _data->Access(cmd.Operands(0)), _data->Access(cmd.Operands(1)) );
+                    case Instructions::SwapArray:
+
+                        break;
+                    case Instructions::SwapVariables:
+                        std::swap( _data->GetVariable(cmd.Operands(0)), _data->GetVariable(cmd.Operands(1)) );
                         break;
 
                     default:
