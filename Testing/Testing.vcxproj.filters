@@ -71,6 +71,9 @@
     <ClCompile Include="VirtualMemory.cpp">
       <Filter>VirtualMachine</Filter>
     </ClCompile>
+    <ClCompile Include="VirtualClass.cpp">
+      <Filter>VirtualMachine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utilities">
