@@ -20,7 +20,6 @@ namespace Cyclone
             {
                 /// <summary> A blank default variable type that is invalid in nearly all operations. </summary>
                 Null        = 0,
-                Address     = 10,
                 Array       = 6,
                 /// <summary> A binary logical variable that can only take on values of either true or false. </summary>
                 Boolean     = 1,
@@ -32,6 +31,7 @@ namespace Cyclone
                 /// <summary> A 32-bit signed integer. </summary>
                 Integer     = 2,
                 Object      = 9,
+                Reference   = 10,
                 /// <summary> An array of characters. </summary>
                 String      = 5,
                 Type        = 7,
@@ -56,6 +56,7 @@ namespace Cyclone
                 return (x == Null || y == Null) ? Null : 
                     (x >= y) ? x : y;
             }
+
         };
 
 
@@ -66,7 +67,6 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 constexpr uint FirstHalf()                          const { return (uint)((ulong)_value >> 32); }
-                constexpr bool IsAddress()                          const { return _type == VariableTypes::Address; }
                 /// <summary> Gets whether the variable is of Boolean type. </summary>
                 constexpr bool IsBoolean()                          const { return _type == VariableTypes::Boolean; }
                 /// <summary> Gets whether the variable is of double-precision floating point type. </summary>
@@ -83,6 +83,8 @@ namespace Cyclone
                 constexpr bool IsNumeric()                          const { return _type.IsNumeric(); }
                 /// <summary> Gets whether the variable represents a handle to an instance of some class. </summary>
                 constexpr bool IsObject()                           const { return _type == VariableTypes::Object; }
+
+                constexpr bool IsReference()                        const { return _type >= VariableTypes::Reference; }
                 /// <summary> Gets whether the variable represents a handle to a string literal. </summary>
                 constexpr bool IsString()                           const { return _type == VariableTypes::String; }
                 /// <summary> Gets whether the variable represents a handle to a type definition. </summary>
@@ -101,6 +103,7 @@ namespace Cyclone
                 /// <param name="type"> The type of the data to be stored. </param>
                 /// <param name="value"> The real or representative numeric value of the data to be stored. </param>
                 VMAPI constexpr VirtualVariable(VariableTypes type = VariableTypes::Null, double value = 0.0);
+                VMAPI constexpr VirtualVariable(VariableTypes reference, uint type, uint id);
                 VMAPI constexpr VirtualVariable(bool value);
                 VMAPI constexpr VirtualVariable(double value);
                 VMAPI constexpr VirtualVariable(float value);

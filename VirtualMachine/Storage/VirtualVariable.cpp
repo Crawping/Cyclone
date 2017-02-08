@@ -17,20 +17,23 @@ namespace Cyclone
         constexpr bool VariableTypes::IsNumeric()    const
         {
             return 
-                (Value != Null)     && 
-                (Value != Function) && 
-                (Value != Object)   && 
-                (Value != String)   && 
-                (Value != Type);
+                (Value == Boolean)  ||
+                (Value == Double)   ||
+                (Value == Float)    ||
+                (Value == Integer);
         }
         string VariableTypes::ToString()             const
         {
             return
-                (Value == Boolean)  ? "Boolean" :
-                (Value == Double)   ? "Double"  :
-                (Value == Float)    ? "Float"   :
-                (Value == Integer)  ? "Integer" :
-                (Value == String)   ? "String"  : "Void";
+                (Value == Array)    ? "Array"       :
+                (Value == Boolean)  ? "Boolean"     :
+                (Value == Double)   ? "Double"      :
+                (Value == Float)    ? "Float"       :
+                (Value == Function) ? "Function"    :
+                (Value == Integer)  ? "Integer"     :
+                (Value == Null)     ? "Null"        :
+                (Value == Object)   ? "Object"      :
+                (Value == String)   ? "String"      : "Reference";
         }
 
 
@@ -39,6 +42,12 @@ namespace Cyclone
         constexpr VirtualVariable::VirtualVariable(VariableTypes type, double value) :
             _type(type),
             _value(value)
+        {
+
+        }
+        constexpr VirtualVariable::VirtualVariable(VariableTypes reference, uint type, uint id) : 
+            _type(type),
+            _value( ((ulong)type << 32) & id )
         {
 
         }
@@ -118,26 +127,22 @@ namespace Cyclone
         }
         VirtualVariable& VirtualVariable::operator ++()
         {
-            if (IsNull()) { return *this; }
-            _value++;
+            if (IsNumeric()) { _value++; }
             return *this;
         }
         VirtualVariable& VirtualVariable::operator ++(int)
         {
-            if (IsNull()) { return *this; }
-            _value++;
+            if (IsNumeric()) { _value++; }
             return *this;
         }
         VirtualVariable& VirtualVariable::operator --()
         {
-            if (IsNull()) { return *this; }
-            _value--;
+            if (IsNumeric()) { _value--; }
             return *this;
         }
         VirtualVariable& VirtualVariable::operator --(int)
         {
-            if (IsNull()) { return *this; }
-            _value--;
+            if (IsNumeric()) { _value--; }
             return *this;
         }
 
