@@ -6,6 +6,7 @@
 #include "VMAPI.h"
 #include "Collections/Registry.h"
 #include "Storage/VirtualVariable.h"
+#include "Storage/VirtualReference.h"
 
 
 
@@ -20,23 +21,25 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 int ID()                            const { return _id; }
+                const VirtualVariable& Type()       const { return _type; }
 
 
 
                 /** CONSTRUCTOR **/
-                VMAPI VirtualProperty(uint id = 0);
+                VMAPI VirtualProperty();
+                VMAPI VirtualProperty(uint id, const VirtualVariable& type);
 
 
 
                 /** UTILITIES **/
-                VMAPI VirtualVariable& Access(uint instance);
-                VMAPI const VirtualVariable& Access(uint instance)              const;
-                VMAPI VirtualVariable Get(uint instance)                        const;
+                VMAPI void Delete(uint instance);
+                VMAPI VirtualVariable& Get(uint instance);
                 VMAPI void Set(uint instance, const VirtualVariable& value);
 
             private:
 
-                int                 _id;
+                int                         _id;
+                VirtualVariable             _type;
                 BST<uint, VirtualVariable>  _instances;
         };
 

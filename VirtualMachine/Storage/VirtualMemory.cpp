@@ -10,33 +10,99 @@ namespace Cyclone
         /** CONSTRUCTOR **/
         VirtualMemory::VirtualMemory()
         {
+            Arrays.Insert(0, { });
             Classes.Insert(0, { });
+            Functions.Insert(0, { });
             Variables.Insert(0, VirtualVariable());
         }
 
 
 
         /** UTILITIES **/
-        VirtualVariable& VirtualMemory::Access(uint id)                                   { return Variables[id]; }
-        VirtualVariable& VirtualMemory::Access(uint type, uint property, uint instance)
+        void VirtualMemory::CopyArray(uint source, uint destination)
         {
-            return Classes[type].Access(instance, property);
+            if (!destination) { return; }
+            Arrays.Insert(destination, Arrays[ Arrays.Contains(source) ? source : 0 ]);
         }
-        void VirtualMemory::Delete(uint id)
+        void VirtualMemory::CopyObject(uint type, uint source, uint destination)
+        {
+            if (!destination) { return; }
+
+        }
+        uint VirtualMemory::Define(VariableTypes type, const string& name)
+        {
+            uint id = Strings.Insert(name);
+            switch (type)
+            {
+                case VariableTypes::Function:
+
+                    break;
+                case VariableTypes::Type:
+                    Classes.Insert(id, VirtualClass(id));
+                    break;
+                default:
+                    Variables.Insert(id, VirtualVariable(type));
+                    break;
+            }
+
+            return id;
+        }
+        void VirtualMemory::Delete(const VirtualVariable& reference)
+        {
+            if (reference.IsNull()) { return; }
+            switch (reference.Type())
+            {
+                case VariableTypes::Array:
+                    return DeleteArray(reference.SecondHalf());
+                case VariableTypes::Object:
+                    return DeleteObject(reference.FirstHalf(), reference.SecondHalf());
+            }
+        }
+        void VirtualMemory::DeleteArray(uint id)
+        {
+            if (!id) { return; }
+            Arrays.Remove(id);
+        }
+        void VirtualMemory::DeleteObject(uint type, uint id)
+        {
+            Classes[ Classes.Contains(type) ? type : 0 ].Delete(id);
+        }
+        void VirtualMemory::DeleteVariable(uint id)
         {
             if (id == 0) { return; }
             Variables.Remove(id);
         }
+
         uint VirtualMemory::Find(const string& name)                                    const { return Strings.Find(name); }
         const string& VirtualMemory::Find(uint id)                                      const { return Strings.Find(id); }
-        VirtualVariable VirtualMemory::Get(uint id)                                     const
+
+        VirtualVariable& VirtualMemory::Get(const VirtualVariable& reference, const VirtualVariable& property)
         {
-            return Variables.Contains(id) ? Variables[id] : VirtualVariable();
+            switch (reference.Type())
+            {
+                case VariableTypes::Array:
+                    return property.IsInteger() ? GetArray(reference.SecondHalf(), property.SecondHalf()) : Variables[0];
+                case VariableTypes::Object:
+                    return GetObject(reference.FirstHalf(), property.SecondHalf(), reference.SecondHalf());
+                case VariableTypes::Reference:
+                    return Get( VirtualVariable(reference.FirstHalf(), reference.SecondHalf()), property );
+                default:
+                    return Variables[0];
+            }
         }
-        VirtualVariable VirtualMemory::Get(uint type, uint property, uint instance)     const
+        VirtualVariable& VirtualMemory::GetArray(uint id, uint index)
         {
-            return Classes.Contains(type) ? Classes[type].Get(instance, property) : VirtualVariable();
+            return Arrays[ Arrays.Contains(id) ? id : 0 ].Get(index);
         }
+        VirtualVariable& VirtualMemory::GetObject(uint type, uint property, uint id)
+        {
+            return Classes[ Classes.Contains(type) ? type : 0 ].Get(id, property);
+        }
+        VirtualVariable& VirtualMemory::GetVariable(uint id)
+        {
+            return Variables[ Variables.Contains(id) ? id : 0 ];
+        }
+
         void VirtualMemory::Insert(const VirtualClass& type)
         {
             if (type.ID() == 0) { return; }
@@ -68,16 +134,24 @@ namespace Cyclone
             Variables.Insert(id, value);
             return id;
         }
-        void VirtualMemory::Set(uint id, const VirtualVariable& value)
+
+        void VirtualMemory::Set(const VirtualVariable& reference, const VirtualVariable& property, const VirtualVariable& value)
         {
-            if (id == 0) { return; }
+            VirtualVariable& data = Get(reference, property);
+            if (!data.IsNull()) { data = value; }
+        }
+        void VirtualMemory::SetArray(uint id, uint index, const VirtualVariable& value)
+        {
+            Arrays[ Arrays.Contains(id) ? id : 0 ].Set(index, value);
+        }
+        void VirtualMemory::SetObject(uint type, uint property, uint id, const VirtualVariable& value)
+        {
+            Classes[ Classes.Contains(type) ? type : 0 ].Set(id, property, value);
+        }
+        void VirtualMemory::SetVariable(uint id, const VirtualVariable& value)
+        {
+            if (!id) { return; }
             Variables.Insert(id, value);
         }
-        void VirtualMemory::Set(uint type, uint property, uint instance, const VirtualVariable& value)
-        {
-            if ((type == 0) || !Classes.Contains(type)) { return; }
-            Classes[type].Set(instance, property, value);
-        }
-
     }
 }

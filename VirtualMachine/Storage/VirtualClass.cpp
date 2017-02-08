@@ -8,25 +8,24 @@ namespace Cyclone
     {
 
         /** UTILITIES **/
-        VirtualVariable& VirtualClass::Access(uint instance, uint property)
+        void VirtualClass::Delete(uint instance)
         {
-            return _properties[ _properties.Contains(property) ? property : 0 ].Access(instance);
+            if (ID() == 0 || !_instances.Contains(instance)) { return; }
+            for (auto& kvp : _properties)
+                kvp.Value.Delete(instance);
         }
-        const VirtualVariable& VirtualClass::Access(uint instance, uint property)   const
-        {
-            return _properties[_properties.Contains(property) ? property : 0].Access(instance);
-        }
-        VirtualVariable VirtualClass::Get(uint object, uint property)               const
+        VirtualVariable& VirtualClass::Get(uint object, uint property)
         {
             return _properties[ _properties.Contains(property) ? property : 0 ].Get(object);
         }
         void VirtualClass::Insert(const VirtualFunction& function)
         {
-            if (function.ID() == 0) { return; }
+            if (ID() == 0 || function.ID() == 0) { return; }
             _methods.Insert(function.ID(), function);
         }
         void VirtualClass::Insert(const VirtualProperty& property)
         {
+            if (ID() == 0) { return; }
             _properties.Insert(property.ID(), property);
         }
         bool VirtualClass::IsMethod(uint id)                                        const { return _methods.Contains(id); }
@@ -36,7 +35,8 @@ namespace Cyclone
         }
         void VirtualClass::Set(uint instance, uint property, const VirtualVariable& value)
         {
-            if (!_properties.Contains(property)) { return; }
+            if (ID() == 0 || !_properties.Contains(property)) { return; }
+            _instances.Insert(instance);
             _properties[property].Set(instance, value);
         }
 

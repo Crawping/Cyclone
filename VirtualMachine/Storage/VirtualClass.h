@@ -3,21 +3,30 @@
  */
 
 #pragma once
+#include "Collections/Set.h"
 #include "Storage/VirtualProperty.h"
 
 
 
 namespace Cyclone
 {
+    namespace { using namespace Utilities; }
     namespace VM
     {
         class VirtualClass
         {
             public:
 
+                template<typename T> using SortedSet = Utilities::Set<T>;
+
+
+
                 /** PROPERTIES **/
                 int ID()                            const { return _id; }
-                VariableTypes Type()                 const { return VariableTypes::Type; }
+                uint InstanceCount()                const { return _instances.Count(); }
+                uint MethodCount()                  const { return _methods.Count(); }
+                uint PropertyCount()                const { return _properties.Count(); }
+                VariableTypes Type()                const { return VariableTypes::Type; }
 
 
 
@@ -27,9 +36,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                VMAPI VirtualVariable& Access(uint instance, uint property);
-                VMAPI const VirtualVariable& Access(uint instance, uint property)   const;
-                VMAPI VirtualVariable Get(uint object, uint property)               const;
+                VMAPI void Delete(uint instance);
+                VMAPI VirtualVariable& Get(uint object, uint property);
                 VMAPI void Insert(const VirtualFunction& function);
                 VMAPI void Insert(const VirtualProperty& property);
                 VMAPI bool IsMethod(uint id)                                        const;
@@ -40,7 +48,8 @@ namespace Cyclone
             private:
 
                 int                         _id;
-                BST<uint, VirtualVariable>  _instances;
+                //BST<uint, VirtualVariable>  _instances;
+                SortedSet<uint>             _instances;
                 BST<uint, VirtualFunction>  _methods;
                 BST<uint, VirtualProperty>  _properties;
 
