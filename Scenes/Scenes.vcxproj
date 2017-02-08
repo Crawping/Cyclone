@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Messaging\Message.cpp" />
+    <ClCompile Include="Scene3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenGL\OpenGL.vcxproj">
