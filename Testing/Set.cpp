@@ -32,7 +32,6 @@ class _Set : public testing::Test
 
         CanonicalSets Canon;
 
-
         Set<int>    _s0;
         Set<int>    _s1;
 

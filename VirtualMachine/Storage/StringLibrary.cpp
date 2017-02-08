@@ -32,13 +32,13 @@ namespace Cyclone
         }
         bool StringLibrary::Contains(uint id)               const { return _strings.Contains(id); }
         bool StringLibrary::Contains(const string& string)  const { return _ids.Contains(string); }
-        const string& StringLibrary::Find(uint id)          const 
+        const string& StringLibrary::Find(uint id)          const
         {
-            return _strings.Contains(id) ? _strings[id] : _strings[0];
+            return _strings[ Contains(id) ? id : 0 ];
         }
         uint StringLibrary::Find(const string& string)      const
         {
-            return _ids.Contains(string) ? _ids[string] : _ids[""];
+            return _ids[ Contains(string) ? string : "" ];
         }
         uint StringLibrary::Insert(const string& string)
         {

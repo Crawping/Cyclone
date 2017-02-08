@@ -107,8 +107,6 @@ namespace Cyclone
                     if (IsEmpty()) { return 0; }
 
                     uint idx = 0, idxLower = 0, idxUpper = Count();
-                    //Node<T>* data = Data.begin();
-
                     while (idxLower < idxUpper)
                     {
                         idx = idxLower + ((idxUpper - idxLower) / 2);
