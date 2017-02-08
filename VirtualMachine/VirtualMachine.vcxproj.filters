@@ -37,6 +37,7 @@
     <ClCompile Include="Storage\VirtualVariable.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="Storage\VirtualArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
@@ -71,5 +72,9 @@
     <ClInclude Include="Storage\VirtualVariable.h">
       <Filter>Storage</Filter>
     </ClInclude>
+    <ClInclude Include="Storage\VirtualStructure.h" />
+    <ClInclude Include="Storage\VirtualArray.h" />
+    <ClInclude Include="Execution\Shorthand.h" />
+    <ClInclude Include="Storage\VirtualReference.h" />
   </ItemGroup>
 </Project>

@@ -118,6 +118,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Storage\VirtualArray.cpp" />
     <ClCompile Include="Storage\VirtualVariable.cpp" />
     <ClCompile Include="Storage\StringLibrary.cpp" />
     <ClCompile Include="Storage\VirtualClass.cpp" />
@@ -130,7 +131,11 @@
     <ClInclude Include="Execution\Classes.h" />
     <ClInclude Include="Execution\Functions.h" />
     <ClInclude Include="Execution\Instructions.h" />
+    <ClInclude Include="Execution\Shorthand.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />
+    <ClInclude Include="Storage\VirtualArray.h" />
+    <ClInclude Include="Storage\VirtualStructure.h" />
+    <ClInclude Include="Storage\VirtualReference.h" />
     <ClInclude Include="Storage\VirtualVariable.h" />
     <ClInclude Include="Storage\StringLibrary.h" />
     <ClInclude Include="Storage\VirtualClass.h" />
