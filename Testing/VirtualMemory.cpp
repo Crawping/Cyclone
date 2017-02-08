@@ -15,11 +15,12 @@ class _VirtualMemory : public testing::Test
 {
     protected:
 
-        Vector<int, 5>      _i1 = 0;
-        Vector<string, 5>   _s1 = { "Variable0", "Variable1", "Variable2", "Variable3", "Variable4" };
-        Vector<int, 5>      _v1 = { 0, 10, 20, 30, 40, 50 };
+        Vector<int, 6>      _i1 = 0;
+        Vector<string, 6>   _s1 = { "Variable0", "Variable1", "Variable2", "Variable3", "Variable4", "Variable5" };
+        Vector<int, 6>      _v1 = { 0, 10, 20, 30, 40, 50 };
 
         VirtualClass        _c1;
+        VirtualClass        _c2;
         VirtualProperty     _p1;
 
         VirtualMemory       _t0;
@@ -30,15 +31,19 @@ class _VirtualMemory : public testing::Test
             for (uint a = 0; a < _v1.Count(); a++)
             {
                 _i1(a) = _t1.Insert(_s1(a));
-                _t1.Set(_i1(a), _v1(a));
+                _t1.SetVariable(_i1(a), _v1(a));
             }
 
             _c1 = VirtualClass(_i1(1));
-            _p1 = VirtualProperty(_i1(2));
+            _c2 = VirtualClass(_i1(2));
+            _p1 = VirtualProperty(_i1(2), VariableTypes::Integer);
             _c1.Insert(_p1);
+            _c2.Insert(_p1);
 
             _t1.Insert(_c1);
-            _t1.Set(_c1.ID(), _p1.ID(), _i1(3), _v1(3));
+            _t1.Insert(_c2);
+            _t1.SetObject(_c1.ID(), _p1.ID(), _i1(3), _v1(3));
+            _t1.SetObject(_c2.ID(), _p1.ID(), _i1(4), _v1(4));
         }
 
 };
@@ -58,8 +63,16 @@ TEST_F(_VirtualMemory, DefaultConstruction)
 /** UTILITY TESTS **/
 TEST_F(_VirtualMemory, ClassInsertion)
 {
-    ASSERT_EQ(_t1.Get(_i1(1)), _v1(1));
-    ASSERT_EQ(_t1.Get(_c1.ID(), _p1.ID(), _i1(3)), _v1(3));
+    ASSERT_EQ(_t1.ClassCount(), 2);
+
+    ASSERT_NE(_v1(3), _v1(4));
+    ASSERT_NE(_c1.ID(), _c2.ID());
+    ASSERT_EQ(_t1.GetObject(_c1.ID(), _p1.ID(), _i1(3)), _v1(3));
+    ASSERT_EQ(_t1.GetObject(_c2.ID(), _p1.ID(), _i1(4)), _v1(4));
+
+    _t1.SetObject(_c2.ID(), _p1.ID(), _i1(4), _v1(5));
+    ASSERT_NE(_t1.GetObject(_c2.ID(), _p1.ID(), _i1(4)), _v1(4));
+    ASSERT_EQ(_t1.GetObject(_c2.ID(), _p1.ID(), _i1(4)), _v1(5));
 }
 TEST_F(_VirtualMemory, StringHashing)
 {
@@ -80,14 +93,14 @@ TEST_F(_VirtualMemory, VariableDeletion)
     ASSERT_EQ(_t1.VariableCount(), _v1.Count());
     for (uint a = 0; a < _v1.Count(); a++)
     {
-        _t1.Delete(_i1(a));
+        _t1.DeleteVariable(_i1(a));
         ASSERT_EQ(_t1.VariableCount(), _v1.Count() - a - 1);
-        ASSERT_EQ(_t1.Get(_i1(a)), VirtualVariable());
+        ASSERT_EQ(_t1.GetVariable(_i1(a)), VirtualVariable());
     }
 }
 TEST_F(_VirtualMemory, VariableInsertion)
 {
     ASSERT_EQ(_t1.VariableCount(), _v1.Count());
     for (uint a = 0; a < _v1.Count(); a++)
-        ASSERT_EQ(_t1.Get(_i1(a)), _v1(a));
+        ASSERT_EQ(_t1.GetVariable(_i1(a)), _v1(a));
 }
