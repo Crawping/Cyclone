@@ -7,7 +7,7 @@
 namespace Core.Primitives
 {
 
-    class Color.RGBA : 
+    class Color.RGBA :
         alias = rgba;
     {
 
@@ -22,7 +22,6 @@ namespace Core.Primitives
         /** CONSTRUCTORS **/
         Color():            this(0.0f, 0.0f, 0.0f, 1.0f) { }
         Color(float g):     this(g, g, g, 1.0f) { }
-        Color(float[4] 
         Color(float r, float g, float b, float a = 1.0f)
         {
             (R, G, B, A) = (r, g, b, a);
@@ -33,7 +32,7 @@ namespace Core.Primitives
         }
 
 
-        
+
 
     }
 

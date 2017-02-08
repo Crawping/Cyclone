@@ -8,23 +8,22 @@ namespace Core.Primitives
 {
 
     class List<T> : 
-        interfaces  = ICollection;
-        T           = IDefaultable;
+        interface  = ICollection;
     {
         uint Count
         {
-            default     { return 0; }
-            public get  { return Value; }
-            private set { Value = value; }
+            public get  { return _count; }
+            private set { _count = value; }
         }
+        @T First        { return 
         bool IsEmpty    { return Count == 0; }
 
 
 
         @T operator [](uint index);
+
+        private uint _count;
         
-
-
     }
 
 }

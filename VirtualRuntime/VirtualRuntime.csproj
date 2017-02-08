@@ -43,6 +43,7 @@
     <Content Include="Primitives\Structure.q" />
     <Content Include="Primitives\Boolean.q" />
     <Content Include="Primitives\Primitives.q" />
+    <Content Include="Primitives\Character.q" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
