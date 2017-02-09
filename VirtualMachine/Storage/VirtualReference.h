@@ -19,6 +19,21 @@ namespace Cyclone
                 constexpr uint Target()         const { return _target; }
                 constexpr uint TargetType()     const { return _targetType; }
 
+                VirtualReference& Type(VariableTypes value)
+                {
+                    _type = value;
+                    return *this;
+                }
+                VirtualReference& Target(uint value)
+                {
+                    _target = value;
+                    return *this;
+                }
+                VirtualReference& TargetType(uint value)
+                {
+                    _targetType = value;
+                    return *this;
+                }
 
                 constexpr VirtualReference() :
                     _target(0),
@@ -26,7 +41,14 @@ namespace Cyclone
                 {
 
                 }
-                constexpr VirtualReference(VariableTypes type, uint targetType, uint target) :
+                constexpr VirtualReference(VariableTypes type) :
+                    _type(VariableTypes::Reference),
+                    _target(0),
+                    _targetType((uint)type)
+                {
+
+                }
+                constexpr VirtualReference(VariableTypes type, uint targetType, uint target = 0) :
                     _type(type),
                     _target(target),
                     _targetType(targetType)
