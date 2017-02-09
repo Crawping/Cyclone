@@ -36,7 +36,7 @@ class _VirtualMemory : public testing::Test
 
             _c1 = VirtualClass(_i1(1));
             _c2 = VirtualClass(_i1(2));
-            _p1 = VirtualProperty(_i1(2), VariableTypes::Integer);
+            _p1 = VirtualProperty(_i1(2), { VariableTypes::Integer });
             _c1.Insert(_p1);
             _c2.Insert(_p1);
 

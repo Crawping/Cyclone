@@ -13,7 +13,7 @@ namespace Cyclone
         {
 
         }
-        VirtualProperty::VirtualProperty(uint id, const VirtualVariable& type) :
+        VirtualProperty::VirtualProperty(uint id, const VirtualReference& type) :
             _id(id),
             _type(type)
         {

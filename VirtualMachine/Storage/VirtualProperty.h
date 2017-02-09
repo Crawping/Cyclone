@@ -21,13 +21,13 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 int ID()                            const { return _id; }
-                const VirtualVariable& Type()       const { return _type; }
+                const VirtualReference& Type()      const { return _type; }
 
 
 
                 /** CONSTRUCTOR **/
                 VMAPI VirtualProperty();
-                VMAPI VirtualProperty(uint id, const VirtualVariable& type);
+                VMAPI VirtualProperty(uint id, const VirtualReference& type);
 
 
 
@@ -39,7 +39,7 @@ namespace Cyclone
             private:
 
                 int                         _id;
-                VirtualVariable             _type;
+                VirtualReference            _type;
                 BST<uint, VirtualVariable>  _instances;
         };
 

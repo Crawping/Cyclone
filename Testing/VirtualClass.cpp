@@ -27,7 +27,7 @@ class _VirtualClass : public testing::Test
             _c1(1)
         {
             for (int id : propIDs)
-                _c1.Insert(VirtualProperty(id, VariableTypes::Integer));
+                _c1.Insert(VirtualProperty(id, { VariableTypes::Integer }));
         }
 };
 

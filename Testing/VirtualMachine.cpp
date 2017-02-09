@@ -48,7 +48,7 @@ class _VirtualMachine : public testing::Test
             }
 
             _c1 = VirtualClass(_i2(0));
-            _p1 = VirtualProperty(_i1(0), VariableTypes::Integer);
+            _p1 = VirtualProperty(_i1(0), { VariableTypes::Integer });
             _c1.Insert(_p1);
 
             _t1.Insert(_c1);
