@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{197641a4-43df-4769-b82d-36b9c54b1612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Execution">
+      <UniqueIdentifier>{ae0b7cd0-1cb2-49a8-95a9-e4cfe59a1c77}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Storage\VirtualClass.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\VirtualMemory.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Execution\VirtualMachine.cpp">
+      <Filter>Execution</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

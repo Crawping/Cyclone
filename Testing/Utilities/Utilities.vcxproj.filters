@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Collections">
+      <UniqueIdentifier>{a94b42f3-8393-4209-9be9-9c017028f75b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imaging">
+      <UniqueIdentifier>{696d5fb8-495c-41ec-8493-f65100175aa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{3434918a-05ed-45e6-9bbe-fa6bac8f2297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{cefec139-fba4-4c2d-907d-2e48bfcd8ab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spatial">
+      <UniqueIdentifier>{ed6cc478-0d35-4103-ac33-98a656bb07c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Spatial\Area.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Spatial\Transform.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Matrix4x4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\Event.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\Functions.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Imaging\Bitmap.cpp">
+      <Filter>Imaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Imaging\Color4.cpp">
+      <Filter>Imaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\BST.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\List.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\ListVector.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\Quadtree.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\Registry.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\Set.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\Vector.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+</Project>

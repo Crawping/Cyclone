@@ -1,107 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Color4.cpp">
-      <Filter>Utilities\Imaging</Filter>
-    </ClCompile>
-    <ClCompile Include="Bitmap.cpp">
-      <Filter>Utilities\Imaging</Filter>
-    </ClCompile>
-    <ClCompile Include="Array.cpp">
-      <Filter>Utilities\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Utilities\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Utilities\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Matrix4x4.cpp">
-      <Filter>Utilities\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Event.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Utilities\Spatial</Filter>
-    </ClCompile>
-    <ClCompile Include="Area.cpp">
-      <Filter>Utilities\Spatial</Filter>
-    </ClCompile>
-    <ClCompile Include="Enumerator.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Vertex.cpp">
-      <Filter>OpenGL\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="List.cpp">
-      <Filter>Utilities\Collections</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry3D.cpp">
-      <Filter>OpenGL\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector.cpp">
-      <Filter>Utilities\Collections</Filter>
-    </ClCompile>
-    <ClCompile Include="Quadtree.cpp">
-      <Filter>Utilities\Collections</Filter>
-    </ClCompile>
-    <ClCompile Include="BST.cpp">
-      <Filter>Utilities\Collections</Filter>
-    </ClCompile>
-    <ClCompile Include="Registry.cpp">
-      <Filter>Utilities\Collections</Filter>
-    </ClCompile>
-    <ClCompile Include="Set.cpp">
-      <Filter>Utilities\Collections</Filter>
-    </ClCompile>
-    <ClCompile Include="Functions.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="ListVector.cpp">
-      <Filter>Utilities\Collections</Filter>
-    </ClCompile>
-    <ClCompile Include="VirtualMachine.cpp">
-      <Filter>VirtualMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="VirtualMemory.cpp">
-      <Filter>VirtualMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="VirtualClass.cpp">
-      <Filter>VirtualMachine</Filter>
-    </ClCompile>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Utilities">
-      <UniqueIdentifier>{f9e8b9e1-b0e9-4482-bb14-d853859c3d9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\Imaging">
-      <UniqueIdentifier>{21e3d29a-770e-4629-9dc2-0beda982ef93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\Math">
-      <UniqueIdentifier>{bb931cc1-19c6-46a2-a920-4c5a0b2c8915}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Platform">
-      <UniqueIdentifier>{8682127e-f8e2-430f-86ef-37a4cc9d99f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\Spatial">
-      <UniqueIdentifier>{f7bce296-ebd2-40ab-b384-cd57384330fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL">
-      <UniqueIdentifier>{904bfe6f-3b64-4138-8c4e-420beb601ef3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGL\Geometry">
-      <UniqueIdentifier>{b7637202-8841-4397-9165-5d534bbcba71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\Collections">
-      <UniqueIdentifier>{2e60fbcf-a7e3-4136-ab5a-7db035dc9caa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="VirtualMachine">
-      <UniqueIdentifier>{ed543799-ce1e-44e5-9066-b323f82937d8}</UniqueIdentifier>
-    </Filter>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

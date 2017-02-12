@@ -20,14 +20,19 @@ class _VirtualClass : public testing::Test
 
         VirtualClass _c0;
         VirtualClass _c1;
+        VirtualClass _c2;
 
 
 
         _VirtualClass() : 
-            _c1(1)
+            _c1(1),
+            _c2(2)
         {
             for (int id : propIDs)
+            {
                 _c1.Insert(VirtualProperty(id, { VariableTypes::Integer }));
+                _c2.Insert(VirtualProperty(id, { VariableTypes::Reference }));
+            }
         }
 };
 
