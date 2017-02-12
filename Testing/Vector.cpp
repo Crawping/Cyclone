@@ -67,22 +67,22 @@ TEST_F(_Vector, VectorClearing)
     _v1.Clear();
     ASSERT_EQ(_v1.Count(), 0);
 }
-TEST_F(_Vector, ElementAppending)
+TEST_F(_Vector, ElementConcatenation)
 {
-    _v0.Append(256);
+    _v0.Concatenate(256);
     ASSERT_EQ(_v0.Count(), 1);
     ASSERT_EQ(_v0.First(), 256);
 
-    _v1.Append('x');
+    _v1.Concatenate('x');
     ASSERT_EQ(_v1.Count(),    6);
     ASSERT_EQ(_v1.Last(),   'x');
     ASSERT_EQ(_v1(5),       'x');
 }
-TEST_F(_Vector, VectorAppending)
+TEST_F(_Vector, VectorConcatenation)
 {
     Vector<char> _v1Copy = _v1;
 
-    _v1Copy.Append(_v2);
+    _v1Copy.Concatenate(_v2);
     ASSERT_EQ(_v1Copy.Count(), _v1.Count() + _v2.Count());
 
     for (uint a = 0; a < _v1.Count(); a++)
@@ -91,12 +91,12 @@ TEST_F(_Vector, VectorAppending)
     for (uint a = _v1.Count(); a < _v1Copy.Count(); a++)
         ASSERT_EQ(_v1Copy(a), _v2(a - _v1.Count()));
 
-    // Test appending an empty vector
+    // Test concatenating an empty vector
     Vector<char> empty;
     Vector<char> _v2Copy = _v2;
     
-    // Test appending to an empty vector
-    empty.Append(_v2);
+    // Test concatenating to an empty vector
+    empty.Concatenate(_v2);
     for (uint a = 0; a < _v2.Count(); a++)
         ASSERT_EQ(_v2(a), empty(a));
 }

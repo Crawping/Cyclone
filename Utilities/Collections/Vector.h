@@ -11,7 +11,9 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        /// <summary> A class that represents a one-dimensional array of contiguous data. </summary>
+        /// <summary> A class that represents a one-dimensional stack-allocated array of contiguous data elements. </summary>
+        /// <typeparam name="T"> The type name of the data elements stored within the vector. </typeparam>
+        /// <typeparam name="U"> The number of data elements that can be stored within the vector. </typeparam>
         template<typename T, uint U = 0>
         struct Vector : public IArray<T>
         {
@@ -26,13 +28,15 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS **/
-                /// <summary> Constructs a new stack-allocated vector of data filled with a single uniform value. </summary>
+                /// <summary> Constructs a new vector of data filled with a single uniform value. </summary>
                 /// <param name="value"> The value used to initialize all data elements of the array. </param>
                 Vector(const T& value = T())
                 {
                     for (uint a = 0; a < Count(); a++)
                         Data[a] = value;
                 }
+                /// <summary> Constructs a new vector of data using the contents of an initializer list. </summary>
+                /// <param name="values"> An initialization list containing values to be copied into the new vector. </param>
                 Vector(std::initializer_list<T> values)
                 {
                     int idx = 0;
@@ -45,9 +49,20 @@ namespace Cyclone
                 /** OPERATORS **/
                 virtual Iterator begin()                    { return Iterator(0, this); }
                 virtual Iterator end()                      { return Iterator(Count(), this); }
+                /// <summary> Performs linear array-like indexing of the data elements stored within the vector. </summary>
+                /// <returns> A reference to the data element stored at the inputted index. </returns>
+                /// <param name="idx"> The numeric position of the desired data element within the vector. </param>
+                /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
                 virtual T& operator ()(uint idx)            { return Data[idx]; }
+                /// <summary> Performs linear array-like indexing of the data elements stored within the vector. </summary>
+                /// <returns> An immutable reference to the data element stored at the inputted index. </returns>
+                /// <param name="idx"> The numeric position of the desired data element within the vector. </param>
+                /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
                 virtual const T& operator ()(uint idx)      const { return Data[idx]; }
 
+                /// <summary> Determines whether two vectors of data are equivalent. </summary>
+                /// <returns> A Boolean <c>true</c> if the two vectors are equivalent, or <c>false</c> otherwise. </returns>
+                /// <param name="other"> Another vector of data to be tested for equivalency. </param>
                 virtual bool operator ==(const Vector<T, U>& other) const
                 {
                     for (uint a = 0; a < U; a++)
@@ -63,7 +78,8 @@ namespace Cyclone
         };
 
 
-
+        /// <summary> A class that represents a one-dimensional heap-allocated array of contiguous data elements. </summary>
+        /// <typeparam name="T"> The type name of the data elements stored within the vector. </typeparam>
         template<typename T> 
         struct Vector<T, 0> : public IArray<T>
         {
@@ -77,10 +93,7 @@ namespace Cyclone
                 /// <summary> Gets a reference to the last data element in the vector. </summary>
                 virtual T& Last()           const { return Data[Count() - 1]; }
                 /// <summary> Gets the number of dimensions occupied by the array. </summary>
-                /// <remarks> 
-                ///     Vectors are always one-dimensional arrays. Thus, this method always returns a value 
-                ///     of 1.
-                /// </remarks>
+                /// <remarks> Vectors are always one-dimensional arrays. Thus, this method always returns a value of 1. </remarks>
                 virtual uint Rank()         const override { return 1; }
 
 
@@ -122,30 +135,12 @@ namespace Cyclone
                 /// <summary> Destroys the underlying native storage for this array. </summary>
 		        ~Vector()
 		        {
-			        if (Data)
-				        delete[] Data;
+			        if (Data) { delete[] Data; }
 		        }
 
 
 
                 /** UTILITIES **/
-                virtual Vector& Append(const T& value)
-                {
-                    Reallocate(Count() + 1);
-                    Data[Count() - 1] = value;
-                    return *this;
-                }
-                virtual Vector& Append(const ICollection<T>& values)
-                {
-                    if (values.IsEmpty()) { return *this; }
-
-                    uint idx = Count();
-                    Reallocate(idx + values.Count());
-                    for (uint a = 0; a < values.Count(); a++)
-                        Data[idx++] = values(a);
-
-                    return *this;
-                }
                 /// <summary> Removes all data elements from the vector and leaves it in an empty state. </summary>
                 virtual void Clear()
                 {
@@ -153,14 +148,30 @@ namespace Cyclone
                     _count = 0;
                     Data = nullptr;
                 }
+                /// <summary> Adds a new data element to the end of the vector. </summary>
+                /// <param name="value"> A single data element to be copied and appended to the vector. </param>
+                virtual void Concatenate(const T& value)
+                {
+                    Reallocate(Count() + 1);
+                    Data[Count() - 1] = value;
+                }
+                /// <summary> Adds the contents of another collection to the end of the vector. </summary>
+                /// <param name="values"> A collection of data elements to be copied and appended to the vector. </param>
+                virtual void Concatenate(const ICollection<T>& values)
+                {
+                    if (values.IsEmpty()) { return; }
+
+                    uint idx = Count();
+                    Reallocate(idx + values.Count());
+                    for (uint a = 0; a < values.Count(); a++)
+                        Data[idx++] = values(a);
+                }
                 /// <summary> Sets each element of the array to a single uniform value. </summary>
-                /// <returns> A reference to the modified array for chaining together operations. </returns>
                 /// <param name="value"> The value to which each element of the array should be set. </param>
-                virtual Vector& Fill(const T& value)
+                virtual void Fill(const T& value)
                 {
                     for (int a = 0; a < Count(); a++)
                         Data[a] = value;
-                    return *this;
                 }
                 /// <summary> Exchanges the values of two separate vector elements. </summary>
                 /// <param name="idxFirst"> The position of the first element to be swapped. </param>
@@ -178,25 +189,20 @@ namespace Cyclone
 		        /** OPERATORS **/
                 virtual Iterator begin()                                { return Iterator(0, this); }
                 virtual Iterator end()                                  { return Iterator(Count(), this); }
+                /// <summary> Performs linear array-like indexing of the data elements stored within the vector. </summary>
+                /// <returns> A reference to the data element stored at the inputted index. </returns>
+                /// <param name="idx"> The numeric position of the desired data element within the vector. </param>
+                /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
 		        virtual T& operator ()(uint idx)			            { return Data[idx]; }
-
+                /// <summary> Performs linear array-like indexing of the data elements stored within the vector. </summary>
+                /// <returns> An immutable reference to the data element stored at the inputted index. </returns>
+                /// <param name="idx"> The numeric position of the desired data element within the vector. </param>
+                /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
 		        virtual const T& operator ()(uint idx)	                const override { return Data[idx]; }
 
-		        virtual Vector& operator =(const Vector<T>& other)
-		        {
-                    Reallocate(other.Count());
-			        for (uint a = 0; a < Count(); a++)
-				        Data[a] = other.Data[a];
-			        return *this;
-		        }
-                virtual Vector& operator =(std::initializer_list<T> values)
-                {
-                    Reallocate(values.size());
-                    int idx = 0;
-                    for (const T& v : values)
-                        Data[idx++] = v;
-                    return *this;
-                }
+                /// <summary> Clears the vector of any stored data and transfers the contents of another vector into it. </summary>
+                /// <returns> A reference to the new data vector containing the tranferred contents of the old one. </returns>
+                /// <param name="other"> Another generic vector of data elements. </param>
 		        virtual Vector& operator =(Vector<T>&& other)
 		        {
                     Clear();
@@ -207,9 +213,36 @@ namespace Cyclone
                     other.Data = nullptr;
 			        return *this;
 		        }
+                /// <summary> Clears the vector of any stored data and copies the contents of another vector into it. </summary>
+                /// <returns> A reference to the new data vector containing the copied contents of the other one. </returns>
+                /// <param name="other"> Another generic vector of data elements. </param>
+		        virtual Vector& operator =(const Vector<T>& other)
+		        {
+                    Reallocate(other.Count());
+			        for (uint a = 0; a < Count(); a++)
+				        Data[a] = other.Data[a];
+			        return *this;
+		        }
+                /// <summary> Clears the vector of any stored data and copies the contents of an initializer list into it. </summary>
+                /// <returns> A reference to the new data vector containing the copied contents of the initialization list. </returns>
+                /// <param name="values"> An initialization list of data elements. </param>
+                virtual Vector& operator =(std::initializer_list<T> values)
+                {
+                    Reallocate(values.size());
+                    int idx = 0;
+                    for (const T& v : values)
+                        Data[idx++] = v;
+                    return *this;
+                }
 
             protected:
 
+                /// <summary> Destroys and recreates the underlying storage array for the vector. </summary>
+                /// <param name="n"> The desired number of elements that can be stored in the new array. </param>
+                /// <remarks> 
+                ///     This method is used to resize the native array that holds the vector's data elements. Existing vector 
+                ///     elements are copied into the new array before the old one is destroyed. 
+                /// </remarks>
                 virtual void Reallocate(uint n)
                 {
                     if (n == Count())   { return; }

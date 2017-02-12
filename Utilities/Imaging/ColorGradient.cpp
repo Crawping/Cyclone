@@ -51,7 +51,10 @@ namespace Cyclone
         {
             Vector<Color4> output(count);
             if (IsEmpty())
-                return output.Fill(Color4::Transparent);
+            {
+                output.Fill(Color4::Transparent);
+                return output;
+            }
 
             count = (uint)Math::Max(count, 2);
 

@@ -110,11 +110,11 @@ namespace Cyclone
         /** UTILITIES **/
         void Geometry3D::Append(const Vertex& vertex)
         {
-            Vertices.Append(vertex);
+            Vertices.Concatenate(vertex);
         }
         void Geometry3D::Append(const ICollection<Vertex>& vertices)
         {
-            Vertices.Append(vertices);
+            Vertices.Concatenate(vertices);
         }
         void Geometry3D::CalculateNormals()
         {
