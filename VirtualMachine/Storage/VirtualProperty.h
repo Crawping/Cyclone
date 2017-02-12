@@ -50,7 +50,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 int ID()                            const { return _id; }
                 uint InputCount()                   const { return _inputCount; }
-                const Vector<Instructions>& Logic() const { return _logic; }
+                const Vector<Instruction>& Logic()  const { return _logic; }
                 uint OutputCount()                  const { return _outputCount; }
 
                 VirtualFunction(uint id = 0) : _id(id) { }
@@ -59,7 +59,7 @@ namespace Cyclone
 
                 uint                    _id;
                 uint                    _inputCount;
-                Vector<Instructions>    _logic;
+                Vector<Instruction>     _logic;
                 uint                    _outputCount;
         };
 
