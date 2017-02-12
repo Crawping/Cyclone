@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Collections/Set.h"
+#include "Storage/VirtualFunction.h"
 #include "Storage/VirtualProperty.h"
 
 

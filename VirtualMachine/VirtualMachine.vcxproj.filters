@@ -76,5 +76,6 @@
     <ClInclude Include="Storage\VirtualArray.h" />
     <ClInclude Include="Execution\Shorthand.h" />
     <ClInclude Include="Storage\VirtualReference.h" />
+    <ClInclude Include="Storage\VirtualFunction.h" />
   </ItemGroup>
 </Project>
