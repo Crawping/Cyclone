@@ -37,15 +37,19 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                VMAPI const Vector<Instruction>& Call(const VirtualVariable& function)  const;
+                VMAPI const Vector<Instruction>& CallFunction(uint id)                  const;
+                VMAPI const Vector<Instruction>& CallMethod(uint type, uint method)     const;
+
                 VMAPI void CopyArray(uint source, uint destination);
                 VMAPI void CopyObject(uint type, uint source, uint destination);
                 VMAPI uint Define(VariableTypes type, const string& name);
-                
+
                 VMAPI void Delete(const VirtualVariable& reference);
                 VMAPI void DeleteArray(uint id);
                 VMAPI void DeleteObject(uint type, uint id);
                 VMAPI void DeleteVariable(uint id);
-                
+
                 VMAPI const string& Find(uint id)                                   const;
                 VMAPI uint Find(const string& name)                                 const;
 

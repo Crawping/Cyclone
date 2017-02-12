@@ -8,6 +8,10 @@ namespace Cyclone
     {
 
         /** UTILITIES **/
+        const Vector<Instruction>& VirtualClass::Call(uint method)                  const
+        {
+            return _methods[ _methods.Contains(method) ? method : 0 ].Logic();
+        }
         void VirtualClass::Delete(uint instance)
         {
             if (ID() == 0 || !_instances.Contains(instance)) { return; }
@@ -38,6 +42,10 @@ namespace Cyclone
             if (ID() == 0 || !_properties.Contains(property)) { return; }
             _instances.Insert(instance);
             _properties[property].Set(instance, value);
+        }
+        const VirtualReference& VirtualClass::TypeOf(uint property)                 const
+        {
+            return _properties[ _properties.Contains(property) ? property : 0 ].Type();
         }
 
     }

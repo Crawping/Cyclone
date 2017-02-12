@@ -23,7 +23,7 @@ namespace Cyclone
 
                 and, anda, andv,
 
-                call, callm, callr,
+                call, callf, callm, callr,
 
                 cast,
 

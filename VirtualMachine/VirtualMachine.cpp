@@ -40,17 +40,18 @@ namespace Cyclone
             uint idx = 0;
             VirtualVariable v1, v2, v3, v4;
             int n1 = 0, n2 = 0, n3 = 0, n4 = 0;
-            StackFrame f1 = { instructions.Count(), { } };
-
+            
+            StackFrame f1 = { instructions.Count(), &instructions, { } };
             _frames.Push(f1);
-            while (idx < instructions.Count())
+
+            while (idx < f1.Instructions->Count())
             {
                 if (Interrupt == Instructions::Return || Interrupt == Instructions::Abort)
                     return Resume();
                 else if (Interrupt == Instructions::Pause)
                     continue;
 
-                const auto& cmd = instructions(idx);
+                const auto& cmd = f1.Instructions->operator ()(idx);
                 switch (cmd.Command)
                 {
                     case Instructions::Add:
@@ -83,11 +84,23 @@ namespace Cyclone
                         return;
 
                     case Instructions::Call:
-                        _frames.Push({ idx, { } });
+                        _frames.Push(f1);
+                        f1 = { idx, &(_data->Call(Pop())), { } };
                         idx = cmd.Operands(0);
                         break;
+                    case Instructions::CallFunction:
+                        _frames.Push(f1);
+                        f1 = { idx, &(_data->CallFunction(cmd.Operands(1))), { } };
+                        idx = 0;
+                        break;
+                    case Instructions::CallMethod:
+                        _frames.Push(f1);
+                        f1 = { idx, &(_data->CallMethod(cmd.Operands(1), cmd.Operands(2))), { } };
+                        idx = 0;
+                        break;
                     case Instructions::CallRelative:
-                        _frames.Push({ idx,  { } });
+                        _frames.Push(f1);
+                        f1 = { idx, &instructions, { } };
                         idx += cmd.Operands(0);
                         break;
 
@@ -145,13 +158,6 @@ namespace Cyclone
                         _data->DeleteVariable(cmd.Operands(0));
                         break;
 
-                    //case Instructions::DefineType:
-                    //    _data->Insert(VirtualClass(cmd.Operands(0)));
-                    //    break;
-                    //case Instructions::DefineProperty:
-                    //    _data->Insert(cmd.Operands(0), VirtualProperty(cmd.Operands(1)));
-                    //    break;
-
                     case Instructions::Get:
                         Push( _data->Get(Pop(), Pop()) );
                         break;
@@ -208,8 +214,8 @@ namespace Cyclone
                         Pop();
                         break;
                     case Instructions::Return:
+                        idx = f1.Index;
                         f1 = _frames.Pop();
-                        idx = f1.ReturnAddress;
                         break;
 
                     case Instructions::Set:

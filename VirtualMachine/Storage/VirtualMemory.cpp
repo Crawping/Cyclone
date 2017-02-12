@@ -19,6 +19,29 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        const Vector<Instruction>& VirtualMemory::Call(const VirtualVariable& function) const
+        {
+            switch (function.Type())
+            {
+                case VariableTypes::Function:
+                    return CallFunction(function.FirstHalf());
+                case VariableTypes::Object:
+                    return CallMethod(function.FirstHalf(), function.SecondHalf());
+                case VariableTypes::Reference:
+
+                default:
+                    return Functions[0].Logic();
+            }
+        }
+        const Vector<Instruction>& VirtualMemory::CallFunction(uint id)                 const
+        {
+            return Functions[ Functions.Contains(id) ? id : 0 ].Logic();
+        }
+        const Vector<Instruction>& VirtualMemory::CallMethod(uint type, uint method)    const
+        {
+            return Classes[Classes.Contains(type) ? type : 0].Call(method);
+        }
+
         void VirtualMemory::CopyArray(uint source, uint destination)
         {
             if (!destination) { return; }
@@ -85,7 +108,10 @@ namespace Cyclone
                 case VariableTypes::Object:
                     return GetObject(reference.FirstHalf(), property.SecondHalf(), reference.SecondHalf());
                 case VariableTypes::Reference:
-                    return Get( VirtualVariable(reference.FirstHalf(), reference.SecondHalf()), property );
+                    return (reference.FirstHalf() > VariableTypes::Reference) ? 
+                        Get( VirtualVariable(VariableTypes::Object, reference.FirstHalf(), reference.SecondHalf()), property ) : 
+                        Get( VirtualVariable(reference.FirstHalf(), reference.SecondHalf()), property );
+
                 default:
                     return Variables[0];
             }

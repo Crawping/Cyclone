@@ -33,6 +33,7 @@ namespace Cyclone
                 AndVariables,
 
                 Call,
+                CallFunction,
                 CallMethod,
                 CallRelative,
 

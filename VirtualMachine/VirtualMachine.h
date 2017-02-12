@@ -47,8 +47,9 @@ namespace Cyclone
 
                 struct StackFrame
                 {
-                    uint                    ReturnAddress;
-                    Stack<VirtualVariable>  Workspace;
+                    uint                        Index;
+                    const Vector<Instruction>*  Instructions;
+                    Stack<VirtualVariable>      Workspace;
                 };
 
                 VirtualMemory*      _data;

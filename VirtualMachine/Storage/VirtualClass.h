@@ -22,33 +22,37 @@ namespace Cyclone
 
 
                 /** PROPERTIES **/
-                int ID()                            const { return _id; }
+                int ID()                            const { return _type.TargetType(); }
                 uint InstanceCount()                const { return _instances.Count(); }
                 uint MethodCount()                  const { return _methods.Count(); }
                 uint PropertyCount()                const { return _properties.Count(); }
-                VariableTypes Type()                const { return VariableTypes::Type; }
+                const VirtualReference& Type()      const { return _type; }
 
 
 
                 /** CONSTRUCTOR **/
-                VirtualClass(uint id = 0) : _id(id) { }
+                VirtualClass(uint id = 0) :
+                    _type(VariableTypes::Type, id)
+                {
+
+                }
 
 
 
                 /** UTILITIES **/
+                VMAPI const Vector<Instruction>& Call(uint method)                          const;
                 VMAPI void Delete(uint instance);
                 VMAPI VirtualVariable& Get(uint object, uint property);
                 VMAPI void Insert(const VirtualFunction& function);
                 VMAPI void Insert(const VirtualProperty& property);
-                VMAPI bool IsMethod(uint id)                                        const;
-                VMAPI bool IsOfType(const VirtualVariable& object)                  const;
-
+                VMAPI bool IsMethod(uint id)                                                const;
+                VMAPI bool IsOfType(const VirtualVariable& object)                          const;
                 VMAPI void Set(uint object, uint property, const VirtualVariable& value);
-
+                VMAPI const VirtualReference& TypeOf(uint property)                         const;
             private:
 
                 int                         _id;
-                //BST<uint, VirtualVariable>  _instances;
+                VirtualReference            _type;
                 SortedSet<uint>             _instances;
                 BST<uint, VirtualFunction>  _methods;
                 BST<uint, VirtualProperty>  _properties;
