@@ -8,13 +8,13 @@ namespace Cyclone
     {
 
         /** LITERAL TYPE UTILITIES **/
-        constexpr uint VariableTypes::ByteSize()     const
+        constexpr uint VariableTypes::ByteSize()        const
         {
             return
                 (Value == Boolean)  ? 1 :
                 (Value == Double)   ? 8 : 4;
         }
-        constexpr bool VariableTypes::IsNumeric()    const
+        constexpr bool VariableTypes::IsNumeric()       const
         {
             return 
                 (Value == Boolean)  ||
@@ -22,7 +22,17 @@ namespace Cyclone
                 (Value == Float)    ||
                 (Value == Integer);
         }
-        string VariableTypes::ToString()             const
+        constexpr bool VariableTypes::IsReferential()   const
+        {
+            return
+                (Value == Array)        ||
+                (Value == Function)     ||
+                (Value == Object)       ||
+                (Value == Reference)    ||
+                (Value == String)       ||
+                (Value == Type);
+        }
+        string VariableTypes::ToString()                const
         {
             return
                 (Value == Array)    ? "Array"       :

@@ -46,9 +46,10 @@ namespace Cyclone
 
 
             /** UTILITIES **/
-            VMAPI constexpr uint ByteSize()     const;
-            VMAPI constexpr bool IsNumeric()    const;
-            VMAPI string ToString()             const;
+            VMAPI constexpr uint ByteSize()         const;
+            VMAPI constexpr bool IsNumeric()        const;
+            VMAPI constexpr bool IsReferential()    const;
+            VMAPI string ToString()                 const;
 
 
             constexpr static VariableTypes MaxPrecision(VariableTypes x, VariableTypes y)
@@ -84,7 +85,9 @@ namespace Cyclone
                 /// <summary> Gets whether the variable represents a handle to an instance of some class. </summary>
                 constexpr bool IsObject()                           const { return _type == VariableTypes::Object; }
 
-                constexpr bool IsReference()                        const { return _type >= VariableTypes::Reference; }
+                constexpr bool IsReference()                        const { return _type == VariableTypes::Reference; }
+
+                constexpr bool IsReferential()                      const { return _type.IsReferential(); }
                 /// <summary> Gets whether the variable represents a handle to a string literal. </summary>
                 constexpr bool IsString()                           const { return _type == VariableTypes::String; }
                 /// <summary> Gets whether the variable represents a handle to a type definition. </summary>
