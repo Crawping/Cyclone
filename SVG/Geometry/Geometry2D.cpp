@@ -43,7 +43,7 @@ namespace Cyclone
         {
             Vector<float> params;
             for (uint a = 0; a < ControlPoints.Count(); a++)
-                params.Append(ControlPoints(a).Coordinates);
+                params.Concatenate(ControlPoints(a).Coordinates);
             return params;
         }
 
@@ -69,8 +69,8 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        void Geometry2D::Append(const ControlPoint2D& point)                    { ControlPoints.Append(point); }
-        void Geometry2D::Append(const ICollection<ControlPoint2D>& points)      { ControlPoints.Append(points); }
+        void Geometry2D::Append(const ControlPoint2D& point)                    { ControlPoints.Concatenate(point); }
+        void Geometry2D::Append(const ICollection<ControlPoint2D>& points)      { ControlPoints.Concatenate(points); }
         //void Geometry2D::Insert(uint index, const ControlPoint2D& point)
         //{
         //    ControlPoints
