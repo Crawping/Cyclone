@@ -225,8 +225,8 @@ namespace Cyclone
                 const T& operator ()(uint index)                        const override { return Index(index)->Value; }
 
                 /// <summary> Clears the list of any stored data and transfers the contents of another list into it. </summary>
-                /// <param name="other"> A pre-existing list whose contents are to be moved. </param>
                 /// <returns> A reference to the new list object that contains the uncopied contents of the old one. </returns>
+                /// <param name="other"> A pre-existing list whose contents are to be moved. </param>
                 List& operator =(List<T>&& other)
                 {
                     Clear();
@@ -240,7 +240,9 @@ namespace Cyclone
 
                     return *this;
                 }
-
+                /// <summary> Clears the list of any stored data and copies the contents of another list into it. </summary>
+                /// <returns> A reference to the new list object that contains the copied contents of the other one. </returns>
+                /// <param name="values"> Another generic list of data elements. </param>
                 List& operator =(const List<T>& values)
                 {
                     Clear();
@@ -250,9 +252,9 @@ namespace Cyclone
                     
                     return *this;
                 }
-                /// <summary> Clears the list of any stored data and copies the contents of another list into it. </summary>
+                /// <summary> Clears the list of any stored data and copies the contents of another collection into it. </summary>
+                /// <returns> A reference to the new list object that contains the copied contents of the other collection. </returns>
                 /// <param name="values"> An array-like collection of data elements to be copied. </param>
-                /// <returns> A reference to the new list object that contains the copied contents of the other one. </returns>
                 List& operator =(const ICollection<T>& values)
                 {
                     Clear();
@@ -260,8 +262,8 @@ namespace Cyclone
                     return *this;
                 }
                 /// <summary> Clears the list of any stored data and copies the contents of an initialization list into it. </summary>
+                /// <returns> A reference to the new list containing the copied contents of the initializer list. </returns>
                 /// <param name="values"> An initialization list that contains the values to be copied. </param>
-                /// <returns></returns>
                 List& operator =(std::initializer_list<T> values)
                 {
                     Clear();

@@ -12,7 +12,8 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        
+        /// <summary> A class that represents a doubly-linked list of generic data with contiguous element storage. </summary>
+        /// <typeparam name="T"> The type name of the data elements held by the list. </typeparam>
         template<typename T>
         class ListVector : public ICollection<T>
         {
