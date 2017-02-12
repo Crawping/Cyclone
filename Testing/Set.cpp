@@ -72,12 +72,16 @@ TEST_F(_Set, ValueInsertion)
     ASSERT_EQ(_s1.Count(), Canon.SortedIntegers.Count() + 2);
     ASSERT_EQ(_s1.Last(), 100);
 
-    int idx = _s1.IndexOf(50);
+    int idx = _s1.Find(50);
     ASSERT_TRUE(idx > -1);
 
-    _s1.Insert(51);
-    ASSERT_EQ(_s1.Count(), Canon.SortedIntegers.Count() + 3);
-    ASSERT_EQ(_s1(idx + 1), 51);
+    // Assert element uniqueness
+    for (uint a = 0; a < 2; a++)
+    {
+        _s1.Insert(51);
+        ASSERT_EQ(_s1.Count(), Canon.SortedIntegers.Count() + 3);
+        ASSERT_EQ(_s1(idx + 1), 51);
+    }
 }
 TEST_F(_Set, ValueRemoval)
 {
