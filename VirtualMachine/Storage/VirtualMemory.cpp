@@ -28,7 +28,9 @@ namespace Cyclone
                 case VariableTypes::Object:
                     return CallMethod(function.FirstHalf(), function.SecondHalf());
                 case VariableTypes::Reference:
-
+                    return (function.FirstHalf() > VariableTypes::Reference) ? 
+                        Call( VirtualVariable(VariableTypes::Object, function.FirstHalf(), function.SecondHalf()) ) : 
+                        Call( VirtualVariable(function.FirstHalf(), function.SecondHalf()) );
                 default:
                     return Functions[0].Logic();
             }
@@ -39,7 +41,7 @@ namespace Cyclone
         }
         const Vector<Instruction>& VirtualMemory::CallMethod(uint type, uint method)    const
         {
-            return Classes[Classes.Contains(type) ? type : 0].Call(method);
+            return Classes[ Classes.Contains(type) ? type : 0 ].Call(method);
         }
 
         void VirtualMemory::CopyArray(uint source, uint destination)
@@ -52,24 +54,26 @@ namespace Cyclone
             if (!destination) { return; }
 
         }
-        uint VirtualMemory::Define(VariableTypes type, const string& name)
-        {
-            uint id = Strings.Insert(name);
-            switch (type)
-            {
-                case VariableTypes::Function:
 
-                    break;
-                case VariableTypes::Type:
-                    Classes.Insert(id, VirtualClass(id));
-                    break;
-                default:
-                    Variables.Insert(id, VirtualVariable(type));
-                    break;
-            }
+        //uint VirtualMemory::Define(VariableTypes type, const string& name)
+        //{
+        //    uint id = Strings.Insert(name);
+        //    switch (type)
+        //    {
+        //        case VariableTypes::Function:
 
-            return id;
-        }
+        //            break;
+        //        case VariableTypes::Type:
+        //            Classes.Insert(id, VirtualClass(id));
+        //            break;
+        //        default:
+        //            Variables.Insert(id, VirtualVariable(type));
+        //            break;
+        //    }
+
+        //    return id;
+        //}
+
         void VirtualMemory::Delete(const VirtualVariable& reference)
         {
             if (reference.IsNull()) { return; }
@@ -111,7 +115,6 @@ namespace Cyclone
                     return (reference.FirstHalf() > VariableTypes::Reference) ? 
                         Get( VirtualVariable(VariableTypes::Object, reference.FirstHalf(), reference.SecondHalf()), property ) : 
                         Get( VirtualVariable(reference.FirstHalf(), reference.SecondHalf()), property );
-
                 default:
                     return Variables[0];
             }

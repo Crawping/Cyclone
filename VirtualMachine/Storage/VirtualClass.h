@@ -50,6 +50,7 @@ namespace Cyclone
                 VMAPI bool IsOfType(const VirtualVariable& object)                          const;
                 VMAPI void Set(uint object, uint property, const VirtualVariable& value);
                 VMAPI const VirtualReference& TypeOf(uint property)                         const;
+
             private:
 
                 int                         _id;

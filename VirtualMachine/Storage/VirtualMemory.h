@@ -43,7 +43,7 @@ namespace Cyclone
 
                 VMAPI void CopyArray(uint source, uint destination);
                 VMAPI void CopyObject(uint type, uint source, uint destination);
-                VMAPI uint Define(VariableTypes type, const string& name);
+                //VMAPI uint Define(VariableTypes type, const string& name);
 
                 VMAPI void Delete(const VirtualVariable& reference);
                 VMAPI void DeleteArray(uint id);
