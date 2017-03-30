@@ -23,8 +23,6 @@
             PlatformAPI extern PFNGLDELETEPATHSNVPROC                       nvDeletePaths;
             PlatformAPI extern PFNGLGENPATHSNVPROC                          nvGenPaths;
 
-            PlatformAPI extern PFNGLGETPATHCOLORGENIVNVPROC                 nvGetPathColorGeniv;
-            PlatformAPI extern PFNGLGETPATHCOLORGENFVNVPROC                 nvGetPathColorGenfv;
             PlatformAPI extern PFNGLGETPATHCOMMANDSNVPROC                   nvGetPathCommands;
             PlatformAPI extern PFNGLGETPATHCOORDSNVPROC                     nvGetPathCoords;
             PlatformAPI extern PFNGLGETPATHDASHARRAYNVPROC                  nvGetPathDashArray;
@@ -34,8 +32,6 @@
             PlatformAPI extern PFNGLGETPATHPARAMETERIVNVPROC                nvGetPathParameteriv;
             PlatformAPI extern PFNGLGETPATHPARAMETERFVNVPROC                nvGetPathParameterfv;
             PlatformAPI extern PFNGLGETPATHSPACINGNVPROC                    nvGetPathSpacing;
-            PlatformAPI extern PFNGLGETPATHTEXGENIVNVPROC                   nvGetPathTexGeniv;
-            PlatformAPI extern PFNGLGETPATHTEXGENFVNVPROC                   nvGetPathTexGenfv;
 
             PlatformAPI extern PFNGLINTERPOLATEPATHSNVPROC                  nvInterpolatePaths;
             PlatformAPI extern PFNGLISPATHNVPROC                            nvIsPath;
@@ -62,12 +58,10 @@
             PlatformAPI extern PFNGLMATRIXTRANSLATEDEXTPROC                 nvMatrixTranslated;
             PlatformAPI extern PFNGLMATRIXTRANSLATEFEXTPROC                 nvMatrixTranslatef;
 
-            PlatformAPI extern PFNGLPATHCOLORGENNVPROC                      nvPathColorGen;
             PlatformAPI extern PFNGLPATHCOMMANDSNVPROC                      nvPathCommands;
             PlatformAPI extern PFNGLPATHCOORDSNVPROC                        nvPathCoords;
             PlatformAPI extern PFNGLPATHCOVERDEPTHFUNCNVPROC                nvPathCoverDepthFunc;
             PlatformAPI extern PFNGLPATHDASHARRAYNVPROC                     nvPathDashArray;
-            PlatformAPI extern PFNGLPATHFOGGENNVPROC                        nvPathFogGen;
             PlatformAPI extern PFNGLPATHGLYPHRANGENVPROC                    nvPathGlyphRange;
             PlatformAPI extern PFNGLPATHGLYPHSNVPROC                        nvPathGlyphs;
             PlatformAPI extern PFNGLPATHPARAMETERFNVPROC                    nvPathParameterf;
@@ -79,7 +73,6 @@
             PlatformAPI extern PFNGLPATHSTRINGNVPROC                        nvPathString;
             PlatformAPI extern PFNGLPATHSUBCOMMANDSNVPROC                   nvPathSubCommands;
             PlatformAPI extern PFNGLPATHSUBCOORDSNVPROC                     nvPathSubCoords;
-            PlatformAPI extern PFNGLPATHTEXGENNVPROC                        nvPathTexGen;
 
             PlatformAPI extern PFNGLPOINTALONGPATHNVPROC                    nvPointAlongPath;
             PlatformAPI extern PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC       nvProgramPathFragmentInputGen;

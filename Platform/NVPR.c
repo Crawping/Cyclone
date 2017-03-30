@@ -19,8 +19,6 @@ PFNGLCOPYPATHNVPROC                          nvCopyPath                         
 PFNGLDELETEPATHSNVPROC                       nvDeletePaths                              = NULL;
 PFNGLGENPATHSNVPROC                          nvGenPaths                                 = NULL;
 
-PFNGLGETPATHCOLORGENIVNVPROC                 nvGetPathColorGeniv                        = NULL;
-PFNGLGETPATHCOLORGENFVNVPROC                 nvGetPathColorGenfv                        = NULL;
 PFNGLGETPATHCOMMANDSNVPROC                   nvGetPathCommands                          = NULL;
 PFNGLGETPATHCOORDSNVPROC                     nvGetPathCoords                            = NULL;
 PFNGLGETPATHDASHARRAYNVPROC                  nvGetPathDashArray                         = NULL;
@@ -30,8 +28,6 @@ PFNGLGETPATHMETRICSNVPROC                    nvGetPathMetrics                   
 PFNGLGETPATHPARAMETERIVNVPROC                nvGetPathParameteriv                       = NULL;
 PFNGLGETPATHPARAMETERFVNVPROC                nvGetPathParameterfv                       = NULL;
 PFNGLGETPATHSPACINGNVPROC                    nvGetPathSpacing                           = NULL;
-PFNGLGETPATHTEXGENIVNVPROC                   nvGetPathTexGeniv                          = NULL;
-PFNGLGETPATHTEXGENFVNVPROC                   nvGetPathTexGenfv                          = NULL;
 
 PFNGLINTERPOLATEPATHSNVPROC                  nvInterpolatePaths                         = NULL;
 PFNGLISPATHNVPROC                            nvIsPath                                   = NULL;
@@ -58,12 +54,10 @@ PFNGLMATRIXSCALEFEXTPROC                     nvMatrixScalef                     
 PFNGLMATRIXTRANSLATEDEXTPROC                 nvMatrixTranslated                         = NULL;
 PFNGLMATRIXTRANSLATEFEXTPROC                 nvMatrixTranslatef                         = NULL;
 
-PFNGLPATHCOLORGENNVPROC                      nvPathColorGen                             = NULL;
 PFNGLPATHCOMMANDSNVPROC                      nvPathCommands                             = NULL;
 PFNGLPATHCOORDSNVPROC                        nvPathCoords                               = NULL;
 PFNGLPATHCOVERDEPTHFUNCNVPROC                nvPathCoverDepthFunc                       = NULL;
 PFNGLPATHDASHARRAYNVPROC                     nvPathDashArray                            = NULL;
-PFNGLPATHFOGGENNVPROC                        nvPathFogGen                               = NULL;
 PFNGLPATHGLYPHRANGENVPROC                    nvPathGlyphRange                           = NULL;
 PFNGLPATHGLYPHSNVPROC                        nvPathGlyphs                               = NULL;
 PFNGLPATHPARAMETERFNVPROC                    nvPathParameterf                           = NULL;
@@ -75,7 +69,6 @@ PFNGLPATHSTENCILFUNCNVPROC                   nvPathStencilFunc                  
 PFNGLPATHSTRINGNVPROC                        nvPathString                               = NULL;
 PFNGLPATHSUBCOMMANDSNVPROC                   nvPathSubCommands                          = NULL;
 PFNGLPATHSUBCOORDSNVPROC                     nvPathSubCoords                            = NULL;
-PFNGLPATHTEXGENNVPROC                        nvPathTexGen                               = NULL;
 
 PFNGLPOINTALONGPATHNVPROC                    nvPointAlongPath                           = NULL;
 PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC       nvProgramPathFragmentInputGen              = NULL;
@@ -106,8 +99,6 @@ int nvLoadFunctions()
     nvCopyPath                          = (PFNGLCOPYPATHNVPROC)                         glGetFunctionPointer("glCopyPathNV");
     nvDeletePaths                       = (PFNGLDELETEPATHSNVPROC)                      glGetFunctionPointer("glDeletePathsNV");
     nvGenPaths                          = (PFNGLGENPATHSNVPROC)                         glGetFunctionPointer("glGenPathsNV");
-    nvGetPathColorGeniv                 = (PFNGLGETPATHCOLORGENIVNVPROC)                glGetFunctionPointer("glGetPathColorGenivNV");
-    nvGetPathColorGenfv                 = (PFNGLGETPATHCOLORGENFVNVPROC)                glGetFunctionPointer("glGetPathColorGenfvNV");
     nvGetPathCommands                   = (PFNGLGETPATHCOMMANDSNVPROC)                  glGetFunctionPointer("glGetPathCommandsNV");
     nvGetPathCoords                     = (PFNGLGETPATHCOORDSNVPROC)                    glGetFunctionPointer("glGetPathCoordsNV");
     nvGetPathDashArray                  = (PFNGLGETPATHDASHARRAYNVPROC)                 glGetFunctionPointer("glGetPathDashArrayNV");
@@ -117,8 +108,6 @@ int nvLoadFunctions()
     nvGetPathParameterfv                = (PFNGLGETPATHPARAMETERFVNVPROC)               glGetFunctionPointer("glGetPathParameterfvNV");
     nvGetPathParameteriv                = (PFNGLGETPATHPARAMETERIVNVPROC)               glGetFunctionPointer("glGetPathParameterivNV");
     nvGetPathSpacing                    = (PFNGLGETPATHSPACINGNVPROC)                   glGetFunctionPointer("glGetPathSpacingNV");
-    nvGetPathTexGeniv                   = (PFNGLGETPATHTEXGENIVNVPROC)                  glGetFunctionPointer("glGetPathTexGenivNV");
-    nvGetPathTexGenfv                   = (PFNGLGETPATHTEXGENFVNVPROC)                  glGetFunctionPointer("glGetPathTexGenfvNV");
     nvInterpolatePaths                  = (PFNGLINTERPOLATEPATHSNVPROC)                 glGetFunctionPointer("glInterpolatePathsNV");
     nvIsPath                            = (PFNGLISPATHNVPROC)                           glGetFunctionPointer("glIsPathNV");
     nvIsPointInFillPath                 = (PFNGLISPOINTINFILLPATHNVPROC)                glGetFunctionPointer("glIsPointInFillPathNV");
@@ -146,12 +135,10 @@ int nvLoadFunctions()
     nvMatrixTranslated                  = (PFNGLMATRIXTRANSLATEDEXTPROC)                glGetFunctionPointer("glMatrixTranslatedEXT");
     nvMatrixTranslatef                  = (PFNGLMATRIXTRANSLATEFEXTPROC)                glGetFunctionPointer("glMatrixTranslatefEXT");
 
-    nvPathColorGen                      = (PFNGLPATHCOLORGENNVPROC)                     glGetFunctionPointer("glPathColorGenNV");
     nvPathCommands                      = (PFNGLPATHCOMMANDSNVPROC)                     glGetFunctionPointer("glPathCommandsNV");
     nvPathCoords                        = (PFNGLPATHCOORDSNVPROC)                       glGetFunctionPointer("glPathCoordsNV");
     nvPathCoverDepthFunc                = (PFNGLPATHCOVERDEPTHFUNCNVPROC)               glGetFunctionPointer("glPathCoverDepthFuncNV");
     nvPathDashArray                     = (PFNGLPATHDASHARRAYNVPROC)                    glGetFunctionPointer("glPathDashArrayNV");
-    nvPathFogGen                        = (PFNGLPATHFOGGENNVPROC)                       glGetFunctionPointer("glPathFogGenNV");
     nvPathGlyphs                        = (PFNGLPATHGLYPHSNVPROC)                       glGetFunctionPointer("glPathGlyphsNV");
     nvPathGlyphRange                    = (PFNGLPATHGLYPHRANGENVPROC)                   glGetFunctionPointer("glPathGlyphRangeNV");
     nvPathParameterf                    = (PFNGLPATHPARAMETERFNVPROC)                   glGetFunctionPointer("glPathParameterfNV");
@@ -163,7 +150,6 @@ int nvLoadFunctions()
     nvPathString                        = (PFNGLPATHSTRINGNVPROC)                       glGetFunctionPointer("glPathStringNV");
     nvPathSubCommands                   = (PFNGLPATHSUBCOMMANDSNVPROC)                  glGetFunctionPointer("glPathSubCommandsNV");
     nvPathSubCoords                     = (PFNGLPATHSUBCOORDSNVPROC)                    glGetFunctionPointer("glPathSubCoordsNV");
-    nvPathTexGen                        = (PFNGLPATHTEXGENNVPROC)                       glGetFunctionPointer("glPathTexGenNV");
 
     nvPointAlongPath                    = (PFNGLPOINTALONGPATHNVPROC)                   glGetFunctionPointer("glPointAlongPathNV");
     nvProgramPathFragmentInputGen       = (PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC)      glGetFunctionPointer("glProgramPathFragmentInputGenNV");
