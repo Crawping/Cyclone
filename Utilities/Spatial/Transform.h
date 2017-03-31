@@ -122,14 +122,34 @@ namespace Cyclone
 
 
                 /** STATIC CONSTRUCTORS **/
+                /// <summary> Constructs a transformation data structure by mathematically decomposing a 4x4 transformation matrix. </summary>
+                /// <returns> 
+                ///     A new transformation matrix whose translation, scaling, and orientation components are derived from the 
+                ///     inputted matrix.
+                /// </returns>
+                /// <param name="transform"> An existing 4x4 transformation matrix. </param>
+                /// <remarks>
+                ///     Transformation matrix decomposition attempts to calculate the translation, scaling, and orientation 
+                ///     components that contribute to the overall matrix formation. However, this process is inexact for a 
+                ///     few reasons. Firstly, many individual transformations can be concatenated together to form a single 
+                ///     transformation matrix, and decomposition is only able to resolve a single set of parameters. Secondly, 
+                ///     and related to the previous point, there are infinitely many ways to generate any given transformation, 
+                ///     even with a single set of parameters. Therefore, while the result returned by this method should be 
+                ///     mathematically equivalent to the inputted matrix, it very likely will not be identical.
+                /// </remarks>
+                UtilitiesAPI static Transform Decompose(const Matrix4x4& transform);
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
-                /// <param name="displayVolume"> The rectangular prism defining the volume of camera space that is visible on the screen. </param>
                 /// <returns>
                 ///     A new transformation matrix that can be used to convert camera or view space coordinates into clip space.
                 ///     This transform assumes that the view-space follows a right-handed coordinate system.
                 /// </returns>
+                /// <param name="displayVolume"> The rectangular prism defining the volume of camera space that is visible on the screen. </param>
                 UtilitiesAPI static Transform PerspectiveProjection(const Volume& displayVolume);
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
+                /// <returns>
+                ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
+                ///     This transform assumes that the view-space follows a right-handed coordinate system.
+                /// </returns>
                 /// <param name="fov">
                 ///     The vertical field of view, which is the angle (in degrees, not radians, here) subtended by the height of
                 ///     the visible rendering space.
@@ -141,10 +161,6 @@ namespace Cyclone
                 /// </param>
                 /// <param name="znear"> The desired position of the clipping plane closest to the camera in view-space. </param>
                 /// <param name="zfar"> The desired position of the clipping plane furthest from the camera in view-space. </param>
-                /// <returns>
-                ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
-                ///     This transform assumes that the view-space follows a right-handed coordinate system.
-                /// </returns>
                 UtilitiesAPI static Transform PerspectiveProjection(float fov, float aspect, float znear, float zfar);
                 /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
                 /// <param name="angles"> A three-element vector representing the desired (pitch, yaw, roll) rotations of the transform in radians. </param>

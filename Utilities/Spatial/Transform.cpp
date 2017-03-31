@@ -70,6 +70,28 @@ namespace Cyclone
 
 
         /** STATIC CONSTRUCTORS **/
+        Transform Transform::Decompose(const Matrix4x4& transform)
+        {
+            Vector3 xbasis(transform(0, 0), transform(1, 0), transform(2, 0));
+            Vector3 ybasis(transform(0, 1), transform(1, 1), transform(2, 1));
+            Vector3 zbasis(transform(0, 2), transform(1, 2), transform(2, 2));
+
+            Vector3 position(transform(0, 3), transform(1, 3), transform(2, 3));
+            Vector3 scale(xbasis.Length(), ybasis.Length(), zbasis.Length());
+
+            Matrix4x4 rotation(transform);
+            for (uint a = 0; a < 3; a++)
+                for (uint b = 0; b < 3; b++)
+                    rotation(a, b) /= scale(b);
+
+            Vector3 orientation(0, -asinf(rotation(2, 0)), 0);
+            float cy = cosf(orientation.Y);
+
+            orientation.X = atan2f(rotation(2, 1) / cy, rotation(2, 2) / cy);
+            orientation.Z = atan2f(rotation(1, 0) / cy, rotation(0, 0) / cy);
+
+            return Transform(position, scale, orientation);
+        }
         Transform Transform::PerspectiveProjection(const Volume& displayVolume)
         {
             Transform p;
@@ -192,12 +214,7 @@ namespace Cyclone
         /** OPERATORS **/
         Transform operator *(Transform left, Transform right)
         {
-            return Transform
-            (
-                left.Position() + right.Position(),
-                left.Scale() * right.Scale(),
-                left.Orientation() + right.Orientation()
-            );
+            return Transform::Decompose(left.ToMatrix4x4() * right.ToMatrix4x4());
         }
 
         bool Transform::operator ==(const Transform& other) const

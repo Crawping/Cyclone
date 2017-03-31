@@ -120,7 +120,8 @@ class _Transform : public testing::Test
             _t6(Transform::Rotation(0.0f, 0.0f, Canon.Orientation.Z)),
             _t7(Transform::Rotation(Canon.Orientation)),
             _t8(Transform::Scaling(Canon.Scale)),
-            _t9(Transform::Translation(Canon.Position))
+            _t9(Transform::Translation(Canon.Position)),
+            _t10(Transform::Decompose(Canon.Transformation))
         {
             _t3 = _t2;
         }
@@ -130,35 +131,38 @@ class _Transform : public testing::Test
 
 
 /** CONSTRUCTION TESTS **/
+TEST_F(_Transform, DecompositionConstructor)
+{
+    ASSERT_EQ(_t10.ToMatrix4x4(), Canon.Transformation);
+    ASSERT_EQ(_t10.Position(), Canon.Position);
+    ASSERT_EQ(_t10.Scale(), Canon.Scale);
+
+    // No easy way to test for a valid orientation here because there are many possible 
+    // solutions that would result in the same overall transformation. 
+}
 TEST_F(_Transform, DefaultConstruction)
 {
-    Matrix4x4 _t0Copy = _t0.ToArray();
-    ASSERT_EQ(_t0Copy, Matrix4x4::Identity);
+    ASSERT_EQ(_t0.ToMatrix4x4(), Matrix4x4::Identity);
 }
-
 TEST_F(_Transform, PerspectiveProjectionConstructor)
 {
 
 }
-
 TEST_F(_Transform, RotationConstructor)
 {
-    ASSERT_EQ(Matrix4x4(_t4.ToArray()), Canon.Pitch);
-    ASSERT_EQ(Matrix4x4(_t5.ToArray()), Canon.Yaw);
-    ASSERT_EQ(Matrix4x4(_t6.ToArray()), Canon.Roll);
-    ASSERT_EQ(Matrix4x4(_t7.ToArray()), Canon.Rotation);
+    ASSERT_EQ(_t4.ToMatrix4x4(), Canon.Pitch);
+    ASSERT_EQ(_t5.ToMatrix4x4(), Canon.Yaw);
+    ASSERT_EQ(_t6.ToMatrix4x4(), Canon.Roll);
+    ASSERT_EQ(_t7.ToMatrix4x4(), Canon.Rotation);
 }
-
 TEST_F(_Transform, ScalingConstructor)
 {
-    ASSERT_EQ(Matrix4x4(_t8.ToArray()), Canon.Scaling);
+    ASSERT_EQ(_t8.ToMatrix4x4(), Canon.Scaling);
 }
-
 TEST_F(_Transform, TranslationConstructor)
 {
-    ASSERT_EQ(Matrix4x4(_t9.ToArray()), Canon.Translation);
+    ASSERT_EQ(_t9.ToMatrix4x4(), Canon.Translation);
 }
-
 TEST_F(_Transform, VectorConstruction)
 {
     ASSERT_EQ(_t2.Orientation(),    Canon.Orientation);
@@ -203,6 +207,6 @@ TEST_F(_Transform, EqualityOperators)
 TEST_F(_Transform, MultiplicationOperators)
 {
     Transform _catRotation = _t6 * _t5 * _t4;    
-    ASSERT_EQ(Matrix4x4(_catRotation.ToArray()), Canon.Rotation);
+    ASSERT_EQ(_catRotation.ToMatrix4x4(), Canon.Rotation);
     ASSERT_EQ(_t7, _catRotation);
 }
