@@ -8,7 +8,7 @@
 #include "GPU.h"
 #include "Window3D.h"
 
-#include "Geometry/Quad3D.h"
+#include "Geometry/Mesh3D.h"
 #include "Imaging/Bitmap.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Textures/Texture2D.h"
@@ -35,7 +35,7 @@ class Program : public AdvancedRenderer
     protected:
 
         Texture2D*  Image;
-        Quad3D      Quad;
+        Mesh3D      Quad;
 
         
         void CreateSceneResources() override
@@ -52,6 +52,7 @@ class Program : public AdvancedRenderer
             Image->Bind();
 
             Quad
+                .Geometry(Geometry3D::Quad(true))
                 .PrimaryColor(Color4::Blue)
                 .Position(RenderWindow->ClientArea().Center())
                 .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f);
