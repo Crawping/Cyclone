@@ -39,6 +39,7 @@ namespace Cyclone
 
 
             /** PROPERTIES **/
+            /// <summary> Gets the length or magnitude of the vector. </summary>
             float Length()                                          const { return sqrtf( (X * X) + (Y * Y) + (Z * Z) );}
 
 
