@@ -138,12 +138,19 @@ namespace Cyclone
                 ///     mathematically equivalent to the inputted matrix, it very likely will not be identical.
                 /// </remarks>
                 UtilitiesAPI static Transform Decompose(const Matrix4x4& transform);
-                /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
+                /// <summary> Constructs a right-handed orthographic projection transformation matrix. </summary>
                 /// <returns>
-                ///     A new transformation matrix that can be used to convert camera or view space coordinates into clip space.
+                ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
                 ///     This transform assumes that the view-space follows a right-handed coordinate system.
                 /// </returns>
-                /// <param name="displayVolume"> The rectangular prism defining the volume of camera space that is visible on the screen. </param>
+                /// <param name="displayVolume"> The rectangular prism defining the volume of camera-space that is visible on the screen. </param>
+                UtilitiesAPI static Transform OrthographicProjection(const Volume& displayVolume);
+                /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
+                /// <returns>
+                ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
+                ///     This transform assumes that the view-space follows a right-handed coordinate system.
+                /// </returns>
+                /// <param name="displayVolume"> The rectangular prism defining the volume of camera-space that is visible on the screen. </param>
                 UtilitiesAPI static Transform PerspectiveProjection(const Volume& displayVolume);
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
                 /// <returns>

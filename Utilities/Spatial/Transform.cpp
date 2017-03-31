@@ -92,6 +92,21 @@ namespace Cyclone
 
             return Transform(position, scale, orientation);
         }
+        Transform Transform::OrthographicProjection(const Volume& displayVolume)
+        {
+            Transform p;
+            p.State(0)  = 2.0f / displayVolume.Width;
+            p.State(5)  = 2.0f / displayVolume.Height;
+            p.State(10) = -2.0f / displayVolume.Depth;
+            p.State(12) = -2.0f * displayVolume.Right() / displayVolume.Width;
+            p.State(13) = -2.0f * displayVolume.Top() / displayVolume.Height;
+            p.State(14) = -2.0f * displayVolume.Front() / displayVolume.Depth;
+
+            p._position = Vector3(p.State(12), p.State(13), p.State(14));
+            p._size = Vector3(p.State(0), p.State(5), p.State(10));
+
+            return p;
+        }
         Transform Transform::PerspectiveProjection(const Volume& displayVolume)
         {
             Transform p;
