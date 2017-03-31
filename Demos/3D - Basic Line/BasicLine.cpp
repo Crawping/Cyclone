@@ -2,7 +2,7 @@
 #include "GPU.h"
 #include "Window3D.h"
 #include "Geometry/Geometry3D.h"
-#include "Geometry/Line3D.h"
+#include "Geometry/Mesh3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
@@ -23,7 +23,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Line3D Line;
+        Mesh3D Line;
 
         void CreateSceneResources() override
         {
@@ -58,7 +58,11 @@ class Program : public BasicRenderer
                 0.125f * sinf(Line.Roll()) + 0.875
             );
 
-            Line.PrimaryColor(color).Rotate(0.01f);
+            Line
+                .Geometry(Geometry3D::Line())
+                .PrimaryColor(color)
+                .Rotate(0.01f);
+
             RenderScene->Update(Line);
 
             BasicRenderer::UpdateScene();

@@ -6,7 +6,7 @@
 
 #include "Console.h"
 #include "BasicRenderer.h"
-#include "Geometry/Quad3D.h"
+#include "Geometry/Mesh3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 #include "Textures/GradientTexture.h"
@@ -32,7 +32,7 @@ class Program : public BasicRenderer
     protected:
 
         GradientTexture*    Gradient;
-        Quad3D              Quad;
+        Mesh3D              Quad;
 
 
 
@@ -60,6 +60,7 @@ class Program : public BasicRenderer
                 Console::WriteLine(g(a).ToString());
 
             Quad
+                .Geometry(Geometry3D::Quad(true))
                 .Position(RenderWindow->ClientArea().Center())
                 .Scale(512, 256);
 
