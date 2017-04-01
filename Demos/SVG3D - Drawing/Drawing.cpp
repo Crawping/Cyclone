@@ -7,7 +7,7 @@
 #include "PathRenderer.h"
 #include "Window3D.h"
 #include "Geometry/DrawingPath.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Geometry/Path2D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
@@ -46,7 +46,7 @@ class Program : public PathRenderer
         Texture2D*          Image;
         bool                IsEnteringText;
         Vector2             LastClickPosition;
-        Mesh3D              Quad;
+        Model3D              Quad;
         List<Text2D*>       TextBoxes;
 
 

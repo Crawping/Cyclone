@@ -8,7 +8,7 @@
 #include "GPU.h"
 #include "Window3D.h"
 
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Imaging/Bitmap.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Textures/Texture2D.h"
@@ -35,7 +35,7 @@ class Program : public AdvancedRenderer
     protected:
 
         Texture2D*  Image;
-        Mesh3D      Quad;
+        Model3D      Quad;
 
         
         void CreateSceneResources() override

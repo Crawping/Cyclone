@@ -166,7 +166,7 @@
     <ClInclude Include="EnumerationsGL.h" />
     <ClInclude Include="Geometry\Entity3D.h" />
     <ClInclude Include="Geometry\Geometry3D.h" />
-    <ClInclude Include="Geometry\Mesh3D.h" />
+    <ClInclude Include="Geometry\Model3D.h" />
     <ClInclude Include="Geometry\Point3D.h" />
     <ClInclude Include="Geometry\Transform3D.h" />
     <ClInclude Include="Geometry\Vertex.h" />
@@ -204,7 +204,7 @@
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexArray.cpp" />
     <ClCompile Include="Geometry\Geometry3D.cpp" />
-    <ClCompile Include="Geometry\Mesh3D.cpp" />
+    <ClCompile Include="Geometry\Model3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
     <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />

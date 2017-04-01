@@ -3,7 +3,7 @@
 #include "GPU.h"
 #include "Window3D.h"
 #include "Geometry/Geometry3D.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
@@ -24,7 +24,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Mesh3D Cube;
+        Model3D Cube;
         Vector3 Rotation;
 
         void CreateSceneResources() override
@@ -35,7 +35,7 @@ class Program : public BasicRenderer
                 .Position(RenderWindow->ClientArea().Center())
                 .Pitch(90)
                 .Roll(90)
-                .Scale(100, 100, 100);
+                .Scale(200, 200, 200);
 
             RenderScene->Insert(Cube);
         }

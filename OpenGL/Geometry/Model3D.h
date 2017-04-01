@@ -15,7 +15,7 @@ namespace Cyclone
     {
 
 
-        class Mesh3D : public Entity3D
+        class Model3D : public Entity3D
         {
             public:
 
@@ -27,16 +27,16 @@ namespace Cyclone
                 virtual bool IsEmpty()                      const { return _geometry.IsEmpty(); }
 
                 /// <summary> Sets the geometric data that define the shape of the mesh. </summary>
-                OpenGLAPI virtual Mesh3D& Geometry(const Geometry3D& value);
+                OpenGLAPI virtual Model3D& Geometry(const Geometry3D& value);
 
 
 
                 /** CONSTRUCTORS **/
                 /// <summary> Constructs a new empty 3D mesh for rendering models in scenes. </summary>
-                OpenGLAPI Mesh3D();
+                OpenGLAPI Model3D();
                 /// <summary> Constructs a new 3D mesh that is initialized with pre-defined geometric data. </summary>
                 /// <param name="geometry"> An existing 3D geometry data object. </param>
-                OpenGLAPI Mesh3D(const Geometry3D& geometry);
+                OpenGLAPI Model3D(const Geometry3D& geometry);
 
             protected:
             

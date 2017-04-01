@@ -6,7 +6,7 @@
 
 #include "Console.h"
 #include "BasicRenderer.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 #include "Textures/GradientTexture.h"
@@ -32,7 +32,7 @@ class Program : public BasicRenderer
     protected:
 
         GradientTexture*    Gradient;
-        Mesh3D              Quad;
+        Model3D              Quad;
 
 
 

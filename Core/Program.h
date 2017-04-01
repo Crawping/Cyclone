@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Buffers/VertexBuffer.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 
@@ -57,9 +57,9 @@ namespace Cyclone
             FrameBuffer*    RenderTarget;
             Window3D*       RenderWindow;
             Camera          View;
-            Mesh3D          Cube;
-            Mesh3D          PlaneXZ;
-            Mesh3D          Icosahedron;
+            Model3D          Cube;
+            Model3D          PlaneXZ;
+            Model3D          Icosahedron;
             
 
 

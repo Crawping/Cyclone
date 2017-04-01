@@ -53,9 +53,6 @@
     <ClInclude Include="Geometry\Entity3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Mesh3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\Point3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -135,6 +132,9 @@
     <ClInclude Include="Textures\Texture3D.h">
       <Filter>Textures</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\Model3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -197,11 +197,11 @@
     <ClCompile Include="Scenes\SceneComponent.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Mesh3D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Textures\Texture3D.cpp">
       <Filter>Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Model3D.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

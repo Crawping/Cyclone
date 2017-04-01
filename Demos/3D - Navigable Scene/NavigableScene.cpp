@@ -9,7 +9,7 @@
 #include "Window3D.h"
 
 #include "Geometry/Geometry3D.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Geometry/Point3D.h"
 #include "Geometry/Vertex.h"
 #include "Math/Constants.h"
@@ -36,9 +36,9 @@ class Program : public AdvancedRenderer
 
     protected:
 
-        Mesh3D  Cube;
-        Mesh3D  Cylinder;
-        Mesh3D  Icosahedron;
+        Model3D  Cube;
+        Model3D  Cylinder;
+        Model3D  Icosahedron;
         Point3D Point;
 
 
@@ -46,9 +46,9 @@ class Program : public AdvancedRenderer
         {
             AdvancedRenderer::CreateSceneResources();
 
-            Cube = Mesh3D(Geometry3D::Cube(true));
-            Icosahedron = Mesh3D(Geometry3D::Icosahedron());
-            Cylinder = Mesh3D(Geometry3D::Cylinder(64));
+            Cube = Model3D(Geometry3D::Cube(true));
+            Icosahedron = Model3D(Geometry3D::Icosahedron());
+            Cylinder = Model3D(Geometry3D::Cylinder(64));
         
             Vector2 ctrWin = RenderWindow->ClientArea().Center();
             Vector2 szWin = RenderWindow->Size();

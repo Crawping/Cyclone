@@ -225,11 +225,11 @@
       <FileName>Geometry\Line3D.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cyclone::OpenGL::Mesh3D" Collapsed="true">
+  <Class Name="Cyclone::OpenGL::Model3D" Collapsed="true">
     <Position X="2.75" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAAAggA=</HashCode>
-      <FileName>Geometry\Mesh3D.h</FileName>
+      <FileName>Geometry\Model3D.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Cyclone::OpenGL::Point3D" Collapsed="true">

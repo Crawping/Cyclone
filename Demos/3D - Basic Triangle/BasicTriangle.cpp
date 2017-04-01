@@ -4,7 +4,7 @@
 
 #include "BasicRenderer.h"
 #include "Window3D.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Geometry/Geometry3D.h"
 #include "Scenes/Scene3D.h"
 
@@ -25,7 +25,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Mesh3D  Triangle;
+        Model3D  Triangle;
 
         void CreateSceneResources() override
         {

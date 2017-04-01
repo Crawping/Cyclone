@@ -10,7 +10,7 @@
 #include "Buffers/FrameBuffer.h"
 #include "Collections/Vector.h"
 #include "Geometry/Geometry3D.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Geometry/Scene3D.h"
 #include "Geometry/Path2D.h"
 
@@ -45,7 +45,7 @@ class Program : public PathRenderer
     protected:
 
         Path2D          Path;
-        Mesh3D          Sphere;
+        Model3D          Sphere;
 
 
         void CreateSceneResources() override

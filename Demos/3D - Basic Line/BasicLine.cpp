@@ -2,7 +2,7 @@
 #include "GPU.h"
 #include "Window3D.h"
 #include "Geometry/Geometry3D.h"
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
@@ -23,7 +23,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Mesh3D Line;
+        Model3D Line;
 
         void CreateSceneResources() override
         {

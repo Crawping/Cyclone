@@ -172,6 +172,10 @@ namespace Cyclone
 			.Orientation(Vector3::Zero)
 			.Position(Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f));
 
+        //Vector3 position(-2048, -2048, 2048);
+        //Vector3 size(4096, 4096, 4096);
+        //Projection = Transform::OrthographicProjection(Volume(position, size));
+
 		Projection = Transform::PerspectiveProjection
 		(
 			90,

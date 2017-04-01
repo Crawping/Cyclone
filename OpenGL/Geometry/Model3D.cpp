@@ -1,4 +1,4 @@
-#include "Geometry/Mesh3D.h"
+#include "Geometry/Model3D.h"
 
 
 
@@ -8,7 +8,7 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Mesh3D& Mesh3D::Geometry(const Geometry3D& value)
+        Model3D& Model3D::Geometry(const Geometry3D& value)
         {
             _geometry = value;
             return *this;
@@ -17,8 +17,8 @@ namespace Cyclone
 
 
         /** CONSTRUCTORS **/
-        Mesh3D::Mesh3D() { }
-        Mesh3D::Mesh3D(const Geometry3D& geometry) :
+        Model3D::Model3D() { }
+        Model3D::Model3D(const Geometry3D& geometry) :
             _geometry(geometry)
         {
 
