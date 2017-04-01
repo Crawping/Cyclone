@@ -5,7 +5,7 @@
 #pragma once
 #include "Collections/List.h"
 #include "Imaging/ColorGradient.h"
-#include "Textures/Texture.h"
+#include "Textures/Texture3D.h"
 
 
 

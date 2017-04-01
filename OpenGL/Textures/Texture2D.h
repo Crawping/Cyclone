@@ -9,7 +9,7 @@
 #include "Imaging/Color4.h"
 #include "Math/Vector2.h"
 #include "Spatial/Area.h"
-#include "Textures/Texture.h"
+#include "Textures/Texture3D.h"
 #include "Textures/TextureSampler.h"
 
 #include <string>
