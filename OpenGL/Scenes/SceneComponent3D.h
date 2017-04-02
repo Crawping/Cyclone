@@ -46,15 +46,15 @@ namespace Cyclone
 
                 /** COLLECTIONS **/
                 BST<const IRenderable*, const ResourceMapping*>     Resources;
-                BST<VertexTopologies, StageGroup3D*>                Staging;
+                BST<PointTopologies, StageGroup3D*>                 Staging;
 
 
 
                 /** UTILITIES **/
                 void ClearCommands();
                 void ClearMappings();
-                StageGroup3D* CreateStage(VertexTopologies topology);
-                
+                StageGroup3D* CreateStage(PointTopologies topology);
+
         };
     }
 }

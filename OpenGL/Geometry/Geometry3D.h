@@ -38,7 +38,7 @@ namespace Cyclone
                 /// <summary> Gets an array of points that define the prototypical shape of some geometry in 3D space. </summary>
                 OpenGLAPI virtual Vector<Vector3> Points()      const override;
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
-                virtual VertexTopologies Topology()             const override { return _topology; }
+                virtual PointTopologies Topology()              const override { return _topology; }
 
                 virtual WindingOrders Winding()                 const { return _winding; }
 
@@ -49,7 +49,7 @@ namespace Cyclone
                 /// <summary> Sets the array of indices that specify the order in which geometric points are rendered. </summary>
                 OpenGLAPI virtual Geometry3D& Indices(const Vector<uint>& value);
                 /// <summary> Sets the type of primitive that the points of the geometry construct. </summary>
-                OpenGLAPI virtual Geometry3D& Topology(VertexTopologies value);
+                OpenGLAPI virtual Geometry3D& Topology(PointTopologies value);
 
 
 
@@ -148,7 +148,7 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 Volume              _bounds;
                 Vector<uint>        _indices;
-                VertexTopologies    _topology;
+                PointTopologies    _topology;
                 WindingOrders       _winding;
 
                 Vector<Vertex>      Vertices;

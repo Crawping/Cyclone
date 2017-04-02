@@ -22,7 +22,7 @@ namespace Cyclone
             Vector<Vector3>     Mapping;
             Vector<Vector3>     Normals;
             Vector<Vector3>     Points;
-            VertexTopologies    Topology;
+            PointTopologies     Topology;
         };
 
 
@@ -65,7 +65,7 @@ namespace Cyclone
                 /// </remarks>
                 virtual Vector<Vector3> Points()    const = 0;
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
-                virtual VertexTopologies Topology() const = 0;
+                virtual PointTopologies Topology()  const = 0;
 
 
 

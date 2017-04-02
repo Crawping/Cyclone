@@ -30,7 +30,7 @@ namespace Cyclone
                 /// <summary> Gets the GPU configuration settings that are used by the rendering stage. </summary>
                 const GraphicsSettings& Settings()                          const override { return _settings; }
                 /// <summary> Gets the primitive topology of the points that are used by the rendering stage. </summary>
-                VertexTopologies Topology()                                 const override { return _topology; }
+                PointTopologies Topology()                                  const override { return _topology; }
 
                 /// <summary> Sets the type of geometric face culling to be used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& CullingMode(CullingModes value);
@@ -49,7 +49,7 @@ namespace Cyclone
                 /// <summary> Sets the target framebuffer object to be used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& Target(FrameBuffer* value);
                 /// <summary> Sets the primitive topology of the points that are used by the rendering stage. </summary>
-                OpenGLAPI RenderStage& Topology(VertexTopologies value);
+                OpenGLAPI RenderStage& Topology(PointTopologies value);
                 /// <summary> Sets the view transformation to be used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& View(ISpatialTransform* value);
 
@@ -76,7 +76,7 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 List<BufferBinding>     _buffers;
                 GraphicsSettings        _settings;
-                VertexTopologies        _topology;
+                PointTopologies        _topology;
 
         };
     }

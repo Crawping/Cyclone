@@ -14,7 +14,7 @@ namespace Cyclone
         {
             return (v - u) * 0.5f + u;
         }
-        Vertex midpoint(const Vertex& u, const Vertex& v)
+        static Vertex midpoint(const Vertex& u, const Vertex& v)
         {
             return Vertex
             (
@@ -99,7 +99,7 @@ namespace Cyclone
             _indices = value;
             return *this;
         }
-        Geometry3D& Geometry3D::Topology(VertexTopologies value)
+        Geometry3D& Geometry3D::Topology(PointTopologies value)
         {
             _topology = value;
             return *this;
@@ -416,7 +416,7 @@ namespace Cyclone
         Geometry3D Geometry3D::Line()
         {
             Geometry3D geometry;
-            geometry.Topology(VertexTopologies::Lines);
+            geometry.Topology(PointTopologies::Lines);
             geometry.Append({ -0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             geometry.Append({  0.5f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             return geometry;
@@ -424,7 +424,7 @@ namespace Cyclone
         Geometry3D Geometry3D::Point()
         {
             Geometry3D geometry;
-            geometry.Topology(VertexTopologies::Points);
+            geometry.Topology(PointTopologies::Points);
             geometry.Append({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
             return geometry;
         }

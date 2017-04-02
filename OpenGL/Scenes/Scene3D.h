@@ -27,7 +27,7 @@ namespace Cyclone
 
             RegistryKey<EntityData>     EntityKey;
             RegistryKey<MaterialData>   MaterialKey;
-            VertexTopologies            Topology;
+            PointTopologies             Topology;
             RegistryKey<TransformData>  TransformKey;
         };
 
@@ -40,7 +40,7 @@ namespace Cyclone
         {
 
             public:
-            
+
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty scene object that can be populated with renderable entities. </summary>
                 OpenGLAPI Scene3D(const string& name = "");

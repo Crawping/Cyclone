@@ -52,7 +52,7 @@ namespace Cyclone
             _bounds = value;
             return *this;
         }
-        Geometry2D& Geometry2D::Topology(VertexTopologies value)
+        Geometry2D& Geometry2D::Topology(PointTopologies value)
         {
             _topology = value;
             return *this;
@@ -63,7 +63,7 @@ namespace Cyclone
         /** CONSTRUCTOR **/
         Geometry2D::Geometry2D()
         {
-            Topology(VertexTopologies::Path);
+            Topology(PointTopologies::Path);
         }
 
 

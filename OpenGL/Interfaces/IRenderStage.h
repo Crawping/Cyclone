@@ -18,8 +18,8 @@ namespace Cyclone
         /// <summary> An interface that represents a single indivisible stage of a rendering process. </summary>
         /// <remarks>
         ///     A rendering stage is defined here as the most basic single element of some rendering procedure. It is intended to contain
-        ///     all of the information necessary to completely setup and execute the rendering of geometric data on the GPU. Specifically, 
-        ///     this includes (but is not necessarily limited to): GPU resource buffer configurations, the rendering pipeline to be used, 
+        ///     all of the information necessary to completely setup and execute the rendering of geometric data on the GPU. Specifically,
+        ///     this includes (but is not necessarily limited to): GPU resource buffer configurations, the rendering pipeline to be used,
         ///     blending configurations, depth/stencil testing configurations, and the primitive topology of the geometry to be rendered.
         /// </remarks>
         class IRenderStage
@@ -32,7 +32,7 @@ namespace Cyclone
                 /// <summary> Gets the GPU configuration used to execute the rendering stage. </summary>
                 virtual const GraphicsSettings& Settings()              const = 0;
                 /// <summary> Gets the primitive topology of the geometry to be rendered by the stage. </summary>
-                virtual VertexTopologies Topology()                     const = 0;
+                virtual PointTopologies Topology()                      const = 0;
 
 
 

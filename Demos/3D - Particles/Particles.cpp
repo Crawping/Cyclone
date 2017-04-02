@@ -15,7 +15,7 @@ class PointCloud : public Point3D
 
         PointCloud() 
         {
-            _geometry.Topology(VertexTopologies::Points);
+            _geometry.Topology(PointTopologies::Points);
         }
 
         void Add(const Vector<Vector3>& points)

@@ -226,6 +226,51 @@ struct NumericFormats : public Enumerator
     }
 };
 
+/// <summary> A list of supported topologies that indicate the primitive geometry to be rendered. </summary>
+/// <remarks>
+///     Topologies describe how collections of vertices should be parsed and rendered on-screen. The enumerators provided here are
+///     intended for use in all 'glDraw' API functions as a replacement for clumsier 'GLenum mode' arguments.
+///
+///     Uninitalized instances of these enumerators default to the value of 'Triangles'.
+/// </remarks>
+struct PointTopologies : public Enumerator
+{
+    enum Topologies
+    {
+        /// <summary> Instructs the rendering pipeline to draw lines using an array of vertices. </summary>
+        /// <remarks> Equivalent to GL_LINES. </remarks>
+        Lines                       = 0x0001,
+        /// <summary> </summary>
+        /// <remarks> Equivalent to GL_LINE_LOOP. </remarks>
+        LineLoop                    = 0x0002,
+        /// <summary> </summary>
+        /// <remarks> Equivalent to GL_LINE_STRIP. </remarks>
+        LineStrip                   = 0x0003,
+        /// <summary> Instructs the rendering pipeline to draw scalable vector graphics using an array of control points. </summary>
+        /// <remarks>
+        ///     This is a special enumerator inserted to support the rendering of resolution-independent paths, which is the process used 
+        ///     to generate scalable vector graphics (SVGs). Because this is a special format, ordinary OpenGL functions that operate on 
+        ///     vertex topologies will not work with this value. 
+        /// </remarks>
+        Path                        = -1,
+        /// <summary> Instructs the rendering pipeline to draw individual points using an array of vertices. </summary>
+        /// <remarks> Equivalent to GL_POINTS. </remarks>
+        Points                      = 0x0000,
+        /// <remarks> Equivalent to GL_QUADS. </remarks>
+        Quads                       = 0x0007,
+        /// <summary> Instructs the rendering pipeline to draw triangles using an array of vertices. </summary>
+        /// /// <remarks> Equivalent to GL_TRIANGLES. </remarks>
+        Triangles                   = 0x0004,
+        /// <remarks> Equivalent to GL_TRIANGLE_FAN. </remarks>
+        TriangleFan                 = 0x0006,
+        /// <summary> Instructs the rendering pipeline to draw a series of contiguous triangles using an array of vertices. </summary>
+        /// <remarks> Equivalent to GL_TRIANGLE_STRIP. </remarks>
+        TriangleStrip               = 0x0005,
+    };
+
+    constexpr PointTopologies(enum Topologies t = Triangles) : Enumerator((int)t) { }
+};
+
 /// <summary> A list of possible errors indicating issues that can arise within an OpenGL rendering pipeline. </summary>
 struct RenderErrors : public Enumerator
 {
@@ -432,51 +477,6 @@ struct TextureTargets : public Enumerator
     };
 
     constexpr TextureTargets(enum Targets t = Texture2D) : Enumerator((int)t) { }
-};
-
-/// <summary> A list of supported topologies that indicate the primitive geometry to be rendered. </summary>
-/// <remarks>
-///     Topologies describe how collections of vertices should be parsed and rendered on-screen. The enumerators provided here are
-///     intended for use in all 'glDraw' API functions as a replacement for clumsier 'GLenum mode' arguments.
-///
-///     Uninitalized instances of these enumerators default to the value of 'Triangles'.
-/// </remarks>
-struct VertexTopologies : public Enumerator
-{
-    enum Topologies
-    {
-        /// <summary> Instructs the rendering pipeline to draw lines using an array of vertices. </summary>
-        /// <remarks> Equivalent to GL_LINES. </remarks>
-        Lines                       = 0x0001,
-        /// <summary> </summary>
-        /// <remarks> Equivalent to GL_LINE_LOOP. </remarks>
-        LineLoop                    = 0x0002,
-        /// <summary> </summary>
-        /// <remarks> Equivalent to GL_LINE_STRIP. </remarks>
-        LineStrip                   = 0x0003,
-        /// <summary> Instructs the rendering pipeline to draw scalable vector graphics using an array of control points. </summary>
-        /// <remarks>
-        ///     This is a special enumerator inserted to support the rendering of resolution-independent paths, which is the process used 
-        ///     to generate scalable vector graphics (SVGs). Because this is a special format, ordinary OpenGL functions that operate on 
-        ///     vertex topologies will not work with this value. 
-        /// </remarks>
-        Path                        = -1,
-        /// <summary> Instructs the rendering pipeline to draw individual points using an array of vertices. </summary>
-        /// <remarks> Equivalent to GL_POINTS. </remarks>
-        Points                      = 0x0000,
-        /// <remarks> Equivalent to GL_QUADS. </remarks>
-        Quads                       = 0x0007,
-        /// <summary> Instructs the rendering pipeline to draw triangles using an array of vertices. </summary>
-        /// /// <remarks> Equivalent to GL_TRIANGLES. </remarks>
-        Triangles                   = 0x0004,
-        /// <remarks> Equivalent to GL_TRIANGLE_FAN. </remarks>
-        TriangleFan                 = 0x0006,
-        /// <summary> Instructs the rendering pipeline to draw a series of contiguous triangles using an array of vertices. </summary>
-        /// <remarks> Equivalent to GL_TRIANGLE_STRIP. </remarks>
-        TriangleStrip               = 0x0005,
-    };
-
-    constexpr VertexTopologies(enum Topologies t = Triangles) : Enumerator((int)t) { }
 };
 
 /// <summary> A list of supported wrapping modes that control behavior when attempting to sample outside texture boundaries. </summary>

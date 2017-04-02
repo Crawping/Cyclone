@@ -55,7 +55,7 @@ namespace Cyclone
             _settings.Target = value; 
             return *this;
         }
-        RenderStage& RenderStage::Topology(VertexTopologies value)
+        RenderStage& RenderStage::Topology(PointTopologies value)
         {
             _topology = value;
             return *this;

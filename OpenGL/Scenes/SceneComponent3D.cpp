@@ -117,7 +117,7 @@ namespace Cyclone
             Resources.Clear();
             NeedsUpdate = true;
         }
-        StageGroup3D* SceneComponent3D::CreateStage(VertexTopologies topology)
+        StageGroup3D* SceneComponent3D::CreateStage(PointTopologies topology)
         {
             StageGroup3D* stage = new StageGroup3D();
             stage->Indexed

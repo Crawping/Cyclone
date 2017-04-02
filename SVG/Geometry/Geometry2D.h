@@ -36,10 +36,10 @@ namespace Cyclone
                 SVGAPI Vector<Vector3> Normals()            const override;
                 SVGAPI Vector<Vector3> Points()             const override;
                 SVGAPI Vector<float> Parameters()           const override;
-                VertexTopologies Topology()                 const override { return _topology; }
-                
+                PointTopologies Topology()                  const override { return _topology; }
+
                 SVGAPI Geometry2D& Bounds(const Volume& value);
-                SVGAPI Geometry2D& Topology(VertexTopologies value);
+                SVGAPI Geometry2D& Topology(PointTopologies value);
 
 
 
@@ -72,7 +72,7 @@ namespace Cyclone
             private:
 
                 Volume                  _bounds;
-                VertexTopologies        _topology;
+                PointTopologies        _topology;
                 Vector<ControlPoint2D>  ControlPoints;
 
         };
