@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Imaging/Color4.h"
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 
 
@@ -68,7 +69,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new white-colored point at the origin in 3D space. </summary>
-                Point3D() : Model3D(Geometry3D::Point()) { }
+                Point3D() : Model3D(Mesh3D::Point()) { }
         };
     }
 }

@@ -135,6 +135,9 @@
     <ClInclude Include="Geometry\Model3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\Mesh3D.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -201,6 +204,9 @@
       <Filter>Textures</Filter>
     </ClCompile>
     <ClCompile Include="Geometry\Model3D.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Mesh3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
