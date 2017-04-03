@@ -19,14 +19,7 @@ namespace Cyclone
 
             public:
 
-                /** DATA **/
-                /// <summary> The texture currently serving as the color attachment for this framebuffer. </summary>
-                Texture2D* ColorTexture;
-                /// <summary> The texture currently serving as the depth attachment for this framebuffer. </summary>
-                Texture2D* DepthTexture;
-
-
-
+                
                 /** PROPERTIES **/
                 /// <summary> Gets the size and position of this framebuffer in pixels. </summary>
                 Area DisplayArea()      const { return Area(0, 0, ColorTexture->Width(), ColorTexture->Height()); }
@@ -46,6 +39,8 @@ namespace Cyclone
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs an empty framebuffer object with no attachments. </summary>
                 OpenGLAPI FrameBuffer();
+
+                OpenGLAPI FrameBuffer(FrameBuffer&& other);
                 /// <summary> Constructs a new framebuffer object that can be used to render images. </summary>
                 /// <param name="size">
                 ///     The (x, y, z, w) size of the texture objects that comprise the framebuffer. 
@@ -171,6 +166,14 @@ namespace Cyclone
                 uint            _id;
                 Vector4         _size;
                 TextureTargets  _target;
+
+
+
+                /** DATA **/
+                /// <summary> The texture currently serving as the color attachment for this framebuffer. </summary>
+                Texture2D* ColorTexture;
+                /// <summary> The texture currently serving as the depth attachment for this framebuffer. </summary>
+                Texture2D* DepthTexture;
 
 
 

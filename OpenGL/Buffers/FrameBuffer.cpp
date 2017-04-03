@@ -18,6 +18,17 @@ namespace Cyclone
         {
             glCreateFramebuffers(1, &_id);
         }
+        FrameBuffer::FrameBuffer(FrameBuffer&& other) :
+            _id(other._id),
+            _size(other._size),
+            ColorTexture(other.ColorTexture),
+            DepthTexture(other.DepthTexture)
+        {
+            other._id = 0;
+            other._size = Vector4::Zero;
+            other.ColorTexture = nullptr;
+            other.DepthTexture = nullptr;
+        }
         FrameBuffer::FrameBuffer(const Vector4& size, TextureFormats colorFormat, TextureFormats depthFormat) :
             _id(0),
             _size(size),
