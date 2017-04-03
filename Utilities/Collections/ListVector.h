@@ -45,11 +45,9 @@ namespace Cyclone
 
                 }
                 ListVector(const ICollection<T>& values) :
-                    _count(0),
-                    _index(n / 4),
-                    Data(nextpow2(values.Count()))
+                    ListVector(nextpow2(values.Count()))
                 {
-
+                    Append(values);
                 }
                 ListVector(std::initializer_list<T> values) :
                     _count(0),
@@ -105,6 +103,11 @@ namespace Cyclone
                 /** OPERATORS **/
                 virtual Iterator begin()                    { return Iterator(_index, &Data); }
                 virtual Iterator end()                      { return Iterator(_index + Count(), &Data); }
+
+                virtual Vector<T> ToVector()                const
+                {
+                    return Vector<T>(Data, _index, _count);
+                }
                 virtual T& operator ()(uint index)          { return Data(_index + index); }
                 virtual const T& operator ()(uint index)    const override { return Data(_index + index); }
 

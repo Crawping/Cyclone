@@ -123,6 +123,13 @@ namespace Cyclone
                     for (uint a = 0; a < Count(); a++)
                         Data[a] = other(a);
 		        }
+                Vector(const Vector<T>& other, uint index, uint count) :
+                    _count(count),
+                    Data(new T[count])
+                {
+                    for (uint a = index; a < index + count; a++)
+                        Data[a - index] = other(a);
+                }
                 /// <summary> Constructs an array by copying values contained in an initializer list. </summary>
 		        Vector(std::initializer_list<T> values) :
 			        _count(values.size()),
