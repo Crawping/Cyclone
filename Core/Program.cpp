@@ -9,6 +9,8 @@
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
+#include "Geometry/Mesh3D.h"
+
 
 
 const static string Help = "                        \n\
@@ -137,19 +139,19 @@ namespace Cyclone
             .View(&View);
 
 		PlaneXZ
-            .Geometry(Geometry3D::Quad(true))
+            .Geometry(Mesh3D::Quad(true))
             .Pitch(-90)
             .PrimaryColor(Color4::Blue)
             .Scale(5000).Translate(0, 50, 0);
 
         Cube
-            .Geometry(Geometry3D::Cube(true))
+            .Geometry(Mesh3D::Cube(true))
             .PrimaryColor(Color4::Gray)
             .Scale(Vector3(50, 50, 50))
             .Translate(250, 250, -10);
 
         Icosahedron
-            .Geometry(Geometry3D::Icosahedron())
+            .Geometry(Mesh3D::Icosahedron())
             .PrimaryColor(Color4::Red)
             .Scale(Vector3(50, 50, 50))
             .Translate(750, 250, -10);
