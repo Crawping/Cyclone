@@ -17,8 +17,10 @@ void main(void)
     EntityData ids = Entities[EntityIndex];
     MaterialData mat = Materials[ids.MaterialIndex];
 
-    OutputColor = mat.PrimaryColor - vec4((gl_FragDepth + 1.0) / 2.0);
+    //OutputColor = mat.PrimaryColor - vec4((gl_FragDepth + 1.0) / 2.0);
+    OutputColor = mat.PrimaryColor * vec4(gl_FragCoord.z);
     OutputColor.a = mat.PrimaryColor.a;
+    OutputColor = normalize(OutputColor);
     //OutputColor = (OutputColor + 1.0) / 2.0;
     //OutputColor = normalize(OutputColor);
 }
