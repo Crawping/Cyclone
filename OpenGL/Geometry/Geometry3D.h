@@ -43,6 +43,11 @@ namespace Cyclone
 
                 virtual WindingOrders Winding()                 const { return _winding; }
 
+
+                OpenGLAPI virtual Geometry3D& Mapping(const ICollection<Vector3>& value);
+                OpenGLAPI virtual Geometry3D& Normals(const ICollection<Vector3>& value);
+                OpenGLAPI virtual Geometry3D& Points(const ICollection<Vector3>& value);
+
                 /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
                 OpenGLAPI virtual Geometry3D& Bounds(const Volume& value);
                 /// <summary> Summarily sets all of the data needed to render the 3D geometric shape. </summary>
@@ -60,6 +65,8 @@ namespace Cyclone
                 {
                     Data(data);
                 }
+
+
 
             protected:
 

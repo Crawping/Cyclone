@@ -40,6 +40,25 @@ namespace Cyclone
             _topology = value.Topology;
             return *this;
         }
+        
+        Geometry3D& Geometry3D::Mapping(const ICollection<Vector3>& value)
+        {
+            _mapping.Clear();
+            _mapping.Append(value);
+            return *this;
+        }
+        Geometry3D& Geometry3D::Normals(const ICollection<Vector3>& value)
+        {
+            _normals.Clear();
+            _normals.Append(value);
+            return *this;
+        }
+        Geometry3D& Geometry3D::Points(const ICollection<Vector3>& value)
+        {
+            _points.Clear();
+            _points.Append(value);
+            return *this;
+        }
         Geometry3D& Geometry3D::Topology(PointTopologies value)
         {
             _topology = value;
