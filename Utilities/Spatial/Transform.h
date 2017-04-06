@@ -133,8 +133,8 @@ namespace Cyclone
                 ///     components that contribute to the overall matrix formation. However, this process is inexact for a 
                 ///     few reasons. Firstly, many individual transformations can be concatenated together to form a single 
                 ///     transformation matrix, and decomposition is only able to resolve a single set of parameters. Secondly, 
-                ///     and related to the previous point, there are infinitely many ways to generate any given transformation, 
-                ///     even with a single set of parameters. Therefore, while the result returned by this method should be 
+                ///     and related to the first point, there are infinitely many ways to generate any given transformation, 
+                ///     even with a single set of parameters. Therefore, while the result returned by this method will be 
                 ///     mathematically equivalent to the inputted matrix, it very likely will not be identical.
                 /// </remarks>
                 UtilitiesAPI static Transform Decompose(const Matrix4x4& transform);

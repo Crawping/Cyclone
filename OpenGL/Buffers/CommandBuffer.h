@@ -29,7 +29,7 @@ namespace Cyclone
             /// <summary> The position of the first vertex data structure within the vertex buffer. </summary>
             /// <remarks>
             ///     Vertices that make up the geometry in a rendered scene are often thrown together in a single vertex buffer 
-            ///     object. This parameter gives the GPU an index into that buffer where the first (of potentially many) vertex 
+            ///     object. This parameter gives the GPU an index into that buffer where the first vertex (of potentially many)
             ///     associated with the drawing command resides.
             /// </remarks>
             uint FirstVertex;
@@ -64,7 +64,7 @@ namespace Cyclone
             /// <summary> The position of the first vertex data structure within the vertex buffer. </summary>
             /// <remarks>
             ///     Vertices that make up the geometry in a rendered scene are often thrown together in a single vertex buffer 
-            ///     object. This parameter gives the GPU an index into that buffer where the first (of potentially many) vertex 
+            ///     object. This parameter gives the GPU an index into that buffer where the first vertex (of potentially many)
             ///     associated with the drawing command resides.
             /// </remarks>
             uint FirstVertex;

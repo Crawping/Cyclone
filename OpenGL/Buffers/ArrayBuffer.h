@@ -102,10 +102,10 @@ namespace Cyclone
             protected:
 
                 /** CONSTRUCTOR **/
-                /// <summary> Constructs an empty one-dimensional data buffer whose data can be accessed on the GPU. </summary>
+                /// <summary> Constructs an empty one-dimensional storage buffer whose data can be accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
 		        ArrayBuffer(BufferTypes type) : GraphicsBuffer(type) { }
-                /// <summary> Constructs a one-dimensional data buffer of a specified size whose data can accessed on the GPU. </summary>
+                /// <summary> Constructs a one-dimensional storage buffer of a specified size whose data can accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
                 /// <param name="length"> The desired number of data elements to stored within the buffer. </param>
 		        ArrayBuffer(BufferTypes type, uint length) :
