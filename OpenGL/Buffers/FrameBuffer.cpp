@@ -13,27 +13,27 @@ namespace Cyclone
         /** CONSTRUCTORS & DESTRUCTOR **/
         FrameBuffer::FrameBuffer() :
             _id(0),
-            ColorTexture(nullptr),
-            DepthTexture(nullptr)
+            _colorTexture(nullptr),
+            _depthTexture(nullptr)
         {
             glCreateFramebuffers(1, &_id);
         }
         FrameBuffer::FrameBuffer(FrameBuffer&& other) :
             _id(other._id),
             _size(other._size),
-            ColorTexture(other.ColorTexture),
-            DepthTexture(other.DepthTexture)
+            _colorTexture(other._colorTexture),
+            _depthTexture(other._depthTexture)
         {
             other._id = 0;
             other._size = Vector4::Zero;
-            other.ColorTexture = nullptr;
-            other.DepthTexture = nullptr;
+            other._colorTexture = nullptr;
+            other._depthTexture = nullptr;
         }
         FrameBuffer::FrameBuffer(const Vector4& size, TextureFormats colorFormat, TextureFormats depthFormat) :
             _id(0),
             _size(size),
-            ColorTexture(nullptr),
-            DepthTexture(nullptr)
+            _colorTexture(nullptr),
+            _depthTexture(nullptr)
         {
             glCreateFramebuffers(1, &_id);
             CreateColorAttachment(colorFormat, TextureTargets::Texture2D);
@@ -43,8 +43,8 @@ namespace Cyclone
             _id(0),
             _size(size),
             _target(target),
-            ColorTexture(nullptr),
-            DepthTexture(nullptr)
+            _colorTexture(nullptr),
+            _depthTexture(nullptr)
         {
             glCreateFramebuffers(1, &_id);
             CreateColorAttachment(colorFormat, target);
@@ -54,8 +54,8 @@ namespace Cyclone
         {
             Unbind();
             if (_id)            { glDeleteFramebuffers(1, &_id); }
-            if (DepthTexture)   { delete DepthTexture; }
-            if (ColorTexture)   { delete ColorTexture; }
+            if (_depthTexture)   { delete _depthTexture; }
+            if (_colorTexture)   { delete _colorTexture; }
         }
 
 
@@ -95,16 +95,16 @@ namespace Cyclone
                 target ? target->ID() : 0,
                 srcArea.X, srcArea.Y, srcArea.Width, srcArea.Height,
                 dstArea.X, dstArea.Y, dstArea.Width, dstArea.Height,
-                GL_COLOR_BUFFER_BIT | ( DepthTexture ? GL_DEPTH_BUFFER_BIT : 0 ),
+                GL_COLOR_BUFFER_BIT | ( _depthTexture ? GL_DEPTH_BUFFER_BIT : 0 ),
                 GL_NEAREST
             );
         }
         void FrameBuffer::Clear(const Color4& color, float depth, int stencil)
         {
-            if (ColorTexture)
+            if (_colorTexture)
                 glClearNamedFramebufferfv(ID(), GL_COLOR, 0, color.ToArray());
 
-            if (DepthTexture)
+            if (_depthTexture)
             {
                 if (HasStencilBuffer())
                     glClearNamedFramebufferfi(ID(), GL_DEPTH_STENCIL, 0, depth, stencil);
@@ -119,11 +119,11 @@ namespace Cyclone
                    "\tID:                 " << _id                          << "\n" <<
                    "\tStatus:             " << ReportCompletionStatus()     << "\n\n";
 
-            if (ColorTexture)
-                msg << "\tFramebuffer Color " << ColorTexture->Report();
+            if (_colorTexture)
+                msg << "\tFramebuffer Color " << _colorTexture->Report();
 
-            if (DepthTexture)
-                msg << "\n\tFramebuffer Depth " << DepthTexture->Report();
+            if (_depthTexture)
+                msg << "\n\tFramebuffer Depth " << _depthTexture->Report();
 
             return msg.str();
         }
@@ -141,25 +141,25 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void FrameBuffer::CreateColorAttachment(TextureFormats format, TextureTargets target)
         {
-            ColorTexture = new Texture2D(_size, format, target);
-            ColorTexture->Sampler.EdgeWrap = WrapModes::Repeat;
+            _colorTexture = new Texture2D(_size, format, target);
+            _colorTexture->Sampler.EdgeWrap = WrapModes::Repeat;
 
-            glNamedFramebufferTexture(_id, GL_COLOR_ATTACHMENT0, ColorTexture->ID(), 0);
+            glNamedFramebufferTexture(_id, GL_COLOR_ATTACHMENT0, _colorTexture->ID(), 0);
             glNamedFramebufferDrawBuffer(_id, GL_COLOR_ATTACHMENT0);
         }
         void FrameBuffer::CreateDepthAttachment(TextureFormats format, TextureTargets target)
         {
-            DepthTexture = new Texture2D(_size, format, target);
+            _depthTexture = new Texture2D(_size, format, target);
             if (HasStencilBuffer())
-                glNamedFramebufferTexture(ID(), GL_DEPTH_STENCIL_ATTACHMENT, DepthTexture->ID(), 0);
+                glNamedFramebufferTexture(ID(), GL_DEPTH_STENCIL_ATTACHMENT, _depthTexture->ID(), 0);
             else
-                glNamedFramebufferTexture(ID(), GL_DEPTH_ATTACHMENT, DepthTexture->ID(), 0);
+                glNamedFramebufferTexture(ID(), GL_DEPTH_ATTACHMENT, _depthTexture->ID(), 0);
         }
         bool FrameBuffer::HasStencilBuffer() const
         {
-            if (DepthTexture)
-                return DepthTexture->Format() == TextureFormats::DepthStencil ||
-                    DepthTexture->Format() == TextureFormats::DepthStencilFloat;
+            if (_depthTexture)
+                return _depthTexture->Format() == TextureFormats::DepthStencil ||
+                    _depthTexture->Format() == TextureFormats::DepthStencilFloat;
             else
                 return false;
         }

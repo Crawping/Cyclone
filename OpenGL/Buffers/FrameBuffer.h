@@ -21,18 +21,26 @@ namespace Cyclone
 
                 
                 /** PROPERTIES **/
+                /// <summary> Gets the texture currently serving as the color attachment for this framebuffer. </summary>
+                const Texture2D* ColorTexture()     const { return _colorTexture; }
+                /// <summary> The texture currently serving as the depth attachment for this framebuffer. </summary>
+                const Texture2D* DepthTexture()     const { return _depthTexture; }
                 /// <summary> Gets the size and position of this framebuffer in pixels. </summary>
-                Area DisplayArea()      const { return Area(0, 0, ColorTexture->Width(), ColorTexture->Height()); }
+                Area DisplayArea()                  const { return Area(0, 0, Width(), Height()); }
                 /// <summary> Gets the height of this framebuffer in pixels. </summary>
-                uint Height()           const { return (uint)_size.Y; }
+                uint Height()                       const { return (uint)_size.Y; }
                 /// <summary> Gets the numeric handle (or 'Name' in OpenGL jargon) associated with this framebuffer. </summary>
-                uint ID()               const override { return _id; }
+                uint ID()                           const override { return _id; }
                 /// <summary> Gets the width and height of this framebuffer in pixels. </summary>
-                const Vector3& Size()   const { return (Vector3)_size; }
+                const Vector3& Size()               const { return (Vector3)_size; }
 
-                TextureTargets Target() const { return _target; }
+                TextureTargets Target()             const { return _target; }
                 /// <summary> Gets the width of this framebuffer in pixels. </summary>
-                uint Width()            const { return (uint)_size.X; }
+                uint Width()                        const { return (uint)_size.X; }
+
+                //OpenGLAPI FrameBuffer& ColorTexture(Texture2D* value);
+                //OpenGLAPI FrameBuffer& DepthTexture(Texture2D* value);
+
 
 
 
@@ -163,17 +171,11 @@ namespace Cyclone
             private:
 
                 /** PROPERTY DATA **/
+                Texture2D*      _colorTexture;
+                Texture2D*      _depthTexture;
                 uint            _id;
                 Vector4         _size;
                 TextureTargets  _target;
-
-
-
-                /** DATA **/
-                /// <summary> The texture currently serving as the color attachment for this framebuffer. </summary>
-                Texture2D* ColorTexture;
-                /// <summary> The texture currently serving as the depth attachment for this framebuffer. </summary>
-                Texture2D* DepthTexture;
 
 
 
