@@ -4,8 +4,8 @@
 
 #include "BasicRenderer.h"
 #include "Window3D.h"
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
-#include "Geometry/Geometry3D.h"
 #include "Scenes/Scene3D.h"
 
 using namespace Renderers;
@@ -19,7 +19,7 @@ class Program : public BasicRenderer
     public:
         Program() : 
             BasicRenderer(Area(0, 0, 1024, 960), "Basic Triangle Rendering"),
-            Triangle(Geometry3D::Triangle())
+            Triangle(Mesh3D::Triangle())
         { 
             Initialize();
         }

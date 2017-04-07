@@ -1,7 +1,7 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
-#include "Geometry/Geometry3D.h"
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
@@ -29,6 +29,7 @@ class Program : public BasicRenderer
         {
             BasicRenderer::CreateSceneResources();
             Line
+                .Geometry(Mesh3D::Line())
                 .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
@@ -59,7 +60,7 @@ class Program : public BasicRenderer
             );
 
             Line
-                .Geometry(Geometry3D::Line())
+                .Geometry(Mesh3D::Line())
                 .PrimaryColor(color)
                 .Rotate(0.01f);
 

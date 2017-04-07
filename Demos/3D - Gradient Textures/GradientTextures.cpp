@@ -6,6 +6,7 @@
 
 #include "Console.h"
 #include "BasicRenderer.h"
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
@@ -60,7 +61,7 @@ class Program : public BasicRenderer
                 Console::WriteLine(g(a).ToString());
 
             Quad
-                .Geometry(Geometry3D::Quad(true))
+                .Geometry(Mesh3D::Quad(true))
                 .Position(RenderWindow->ClientArea().Center())
                 .Scale(512, 256);
 

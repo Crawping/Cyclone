@@ -8,6 +8,7 @@
 #include "GPU.h"
 #include "Window3D.h"
 
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 #include "Imaging/Bitmap.h"
 #include "Pipelines/ShaderPipeline.h"
@@ -52,7 +53,7 @@ class Program : public AdvancedRenderer
             Image->Bind();
 
             Quad
-                .Geometry(Geometry3D::Quad(true))
+                .Geometry(Mesh3D::Quad(true))
                 .PrimaryColor(Color4::Blue)
                 .Position(RenderWindow->ClientArea().Center())
                 .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f);

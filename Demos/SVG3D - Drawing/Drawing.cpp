@@ -7,6 +7,7 @@
 #include "PathRenderer.h"
 #include "Window3D.h"
 #include "Geometry/DrawingPath.h"
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 #include "Geometry/Path2D.h"
 #include "Pipelines/ShaderPipeline.h"
@@ -46,7 +47,7 @@ class Program : public PathRenderer
         Texture2D*          Image;
         bool                IsEnteringText;
         Vector2             LastClickPosition;
-        Model3D              Quad;
+        Model3D             Quad;
         List<Text2D*>       TextBoxes;
 
 
@@ -60,7 +61,7 @@ class Program : public PathRenderer
             Image->Bind();
 
             Quad
-                .Geometry(Geometry3D::Quad())
+                .Geometry(Mesh3D::Quad())
                 .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
                 .Scale(Vector3(RenderWindow->ClientArea().Scale(), 0.0f));
 

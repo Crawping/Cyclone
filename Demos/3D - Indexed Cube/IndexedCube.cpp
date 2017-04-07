@@ -2,7 +2,7 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
-#include "Geometry/Geometry3D.h"
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
@@ -17,7 +17,7 @@ class Program : public BasicRenderer
     public:
         Program() :
             BasicRenderer(Area(0, 0, 1024, 960), "Indexed Cube"),
-            Cube(Geometry3D::Cube(true))
+            Cube(Mesh3D::Cube(true))
         {
             Initialize();
         }

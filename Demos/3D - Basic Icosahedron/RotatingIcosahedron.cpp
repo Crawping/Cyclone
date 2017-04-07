@@ -1,7 +1,7 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
-#include "Geometry/Geometry3D.h"
+#include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
@@ -16,7 +16,7 @@ class Program : public BasicRenderer
     public:
         Program() :
             BasicRenderer(Area(0, 0, 1024, 960), "Rotating Cube"),
-            Icosahedron(Geometry3D::Icosahedron())
+            Icosahedron(Mesh3D::Icosahedron())
         {
             Initialize();
         }
