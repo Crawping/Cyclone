@@ -41,6 +41,12 @@ namespace Cyclone
             return *this;
         }
         
+        Geometry3D& Geometry3D::Indices(const ICollection<uint>& value)
+        {
+            _indices.Clear();
+            _indices.Append(value);
+            return *this;
+        }
         Geometry3D& Geometry3D::Mapping(const ICollection<Vector3>& value)
         {
             _mapping.Clear();

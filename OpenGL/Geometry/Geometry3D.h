@@ -32,6 +32,8 @@ namespace Cyclone
                 OpenGLAPI virtual GeometryData Data()           const override;
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
                 virtual Vector<uint> Indices()                  const override { return _indices.ToVector(); }
+
+                virtual bool IsIndexed()                        const { return !_indices.IsEmpty(); }
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
                 virtual Vector<Vector3> Mapping()               const override { return _mapping.ToVector(); }
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>
@@ -43,7 +45,7 @@ namespace Cyclone
 
                 virtual WindingOrders Winding()                 const { return _winding; }
 
-
+                OpenGLAPI virtual Geometry3D& Indices(const ICollection<uint>& value);
                 OpenGLAPI virtual Geometry3D& Mapping(const ICollection<Vector3>& value);
                 OpenGLAPI virtual Geometry3D& Normals(const ICollection<Vector3>& value);
                 OpenGLAPI virtual Geometry3D& Points(const ICollection<Vector3>& value);
