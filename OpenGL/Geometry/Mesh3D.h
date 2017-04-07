@@ -15,10 +15,11 @@ namespace Cyclone
         {
             public:
 
+                /** PROPERTIES **/
+                OpenGLAPI Vector<Vertex> Vertices() const;
 
-                /** CONSTRUCTOR **/
-                //Mesh3D() { }
-                //Mesh3D(const GeometryData& data) : Geometry3D()
+                OpenGLAPI Mesh3D& Vertices(const ICollection<Vertex>& value);
+
 
 
                 /** STATIC CONSTRUCTORS **/
@@ -26,8 +27,8 @@ namespace Cyclone
                 /// <param name="isIndexed"> Indicates whether the vertices of the cube should be indexed or shared. </param>
                 /// <remarks> The vertices of this cube are wound counter-clockwise and are shared only if indexed. </remarks>
                 OpenGLAPI static Mesh3D Cube(bool isIndexed = false);
-                /// <summary> A cylinder with unit radius and height centered on the origin (0, 0, 0). </summary>
-                /// <returns> An array of standard vertices that define a cylinder in 3D space. </returns>
+                /// <summary> Constructs a cylinder with unit radius and height centered on the origin (0, 0, 0). </summary>
+                /// <returns> A triangle mesh that forms a cylinder in 3D space. </returns>
                 /// <param name="nfaces">
                 ///     The desired number of quad faces that make up the cylinder.
                 ///     <para> </para>
@@ -35,8 +36,8 @@ namespace Cyclone
                 /// </param>
                 /// <remarks> The vertices of this cylinder are not shared and are wound counter-clockwise. </remarks>
                 OpenGLAPI static Mesh3D Cylinder(uint nfaces, bool isIndexed = false);
-                /// <summary> A regular icosahedron with a unit radius centered on the origin (0, 0, 0). </summary>
-                /// <returns> An array of standard vertices that define a regular icosahedron in 3D space. </returns>
+                /// <summary> Constructs a regular icosahedron with a unit radius centered on the origin (0, 0, 0). </summary>
+                /// <returns> A triangle mesh that forms a regular icosahedron in 3D space. </returns>
                 /// <remarks> The vertices of this icosahedron are not shared and are wound counter-clockwise. </remarks>
                 OpenGLAPI static Mesh3D Icosahedron(bool isIndexed = false);
                 /// <summary> Constructs a line with unit length spanning the coordinates (-0.5, 0, 0) to (0.5, 0, 0). </summary>
@@ -47,8 +48,8 @@ namespace Cyclone
                 /// <remarks> The vertices of this quad are wound counter-clockwise and are shared only if indexed. </remarks>
                 /// <param name="isIndexed"> Indicates whether the vertices of the quad should be indexed or shared. </param>
                 OpenGLAPI static Mesh3D Quad(bool isIndexed = false);
-                /// <summary> A sphere with unit radius centered on the origin (0, 0, 0). </summary>
-                /// <returns> An array of standard vertices that define a sphere in 3D space. </returns>
+                /// <summary> Constructs a sphere with unit radius centered on the origin (0, 0, 0). </summary>
+                /// <returns> A triangle mesh that forms a sphere in 3D space. </returns>
                 /// <param name="n">
                 ///     The number of times the vertices of a regular icosahedron are tessellated to approximate the sphere.
                 /// </param>
@@ -74,9 +75,11 @@ namespace Cyclone
                 /// </param>
                 OpenGLAPI void Tessellate(uint n);
 
+                OpenGLAPI void Unindex();
+
             private:
 
-                Vector<Vertex>      Vertices;
+                //Vector<Vertex>      Vertices;
 
         };
     }
