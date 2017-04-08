@@ -16,9 +16,10 @@ class Program : public BasicRenderer
     public:
         Program() :
             BasicRenderer(Area(0, 0, 1024, 960), "Rotating Sphere"),
-            Sphere(Mesh3D::Sphere(3))
+            Sphere(Mesh3D::Sphere(6))
         {
             Initialize();
+            Console::WriteLine(num2str(Sphere.Geometry().Count()) + " vertices being rendered!");
         }
 
     protected:

@@ -62,19 +62,22 @@ namespace Cyclone
         void Mesh3D::CalculateNormals()
         {
             auto pts = Points();
-            auto nms = Normals();
+            auto newNormals = Vector<Vector3>(pts.Count());
 
-            auto newNormals = Vector<Vector3>(Count());
-            for (uint a = 0; a < pts.Count(); a += 3)
-            {
-                Vector3 diff1 = pts(a + 1) - pts(a);
-                Vector3 diff2 = pts(a + 2) - pts(a);
-                Vector3 diff3 = pts(a + 2) - pts(a + 1);
+            if (IsIndexed())
+                for (uint a = 0; a < pts.Count(); a++)
+                    newNormals(a) = pts(a).Normalize();
+            else
+                for (uint a = 0; a < pts.Count(); a += 3)
+                {
+                    Vector3 diff1 = pts(a + 1) - pts(a);
+                    Vector3 diff2 = pts(a + 2) - pts(a);
+                    Vector3 diff3 = pts(a + 2) - pts(a + 1);
 
-                newNormals(a) = Math::Cross(diff1, diff2).Normalize();
-                newNormals(a + 1) = Math::Cross(diff3, -diff1).Normalize();
-                newNormals(a + 2) = Math::Cross(-diff2, -diff3).Normalize();
-            }
+                    newNormals(a) = Math::Cross(diff1, diff2).Normalize();
+                    newNormals(a + 1) = Math::Cross(diff3, -diff1).Normalize();
+                    newNormals(a + 2) = Math::Cross(-diff2, -diff3).Normalize();
+                }
 
             Normals(newNormals);
         }
@@ -83,32 +86,79 @@ namespace Cyclone
             if (n == 0)         return;
             else if (n > 1)     Mesh3D::Tessellate(n - 1);
 
-            uint idx = 0;
-            uint newCount = Count() * 12;
-            Vector<Vertex> vertices(Vertices()), newVertices(newCount);
-            for (uint a = 0; a < vertices.Count(); a += 3)
+            Vector<Vertex> vertices(Vertices());
+
+            if (IsIndexed())
             {
-                Vertex v1 = vertices(a), v2 = vertices(a + 1), v3 = vertices(a + 2);
-                Vertex m1 = midpoint(v1, v2), m2 = midpoint(v1, v3), m3 = midpoint(v2, v3);
+                Vector<uint> indices(Indices());
+                Vector<uint> newIndices(indices.Count() * 4);
+                Vector<Vertex> newVertices(indices.Count() * 2);
 
-                newVertices(idx++) = v1;
-                newVertices(idx++) = m1;
-                newVertices(idx++) = m2;
+                uint idxIndex = 0, idxVertex = 0;
+                for (uint a = 0; a < indices.Count(); a += 3)
+                {
+                    uint idx1 = indices(a), idx2 = indices(a + 1), idx3 = indices(a + 2);
+                    Vertex v1 = vertices(idx1), v2 = vertices(idx2), v3 = vertices(idx3);
+                    Vertex m1 = midpoint(v1, v2), m2 = midpoint(v1, v3), m3 = midpoint(v2, v3);
 
-                newVertices(idx++) = m2;
-                newVertices(idx++) = m1;
-                newVertices(idx++) = m3;
+                    newIndices(idxIndex)        = idxVertex;
+                    newIndices(idxIndex + 1)    = idxVertex + 1;
+                    newIndices(idxIndex + 2)    = idxVertex + 2;
 
-                newVertices(idx++) = m3;
-                newVertices(idx++) = m1;
-                newVertices(idx++) = v2;
+                    newIndices(idxIndex + 3)    = idxVertex + 2;
+                    newIndices(idxIndex + 4)    = idxVertex + 1;
+                    newIndices(idxIndex + 5)    = idxVertex + 3;
 
-                newVertices(idx++) = m2;
-                newVertices(idx++) = m3;
-                newVertices(idx++) = v3;
+                    newIndices(idxIndex + 6)    = idxVertex + 3;
+                    newIndices(idxIndex + 7)    = idxVertex + 1;
+                    newIndices(idxIndex + 8)    = idxVertex + 4;
+
+                    newIndices(idxIndex + 9)    = idxVertex + 2;
+                    newIndices(idxIndex + 10)   = idxVertex + 3;
+                    newIndices(idxIndex + 11)   = idxVertex + 5;
+
+                    newVertices(idxVertex)      = v1;
+                    newVertices(idxVertex + 1)  = m1;
+                    newVertices(idxVertex + 2)  = m2;
+                    newVertices(idxVertex + 3)  = m3;
+                    newVertices(idxVertex + 4)  = v2;
+                    newVertices(idxVertex + 5)  = v3;
+
+                    idxIndex += 12;
+                    idxVertex += 6;
+                }
+
+                Indices(newIndices);
+                Vertices(newVertices);
             }
+            else
+            {
+                uint idx = 0;
+                Vector<Vertex> newVertices(vertices.Count() * 4);
+                for (uint a = 0; a < vertices.Count(); a += 3)
+                {
+                    Vertex v1 = vertices(a), v2 = vertices(a + 1), v3 = vertices(a + 2);
+                    Vertex m1 = midpoint(v1, v2), m2 = midpoint(v1, v3), m3 = midpoint(v2, v3);
 
-            Vertices(newVertices);
+                    newVertices(idx++) = v1;
+                    newVertices(idx++) = m1;
+                    newVertices(idx++) = m2;
+
+                    newVertices(idx++) = m2;
+                    newVertices(idx++) = m1;
+                    newVertices(idx++) = m3;
+
+                    newVertices(idx++) = m3;
+                    newVertices(idx++) = m1;
+                    newVertices(idx++) = v2;
+
+                    newVertices(idx++) = m2;
+                    newVertices(idx++) = m3;
+                    newVertices(idx++) = v3;
+                }
+
+                Vertices(newVertices);
+            }
         }
         void Mesh3D::Unindex()
         {
@@ -244,9 +294,9 @@ namespace Cyclone
             if (!isIndexed)
             {
                 geometry.Unindex();
-                geometry.CalculateNormals();
             }
 
+            geometry.CalculateNormals();
             return geometry;
         }
         Mesh3D Mesh3D::Line()
@@ -284,9 +334,9 @@ namespace Cyclone
             if (!isIndexed) geometry.Unindex();
             return geometry;
         }
-        Mesh3D Mesh3D::Sphere(uint n)
+        Mesh3D Mesh3D::Sphere(uint n, bool isIndexed)
         {
-            Mesh3D geometry = Mesh3D::Icosahedron();
+            Mesh3D geometry = Mesh3D::Icosahedron(isIndexed);
             geometry.Tessellate(n);
 
             Vector<Vector3> points(geometry.Points()), normals(geometry.Normals());

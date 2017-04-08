@@ -53,7 +53,7 @@ namespace Cyclone
                 /// <param name="n">
                 ///     The number of times the vertices of a regular icosahedron are tessellated to approximate the sphere.
                 /// </param>
-                OpenGLAPI static Mesh3D Sphere(uint n);
+                OpenGLAPI static Mesh3D Sphere(uint n, bool isIndexed = true);
                 /// <summary> Constructs a right-triangle in the xy-plane whose hypotenuse spans the coordinates (1, 0, 0) to (0, 1, 0). </summary>
                 /// <remarks> The vertices of this triangle are wound counter-clockwise. </remarks>
                 OpenGLAPI static Mesh3D Triangle();
