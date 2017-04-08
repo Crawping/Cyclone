@@ -16,8 +16,10 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets a vector of vertices containing the mapping, normal, and point data for the mesh. </summary>
                 OpenGLAPI Vector<Vertex> Vertices() const;
-
+                /// <summary> Sets the mapping, normal, and point data for the mesh. </summary>
+                /// <param name="value"> A vector of vertex data structures. </param>
                 OpenGLAPI Mesh3D& Vertices(const ICollection<Vertex>& value);
 
 
@@ -74,12 +76,12 @@ namespace Cyclone
                 ///     Note that each tessellation step returns 12 times the number of inputted vertices.
                 /// </param>
                 OpenGLAPI void Tessellate(uint n);
-
+                /// <summary> Reconstructs the full set of mapping, normal, and point data for an indexed mesh. </summary>
+                /// <remarks>
+                ///     When called on any indexed mesh geometry, this method permanently removes the use indices and 
+                ///     decompresses all internal data stores.
+                /// </remarks>
                 OpenGLAPI void Unindex();
-
-            private:
-
-                //Vector<Vertex>      Vertices;
 
         };
     }
