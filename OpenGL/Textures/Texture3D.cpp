@@ -8,12 +8,12 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        
+
         /** PROPERTIES **/
         Texture3D& Texture3D::Size(const Vector4& value)
         {
             if (value == Size()) { return *this; }
-            
+
             _size = Vector4(value.X, value.Y, value.Z, Math::Max(value.W, 1.0f));
             _needsUpdate = true;
             return *this;
@@ -28,7 +28,7 @@ namespace Cyclone
             _needsUpdate(true)
         {
 
-        }            
+        }
         Texture3D::Texture3D(const Vector4& size, TextureFormats format, TextureTargets target) :
             _format(format),
             _handle(0),
@@ -44,7 +44,7 @@ namespace Cyclone
         }
         Texture3D::~Texture3D()
         {
-            //MakeNonresident();
+            MakeNonresident();
             if (_id)
                 glDeleteTextures(1, &_id);
         }
@@ -64,7 +64,6 @@ namespace Cyclone
         void Texture3D::MakeResident()
         {
             Update();
-
             if (!_handle)
                 _handle = glGetTextureHandleARB(_id);
             glMakeTextureHandleResidentARB(Handle());
@@ -80,7 +79,7 @@ namespace Cyclone
         /** TEXTURE UTILITIES **/
         void Texture3D::GenerateMipmap()
         {
-            if ( IsEmpty() || !MipmapCount() || (Target() == TextureTargets::Texture2DMS) ) 
+            if ( IsEmpty() || !MipmapCount() || (Target() == TextureTargets::Texture2DMS) )
                 return;
 
             Update();
@@ -130,7 +129,7 @@ namespace Cyclone
         {
             if (_id)
             {
-                //MakeNonresident();
+                MakeNonresident();
                 glDeleteTextures(1, &_id);
                 _handle = 0;
                 _id = 0;

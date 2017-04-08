@@ -50,15 +50,15 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                virtual void BindResources()            const override;
+                virtual void BindResources()                                    const override;
                 /* COPY - Performs a deep copy operation, replacing all data in this object with those from another texture. */
                 void Copy(const Texture2D& texture);
 
                 void CopyFramebuffer(const Area& screenArea, int level = 0);
 
-                Bitmap Read(const Vector3& offset, const Vector2& size)          const;
+                Bitmap Read(const Vector3& offset, const Vector2& size)         const;
 
-                virtual string Report()         const;
+                virtual string Report()                                         const;
 
         };
     }

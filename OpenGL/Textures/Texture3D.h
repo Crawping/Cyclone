@@ -25,10 +25,6 @@ namespace Cyclone
                 virtual uint Depth()            const { return (uint)_size.Z; }
                 virtual TextureFormats Format() const { return _format; }
                 /// <summary> Gets the direct handle reference to the texture on the GPU. </summary>
-                /// <remarks> 
-                ///     This property is associated with the OpenGL bindless texturing extension and is not 
-                ///     yet enabled for use. 
-                /// </remarks>
                 virtual ulong Handle()          const { return _handle; }
                 /// <summary> Gets the height of the texture in texels. </summary>
                 virtual uint Height()           const { return (uint)_size.Y; }
