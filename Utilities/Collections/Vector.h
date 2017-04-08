@@ -47,7 +47,15 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                /// <summary> Gets an iterator that references the first element stored in the vector. </summary>
                 virtual Iterator begin()                    { return Iterator(0, this); }
+                /// <summary> Gets an iterator that represents the end of the vector. </summary>
+                /// <remarks>
+                ///     This iterator references a non-existent element that lies after the last data element 
+                ///     stored in the vector. It is used in ranged for-loops and in similar situations to check 
+                ///     whether the end of the vector has been reached, but should never be dereferenced because 
+                ///     it points to an undefined array slot.
+                /// </remarks>
                 virtual Iterator end()                      { return Iterator(Count(), this); }
                 /// <summary> Performs linear array-like indexing of the data elements stored within the vector. </summary>
                 /// <returns> A reference to the data element stored at the inputted index. </returns>
@@ -123,7 +131,11 @@ namespace Cyclone
                     for (uint a = 0; a < Count(); a++)
                         Data[a] = other(a);
 		        }
-                Vector(const Vector<T>& other, uint index, uint count) :
+                /// <summary> Constructs a new vector by copying a subset of another collection. </summary>
+                /// <param name="other"> The collection of data from which values will be copied. </param>
+                /// <param name="index"> The index of the first element to be copied. </param>
+                /// <param name="count"> The number of data elements to copy. </param>
+                Vector(const ICollection<T>& other, uint index, uint count) :
                     _count(count),
                     Data(new T[count])
                 {
@@ -194,7 +206,15 @@ namespace Cyclone
 
 
 		        /** OPERATORS **/
+                /// <summary> Gets an iterator that references the first element stored in the vector. </summary>
                 virtual Iterator begin()                                { return Iterator(0, this); }
+                /// <summary> Gets an iterator that represents the end of the vector. </summary>
+                /// <remarks>
+                ///     This iterator references a non-existent element that lies after the last data element 
+                ///     stored in the vector. It is used in ranged for-loops and in similar situations to check 
+                ///     whether the end of the vector has been reached, but should never be dereferenced because 
+                ///     it points to an undefined array slot.
+                /// </remarks>
                 virtual Iterator end()                                  { return Iterator(Count(), this); }
                 /// <summary> Performs linear array-like indexing of the data elements stored within the vector. </summary>
                 /// <returns> A reference to the data element stored at the inputted index. </returns>
