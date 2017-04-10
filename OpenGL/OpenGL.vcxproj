@@ -208,6 +208,7 @@
     <ClCompile Include="Geometry\Mesh3D.cpp" />
     <ClCompile Include="Geometry\Model3D.cpp" />
     <ClCompile Include="Geometry\Point3D.cpp" />
+    <ClCompile Include="Libraries\Material3D.cpp" />
     <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
     <ClCompile Include="Pipelines\RenderStage.cpp" />

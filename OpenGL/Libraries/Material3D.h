@@ -8,6 +8,7 @@
 #include "Interfaces/IMaterial.h"
 
 
+
 namespace Cyclone
 {
     namespace OpenGL
@@ -29,39 +30,19 @@ namespace Cyclone
                 const Texture3D* Texture()                          const override { return _texture; }
 
                 /// <summary> Summarily sets all of the data needed to render the material. </summary>
-                Material3D& Data(const MaterialData& value)
-                {
-                    _data = value;
-                    return *this;
-                }
+                OpenGLAPI Material3D& Data(const MaterialData& value);
                 /// <summary> Sets the primary color of the material. </summary>
-                Material3D& PrimaryColor(const Color4& value)       
-                { 
-                    _data.PrimaryColor = value; 
-                    return *this;
-                }
+                OpenGLAPI Material3D& PrimaryColor(const Color4& value);
                 /// <summary> Sets the secondary color of the material. </summary>
-                Material3D& SecondaryColor(const Color4& value)
-                { 
-                    _data.SecondaryColor = value;
-                    return *this;
-                }
+                OpenGLAPI Material3D& SecondaryColor(const Color4& value);
                 /// <summary> Sets the texture of a material. </summary>
-                Material3D& Texture(const Texture3D* value)
-                {
-                    _texture = value;
-                    return *this;
-                }
+                OpenGLAPI Material3D& Texture(const Texture3D* value);
 
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new black textureless material that can be used to style renderable objects. </summary>
-                Material3D() :
-                    _texture(nullptr)
-                {
-
-                }
+                OpenGLAPI Material3D();
 
             private:
                 
