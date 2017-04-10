@@ -23,6 +23,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the depth of the texture in texels. </summary>
                 virtual uint Depth()            const { return (uint)_size.Z; }
+
                 virtual TextureFormats Format() const { return _format; }
                 /// <summary> Gets the direct handle reference to the texture on the GPU. </summary>
                 virtual ulong Handle()          const { return _handle; }
@@ -34,6 +35,8 @@ namespace Cyclone
                 virtual bool IsEmpty()          const { return Height() && Width() && Depth(); }
                 /// <summary> Gets whether the texture contains multiple samples per texel. </summary>
                 virtual bool IsMultisampled()   const { return Target() == TextureTargets::Texture2DMS; }
+
+                virtual bool IsResident()       const { return Handle() > 0; }
                 /// <summary> Gets the number of mipmap levels associated with the texture. </summary>
                 virtual uint MipmapCount()      const { return IsMultisampled() ? 1 : (uint)_size.W; }
                 

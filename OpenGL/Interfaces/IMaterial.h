@@ -4,6 +4,8 @@
 
 #pragma once
 #include "Imaging/Color4.h"
+#include "Math/Vector2.h"
+
 
 
 namespace Cyclone
@@ -22,6 +24,10 @@ namespace Cyclone
             Color4      PrimaryColor;
             /// <summary> The secondary color of a material. </summary>
             Color4      SecondaryColor;
+
+            ulong       Texture;
+
+            Vector2     _0;
 
             constexpr bool operator ==(const MaterialData& other) const
             {

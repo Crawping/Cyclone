@@ -51,12 +51,14 @@ class Program : public AdvancedRenderer
             Image->Sampler.EdgeWrap = WrapModes::Repeat;
             Image->GenerateMipmap();
             Image->Bind();
+            Image->MakeResident();
 
             Quad
                 .Geometry(Mesh3D::Quad(true))
                 .PrimaryColor(Color4::Blue)
                 .Position(RenderWindow->ClientArea().Center())
-                .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f);
+                .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f)
+                .Texture(Image);
 
             RenderScene->Insert(Quad);
         }

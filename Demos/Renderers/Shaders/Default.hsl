@@ -4,6 +4,12 @@
 
 
 
+/** EXTENSIONS **/
+#extension GL_ARB_bindless_texture : require
+#extension GL_ARB_shader_draw_parameters : require
+
+
+
 /** DATA **/
 struct PerEntity
 {
@@ -31,6 +37,7 @@ struct MaterialData
 {
     vec4        PrimaryColor;
     vec4        SecondaryColor;
+    sampler2D   Texture;
 };
 
 struct TransformData

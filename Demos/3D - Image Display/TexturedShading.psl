@@ -2,7 +2,8 @@
  * Written by Josh Grooms on 20161001
  */
 
-#version 440 core
+#version 450 core
+#include "../Renderers/Shaders/Default.hsl"
 
 in vec2         TexUV;
 flat in int     EntityIndex;
@@ -10,9 +11,9 @@ flat in int     EntityIndex;
 out vec4 OutputColor;
 
 
-layout (binding = 0) uniform sampler2D InputTexture;
 
 void main(void)
 {
-    OutputColor = texture(InputTexture, TexUV);
+    EntityData ids = Entities[EntityIndex];
+    OutputColor = texture(Materials[ids.MaterialIndex].Texture, TexUV);
 }
