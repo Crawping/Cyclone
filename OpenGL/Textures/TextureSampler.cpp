@@ -8,48 +8,110 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        TextureSampler& TextureSampler::BorderColor(const Color4& value)
+        {
+            _borderColor = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        TextureSampler& TextureSampler::EdgeWrap(WrapModes value)
+        {
+            _edgeWrap = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        TextureSampler& TextureSampler::LOD(int value)
+        {
+            _lod = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        TextureSampler& TextureSampler::MagnifyFilter(TextureFilters value)
+        {
+            _magnifyFilter = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        TextureSampler& TextureSampler::MaxLOD(int value)
+        {
+            _maxLOD = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        TextureSampler& TextureSampler::MinifyFilter(TextureFilters value)
+        {
+            _minifyFilter = value;
+            _needsUpdate = true;
+            return *this;
+        }
+        TextureSampler& TextureSampler::MinLOD(int value)
+        {
+            _minLOD = value;
+            _needsUpdate = true;
+            return *this;
+        }
+
+
+
+
         TextureSampler::TextureSampler() :
-            BorderColor(Color4::Transparent),
-            EdgeWrap(WrapModes::ClampToBorder),
-            LOD(0),
-            MagnifyFilter(TextureFilters::Linear),
-            MaxLOD(5),
-            MinifyFilter(TextureFilters::Linear),
-            MinLOD(0)
+            _id(0),
+            _lod(0),
+            _maxLOD(0),
+            _minLOD(0),
+            _needsUpdate(true)
+        {
+            glCreateSamplers(1, &_id);
+        }
+        TextureSampler::~TextureSampler()
+        {
+            if (_id)    glDeleteSamplers(1, &_id);
+        }
+
+
+        void TextureSampler::Bind(int slot)         const
+        {
+            BindEntity(slot);
+            BindResources();
+        }
+        void TextureSampler::BindEntity(int slot)   const
+        {
+            Update();
+            glBindSampler(slot, ID());
+        }
+        void TextureSampler::BindResources()        const
         {
 
         }
-        void TextureSampler::Bind() const
+        void TextureSampler::Unbind()               const
         {
-            Color4 color(BorderColor);
-            glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, color.ToArray());
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, EdgeWrap);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, EdgeWrap);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, LOD);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MagnifyFilter);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LOD, MaxLOD);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MinifyFilter);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_LOD, MinLOD);
+            UnbindResources();
+            UnbindEntity();
         }
-        string TextureSampler::Report() const
+        void TextureSampler::UnbindEntity()         const
         {
-            std::stringstream msg;
-            msg << "Texture Sampler Description:\n" <<
-                   "\tBorder Color:     "   <<
-                        BorderColor.R       << " " <<
-                        BorderColor.G       << " " <<
-                        BorderColor.B       << " " <<
-                        BorderColor.A                           << "\n" <<
-                   "\tEdge Wrap:        "   << EdgeWrap         << "\n" <<
-                   "\tLOD:              "   << LOD              << "\n" <<
-                   "\tMagnify Filter:   "   << MagnifyFilter    << "\n" <<
-                   "\tMaximum LOD:      "   << MaxLOD           << "\n" <<
-                   "\tMinify Filter:    "   << MinifyFilter     << "\n" <<
-                   "\tMinimum LOD:      "   << MinLOD           << "\n";
 
-            return msg.str();
         }
+        void TextureSampler::UnbindResources()      const
+        {
+
+        }
+
+
+        void TextureSampler::Update() const
+        {
+            if (!_needsUpdate) return;
+            glSamplerParameterfv(ID(), GL_TEXTURE_BORDER_COLOR, BorderColor().ToArray());
+            glSamplerParameteri(ID(), GL_TEXTURE_WRAP_S, EdgeWrap());
+            glSamplerParameteri(ID(), GL_TEXTURE_WRAP_T, EdgeWrap());
+            glSamplerParameteri(ID(), GL_TEXTURE_BASE_LEVEL, LOD());
+            glSamplerParameteri(ID(), GL_TEXTURE_MAG_FILTER, MagnifyFilter());
+            glSamplerParameteri(ID(), GL_TEXTURE_MAX_LOD, MaxLOD());
+            glSamplerParameteri(ID(), GL_TEXTURE_MIN_FILTER, MinifyFilter());
+            glSamplerParameteri(ID(), GL_TEXTURE_MIN_LOD, MinLOD());
+
+            _needsUpdate = false;
+        }
+
     }
 }
-

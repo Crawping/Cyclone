@@ -30,7 +30,7 @@ namespace Cyclone
 
 
 
-        class OpenGLAPI Texture2D : public Texture3D
+        class Texture2D : public Texture3D
         {
 
             public:
@@ -39,26 +39,25 @@ namespace Cyclone
                 /// <summary> A data structure that dictates how the texture is sampled within a GPU shader program. </summary>
                 TextureSampler  Sampler;
                 /// <summary> A 32-bit RGBA color used to tint the rendered texture. </summary>
-                Color4          Tint;
+                //Color4          Tint;
 
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                Texture2D(const Vector4& size, TextureFormats format = TextureFormats::Byte4, TextureTargets target = TextureTargets::Texture2D);
-                Texture2D(const string& fileName);
+                OpenGLAPI Texture2D(const Vector4& size, TextureFormats format = TextureFormats::Byte4, TextureTargets target = TextureTargets::Texture2D);
+                OpenGLAPI Texture2D(const string& fileName);
 
 
 
                 /** UTILITIES **/
-                virtual void BindResources()                                    const override;
                 /* COPY - Performs a deep copy operation, replacing all data in this object with those from another texture. */
-                void Copy(const Texture2D& texture);
+                OpenGLAPI void Copy(const Texture2D& texture);
 
-                void CopyFramebuffer(const Area& screenArea, int level = 0);
+                OpenGLAPI void CopyFramebuffer(const Area& screenArea, int level = 0);
 
-                Bitmap Read(const Vector3& offset, const Vector2& size)         const;
+                OpenGLAPI Bitmap Read(const Vector3& offset, const Vector2& size)       const;
 
-                virtual string Report()                                         const;
+                OpenGLAPI virtual string Report()                                       const;
 
         };
     }

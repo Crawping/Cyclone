@@ -32,14 +32,14 @@ namespace Cyclone
 
         /** CONSTRUCTORS & DESTRUCTOR **/
         Texture2D::Texture2D(const Vector4& size, TextureFormats format, TextureTargets target) :
-            Texture3D(size, format, target),
-            Tint(Color4::White)
+            Texture3D(size, format, target)
+            //Tint(Color4::White)
         {
             Update();
         }
 
         Texture2D::Texture2D(const string& fileName)
-        {            
+        {
             jpeg_decompress_struct jpgInfo;
             FILE* jpgFile;
 
@@ -84,14 +84,10 @@ namespace Cyclone
             jpeg_destroy_decompress(&jpgInfo);
             fclose(jpgFile);
         }
-                
+
 
 
         /** UTILITIES **/
-        void Texture2D::BindResources() const
-        {
-            Sampler.Bind();
-        }
         void Texture2D::Copy(const Texture2D& texture)
         {
             Update();
@@ -105,12 +101,12 @@ namespace Cyclone
 
             glCopyImageSubData
             (
-                texture.ID(), 
-                texture.Target(), 
-                0, 0, 0, 0, 
-                ID(), 
-                Target(), 
-                0, 0, 0, 0, 
+                texture.ID(),
+                texture.Target(),
+                0, 0, 0, 0,
+                ID(),
+                Target(),
+                0, 0, 0, 0,
                 Width(), Height(), 1
             );
         }
@@ -120,10 +116,10 @@ namespace Cyclone
 
             glCopyTextureSubImage2D
             (
-                ID(), 
-                level, 
-                0, 0, 
-                (int)screenArea.X, (int)screenArea.Y, 
+                ID(),
+                level,
+                0, 0,
+                (int)screenArea.X, (int)screenArea.Y,
                 screenArea.Width, screenArea.Height
             );
         }

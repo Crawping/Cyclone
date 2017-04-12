@@ -9,6 +9,7 @@
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IBindable.h"
 #include "Math/Vector4.h"
+#include "Textures/TextureSampler.h"
 
 
 
@@ -79,11 +80,11 @@ namespace Cyclone
                 /// <summary> Binds the texture object to the GPU rendering pipeline. </summary>
                 /// <param name="slot"> The desired texture binding slot, which is <c>0</c> by default. </param>
                 OpenGLAPI void BindEntity(int slot = 0) const override;
-                void BindResources()                    const override { }
+                OpenGLAPI void BindResources()          const override;
 
                 void Unbind()                           const override { UnbindResources(); UnbindEntity(); }
                 OpenGLAPI void UnbindEntity()           const override;
-                void UnbindResources()                  const override { }
+                OpenGLAPI void UnbindResources()        const override;
 
 
 
@@ -135,6 +136,7 @@ namespace Cyclone
                 ulong           _handle;
                 uint            _id;
                 mutable bool    _needsUpdate;
+                TextureSampler  _sampler;
                 Vector4         _size;
                 TextureTargets  _target;
 

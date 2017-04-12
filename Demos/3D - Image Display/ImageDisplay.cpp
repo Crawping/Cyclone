@@ -1,4 +1,4 @@
-/* CHANGELOG 
+/* CHANGELOG
  * Written by Josh Grooms on 20161001
  */
 
@@ -21,7 +21,7 @@ class Program : public AdvancedRenderer
 {
     public:
 
-        Program() : 
+        Program() :
             AdvancedRenderer(Area(0, 0, 1024, 960), "Image Display", 0),
             Image(nullptr)
         {
@@ -38,7 +38,7 @@ class Program : public AdvancedRenderer
         Texture2D*  Image;
         Model3D      Quad;
 
-        
+
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
@@ -48,7 +48,7 @@ class Program : public AdvancedRenderer
             //Image = new Texture2D("../ImageDisplay/Scottish Beach (1080x1920).jpg");
             //Image = new Texture2D("../ImageDisplay/Solar System (12000x7000).jpg");
 
-            Image->Sampler.EdgeWrap = WrapModes::Repeat;
+            Image->Sampler.EdgeWrap(WrapModes::Repeat);
             Image->GenerateMipmap();
             Image->Bind();
             Image->MakeResident();

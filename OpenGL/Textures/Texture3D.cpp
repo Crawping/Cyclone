@@ -54,8 +54,12 @@ namespace Cyclone
         /** BINDING UTILITIES **/
         void Texture3D::BindEntity(int slot) const
         {
-            glActiveTexture(GL_TEXTURE0 + slot);
-            glBindTexture(Target(), ID());
+            glBindTextureUnit(slot, ID());
+            
+        }
+        void Texture3D::BindResources() const
+        {
+            _sampler.Bind();
         }
         void Texture3D::MakeNonresident()
         {
@@ -65,14 +69,14 @@ namespace Cyclone
         {
             Update();
             if (!_handle)
-                _handle = glGetTextureHandleARB(_id);
+                _handle = glGetTextureSamplerHandleARB(_id, _sampler.ID());
             glMakeTextureHandleResidentARB(Handle());
         }
         void Texture3D::UnbindEntity() const
         {
-            glBindTexture(Target(), 0);
-            glActiveTexture(GL_TEXTURE0);
+
         }
+        void Texture3D::UnbindResources() const { }
 
 
 
