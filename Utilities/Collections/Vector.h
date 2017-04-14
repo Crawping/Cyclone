@@ -189,7 +189,7 @@ namespace Cyclone
                 /// <param name="value"> The value to which each element of the array should be set. </param>
                 virtual void Fill(const T& value)
                 {
-                    for (int a = 0; a < Count(); a++)
+                    for (uint a = 0; a < Count(); a++)
                         Data[a] = value;
                 }
                 /// <summary> Exchanges the values of two separate vector elements. </summary>
