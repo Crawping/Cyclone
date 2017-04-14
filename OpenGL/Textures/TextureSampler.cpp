@@ -8,6 +8,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+
+        /** PROPERTIES **/
         TextureSampler& TextureSampler::BorderColor(const Color4& value)
         {
             _borderColor = value;
@@ -53,7 +55,7 @@ namespace Cyclone
 
 
 
-
+        /** CONSTRUCTOR & DESTRUCTOR **/
         TextureSampler::TextureSampler() :
             _id(0),
             _lod(0),
@@ -69,6 +71,8 @@ namespace Cyclone
         }
 
 
+
+        /** UTILITIES **/
         void TextureSampler::Bind(int slot)         const
         {
             BindEntity(slot);
@@ -96,8 +100,6 @@ namespace Cyclone
         {
 
         }
-
-
         void TextureSampler::Update() const
         {
             if (!_needsUpdate) return;
