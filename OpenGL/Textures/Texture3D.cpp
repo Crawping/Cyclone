@@ -10,6 +10,52 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
+        Texture3D& Texture3D::BorderColor(const Color4& value)
+        {
+            _sampler.BorderColor(value);
+            return *this;
+        }
+        Texture3D& Texture3D::EdgeWrap(WrapModes value)
+        {
+            _sampler.EdgeWrap(value);
+            return *this;
+        }
+        Texture3D& Texture3D::LOD(int value)
+        {
+            _sampler.LOD(value);
+            return *this;
+        }
+        Texture3D& Texture3D::MagnifyFilter(TextureFilters value)
+        {
+            _sampler.MagnifyFilter(value);
+            return *this;
+        }
+        Texture3D& Texture3D::MaxLOD(int value)
+        {
+            _sampler.MaxLOD(value);
+            return *this;
+        }
+        Texture3D& Texture3D::MinifyFilter(TextureFilters value)
+        {
+            _sampler.MinifyFilter(value);
+            return *this;
+        }
+        Texture3D& Texture3D::MinLOD(int value)
+        {
+            _sampler.MinLOD(value);
+            return *this;
+        }
+        Texture3D& Texture3D::Sampler(const TextureSampler& value)
+        {
+            return 
+                 BorderColor(value.BorderColor())
+                .EdgeWrap(value.EdgeWrap())
+                .LOD(value.LOD())
+                .MagnifyFilter(value.MagnifyFilter())
+                .MaxLOD(value.MaxLOD())
+                .MinifyFilter(value.MinifyFilter())
+                .MinLOD(value.MinLOD());
+        }
         Texture3D& Texture3D::Size(const Vector4& value)
         {
             if (value == Size()) { return *this; }

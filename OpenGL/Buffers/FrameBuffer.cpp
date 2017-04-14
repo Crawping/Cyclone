@@ -142,7 +142,7 @@ namespace Cyclone
         void FrameBuffer::CreateColorAttachment(TextureFormats format, TextureTargets target)
         {
             _colorTexture = new Texture2D(_size, format, target);
-            _colorTexture->Sampler.EdgeWrap(WrapModes::Repeat);
+            _colorTexture->EdgeWrap(WrapModes::Repeat);
 
             glNamedFramebufferTexture(_id, GL_COLOR_ATTACHMENT0, _colorTexture->ID(), 0);
             glNamedFramebufferDrawBuffer(_id, GL_COLOR_ATTACHMENT0);

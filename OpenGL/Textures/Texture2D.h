@@ -37,7 +37,7 @@ namespace Cyclone
 
                 /** DATA **/
                 /// <summary> A data structure that dictates how the texture is sampled within a GPU shader program. </summary>
-                TextureSampler  Sampler;
+                //TextureSampler  Sampler;
                 /// <summary> A 32-bit RGBA color used to tint the rendered texture. </summary>
                 //Color4          Tint;
 

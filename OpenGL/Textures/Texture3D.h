@@ -22,36 +22,70 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the color of the border that surrounds the texture. </summary>
+                virtual Color4 BorderColor()                const { return _sampler.BorderColor(); }
                 /// <summary> Gets the depth of the texture in texels. </summary>
-                virtual uint Depth()            const { return (uint)_size.Z; }
-
-                virtual TextureFormats Format() const override { return _format; }
+                virtual uint Depth()                        const { return (uint)_size.Z; }
+                /// <summary> Gets the wrapping behavior applied when attempting to sample the texture at out-of-bounds coordinates. </summary>
+                virtual WrapModes EdgeWrap()                const { return _sampler.EdgeWrap(); }
+                /// <summary> Gets an enumerator that describes the format of the data stored within the texture. </summary>
+                virtual TextureFormats Format()             const override { return _format; }
                 /// <summary> Gets the direct handle reference to the texture on the GPU. </summary>
-                virtual ulong Handle()          const override { return _handle; }
+                virtual ulong Handle()                      const override { return _handle; }
                 /// <summary> Gets the height of the texture in texels. </summary>
-                virtual uint Height()           const { return (uint)_size.Y; }
+                virtual uint Height()                       const { return (uint)_size.Y; }
                 /// <summary> Gets the unique numeric identifier for the texture object on the GPU. </summary>
-                virtual uint ID()               const override { return _id; }
+                virtual uint ID()                           const override { return _id; }
                 /// <summary> Gets whether the texture has any zero-length dimensions. </summary>
-                virtual bool IsEmpty()          const override { return Height() && Width() && Depth(); }
+                virtual bool IsEmpty()                      const override { return Height() && Width() && Depth(); }
                 /// <summary> Gets whether the texture contains multiple samples per texel. </summary>
-                virtual bool IsMultisampled()   const { return Target() == TextureTargets::Texture2DMS; }
-
-                virtual bool IsResident()       const { return _isResident; }
+                virtual bool IsMultisampled()               const { return Target() == TextureTargets::Texture2DMS; }
+                /// <summary> Gets whether the texture is currently resident in GPU memory. </summary>
+                virtual bool IsResident()                   const { return _isResident; }
+                /// <summary> Gets the base level of detail at which the texture is sampled. </summary>
+                virtual int LOD()                           const { return _sampler.LOD(); }
+                /// <summary> Gets the filtering behavior applied when the texture is enlarged. </summary>
+                virtual TextureFilters MagnifyFilter()      const { return _sampler.MagnifyFilter(); }
+                /// <summary> Gets the maximum level of detail at which the texture can be sampled. </summary>
+                virtual int MaxLOD()                        const { return _sampler.MaxLOD(); }
+                /// <summary> Gets the filtering behavior applied when the texture is shrunk. </summary>
+                virtual TextureFilters MinifyFilter()       const { return _sampler.MinifyFilter(); }
+                /// <summary> Gets the minimum level of detail at which the texture can be sampled. </summary>
+                virtual int MinLOD()                        const { return _sampler.MinLOD(); }
                 /// <summary> Gets the number of mipmap levels associated with the texture. </summary>
-                virtual uint MipmapCount()      const { return IsMultisampled() ? 1 : (uint)_size.W; }
+                virtual uint MipmapCount()                  const { return IsMultisampled() ? 1 : (uint)_size.W; }
                 
-                virtual bool NeedsUpdate()      const { return _needsUpdate; }
+                virtual bool NeedsUpdate()                  const { return _needsUpdate; }
                 /// <summary> Gets the number of samples associated with each texel of the texture. </summary>
-                virtual uint SampleCount()      const { return IsMultisampled() ? (uint)_size.W : 0; }
+                virtual uint SampleCount()                  const { return IsMultisampled() ? (uint)_size.W : 0; }
+                /// <summary> Gets the object that controls sampling behavior when the texture is used by shader programs. </summary>
+                virtual const TextureSampler& Sampler()     const { return _sampler; }
                 /// <summary> Gets the (x, y, z) size of the texture in texels. </summary>
-                virtual const Vector3& Size()   const { return (Vector3)_size; }
-
-                virtual TextureTargets Target() const override { return _target; }
+                virtual const Vector3& Size()               const { return (Vector3)_size; }
+                /// <summary> Gets an enumerator that describes the type and dimensionality of the texture. </summary>
+                virtual TextureTargets Target()             const override { return _target; }
                 /// <summary> Gets the width of the texture in texels. </summary>
-                virtual uint Width()            const { return (uint)_size.X; }
+                virtual uint Width()                        const { return (uint)_size.X; }
 
+                /// <summary> Sets the color of the border that surround sthe texture. </summary>
+                OpenGLAPI virtual Texture3D& BorderColor(const Color4& value);
+                /// <summary> Sets the wrapping behavior applied when attempting to sample the texture at out-of-bounds coordinates. </summary>
+                OpenGLAPI virtual Texture3D& EdgeWrap(WrapModes value);
+                /// <summary> Sets the level of detail at which the texture is sampled. </summary>
+                OpenGLAPI virtual Texture3D& LOD(int value);
+                /// <summary> Sets the filtering behavior applied when the texture is enlarged. </summary>
+                OpenGLAPI virtual Texture3D& MagnifyFilter(TextureFilters value);
+                /// <summary> Sets the maximum level of detail at which the texture can be sampled. </summary>
+                OpenGLAPI virtual Texture3D& MaxLOD(int value);
+                /// <summary> Sets the filtering behavior applied when the texture is shrunk. </summary>
+                OpenGLAPI virtual Texture3D& MinifyFilter(TextureFilters value);
+                /// <summary> Sets the minimum level of detail at which the texture can be sampled. </summary>
+                OpenGLAPI virtual Texture3D& MinLOD(int value);
+                /// <summary> Sets the object that controls sampling behavior when the texture is used by shader programs. </summary>
+                OpenGLAPI virtual Texture3D& Sampler(const TextureSampler& value);
+                /// <summary> Set the (x, y, z, w) size of the texture in texels. </summary>
                 OpenGLAPI virtual Texture3D& Size(const Vector4& value);
+
 
 
 
