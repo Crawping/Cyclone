@@ -89,7 +89,6 @@ namespace Cyclone
         /** UTILITIES **/
         void Texture2D::Copy(const Texture2D& texture)
         {
-            //Sampler = texture.Sampler;
             if (texture.Size() != Size())
             {
                 Size(texture.Size());
