@@ -133,7 +133,7 @@ namespace Cyclone
                 size.X,     size.Y,     1,
                 Format().ToBaseFormat(),
                 NumericFormats::Float,
-                bmp.Length() * sizeof(Color4),
+                bmp.Count() * sizeof(Color4),
                 (void*)bmp.ToArray()
             );
             return bmp;
