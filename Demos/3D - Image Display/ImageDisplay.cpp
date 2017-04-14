@@ -40,8 +40,8 @@ class Program : public AdvancedRenderer
     protected:
 
         //Vector<Texture2D>  Images;
-        Texture2D           Image;
-        Model3D      Quad;
+        Texture2D       Image;
+        Model3D         Quad;
         //Vector<Model3D> Quads;
 
 
@@ -66,20 +66,14 @@ class Program : public AdvancedRenderer
             Image.MakeResident();
 
             Quad
-                .Geometry(Mesh3D::Quad(true))
+                .Geometry(Mesh3D::Cube(true))
                 .PrimaryColor(Color4::Blue)
                 .Position(RenderWindow->ClientArea().Center())
-                .Scale(Image.Width() / 10.0f, Image.Height() / 10.0f)
-                .Texture((const Texture2D*)&Image);
+                .Scale(Image.Width() / 10.0f, Image.Height() / 10.0f, Image.Width() / 10.0f)
+                .Texture(&Image);
 
             RenderScene->Insert(Quad);
 
-            //Image = new Texture2D("../3D - Image Display/World (21600x10800).jpg");
-            //Image = new Texture2D("../ImageDisplay/Dorset Durdle (6400x4000).jpg");
-            //Image = new Texture2D("../ImageDisplay/Scottish Beach (1080x1920).jpg");
-            //Image = new Texture2D("../ImageDisplay/Solar System (12000x7000).jpg");
-
-            //for (auto& i : images)
             //for (uint a = 0; a < 1; a++)
             //{
             //    Images(a) = Texture2D(images(a));
