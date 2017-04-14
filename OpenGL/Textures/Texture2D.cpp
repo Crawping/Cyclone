@@ -33,7 +33,6 @@ namespace Cyclone
         /** CONSTRUCTORS & DESTRUCTOR **/
         Texture2D::Texture2D(const Vector4& size, TextureFormats format, TextureTargets target) :
             Texture3D(size, format, target)
-            //Tint(Color4::White)
         {
             Update();
         }

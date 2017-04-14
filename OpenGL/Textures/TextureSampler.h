@@ -56,6 +56,8 @@ namespace Cyclone
                 OpenGLAPI void UnbindEntity()               const override;
                 OpenGLAPI void UnbindResources()            const override;
 
+                OpenGLAPI void Update()                     const;
+
             private:
 
                 Color4          _borderColor;
@@ -70,7 +72,7 @@ namespace Cyclone
 
 
 
-                void Update()   const;
+                
         };
     }
 }

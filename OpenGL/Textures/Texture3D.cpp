@@ -25,9 +25,21 @@ namespace Cyclone
         Texture3D::Texture3D() :
             _handle(0),
             _id(0),
-            _needsUpdate(true)
+            _needsUpdate(false)
         {
 
+        }
+        Texture3D::Texture3D(Texture3D&& other) :
+            _format(other._format),
+            _handle(other._handle),
+            _id(other._id),
+            _needsUpdate(other._needsUpdate),
+            _size(other._size),
+            _target(other._target)
+        {
+            other._handle = 0;
+            other._id = 0;
+            std::swap(_sampler, other._sampler);
         }
         Texture3D::Texture3D(const Vector4& size, TextureFormats format, TextureTargets target) :
             _format(format),
@@ -55,7 +67,6 @@ namespace Cyclone
         void Texture3D::BindEntity(int slot) const
         {
             glBindTextureUnit(slot, ID());
-            
         }
         void Texture3D::BindResources() const
         {
@@ -63,7 +74,8 @@ namespace Cyclone
         }
         void Texture3D::MakeNonresident()
         {
-            glMakeTextureHandleNonResidentARB(Handle());
+            if (Handle())
+                glMakeTextureHandleNonResidentARB(Handle());
         }
         void Texture3D::MakeResident()
         {
@@ -76,7 +88,10 @@ namespace Cyclone
         {
 
         }
-        void Texture3D::UnbindResources() const { }
+        void Texture3D::UnbindResources() const 
+        {
+            _sampler.Unbind();
+        }
 
 
 
@@ -91,6 +106,7 @@ namespace Cyclone
         }
         void Texture3D::Update()
         {
+            _sampler.Update();
             if (!NeedsUpdate()) { return; }
             Reallocate();
             _needsUpdate = false;
@@ -144,6 +160,25 @@ namespace Cyclone
             Destroy();
             Create();
             Allocate();
+        }
+
+
+
+        Texture3D& Texture3D::operator =(Texture3D&& other)
+        {
+            _format         = other._format;
+            _handle         = other._handle;
+            _id             = other._id;
+            _needsUpdate    = other._needsUpdate;
+            _size           = other._size;
+            _target         = other._target;
+
+            other._id = 0;
+            other._handle = 0;
+            other._needsUpdate = false;
+            std::swap(_sampler, other._sampler);
+
+            return *this;
         }
     }
 }

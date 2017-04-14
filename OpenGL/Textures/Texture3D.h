@@ -56,6 +56,10 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
+                /// <summary> Constructs an empty texture object that can be manually initialized by subclasses. </summary>
+                OpenGLAPI Texture3D();
+
+                OpenGLAPI Texture3D(Texture3D&& other);
                 /// <summary> Constructs a new texture object of the specified size, format, and type. </summary>
                 /// <param name="size"> 
                 ///     The desired (x, y, z, w) size of the texture. 
@@ -101,16 +105,14 @@ namespace Cyclone
                 OpenGLAPI virtual void MakeResident();
                 OpenGLAPI virtual void Update();
 
+
+
+                OpenGLAPI virtual Texture3D& operator =(Texture3D&& other);
+
             protected:
 
                 /** PROPERTIES **/
                 void NeedsUpdate(bool value)    const { _needsUpdate = _needsUpdate ? true : value; }
-
-
-
-                /** CONSTRUCTOR **/
-                /// <summary> Constructs an empty texture object that can be manually initialized by subclasses. </summary>
-                OpenGLAPI Texture3D();
 
 
 

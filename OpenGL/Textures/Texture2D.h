@@ -44,6 +44,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
+                Texture2D() : Texture3D() { }
                 OpenGLAPI Texture2D(const Vector4& size, TextureFormats format = TextureFormats::Byte4, TextureTargets target = TextureTargets::Texture2D);
                 OpenGLAPI Texture2D(const string& fileName);
 
@@ -58,7 +59,6 @@ namespace Cyclone
                 OpenGLAPI Bitmap Read(const Vector3& offset, const Vector2& size)       const;
 
                 OpenGLAPI virtual string Report()                                       const;
-
         };
     }
 }
