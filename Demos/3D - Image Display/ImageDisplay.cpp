@@ -22,50 +22,103 @@ class Program : public AdvancedRenderer
     public:
 
         Program() :
-            AdvancedRenderer(Area(0, 0, 1024, 960), "Image Display", 0),
-            Image(nullptr)
+            AdvancedRenderer(Area(0, 0, 1024, 960), "Image Display", 0)
+            //Image(nullptr)
         {
             Initialize();
         }
 
         ~Program()
         {
-            if (Image) { delete Image; }
+            //Quads.Clear();
+            //Images.Clear();
+            //if (Image) { delete Image; }
+            //for (auto i : Images)
+            //    delete i;
         }
 
     protected:
 
-        Texture2D*  Image;
+        //Vector<Texture2D>  Images;
+        Texture2D           Image;
         Model3D      Quad;
+        //Vector<Model3D> Quads;
 
 
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
 
-            Image = new Texture2D("../3D - Image Display/World (21600x10800).jpg");
-            //Image = new Texture2D("../ImageDisplay/Dorset Durdle (6400x4000).jpg");
-            //Image = new Texture2D("../ImageDisplay/Scottish Beach (1080x1920).jpg");
-            //Image = new Texture2D("../ImageDisplay/Solar System (12000x7000).jpg");
+            Vector<string> images = 
+            {
+                "../3D - Image Display/World (21600x10800).jpg",
+                "../3D - Image Display/Dorset Durdle (6400x4000).jpg",
+                "../3D - Image Display/Scottish Beach (1080x1920).jpg",
+                "../3D - Image Display/Solar System (12000x7000).jpg",
+            };
 
-            Image->Sampler.EdgeWrap(WrapModes::Repeat);
-            Image->GenerateMipmap();
-            Image->Bind();
-            Image->MakeResident();
+            uint nimgs = images.Count();
+            //Images = Vector<Texture2D>(nimgs);
+            //Quads = Vector<Model3D>(nimgs);
+
+            Texture2D Image(images(3));
+            Image.GenerateMipmap();
+            Image.MakeResident();
 
             Quad
                 .Geometry(Mesh3D::Quad(true))
                 .PrimaryColor(Color4::Blue)
                 .Position(RenderWindow->ClientArea().Center())
-                .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f)
-                .Texture(Image);
+                .Scale(Image.Width() / 10.0f, Image.Height() / 10.0f)
+                .Texture((const Texture2D*)&Image);
 
             RenderScene->Insert(Quad);
+
+            //Image = new Texture2D("../3D - Image Display/World (21600x10800).jpg");
+            //Image = new Texture2D("../ImageDisplay/Dorset Durdle (6400x4000).jpg");
+            //Image = new Texture2D("../ImageDisplay/Scottish Beach (1080x1920).jpg");
+            //Image = new Texture2D("../ImageDisplay/Solar System (12000x7000).jpg");
+
+            //for (auto& i : images)
+            //for (uint a = 0; a < 1; a++)
+            //{
+            //    Images(a) = Texture2D(images(a));
+            //    Images(a).Sampler.EdgeWrap(WrapModes::Repeat);
+            //    Images(a).GenerateMipmap();
+            //    Images(a).Bind();
+            //    Images(a).MakeResident();
+
+
+            //    Quads(a) = Model3D(Mesh3D::Quad(true));
+            //    Quads(a)
+            //        .PrimaryColor(Color4::Blue)
+            //        .Position(RenderWindow->ClientArea().Center())
+            //        .Scale(Images(a).Width() / 10.0f, Images(a).Height() / 10.0f)
+            //        .Texture(&Images(a));
+
+            //    RenderScene->Insert(Quads(a));
+            //}
+
+            //Image->Sampler.EdgeWrap(WrapModes::Repeat);
+            //Image->GenerateMipmap();
+            //Image->Bind();
+            //Image->MakeResident();
+
+            //Quad
+            //    .Geometry(Mesh3D::Quad(true))
+            //    .PrimaryColor(Color4::Blue)
+            //    .Position(RenderWindow->ClientArea().Center())
+            //    .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f)
+            //    .Texture(Image);
+
+            //RenderScene->Insert(Quad);
         }
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Image Display/TexturedShading.psl");
+            //RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Default.psl");
         }
+
 
 };
 
