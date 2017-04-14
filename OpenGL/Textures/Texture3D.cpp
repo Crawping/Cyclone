@@ -25,6 +25,7 @@ namespace Cyclone
         Texture3D::Texture3D() :
             _handle(0),
             _id(0),
+            _isResident(false),
             _needsUpdate(false)
         {
 
@@ -33,6 +34,7 @@ namespace Cyclone
             _format(other._format),
             _handle(other._handle),
             _id(other._id),
+            _isResident(other._isResident),
             _needsUpdate(other._needsUpdate),
             _size(other._size),
             _target(other._target)
@@ -45,6 +47,7 @@ namespace Cyclone
             _format(format),
             _handle(0),
             _id(0),
+            _isResident(false),
             _needsUpdate(true),
             _size(size),
             _target(target)
@@ -64,31 +67,30 @@ namespace Cyclone
 
 
         /** BINDING UTILITIES **/
-        void Texture3D::BindEntity(int slot) const
+        void Texture3D::Bind(int slot)          const
+        {
+            BindEntity(slot);
+            BindResources();
+        }
+        void Texture3D::BindEntity(int slot)    const
         {
             glBindTextureUnit(slot, ID());
         }
-        void Texture3D::BindResources() const
+        void Texture3D::BindResources()         const
         {
             _sampler.Bind();
         }
-        void Texture3D::MakeNonresident()
+
+        void Texture3D::Unbind()                const
         {
-            if (Handle())
-                glMakeTextureHandleNonResidentARB(Handle());
+            UnbindResources();
+            UnbindEntity();
         }
-        void Texture3D::MakeResident()
-        {
-            Update();
-            if (!_handle)
-                _handle = glGetTextureSamplerHandleARB(_id, _sampler.ID());
-            glMakeTextureHandleResidentARB(Handle());
-        }
-        void Texture3D::UnbindEntity() const
+        void Texture3D::UnbindEntity()          const
         {
 
         }
-        void Texture3D::UnbindResources() const 
+        void Texture3D::UnbindResources()       const 
         {
             _sampler.Unbind();
         }
@@ -103,6 +105,20 @@ namespace Cyclone
 
             Update();
             glGenerateTextureMipmap(ID());
+        }
+        void Texture3D::MakeNonresident()
+        {
+            if (!IsResident()) { return; }
+            glMakeTextureHandleNonResidentARB(Handle());
+            _isResident = false;
+        }
+        void Texture3D::MakeResident()
+        {
+            Update();
+            if (!_handle)
+                _handle = glGetTextureSamplerHandleARB(_id, _sampler.ID());
+            glMakeTextureHandleResidentARB(Handle());
+            _isResident = true;
         }
         void Texture3D::Update()
         {
@@ -135,7 +151,6 @@ namespace Cyclone
                     break;
             }
         }
-
         void Texture3D::Create()
         {
             if (_id)
@@ -164,6 +179,7 @@ namespace Cyclone
 
 
 
+        /** OPERATORS **/
         Texture3D& Texture3D::operator =(Texture3D&& other)
         {
             _format         = other._format;
@@ -180,5 +196,6 @@ namespace Cyclone
 
             return *this;
         }
+
     }
 }

@@ -7,7 +7,7 @@
 #include "TypeDefinitions.h"
 
 #include "GL/OpenGLAPI.h"
-#include "Interfaces/IBindable.h"
+#include "Interfaces/ITexture.h"
 #include "Math/Vector4.h"
 #include "Textures/TextureSampler.h"
 
@@ -17,7 +17,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Texture3D : public IBindable
+        class Texture3D : public ITexture
         {
             public:
 
@@ -25,19 +25,19 @@ namespace Cyclone
                 /// <summary> Gets the depth of the texture in texels. </summary>
                 virtual uint Depth()            const { return (uint)_size.Z; }
 
-                virtual TextureFormats Format() const { return _format; }
+                virtual TextureFormats Format() const override { return _format; }
                 /// <summary> Gets the direct handle reference to the texture on the GPU. </summary>
-                virtual ulong Handle()          const { return _handle; }
+                virtual ulong Handle()          const override { return _handle; }
                 /// <summary> Gets the height of the texture in texels. </summary>
                 virtual uint Height()           const { return (uint)_size.Y; }
                 /// <summary> Gets the unique numeric identifier for the texture object on the GPU. </summary>
                 virtual uint ID()               const override { return _id; }
                 /// <summary> Gets whether the texture has any zero-length dimensions. </summary>
-                virtual bool IsEmpty()          const { return Height() && Width() && Depth(); }
+                virtual bool IsEmpty()          const override { return Height() && Width() && Depth(); }
                 /// <summary> Gets whether the texture contains multiple samples per texel. </summary>
                 virtual bool IsMultisampled()   const { return Target() == TextureTargets::Texture2DMS; }
 
-                virtual bool IsResident()       const { return Handle() > 0; }
+                virtual bool IsResident()       const { return _isResident; }
                 /// <summary> Gets the number of mipmap levels associated with the texture. </summary>
                 virtual uint MipmapCount()      const { return IsMultisampled() ? 1 : (uint)_size.W; }
                 
@@ -47,7 +47,7 @@ namespace Cyclone
                 /// <summary> Gets the (x, y, z) size of the texture in texels. </summary>
                 virtual const Vector3& Size()   const { return (Vector3)_size; }
 
-                virtual TextureTargets Target() const { return _target; }
+                virtual TextureTargets Target() const override { return _target; }
                 /// <summary> Gets the width of the texture in texels. </summary>
                 virtual uint Width()            const { return (uint)_size.X; }
 
@@ -80,19 +80,19 @@ namespace Cyclone
                 /** BINDING UTILITIES **/
                 /// <summary> Summarily binds the texture object and its associated resources to the GPU rendering pipeline. </summary>
                 /// <param name="slot"> The desired texture binding slot, which is <c>0</c> by default. </param>
-                void Bind(int slot = 0)                 const override { BindEntity(slot); BindResources(); }
+                OpenGLAPI void Bind(int slot = 0)       const override;
                 /// <summary> Binds the texture object to the GPU rendering pipeline. </summary>
                 /// <param name="slot"> The desired texture binding slot, which is <c>0</c> by default. </param>
                 OpenGLAPI void BindEntity(int slot = 0) const override;
                 OpenGLAPI void BindResources()          const override;
 
-                void Unbind()                           const override { UnbindResources(); UnbindEntity(); }
+                OpenGLAPI void Unbind()                 const override;
                 OpenGLAPI void UnbindEntity()           const override;
                 OpenGLAPI void UnbindResources()        const override;
 
 
 
-                /** TEXTURE UTILITIES **/
+                /** UTILITIES **/
                 /// <summary> Generates lower resolution image data to populate the mipmap levels of the texture. </summary>
                 /// <remarks> 
                 ///     Space for texture mipmaps must first be reserved during object allocation. If no mipmap levels 
@@ -107,6 +107,7 @@ namespace Cyclone
 
 
 
+                /** OPERATORS **/
                 OpenGLAPI virtual Texture3D& operator =(Texture3D&& other);
 
             protected:
@@ -137,6 +138,7 @@ namespace Cyclone
                 TextureFormats  _format;
                 ulong           _handle;
                 uint            _id;
+                bool            _isResident;
                 mutable bool    _needsUpdate;
                 TextureSampler  _sampler;
                 Vector4         _size;

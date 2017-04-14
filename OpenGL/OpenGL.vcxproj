@@ -179,6 +179,7 @@
     <ClInclude Include="Interfaces\IRenderable.h" />
     <ClInclude Include="Interfaces\IRenderStage.h" />
     <ClInclude Include="Interfaces\IScene.h" />
+    <ClInclude Include="Interfaces\ITexture.h" />
     <ClInclude Include="Interfaces\ITransformable.h" />
     <ClInclude Include="Interfaces\IVertex.h" />
     <ClInclude Include="Libraries\Material3D.h" />
