@@ -15,57 +15,41 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        Bitmap::Bitmap(Bitmap&& other) :
-            _size(other.Size()),
-            Pixels(other.Pixels)
+        Bitmap::Bitmap(const Vector3& size)
         {
-            other.Pixels = nullptr;
+            Reallocate(size);
         }
-        Bitmap::Bitmap(const Vector2& size) :
-            _size(size),
-            Pixels(nullptr)
+        Bitmap::Bitmap(Bitmap&& other) :
+            _size(other._size),
+            _pixels(other._pixels)
         {
-            Allocate(size);
+            
         }
         Bitmap::Bitmap(const Bitmap& other) :
             _size(other.Size()),
-            Pixels(nullptr)
+            _pixels(other._pixels)
         {
-            Allocate(Size());
-            std::memcpy(Pixels, other.Pixels, Height() * Width() * sizeof(Color4));
-        }
-        Bitmap::~Bitmap()
-        {
-            if (Pixels)
-                delete[] Pixels;
+            
         }
 
 
 
         /** UTILITIES **/
-        Bitmap& Bitmap::Allocate(const Vector2& size)
+        void Bitmap::Fill(const Color4& color)
         {
-            if (Pixels)
-                delete[] Pixels;
-
-            _size = size;
-            Pixels = new Color4[Width() * Height()];
-            return *this;
-        }
-        Bitmap& Bitmap::Fill(const Color4& color)
-        {
-            for (uint a = 0; a < Length(); a++)
-                Pixels[a] = color;
-            return *this;
+            _pixels.Fill(color);
         }
         string Bitmap::Report() const
         {
             std::stringstream msg;
             msg << "Bitmap Pixel Values:\n\n";
 
+            uint area = Width() * Height();
             for (uint a = 0; a < Height(); a++)
                 for (uint b = 0; b < Width(); b++)
-                    msg << "\t(" << a << ", " << b << "): " << Pixels[sub2ind(Height(), Width(), a, b)].ToString() << "\n";
+                    for (uint c = 0; c < Depth(); c++)
+                        msg << "\t(" << a << ", " << b << "," << c << "): " << 
+                            _pixels( (c * area) + sub2ind(Height(), Width(), a, b) ).ToString() << "\n";
 
             msg << "\n";
             return msg.str();
@@ -73,23 +57,39 @@ namespace Cyclone
 
 
 
-        /** OPERATORS **/
-        Color4& Bitmap::operator ()(uint a, uint b)
+        /** PROTECTED UTILITIES **/
+        void Bitmap::Reallocate(const Vector3& size)
         {
-            int idx = sub2ind(Height(), Width(), a, b);
-            return Pixels[idx];
+            _size = size;
+            uint npixels = Width() * Height() * Depth();
+            _pixels = Vector<Color4>(npixels);
+        }
+
+
+
+        /** OPERATORS **/
+        Color4& Bitmap::operator ()(uint index)                     { return _pixels(index); }
+        const Color4& Bitmap::operator ()(uint index)               const { return _pixels(index); }
+        Color4& Bitmap::operator ()(uint a, uint b, uint c)
+        {
+            int idx = (c * Height() * Width()) + sub2ind(Height(), Width(), a, b);
+            return _pixels(idx);
+        }
+        const Color4& Bitmap::operator ()(uint a, uint b, uint c)   const
+        {
+            int idx = (c * Height() * Width()) + sub2ind(Height(), Width(), a, b);
+            return _pixels(idx);
         }
         Bitmap& Bitmap::operator =(Bitmap& other)
         {
             _size = other._size;
-            Allocate(Size());
-            std::memcpy(Pixels, other.Pixels, Height() * Width() * sizeof(Color4));
+            _pixels = other._pixels;
             return *this;
         }
         Bitmap& Bitmap::operator =(Bitmap&& other)
         {
             std::swap(_size, other._size);
-            std::swap(Pixels, other.Pixels);
+            std::swap(_pixels, other._pixels);
             return *this;
         }
 
