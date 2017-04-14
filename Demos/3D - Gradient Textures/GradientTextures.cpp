@@ -54,7 +54,7 @@ class Program : public BasicRenderer
 
             Gradient = new GradientTexture(8, gradient);
             Gradient->Update();
-            Gradient->Bind();
+            Gradient->MakeResident();
 
             Vector<Color4> g = gradient.ToVector(2);
             for (uint a = 0; a < g.Count(); a++)
@@ -63,14 +63,15 @@ class Program : public BasicRenderer
             Quad
                 .Geometry(Mesh3D::Quad(true))
                 .Position(RenderWindow->ClientArea().Center())
-                .Scale(512, 256);
+                .Scale(512, 256)
+                .Texture(Gradient);
 
             RenderScene->Insert(Quad);
         }
 
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Gradient Textures/GradientTexture.psl");
+            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Image Display/TexturedShading.psl");
         }
 
 };
