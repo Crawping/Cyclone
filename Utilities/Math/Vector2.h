@@ -17,47 +17,53 @@ namespace Cyclone
         {
 
             /** STATIC DATA **/
-            /* ONE - A vector whose value is (1, 1, 1). */
+            /// <summary> A vector whose value is (1, 1, 1). </summary>
             const static Vector2 One;
-            /* UNITX - A unit vector in the x direction (1, 0). */
+            /// <summary> A unit vector in the x direction (1, 0). </summary>
             const static Vector2 UnitX;
-            /* UNITY - A unit vector in the y direction (0, 1). */
+            /// <summary> A unit vector in the y direction (0, 1).  </summary>
             const static Vector2 UnitY;
-            /* ZERO - A vector of zero length pointing to the origin (0, 0). */
+            /// <summary> A vector of zero length pointing to the origin (0, 0). </summary>
             const static Vector2 Zero;
 
 
 
             /** DATA **/
-            /* X - The x-coordinate of the vector. */
+            /// <summary> The x-coordinate of the vector. </summary>
             float X;
-            /* Y - The y-coordinate of the vector. */
+            /// <summary> The y-coordinate of the vector. </summary>
             float Y;
 
 
 
             /** CONSTRUCTORS **/
-            /* VECTOR2 - Constructs a 2-element vector pointing to the origin (0, 0). */
+            /// <summary> Constructs a 2-element vector pointing to the origin (0, 0). </summary>
             constexpr Vector2()                 : X(0), Y(0) { }
-            /* VECTOR2 - Constructs a 2-element vector pointing to uniform coordinates. */
+            /// <summary> Constructs a 2-element vector pointing to uniform coordinates. /summary>
+            /// <param name="v"> A single number to be copied to each of the two vector elements. </param>
             constexpr Vector2(float v)          : X(v), Y(v) { }
-            /* VECTOR2 - Constructs a 2-element vector pointing to the specified coordinates. */
+            /// <summary> Constructs a 2-element vector pointing to the specified coordinates. </summary>
+            /// <param name="x"> The desired x-coordinate of the vector. </param>
+            /// <param name="y"> The desired y-coordinate of the vector. </param>
             constexpr Vector2(float x, float y) : X(x), Y(y) { }
 
 
 
             /** UTILITIES **/
             string ToString() const;
-            /* TRANSLATE - Moves the vector relative to its current position. */
+            /// <summary> Moves the vector relative to its current position. </summary>
+            /// <param name="x"> The amount by which the x-coordinate of the vector should move. </param>
+            /// <param name="y"> The amount by which the y-coordinate of the vector should move. </param>
             Vector2& Translate(float x, float y) { X += x; Y += y; return *this; }
-            /* TRANSLATE - Moves the vector relative to its current position. */
+            /// <summary> Moves the vector relative to its current position. </summary>
+            /// <param name="v"> The (x, y) amounts by which the vector should move. </param>
             Vector2& Translate(const Vector2& v) { X += v.X; Y += v.Y; return *this; }
 
 
 
             /** OPERATORS **/
-            float& operator [](int index)                             { return index ? Y : X; }
-            constexpr float operator [](int index)              const { return index ? Y : X; }
+            float& operator ()(int index)                             { return index ? Y : X; }
+            constexpr float operator ()(int index)              const { return index ? Y : X; }
 
             constexpr bool operator ==(const Vector2& other)    const { return X == other.X && Y == other.Y; }
             constexpr bool operator !=(const Vector2& other)    const { return !(*this == other); }
