@@ -40,7 +40,7 @@ namespace Cyclone
 
             /** PROPERTIES **/
             /// <summary> Gets the length or magnitude of the vector. </summary>
-            float Length()                                          const { return sqrtf( (X * X) + (Y * Y) + (Z * Z) );}
+            float Norm()                                            const { return sqrtf( (X * X) + (Y * Y) + (Z * Z) );}
 
 
 
@@ -87,7 +87,7 @@ namespace Cyclone
             /// </remarks>
             Vector3& Translate(const Vector3& t)                { return Translate(t.X, t.Y, t.Z); }
 
-            Vector3& Normalize()                                { return operator /=(Length()); }
+            Vector3& Normalize()                                { return operator /=(Norm()); }
 
 
             /** OPERATORS **/

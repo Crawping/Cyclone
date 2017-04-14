@@ -77,7 +77,7 @@ namespace Cyclone
             Vector3 zbasis(transform(0, 2), transform(1, 2), transform(2, 2));
 
             Vector3 position(transform(0, 3), transform(1, 3), transform(2, 3));
-            Vector3 scale(xbasis.Length(), ybasis.Length(), zbasis.Length());
+            Vector3 scale(xbasis.Norm(), ybasis.Norm(), zbasis.Norm());
 
             Matrix4x4 rotation(transform);
             for (uint a = 0; a < 3; a++)
