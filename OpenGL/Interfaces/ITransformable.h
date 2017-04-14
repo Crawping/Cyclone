@@ -10,7 +10,7 @@
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-    namespace Utilities { struct ISpatialTransform; }
+    namespace Utilities { class ISpatialTransform; }
     namespace OpenGL
     {
 
