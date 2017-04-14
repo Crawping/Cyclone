@@ -232,12 +232,8 @@ namespace Cyclone
                 /// <param name="other"> Another generic vector of data elements. </param>
 		        virtual Vector& operator =(Vector<T>&& other)
 		        {
-                    Clear();
-
-                    _count = other._count;
-                    other._count = 0;
-                    Data = other.Data;
-                    other.Data = nullptr;
+                    std::swap(_count, other._count);
+                    std::swap(Data, other.Data);
 			        return *this;
 		        }
                 /// <summary> Clears the vector of any stored data and copies the contents of another vector into it. </summary>
@@ -256,7 +252,7 @@ namespace Cyclone
                 virtual Vector& operator =(std::initializer_list<T> values)
                 {
                     Reallocate(values.size());
-                    int idx = 0;
+                    uint idx = 0;
                     for (const T& v : values)
                         Data[idx++] = v;
                     return *this;
