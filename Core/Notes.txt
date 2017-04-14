@@ -22,7 +22,7 @@ TODOS:
 - 3D Rendering
 	-- Entity instancing
 	-- Patch entities
-	-- Proper texture samplers
+	-- Proper texture samplers                  (DONE)
     -- BMP textures 
     -- PNG textures
     -- Hit testing

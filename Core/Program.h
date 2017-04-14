@@ -57,9 +57,9 @@ namespace Cyclone
             FrameBuffer*    RenderTarget;
             Window3D*       RenderWindow;
             Camera          View;
-            Model3D          Cube;
-            Model3D          PlaneXZ;
-            Model3D          Icosahedron;
+            Model3D         Cube;
+            Model3D         PlaneXZ;
+            Model3D         Icosahedron;
             
 
 
