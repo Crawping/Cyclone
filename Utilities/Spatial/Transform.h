@@ -179,18 +179,28 @@ namespace Cyclone
                 /// <param name="roll"> The rotation about the z-axis in radians. </param>
                 /// <remarks> The transform constructed by this method follows the right-hand rule for rotation about any axis. </remarks>
                 UtilitiesAPI static Transform Rotation(float pitch, float yaw, float roll);
+                /// <summary> Constructs a transformation matrix that can be used to scale an entity along the three spatial axes. </summary>
+                /// <param name="size"> A three-element vector containing the desired (width, height, depth) scaling factors of the transform. </param>
                 UtilitiesAPI static Transform Scaling(const Vector3& size);
+                /// <summary> Constructs a transformation matrix that can be used to scale an entity along the three spatial axes. </summary>
+                /// <param name="x"> The desired scaling factor along the x-axis. </param>
+                /// <param name="y"> The desired scaling factor along the y-axis. </param>
+                /// <param name="z"> The desired scaling factor along the z-axis. </param>
                 UtilitiesAPI static Transform Scaling(float x, float y, float z);
+                /// <summary> Constructs a transformation matrix that can be used to translate an entity along the three spatial axes. </summary>
+                /// <param name="position"> A three-element vector containing the desired (x, y, z) translation amounts. </param>
                 UtilitiesAPI static Transform Translation(const Vector3& position);
+                /// <summary> Constructs a transformation matrix that can be used to translate an entity along the three spatial axes. </summary>
+                /// <param name="x"> The desired amount of translation along the x-axis. </param>
+                /// <param name="y"> The desired amount of translation along the y-axis. </param>
+                /// <param name="z"> The desired amount of translation along the z-axis. </param>
                 UtilitiesAPI static Transform Translation(float x, float y, float z);
 
 
 
                 /** UTILITIES **/
-
-                UtilitiesAPI Matrix4x4 Inverse()                                    const;
-
-                UtilitiesAPI Transform& Invert();
+                /// <summary> Generates a new transformation object that represents the inverse of this one. </summary>
+                UtilitiesAPI Transform Inverse()                                    const;
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI virtual string Report()                                const;
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
@@ -217,7 +227,14 @@ namespace Cyclone
                 /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
                 virtual bool operator !=(const Transform& other)                    const { return !(*this == other); }
 
+                /// <summary> Performs matrix multiplication between a 4x4 transformation matrix and a vector. </summary>
+                /// <returns> A four-element vector containing the results of the multiplication. </returns>
+                /// <param name="right"> A four-element vector that serves as the right operand of the multiplication. </param>
                 virtual Vector4 operator *(const Vector4& right)                    const { return ToMatrix4x4() * right; }
+                /// <summary> Performs matrix multiplication for two 4x4 transformation matrices. </summary>
+                /// <returns> A transformation object containing the results of the multiplication. </returns>
+                /// <param name="other"> Another 4x4 transformation matrix that serves as the right operand of the multiplication. </param>
+                UtilitiesAPI virtual Transform operator *(const Transform& other)   const;
 
 
 
@@ -248,7 +265,7 @@ namespace Cyclone
         };
 
 
-        /// <summary> Performs matrix multiplication for two 4x4 transformation matrices. </summary>
+        
         UtilitiesAPI Transform operator *(Transform left, Transform right);
 
     }

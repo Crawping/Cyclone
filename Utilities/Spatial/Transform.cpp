@@ -195,44 +195,38 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        Transform& Transform::Invert()
+        Transform Transform::Inverse()                          const
         {
-            Position(-Position());
-            Scale(Vector3::One / Scale());
-            Orientation(-Orientation());
-
-            return *this;
+            Update();
+            return Transform::Decompose(State.Inverse());
         }
-        Matrix4x4 Transform::Inverse() const
-        {
-            return State.Inverse();
-        }
-        string Transform::Report() const
+        string Transform::Report()                              const
         {
             Update();
             std::stringstream msg;
             msg << "Transformation Matrix Details:\n" << State.ToString();
             return msg.str();
         }
-        const float* Transform::ToArray() const
+        const float* Transform::ToArray()                       const
         {
             Update();
             return State.ToArray();
         }
-        const Matrix4x4& Transform::ToMatrix4x4() const
+        const Matrix4x4& Transform::ToMatrix4x4()               const
         {
             Update();
             return State;
         }
 
 
+
         /** OPERATORS **/
-        Transform operator *(Transform left, Transform right)
+        Transform Transform::operator *(const Transform& other) const
         {
-            return Transform::Decompose(left.ToMatrix4x4() * right.ToMatrix4x4());
+            return Transform::Decompose(ToMatrix4x4() * other.ToMatrix4x4());
         }
 
-        bool Transform::operator ==(const Transform& other) const
+        bool Transform::operator ==(const Transform& other)     const
         {
             if (this == (const Transform*) &other)
                 return true;
@@ -260,7 +254,7 @@ namespace Cyclone
         ///
         ///     The equations used in this method were derived using MATLAB.
         /// </remarks>
-        void Transform::Update() const
+        void Transform::Update()                                const
         {
             if (!_needsUpdate) { return; }
 
