@@ -15,6 +15,12 @@
 
 namespace Cyclone
 {
+    namespace Utilities 
+    { 
+        class Bitmap;
+        struct Volume; 
+    }
+
     namespace OpenGL
     {
         class Texture3D : public ITexture
@@ -126,18 +132,31 @@ namespace Cyclone
 
 
 
-                /** UTILITIES **/
+                /** IMAGING UTILITIES **/
+                /// <summary> Copies data from one texture region to into another texture. </summary>
+                /// <param name="target"> A texture resource into which data will be copied. </param>
+                /// <param name="src"> The volume of texels to be copied. </param>
+                /// <param name="srcLevel"> The mipmap level of the source texture from which data will be copied. </param>
+                /// <param name="dst"> The volume of texels into which data will be copied. </param>
+                /// <param name="dstLevel"> The mipmap level of the destination texture to which data will be copied. </param>
+                OpenGLAPI virtual void Blit(ITexture& target, const Volume& src, int srcLevel, const Volume& dst, int dstLevel) const;
+                OpenGLAPI virtual void Fill(const Color4& value);
                 /// <summary> Generates lower resolution image data to populate the mipmap levels of the texture. </summary>
                 /// <remarks> 
                 ///     Space for texture mipmaps must first be reserved during object allocation. If no mipmap levels 
-                ///     have been allocated (i.e. the <see cref="MipmapCount"/> is zero), or the texture contains a 
-                ///     zero-length dimension, or the texture target is a multisampled one, mipmap generation will 
-                ///     silently fail.
+                ///     have been allocated (i.e. the <see cref="MipmapCount"/> is zero), the texture contains any 
+                ///     zero-length dimensions, or the texture is multisampled, mipmap generation will silently fail.
                 /// </remarks>
                 OpenGLAPI virtual void GenerateMipmap();
                 OpenGLAPI virtual void MakeNonresident();
                 OpenGLAPI virtual void MakeResident();
+                /// <summary> Reads data from a specific region of the texture. </summary>
+                /// <param name="region"> The volume of texels to be read. </param>
+                /// <param name="level"> The mipmap level of the texture from which data will be read. </param>
+                /// <returns> A bitmap of color data representing the texture volume copied over from the GPU. </returns>
+                OpenGLAPI virtual Bitmap Read(const Volume& region, int level = 0)   const;
                 OpenGLAPI virtual void Update();
+                //OpenGLAPI virtual void Write(const Volume& region, int level, const ICollection<Color4>& values);
 
 
 

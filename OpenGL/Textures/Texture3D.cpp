@@ -1,5 +1,7 @@
 #include "Console.h"
 #include "Utilities.h"
+#include "Imaging/Bitmap.h"
+#include "Spatial/Volume.h"
 #include "Textures/Texture3D.h"
 
 
@@ -143,7 +145,32 @@ namespace Cyclone
 
 
 
-        /** TEXTURE UTILITIES **/
+        /** IMAGING UTILITIES **/
+        void Texture3D::Blit(ITexture& target, const Volume& src, int srcLevel, const Volume& dst, int dstLevel) const
+        {
+            glCopyImageSubData
+            (
+                ID(),
+                Target(),
+                srcLevel, src.X, src.Y, src.Z,
+                target.ID(),
+                target.Target(),
+                dstLevel, dst.X, dst.Y, dst.Z,
+                src.Width, src.Height, src.Depth
+            );
+        }
+        void Texture3D::Fill(const Color4& value)
+        {
+            glClearTexSubImage
+            (
+                ID(),
+                0, 0, 0, 0, 
+                Width(), Height(), Depth(), 
+                Format().ToBaseFormat(),
+                NumericFormats::Float,
+                value.ToArray()
+            );
+        }
         void Texture3D::GenerateMipmap()
         {
             if ( IsEmpty() || !MipmapCount() || (Target() == TextureTargets::Texture2DMS) )
@@ -166,6 +193,24 @@ namespace Cyclone
             glMakeTextureHandleResidentARB(Handle());
             _isResident = true;
         }
+        Bitmap Texture3D::Read(const Volume& region, int level) const
+        {
+            Vector3 size(region.Size());
+            Bitmap bmp(size);
+
+            glGetTextureSubImage
+            (
+                ID(),
+                level,
+                region.X,   region.Y,   region.Z,
+                size.X,     size.Y,     size.Z,
+                Format().ToBaseFormat(),
+                NumericFormats::Float,
+                bmp.Count() * sizeof(Color4),
+                (void*)bmp.ToArray()
+            );
+            return Bitmap(region.Size());
+        }
         void Texture3D::Update()
         {
             _sampler.Update();
@@ -173,7 +218,12 @@ namespace Cyclone
             Reallocate();
             _needsUpdate = false;
         }
-
+        //void Texture3D::Write(const Volume& region, int level, const ICollection<Color4>& values)
+        //{
+        //    Vector<Color4> vals(values, 0, values.Count());
+        //    //glTextureSubIm
+        //}
+        
 
 
         /** PROTECTED UTILITIES **/
