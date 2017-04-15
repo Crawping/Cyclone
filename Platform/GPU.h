@@ -52,6 +52,8 @@ namespace Cyclone
                 const ISpatialTransform* Projection()       const { return _settings.Projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
                 const GraphicsPipeline* Pipeline()          const { return _settings.Pipeline; }
+
+                const GraphicsSettings& Settings()          const { return _settings; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
                 const FrameBuffer* Target()                 const { return _settings.Target; }
                 /// <summary> Gets a pointer to the view transformation being used by the rendering pipeline. </summary>
@@ -67,17 +69,19 @@ namespace Cyclone
                 PlatformAPI GPU& IsStencilTestEnabled(bool value);
 
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
-                PlatformAPI void Pipeline(GraphicsPipeline* pipeline);
+                PlatformAPI GPU& Pipeline(GraphicsPipeline* pipeline);
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
-                PlatformAPI void Projection(ISpatialTransform* projection);
+                PlatformAPI GPU& Projection(ISpatialTransform* projection);
                 /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>
-                PlatformAPI void Scene(IScene* scene, int slot = 0);
+                PlatformAPI GPU& Scene(IScene* scene, int slot = 0);
+
+                PlatformAPI GPU& Settings(const GraphicsSettings& value);
                 /// <summary> Sets the framebuffer to which all subsequent rendering will occur. </summary>
-                PlatformAPI void Target(FrameBuffer* framebuffer, int slot = 0);
+                PlatformAPI GPU& Target(FrameBuffer* framebuffer, int slot = 0);
                 /// <summary> Sets the view transformation matrix that will be used by the GPU shader pipeline. </summary>
-                PlatformAPI void View(ISpatialTransform* view);
+                PlatformAPI GPU& View(ISpatialTransform* view);
                 /// <summary> Sets the window that will be used to display the images in the render target. </summary>
-                PlatformAPI void Window(Window3D* window);
+                PlatformAPI GPU& Window(Window3D* window);
 
 
 
@@ -89,14 +93,11 @@ namespace Cyclone
 
 
 
-
                 /** RENDERING UTILITIES **/
                 /// <summary> Clears the depth-stencil and render target buffers in preparation for a new render loop iteration. </summary>
                 /// <param name="color"> The color value that will be used to nullify or replace all contents of the render target. </param>
                 /// <remarks> This method should be among the first called within the rendering loop. </remarks>
                 PlatformAPI void Clear(const Color4& color = Color4::White, float depth = 1.0f, int stencil = 0);
-
-                PlatformAPI void Configure(const GraphicsSettings& settings);
                 /// <summary> Swaps the front and back rendering buffers, displaying the contents of the backbuffer to the user. </summary>
                 /// <remarks>
                 ///     On Windows, and in particular within DirectX, the rendering buffer associated with a window is often
@@ -127,18 +128,20 @@ namespace Cyclone
 
 
                 /** GENERAL UTILITIES **/
+                PlatformAPI void Bind(const BufferBinding& buffer);
+                PlatformAPI void Bind(int slot, const IBindable& element);
                 /// <summary> Generates a human-readable string detailing the internal state of the GPU object and any OpenGL errors encountered. </summary>
                 /// <remarks>
                 ///     Calls to this method impose a significant performance penalty and therefore should only be made sparingly, if
                 ///     at all. Prefer invoking this functionality only while debugging.
                 /// </remarks>
-                PlatformAPI string Report() const override;
+                PlatformAPI string Report()                                                     const override;
                 /// <summary> Determines whether a specific OpenGL extension is available on the current system. </summary>
                 /// <returns> A Boolean <c>true</c> if the given extension is supported, or <c>false</c> otherwise. </returns>
                 /// <param name="extension"> A string containing the name of extension for which support is being queried. </param>
-                PlatformAPI bool SupportsExtension(const string& extension) const;
+                PlatformAPI bool SupportsExtension(const string& extension)                     const;
                 /// <summary> Gets a list of all OpenGL extensions that are supported in the current environment. </summary>
-                PlatformAPI List<string> QueryExtensions() const;
+                PlatformAPI List<string> QueryExtensions()                                      const;
 
 
 
@@ -153,6 +156,8 @@ namespace Cyclone
                 Window3D*                   _renderWindow;
                 IScene*                     _renderScene;
                 GraphicsSettings            _settings;
+                bool                        _updateFrameData;
+                bool                        _updateSettings;
 
 
 
@@ -164,6 +169,8 @@ namespace Cyclone
                 /** PRIVATE UTILITIES **/
                 void RestoreRenderingDefaults();
                 string ReportErrors() const;
+                void UpdateFrameData();
+                void UpdateSettings();
 
         };
     }

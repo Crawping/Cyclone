@@ -90,41 +90,65 @@ namespace Cyclone
             _settings.IsStencilTestEnabled = value;
             return *this;
         }
-        void GPU::Pipeline(GraphicsPipeline* pipeline)
+        GPU& GPU::Pipeline(GraphicsPipeline* value)
         {
-            if (pipeline == _settings.Pipeline) { return; }
+            if (value == _settings.Pipeline) { return *this; }
 
-            _settings.Pipeline = pipeline;
+            _settings.Pipeline = value;
             if (_settings.Pipeline)
                 _settings.Pipeline->Bind();
+
+            return *this;
         }
-        void GPU::Projection(ISpatialTransform* projection)
+        GPU& GPU::Projection(ISpatialTransform* projection)
         {
+            _updateFrameData = true;
             _settings.Projection = projection;
+            return *this;
         }
-        void GPU::Scene(IScene* scene, int slot)
+        GPU& GPU::Scene(IScene* scene, int slot)
         {
             _renderScene = scene;
+            return *this;
         }
-        void GPU::Target(FrameBuffer* target, int slot)
+        GPU& GPU::Settings(const GraphicsSettings& value)
         {
-            if (target == _settings.Target) { return; }
+            return 
+                 CullingMode(value.CullingMode)
+                .IsBlendEnabled(value.IsBlendEnabled)
+                .IsDepthTestEnabled(value.IsDepthTestEnabled)
+                .IsStencilTestEnabled(value.IsStencilTestEnabled)
+                .Pipeline(value.Pipeline)
+                .Projection(value.Projection)
+                .Target(value.Target)
+                .View(value.View);
+        }
+        GPU& GPU::Target(FrameBuffer* target, int slot)
+        {
+            if (target == _settings.Target) { return *this; }
 
             _settings.Target = target;
             if (_settings.Target)
                 _settings.Target->Bind(slot);
+
+            return *this;
         }
-        void GPU::View(ISpatialTransform* view)
+        GPU& GPU::View(ISpatialTransform* view)
         {
+            _updateFrameData = true;
             _settings.View = view;
+
+            return *this;
         }
-        void GPU::Window(Window3D* window)
+        GPU& GPU::Window(Window3D* window)
         {
-            if (window == _renderWindow) { return; }
+            if (window == _renderWindow) { return *this; }
 
             _renderWindow = window;
             if (_renderWindow)
                 _renderWindow->Bind();
+
+            return *this;
         }
 
 
@@ -132,7 +156,9 @@ namespace Cyclone
         /** CONSTRUCTOR & DESTRUCTOR **/
         GPU::GPU() :
             _renderWindow(nullptr),
-            _renderScene(nullptr)
+            _renderScene(nullptr),
+            _updateFrameData(true),
+            _updateSettings(true)
         {
             _settings.IsBlendEnabled        = false;
             _settings.IsDepthTestEnabled    = false;
@@ -157,17 +183,6 @@ namespace Cyclone
                 glClearBufferfv(GL_DEPTH, 0, &depth);
             }
         }
-        void GPU::Configure(const GraphicsSettings& settings)
-        {
-            CullingMode(settings.CullingMode);
-            IsBlendEnabled(settings.IsBlendEnabled);
-            IsDepthTestEnabled(settings.IsDepthTestEnabled);
-            IsStencilTestEnabled(settings.IsStencilTestEnabled);
-            Pipeline(settings.Pipeline);
-            Projection(settings.Projection);
-            Target(settings.Target);
-            View(settings.View);
-        }
         void GPU::Present()
         {
             if (!_renderWindow) { return; }
@@ -181,26 +196,22 @@ namespace Cyclone
         {
             if (!_renderScene) { return; }
 
-            if (_renderScene)
+            const auto& stages = _renderScene->Stages();
+            for (uint a = 0; a < stages.Count(); a++)
             {
-                const auto& stages = _renderScene->Stages();
-                for (uint a = 0; a < stages.Count(); a++)
-                {
-                    IRenderStage& ctStage = stages(a);
-                    Configure(ctStage.Settings());
+                IRenderStage& ctStage = stages(a);
+                Settings(ctStage.Settings());
 
-                    for (BufferBinding b : ctStage.Buffers())
-                        b.Buffer.Bind(b.Slot);
+                auto buffers(ctStage.Buffers());
+                for (BufferBinding b : buffers)
+                    Bind(b);
 
-                    ctStage.Render();
-                }
+                ctStage.Render();
             }
         }
         void GPU::Update()
         {
-            PerFrameBuffer.Update();
-            PerFrameBuffer.Bind(1);
-
+            UpdateFrameData();
             if (_renderScene)
                 _renderScene->Update();
         }
@@ -208,11 +219,33 @@ namespace Cyclone
 
 
         /** GENERAL UTILITIES **/
-        string GPU::Report() const
+        void GPU::Bind(const BufferBinding& buffer)
         {
-            return ReportErrors();
+            buffer.Buffer.Bind(buffer.Slot);
         }
-        bool GPU::SupportsExtension(const string& extension) const
+        void GPU::Bind(int slot, const IBindable& element)
+        {
+            element.Bind(slot);
+        }
+        string GPU::Report()                                                        const
+        {
+            glFinish();
+            GLenum status = glGetError();
+            switch (status)
+            {
+                case RenderErrors::InsufficientMemory:          return "Not enough GPU memory exists for the attempted operation.";
+                case RenderErrors::InvalidEnum:                 return "An invalid enumerator value was detected.";
+                case RenderErrors::InvalidFramebufferOperation: return "The framebuffer currently in use is incomplete.";
+                case RenderErrors::InvalidIndex:                return "An invalid index was detected.";
+                case RenderErrors::InvalidOperation:            return "An invalid operation was attempted.";
+                case RenderErrors::InvalidValue:                return "An out-of-bounds numeric argument was detected.";
+                case RenderErrors::Nothing:                     return "No errors were detected.";
+                case RenderErrors::StackOverflow:               return "Internal stack overflow detected.";
+                case RenderErrors::StackUnderflow:              return "Internal stack underflow detected.";
+                default:                                        return "An unknown rendering error was detected.";
+            }
+        }
+        bool GPU::SupportsExtension(const string& extension)                        const
         {
             int numExtensions = 0;
             glGetIntegerv(GL_NUM_EXTENSIONS, &numExtensions);
@@ -224,8 +257,7 @@ namespace Cyclone
             }
             return false;
         }
-
-        List<string> GPU::QueryExtensions() const
+        List<string> GPU::QueryExtensions()                                         const
         {
             List<string> extensions;
 
@@ -262,41 +294,29 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void GPU::RestoreRenderingDefaults()
         {
-            if (_settings.Projection && _settings.View)
-            {
-                PerFrame data =
-                {
-                    _settings.Projection->ToMatrix4x4(),
-                    _settings.View->ToMatrix4x4(),
-                    Vector3::One,
-                    0,
-                };
-
-                PerFrameBuffer.Set(0, data);
-            }
-
+            UpdateFrameData();
             if (_renderWindow)
                 glViewport(0, 0, _renderWindow->ClientArea().Width, _renderWindow->ClientArea().Height);
-
-            glActiveTexture(GL_TEXTURE0);
         }
-        string GPU::ReportErrors() const
+        void GPU::UpdateFrameData()
         {
-            glFinish();
-            GLenum status = glGetError();
-            switch (status)
+            if (!(_updateFrameData && _settings.Projection && _settings.View))
+                return;
+
+            PerFrame data =
             {
-                case RenderErrors::InsufficientMemory:          return "Not enough GPU memory exists for the attempted operation.";
-                case RenderErrors::InvalidEnum:                 return "An invalid enumerator value was detected.";
-                case RenderErrors::InvalidFramebufferOperation: return "The framebuffer currently in use is incomplete.";
-                case RenderErrors::InvalidIndex:                return "An invalid index was detected.";
-                case RenderErrors::InvalidOperation:            return "An invalid operation was attempted.";
-                case RenderErrors::InvalidValue:                return "An out-of-bounds numeric argument was detected.";
-                case RenderErrors::Nothing:                     return "No errors were detected.";
-                case RenderErrors::StackOverflow:               return "Internal stack overflow detected.";
-                case RenderErrors::StackUnderflow:              return "Internal stack underflow detected.";
-                default:                                        return "An unknown rendering error was detected.";
-            }
+                _settings.Projection->ToMatrix4x4(),
+                _settings.View->ToMatrix4x4(),
+                Vector3::One,
+                0,
+            };
+
+            PerFrameBuffer.Set(0, data);
+            PerFrameBuffer.Update();
+            PerFrameBuffer.Bind(1);
+
+            _updateFrameData = false;
         }
+
     }
 }
