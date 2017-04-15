@@ -23,26 +23,23 @@ class Program : public AdvancedRenderer
 
         Program() :
             AdvancedRenderer(Area(0, 0, 1024, 960), "Image Display", 0)
-            //Image(nullptr)
         {
             Initialize();
         }
 
         ~Program()
         {
-            //Quads.Clear();
-            //Images.Clear();
-            //if (Image) { delete Image; }
-            //for (auto i : Images)
-            //    delete i;
+            for (auto i : Images)
+                delete i;
+
+            for (auto q : Quads)
+                delete q;
         }
 
     protected:
 
-        //Vector<Texture2D>  Images;
-        Texture2D       Image;
-        Model3D         Quad;
-        //Vector<Model3D> Quads;
+        Vector<Texture2D*>  Images;
+        Vector<Model3D*> Quads;
 
 
         void CreateSceneResources() override
@@ -52,65 +49,36 @@ class Program : public AdvancedRenderer
             Vector<string> images = 
             {
                 "../3D - Image Display/World (21600x10800).jpg",
+                "../3D - Image Display/Solar System (12000x7000).jpg",
                 "../3D - Image Display/Dorset Durdle (6400x4000).jpg",
                 "../3D - Image Display/Scottish Beach (1080x1920).jpg",
-                "../3D - Image Display/Solar System (12000x7000).jpg",
             };
 
             uint nimgs = images.Count();
-            //Images = Vector<Texture2D>(nimgs);
-            //Quads = Vector<Model3D>(nimgs);
+            Images = Vector<Texture2D*>(nimgs);
+            Quads = Vector<Model3D*>(nimgs);
 
-            Texture2D Image(images(3));
-            Image.GenerateMipmap();
-            Image.MakeResident();
+            for (uint a = 0; a < nimgs; a++)
+            {
+                Images(a) = new Texture2D(images(a));
+                Images(a)->GenerateMipmap();
+                Images(a)->MakeResident();
 
-            Quad
-                .Geometry(Mesh3D::Cube(true))
-                .PrimaryColor(Color4::Blue)
-                .Position(RenderWindow->ClientArea().Center())
-                .Scale(Image.Width() / 10.0f, Image.Height() / 10.0f, Image.Width() / 10.0f)
-                .Texture(&Image);
+                Quads(a) = new Model3D();
+                Quads(a)->
+                     Geometry(Mesh3D::Quad(true))
+                    .PrimaryColor(Color4::Blue)
+                    .Position(RenderWindow->ClientArea().Center())
+                    .Scale(Images(a)->Width() / 10.0f, Images(a)->Height() / 10.0f)
+                    .Texture(Images(a))
+                    .Z(a * 100);
 
-            RenderScene->Insert(Quad);
-
-            //for (uint a = 0; a < 1; a++)
-            //{
-            //    Images(a) = Texture2D(images(a));
-            //    Images(a).Sampler.EdgeWrap(WrapModes::Repeat);
-            //    Images(a).GenerateMipmap();
-            //    Images(a).Bind();
-            //    Images(a).MakeResident();
-
-
-            //    Quads(a) = Model3D(Mesh3D::Quad(true));
-            //    Quads(a)
-            //        .PrimaryColor(Color4::Blue)
-            //        .Position(RenderWindow->ClientArea().Center())
-            //        .Scale(Images(a).Width() / 10.0f, Images(a).Height() / 10.0f)
-            //        .Texture(&Images(a));
-
-            //    RenderScene->Insert(Quads(a));
-            //}
-
-            //Image->Sampler.EdgeWrap(WrapModes::Repeat);
-            //Image->GenerateMipmap();
-            //Image->Bind();
-            //Image->MakeResident();
-
-            //Quad
-            //    .Geometry(Mesh3D::Quad(true))
-            //    .PrimaryColor(Color4::Blue)
-            //    .Position(RenderWindow->ClientArea().Center())
-            //    .Scale(Image->Width() / 10.0f, Image->Height() / 10.0f)
-            //    .Texture(Image);
-
-            //RenderScene->Insert(Quad);
+                RenderScene->Insert(*Quads(a));
+            }
         }
         void CreateShaderPipeline() override
         {
             RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Image Display/TexturedShading.psl");
-            //RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Default.psl");
         }
 
 
