@@ -214,7 +214,7 @@ namespace Cyclone
         void Texture3D::Update()
         {
             _sampler.Update();
-            if (!NeedsUpdate()) { return; }
+            if (!_needsUpdate) { return; }
             Reallocate();
             _needsUpdate = false;
         }

@@ -96,7 +96,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                /// <summary> Constructs an empty texture object that can be manually initialized by subclasses. </summary>
+                /// <summary> Constructs an empty unallocated texture object. </summary>
                 OpenGLAPI Texture3D();
 
                 OpenGLAPI Texture3D(Texture3D&& other);
@@ -175,7 +175,7 @@ namespace Cyclone
                 /// <remarks>
                 ///     This method allocates the storage space needed to hold the texture on the GPU. It requires 
                 ///     an existing texture object (created with the <see cref="Create"/> method of this class) and 
-                ///     sizing information 
+                ///     sizing information.
                 /// </remarks>
                 OpenGLAPI virtual void Allocate();
                 /// <summary> Creates the texture object on the GPU. </summary>
