@@ -14,7 +14,9 @@ namespace Cyclone
     namespace OpenGL
     {
         /// <summary> An interface that represents a generalized GPU buffer object. </summary>
-        class OpenGLAPI IGraphicsBuffer : public IBindable, public IUpdatable
+        class OpenGLAPI IGraphicsBuffer : 
+            public virtual IBindable, 
+            public virtual IUpdatable
         {
 
             public:
