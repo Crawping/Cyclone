@@ -55,6 +55,7 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                Color4* ToArray()                                                   { return _pixels.ToArray(); }
                 const Color4* ToArray()                                             const { return _pixels.ToArray(); }
                 const Vector<Color4>& ToVector()                                    const { return _pixels; }
 

@@ -201,7 +201,19 @@ namespace Cyclone
                     std::swap(Data[idxFirst], Data[idxSecond]);
                 }
                 /// <summary> Gets a pointer to the underlying native storage for the array. </summary>
-                virtual const T* ToArray() const { return Data; }
+                /// <remarks> 
+                ///     This method is provided for interoperability with low level API functions that read from 
+                ///     or write to native arrays, such as those found throughout OpenGL. It should not be used 
+                ///     in any newly designed systems for read/write operations.
+                /// </remarks>
+                virtual T* ToArray()                                    { return Data; }
+                /// <summary> Gets a pointer to the underlying native storage for the array. </summary>
+                /// <remarks> 
+                ///     This method is provided for interoperability with low level API functions that read from 
+                ///     or write to native arrays, such as those found throughout OpenGL. It should not be used 
+                ///     in any newly designed systems for read/write operations.
+                /// </remarks>
+                virtual const T* ToArray()                              const { return Data; }
 
 
 
