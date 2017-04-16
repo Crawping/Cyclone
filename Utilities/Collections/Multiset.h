@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Enumerator.h"
+#include "Functions.h"
 #include "Interfaces/ICollection.h"
 #include "Collections/ListVector.h"
 
@@ -38,37 +39,67 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of elements present in the set. </summary>
                 virtual uint Count()                const override { return Data.Count(); }
-                /// <summary> Gets a reference to the first data element in the set. </summary>
+                /// <summary> Gets a reference to the first data element of the set. </summary>
                 virtual T& First()                  { return Data.First(); }
-                /// <summary> Gets a constant reference to the first data element in the set. </summary>
+                /// <summary> Gets a constant reference to the first data element of the set. </summary>
                 virtual const T& First()            const { return Data.First(); }
-                /// <summary> Gets a reference to the last data element in the set. </summary>
+                /// <summary> Gets a reference to the last data element of the set. </summary>
                 virtual T& Last()                   { return Data.Last(); }
-                /// <summary> Gets a constant reference to the last data element in the set. </summary>
+                /// <summary> Gets a constant reference to the last data element of the set. </summary>
                 virtual const T& Last()             const { return Data.Last(); }
                 /// <summary> Gets the ordering scheme used to sort elements of the set. </summary>
                 virtual SortOrders SortOrder()      const { return _sortOrder; }
+
+                /// <summary> Sets the function used to compare and sort elements of the set. </summary>
+                virtual Multiset& Comparator(Function<bool, const T&, const T&> value)
+                {
+                    _comparator = value;
+                    Sort(0, Count());
+                    return *this;
+                }
+                /// <summary> Sets the sorting order used to arrange elements of the set. </summary>
+                virtual Multiset& SortOrder(SortOrders value)
+                {
+                    if (_sortOrder == value) { return *this; }
+
+                    switch (value)
+                    {
+                        case SortOrders::Ascending:         _comparator = Multiset::LessThan; break;
+                        case SortOrders::Descending:        _comparator = Multiset::GreaterThan; break;
+                        default:                            break;
+                    }
+
+                    _sortOrder = value;
+                    Sort(0, Count());
+                    return *this;
+                }
 
 
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new empty set that can be populated with data elements. </summary>
-                Multiset() { }
-                /// <summary> Constructs a new set by inserting data from another generic collection. </summary>
-                /// <param name="values"> An existing generic collection whose contents are to be copied into the new set. </param>
-                Multiset(const ICollection<T>& values)
+                Multiset() : 
+                    _comparator(Multiset::LessThan)
                 {
-                    for (uint a = 0; a < values.Count(); a++)
-                        Insert(values(a));
+
                 }
                 /// <summary> Constructs a new set containing the values found within an initalizer list. </summary>
                 /// <param name="values"> An initialization list containing values to be to be inserted into the new set. </param>
-                Multiset(const std::initializer_list<T>& values)
+                Multiset(const std::initializer_list<T>& values) : 
+                    _comparator(Multiset::LessThan)
                 {
                     for (const T& v : values)
                         Insert(v);
                 }
 
+                /// <summary> Constructs a new set by inserting data from another generic collection. </summary>
+                /// <param name="values"> An existing generic collection whose contents are to be copied into the new set. </param>
+                explicit Multiset(const ICollection<T>& values) : 
+                    _comparator(Multiset::LessThan)
+                {
+                    for (uint a = 0; a < values.Count(); a++)
+                        Insert(values(a));
+                }
 
 
                 /** UTILITIES **/
@@ -139,8 +170,8 @@ namespace Cyclone
                     while (idxLower < idxUpper)
                     {
                         idx = idxLower + ((idxUpper - idxLower) / 2);
-                        if (Data(idx) < value) { idxLower = idx + 1; }
-                        else { idxUpper = idx; }
+                        if (_comparator(Data(idx), value))      { idxLower = idx + 1; }
+                        else                                    { idxUpper = idx; }
                     }
 
                     return Data(idx) < value ? idx + 1 : idx;
@@ -154,7 +185,7 @@ namespace Cyclone
                     const T& pivot = Data(idxEnd);
 
                     for (uint a = idxStart; a < idxEnd; a++)
-                        if (Data(a) < pivot)
+                        if (_comparator(Data(a), pivot))
                             Data.Swap(a, idxPivot++);
 
                     Data.Swap(idxEnd, idxPivot);
@@ -167,8 +198,13 @@ namespace Cyclone
 
             private:
 
-                SortOrders      _sortOrder;
-                ListVector<T>   Data;
+                Function<bool, const T&, const T&>      _comparator;
+                SortOrders                              _sortOrder;
+                ListVector<T>                           Data;
+
+
+                static bool GreaterThan(const T& x, const T& y)     { return x > y; }
+                static bool LessThan(const T& x, const T& y)        { return x < y; }
 
         };
     }

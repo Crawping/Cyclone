@@ -35,10 +35,10 @@ class _Set : public testing::Test
         Set<int>    _s0;
         Set<int>    _s1;
 
-
-        _Set()
+        _Set() : 
+            _s1(Canon.UnsortedIntegers)
         {
-            _s1 = Set<int>(Canon.UnsortedIntegers);
+
         }
 
 };
@@ -62,6 +62,16 @@ TEST_F(_Set, InitializedConstruction)
 
 
 /** UTILITY TESTS **/
+TEST_F(_Set, SortingOrders)
+{
+    ASSERT_EQ(_s1.SortOrder(), SortOrders::Ascending);
+    for (uint a = 0; a < _s1.Count(); a++)
+        ASSERT_EQ(_s1(a), Canon.SortedIntegers(a));
+
+    _s1.SortOrder(SortOrders::Descending);
+    for (uint a = 0; a < _s1.Count(); a++)
+        ASSERT_EQ(_s1(a), Canon.SortedIntegers(_s1.Count() - a - 1));
+}
 TEST_F(_Set, ValueInsertion)
 {
     _s1.Insert(-1);
