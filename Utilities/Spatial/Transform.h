@@ -263,10 +263,5 @@ namespace Cyclone
                 void Update() const;
 
         };
-
-
-        
-        UtilitiesAPI Transform operator *(Transform left, Transform right);
-
     }
 }
