@@ -39,7 +39,7 @@ namespace Cyclone
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs an array of RGBA color values representing a bitmap image. </summary>
                 /// <param name="size"> A three-element vector specifying the desired width, height, and depth of the bitmap in pixels. </param>
-		        UtilitiesAPI Bitmap(const Vector3& size = Vector3::Zero);
+		        UtilitiesAPI Bitmap(const Vector3& size = Vector3::One);
                 /// <summary> Constructs a RGBA bitmap image that is a deep copy of another bitmap. </summary>
                 /// <param name="other"> A bitmap instance whose pixel array is to be copied. </param>
 		        UtilitiesAPI Bitmap(const Bitmap& other);
@@ -59,8 +59,8 @@ namespace Cyclone
                 const Color4* ToArray()                                             const { return _pixels.ToArray(); }
                 const Vector<Color4>& ToVector()                                    const { return _pixels; }
 
-                UtilitiesAPI Color4& operator() (uint index);
-                UtilitiesAPI const Color4& operator() (uint index)                  const;
+                UtilitiesAPI Color4& operator ()(uint index);
+                UtilitiesAPI const Color4& operator ()(uint index)                  const;
 		        UtilitiesAPI Color4& operator ()(uint a, uint b, uint c = 0);
                 UtilitiesAPI const Color4& operator ()(uint a, uint b, uint c = 0)  const;
 
