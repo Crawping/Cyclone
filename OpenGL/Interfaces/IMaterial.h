@@ -15,7 +15,7 @@ namespace Cyclone
     namespace OpenGL
     {        
         /** FORWARD DECLARATIONS **/
-        class Texture3D;
+        class ITexture;
 
 
         struct MaterialData
@@ -37,6 +37,7 @@ namespace Cyclone
         };
 
 
+
         /// <summary> An interface used to specify the material properties of an entity. </summary>
         class IMaterial
         {
@@ -53,7 +54,7 @@ namespace Cyclone
                 ///     Not all materials or material-like entities will have textured associated with them. In those cases, this
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
-                virtual const Texture3D* Texture()			        const = 0;
+                virtual const ITexture* Texture()			        const = 0;
 
                 virtual ~IMaterial() { }
         };
