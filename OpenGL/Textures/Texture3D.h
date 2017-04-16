@@ -23,7 +23,7 @@ namespace Cyclone
 
     namespace OpenGL
     {
-        class Texture3D : public ITexture
+        class Texture3D : public virtual ITexture
         {
             public:
 
@@ -156,7 +156,8 @@ namespace Cyclone
                 /// <returns> A bitmap of color data representing the texture volume copied over from the GPU. </returns>
                 OpenGLAPI virtual Bitmap Read(const Volume& region, int level = 0)   const;
                 OpenGLAPI virtual void Update();
-                //OpenGLAPI virtual void Write(const Volume& region, int level, const ICollection<Color4>& values);
+                OpenGLAPI virtual void Write(const Bitmap& values);
+                OpenGLAPI virtual void Write(int level, const Volume& region, const Bitmap& values);
 
 
 

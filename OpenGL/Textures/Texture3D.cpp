@@ -207,9 +207,9 @@ namespace Cyclone
                 Format().ToBaseFormat(),
                 NumericFormats::Float,
                 bmp.Count() * sizeof(Color4),
-                (void*)bmp.ToArray()
+                bmp.ToArray()
             );
-            return Bitmap(region.Size());
+            return bmp;
         }
         void Texture3D::Update()
         {
@@ -218,11 +218,22 @@ namespace Cyclone
             Reallocate();
             _needsUpdate = false;
         }
-        //void Texture3D::Write(const Volume& region, int level, const ICollection<Color4>& values)
-        //{
-        //    Vector<Color4> vals(values, 0, values.Count());
-        //    //glTextureSubIm
-        //}
+        void Texture3D::Write(const Bitmap& values)
+        {
+            Write(0, Volume(Vector3::Zero, values.Size()), values);
+        }
+        void Texture3D::Write(int level, const Volume& region, const Bitmap& values)
+        {
+            glTextureSubImage2D
+            (
+                ID(), 
+                level, region.X, region.Y, 
+                region.Width, region.Height, 
+                Format().ToBaseFormat(), 
+                NumericFormats::Float, 
+                values.ToArray()
+            );
+        }
         
 
 
