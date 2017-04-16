@@ -33,7 +33,7 @@ class Program : public BasicRenderer
     protected:
 
         GradientTexture*    Gradient;
-        Model3D              Quad;
+        Model3D             Quad;
 
 
 

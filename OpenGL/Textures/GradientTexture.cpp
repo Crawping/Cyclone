@@ -24,7 +24,15 @@ namespace Cyclone
             Texture3D::Update();
 
             Vector<Color4> gradient = _gradient.ToVector(Width());
-            glTextureSubImage2D(ID(), 0, 0, 0, gradient.Count(), Height(), Format().ToBaseFormat(), NumericFormats::Float, gradient.ToArray());
+            glTextureSubImage2D
+            (
+                ID(), 
+                0, 0, 0, 
+                gradient.Count(), Height(), 
+                Format().ToBaseFormat(), 
+                NumericFormats::Float, 
+                gradient.ToArray()
+            );
         }
     }
 }
