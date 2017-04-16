@@ -6,6 +6,7 @@
 #include "GL/OpenGLAPI.h" 
 #include "Imaging/Color4.h"
 #include "Interfaces/IMaterial.h"
+#include "Textures/Texture3D.h"
 
 
 
@@ -13,6 +14,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        
 
         class Material3D : public IMaterial
         {
@@ -36,7 +38,7 @@ namespace Cyclone
                 /// <summary> Sets the secondary color of the material. </summary>
                 OpenGLAPI Material3D& SecondaryColor(const Color4& value);
                 /// <summary> Sets the texture of a material. </summary>
-                OpenGLAPI Material3D& Texture(const Texture3D* value);
+                OpenGLAPI Material3D& Texture(Texture3D* value);
 
 
 
@@ -48,7 +50,7 @@ namespace Cyclone
                 
                 /** PROPERTY DATA **/
                 MaterialData        _data;
-                const Texture3D*    _texture;
+                Texture3D*          _texture;
 
         };
     }

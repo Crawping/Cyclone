@@ -159,7 +159,7 @@ namespace Cyclone
                     return *this;
                 }
                 /// <summary> Sets the texture to be used when rendering the entity (NOT YET IMPLEMENTED). </summary>
-                virtual Entity3D& Texture(const Texture3D* value)
+                virtual Entity3D& Texture(Texture3D* value)
                 {
                     _material.Texture(value);
                     return *this;

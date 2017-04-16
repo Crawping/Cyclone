@@ -22,7 +22,7 @@ namespace Cyclone
             _data.SecondaryColor = value;
             return *this;
         }
-        Material3D& Material3D::Texture(const Texture3D* value)
+        Material3D& Material3D::Texture(Texture3D* value)
         {
             _texture = value;
             if (value)
