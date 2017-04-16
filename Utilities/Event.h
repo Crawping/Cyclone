@@ -20,7 +20,7 @@ namespace Cyclone
 		{
 			private:
 
-                List<ICallback<T...>*> Subscriptions;
+                List<ICallback<void, T...>*> Subscriptions;
     
 			public:
 				/** PROPERTIES **/
@@ -56,19 +56,19 @@ namespace Cyclone
                 }
                 
                 template<typename S>
-                void Register(Method<S, T...> callback)
+                void Register(Method<void, S, T...> callback)
                 {
-                    Subscriptions.Append(new Method<S, T...>(callback));
+                    Subscriptions.Append(new Method<void, S, T...>(callback));
                 }
 
                 template<typename S>
-                void Register(S* object, MethodPointer<S, T...> callback)
+                void Register(S* object, MethodPointer<void, S, T...> callback)
                 {
-                    Subscriptions.Append(new Method<S, T...>(object, callback));
+                    Subscriptions.Append(new Method<void, S, T...>(object, callback));
                 }
 
                 /// <summary> Unsubscribes a callback function, preventing its future execution when this event is triggered. </summary>
-                void Remove(const ICallback<T...>& callback)
+                void Remove(const ICallback<void, T...>& callback)
                 {
                     uint idx = 0;
                     for (auto s : Subscriptions)
@@ -82,7 +82,7 @@ namespace Cyclone
                 }
 
                 template<typename S>
-                void Remove(S* object, MethodPointer<S, T...> callback) { Remove(Method<S, T...>(object, callback)); }
+                void Remove(S* object, MethodPointer<void, S, T...> callback) { Remove(Method<void, S, T...>(object, callback)); }
 
 
 

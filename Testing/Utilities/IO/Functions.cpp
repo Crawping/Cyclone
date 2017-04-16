@@ -38,9 +38,9 @@ class _Functions : public testing::Test
         Procedure<int>                              _f2;
         Procedure<int, float, double>               _f3;
 
-        Method<NumberClass>                         _m1;
-        Method<NumberClass, int>                    _m2;
-        Method<NumberClass, int, float, double>     _m3;
+        Method<void, NumberClass>                         _m1;
+        Method<void, NumberClass, int>                    _m2;
+        Method<void, NumberClass, int, float, double>     _m3;
         
 
         _Functions() :
@@ -66,7 +66,7 @@ TEST_F(_Functions, EqualityOperator)
     Procedure<int> fcn = Procedure<int>(NumberFunction);
     ASSERT_EQ(_f2, fcn);
 
-    Method<NumberClass, int> mtd = Method<NumberClass, int>(&_c0, &NumberClass::NumberMethod);
+    Method<void, NumberClass, int> mtd = Method<void, NumberClass, int>(&_c0, &NumberClass::NumberMethod);
     ASSERT_EQ(_m2, mtd);
 }
 TEST_F(_Functions, FunctionPointerInvocation)
