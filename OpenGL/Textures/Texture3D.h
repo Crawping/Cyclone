@@ -95,7 +95,7 @@ namespace Cyclone
 
 
 
-                /** CONSTRUCTOR & DESTRUCTOR **/
+                /** CONSTRUCTORS & DESTRUCTOR **/
                 /// <summary> Constructs an empty unallocated texture object. </summary>
                 OpenGLAPI Texture3D();
 
@@ -140,6 +140,7 @@ namespace Cyclone
                 /// <param name="dst"> The volume of texels into which data will be copied. </param>
                 /// <param name="dstLevel"> The mipmap level of the destination texture to which data will be copied. </param>
                 OpenGLAPI virtual void Blit(ITexture& target, const Volume& src, int srcLevel, const Volume& dst, int dstLevel) const;
+                OpenGLAPI virtual Texture3D* CreateView()                           const; // override;
                 OpenGLAPI virtual void Fill(const Color4& value);
                 /// <summary> Generates lower resolution image data to populate the mipmap levels of the texture. </summary>
                 /// <remarks> 
@@ -154,7 +155,7 @@ namespace Cyclone
                 /// <param name="region"> The volume of texels to be read. </param>
                 /// <param name="level"> The mipmap level of the texture from which data will be read. </param>
                 /// <returns> A bitmap of color data representing the texture volume copied over from the GPU. </returns>
-                OpenGLAPI virtual Bitmap Read(const Volume& region, int level = 0)   const;
+                OpenGLAPI virtual Bitmap Read(const Volume& region, int level = 0)  const;
                 OpenGLAPI virtual void Update();
                 OpenGLAPI virtual void Write(const Bitmap& values);
                 OpenGLAPI virtual void Write(int level, const Volume& region, const Bitmap& values);
@@ -168,6 +169,11 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 void NeedsUpdate(bool value)    const { _needsUpdate = _needsUpdate ? true : value; }
+
+
+
+                /** CONSTRUCTOR **/
+                OpenGLAPI Texture3D(const Texture3D& other);
 
 
 
@@ -194,6 +200,7 @@ namespace Cyclone
                 uint            _id;
                 bool            _isResident;
                 mutable bool    _needsUpdate;
+                bool            _ownsResource;
                 TextureSampler  _sampler;
                 Vector4         _size;
                 TextureTargets  _target;

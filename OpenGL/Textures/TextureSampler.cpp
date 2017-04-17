@@ -65,6 +65,32 @@ namespace Cyclone
         {
             glCreateSamplers(1, &_id);
         }
+        TextureSampler::TextureSampler(TextureSampler&& other) :
+            _borderColor(other._borderColor),
+            _edgeWrap(other._edgeWrap),
+            _id(other._id),
+            _lod(other._lod),
+            _magnifyFilter(other._magnifyFilter),
+            _maxLOD(other._maxLOD),
+            _minifyFilter(other._minifyFilter),
+            _minLOD(other._minLOD),
+            _needsUpdate(other._needsUpdate)
+        {
+            other._id = 0;
+        }
+        TextureSampler::TextureSampler(const TextureSampler& other) :
+            _borderColor(other._borderColor),
+            _edgeWrap(other._edgeWrap),
+            _id(0),
+            _lod(other._lod),
+            _magnifyFilter(other._magnifyFilter),
+            _maxLOD(other._maxLOD),
+            _minifyFilter(other._minifyFilter),
+            _minLOD(other._minLOD),
+            _needsUpdate(true)
+        {
+            glCreateSamplers(1, &_id);
+        }
         TextureSampler::~TextureSampler()
         {
             if (_id)    glDeleteSamplers(1, &_id);
@@ -113,6 +139,40 @@ namespace Cyclone
             glSamplerParameteri(ID(), GL_TEXTURE_MIN_LOD, MinLOD());
 
             _needsUpdate = false;
+        }
+
+
+
+        /** OPERATORS **/
+        TextureSampler& TextureSampler::operator =(TextureSampler&& other)
+        {
+            _borderColor    = other._borderColor;
+            _edgeWrap       = other._edgeWrap;
+            _lod            = other._lod;
+            _magnifyFilter  = other._magnifyFilter;
+            _maxLOD         = other._maxLOD;
+            _minifyFilter   = other._minifyFilter;
+            _minLOD         = other._minLOD;
+            _needsUpdate    = other._needsUpdate;
+
+            std::swap(_id, other._id);
+            return *this;
+        }
+        TextureSampler& TextureSampler::operator =(const TextureSampler& other)
+        {
+            if (_id)        glDeleteSamplers(1, &_id);
+
+            _borderColor    = other._borderColor;
+            _edgeWrap       = other._edgeWrap;
+            _lod            = other._lod;
+            _magnifyFilter  = other._magnifyFilter;
+            _maxLOD         = other._maxLOD;
+            _minifyFilter   = other._minifyFilter;
+            _minLOD         = other._minLOD;
+            _needsUpdate    = true;
+
+            glCreateSamplers(1, &_id);
+            return *this;
         }
 
     }

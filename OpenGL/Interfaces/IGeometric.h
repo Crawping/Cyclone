@@ -5,6 +5,7 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "Collections/Vector.h"
+#include "Interfaces/IGraphicsResource.h"
 #include "Spatial/Volume.h"
 
 
@@ -28,7 +29,7 @@ namespace Cyclone
 
 
         /// <summary> An interface that represents a generalized three-dimensional geometric shape. </summary>
-        class IGeometric
+        class IGeometric //: public virtual IGraphicsResource
         {
 
             public:
@@ -71,6 +72,11 @@ namespace Cyclone
 
                 /** DESTRUCTOR **/
                 virtual ~IGeometric() { }
+
+
+
+                /** UTILITIES **/
+                //virtual IGeometric* CreateView()    const = 0;
 
         };
     }

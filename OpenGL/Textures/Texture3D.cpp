@@ -74,7 +74,8 @@ namespace Cyclone
             _handle(0),
             _id(0),
             _isResident(false),
-            _needsUpdate(false)
+            _needsUpdate(false),
+            _ownsResource(true)
         {
 
         }
@@ -84,12 +85,26 @@ namespace Cyclone
             _id(other._id),
             _isResident(other._isResident),
             _needsUpdate(other._needsUpdate),
+            _ownsResource(other._ownsResource),
             _size(other._size),
             _target(other._target)
         {
             other._handle = 0;
             other._id = 0;
             std::swap(_sampler, other._sampler);
+        }
+        Texture3D::Texture3D(const Texture3D& other) :
+            _format(other._format),
+            _handle(0),
+            _id(other._id),
+            _isResident(false),
+            _needsUpdate(true),
+            _ownsResource(false),
+            _sampler(other._sampler),
+            _size(other._size),
+            _target(other._target)
+        {
+
         }
         Texture3D::Texture3D(const Vector4& size, TextureFormats format, TextureTargets target) :
             _format(format),
@@ -108,7 +123,7 @@ namespace Cyclone
         Texture3D::~Texture3D()
         {
             MakeNonresident();
-            if (_id)
+            if (_id && _ownsResource)
                 glDeleteTextures(1, &_id);
         }
 
@@ -158,6 +173,10 @@ namespace Cyclone
                 dstLevel, dst.X, dst.Y, dst.Z,
                 src.Width, src.Height, src.Depth
             );
+        }
+        Texture3D* Texture3D::CreateView()                      const
+        {
+            return new Texture3D(*this);
         }
         void Texture3D::Fill(const Color4& value)
         {
@@ -240,6 +259,11 @@ namespace Cyclone
         /** PROTECTED UTILITIES **/
         void Texture3D::Allocate()
         {
+            if (!_id)
+                return Console::WriteLine("Texture resources must have existing names on the GPU before storage space can be allocated.");
+            else if (!_ownsResource)
+                return Console::WriteLine("Resource views are not allowed to reallocate their underlying storage spaces.");
+
             switch (Target())
             {
                 case TextureTargets::Texture1D:
@@ -248,7 +272,6 @@ namespace Cyclone
                 case TextureTargets::Texture2D:
                     glTextureStorage2D(ID(), MipmapCount(), Format(), (int)Width(), (int)Height());
                     break;
-                case TextureTargets::Texture2DMS:
                     glTextureStorage2DMultisample(ID(), SampleCount(), Format(), (int)Width(), (int)Height(), true);
                     break;
 
@@ -261,15 +284,16 @@ namespace Cyclone
         void Texture3D::Create()
         {
             if (_id)
-            {
-                Console::WriteLine("A texture object already exists and must be deleted before attempting to create a new one.");
-                return;
-            }
+                return Console::WriteLine("Existing texture resources must be destroyed before attempting to recreate them.");
+
             glCreateTextures(Target(), 1, &_id);
         }
         void Texture3D::Destroy()
         {
-            if (_id)
+            if (!_ownsResource)
+                return Console::WriteLine("Resource views are not allowed to destroy their underlying GPU objects.");
+
+            if (_id && _ownsResource)
             {
                 MakeNonresident();
                 glDeleteTextures(1, &_id);

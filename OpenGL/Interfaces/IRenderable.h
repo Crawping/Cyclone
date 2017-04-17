@@ -21,7 +21,6 @@ namespace Cyclone
         /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
         class IRenderable
         {
-
             public:
 
                 /** PROPERTIES **/
@@ -40,7 +39,6 @@ namespace Cyclone
 
                 /** DESTRUCTOR **/
                 virtual ~IRenderable() { }
-
         };
 
     }

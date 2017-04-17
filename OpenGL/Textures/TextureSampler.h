@@ -57,6 +57,8 @@ namespace Cyclone
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs a new default texture sampler object. </summary>
                 OpenGLAPI TextureSampler();
+                OpenGLAPI TextureSampler(TextureSampler&& other);
+                OpenGLAPI TextureSampler(const TextureSampler& other);
                 /// <summary> Destroys a texture sampler object and frees its GPU resources. </summary>
                 OpenGLAPI ~TextureSampler();
 
@@ -72,6 +74,12 @@ namespace Cyclone
                 OpenGLAPI void UnbindResources()            const override;
 
                 OpenGLAPI void Update()                     const;
+
+
+
+                /** OPERATORS **/
+                OpenGLAPI TextureSampler& operator =(TextureSampler&& other);
+                OpenGLAPI TextureSampler& operator =(const TextureSampler& other);
 
             private:
 
