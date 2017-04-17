@@ -18,12 +18,18 @@
     <ClInclude Include="Interfaces\ISceneLayer.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Components\SceneComponent3D.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Messaging\Message.cpp">
       <Filter>Messaging</Filter>
     </ClCompile>
     <ClCompile Include="Scene3D.cpp" />
+    <ClCompile Include="Components\SceneComponent3D.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
@@ -34,6 +40,9 @@
     </Filter>
     <Filter Include="Scripting">
       <UniqueIdentifier>{0d990689-7b0e-4fee-9ec6-cd6dfe667f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{b73502a7-ce17-46c4-99d6-6ada78c5e1a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

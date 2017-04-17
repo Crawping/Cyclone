@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\SceneComponent3D.h" />
     <ClInclude Include="Interfaces\IScene.h" />
     <ClInclude Include="Interfaces\ISceneComponent.h" />
     <ClInclude Include="Interfaces\ISceneLayer.h" />
@@ -127,6 +128,7 @@
     <ClInclude Include="SceneAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\SceneComponent3D.cpp" />
     <ClCompile Include="Messaging\Message.cpp" />
     <ClCompile Include="Scene3D.cpp" />
   </ItemGroup>
