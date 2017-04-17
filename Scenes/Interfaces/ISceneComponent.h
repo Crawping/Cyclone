@@ -19,7 +19,6 @@ namespace Cyclone
     { 
         class IRenderable;
         class IRenderStage;
-        struct GraphicsSettings;
     }
     namespace Utilities
     {
@@ -38,7 +37,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 virtual const Volume& Bounds()                                      const = 0;
 
-                virtual List<ISceneComponent&> Children()                           const = 0;
+                virtual List<ISceneComponent*> Children()                           const = 0;
                 /// <summary> Gets whether the scene component is visible in the rendered environment. </summary>
                 virtual bool IsVisible()                                            const = 0;
 
@@ -62,6 +61,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 virtual bool Contains(const Vector3& point)                         const = 0;
+                virtual bool Contains(const ISceneComponent& child)                 const = 0;
                 virtual bool Intersects(const Vector<Vector3, 2>& line)             const = 0;
                 /// <summary> Determines whether the scene component contains a specific renderable entity. </summary>
                 //virtual bool Contains(const IRenderable& entity)                    const = 0;

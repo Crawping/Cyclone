@@ -44,6 +44,31 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        bool SceneComponent3D::Contains(const Vector3& point)           const
+        {
+            return false;
+        }
+        bool SceneComponent3D::Contains(const ISceneComponent& child)   const
+        {
+            return false;
+        }
+        void SceneComponent3D::Insert(ISceneComponent& child)
+        {
+
+        }
+        bool SceneComponent3D::Intersects(const Vector<Vector3, 2>& line) const
+        {
+            return false;
+        }
+        void SceneComponent3D::Remove(const ISceneComponent& child)
+        {
+
+        }
+        void SceneComponent3D::Update()
+        {
+
+        }
+
 
     }
 }

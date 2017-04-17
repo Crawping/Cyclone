@@ -22,14 +22,14 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 const Volume& Bounds()                      const override { return _bounds; }
-                List<ISceneComponent&> Children()           const override { return _children; }
+                List<ISceneComponent*> Children()           const override { return _children; }
                 bool IsVisible()                            const override { return _isVisible; }
                 const IRenderable* Model()                  const override { return _model; }
                 const ISceneComponent& Parent()             const override { return _parent; }
                 const string& Tag()                         const override { return _tag; }
                 const Transform& Transformation()           const override { return _transformation; }
                 
-                SceneAPI SceneComponent3D& IsVisible(bool value);
+                SceneAPI SceneComponent3D& IsVisible(bool value) override;
                 SceneAPI SceneComponent3D& Model(IRenderable* value);
                 SceneAPI SceneComponent3D& Parent(ISceneComponent& value);
                 SceneAPI SceneComponent3D& Transformation(const Transform& value);
@@ -42,11 +42,12 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                SceneAPI bool Contains(const Vector3& point)                const;
-                SceneAPI bool Contains(const ISceneComponent& child)        const;
+                SceneAPI bool Contains(const Vector3& point)                const override;
+                SceneAPI bool Contains(const ISceneComponent& child)        const override;
                 SceneAPI void Insert(ISceneComponent& child);
                 SceneAPI bool Intersects(const Vector<Vector3, 2>& line)    const;
                 SceneAPI void Remove(const ISceneComponent& child);
+                SceneAPI void Update() override;
 
             protected:
 
@@ -55,7 +56,7 @@ namespace Cyclone
 
             private:
                 Volume                  _bounds;
-                Set<ISceneComponent&>   _children;
+                Set<ISceneComponent*>   _children;
                 bool                    _isVisible;
                 IRenderable*            _model;
                 ISceneComponent&        _parent;
