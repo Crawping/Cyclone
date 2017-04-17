@@ -3,7 +3,4 @@
   <ItemGroup>
     <ClCompile Include="GradientTextures.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="GradientTexture.psl" />
-  </ItemGroup>
 </Project>
