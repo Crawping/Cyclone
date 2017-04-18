@@ -272,6 +272,8 @@ namespace Cyclone
                 case TextureTargets::Texture2D:
                     glTextureStorage2D(ID(), MipmapCount(), Format(), (int)Width(), (int)Height());
                     break;
+
+                case TextureTargets::Texture2DMS:
                     glTextureStorage2DMultisample(ID(), SampleCount(), Format(), (int)Width(), (int)Height(), true);
                     break;
 
