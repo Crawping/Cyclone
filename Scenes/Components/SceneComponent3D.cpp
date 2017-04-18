@@ -50,11 +50,11 @@ namespace Cyclone
         }
         bool SceneComponent3D::Contains(const ISceneComponent& child)   const
         {
-            return false;
+            return _children.Contains((ISceneComponent* const) &child);
         }
         void SceneComponent3D::Insert(ISceneComponent& child)
         {
-
+            _children.Insert(&child);
         }
         bool SceneComponent3D::Intersects(const Vector<Vector3, 2>& line) const
         {
@@ -62,13 +62,20 @@ namespace Cyclone
         }
         void SceneComponent3D::Remove(const ISceneComponent& child)
         {
-
+            _children.Remove((ISceneComponent* const) &child);
         }
         void SceneComponent3D::Update()
         {
 
         }
 
+
+
+
+        void SceneComponent3D::UpdateBounds()
+        {
+
+        }
 
     }
 }

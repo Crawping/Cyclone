@@ -52,7 +52,7 @@ namespace Cyclone
             protected:
 
                 
-
+                SceneAPI void UpdateBounds();
 
             private:
                 Volume                  _bounds;
