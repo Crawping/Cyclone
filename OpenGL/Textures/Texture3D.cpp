@@ -112,6 +112,7 @@ namespace Cyclone
             _id(0),
             _isResident(false),
             _needsUpdate(true),
+            _ownsResource(true),
             _size(size),
             _target(target)
         {

@@ -10,9 +10,14 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+
+        struct IResourceData { };
+
         class IGraphicsResource
         {
             public:
+
+                virtual const IResourceData& Data()         const = 0;
 
                 virtual ~IGraphicsResource() { }
 

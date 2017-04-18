@@ -7,6 +7,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+
+        /** PROPERTIES **/
         Material3D& Material3D::Data(const MaterialData& value)
         {
             _data = value;
@@ -25,8 +27,7 @@ namespace Cyclone
         Material3D& Material3D::Texture(Texture3D* value)
         {
             _texture = value;
-            if (value)
-                _data.Texture = value->Handle();
+            _data.Texture = value ? value->Handle() : 0;
             return *this;
         }
 
@@ -39,5 +40,14 @@ namespace Cyclone
         {
 
         }
+
+
+
+        /** UTILITIES **/
+        Material3D* Material3D::CreateView() const
+        {
+            return new Material3D(*this);
+        }
+
     }
 }

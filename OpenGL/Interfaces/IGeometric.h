@@ -16,7 +16,7 @@ namespace Cyclone
     namespace OpenGL
     {
         /** FORWARD DECLARATIONS **/
-        struct GeometryData
+        struct GeometryData : public virtual IResourceData
         {
             Volume              Bounds;
             Vector<uint>        Indices;
@@ -29,7 +29,7 @@ namespace Cyclone
 
 
         /// <summary> An interface that represents a generalized three-dimensional geometric shape. </summary>
-        class IGeometric //: public virtual IGraphicsResource
+        class IGeometric : public virtual IGraphicsResource
         {
 
             public:
@@ -40,7 +40,7 @@ namespace Cyclone
                 /// <summary> Gets the number of points that are used to define the 3D geometric shape. </summary>
                 virtual uint Count()                const = 0;
                 /// <summary> Gets a structure containing all of the data used to render the 3D geometric shape. </summary>
-                virtual GeometryData Data()         const = 0;
+                virtual const GeometryData& Data()  const override = 0;
                 /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
                 /// <remarks>
                 ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will
@@ -72,11 +72,6 @@ namespace Cyclone
 
                 /** DESTRUCTOR **/
                 virtual ~IGeometric() { }
-
-
-
-                /** UTILITIES **/
-                //virtual IGeometric* CreateView()    const = 0;
 
         };
     }

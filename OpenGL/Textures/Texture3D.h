@@ -173,7 +173,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                OpenGLAPI Texture3D(const Texture3D& other);
+                OpenGLAPI explicit Texture3D(const Texture3D& other);
 
 
 

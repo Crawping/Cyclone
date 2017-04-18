@@ -49,6 +49,7 @@ namespace Cyclone
                 points(a) = vertex.Position;
             }
 
+
             Mapping(mapping)
                 .Normals(normals)
                 .Points(points);
@@ -189,6 +190,11 @@ namespace Cyclone
 
             geometry.Indices(indices);
 
+
+            Vector<Vector3> mapping(24);
+            Vector<Vector3> normals(24);
+            Vector<Vector3> points(24);
+
             // Front
             geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f }); // 0
             geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f }); // 1
@@ -276,25 +282,27 @@ namespace Cyclone
                 10,  1,  6,    11,  0,  9,     2, 11,  9,     5,  2,  9,    11,  2,  7,
             };
 
-            geometry.Indices(indices);
+            Vector<Vector3> points =
+            {
+                { -0.525731f,          0,  0.850651f }, // 0
+                {  0.525731f,          0,  0.850651f }, // 1
+                { -0.525731f,          0, -0.850651f }, // 2
+                {  0.525731f,          0, -0.850651f }, // 3
+                {          0,  0.850651f,  0.525731f }, // 4
+                {          0,  0.850651f, -0.525731f }, // 5
+                {          0, -0.850651f,  0.525731f }, // 6
+                {          0, -0.850651f, -0.525731f }, // 7
+                {  0.850651f,  0.525731f,          0 }, // 8
+                { -0.850651f,  0.525731f,          0 }, // 9
+                {  0.850651f, -0.525731f,          0 }, // 10
+                { -0.850651f, -0.525731f,          0 }, // 11
+            };
 
-            geometry.Append({ -0.525731f,          0,  0.850651f }); // 0
-			geometry.Append({  0.525731f,          0,  0.850651f }); // 1
-			geometry.Append({ -0.525731f,          0, -0.850651f }); // 2
-			geometry.Append({  0.525731f,          0, -0.850651f }); // 3
-			geometry.Append({          0,  0.850651f,  0.525731f }); // 4
-			geometry.Append({          0,  0.850651f, -0.525731f }); // 5
-			geometry.Append({          0, -0.850651f,  0.525731f }); // 6
-			geometry.Append({          0, -0.850651f, -0.525731f }); // 7
-			geometry.Append({  0.850651f,  0.525731f,          0 }); // 8
-			geometry.Append({ -0.850651f,  0.525731f,          0 }); // 9
-			geometry.Append({  0.850651f, -0.525731f,          0 }); // 10
-            geometry.Append({ -0.850651f, -0.525731f,          0 }); // 11
+            geometry.Indices(indices);
+            geometry.Points(points);
 
             if (!isIndexed)
-            {
                 geometry.Unindex();
-            }
 
             geometry.CalculateNormals();
             return geometry;
@@ -324,7 +332,7 @@ namespace Cyclone
                 2, 1, 3,
             };
 
-            geometry.Append(indices);
+            geometry.Indices(indices);
 
             geometry.Append({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
             geometry.Append({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });

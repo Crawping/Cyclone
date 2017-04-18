@@ -46,6 +46,11 @@ namespace Cyclone
                 /// <summary> Constructs a new black textureless material that can be used to style renderable objects. </summary>
                 OpenGLAPI Material3D();
 
+
+
+                /** UTILITIES **/
+                OpenGLAPI Material3D* CreateView()                  const override;
+
             private:
                 
                 /** PROPERTY DATA **/

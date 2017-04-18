@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Imaging/Color4.h"
+#include "Interfaces/IGraphicsResource.h"
 #include "Math/Vector2.h"
 
 
@@ -18,7 +19,7 @@ namespace Cyclone
         class ITexture;
 
 
-        struct MaterialData
+        struct MaterialData : public virtual IResourceData
         {
             /// <summary> The primary color of a material. </summary>
             Color4      PrimaryColor;
@@ -29,9 +30,11 @@ namespace Cyclone
 
             Vector2     _0;
 
-            constexpr bool operator ==(const MaterialData& other) const
+            bool operator ==(const MaterialData& other) const
             {
-                return (PrimaryColor == other.PrimaryColor) && 
+                return 
+                    (Texture == other.Texture)                  &&
+                    (PrimaryColor == other.PrimaryColor)        &&
                     (SecondaryColor == other.SecondaryColor);
             }
         };
@@ -39,12 +42,13 @@ namespace Cyclone
 
 
         /// <summary> An interface used to specify the material properties of an entity. </summary>
-        class IMaterial
+        class IMaterial : 
+            public virtual IGraphicsResource
         {
             public:
 
                 /// <summary> Gets a structure containing all of the data needed to render the material. </summary>
-                virtual const MaterialData& Data()                  const = 0;
+                //virtual const MaterialData& Data()                  const = 0;
                 /// <summary> Gets the primary color of the material. </summary>
                 virtual const Color4& PrimaryColor()                const = 0;
                 /// <summary> Gets the secondary color of the material. </summary>

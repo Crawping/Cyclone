@@ -83,6 +83,10 @@ namespace Cyclone
                 /// </remarks>
                 OpenGLAPI void Unindex();
 
+            private:
+
+                ListVector<Vertex> _vertices;
+
         };
     }
 }
