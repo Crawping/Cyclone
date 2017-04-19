@@ -16,10 +16,15 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        /** ARRAY UTILITIES **/
-        int sub2ind(int nrows, int ncols, int a, int b)
+        /** INTERNAL UTILITIES **/
+        static std::hash<string> Hash;
+
+
+
+        /** GENERAL UTILITIES **/
+        uint hash(const string& string)
         {
-             return b * nrows + a;
+            return Hash(string);
         }
         uint nextpow2(uint x)
         {
@@ -31,6 +36,10 @@ namespace Cyclone
             y |= y >> 16;
 
             return y + 1;
+        }
+        int sub2ind(int nrows, int ncols, int a, int b)
+        {
+             return b * nrows + a;
         }
 
 
