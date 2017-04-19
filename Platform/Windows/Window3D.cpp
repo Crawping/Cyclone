@@ -1,7 +1,7 @@
-#include "Console.h"
-#include "Math/Vector2.h"
 #include "Utilities.h"
 #include "Window3D.h"
+#include "IO/Console.h"
+#include "Math/Vector2.h"
 #include "Windows/WGL.h"
 #include <Windows.h>
 

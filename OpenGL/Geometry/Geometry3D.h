@@ -121,12 +121,6 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 GeometryData        _data;
-                //Volume              _bounds;
-                //ListVector<uint>    _indices;
-                //ListVector<Vector3> _mapping;
-                //ListVector<Vector3> _normals;
-                //ListVector<Vector3> _points;
-                //PointTopologies     _topology;
                 WindingOrders       _winding;
 
         };

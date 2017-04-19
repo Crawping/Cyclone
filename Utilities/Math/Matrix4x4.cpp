@@ -1,6 +1,6 @@
-#include "Console.h"
-#include "Matrix4x4.h"
 #include "Utilities.h"
+#include "IO/Console.h"
+#include "Math/Matrix4x4.h"
 #include <iomanip>
 #include <sstream>
 #include <cstring>

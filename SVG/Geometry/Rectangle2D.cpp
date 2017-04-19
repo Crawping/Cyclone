@@ -1,5 +1,4 @@
 #include "NVPR.h"
-#include "Console.h"
 #include "Utilities.h"
 #include "Geometry/Rectangle2D.h"
 #include "Geometry/Geometry2D.h"

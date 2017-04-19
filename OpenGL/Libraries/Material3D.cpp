@@ -35,7 +35,6 @@ namespace Cyclone
 
         /** CONSTRUCTOR **/
         Material3D::Material3D() :
-            _data{ Color4(), Color4(), 0, Vector2() },
             _texture(nullptr)
         {
 

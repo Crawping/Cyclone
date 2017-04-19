@@ -3,10 +3,10 @@
 #include "Area.h"
 #include "Array.h"
 #include "CGL.h"
-#include "Console.h"
 #include "Program.h"
 #include "Utilities.h"
 #include "Window3D.h"
+#include "IO/Console.h"
 
 #include <stdio.h>
 #include <stdlib.h>

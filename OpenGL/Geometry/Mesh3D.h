@@ -83,9 +83,18 @@ namespace Cyclone
                 /// </remarks>
                 OpenGLAPI void Unindex();
 
+            protected:
+                
+                OpenGLAPI virtual void Append(uint index);
+                OpenGLAPI virtual void Append(const Vertex& vertex);
+                OpenGLAPI virtual void Append(const ICollection<uint>& indices);
+                OpenGLAPI virtual void Append(const ICollection<Vertex>& vertices);
+                OpenGLAPI virtual void Append(const Vector3& position, const Vector3& normal, const Vector3& mapping);
+
             private:
 
-                ListVector<Vertex> _vertices;
+                mutable bool        _needsUpdate;
+                ListVector<Vertex>  _vertices;
 
         };
     }

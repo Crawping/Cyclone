@@ -19,7 +19,7 @@ namespace Cyclone
         class ITexture;
 
 
-        struct MaterialData : public virtual IResourceData
+        struct MaterialData //: public virtual IResourceData
         {
             /// <summary> The primary color of a material. </summary>
             Color4      PrimaryColor;
@@ -29,6 +29,8 @@ namespace Cyclone
             ulong       Texture;
 
             Vector2     _0;
+
+            MaterialData() : Texture(0) { }
 
             bool operator ==(const MaterialData& other) const
             {
@@ -48,7 +50,7 @@ namespace Cyclone
             public:
 
                 /// <summary> Gets a structure containing all of the data needed to render the material. </summary>
-                //virtual const MaterialData& Data()                  const = 0;
+                virtual const MaterialData& Data()                  const = 0;
                 /// <summary> Gets the primary color of the material. </summary>
                 virtual const Color4& PrimaryColor()                const = 0;
                 /// <summary> Gets the secondary color of the material. </summary>

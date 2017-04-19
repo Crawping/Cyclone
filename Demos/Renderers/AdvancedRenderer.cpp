@@ -1,9 +1,9 @@
 #include "AdvancedRenderer.h"
-#include "Console.h"
 #include "GPU.h"
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
+#include "IO/Console.h"
 #include "Math/Constants.h"
 #include "Pipelines/ShaderPipeline.h"
 

@@ -1,8 +1,8 @@
-#include "Console.h"
 #include "EnumerationsGL.h"
-#include "GL/OpenGL.h"
 #include "Shader.h"
 #include "Utilities.h"
+#include "GL/OpenGL.h"
+#include "IO/Console.h"
 #include <regex>
 #include <sstream>
 

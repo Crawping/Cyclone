@@ -1,11 +1,11 @@
 #include "CGL.h"
-#include "Console.h"
 #include "Program.h"
 #include "GPU.h"
 #include "Utilities.h"
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
+#include "IO/Console.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 

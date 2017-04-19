@@ -3,7 +3,6 @@
  */
 
 #include "AdvancedRenderer.h"
-#include "Console.h"
 #include "GPU.h"
 #include "Utilities.h"
 #include "Window3D.h"
@@ -12,6 +11,7 @@
 #include "Geometry/Model3D.h"
 #include "Geometry/Point3D.h"
 #include "Geometry/Vertex.h"
+#include "IO/Console.h"
 #include "Math/Constants.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"

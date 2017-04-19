@@ -3,9 +3,9 @@
  */
 
 #pragma once
-#include "Console.h"
 #include "EnumerationsGL.h"
 #include "Buffers/ArrayBuffer.h"
+#include "IO/Console.h"
 
 
 namespace Cyclone

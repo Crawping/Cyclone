@@ -3,7 +3,6 @@
  */
 
 #include "AdvancedRenderer.h"
-#include "Console.h"
 #include "EnumerationsGL.h"
 #include "GPU.h"
 #include "Window3D.h"
@@ -11,6 +10,7 @@
 #include "Geometry/Mesh3D.h"
 #include "Geometry/Model3D.h"
 #include "Imaging/Bitmap.h"
+#include "IO/Console.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Textures/Texture2D.h"
 using namespace Renderers;

@@ -1,6 +1,6 @@
-#include "Console.h"
 #include "CGL.h"
 #include "NVPR.h"
+#include "IO/Console.h"
 
 #ifdef __linux__
     #include "Linux/GLX.h"

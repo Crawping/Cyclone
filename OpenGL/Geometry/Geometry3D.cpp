@@ -38,7 +38,7 @@ namespace Cyclone
                 .Mapping(value.Mapping)
                 .Normals(value.Normals)
                 .Points(value.Points)
-                .Topology(value.Topology)
+                .Topology(value.Topology);
         }
         
         Geometry3D& Geometry3D::Indices(const ICollection<uint>& value)

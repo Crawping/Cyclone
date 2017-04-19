@@ -1,6 +1,6 @@
-#include "Console.h"
 #include "Utilities.h"
 #include "Imaging/Bitmap.h"
+#include "IO/Console.h"
 #include "Math/Vector3.h"
 #include "Spatial/Border.h"
 #include "Textures/Texture2D.h"

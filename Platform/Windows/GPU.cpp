@@ -1,5 +1,4 @@
 #include "CGL.h"
-#include "Console.h"
 #include "GPU.h"
 #include "GraphicsSettings.h"
 #include "Window3D.h"
@@ -11,6 +10,7 @@
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IRenderStage.h"
 #include "Interfaces/ISpatialTransform.h"
+#include "IO/Console.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Scenes/Scene3D.h"
 #include "Windows/WGL.h"

@@ -157,11 +157,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collections\Vector.h" />
-    <ClCompile Include="Console.cpp" />
     <ClCompile Include="Imaging\Bitmap.cpp" />
     <ClCompile Include="Imaging\Color4.cpp" />
     <ClCompile Include="Imaging\ColorGradient.cpp" />
-    <ClCompile Include="InputControls.cpp" />
+    <ClCompile Include="IO\Console.cpp" />
+    <ClCompile Include="IO\InputControls.cpp" />
     <ClCompile Include="Math\Matrix4x4.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
@@ -183,14 +183,10 @@
     <ClInclude Include="Collections\Registry.h" />
     <ClInclude Include="Collections\Set.h" />
     <ClInclude Include="Collections\Stack.h" />
-    <ClInclude Include="Console.h" />
     <ClInclude Include="Enumerator.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="Functions.h" />
     <ClInclude Include="Imaging\Bitmap.h" />
     <ClInclude Include="Imaging\Color4.h" />
     <ClInclude Include="Imaging\ColorGradient.h" />
-    <ClInclude Include="InputControls.h" />
     <ClInclude Include="Interfaces\IArray.h" />
     <ClInclude Include="Interfaces\ICallback.h" />
     <ClInclude Include="Interfaces\ICollection.h" />
@@ -198,6 +194,10 @@
     <ClInclude Include="Interfaces\IReportable.h" />
     <ClInclude Include="Interfaces\ISpatialTransform.h" />
     <ClInclude Include="Interfaces\IUpdatable.h" />
+    <ClInclude Include="IO\Console.h" />
+    <ClInclude Include="IO\Event.h" />
+    <ClInclude Include="IO\Functions.h" />
+    <ClInclude Include="IO\InputControls.h" />
     <ClInclude Include="Math\Array.h" />
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Matrix4x4.h" />

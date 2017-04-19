@@ -11,13 +11,13 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        struct IResourceData { };
+        //struct IResourceData { };
 
         class IGraphicsResource
         {
             public:
 
-                virtual const IResourceData& Data()         const = 0;
+                //virtual const IResourceData& Data()         const = 0;
 
                 virtual ~IGraphicsResource() { }
 

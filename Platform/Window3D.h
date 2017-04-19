@@ -3,10 +3,10 @@
  */
 
 #pragma once
-#include "Event.h"
 #include "PlatformAPI.h"
 #include "TypeDefinitions.h"
 #include "WindowEvents.h"
+#include "IO/Event.h"
 #include "Spatial/Area.h"
 
 struct _window3D;

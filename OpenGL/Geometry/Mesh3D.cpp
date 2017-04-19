@@ -32,7 +32,7 @@ namespace Cyclone
             Vector<Vector3> mapping(Mapping()), normals(Normals()), points(Points());
             Vector<Vertex> vertices(points.Count());
             for (uint a = 0; a < points.Count(); a++)
-                vertices(a) = Vertex( points(a), normals(a), (Vector2)mapping(a) );
+                vertices(a) = Vertex( points(a), normals(a), mapping(a) );
 
             return vertices;
         }
@@ -48,7 +48,6 @@ namespace Cyclone
                 normals(a) = vertex.Normal;
                 points(a) = vertex.Position;
             }
-
 
             Mapping(mapping)
                 .Normals(normals)
@@ -85,7 +84,7 @@ namespace Cyclone
         void Mesh3D::Tessellate(uint n)
         {
             if (n == 0)         return;
-            else if (n > 1)     Mesh3D::Tessellate(n - 1);
+            else if (n > 1)     Tessellate(n - 1);
 
             Vector<Vertex> vertices(Vertices());
 
@@ -173,6 +172,31 @@ namespace Cyclone
         }
 
 
+
+        /** PROTECTED UTILITIES **/
+        void Mesh3D::Append(uint index)
+        {
+
+        }
+        void Mesh3D::Append(const Vertex& vertex)
+        {
+
+        }
+        void Mesh3D::Append(const ICollection<uint>& indices)
+        {
+
+        }
+        void Mesh3D::Append(const ICollection<Vertex>& vertices)
+        {
+
+        }
+        void Mesh3D::Append(const Vector3& position, const Vector3& normal, const Vector3& mapping)
+        {
+
+        }
+
+
+
         /** GEOMETRY GENERATING FUNCTIONS **/
         Mesh3D Mesh3D::Cube(bool isIndexed)
         {
@@ -188,48 +212,46 @@ namespace Cyclone
                 20, 21, 22, 22, 21, 23,
             };
 
-            geometry.Indices(indices);
-
-
-            Vector<Vector3> mapping(24);
-            Vector<Vector3> normals(24);
-            Vector<Vector3> points(24);
+            Vector<Vertex> vertices(24);
 
             // Front
-            geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f }); // 0
-            geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f }); // 1
-            geometry.Append({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f }); // 2
-            geometry.Append({  0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 1.0f, 0.0f }); // 3
+            vertices(0)  = Vertex({ -0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 0.0f, 0.0f }); // 0
+            vertices(1)  = Vertex({  0.5f, -0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 0.0f, 0.0f }); // 1
+            vertices(2)  = Vertex({ -0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 0.0f, 1.0f, 0.0f }); // 2
+            vertices(3)  = Vertex({  0.5f,  0.5f,  0.5f }, {  0.0f,  0.0f,  1.0f }, { 1.0f, 1.0f, 0.0f }); // 3
 
             // Top
-            geometry.Append({ -0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Append({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-            geometry.Append({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-            geometry.Append({  0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+            vertices(4)  = Vertex({ -0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+            vertices(5)  = Vertex({  0.5f,  0.5f,  0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+            vertices(6)  = Vertex({ -0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+            vertices(7)  = Vertex({  0.5f,  0.5f, -0.5f }, {  0.0f,  1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
             // Bottom
-            geometry.Append({ -0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Append({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-            geometry.Append({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-            geometry.Append({  0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+            vertices(8)  = Vertex({ -0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+            vertices(9)  = Vertex({  0.5f, -0.5f, -0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+            vertices(10) = Vertex({ -0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+            vertices(11) = Vertex({  0.5f, -0.5f,  0.5f }, {  0.0f, -1.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
             // Left
-            geometry.Append({ -0.5f, -0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Append({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-            geometry.Append({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-            geometry.Append({ -0.5f,  0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+            vertices(12) = Vertex({ -0.5f, -0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+            vertices(13) = Vertex({ -0.5f, -0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+            vertices(14) = Vertex({ -0.5f,  0.5f, -0.5f }, { -1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+            vertices(15) = Vertex({ -0.5f,  0.5f,  0.5f }, { -1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
             // Right
-            geometry.Append({  0.5f, -0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Append({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
-            geometry.Append({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
-            geometry.Append({  0.5f,  0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
+            vertices(16) = Vertex({  0.5f, -0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 0.0f, 0.0f });
+            vertices(17) = Vertex({  0.5f, -0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 0.0f, 0.0f });
+            vertices(18) = Vertex({  0.5f,  0.5f,  0.5f }, {  1.0f,  0.0f,  0.0f }, { 0.0f, 1.0f, 0.0f });
+            vertices(19) = Vertex({  0.5f,  0.5f, -0.5f }, {  1.0f,  0.0f,  0.0f }, { 1.0f, 1.0f, 0.0f });
 
             // Back
-            geometry.Append({  0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Append({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
-            geometry.Append({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
-            geometry.Append({ -0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 1.0f, 0.0f });
+            vertices(20) = Vertex({  0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 0.0f, 0.0f });
+            vertices(21) = Vertex({ -0.5f, -0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 0.0f, 0.0f });
+            vertices(22) = Vertex({  0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 0.0f, 1.0f, 0.0f });
+            vertices(23) = Vertex({ -0.5f,  0.5f, -0.5f }, {  0.0f,  0.0f, -1.0f }, { 1.0f, 1.0f, 0.0f });
+
+            geometry.Indices(indices);
+            geometry.Vertices(vertices);
 
             if (!isIndexed); geometry.Unindex();
             return geometry;
@@ -244,10 +266,12 @@ namespace Cyclone
             else
             {
                 nfaces = Math::Max(3, nfaces);
+                Vector<Vertex> vertices(nfaces * 6);
 
                 float angleStep = Constants::TwoPi / nfaces;
                 float hAngleStep = angleStep / 2.0f;
 
+                uint idx = 0;
                 for (int a = 0; a < nfaces; a++)
                 {
                     float ctAngle = angleStep * a;
@@ -259,13 +283,15 @@ namespace Cyclone
                     float x2 =  cosf(ntAngle);
                     float z2 = -sinf(ntAngle);
 
-                    geometry.Append({ x1, -0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Append({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Append({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Append({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Append({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
-                    geometry.Append({ x2,  0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
+                    vertices(idx++) = Vertex({ x1, -0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
+                    vertices(idx++) = Vertex({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
+                    vertices(idx++) = Vertex({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
+                    vertices(idx++) = Vertex({ x1,  0.5f, z1 }, { x1, 0.0f, z1 }, { 0.0f, 0.0f, 0.0f });
+                    vertices(idx++) = Vertex({ x2, -0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
+                    vertices(idx++) = Vertex({ x2,  0.5f, z2 }, { x2, 0.0f, z2 }, { 0.0f, 0.0f, 0.0f });
                 }
+
+                geometry.Vertices(vertices);
             }
 
             return geometry;
@@ -318,8 +344,9 @@ namespace Cyclone
         Mesh3D Mesh3D::Point()
         {
             Mesh3D geometry;
+            Vector<Vertex, 1> vertices( Vertex({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }) );
             geometry.Topology(PointTopologies::Points);
-            geometry.Append({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+            geometry.Vertices(vertices);
             return geometry;
         }
         Mesh3D Mesh3D::Quad(bool isIndexed)
@@ -332,12 +359,14 @@ namespace Cyclone
                 2, 1, 3,
             };
 
-            geometry.Indices(indices);
+            Vector<Vertex> vertices(4);
+            vertices(0) = Vertex({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
+            vertices(1) = Vertex({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
+            vertices(2) = Vertex({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
+            vertices(3) = Vertex({  0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
 
-            geometry.Append({ -0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 1.0f, 0.0f });
-            geometry.Append({  0.5f, -0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 1.0f, 0.0f });
-            geometry.Append({ -0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f });
-            geometry.Append({  0.5f,  0.5f, 0.0f }, { 0.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f });
+            geometry.Indices(indices);
+            geometry.Vertices(vertices);
 
             if (!isIndexed) geometry.Unindex();
             return geometry;

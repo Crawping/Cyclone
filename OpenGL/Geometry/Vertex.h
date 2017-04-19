@@ -102,6 +102,14 @@ namespace Cyclone
 
             }
 
+            constexpr Vertex(const Vector3& position, const Vector3& normal, const Vector3& uv) :
+                Position(position),
+                Normal(normal),
+                UV((Vector2)uv)
+            {
+
+            }
+
             constexpr Vertex(float x, float y, float z, float nx, float ny, float nz, float u, float v) :
                 Position(x, y, z),
                 Normal(nx, ny, nz),

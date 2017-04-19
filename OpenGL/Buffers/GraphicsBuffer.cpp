@@ -1,6 +1,5 @@
-#include "Console.h"
-#include "GL/OpenGL.h"
 #include "Buffers/GraphicsBuffer.h"
+#include "IO/Console.h"
 
 
 

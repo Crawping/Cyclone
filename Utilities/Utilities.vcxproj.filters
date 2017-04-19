@@ -41,10 +41,10 @@
     <ClCompile Include="Imaging\ColorGradient.cpp">
       <Filter>Imaging</Filter>
     </ClCompile>
-    <ClCompile Include="InputControls.cpp">
+    <ClCompile Include="IO\Console.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="Console.cpp">
+    <ClCompile Include="IO\InputControls.cpp">
       <Filter>IO</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,20 +141,20 @@
     <ClInclude Include="Collections\Stack.h">
       <Filter>Collections</Filter>
     </ClInclude>
-    <ClInclude Include="InputControls.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="Functions.h">
-      <Filter>IO</Filter>
-    </ClInclude>
     <ClInclude Include="Collections\Multiset.h">
       <Filter>Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Console.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Event.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Functions.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\InputControls.h">
+      <Filter>IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
