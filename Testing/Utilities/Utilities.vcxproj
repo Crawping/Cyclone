@@ -133,6 +133,8 @@
     <ClCompile Include="Math\Matrix4x4.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
+    <ClCompile Include="Reflection\Metafunctions.cpp" />
+    <ClCompile Include="Reflection\Type.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
     <ClCompile Include="Spatial\Transform.cpp" />
   </ItemGroup>

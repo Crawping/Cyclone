@@ -166,6 +166,7 @@
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Math\Vector4.cpp" />
+    <ClCompile Include="Reflection\Type.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
     <ClCompile Include="Spatial\Border.cpp" />
     <ClCompile Include="Spatial\Camera.cpp" />
@@ -205,6 +206,9 @@
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />
     <ClInclude Include="Property.h" />
+    <ClInclude Include="Reflection\Field.h" />
+    <ClInclude Include="Reflection\Metafunctions.h" />
+    <ClInclude Include="Reflection\Type.h" />
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
     <ClInclude Include="Spatial\Camera.h" />
