@@ -2,8 +2,8 @@
  * Written by Josh Grooms on 20160804
  */
 
+#include "IO/Event.h"
 #include <gtest/gtest.h>
-#include "Event.h"
 
 using namespace Cyclone::Utilities;
 

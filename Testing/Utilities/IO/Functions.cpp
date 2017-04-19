@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20170107
  */
 
-#include "Functions.h"
+#include "IO/Functions.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;

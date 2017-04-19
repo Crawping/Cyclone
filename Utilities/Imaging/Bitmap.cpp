@@ -1,7 +1,5 @@
-#include "Bitmap.h"
-#include "Color4.h"
-#include "Console.h"
 #include "Utilities.h"
+#include "Imaging/Bitmap.h"
 #include "Imaging/Color4.h"
 
 #include <cstring>

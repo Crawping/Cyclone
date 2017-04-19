@@ -3,10 +3,10 @@
  */
 
 #include <gtest/gtest.h>
-#include "Console.h"
-#include "Spatial/Transform.h"
+#include "IO/Console.h"
 #include "Math/Constants.h"
 #include "Math/Vector3.h"
+#include "Spatial/Transform.h"
 
 using namespace Cyclone::Utilities;
 
