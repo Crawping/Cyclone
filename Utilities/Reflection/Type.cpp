@@ -8,11 +8,11 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR **/
-        Type::Type(const Metadata& metadata) :
-            _data(metadata)
-        {
+        //Metaclass::Metaclass(const Metadata& metadata) :
+        //    _data(metadata)
+        //{
 
-        }
+        //}
 
     }
 }

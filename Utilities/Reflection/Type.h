@@ -4,6 +4,8 @@
 
 #pragma once
 #include "Utilities.h"
+#include "Collections/Set.h"
+//#include "Reflection/Field.h"
 #include "Reflection/Metafunctions.h"
 
 
@@ -13,70 +15,44 @@ namespace Cyclone
     namespace Utilities
     {
         
-        //#define typeof()
+        class Field;
         using namespace Utilities;
 
-        struct Metadata
-        {
-
-            /** DATA **/
-            const uint      ID;
-            const bool      IsReference;
-            const bool      IsPointer;
-            const string    Name;
-            const uint      Size;
 
 
-
-            /** STATIC CONSTRUCTOR **/
-            template<typename T> static Metadata Create()
-            {
-                const auto& type = typeid(Dereference<T>::Class);
-                return
-                {
-                    type.hash_code(),
-                    Utilities::IsReference<T>(),
-                    Utilities::IsPointer<T>(),
-                    type.name(),
-                    SizeOf<T>(),
-                };
-            }
-
-        };
-
-
-
-        class Type
+        class Metaclass
         {
             public:
                 
                 /** PROPERTIES **/    
-                uint ID()               const { return _data.ID; }
-                bool IsReference()      const { return _data.IsReference; }
-                bool IsPointer()        const { return _data.IsPointer; }
-                const string& Name()    const { return _data.Name; }
-                uint Size()             const { return _data.Size; }
-
-
-
-                /** CONSTRUCTOR **/
-                UtilitiesAPI Type(const Metadata& metadata);
+                uint ID()               const { return _id; }
+                bool IsReference()      const { return _isReference; }
+                bool IsPointer()        const { return _isPointer; }
+                const string& Name()    const { return _name; }
+                uint Size()             const { return _size; }
 
 
 
                 /** STATIC CONSTRUCTOR **/
-                template<typename T> static Type Create()
+                template<typename T> static Metaclass Create()
                 {
-                    return Type( Metadata::Create<T>() );
+                    const auto& type = typeid(Dereference<T>::Class);
+
+                    Metaclass m;
+                    m._id = type.hash_code();
+                    m._isReference = Utilities::IsReference<T>();
+                    m._isPointer = Utilities::IsPointer<T>();
+                    m._name = type.name();
+                    m._size = SizeOf<T>();
+                    
+                    return m;
                 }
 
 
 
                 /** UTILITIES **/
-                //template<typename T> T Construct(T)
-                //UtilitiesAPI void Construct();
-                //UtilitiesAPI void HeapAllocate();
-                //UtilitiesAPI void StackAllocate();
+                //UtilitiesAPI void Insert(const Field& field);
+                //UtilitiesAPI void IsField(const Field& field);
 
 
                 /** OPERATORS **/
@@ -85,43 +61,16 @@ namespace Cyclone
             private:
                 
                 /** DATA **/
-                Metadata        _data;
+                //Set<Field*> _fields;
+                uint        _id;
+                bool        _isReference;
+                bool        _isPointer;
+                string      _name;
+                uint        _size;
 
+
+                //Metaclass() { }
         };
-
-
-        
-        
-
-
-
-        //template<typename T>
-        //struct TypeData<T>
-        //{
-        //    using Class             = T;
-        //    const bool IsPointer    = false;
-        //    const bool IsReference  = false;
-        //    const string Name       = "";
-        //    const uint Size         = sizeof(T);
-        //};
-
-        //template<typename T>
-        //struct TypeData<T*>
-        //{
-        //    using Class             = T;
-        //    const bool IsPointer    = true;
-        //    const bool IsReference  = false;
-        //    const uint Size         = sizeof(T);
-        //};
-
-        //template<typename T>
-        //struct TypeData<T&>
-        //{
-        //    using Class             = T;
-        //    const bool IsPointer    = false;
-        //    const bool IsReference  = true;
-        //    const uint Size         = sizeof(T);
-        //};
 
     }
 }

@@ -13,12 +13,12 @@ class _Type : public testing::Test
 {
     protected:
 
-        Type _t1;
-        Type _t2;
+        Metaclass _t1;
+        Metaclass _t2;
 
         _Type() :
-            _t1(Type::Create<void>()),
-            _t2(Type::Create<int>())
+            _t1(Metaclass::Create<void>()),
+            _t2(Metaclass::Create<int>())
         {
             
         }

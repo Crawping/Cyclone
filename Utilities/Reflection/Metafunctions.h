@@ -14,6 +14,20 @@ namespace Cyclone
         template<typename T, T value> struct Primitive      { constexpr operator T() const { return value; } };
         template<bool value> struct Boolean                 : Primitive<bool, value> { };
 
+
+        template<bool S, typename T, typename ... V> 
+        struct Conditional                                  { using Class = T; };
+        
+        template<typename T, typename U, typename ... V>
+        struct Conditional<false, T, U, V...>               { using Class = U; };
+
+        template<bool S, typename T, typename U, T TV, U UV, typename ... V>
+        struct Conditional<S, T, U, TV, UV, V...>           : Primitive<T, TV> { };
+
+        template<typename T, typename U, T TV, U UV, typename ... V> 
+        struct Conditional<false, T, U, TV, UV, V...>       : Primitive<U, UV> { };
+
+
         template<typename T, typename U> struct IsEqual     : Boolean<false> { };
         template<typename T> struct IsEqual<T, T>           : Boolean<true> { };
 
