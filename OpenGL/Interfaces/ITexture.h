@@ -22,7 +22,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets an enumerator that describes the format of the data stored within the texture. </summary>
                 virtual TextureFormats Format()     const = 0;
-                /// <summary> Gets the direct handle reference of the texture on the GPU. </summary>
+                /// <summary> Gets the numeric handle for the texture on the GPU. </summary>
                 virtual ulong Handle()              const = 0;
                 /// <summary> Gets whether the texture has any zero-length dimensions. </summary>
                 virtual bool IsEmpty()              const = 0;

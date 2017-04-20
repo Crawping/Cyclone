@@ -25,7 +25,7 @@ namespace Cyclone
             Color4      PrimaryColor;
             /// <summary> The secondary color of a material. </summary>
             Color4      SecondaryColor;
-
+            /// <summary> The numeric handle of a material's texture resource on the GPU. </summary>
             ulong       Texture;
 
             Vector2     _0;
