@@ -5,7 +5,6 @@
 #pragma once
 #include "Utilities.h"
 #include "Collections/Set.h"
-//#include "Reflection/Field.h"
 #include "Reflection/Metafunctions.h"
 
 
@@ -14,7 +13,8 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        
+
+        /** FORWARD DECLARATIONS **/
         class Field;
         using namespace Utilities;
 
@@ -39,20 +39,31 @@ namespace Cyclone
                     const auto& type = typeid(Dereference<T>::Class);
 
                     Metaclass m;
-                    m._id = type.hash_code();
-                    m._isReference = Utilities::IsReference<T>();
-                    m._isPointer = Utilities::IsPointer<T>();
-                    m._name = type.name();
-                    m._size = SizeOf<T>();
+                    m._id           = type.hash_code();
+                    m._isPointer    = Utilities::IsPointer<T>();
+                    m._isReference  = Utilities::IsReference<T>();
+                    m._name         = type.name();
+                    m._size         = SizeOf<T>();
                     
+                    m.Insert();
                     return m;
                 }
 
 
 
                 /** UTILITIES **/
-                //UtilitiesAPI void Insert(const Field& field);
-                //UtilitiesAPI void IsField(const Field& field);
+                UtilitiesAPI bool Contains(const Field& field) const;
+                UtilitiesAPI void Insert(const Metaclass& type, const string& name);
+
+                UtilitiesAPI static const Metaclass& Get(const string& name);
+                UtilitiesAPI static bool IsClass(const string& name);
+
+                template<typename T> static bool IsClass()
+                {
+                    const auto& type = typeid(Dereference<T>::Class);
+                    return IsClass(type.name());
+                }
+
 
 
                 /** OPERATORS **/
@@ -61,7 +72,7 @@ namespace Cyclone
             private:
                 
                 /** DATA **/
-                //Set<Field*> _fields;
+                Set<Field*> _fields;
                 uint        _id;
                 bool        _isReference;
                 bool        _isPointer;
@@ -69,7 +80,15 @@ namespace Cyclone
                 uint        _size;
 
 
-                //Metaclass() { }
+
+                /** CONSTRUCTOR **/
+                UtilitiesAPI Metaclass();
+
+
+
+                /** UTILITIES **/
+                UtilitiesAPI void Insert() const;
+
         };
 
     }

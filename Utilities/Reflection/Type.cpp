@@ -1,3 +1,5 @@
+#include "Collections/BST.h"
+#include "Reflection/Field.h"
 #include "Reflection/Type.h"
 
 
@@ -7,12 +9,52 @@ namespace Cyclone
     namespace Utilities
     {
 
-        /** CONSTRUCTOR **/
-        //Metaclass::Metaclass(const Metadata& metadata) :
-        //    _data(metadata)
-        //{
+        /** INTERNAL DATA **/
+        static BST<string, Metaclass> Classes;
 
-        //}
+
+
+        /** INTERNAL FUNCTIONS **/
+        bool fieldcomparator(Field* const& x, Field* const& y)
+        {
+            return x->ID() < y->ID();
+        }
+
+
+
+        /** CONSTRUCTOR **/
+        Metaclass::Metaclass()
+        {
+            _fields.Comparator(fieldcomparator);
+        }
+
+
+        
+        /** UTILITIES **/
+        bool Metaclass::Contains(const Field& field) const
+        {
+            return _fields.Contains((Field* const) &field);
+        }
+        const Metaclass& Metaclass::Get(const string& name)
+        {
+            return Classes[name];
+        }
+        void Metaclass::Insert(const Metaclass& type, const string& name)
+        {
+            Field* newfield = new Field(type, name);
+        }
+        bool Metaclass::IsClass(const string& name)
+        {
+            return Classes.Contains(name);
+        }
+
+
+
+        /** PRIVATE UTILITIES **/
+        void Metaclass::Insert() const
+        {
+            Classes.Insert(Name(), *this);
+        }
 
     }
 }

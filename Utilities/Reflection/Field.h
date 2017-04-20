@@ -22,15 +22,7 @@ namespace Cyclone
                 uint Offset()               const { return _offset; }
                 const Metaclass& Type()     const { return _type; }
 
-                Field(const Metaclass& type, const string& name) :
-                    _id(0),
-                    _name(""),
-                    _offset(0),
-                    _type(type)
-                {
-
-                }
-
+                UtilitiesAPI Field(const Metaclass& type, const string& name);
 
             private:
 

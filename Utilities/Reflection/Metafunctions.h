@@ -26,10 +26,10 @@ namespace Cyclone
         template<typename T> struct IsEqual<T, T>           : Boolean<true> { };
 
         template<typename T> struct Dereference             { using Class = T; };
-        template<typename T> struct Dereference<T*>         { using Class = T; };
-        template<typename T> struct Dereference<const T*>   { using Class = T; };
-        template<typename T> struct Dereference<T&>         { using Class = T; };
-        template<typename T> struct Dereference<const T&>   { using Class = T; };
+        template<typename T> struct Dereference<T*>         : Dereference<T> { };
+        template<typename T> struct Dereference<const T*>   : Dereference<T> { };
+        template<typename T> struct Dereference<T&>         : Dereference<T> { };
+        template<typename T> struct Dereference<const T&>   : Dereference<T> { };
 
         template<typename T> struct IsPointer               : Boolean<false> { };
         template<typename T> struct IsPointer<T*>           : Boolean<true> { };

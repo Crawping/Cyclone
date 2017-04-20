@@ -50,6 +50,9 @@
     <ClCompile Include="Reflection\Type.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
+    <ClCompile Include="Reflection\Field.cpp">
+      <Filter>Reflection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TypeDefinitions.h" />
