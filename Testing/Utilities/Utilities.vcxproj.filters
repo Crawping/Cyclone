@@ -73,10 +73,10 @@
     <ClCompile Include="Reflection\Type.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
-    <ClCompile Include="Reflection\Metafunctions.cpp">
+    <ClCompile Include="Reflection\Structure.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
-    <ClCompile Include="Reflection\Structure.cpp">
+    <ClCompile Include="Reflection\MetaUtilities.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,7 +4,7 @@
 
 #include "TypeDefinitions.h"
 #include "IO/Console.h"
-#include "Reflection/Metafunctions.h"
+#include "Reflection/MetaUtilities.h"
 #include <gtest/gtest.h>
 #include <typeinfo>
 

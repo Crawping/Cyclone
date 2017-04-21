@@ -168,7 +168,7 @@
     <ClInclude Include="Reflection\Field.h">
       <Filter>Reflection</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection\Metafunctions.h">
+    <ClInclude Include="Reflection\MetaUtilities.h">
       <Filter>Reflection</Filter>
     </ClInclude>
   </ItemGroup>

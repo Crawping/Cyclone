@@ -208,7 +208,7 @@
     <ClInclude Include="Math\Vector4.h" />
     <ClInclude Include="Property.h" />
     <ClInclude Include="Reflection\Field.h" />
-    <ClInclude Include="Reflection\Metafunctions.h" />
+    <ClInclude Include="Reflection\MetaUtilities.h" />
     <ClInclude Include="Reflection\Type.h" />
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
