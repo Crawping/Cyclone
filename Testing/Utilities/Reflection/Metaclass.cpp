@@ -3,7 +3,7 @@
  */
 
 #include "IO/Console.h"
-#include "Reflection/Type.h"
+#include "Reflection/Metaclass.h"
 #include "Math/Vector4.h"
 #include <gtest/gtest.h>
 

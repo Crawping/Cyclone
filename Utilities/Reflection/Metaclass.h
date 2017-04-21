@@ -19,6 +19,7 @@ namespace Cyclone
         using namespace Utilities;
 
 
+
         /// <summary> A class that holds runtime-accessible information about other classes. </summary>
         class Metaclass
         {

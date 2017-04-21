@@ -5,7 +5,7 @@
 #include "Imaging/Color4.h"
 #include "Math/Vector4.h"
 #include "Reflection/Field.h"
-#include "Reflection/Type.h"
+#include "Reflection/Metaclass.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;

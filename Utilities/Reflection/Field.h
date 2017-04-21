@@ -4,7 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Reflection/Type.h"
+#include "Reflection/Metaclass.h"
 
 
 

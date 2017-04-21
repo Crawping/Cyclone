@@ -23,7 +23,7 @@ TEST(_Metafunctions, Conditionals)
     ((
         Meta::Conditional
         < 
-            (5 + 3), 
+            (5 > 3), 
             Meta::Boolean<true>, 
             Meta::Boolean<false>
         >::Result()

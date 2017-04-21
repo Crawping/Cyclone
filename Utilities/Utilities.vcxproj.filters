@@ -47,10 +47,10 @@
     <ClCompile Include="IO\InputControls.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="Reflection\Type.cpp">
+    <ClCompile Include="Reflection\Field.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
-    <ClCompile Include="Reflection\Field.cpp">
+    <ClCompile Include="Reflection\Metaclass.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
   </ItemGroup>
@@ -162,13 +162,13 @@
     <ClInclude Include="IO\InputControls.h">
       <Filter>IO</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection\Type.h">
-      <Filter>Reflection</Filter>
-    </ClInclude>
     <ClInclude Include="Reflection\Field.h">
       <Filter>Reflection</Filter>
     </ClInclude>
     <ClInclude Include="Reflection\MetaUtilities.h">
+      <Filter>Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection\Metaclass.h">
       <Filter>Reflection</Filter>
     </ClInclude>
   </ItemGroup>

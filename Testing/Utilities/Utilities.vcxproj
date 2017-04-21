@@ -135,7 +135,7 @@
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Reflection\MetaUtilities.cpp" />
     <ClCompile Include="Reflection\Structure.cpp" />
-    <ClCompile Include="Reflection\Type.cpp" />
+    <ClCompile Include="Reflection\Metaclass.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
     <ClCompile Include="Spatial\Transform.cpp" />
   </ItemGroup>

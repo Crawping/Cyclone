@@ -70,13 +70,13 @@
       <Filter>Collections</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Reflection\Type.cpp">
-      <Filter>Reflection</Filter>
-    </ClCompile>
     <ClCompile Include="Reflection\Structure.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
     <ClCompile Include="Reflection\MetaUtilities.cpp">
+      <Filter>Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="Reflection\Metaclass.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
   </ItemGroup>
