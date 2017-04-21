@@ -36,18 +36,19 @@ namespace Cyclone
                 /** STATIC CONSTRUCTOR **/
                 template<typename T> static Metaclass Create()
                 {
-                    const auto& type = typeid(Dereference<T>::Class);
+                    const auto& type = typeid(Meta::Dereference<T>::Class);
 
                     Metaclass m;
                     m._id           = type.hash_code();
-                    m._isPointer    = Utilities::IsPointer<T>();
-                    m._isReference  = Utilities::IsReference<T>();
+                    m._isPointer    = Meta::IsPointer<T>();
+                    m._isReference  = Meta::IsReference<T>();
                     m._name         = type.name();
-                    m._size         = SizeOf<T>();
+                    m._size         = Meta::SizeOf<T>();
                     
-                    m.Insert();
+                    m.Register();
                     return m;
                 }
+                UtilitiesAPI ~Metaclass();
 
 
 
@@ -60,7 +61,7 @@ namespace Cyclone
 
                 template<typename T> static bool IsClass()
                 {
-                    const auto& type = typeid(Dereference<T>::Class);
+                    const auto& type = typeid(Meta::Dereference<T>::Class);
                     return IsClass(type.name());
                 }
 
@@ -87,7 +88,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                UtilitiesAPI void Insert() const;
+                UtilitiesAPI void Register() const;
 
         };
 

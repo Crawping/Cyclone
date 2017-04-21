@@ -17,11 +17,15 @@ class _Type : public testing::Test
         Metaclass _t1;
         Metaclass _t2;
         Metaclass _t3;
+        Metaclass _t4;
+
+
 
         _Type() :
             _t1(Metaclass::Create<void>()),
             _t2(Metaclass::Create<int>()),
-            _t3(Metaclass::Create<string&>())
+            _t3(Metaclass::Create<string&>()),
+            _t4(Metaclass::Create<const char*>())
         {
             
         }
@@ -50,6 +54,12 @@ TEST_F(_Type, Construction)
     ASSERT_EQ(_t3.IsReference(),    true);
     ASSERT_EQ(_t3.Name(),           typeid(string).name());
     ASSERT_EQ(_t3.Size(),           sizeof(string));
+
+    ASSERT_EQ(_t4.ID(),             typeid(char).hash_code());
+    ASSERT_EQ(_t4.IsPointer(),      true);
+    ASSERT_EQ(_t4.IsReference(),    false);
+    ASSERT_EQ(_t4.Name(),           typeid(char).name());
+    ASSERT_EQ(_t4.Size(),           sizeof(char));
 }
 
 

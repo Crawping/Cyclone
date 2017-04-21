@@ -12,39 +12,73 @@ using namespace Cyclone::Utilities;
 
 
 
+TEST(_Metafunctions, Booleans)
+{
+    ASSERT_TRUE(Meta::Boolean<true>());
+    ASSERT_FALSE(Meta::Boolean<false>());
+}
+TEST(_Metafunctions, Conditionals)
+{
+    ASSERT_TRUE
+    ((
+        Meta::Conditional
+        < 
+            (5 + 3), 
+            Meta::Boolean<true>, 
+            Meta::Boolean<false>
+        >::Result()
+    ));
+
+    ASSERT_FALSE
+    ((
+        Meta::Conditional
+        <
+            (3 > 5),
+            Meta::Boolean<true>,
+            Meta::Boolean<false>
+        >::Result()
+    ));
+}
 TEST(_Metafunctions, Dereferencing)
 {
-    ASSERT_STREQ(typeid(void).name(),       typeid(Dereference<void>::Class).name());
-    ASSERT_STREQ(typeid(void).name(),       typeid(Dereference<void*>::Class).name());
-    ASSERT_STREQ(typeid(char).name(),       typeid(Dereference<const char*>::Class).name());
-    ASSERT_STREQ(typeid(string).name(),     typeid(Dereference<const string&>::Class).name());
+    ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void>::Class).name());
+    ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void*>::Class).name());
+    ASSERT_STREQ(typeid(char).name(),               typeid(Meta::Dereference<const char*>::Class).name());
+    ASSERT_STREQ(typeid(string).name(),             typeid(Meta::Dereference<const string&>::Class).name());
 }
 TEST(_Metafunctions, EqualityTesting)
 {
-    ASSERT_EQ((IsEqual<int, double>()),     false);
+    ASSERT_EQ((Meta::IsEqual<int, double>()),       false);
 }
 TEST(_Metafunctions, IsPointer)
 {
-    ASSERT_EQ(IsPointer<int*>(),            true);
-    ASSERT_EQ(IsPointer<const char*>(),     true);
+    ASSERT_EQ(Meta::IsPointer<int*>(),              true);
+    ASSERT_EQ(Meta::IsPointer<const char*>(),       true);
 
-    ASSERT_EQ(IsPointer<int>(),             false);
-    ASSERT_EQ(IsPointer<char>(),            false);
-    ASSERT_EQ(IsPointer<void>(),            false);
-    ASSERT_EQ(IsPointer<const string&>(),   false);
+    ASSERT_EQ(Meta::IsPointer<int>(),               false);
+    ASSERT_EQ(Meta::IsPointer<char>(),              false);
+    ASSERT_EQ(Meta::IsPointer<void>(),              false);
+    ASSERT_EQ(Meta::IsPointer<const string&>(),     false);
 }
 TEST(_Metafunctions, IsReference)
 {
-    ASSERT_EQ(IsReference<int&>(),          true);
-    ASSERT_EQ(IsReference<const string&>(), true);
+    ASSERT_EQ(Meta::IsReference<int&>(),            true);
+    ASSERT_EQ(Meta::IsReference<const string&>(),   true);
 
-    ASSERT_EQ(IsReference<int>(),           false);
-    ASSERT_EQ(IsReference<char>(),          false);
-    ASSERT_EQ(IsReference<void>(),          false);
-    ASSERT_EQ(IsReference<const char*>(),   false);
+    ASSERT_EQ(Meta::IsReference<int>(),             false);
+    ASSERT_EQ(Meta::IsReference<char>(),            false);
+    ASSERT_EQ(Meta::IsReference<void>(),            false);
+    ASSERT_EQ(Meta::IsReference<const char*>(),     false);
 }
 TEST(_Metafunctions, IsVoid)
 {
-    ASSERT_EQ(IsVoid<void>(),               true);
-    ASSERT_EQ(IsVoid<int>(),                false);
+    ASSERT_EQ(Meta::IsVoid<void>(),                 true);
+    ASSERT_EQ(Meta::IsVoid<int>(),                  false);
+}
+TEST(_Metafunctions, SizeOf)
+{
+    ASSERT_EQ(Meta::SizeOf<void>(),                 0);
+    ASSERT_EQ(Meta::SizeOf<int>(),                  sizeof(int));
+    ASSERT_EQ(Meta::SizeOf<const string&>(),        sizeof(string));
+    ASSERT_EQ(Meta::SizeOf<char*>(),                sizeof(char));
 }

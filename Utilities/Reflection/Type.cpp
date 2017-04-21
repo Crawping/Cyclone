@@ -27,6 +27,11 @@ namespace Cyclone
         {
             _fields.Comparator(fieldcomparator);
         }
+        Metaclass::~Metaclass()
+        {
+            for (auto f : _fields)
+                delete f;
+        }
 
 
         
@@ -51,7 +56,7 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        void Metaclass::Insert() const
+        void Metaclass::Register() const
         {
             Classes.Insert(Name(), *this);
         }
