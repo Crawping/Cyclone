@@ -4,14 +4,15 @@
 
 #pragma once
 #include "Utilities.h"
+#include "ReflectionAPI.h"
 #include "Collections/Set.h"
-#include "Reflection/MetaUtilities.h"
+#include "Meta/MetaUtilities.h"
 
 
 
 namespace Cyclone
 {
-    namespace Utilities
+    namespace Reflection
     {
 
         /** FORWARD DECLARATIONS **/
@@ -55,7 +56,7 @@ namespace Cyclone
                     m.Register();
                     return m;
                 }
-                UtilitiesAPI ~Metaclass();
+                ReflectionAPI ~Metaclass();
 
 
 
@@ -63,19 +64,19 @@ namespace Cyclone
                 /// <summary> Determines whether the class contains a specific field. </summary>
                 /// <returns> A Boolean <c>true</c> if the field is part of the class description, or <c>false</c> otherwise. </returns>
                 /// <param name="field"> A field object to be tested for inclusion in the class description. </param>
-                UtilitiesAPI bool Contains(const Field& field) const;
+                ReflectionAPI bool Contains(const Field& field) const;
                 /// <summary> Adds a new field to the class description. </summary>
                 /// <param name="type"> Another metaclass object that describes the type of the field being added. </param>
                 /// <param name="name"> The human-readable string name of the field being added. </param>
-                UtilitiesAPI void Insert(const Metaclass& type, const string& name);
+                ReflectionAPI void Insert(const Metaclass& type, const string& name);
 
 
 
                 /** STATIC UTILITIES **/
                 /// <summary> Gets the metaclass object that corresponds with the string name of the underlying type. </summary>
-                UtilitiesAPI static const Metaclass& Get(const string& name);
+                ReflectionAPI static const Metaclass& Get(const string& name);
                 /// <summary> Determines whether a specific class has been registered with the reflection system. </summary>
-                UtilitiesAPI static bool IsClass(const string& name);
+                ReflectionAPI static bool IsClass(const string& name);
                 /// <summary> Determines whether a specific class has been registered with the reflection system. </summary>
                 template<typename T> static bool IsClass()
                 {
@@ -104,12 +105,12 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                UtilitiesAPI Metaclass();
+                ReflectionAPI Metaclass();
 
 
 
                 /** UTILITIES **/
-                UtilitiesAPI void Register() const;
+                ReflectionAPI void Register() const;
                 
                 template<typename T>
                 constexpr static const std::type_info& TypeInfo()   { return typeid(Meta::Dereference<T>::Type); }

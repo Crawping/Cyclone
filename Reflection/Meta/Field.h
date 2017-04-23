@@ -4,13 +4,13 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Reflection/Metaclass.h"
+#include "Meta/Metaclass.h"
 
 
 
 namespace Cyclone
 {
-    namespace Utilities
+    namespace Reflection
     {
 
         class Field
@@ -22,7 +22,7 @@ namespace Cyclone
                 uint Offset()               const { return _offset; }
                 const Metaclass& Type()     const { return _type; }
 
-                UtilitiesAPI Field(const Metaclass& type, const string& name);
+                ReflectionAPI Field(const Metaclass& type, const string& name);
 
             private:
 

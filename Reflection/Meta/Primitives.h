@@ -9,8 +9,11 @@
 
 namespace Cyclone
 {
-    namespace Utilities
+    namespace Reflection
     {
+
+        using namespace Utilities;
+
         namespace Meta
         {
 
@@ -80,10 +83,6 @@ namespace Cyclone
                 using Count = Primitive<uint, sizeof...(T)>;
 
                 template<uint N> using Get = Node<N, T...>;
-
-
-                
-
 
                 template<uint N, typename S>
                 constexpr static auto Cast(S x) -> decltype((Get<N>::Type)x)

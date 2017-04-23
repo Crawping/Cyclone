@@ -47,12 +47,6 @@
     <ClCompile Include="IO\InputControls.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="Reflection\Field.cpp">
-      <Filter>Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="Reflection\Metaclass.cpp">
-      <Filter>Reflection</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TypeDefinitions.h" />
@@ -162,18 +156,6 @@
     <ClInclude Include="IO\InputControls.h">
       <Filter>IO</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection\Field.h">
-      <Filter>Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="Reflection\MetaUtilities.h">
-      <Filter>Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="Reflection\Metaclass.h">
-      <Filter>Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="Reflection\Primitives.h">
-      <Filter>Reflection</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -193,9 +175,6 @@
     </Filter>
     <Filter Include="IO">
       <UniqueIdentifier>{d17670c7-deae-471a-843c-ab1707925ff7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Reflection">
-      <UniqueIdentifier>{0f32d7bc-a9eb-40ae-9097-877c310048d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

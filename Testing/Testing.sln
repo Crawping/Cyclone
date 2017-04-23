@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL", "OpenGL\OpenGL.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Scenes", "Scenes\Scenes.vcxproj", "{EDB83C18-967C-46D3-BAA3-2533BCD17322}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reflection", "Reflection\Reflection.vcxproj", "{EBDAB07D-9412-4852-90FE-363DF3BAE87A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{EDB83C18-967C-46D3-BAA3-2533BCD17322}.Release|x64.Build.0 = Release|x64
 		{EDB83C18-967C-46D3-BAA3-2533BCD17322}.Release|x86.ActiveCfg = Release|Win32
 		{EDB83C18-967C-46D3-BAA3-2533BCD17322}.Release|x86.Build.0 = Release|Win32
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Debug|x64.ActiveCfg = Debug|Win32
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Debug|x64.Build.0 = Debug|Win32
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Debug|x86.ActiveCfg = Debug|Win32
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Debug|x86.Build.0 = Debug|Win32
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Release|x64.ActiveCfg = Release|x64
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Release|x64.Build.0 = Release|x64
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Release|x86.ActiveCfg = Release|Win32
+		{EBDAB07D-9412-4852-90FE-363DF3BAE87A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

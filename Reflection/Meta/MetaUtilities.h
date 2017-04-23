@@ -4,13 +4,13 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Reflection/Primitives.h"
+#include "Meta/Primitives.h"
 
 
 
 namespace Cyclone
 {
-    namespace Utilities
+    namespace Reflection
     {
         namespace Meta
         {

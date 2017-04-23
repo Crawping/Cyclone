@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Meta">
+      <UniqueIdentifier>{b7d6e650-0944-4c92-bc87-4806fa56f990}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Meta\Metaclass.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\MetaUtilities.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\Primitives.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\Structure.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+</Project>

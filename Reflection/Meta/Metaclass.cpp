@@ -1,12 +1,13 @@
+#include "Utilities.h"
 #include "Collections/BST.h"
-#include "Reflection/Field.h"
-#include "Reflection/Metaclass.h"
+#include "Meta/Field.h"
+#include "Meta/Metaclass.h"
 
 
 
 namespace Cyclone
 {
-    namespace Utilities
+    namespace Reflection
     {
 
         /** INTERNAL DATA **/
