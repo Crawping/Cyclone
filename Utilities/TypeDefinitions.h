@@ -21,6 +21,25 @@ namespace Cyclone
         typedef ulong       Window;
 
         using std::string;
+
+
+        /** ALIASES **/
+        /// <summary> An alias that represents a general parameterized function pointer with one return argument. </summary>
+        /// <typeparam name="T"> The function's output argument class. </typeparam>
+        /// <typeparam name="U"> A listing of the function's input argument classes. </typeparam>
+        template<typename T, typename ... U>
+        using FunctionPointer = T(*)(U ... arguments);
+
+        /// <summary> An alias that represents a general parameterized class method pointer with no return argument. </summary>
+        /// <typeparam name="T"> The class to which the method belongs. </typeparam>
+        /// <typeparam name="U"> A listing of the method's input argument classes. </typeparam>
+        template<typename T, typename U, typename ... V>
+        using MethodPointer = T(U::*)(V ... arguments);
+
+        /// <summary> An alias that represents a general parameterized procedure pointer with no output arguments. </summary>
+        /// <typeparam name="T"> A listing of the procedure's input argument classes. </typeparam>
+        template<typename ... T>
+        using ProcedurePointer = void(*)(T ... arguments);
     }
 }
 
