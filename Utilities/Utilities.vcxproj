@@ -210,6 +210,7 @@
     <ClInclude Include="Reflection\Field.h" />
     <ClInclude Include="Reflection\MetaUtilities.h" />
     <ClInclude Include="Reflection\Metaclass.h" />
+    <ClInclude Include="Reflection\Primitives.h" />
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
     <ClInclude Include="Spatial\Camera.h" />

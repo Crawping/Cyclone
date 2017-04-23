@@ -79,5 +79,8 @@
     <ClCompile Include="Reflection\Metaclass.cpp">
       <Filter>Reflection</Filter>
     </ClCompile>
+    <ClCompile Include="Reflection\Primitives.cpp">
+      <Filter>Reflection</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

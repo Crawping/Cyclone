@@ -171,6 +171,9 @@
     <ClInclude Include="Reflection\Metaclass.h">
       <Filter>Reflection</Filter>
     </ClInclude>
+    <ClInclude Include="Reflection\Primitives.h">
+      <Filter>Reflection</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

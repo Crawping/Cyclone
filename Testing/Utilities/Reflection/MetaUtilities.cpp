@@ -26,7 +26,7 @@ TEST(_Metafunctions, Conditionals)
             (5 > 3), 
             Meta::Boolean<true>, 
             Meta::Boolean<false>
-        >::Result()
+        >()
     ));
 
     ASSERT_FALSE
@@ -36,15 +36,15 @@ TEST(_Metafunctions, Conditionals)
             (3 > 5),
             Meta::Boolean<true>,
             Meta::Boolean<false>
-        >::Result()
+        >()
     ));
 }
 TEST(_Metafunctions, Dereferencing)
 {
-    ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void>::Class).name());
-    ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void*>::Class).name());
-    ASSERT_STREQ(typeid(char).name(),               typeid(Meta::Dereference<const char*>::Class).name());
-    ASSERT_STREQ(typeid(string).name(),             typeid(Meta::Dereference<const string&>::Class).name());
+    ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void>::Type).name());
+    ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void*>::Type).name());
+    ASSERT_STREQ(typeid(char).name(),               typeid(Meta::Dereference<const char*>::Type).name());
+    ASSERT_STREQ(typeid(string).name(),             typeid(Meta::Dereference<const string&>::Type).name());
 }
 TEST(_Metafunctions, EqualityTesting)
 {

@@ -16,7 +16,6 @@ namespace Cyclone
 
         /** FORWARD DECLARATIONS **/
         class Field;
-        using namespace Utilities;
 
 
 
@@ -44,7 +43,7 @@ namespace Cyclone
                 /// <typeparam name="T"> The type for which the metaclass is to be constructed. </typeparam>
                 template<typename T> static Metaclass Create()
                 {
-                    const auto& type = typeid(Meta::Dereference<T>::Class);
+                    const auto& type = TypeInfo<T>();
 
                     Metaclass m;
                     m._id           = type.hash_code();
@@ -80,8 +79,16 @@ namespace Cyclone
                 /// <summary> Determines whether a specific class has been registered with the reflection system. </summary>
                 template<typename T> static bool IsClass()
                 {
-                    const auto& type = typeid(Meta::Dereference<T>::Class);
-                    return IsClass(type.name());
+                    return IsClass( TypeInfo<T>().name() );
+                }
+
+                template<typename T> static const Metaclass& Get()
+                {
+                    const auto& type = TypeInfo<T>();
+                    if (!IsClass(type.name()))
+                        Create<T>();
+
+                    return Get(type.name());
                 }
 
             private:
@@ -103,6 +110,9 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 UtilitiesAPI void Register() const;
+                
+                template<typename T>
+                constexpr static const std::type_info& TypeInfo()   { return typeid(Meta::Dereference<T>::Type); }
 
         };
 
