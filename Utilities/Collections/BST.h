@@ -21,6 +21,8 @@ namespace Cyclone
                 struct Iterator;
                 template<typename T, typename U> struct Node;
 
+
+
                 /** PROPERTIES **/
                 /// <summary> Gets the total number of nodes found in this tree. </summary>
                 virtual uint Count()        const override { return Root ? Root->Count : 0; }
@@ -79,6 +81,11 @@ namespace Cyclone
                 /// <param name="key"> The key for which a corresponding linear index is to be found. </param>
                 /// <returns> A linear index that corresponds with <paramref name="key"/>, or the <see cref="Count"/> if no such index exists. </returns>
                 virtual uint IndexOf(const T& key)          const { return Root ? Root->IndexOf(key) : 0; }
+
+                virtual void Insert(const T& key, U&& value)
+                {
+                    Root = Root ? Root->Insert(key, std::move(value)) : new Node<T, U>(key, std::move(value));
+                }
                 /// <summary> Inserts a new node into the BST and automatically rebalances the tree, if necessary. </summary>
                 /// <param name="key"> The key for the new node being inserted. </param>
                 /// <param name="value"> The value for the new node being inserted. </param>
@@ -121,17 +128,16 @@ namespace Cyclone
                 virtual BST& operator =(BST&& other)
                 {
                     Clear();
-                    Root = other.Root;
-                    other.Root = nullptr;
+                    std::swap(Root, other.Root);
                     return *this;
                 }
-                virtual BST& operator =(const BST& other)
-                {
-                    Clear();
-                    for (const auto& kvp : other)
-                        Insert(kvp.Key, kvp.Value);
-                    return *this;
-                }
+                //virtual BST& operator =(const BST& other)
+                //{
+                //    Clear();
+                //    for (const auto& kvp : other)
+                //        Insert(kvp.Key, kvp.Value);
+                //    return *this;
+                //}
 
             private:
 
@@ -206,6 +212,17 @@ namespace Cyclone
                         /// <summary> Constructs a new node with a specific key-value pair. </summary>
                         /// <param name="key"> The key that will be used to index the new node within a tree. </param>
                         /// <param name="value"> The value held by the node that is associated with its key. </param>
+                        Node(const T& key, U&& value) : 
+                            Left(nullptr),
+                            Right(nullptr),
+                            Balance(0),
+                            Count(1),
+                            Height(0),
+                            Key(key),
+                            Value(std::move(value))
+                        {
+
+                        }
                         Node(const T& key, const U& value) :
                             Left(nullptr),
                             Right(nullptr),
@@ -263,6 +280,20 @@ namespace Cyclone
                                 return Right ? (Right->IndexOf(key) + lc + 1) : index;
                             else
                                 return lc;
+                        }
+                        Node<T, U>* Insert(const T& key, U&& value)
+                        {
+                            if (key < Key)
+                                Left = Left ? Left->Insert(key, value) : new Node<T, U>(key, value);
+                            else if (key > Key)
+                                Right = Right ? Right->Insert(key, value) : new Node<T, U>(key, value);
+                            else
+                            {
+                                Value = std::move(value);
+                                return this;
+                            }
+
+                            return Rebalance();
                         }
                         /// <summary> Inserts a new node into the subtree rooted by this node. </summary>
                         /// <param name="key"> The key for the new node being inserted. </param>
