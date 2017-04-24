@@ -15,6 +15,10 @@ namespace Cyclone
         namespace Meta
         {
 
+            /// <summary> Returns one of two types depending on whether the inputted Boolean expression evaluates to true. </summary>
+            /// <typeparam name="S"> A Boolean expression that resolves to either <c>true</c> or <c>false</c> at compile time. </typeparam>
+            /// <typeparam name="T"> A type to be returned if the expression in <see cref="S"/> resolves to <c>true</c>. </typeparam>
+            /// <typeparam name="U"> A type to be returned if the expression in <see cref="S"/> resolves to <c>false</c>. </typeparam>
             template<bool S, typename T, typename U> 
             struct Conditional                                  : public T { };
         
@@ -26,26 +30,38 @@ namespace Cyclone
             /// <summary> Determines whether two types are equivalent. </summary>
             template<typename T> struct IsEqual<T, T>           : Boolean<true> { };
 
+            /// <summary> Removes constant, pointer, and reference symbols from a type. </summary>
             template<typename T> struct Dereference             : Class<T> { };
             template<typename T> struct Dereference<T*>         : Dereference<T> { };
             template<typename T> struct Dereference<const T*>   : Dereference<T> { };
             template<typename T> struct Dereference<T&>         : Dereference<T> { };
             template<typename T> struct Dereference<const T&>   : Dereference<T> { };
 
+            /// <summary> Determines whether the input represents a pointer type. </summary>
             template<typename T> struct IsPointer               : Boolean<false> { };
             template<typename T> struct IsPointer<T*>           : Boolean<true> { };
             template<typename T> struct IsPointer<const T*>     : Boolean<true> { };
 
+            /// <summary> Determines whether the input represents a referential type. </summary>
             template<typename T> struct IsReference             : Boolean<false> { };
             template<typename T> struct IsReference<T&>         : Boolean<true> { };
             template<typename T> struct IsReference<const T&>   : Boolean<true> { };
 
+            /// <summary> Determines whether the input represents the void type. </summary>
             template<typename T> struct IsVoid                  : IsEqual<T, void> { };
 
-            template<typename T> struct SizeOf                  : Primitive<uint, sizeof( Dereference<T>::Type )> { };
+            /// <summary> Gets the number of bytes required to store instances of a specific type. </summary>
+            /// <remarks> Unlike the <see cref="sizeof"/> operator, this function is safe to use with the <see cref="void"/> type. </remarks>
+            template<typename T> struct SizeOf                  : Primitive<uint, sizeof(T)> { };
             template<> struct SizeOf<void>                      : Primitive<uint, 0> { };
 
 
+
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="value"></param>
+            /// <returns></returns>
             template<typename T> 
             constexpr Class<T> TypeOf(T value)                  { return Class<T>() }
 

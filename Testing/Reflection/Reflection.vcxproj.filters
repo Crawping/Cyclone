@@ -6,12 +6,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Meta\Metaclass.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
-    <ClCompile Include="Meta\MetaUtilities.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
     <ClCompile Include="Meta\Primitives.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
@@ -19,5 +13,12 @@
       <Filter>Meta</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Meta\Utilities.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Metaclass.cpp" />
   </ItemGroup>
 </Project>

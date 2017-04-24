@@ -3,14 +3,14 @@
  */
 
 #include "IO/Console.h"
-#include "Meta/Metaclass.h"
+#include "Metaclass.h"
 #include "Math/Vector4.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Reflection;
 
 
-class _Type : public testing::Test
+class _Metaclass : public testing::Test
 {
     protected:
 
@@ -21,7 +21,7 @@ class _Type : public testing::Test
 
 
 
-        _Type() :
+        _Metaclass() :
             _t1(Metaclass::Create<void>()),
             _t2(Metaclass::Create<int>()),
             _t3(Metaclass::Create<string&>()),
@@ -35,7 +35,7 @@ class _Type : public testing::Test
 
 
 /** CONSTRUCTION TESTS **/
-TEST_F(_Type, Construction)
+TEST_F(_Metaclass, Construction)
 {
     ASSERT_EQ(_t1.ID(),             typeid(void).hash_code());
     ASSERT_EQ(_t1.IsReference(),    false);
@@ -50,22 +50,28 @@ TEST_F(_Type, Construction)
     ASSERT_EQ(_t2.Size(),           sizeof(int));
 
     ASSERT_EQ(_t3.ID(),             typeid(string).hash_code());
+    ASSERT_EQ(_t3.IsConstant(),     false);
     ASSERT_EQ(_t3.IsPointer(),      false);
     ASSERT_EQ(_t3.IsReference(),    true);
     ASSERT_EQ(_t3.Name(),           typeid(string).name());
-    ASSERT_EQ(_t3.Size(),           sizeof(string));
+    ASSERT_EQ(_t3.CoreSize(),       sizeof(string));
 
     ASSERT_EQ(_t4.ID(),             typeid(char).hash_code());
+    ASSERT_EQ(_t4.IsConstant(),     true);
     ASSERT_EQ(_t4.IsPointer(),      true);
     ASSERT_EQ(_t4.IsReference(),    false);
     ASSERT_EQ(_t4.Name(),           typeid(char).name());
-    ASSERT_EQ(_t4.Size(),           sizeof(char));
+    ASSERT_EQ(_t4.CoreSize(),       sizeof(char));
 }
 
 
 
 /** UTILITY TESTS **/
-TEST_F(_Type, Get)
+TEST_F(_Metaclass, Cast)
+{
+
+}
+TEST_F(_Metaclass, Get)
 {
     ASSERT_EQ(Metaclass::IsClass<int>(),        true);
     ASSERT_EQ(Metaclass::IsClass<int&>(),       true);

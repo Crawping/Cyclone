@@ -1,7 +1,7 @@
+#include "Metaclass.h"
 #include "Utilities.h"
 #include "Collections/BST.h"
 #include "Meta/Field.h"
-#include "Meta/Metaclass.h"
 
 
 
@@ -24,7 +24,13 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        Metaclass::Metaclass()
+        Metaclass::Metaclass() : 
+            _coreSize(0),
+            _id(0),
+            _name(""),
+            _size(0),
+            _type(nullptr),
+            TypeCheck(nullptr)
         {
             _fields.Comparator(fieldcomparator);
         }
@@ -32,6 +38,9 @@ namespace Cyclone
         {
             for (auto f : _fields)
                 delete f;
+
+            if (_type) { delete _type; }
+            if (TypeCheck) { delete TypeCheck; }
         }
 
 

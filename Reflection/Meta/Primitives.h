@@ -4,6 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
+#include "Meta/Class.h"
 
 
 
@@ -17,56 +18,9 @@ namespace Cyclone
         namespace Meta
         {
 
-            template<typename T, T U> struct Primitive;
-            template<bool value> using Boolean = Primitive<bool, value>;
-            template<char value> using Character = Primitive<char, value>;
-
-            template<typename T, typename U> struct IsEqual;
-            template<typename T> struct SizeOf;
-            template<> struct SizeOf<void>;
-
-            
-            template<typename T> struct Class
-            { 
-                using IsConstant    = Boolean<false>;
-                using IsReference   = Boolean<false>;
-                using IsPointer     = Boolean<false>;
-                using Type          = T;
-
-
-                template<typename U>
-                constexpr bool operator ==(const Class<U>& other) const
-                {
-                    return 
-                        IsConstant() == Class<U>::IsConstant()      &&
-                        IsReference() == Class<U>::IsReference()    &&
-                        IsPointer() == Class<U>::Ispointer()        &&
-                        IsEqual<T, U>();
-                }
-            };
-
-
-
-            template<typename T> struct Class<T*>               : public Class<T>
-            {
-                using IsPointer     = Boolean<true>;
-            };
-            template<typename T> struct Class<const T*>         : public Class<T*>
-            {
-                using IsConstant    = Boolean<true>;
-            };
-
-            template<typename T> struct Class<T&>               : public Class<T>
-            {
-                using IsReference   = Boolean<true>;
-            };
-            template<typename T> struct Class<const T&>         : public Class<T&>
-            {
-                using IsConstant    = Boolean<true>;
-            };
-
-
-
+            /// <summary> A compile-time typed variable
+            /// 
+            /// </summary>
             template<typename T, T U> struct Primitive          : public Class<T> { constexpr operator T() const { return U; } };
 
 

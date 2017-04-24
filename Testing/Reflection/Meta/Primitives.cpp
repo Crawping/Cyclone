@@ -4,46 +4,13 @@
 
 #include "Imaging/Color4.h"
 #include "Math/Vector4.h"
-#include "Meta/MetaUtilities.h"
+#include "Meta/Utilities.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Reflection;
 
 
 
-TEST(_Primitives, Classes)
-{
-    ASSERT_FALSE(( Meta::Class<int>::IsConstant() ));
-    ASSERT_FALSE(( Meta::Class<int>::IsPointer() ));
-    ASSERT_FALSE(( Meta::Class<int>::IsReference() ));
-
-    ASSERT_FALSE(( Meta::Class<int*>::IsConstant() ));
-    ASSERT_FALSE(( Meta::Class<int*>::IsReference() ));
-    ASSERT_TRUE(( Meta::Class<int*>::IsPointer() ));
-
-    ASSERT_TRUE(( Meta::Class<const int*>::IsConstant() ));
-    ASSERT_TRUE(( Meta::Class<const int*>::IsPointer() ));
-
-    ASSERT_TRUE(( Meta::Class<const string&>::IsConstant() ));
-    ASSERT_TRUE(( Meta::Class<const string&>::IsReference() ));
-    ASSERT_FALSE(( Meta::Class<const string&>::IsPointer() ));
-
-    ASSERT_TRUE(( Meta::IsEqual< Meta::Class<int>::Type, Meta::Class<int>::Type >() ));
-
-    ASSERT_TRUE
-    (( 
-        Meta::IsEqual
-        < 
-            Meta::Class<const string&>
-                ::IsConstant
-                ::IsConstant
-                ::IsConstant
-                ::IsConstant
-                ::Type, 
-            bool
-        >()
-    ));
-}
 TEST(_Primitives, Functions)
 {
     using fcn = Meta::Function<void, Color4, ulong, Vector4, Vector4>;

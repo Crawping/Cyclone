@@ -3,8 +3,7 @@
  */
 
 #pragma once
-#include "TypeDefinitions.h"
-#include "Meta/Metaclass.h"
+#include "Metaclass.h"
 
 
 

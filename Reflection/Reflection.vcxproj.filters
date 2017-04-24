@@ -9,23 +9,23 @@
     <ClCompile Include="Meta\Field.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
-    <ClCompile Include="Meta\Metaclass.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
+    <ClCompile Include="Metaclass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Meta\Field.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
-    <ClInclude Include="Meta\Metaclass.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
-    <ClInclude Include="Meta\MetaUtilities.h">
       <Filter>Meta</Filter>
     </ClInclude>
     <ClInclude Include="Meta\Primitives.h">
       <Filter>Meta</Filter>
     </ClInclude>
     <ClInclude Include="ReflectionAPI.h" />
+    <ClInclude Include="Meta\Utilities.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Metaclass.h" />
+    <ClInclude Include="Meta\Class.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Header.h" />
   </ItemGroup>
 </Project>

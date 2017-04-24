@@ -19,13 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Metaclass.cpp" />
     <ClCompile Include="Meta\Field.cpp" />
-    <ClCompile Include="Meta\Metaclass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Metaclass.h" />
+    <ClInclude Include="Meta\Class.h" />
     <ClInclude Include="Meta\Field.h" />
-    <ClInclude Include="Meta\Metaclass.h" />
-    <ClInclude Include="Meta\MetaUtilities.h" />
+    <ClInclude Include="Meta\Header.h" />
+    <ClInclude Include="Meta\Utilities.h" />
     <ClInclude Include="Meta\Primitives.h" />
     <ClInclude Include="ReflectionAPI.h" />
   </ItemGroup>
