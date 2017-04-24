@@ -27,5 +27,8 @@
       <Filter>Meta</Filter>
     </ClInclude>
     <ClInclude Include="Meta\Header.h" />
+    <ClInclude Include="Meta\String.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

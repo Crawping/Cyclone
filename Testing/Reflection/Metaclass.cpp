@@ -14,18 +14,18 @@ class _Metaclass : public testing::Test
 {
     protected:
 
-        Metaclass _t1;
-        Metaclass _t2;
-        Metaclass _t3;
-        Metaclass _t4;
+        const Metaclass& _t1;
+        const Metaclass& _t2;
+        const Metaclass& _t3;
+        const Metaclass& _t4;
 
 
 
         _Metaclass() :
-            _t1(Metaclass::Create<void>()),
-            _t2(Metaclass::Create<int>()),
-            _t3(Metaclass::Create<string&>()),
-            _t4(Metaclass::Create<const char*>())
+            _t1(Metaclass::Get<void>()),
+            _t2(Metaclass::Get<int>()),
+            _t3(Metaclass::Get<string&>()),
+            _t4(Metaclass::Get<const char*>())
         {
             
         }

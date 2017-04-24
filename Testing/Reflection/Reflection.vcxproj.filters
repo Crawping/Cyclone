@@ -20,5 +20,8 @@
       <Filter>Meta</Filter>
     </ClCompile>
     <ClCompile Include="Metaclass.cpp" />
+    <ClCompile Include="Meta\String.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

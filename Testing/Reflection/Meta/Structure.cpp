@@ -32,8 +32,8 @@ class _TestStructure : public testing::Test
         _TestStructure() 
             //_s1{ Color4::Black, Vector4::One, 0, 10 }
         {
-            Metaclass::Create<TestStructure>();
-            Metaclass::Create<Color4>();
+            Metaclass::Get<TestStructure>();
+            Metaclass::Get<Color4>();
         }
 };
 

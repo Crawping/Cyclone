@@ -43,30 +43,9 @@ namespace Cyclone
 
 
 
-                /** STATIC CONSTRUCTOR **/
-                /// <summary> Constructs a new metaclass object containing information about a specific type. </summary>
-                /// <typeparam name="T"> The type for which the metaclass is to be constructed. </typeparam>
-                template<typename T> static Metaclass Create()
-                {
-                    using Class = Meta::Class<T>;
-                    const auto& type = TypeInfo<T>();
-                    Class* c = new Class();
-
-                    Metaclass m;
-                    m._id           = type.hash_code();
-                    m._coreSize     = Class::CoreType::Size();
-                    m._isConstant   = Class::IsConstant();
-                    m._isPointer    = Class::IsPointer();
-                    m._isReference  = Meta::IsReference<T>();
-                    m._name         = type.name();
-                    m._size         = Class::Size();
-                    m._type         = (void*)c;
-
-                    m.TypeCheck     = new Method(&m, &Metaclass::IsOfType<T>);
-                    
-                    m.Register();
-                    return m;
-                }
+                /** CONSTRUCTORS & DESTRUCTOR **/
+                Metaclass(const Metaclass& other) = delete;
+                ReflectionAPI Metaclass(Metaclass&& other) noexcept;
                 ReflectionAPI ~Metaclass();
 
 
@@ -100,38 +79,55 @@ namespace Cyclone
 
                 template<typename T> static const Metaclass& Get()
                 {
-                    const auto& type = TypeInfo<T>();
-                    if (!IsClass(type.name()))
-                        Create<T>();
-
-                    return Get(type.name());
+                    if (!IsClass<T>())
+                        Register(new Metaclass(Meta::Class<T>()));
+                    return Get(TypeInfo<T>().name());
                 }
+
+
+
+                /** OPERATORS **/
+                Metaclass& operator =(const Metaclass& other) = delete;
+                ReflectionAPI Metaclass& operator =(Metaclass&& other) noexcept;
 
             private:
                 
                 /** DATA **/
-                uint        _coreSize;
-                Set<Field*> _fields;
-                uint        _id;
-                bool        _isConstant;
-                bool        _isReference;
-                bool        _isPointer;
-                string      _name;
-                uint        _size;
-                void*       _type;
-
-                Method<bool, Metaclass>* TypeCheck;
+                uint            _coreSize;
+                Set<Field*>     _fields;
+                uint            _id;
+                bool            _isConstant;
+                bool            _isReference;
+                bool            _isPointer;
+                string          _name;
+                uint            _size;
+                void*           _type;
 
                 
 
-                /** CONSTRUCTOR **/
+                /** CONSTRUCTORS **/
                 ReflectionAPI Metaclass();
+                /// <summary> Constructs a new metaclass object containing information about a specific type. </summary>
+                /// <param name="type"> The type for which the metaclass is to be constructed. </param>
+                template<typename T> Metaclass(const Meta::Class<T>& type) : 
+                    _coreSize       (Meta::Class<T>::CoreType::Size()),
+                    _id             (TypeInfo<T>().hash_code()),
+                    _isConstant     (Meta::Class<T>::IsConstant()),
+                    _isReference    (Meta::Class<T>::IsReference()),
+                    _isPointer      (Meta::Class<T>::IsPointer()),
+                    _name           (TypeInfo<T>().name()),
+                    _size           (Meta::Class<T>::Size()),
+                    _type           (nullptr)
+                {
+                    
+                }
+
 
 
 
                 /** UTILITIES **/
-                ReflectionAPI void Register() const;
-                
+                ReflectionAPI static void Register(Metaclass* type);
+
                 template<typename T>
                 constexpr static const std::type_info& TypeInfo()   { return typeid(Meta::Dereference<T>::Type); }
 

@@ -26,7 +26,9 @@ namespace Cyclone
 
             template<typename T> struct Class
             { 
+                using Constructor   = Boolean<false>;
                 using CoreType      = Dereference<T>;
+                using Destructor    = Boolean<false>;
                 using IsConstant    = Boolean<false>;
                 using IsReference   = Boolean<false>;
                 using IsPointer     = Boolean<false>;
@@ -37,7 +39,9 @@ namespace Cyclone
             };
             template<> struct Class<void>
             {
+                using Constructor   = Boolean<false>;
                 using CoreType      = Class<void>;
+                using Destructor    = Boolean<false>;
                 using IsConstant    = Boolean<false>;
                 using IsReference   = Boolean<false>;
                 using IsPointer     = Boolean<false>;

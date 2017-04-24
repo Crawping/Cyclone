@@ -18,11 +18,9 @@ namespace Cyclone
         namespace Meta
         {
 
-            /// <summary> A compile-time typed variable
-            /// 
-            /// </summary>
+            /// <summary> A compile-time typed variable. </summary>
             template<typename T, T U> struct Primitive          : public Class<T> { constexpr operator T() const { return U; } };
-
+            
 
             template<uint N, typename T, typename ... U>
             struct Node                                         : public Node<N - 1, U...> { };
@@ -62,15 +60,7 @@ namespace Cyclone
             };
 
 
-            //struct Primitive<FunctionPointer, value>            : Class<FunctionPointer>
-            //{
-            //    using Invoke = 
-            //};
-            //template<bool value> struct Boolean                 : Primitive<bool, value> { };
-            //template<char value> struct Character               : Primitive<char, value> { };
-
-
-            //template<bool value> using Boolean = typename Primitive<bool, value>;
+            
 
             //template<typename T, T U> struct Number             : Primitive<T, U>
             //{ 

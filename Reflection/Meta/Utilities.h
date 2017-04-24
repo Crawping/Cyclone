@@ -57,11 +57,9 @@ namespace Cyclone
 
 
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="value"></param>
-            /// <returns></returns>
+            /// <summary> Gets a class object that encapsulates the type of the input argument. </summary>
+            /// <returns> A templated class object representing the type of the inputted value. </returns>
+            /// <param name="value"> An instance of the class whose type is to be found. </param>
             template<typename T> 
             constexpr Class<T> TypeOf(T value)                  { return Class<T>() }
 

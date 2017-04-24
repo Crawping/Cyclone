@@ -2,6 +2,8 @@
 #include "Utilities.h"
 #include "Collections/BST.h"
 #include "Meta/Field.h"
+#include <memory>
+#include <vector>
 
 
 
@@ -11,7 +13,35 @@ namespace Cyclone
     {
 
         /** INTERNAL DATA **/
-        static BST<string, Metaclass> Classes;
+        //template<typename T>
+        //struct Reference : public Class<T>
+        //{
+        //    public:
+
+        //        template<typename ... U>
+        //        Reference(U...) :
+        //            _count(1),
+        //            _data(new T(U...))
+        //        {
+        //            std::shared_ptr();
+        //        }
+        //        ~Reference()
+        //        {
+        //            if (--_count && _data)
+        //                delete _data;
+        //        }
+
+        //    private:
+
+        //        mutable uint    _count;
+        //        T*              _data;
+        //};
+
+
+
+        static BST<string, Metaclass*> Classes;
+
+        
 
 
 
@@ -24,23 +54,37 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        Metaclass::Metaclass() : 
-            _coreSize(0),
-            _id(0),
-            _name(""),
-            _size(0),
-            _type(nullptr),
-            TypeCheck(nullptr)
+        Metaclass::Metaclass() :
+            Metaclass(Meta::Class<void>())
         {
-            _fields.Comparator(fieldcomparator);
+
+        }
+        Metaclass::Metaclass(Metaclass&& other) noexcept :
+            _coreSize       (other._coreSize),
+            _id             (other._id),
+            _isConstant     (other._isConstant),
+            _isReference    (other._isReference),
+            _isPointer      (other._isPointer),
+            _name           (other._name),
+            _size           (other._size),
+            _type           (other._type)
+        {
+            std::swap(_fields, other._fields);
+            other._type = nullptr;
         }
         Metaclass::~Metaclass()
         {
             for (auto f : _fields)
                 delete f;
 
-            if (_type) { delete _type; }
-            if (TypeCheck) { delete TypeCheck; }
+            //Classes.Remove(_name);
+            //if (_type) { delete _type; }
+            //if (TypeCheck) { delete TypeCheck; }
+            //if (DestroyType)    
+            //{ 
+            //    DestroyType->Invoke(_type);
+            //    delete(DestroyType);
+            //}
         }
 
 
@@ -52,7 +96,7 @@ namespace Cyclone
         }
         const Metaclass& Metaclass::Get(const string& name)
         {
-            return Classes[name];
+            return *(Classes[name]);
         }
         void Metaclass::Insert(const Metaclass& type, const string& name)
         {
@@ -64,11 +108,28 @@ namespace Cyclone
         }
 
 
+        Metaclass& Metaclass::operator =(Metaclass&& other) noexcept
+        {
+            _coreSize       = other._coreSize;
+            _id             = other._id;
+            _isConstant     = other._isConstant;
+            _isReference    = other._isReference;
+            _isPointer      = other._isPointer;
+            _name           = other._name;
+            _size           = other._size;
+            _type           = other._type;
+
+            std::swap(_fields, other._fields);
+            other._type = nullptr;
+            return *this;
+        }
+
 
         /** PRIVATE UTILITIES **/
-        void Metaclass::Register() const
+        void Metaclass::Register(Metaclass* type)
         {
-            Classes.Insert(Name(), *this);
+            Classes.Insert(type->Name(), type);
+            //std::vector
         }
 
     }

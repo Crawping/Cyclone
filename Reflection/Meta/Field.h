@@ -25,10 +25,10 @@ namespace Cyclone
 
             private:
 
-                uint        _id;
-                string      _name;
-                uint        _offset;
-                Metaclass   _type;
+                uint                _id;
+                string              _name;
+                uint                _offset;
+                const Metaclass&    _type;
 
         };
     }
