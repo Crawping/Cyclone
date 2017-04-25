@@ -4,6 +4,7 @@
 
 #include "Imaging/Color4.h"
 #include "Math/Vector4.h"
+#include "Meta/String.h"
 #include "Meta/Utilities.h"
 #include <gtest/gtest.h>
 
@@ -36,6 +37,11 @@ TEST(_Primitives, Lists)
 
     ASSERT_TRUE(Meta::TypeEquals<Vector4>(y));
     ASSERT_FALSE(Meta::TypeEquals<Color4>(y));
+}
+TEST(_Primitives, Strings)
+{
+    using S1 = Meta::String<'T', 'E', 'S', 'T', 'I', 'N', 'G'>;
+    ASSERT_EQ(S1::Count(),      7);
 }
 //TEST(_Primitives, Primitives)
 //{

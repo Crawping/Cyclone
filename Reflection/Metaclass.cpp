@@ -39,7 +39,7 @@ namespace Cyclone
 
 
 
-        static BST<string, Metaclass*> Classes;
+        static BST<string, std::shared_ptr<Metaclass>> Classes;
 
         
 
@@ -96,6 +96,7 @@ namespace Cyclone
         }
         const Metaclass& Metaclass::Get(const string& name)
         {
+            //return *(Classes[name]);
             return *(Classes[name]);
         }
         void Metaclass::Insert(const Metaclass& type, const string& name)
@@ -128,7 +129,7 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void Metaclass::Register(Metaclass* type)
         {
-            Classes.Insert(type->Name(), type);
+            Classes.Insert(type->Name(), std::shared_ptr<Metaclass>(type));
             //std::vector
         }
 

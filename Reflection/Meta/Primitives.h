@@ -20,7 +20,9 @@ namespace Cyclone
 
             /// <summary> A compile-time typed variable. </summary>
             template<typename T, T U> struct Primitive          : public Class<T> { constexpr operator T() const { return U; } };
-            
+            template<int U> using Integer32                     = Primitive<int, U>;
+            template<uint U> using Integer32U                   = Primitive<uint, U>;
+
 
             template<uint N, typename T, typename ... U>
             struct Node                                         : public Node<N - 1, U...> { };
@@ -32,6 +34,9 @@ namespace Cyclone
             template<typename ... T>
             struct List
             {
+                template<typename ... U>
+                using Concatenate = List<T..., U...>;
+
                 using Count = Primitive<uint, sizeof...(T)>;
 
                 template<uint N> using Get = Node<N, T...>;

@@ -4,6 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
+#include "Meta/Primitives.h"
 
 
 
@@ -13,14 +14,26 @@ namespace Cyclone
     {
         using namespace Utilities;
 
-
-
-        template<char ... T>
-        struct CharacterList
+        namespace Meta
         {
-            using Count = sizeof...(T);
-        };
 
+            template<uint N, char T, char ... U>
+            struct CharacterList                : public CharacterList<N - 1, U...> { };
+
+            template<char T, char ... U>
+            struct CharacterList<0, T, U...>    : public Character<T> { };
+
+            template<char ... T>
+            struct String
+            {
+                template<typename ... U>
+                using Concatenate   = String<T..., U...>;
+                using Count         = Integer32U<sizeof...(T)>;
+
+                template<uint N> using Get = CharacterList<N, T...>;
+            };
+
+        }
 
 
         struct String
@@ -35,6 +48,12 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
+                constexpr String() :
+                    _count(0),
+                    _value(0)
+                {
+
+                }
                 template<uint N>
                 constexpr String(const char (&value)[N]) : 
                     _count(N - 1),
