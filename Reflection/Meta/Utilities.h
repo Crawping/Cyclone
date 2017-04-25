@@ -37,6 +37,11 @@ namespace Cyclone
             template<typename T> struct Dereference<T&>         : Dereference<T> { };
             template<typename T> struct Dereference<const T&>   : Dereference<T> { };
 
+
+            template<typename T> struct IsConstant              : Boolean<false> { };
+            template<typename T> struct IsConstant<const T*>    : Boolean<true> { };
+            template<typename T> struct IsConstant<const T&>    : Boolean<true> { };
+
             /// <summary> Determines whether the input represents a pointer type. </summary>
             template<typename T> struct IsPointer               : Boolean<false> { };
             template<typename T> struct IsPointer<T*>           : Boolean<true> { };
@@ -52,8 +57,8 @@ namespace Cyclone
 
             /// <summary> Gets the number of bytes required to store instances of a specific type. </summary>
             /// <remarks> Unlike the <see cref="sizeof"/> operator, this function is safe to use with the <see cref="void"/> type. </remarks>
-            template<typename T> struct SizeOf                  : Primitive<uint, sizeof(T)> { };
-            template<> struct SizeOf<void>                      : Primitive<uint, 0> { };
+            template<typename T> struct SizeOf                  : Integer32U<sizeof(T)> { };
+            template<> struct SizeOf<void>                      : Integer32U<0> { };
 
 
 
@@ -68,6 +73,7 @@ namespace Cyclone
             }
 
             //template<typename
+
             /// <summary> Gets a class object that encapsulates the type of the input argument. </summary>
             /// <returns> A templated class object representing the type of the inputted value. </returns>
             /// <param name="value"> An instance of the class whose type is to be found. </param>

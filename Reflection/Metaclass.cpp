@@ -76,15 +76,6 @@ namespace Cyclone
         {
             for (auto f : _fields)
                 delete f;
-
-            //Classes.Remove(_name);
-            //if (_type) { delete _type; }
-            //if (TypeCheck) { delete TypeCheck; }
-            //if (DestroyType)    
-            //{ 
-            //    DestroyType->Invoke(_type);
-            //    delete(DestroyType);
-            //}
         }
 
 

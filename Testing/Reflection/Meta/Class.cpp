@@ -27,13 +27,23 @@ TEST(_Class, Properties)
     ASSERT_TRUE((  c2::IsPointer() ));
 
     ASSERT_TRUE(( c3::IsConstant() ));
+    ASSERT_FALSE(( c3::IsReference() ));
     ASSERT_TRUE(( c3::IsPointer() ));
 
     ASSERT_TRUE(( c4::IsConstant() ));
     ASSERT_TRUE(( c4::IsReference() ));
     ASSERT_FALSE(( c4::IsPointer() ));
 
-    ASSERT_TRUE(( Meta::IsEqual<c4::Type, string>() ));
+    ASSERT_TRUE(( Meta::IsEqual<c1::Type, int>() ));
+    ASSERT_TRUE(( Meta::IsEqual<c1::CoreType::Type, int>() ));
+
+    ASSERT_TRUE(( Meta::IsEqual<c2::Type, int*>() ));
+    ASSERT_TRUE(( Meta::IsEqual<c2::CoreType::Type, int>() ));
+
+    ASSERT_TRUE(( Meta::IsEqual<c3::Type, const int*>() ));
+    ASSERT_TRUE(( Meta::IsEqual<c3::CoreType::Type, int>() ));
+
+    ASSERT_TRUE(( Meta::IsEqual<c4::Type, const string&>() ));
     ASSERT_TRUE(( Meta::IsEqual<c4::CoreType::Type, string>() ));
 
     Meta::IsEqual
@@ -48,11 +58,4 @@ TEST(_Class, Properties)
     > check1;
 
     ASSERT_TRUE(check1);
-}
-TEST(_Class, Inheritance)
-{
-    using c1 = Meta::Class<int>;
-    using c2 = Meta::Class<const int*>;
-
-
 }

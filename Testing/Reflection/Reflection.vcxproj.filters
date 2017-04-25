@@ -16,11 +16,14 @@
     <ClCompile Include="Meta\Utilities.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
-    <ClCompile Include="Class.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
     <ClCompile Include="Metaclass.cpp" />
     <ClCompile Include="Meta\String.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\List.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\Class.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
   </ItemGroup>

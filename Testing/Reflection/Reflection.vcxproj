@@ -122,9 +122,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Class.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Metaclass.cpp" />
+    <ClCompile Include="Meta\Class.cpp" />
+    <ClCompile Include="Meta\List.cpp" />
     <ClCompile Include="Meta\String.cpp" />
     <ClCompile Include="Meta\Utilities.cpp" />
     <ClCompile Include="Meta\Primitives.cpp" />
