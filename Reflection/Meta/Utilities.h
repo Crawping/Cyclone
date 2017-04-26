@@ -37,7 +37,7 @@ namespace Cyclone
             template<typename T> struct Dereference<T&>         : Dereference<T> { };
             template<typename T> struct Dereference<const T&>   : Dereference<T> { };
 
-
+            /// <summary> Determines whether the input is constant qualified. </summary>
             template<typename T> struct IsConstant              : Boolean<false> { };
             template<typename T> struct IsConstant<const T*>    : Boolean<true> { };
             template<typename T> struct IsConstant<const T&>    : Boolean<true> { };
