@@ -94,7 +94,6 @@ namespace Cyclone
         void Metaclass::Register(Metaclass* type)
         {
             Classes.Insert(type->Name(), std::shared_ptr<Metaclass>(type));
-            //std::vector
         }
 
     }
