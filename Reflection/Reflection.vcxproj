@@ -34,6 +34,7 @@
     <ClInclude Include="ReflectionAPI.h" />
     <ClInclude Include="Runtime\Field.h" />
     <ClInclude Include="Runtime\Metaclass.h" />
+    <ClInclude Include="Runtime\Reference.h" />
     <ClInclude Include="Runtime\Variable.h" />
   </ItemGroup>
   <ItemGroup>

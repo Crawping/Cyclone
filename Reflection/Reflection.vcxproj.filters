@@ -54,5 +54,8 @@
     <ClInclude Include="Runtime\Field.h">
       <Filter>Runtime</Filter>
     </ClInclude>
+    <ClInclude Include="Runtime\Reference.h">
+      <Filter>Runtime</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
