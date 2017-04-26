@@ -19,23 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Metaclass.cpp" />
-    <ClCompile Include="Meta\Field.cpp" />
+    <ClCompile Include="Runtime\Field.cpp" />
+    <ClCompile Include="Runtime\Metaclass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interfaces\IClass.h" />
-    <ClInclude Include="Metaclass.h" />
     <ClInclude Include="Meta\Class.h" />
-    <ClInclude Include="Meta\Field.h" />
     <ClInclude Include="Meta\Function.h" />
-    <ClInclude Include="Meta\Header.h" />
     <ClInclude Include="Meta\Letters.h" />
     <ClInclude Include="Meta\List.h" />
     <ClInclude Include="Meta\String.h" />
     <ClInclude Include="Meta\Utilities.h" />
     <ClInclude Include="Meta\Primitives.h" />
-    <ClInclude Include="Meta\Variable.h" />
     <ClInclude Include="ReflectionAPI.h" />
+    <ClInclude Include="Runtime\Field.h" />
+    <ClInclude Include="Runtime\Metaclass.h" />
+    <ClInclude Include="Runtime\Variable.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">

@@ -47,6 +47,7 @@ namespace Cyclone
         {
             public:
                 
+                /** PROPERTIES **/
                 bool IsConstant()           const { return Data->IsConstant(); }
                 bool IsReference()          const { return Data->IsReference(); }
                 bool IsPointer()            const { return Data->IsPointer(); }
@@ -56,19 +57,14 @@ namespace Cyclone
 
 
 
-                Variable() :
-                    Data(new Reference<int>(0))
-                {
-
-                }
-                template<typename T> Variable(T value) : 
-                    Data(new Reference<T>(value))
-                {
-
-                }
-                ~Variable() { delete Data; }
+                /** CONSTRUCTORS & DESTRUCTOR **/
+                Variable()                              : Data(new Reference<int>(0)) { }
+                template<typename T> Variable(T value)  : Data(new Reference<T>(value)) { }
+                ~Variable()                             { delete Data; }
 
 
+
+                /** UTILITIES **/
                 template<typename T>
                 Reference<T>* Cast()        const { return dynamic_cast<Reference<T>*>(Data); }
 

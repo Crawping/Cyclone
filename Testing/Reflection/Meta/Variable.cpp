@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20170425
  */
 
-#include "Meta/Variable.h"
+#include "Runtime/Variable.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Reflection;

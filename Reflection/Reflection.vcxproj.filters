@@ -7,17 +7,19 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{3800630a-2ea4-47dd-9428-4d934d115ec5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime">
+      <UniqueIdentifier>{acc00d87-9e72-4efc-8ed3-1074dcf25830}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Meta\Field.cpp">
-      <Filter>Meta</Filter>
+    <ClCompile Include="Runtime\Metaclass.cpp">
+      <Filter>Runtime</Filter>
     </ClCompile>
-    <ClCompile Include="Metaclass.cpp" />
+    <ClCompile Include="Runtime\Field.cpp">
+      <Filter>Runtime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Meta\Field.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
     <ClInclude Include="Meta\Primitives.h">
       <Filter>Meta</Filter>
     </ClInclude>
@@ -25,11 +27,9 @@
     <ClInclude Include="Meta\Utilities.h">
       <Filter>Meta</Filter>
     </ClInclude>
-    <ClInclude Include="Metaclass.h" />
     <ClInclude Include="Meta\Class.h">
       <Filter>Meta</Filter>
     </ClInclude>
-    <ClInclude Include="Meta\Header.h" />
     <ClInclude Include="Meta\String.h">
       <Filter>Meta</Filter>
     </ClInclude>
@@ -42,9 +42,17 @@
     <ClInclude Include="Meta\Letters.h">
       <Filter>Meta</Filter>
     </ClInclude>
-    <ClInclude Include="Meta\Variable.h" />
     <ClInclude Include="Interfaces\IClass.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Runtime\Metaclass.h">
+      <Filter>Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="Runtime\Variable.h">
+      <Filter>Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="Runtime\Field.h">
+      <Filter>Runtime</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include "Metaclass.h"
 #include "Utilities.h"
 #include "Collections/BST.h"
-#include "Meta/Field.h"
+#include "Runtime/Field.h"
 #include <memory>
 #include <vector>
 
@@ -13,32 +13,6 @@ namespace Cyclone
     {
 
         /** INTERNAL DATA **/
-        //template<typename T>
-        //struct Reference : public Class<T>
-        //{
-        //    public:
-
-        //        template<typename ... U>
-        //        Reference(U...) :
-        //            _count(1),
-        //            _data(new T(U...))
-        //        {
-        //            std::shared_ptr();
-        //        }
-        //        ~Reference()
-        //        {
-        //            if (--_count && _data)
-        //                delete _data;
-        //        }
-
-        //    private:
-
-        //        mutable uint    _count;
-        //        T*              _data;
-        //};
-
-
-
         static BST<string, std::shared_ptr<Metaclass>> Classes;
 
         
@@ -87,7 +61,6 @@ namespace Cyclone
         }
         const Metaclass& Metaclass::Get(const string& name)
         {
-            //return *(Classes[name]);
             return *(Classes[name]);
         }
         void Metaclass::Insert(const Metaclass& type, const string& name)

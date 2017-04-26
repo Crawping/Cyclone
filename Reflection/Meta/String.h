@@ -63,27 +63,6 @@ namespace Cyclone
                 template<char U>
                 constexpr static String<T..., U> Cat(Character<U> value)    { return Concatenate<U>(); }
 
-                //constexpr static char LetterOf(char value)
-                //{
-                //    return
-                //        value == 'A' ? 'A' :
-                //        value == 'B' ? 'B' :
-                //        value == 'C' ? 'C' :
-                //        'Z';
-                //}
-                //constexpr static auto Cat(char value) -> decltype( Concatenate<Reflection::String(value)(0)>() )
-                //{
-                //    return
-                //        value == 'A' ? Concatenate<'A'>() :
-                //        value == 'B' ? Concatenate<'B'>() :
-                //        value == 'C' ? Concatenate<'C'>() :
-                //        String<T..., 'Z'>();
-
-                //}
-                //constexpr static String<T..., char> Cat(char value)               { return Concatenate<'A'>(); }
-                /*template<char U>
-                constexpr static String<T..., U> Cat(char U)                { return Concatenate<U>(); }*/
-
             };
 
             template<> struct String<>
@@ -107,12 +86,6 @@ namespace Cyclone
 
                 constexpr char operator ()(uint index)                      const { return First(); }
 
-
-                //
-                //static auto Create(const Reflection::String& value) -> decltype(Create(value))
-                //{
-
-                //}
             };
 
         }
@@ -143,9 +116,6 @@ namespace Cyclone
                 {
 
                 }
-
-
-                
 
 
 

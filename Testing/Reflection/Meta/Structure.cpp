@@ -2,10 +2,10 @@
  * Written by Josh Grooms on 20170420
  */
 
-#include "Metaclass.h"
 #include "Imaging/Color4.h"
 #include "Math/Vector4.h"
-#include "Meta/Field.h"
+#include "Runtime/Field.h"
+#include "Runtime/Metaclass.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Reflection;

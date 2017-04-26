@@ -3,7 +3,7 @@
  */
 
 #include "IO/Console.h"
-#include "Metaclass.h"
+#include "Runtime/Metaclass.h"
 #include "Math/Vector4.h"
 #include <gtest/gtest.h>
 
