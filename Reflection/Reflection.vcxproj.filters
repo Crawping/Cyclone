@@ -42,9 +42,6 @@
     <ClInclude Include="Meta\Letters.h">
       <Filter>Meta</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\IClass.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Runtime\Metaclass.h">
       <Filter>Runtime</Filter>
     </ClInclude>
@@ -56,6 +53,9 @@
     </ClInclude>
     <ClInclude Include="Runtime\Reference.h">
       <Filter>Runtime</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IReference.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

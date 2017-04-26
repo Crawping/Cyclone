@@ -41,7 +41,7 @@ namespace Cyclone
 
             private:
 
-                IClass* Data;
+                IReference* Data;
           
         };
     }

@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Interfaces/IClass.h"
+#include "Interfaces/IReference.h"
 #include "Meta/Class.h"
 
 
@@ -12,7 +12,8 @@ namespace Cyclone
 {
     namespace Reflection
     {
-        template<typename T> class Reference : public IClass
+        template<typename T> 
+        class Reference : public IReference
         {
             public:
 

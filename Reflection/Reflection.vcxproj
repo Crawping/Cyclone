@@ -23,7 +23,7 @@
     <ClCompile Include="Runtime\Metaclass.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Interfaces\IClass.h" />
+    <ClInclude Include="Interfaces\IReference.h" />
     <ClInclude Include="Meta\Class.h" />
     <ClInclude Include="Meta\Function.h" />
     <ClInclude Include="Meta\Letters.h" />

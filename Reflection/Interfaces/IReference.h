@@ -13,7 +13,7 @@ namespace Cyclone
     {
         using namespace Utilities;
 
-        class IClass
+        class IReference
         {
             public:
                 
@@ -24,7 +24,7 @@ namespace Cyclone
                 virtual const string& TypeName()    const = 0;
                 virtual uint Size()                 const = 0;
 
-                virtual ~IClass() { }
+                virtual ~IReference() { }
         };
     }
 }
