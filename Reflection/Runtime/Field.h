@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Runtime/Metaclass.h"
+#include "Runtime/Variable.h"
 
 
 
@@ -12,23 +12,27 @@ namespace Cyclone
     namespace Reflection
     {
 
-        class Field
+        class Field : public Variable
         {
+
             public:
 
                 uint ID()                   const { return _id; }
                 const string& Name()        const { return _name; }
-                uint Offset()               const { return _offset; }
-                const Metaclass& Type()     const { return _type; }
+                const Metaclass& Type()     const { return _value.Type(); }
+                const Variable& Value()     const { return _value; }
 
-                ReflectionAPI Field(const Metaclass& type, const string& name);
+                ReflectionAPI Field& Value(const Variable& value);
+
+
+
+                ReflectionAPI Field(const string& name);
 
             private:
 
-                uint                _id;
-                string              _name;
-                uint                _offset;
-                const Metaclass&    _type;
+                uint        _id;
+                string      _name;
+                Variable    _value;
 
         };
     }

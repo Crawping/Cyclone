@@ -8,12 +8,19 @@ namespace Cyclone
     namespace Reflection
     {
 
+        /** PROPERTIES **/
+        Field& Field::Value(const Variable& value)
+        {
+            _value = value;
+            return *this;
+        }
+
+
+
         /** CONSTRUCTOR **/
-        Field::Field(const Metaclass& type, const string& name) : 
+        Field::Field(const string& name) : 
             _id(hash(name)),
-            _name(name),
-            _offset(0),
-            _type(type)
+            _name(name)
         {
 
         }
