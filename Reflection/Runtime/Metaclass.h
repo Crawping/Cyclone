@@ -79,7 +79,6 @@ namespace Cyclone
 
                 template<typename T> static const Metaclass& Get()
                 {
-                    // New metaclasses are currently being leaked
                     if (!IsClass<T>())
                         Register(new Metaclass(Meta::Class<T>()));
                     return Get(TypeInfo<T>().name());
