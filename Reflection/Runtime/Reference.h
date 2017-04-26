@@ -12,55 +12,81 @@ namespace Cyclone
 {
     namespace Reflection
     {
-        template<typename T> 
-        class Reference : public IReference
+
+        template<typename T>
+        class Null : public IReference
         {
             public:
 
                 /** PROPERTIES **/
-                bool IsConstant()               const override { return _type.IsConstant(); }
-                bool IsReference()              const override { return _type.IsReference(); }
-                bool IsPointer()                const override { return _type.IsPointer(); }
-                uint TypeID()                   const override { return _type.ID(); }
-                const Metaclass& Type()         const override { return _type; }
-                const string& TypeName()        const override { return _type.Name(); }
-                uint Size()                     const override { return _type.Size(); }
+                bool IsConstant()                           const override { return _type.IsConstant(); }
+                bool IsNull()                               const override { return true; }
+                bool IsReference()                          const override { return _type.IsReference(); }
+                bool IsPointer()                            const override { return _type.IsPointer(); }
+                uint TypeID()                               const override { return _type.ID(); }
+                const Metaclass& Type()                     const override { return _type; }
+                const string& TypeName()                    const override { return _type.Name(); }
+                uint Size()                                 const override { return _type.Size(); }
 
 
 
                 /** CONSTRUCTOR **/
-                Reference(T value) : 
-                    _type(Meta::TypeOf(value)),
-                    _value(value)
-                { 
-
-                }
+                Null()                                      : _type(Meta::TypeOf<T>()) { }
 
 
 
                 /** UTILITIES **/
-                Reference* Copy()           const override { return new Reference(_value); }
+                Null* Copy()                                const override { return new Null(); }
 
 
 
                 /** OPERATORS **/
-                template<typename U>
-                explicit operator U()       const { return nullptr; }
-                explicit operator T()       const { return _value; }
+                template<typename U> explicit operator U()  const { return nullptr; }
+
+                bool operator ==(const IReference& other)   const override { return Type() == other.Type(); }
+
+            private:
+                        
+                const Metaclass& _type;
+
+        };
+
+        template<typename T> 
+        class Reference : public Null<T>
+        {
+            public:
+
+                /** PROPERTIES **/
+                bool IsNull()                               const override { return false; }
 
 
 
-                bool operator ==(const IReference& other) const
+                /** CONSTRUCTOR **/
+                Reference(T value)                          : _value(value) { }
+
+
+
+                /** UTILITIES **/
+                Reference* Copy()                           const override { return new Reference(_value); }
+
+
+
+                /** OPERATORS **/
+                explicit operator T()                       const { return _value; }
+
+                bool operator ==(const IReference& other)   const override
                 {
+                    if (Type() != other.Type()) { return false; }
+
                     auto* y = dynamic_cast<const Reference<T>*>(&other);
-                    return y ? ( (Type() == other.Type()) && (_value == y->_value) ) : false;
+                    return y ? (_value == y->_value) : false;
                 }
 
             private:
                         
-                const Metaclass&    _type;
-                T                   _value;
+                T _value;
                         
         };
+
     }
 }

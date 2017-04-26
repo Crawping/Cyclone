@@ -20,11 +20,13 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets whether the variable is constant qualified. </summary>
                 bool IsConstant()                       const { return Data->IsConstant(); }
+                /// <summary> Gets whether the variable has a null value. </summary>
+                bool IsNull()                           const { return Data->IsNull(); }
                 /// <summary> Gets whether the variable is a native C++ reference to data. </summary>
                 bool IsReference()                      const { return Data->IsReference(); }
                 /// <summary> Gets whether the variable is a native C++ pointer to data. </summary>
                 bool IsPointer()                        const { return Data->IsPointer(); }
-
+                /// <summary> Gets the metaclass that describes the variable's underlying type. </summary>
                 const Metaclass& Type()                 const { return Data->Type(); }
                 /// <summary> Gets the hash identifier of the native C++ type used by the reference. </summary>
                 uint TypeID()                           const { return Data->TypeID(); }
@@ -43,7 +45,7 @@ namespace Cyclone
 
                 template<typename T> Variable(T value) : Data(new Reference<T>(value)) { }
 
-
+                
 
                 /** UTILITIES **/
                 template<typename T>
@@ -58,10 +60,15 @@ namespace Cyclone
                 ReflectionAPI bool operator ==(const Variable& other) const;
                 ReflectionAPI bool operator !=(const Variable& other) const;
 
+            protected:
+
+                
+
             private:
 
                 IReference* Data;
           
         };
+
     }
 }
