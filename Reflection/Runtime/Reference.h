@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Interfaces/IReference.h"
-#include "Meta/Class.h"
+#include "Runtime/Metaclass.h"
 
 
 
@@ -18,19 +18,19 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                bool IsConstant()               const override { return Meta::Class<T>::IsConstant(); }
-                bool IsReference()              const override { return Meta::Class<T>::IsReference(); }
-                bool IsPointer()                const override { return Meta::Class<T>::IsPointer(); }
-                uint TypeID()                   const override { return _info.hash_code(); }
-                const std::type_info& Info()    const override { return _info; }
-                const string& TypeName()        const override { return _info.name(); }
-                uint Size()                     const override { return Meta::Class<T>::Size(); }
+                bool IsConstant()               const override { return _type.IsConstant(); }
+                bool IsReference()              const override { return _type.IsReference(); }
+                bool IsPointer()                const override { return _type.IsPointer(); }
+                uint TypeID()                   const override { return _type.ID(); }
+                const Metaclass& Type()         const override { return _type; }
+                const string& TypeName()        const override { return _type.Name(); }
+                uint Size()                     const override { return _type.Size(); }
 
 
 
                 /** CONSTRUCTOR **/
                 Reference(T value) : 
-                    _info(typeid(T)),
+                    _type(Meta::TypeOf(value)),
                     _value(value)
                 { 
 
@@ -58,8 +58,8 @@ namespace Cyclone
 
             private:
                         
-                const std::type_info&   _info;
-                T                       _value;
+                const Metaclass&    _type;
+                T                   _value;
                         
         };
     }

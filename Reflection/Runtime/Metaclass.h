@@ -18,6 +18,18 @@ namespace Cyclone
 
         /** FORWARD DECLARATIONS **/
         class Field;
+        class Metaclass;
+
+
+        namespace Meta
+        {
+            /// <summary> Gets a class object that encapsulates the type of the input argument. </summary>
+            /// <returns> A templated class object representing the type of the inputted value. </returns>
+            /// <param name="value"> An instance of the class whose type is to be found. </param>
+            template<typename T> 
+            const Metaclass& TypeOf(T value)                  { return Metaclass::Get<T>(); }
+        }
+
 
 
 
@@ -30,11 +42,11 @@ namespace Cyclone
                 uint CoreSize()         const { return _coreSize; }
                 /// <summary> Gets the unique numeric identifier associated with the class. </summary>
                 uint ID()               const { return _id; }
-
+                /// <summary> Gets whether the class is constant qualified. </summary>
                 bool IsConstant()       const { return _isConstant; }
-                /// <summary> Gets whether the class is of a reference type. </summary>
+                /// <summary> Gets whether the class represents a native C++ reference to a type. </summary>
                 bool IsReference()      const { return _isReference; }
-                /// <summary> Gets whether the class is of a native C++ pointer type. </summary>
+                /// <summary> Gets whether the class represents a native C++ pointer to a type. </summary>
                 bool IsPointer()        const { return _isPointer; }
                 /// <summary> Gets the human-readable string name of the class. </summary>
                 const string& Name()    const { return _name; }
@@ -51,10 +63,6 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                template<typename T> T Cast(T variable) const
-                {
-                    return IsOfType<T>() ? (T)variable : nullptr;
-                }
                 /// <summary> Determines whether the class contains a specific field. </summary>
                 /// <returns> A Boolean <c>true</c> if the field is part of the class description, or <c>false</c> otherwise. </returns>
                 /// <param name="field"> A field object to be tested for inclusion in the class description. </param>

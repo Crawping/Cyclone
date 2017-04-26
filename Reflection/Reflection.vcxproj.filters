@@ -42,9 +42,6 @@
     <ClInclude Include="Meta\Function.h">
       <Filter>Meta</Filter>
     </ClInclude>
-    <ClInclude Include="Meta\Letters.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
     <ClInclude Include="Runtime\Metaclass.h">
       <Filter>Runtime</Filter>
     </ClInclude>

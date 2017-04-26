@@ -17,8 +17,6 @@ namespace Cyclone
 
         
 
-
-
         /** INTERNAL FUNCTIONS **/
         bool fieldcomparator(Field* const& x, Field* const& y)
         {
