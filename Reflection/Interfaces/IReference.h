@@ -24,11 +24,13 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets whether the reference is constant qualified. </summary>
                 virtual bool IsConstant()               const = 0;
+                /// <summary> Gets whether the reference has a null value. </summary>
+                virtual bool IsNull()                   const = 0;
                 /// <summary> Gets whether the reference is a native C++ reference to data. </summary>
                 virtual bool IsReference()              const = 0;
                 /// <summary> Gets whether the reference is a native C++ pointer to data. </summary>
                 virtual bool IsPointer()                const = 0;
-                /// <summary> Gets the class definition for the reference's underlying type. </summary>
+                /// <summary> Gets the metaclass that describes the reference's underlying type. </summary>
                 virtual const Metaclass& Type()         const = 0;
                 /// <summary> Gets the hash identifier of the native C++ type used by the reference. </summary>
                 virtual uint TypeID()                   const = 0;
