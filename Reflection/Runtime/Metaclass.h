@@ -139,17 +139,7 @@ namespace Cyclone
                 ReflectionAPI static void Register(Metaclass* type);
 
                 template<typename T>
-                constexpr static const std::type_info& TypeInfo()   { return typeid(Meta::Dereference<T>::Type); }
-
-                template<typename T>
-                bool IsOfType() const 
-                { 
-                    using Class = Meta::Class<T>;
-
-                    try                 { throw static_cast<Class*>(_type); }
-                    catch (Class* type) { return true; }
-                    catch (...)         { return false; }
-                }
+                static const std::type_info& TypeInfo() { return typeid(T); }
 
         };
 

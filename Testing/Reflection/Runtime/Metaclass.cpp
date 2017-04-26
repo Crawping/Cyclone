@@ -49,35 +49,33 @@ TEST_F(_Metaclass, Construction)
     ASSERT_EQ(_t2.Name(),           "int");
     ASSERT_EQ(_t2.Size(),           sizeof(int));
 
-    ASSERT_EQ(_t3.ID(),             typeid(string).hash_code());
+    ASSERT_EQ(_t3.CoreSize(),       sizeof(string));
+    ASSERT_EQ(_t3.ID(),             typeid(string&).hash_code());
     ASSERT_EQ(_t3.IsConstant(),     false);
     ASSERT_EQ(_t3.IsPointer(),      false);
     ASSERT_EQ(_t3.IsReference(),    true);
-    ASSERT_EQ(_t3.Name(),           typeid(string).name());
-    ASSERT_EQ(_t3.CoreSize(),       sizeof(string));
+    ASSERT_EQ(_t3.Name(),           typeid(string&).name());
+    ASSERT_EQ(_t3.Size(),           sizeof(string&));
 
-    ASSERT_EQ(_t4.ID(),             typeid(char).hash_code());
+    ASSERT_EQ(_t4.CoreSize(),       sizeof(char));
+    ASSERT_EQ(_t4.ID(),             typeid(const char*).hash_code());
     ASSERT_EQ(_t4.IsConstant(),     true);
     ASSERT_EQ(_t4.IsPointer(),      true);
     ASSERT_EQ(_t4.IsReference(),    false);
-    ASSERT_EQ(_t4.Name(),           typeid(char).name());
-    ASSERT_EQ(_t4.CoreSize(),       sizeof(char));
+    ASSERT_EQ(_t4.Name(),           typeid(const char*).name());
+    ASSERT_EQ(_t4.Size(),           sizeof(const char*));
 }
 
 
 
 /** UTILITY TESTS **/
-TEST_F(_Metaclass, Cast)
-{
-
-}
 TEST_F(_Metaclass, Get)
 {
     ASSERT_EQ(Metaclass::IsClass<int>(),        true);
     ASSERT_EQ(Metaclass::IsClass<int&>(),       true);
     ASSERT_EQ(Metaclass::IsClass<void>(),       true);
-    ASSERT_EQ(Metaclass::IsClass<void*>(),      true);
 
+    ASSERT_EQ(Metaclass::IsClass<void*>(),      false);
     ASSERT_EQ(Metaclass::IsClass<Metaclass>(),  false);
     ASSERT_EQ(Metaclass::IsClass<Vector4>(),    false);
 }
