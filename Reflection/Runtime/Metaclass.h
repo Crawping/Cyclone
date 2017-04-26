@@ -34,7 +34,7 @@ namespace Cyclone
                 bool IsConstant()       const { return _isConstant; }
                 /// <summary> Gets whether the class is of a reference type. </summary>
                 bool IsReference()      const { return _isReference; }
-                /// <summary> Gets whether the class if of a pointer type. </summary>
+                /// <summary> Gets whether the class is of a native C++ pointer type. </summary>
                 bool IsPointer()        const { return _isPointer; }
                 /// <summary> Gets the human-readable string name of the class. </summary>
                 const string& Name()    const { return _name; }
@@ -121,7 +121,6 @@ namespace Cyclone
                 {
                     
                 }
-
 
 
 

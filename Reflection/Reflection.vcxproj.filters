@@ -18,6 +18,9 @@
     <ClCompile Include="Runtime\Field.cpp">
       <Filter>Runtime</Filter>
     </ClCompile>
+    <ClCompile Include="Runtime\Variable.cpp">
+      <Filter>Runtime</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Meta\Primitives.h">

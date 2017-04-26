@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Runtime\Field.cpp" />
     <ClCompile Include="Runtime\Metaclass.cpp" />
+    <ClCompile Include="Runtime\Variable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interfaces\IReference.h" />

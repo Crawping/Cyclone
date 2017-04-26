@@ -52,6 +52,9 @@ namespace Cyclone
             template<typename T> struct IsReference<T&>         : Boolean<true> { };
             template<typename T> struct IsReference<const T&>   : Boolean<true> { };
 
+            template<typename T> struct IsVolatile              : Boolean<false> { };
+            template<typename T> struct IsVolatile<volatile T>  : Boolean<true> { };
+
             /// <summary> Determines whether the input represents the void type. </summary>
             template<typename T> struct IsVoid                  : IsEqual<T, void> { };
 

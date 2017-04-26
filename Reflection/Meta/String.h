@@ -21,9 +21,9 @@ namespace Cyclone
 
             template<char ... T> struct String;
 
-            template<uint N, char T, char ... U> struct Characters      : public Characters<N - 1, U...> { };
-            template<char T, char ... U> struct Characters<0, T, U...>  : public Character<T> { };
-            template<char T, char ... U> struct Substring               : public String<U...> { };
+            template<uint N, char T, char ... U> struct Characters          : public Characters<N - 1, U...> { };
+            template<char T, char ... U> struct Characters<0, T, U...>      : public Character<T> { };
+            template<char T, char ... U> struct Substring                   : public String<U...> { };
 
 
             template<char ... T>
