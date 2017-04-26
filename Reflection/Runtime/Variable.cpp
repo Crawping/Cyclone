@@ -9,7 +9,7 @@ namespace Cyclone
 
         /** CONSTRUCTORS **/
         Variable::Variable() : 
-            Data(new Reference<int>(0))
+            Data(new Reference<void>(0))
         {
 
         }
