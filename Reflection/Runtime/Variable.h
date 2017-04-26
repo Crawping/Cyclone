@@ -24,6 +24,8 @@ namespace Cyclone
                 bool IsReference()                      const { return Data->IsReference(); }
                 /// <summary> Gets whether the variable is a native C++ pointer to data. </summary>
                 bool IsPointer()                        const { return Data->IsPointer(); }
+
+                const Metaclass& Type()                 const { return Data->Type(); }
                 /// <summary> Gets the hash identifier of the native C++ type used by the reference. </summary>
                 uint TypeID()                           const { return Data->TypeID(); }
                 /// <summary> Gets the string name of the variable's underlying type. </summary>

@@ -7,7 +7,6 @@ namespace Cyclone
     namespace Reflection
     {
 
-
         /** CONSTRUCTORS **/
         Variable::Variable() : 
             Data(new Reference<int>(0))

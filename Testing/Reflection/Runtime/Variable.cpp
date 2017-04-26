@@ -34,6 +34,8 @@ class _Variable : public testing::Test
 };
 
 
+
+/** CONSTRUCTION **/
 TEST_F(_Variable, Properties)
 {
     ASSERT_EQ(_v1.IsConstant(),         false);
@@ -48,6 +50,10 @@ TEST_F(_Variable, Properties)
     ASSERT_EQ(_v3.IsPointer(),          false);
     ASSERT_EQ(_v3.IsReference(),        true);
 }
+
+
+
+/** UTILITIES **/
 TEST_F(_Variable, Casting)
 {
     ASSERT_TRUE(_v1.Cast<int>());
@@ -62,6 +68,33 @@ TEST_F(_Variable, Casting)
     auto v1 = *_v1.Cast<int>();
     ASSERT_EQ((int)v1, 10);
 }
+
+
+
+/** OPERATORS **/
+TEST_F(_Variable, Assignment)
+{
+    Variable v1 = _v1;
+    Variable v2 = _v2;
+    Variable v3 = _v3;
+
+    ASSERT_EQ(v1.Type(),                Meta::TypeOf(10));
+    ASSERT_EQ(v2.Type(),                Meta::TypeOf("T"));
+    ASSERT_EQ(v3.Type(),                Meta::TypeOf(_d1));
+    ASSERT_NE(v2.Type(),                Meta::TypeOf('T'));
+
+    v1 = "New Test";
+    v2 = &v1;
+    v3 = 3.14159265;
+
+    ASSERT_NE(v1.Type(),                Meta::TypeOf(10));
+    ASSERT_NE(v2.Type(),                Meta::TypeOf("T"));
+    ASSERT_NE(v3.Type(),                Meta::TypeOf(_d1));
+
+    ASSERT_EQ(v1.Type(),                Meta::TypeOf("T"));
+    ASSERT_EQ(v2.Type(),                Meta::TypeOf(&v1));
+    ASSERT_EQ(v3.Type(),                Meta::TypeOf(3.14));
+}
 TEST_F(_Variable, Copying)
 {
     Variable v1 = _v1;
@@ -69,10 +102,11 @@ TEST_F(_Variable, Copying)
     Variable v3 = _v3;
 
     ASSERT_EQ(v1,                       _v1);
+    ASSERT_EQ(v2,                       _v2);
+    ASSERT_EQ(v3,                       _v3);
+
     ASSERT_NE(v1,                       _v2);
     ASSERT_NE(v1,                       _v3);
-
     ASSERT_NE(v2,                       _v1);
-    ASSERT_EQ(v2,                       _v2);
     ASSERT_NE(v2,                       _v3);
 }
