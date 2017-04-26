@@ -4,6 +4,9 @@
     <Filter Include="Meta">
       <UniqueIdentifier>{e460dfd8-2689-4ea3-baee-c61d2bf53ed5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{3800630a-2ea4-47dd-9428-4d934d115ec5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Meta\Field.cpp">
@@ -38,6 +41,10 @@
     </ClInclude>
     <ClInclude Include="Meta\Letters.h">
       <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Variable.h" />
+    <ClInclude Include="Interfaces\IClass.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

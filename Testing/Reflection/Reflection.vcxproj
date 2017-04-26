@@ -130,6 +130,7 @@
     <ClCompile Include="Meta\Utilities.cpp" />
     <ClCompile Include="Meta\Primitives.cpp" />
     <ClCompile Include="Meta\Structure.cpp" />
+    <ClCompile Include="Meta\Variable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

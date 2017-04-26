@@ -26,5 +26,8 @@
     <ClCompile Include="Meta\Class.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
+    <ClCompile Include="Meta\Variable.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

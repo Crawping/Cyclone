@@ -39,6 +39,10 @@ TEST_F(_String, Construction)
     ASSERT_EQ(_s1.Value(),                  "Testing");
     ASSERT_NE(_s1,                          "testing");
 
+    ASSERT_EQ(S0::Count(),                  0);
+    ASSERT_EQ(S0::First(),                  NULL);
+    ASSERT_EQ(S0::Last(),                   NULL);
+
     ASSERT_EQ(S1::Count(),                  7);
     ASSERT_EQ(S1::First(),                  'T');
     ASSERT_EQ(S1::Last(),                   'g');

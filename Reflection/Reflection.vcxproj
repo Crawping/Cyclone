@@ -23,6 +23,7 @@
     <ClCompile Include="Meta\Field.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Interfaces\IClass.h" />
     <ClInclude Include="Metaclass.h" />
     <ClInclude Include="Meta\Class.h" />
     <ClInclude Include="Meta\Field.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="Meta\String.h" />
     <ClInclude Include="Meta\Utilities.h" />
     <ClInclude Include="Meta\Primitives.h" />
+    <ClInclude Include="Meta\Variable.h" />
     <ClInclude Include="ReflectionAPI.h" />
   </ItemGroup>
   <ItemGroup>
