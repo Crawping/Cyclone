@@ -62,18 +62,6 @@ namespace Cyclone
 
 
 
-            template<typename T>
-            constexpr bool IsOfType(void* value)
-            { 
-                return static_cast<Class<T>*>(value) ? true : false;
-    
-                //try                     { throw static_cast<Class<T>*>(_type); }
-                //catch (Class<T>* type)  { b = true; }
-                //catch (...)             { b = false; }
-            }
-
-            //template<typename
-
             /// <summary> Gets a class object that encapsulates the type of the input argument. </summary>
             /// <returns> A templated class object representing the type of the inputted value. </returns>
             /// <param name="value"> An instance of the class whose type is to be found. </param>
