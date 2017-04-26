@@ -31,19 +31,6 @@ namespace Cyclone
         {
 
         }
-        Metaclass::Metaclass(Metaclass&& other) noexcept :
-            _coreSize       (other._coreSize),
-            _id             (other._id),
-            _isConstant     (other._isConstant),
-            _isReference    (other._isReference),
-            _isPointer      (other._isPointer),
-            _name           (other._name),
-            _size           (other._size),
-            _type           (other._type)
-        {
-            std::swap(_fields, other._fields);
-            other._type = nullptr;
-        }
         Metaclass::~Metaclass()
         {
             for (auto f : _fields)
@@ -61,30 +48,13 @@ namespace Cyclone
         {
             return *(Classes[name]);
         }
-        void Metaclass::Insert(const Metaclass& type, const string& name)
-        {
-            Field* newfield = new Field(type, name);
-        }
+        //void Metaclass::Insert(const Metaclass& type, const string& name)
+        //{
+        //    Field* newfield = new Field(type, name);
+        //}
         bool Metaclass::IsClass(const string& name)
         {
             return Classes.Contains(name);
-        }
-
-
-        Metaclass& Metaclass::operator =(Metaclass&& other) noexcept
-        {
-            _coreSize       = other._coreSize;
-            _id             = other._id;
-            _isConstant     = other._isConstant;
-            _isReference    = other._isReference;
-            _isPointer      = other._isPointer;
-            _name           = other._name;
-            _size           = other._size;
-            _type           = other._type;
-
-            std::swap(_fields, other._fields);
-            other._type = nullptr;
-            return *this;
         }
 
 

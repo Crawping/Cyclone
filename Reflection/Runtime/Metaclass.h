@@ -23,11 +23,13 @@ namespace Cyclone
 
         namespace Meta
         {
+            template<typename T>
+            const Metaclass& TypeOf()               { return Metaclass::Get<T>(); }
             /// <summary> Gets a class object that encapsulates the type of the input argument. </summary>
             /// <returns> A templated class object representing the type of the inputted value. </returns>
             /// <param name="value"> An instance of the class whose type is to be found. </param>
             template<typename T> 
-            const Metaclass& TypeOf(T value)                  { return Metaclass::Get<T>(); }
+            const Metaclass& TypeOf(T value)        { return Metaclass::Get<T>(); }
         }
 
 
@@ -39,25 +41,24 @@ namespace Cyclone
             public:
                 
                 /** PROPERTIES **/    
-                uint CoreSize()         const { return _coreSize; }
                 /// <summary> Gets the unique numeric identifier associated with the class. </summary>
-                uint ID()               const { return _id; }
+                uint ID()                   const { return _id; }
                 /// <summary> Gets whether the class is constant qualified. </summary>
-                bool IsConstant()       const { return _isConstant; }
+                bool IsConstant()           const { return _isConstant; }
                 /// <summary> Gets whether the class represents a native C++ reference to a type. </summary>
-                bool IsReference()      const { return _isReference; }
+                bool IsReference()          const { return _isReference; }
                 /// <summary> Gets whether the class represents a native C++ pointer to a type. </summary>
-                bool IsPointer()        const { return _isPointer; }
+                bool IsPointer()            const { return _isPointer; }
                 /// <summary> Gets the human-readable string name of the class. </summary>
-                const string& Name()    const { return _name; }
+                const string& Name()        const { return _name; }
                 /// <summary> Gets the number of bytes required to store an instance of the class. </summary>
-                uint Size()             const { return _size; }
+                uint Size()                 const { return _size; }
 
 
 
                 /** CONSTRUCTORS & DESTRUCTOR **/
-                Metaclass(const Metaclass& other) = delete;
-                ReflectionAPI Metaclass(Metaclass&& other) noexcept;
+                Metaclass(const Metaclass& other)   = delete;
+                Metaclass(Metaclass&& other)        = delete;
                 ReflectionAPI ~Metaclass();
 
 
@@ -70,7 +71,7 @@ namespace Cyclone
                 /// <summary> Adds a new field to the class description. </summary>
                 /// <param name="type"> Another metaclass object that describes the type of the field being added. </param>
                 /// <param name="name"> The human-readable string name of the field being added. </param>
-                ReflectionAPI void Insert(const Metaclass& type, const string& name);
+                //ReflectionAPI void Insert(const Metaclass& type, const string& name);
 
 
 
@@ -95,24 +96,19 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                Metaclass& operator =(const Metaclass& other) = delete;
-                ReflectionAPI Metaclass& operator =(Metaclass&& other) noexcept;
-
                 bool operator ==(const Metaclass& other) const { return (this == &other); }
                 bool operator !=(const Metaclass& other) const { return !(operator ==(other)); }
 
             private:
                 
                 /** DATA **/
-                uint            _coreSize;
-                Set<Field*>     _fields;
-                uint            _id;
-                bool            _isConstant;
-                bool            _isReference;
-                bool            _isPointer;
-                string          _name;
-                uint            _size;
-                void*           _type;
+                Set<Field*>         _fields;
+                uint                _id;
+                bool                _isConstant;
+                bool                _isReference;
+                bool                _isPointer;
+                string              _name;
+                uint                _size;
 
                 
 
@@ -121,14 +117,12 @@ namespace Cyclone
                 /// <summary> Constructs a new metaclass object containing information about a specific type. </summary>
                 /// <param name="type"> The type for which the metaclass is to be constructed. </param>
                 template<typename T> Metaclass(const Meta::Class<T>& type) : 
-                    _coreSize       (Meta::Class<T>::CoreType::Size()),
                     _id             (TypeInfo<T>().hash_code()),
                     _isConstant     (Meta::Class<T>::IsConstant()),
                     _isReference    (Meta::Class<T>::IsReference()),
                     _isPointer      (Meta::Class<T>::IsPointer()),
                     _name           (TypeInfo<T>().name()),
-                    _size           (Meta::Class<T>::Size()),
-                    _type           (nullptr)
+                    _size           (Meta::Class<T>::Size())
                 {
                     
                 }
