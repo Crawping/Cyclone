@@ -11,39 +11,39 @@
 using namespace Cyclone::Reflection;
 
 
-
-class TestStructure { }; /*: public Meta::Structure
-<
-    Meta::Primitive<Color4, Color4(0.1f, 0.2f, 0.3f, 1.0f)>,
-    Meta::Primitive<Vector4, Vector4(1.0f)>,
-    Meta::Primitive<int, -10>,
-    Meta::Primitive<ulong, 1000>
-> { };*/
-
-
-
-class _TestStructure : public testing::Test 
-{
-    protected:
-
-        TestStructure   _s1;
-        Color4          _c1;
-
-        _TestStructure() 
-            //_s1{ Color4::Black, Vector4::One, 0, 10 }
-        {
-            Metaclass::Get<TestStructure>();
-            Metaclass::Get<Color4>();
-        }
-};
-
-
-
-/** CONSTRUCTION TESTS **/
-TEST_F(_TestStructure, Construction)
-{
-    ASSERT_EQ(Metaclass::IsClass<Color4>(),         true);
-    ASSERT_EQ(Metaclass::IsClass<TestStructure>(),  true);
-
-    //_s1.Get(0);
-}
+//
+//class TestStructure { }; /*: public Meta::Structure
+//<
+//    Meta::Primitive<Color4, Color4(0.1f, 0.2f, 0.3f, 1.0f)>,
+//    Meta::Primitive<Vector4, Vector4(1.0f)>,
+//    Meta::Primitive<int, -10>,
+//    Meta::Primitive<ulong, 1000>
+//> { };*/
+//
+//
+//
+//class _TestStructure : public testing::Test 
+//{
+//    protected:
+//
+//        TestStructure   _s1;
+//        Color4          _c1;
+//
+//        _TestStructure() 
+//            //_s1{ Color4::Black, Vector4::One, 0, 10 }
+//        {
+//            Metaclass::Get<TestStructure>();
+//            Metaclass::Get<Color4>();
+//        }
+//};
+//
+//
+//
+///** CONSTRUCTION TESTS **/
+//TEST_F(_TestStructure, Construction)
+//{
+//    ASSERT_EQ(Metaclass::IsClass<Color4>(),         true);
+//    ASSERT_EQ(Metaclass::IsClass<TestStructure>(),  true);
+//
+//    //_s1.Get(0);
+//}

@@ -49,7 +49,6 @@ TEST_F(_Metaclass, Construction)
     ASSERT_EQ(_t2.Name(),           "int");
     ASSERT_EQ(_t2.Size(),           sizeof(int));
 
-    ASSERT_EQ(_t3.CoreSize(),       sizeof(string));
     ASSERT_EQ(_t3.ID(),             typeid(string&).hash_code());
     ASSERT_EQ(_t3.IsConstant(),     false);
     ASSERT_EQ(_t3.IsPointer(),      false);
@@ -57,7 +56,6 @@ TEST_F(_Metaclass, Construction)
     ASSERT_EQ(_t3.Name(),           typeid(string&).name());
     ASSERT_EQ(_t3.Size(),           sizeof(string&));
 
-    ASSERT_EQ(_t4.CoreSize(),       sizeof(char));
     ASSERT_EQ(_t4.ID(),             typeid(const char*).hash_code());
     ASSERT_EQ(_t4.IsConstant(),     true);
     ASSERT_EQ(_t4.IsPointer(),      true);
