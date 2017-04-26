@@ -4,6 +4,9 @@
     <Filter Include="Meta">
       <UniqueIdentifier>{b7d6e650-0944-4c92-bc87-4806fa56f990}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Runtime">
+      <UniqueIdentifier>{a9cedfa7-6029-4aef-953a-9ab008f2c542}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Meta\Primitives.cpp">
@@ -16,7 +19,6 @@
     <ClCompile Include="Meta\Utilities.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
-    <ClCompile Include="Metaclass.cpp" />
     <ClCompile Include="Meta\String.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
@@ -26,8 +28,11 @@
     <ClCompile Include="Meta\Class.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
-    <ClCompile Include="Meta\Variable.cpp">
-      <Filter>Meta</Filter>
+    <ClCompile Include="Runtime\Metaclass.cpp">
+      <Filter>Runtime</Filter>
+    </ClCompile>
+    <ClCompile Include="Runtime\Variable.cpp">
+      <Filter>Runtime</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
