@@ -53,7 +53,7 @@ namespace Cyclone
                 bool operator ==(const IReference& other) const
                 {
                     auto* y = dynamic_cast<const Reference<T>*>(&other);
-                    return y ? (_value == y->_value) : false;
+                    return y ? ( (Type() == other.Type()) && (_value == y->_value) ) : false;
                 }
 
             private:

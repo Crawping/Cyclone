@@ -98,6 +98,9 @@ namespace Cyclone
                 Metaclass& operator =(const Metaclass& other) = delete;
                 ReflectionAPI Metaclass& operator =(Metaclass&& other) noexcept;
 
+                bool operator ==(const Metaclass& other) const { return (this == &other); }
+                bool operator !=(const Metaclass& other) const { return !(operator ==(other)); }
+
             private:
                 
                 /** DATA **/

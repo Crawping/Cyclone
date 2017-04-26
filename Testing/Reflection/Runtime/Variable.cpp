@@ -47,7 +47,6 @@ TEST_F(_Variable, Properties)
     ASSERT_EQ(_v3.IsConstant(),         false);
     ASSERT_EQ(_v3.IsPointer(),          false);
     ASSERT_EQ(_v3.IsReference(),        true);
-
 }
 TEST_F(_Variable, Casting)
 {
