@@ -47,6 +47,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                /// <summary> Creates a new identical copy of the data reference. </summary>
                 virtual IReference* Copy()              const = 0;
 
 

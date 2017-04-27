@@ -38,11 +38,19 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS & DESTRUCTOR **/
+                /// <summary> Constructs a new null-valued variable. </summary>
                 ReflectionAPI Variable();
+                /// <summary> Constructs a new variable by transferring the contents of another variable. </summary>
+                /// <param name="other"> Another runtime variable that is about to be moved. </param>
                 ReflectionAPI Variable(Variable&& other);
+                /// <summary> Constructs a new variable by copying the contents of another variable. </summary>
+                /// <param name="other"> Another runtime variable that is to be copied. </param>
                 ReflectionAPI Variable(const Variable& other);
                 ReflectionAPI ~Variable();
 
+                /// <summary> Constructs a new variable using the type and value of another native variable. </summary>
+                /// <typeparam name="T"> The type of the inputted variable. </typeparam>
+                /// <param name="value"> Any native C++ variable. </param>
                 template<typename T> Variable(T value) : Data(new Reference<T>(value)) { }
 
                 
