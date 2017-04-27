@@ -42,6 +42,7 @@ namespace Cyclone
                 VMAPI void Execute(const Vector<Instruction>& commands);
                 VMAPI void Pause();
                 VMAPI void Resume();
+                VMAPI void Run(const Vector<Instruction>& instructions);
 
             private:
 

@@ -8,6 +8,10 @@
 namespace Core.Primitives
 {
     
+    interface IAddable
+    {
+
+    }
     interface IComparable
     {
 
@@ -17,10 +21,10 @@ namespace Core.Primitives
         interface = IComparable;
     {
 
-        INumeric operator +(const @INumeric other);
-        INumeric operator /(const @INumeric other);
-        INumeric operator *(const @INumeric other);
-        INumeric operator -(const @INumeric other);
+        INumeric operator +(const @INumeric other):     const;
+        INumeric operator /(const @INumeric other):     const;
+        INumeric operator *(const @INumeric other):     const;
+        INumeric operator -(const @INumeric other):     const;
 
         @INumeric operator +=(const @INumeric other);
         @INumeric operator /=(const @INumeric other);
@@ -37,6 +41,29 @@ namespace Core.Primitives
     {
         float MaxValue:         (const, static) = 3.40282347E+38F;
         float MinValue:         (const, static) = -3.40282347E+38F;
+
+        Float32 operator +(Float32 other):      (const, override)
+        {
+            add RO0 RI0 RI1;
+            ret;
+        }
+        Float32 operator /(Float32 other):      (const, override)
+        {
+            div RO0 RI0 RI1;
+            ret;
+        }
+        Float32 operator *(Float32 other):      (const, override)
+        {
+            mul RO0 RI0 RI1;
+            ret;
+        }
+        Float32 operator -(Float32 other):      (const, override)
+        {
+            sub RO0 RI0 RI1;
+            ret;
+        }
+
+
     }
     class Float64:
         alias       = double;
@@ -78,7 +105,7 @@ namespace Core.Primitives
         long MaxValue:          (const, static) = 9223372036854775807;    
         long MinValue:          (const, static) = -9223372036854775808;
     }
-    class UnsignedInteger8:
+    class Integer8U:
         alias       = ubyte;
         base        = internal ubyte;
         interface   = INumeric;
@@ -86,7 +113,7 @@ namespace Core.Primitives
         ubyte MaxValue:         (const, static) = 255;
         ubyte MinValue:         (const, static) = 0;
     }
-    class UnsignedInteger16:
+    class Integer16U:
         alias       = ushort;
         base        = internal ushort;
         interface   = INumeric;
@@ -94,7 +121,7 @@ namespace Core.Primitives
         ushort MaxValue:        (const, static) = 65535;
         ushort MinValue:        (const, static) = 0;
     }
-    class UnsignedInteger32:
+    class Integer32U:
         alias       = uint;
         base        = internal uint;
         interface   = INumeric;
@@ -102,7 +129,7 @@ namespace Core.Primitives
         uint MaxValue:          (const, static) = 4294967295;
         uint MinValue:          (const, static) = 0;
     }
-    class UnsignedInteger64:
+    class Integer64U:
         alias       = ulong;
         base        = internal ulong;
         interface   = INumeric;
