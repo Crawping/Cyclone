@@ -8,23 +8,31 @@
 
 namespace Cyclone
 {
+    namespace Platform
+    {
+        struct PointerMotionEvent;
+        struct PointerButtonEvent;
+        struct KeyboardEvent;
+    }
+
     namespace UI
     {
+        namespace { using namespace Platform; }
 
         class IInteractive
         {
             public:
-                
-                
+
+
                 virtual ~IInteractive() { }
 
 
                 /** EVENT HANDLERS **/
-                virtual void ProcessButtonPress()   = 0;
-                virtual void ProcessButtonRelease() = 0;
-                virtual void ProcessKeyPress()      = 0;
-                virtual void ProcessKeyRelease()    = 0;
-                virtual void ProcessPointerHover()  = 0;
+                virtual void ProcessButtonPress(IInteractive& src, const PointerButtonEvent& evt)   = 0;
+                virtual void ProcessButtonRelease(IInteractive& src, const PointerButtonEvent& evt) = 0;
+                virtual void ProcessKeyPress(IInteractive& src, const KeyboardEvent& evt)           = 0;
+                virtual void ProcessKeyRelease(IInteractive& src, const KeyboardEvent& evt)         = 0;
+                virtual void ProcessPointerMotion(IInteractive& src, const PointerMotionEvent& evt) = 0;
         };
     }
 }
