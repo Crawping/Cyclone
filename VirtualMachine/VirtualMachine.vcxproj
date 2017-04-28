@@ -78,6 +78,7 @@
       <AdditionalIncludeDirectories>./;../Reflection;../Utilities;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>VM_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalOptions>/std:c++14 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -125,14 +126,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Storage\VirtualArray.cpp" />
-    <ClCompile Include="Storage\VirtualVariable.cpp" />
     <ClCompile Include="Storage\StringLibrary.cpp" />
-    <ClCompile Include="Storage\VirtualClass.cpp" />
-    <ClCompile Include="Storage\VirtualProperty.cpp" />
-    <ClCompile Include="Storage\VirtualMemory.cpp" />
     <ClCompile Include="Storage\VirtualWorkspace.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
+    <ClCompile Include="Virtual\Machine.cpp" />
+    <ClCompile Include="Virtual\Variable.cpp" />
+    <ClCompile Include="Virtual\Array.cpp" />
+    <ClCompile Include="Virtual\Class.cpp" />
+    <ClCompile Include="Virtual\Property.cpp" />
+    <ClCompile Include="Virtual\Memory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Execution\Classes.h" />
@@ -140,18 +142,19 @@
     <ClInclude Include="Execution\Instructions.h" />
     <ClInclude Include="Execution\Shorthand.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />
-    <ClInclude Include="Storage\VirtualArray.h" />
-    <ClInclude Include="Storage\VirtualFunction.h" />
-    <ClInclude Include="Storage\VirtualStructure.h" />
-    <ClInclude Include="Storage\VirtualReference.h" />
-    <ClInclude Include="Storage\VirtualVariable.h" />
+    <ClInclude Include="Storage\StackFrame.h" />
     <ClInclude Include="Storage\StringLibrary.h" />
-    <ClInclude Include="Storage\VirtualClass.h" />
-    <ClInclude Include="Storage\VirtualProperty.h" />
-    <ClInclude Include="Storage\VirtualMemory.h" />
     <ClInclude Include="Storage\VirtualWorkspace.h" />
     <ClInclude Include="VirtualMachine.h" />
+    <ClInclude Include="Virtual\Address.h" />
+    <ClInclude Include="Virtual\Machine.h" />
     <ClInclude Include="Virtual\Variable.h" />
+    <ClInclude Include="Virtual\Array.h" />
+    <ClInclude Include="Virtual\Class.h" />
+    <ClInclude Include="Virtual\Property.h" />
+    <ClInclude Include="Virtual\Memory.h" />
+    <ClInclude Include="Virtual\Function.h" />
+    <ClInclude Include="Virtual\Workspace.h" />
     <ClInclude Include="VMAPI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

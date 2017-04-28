@@ -5,7 +5,7 @@
 #pragma once
 #include "VMAPI.h"
 #include "Collections/Stack.h"
-#include "Storage/VirtualMemory.h"
+#include "Virtual/Memory.h"
 
 
 
@@ -14,39 +14,44 @@ namespace Cyclone
     namespace { using namespace Utilities; }
     namespace VM
     {
-        class VirtualWorkspace
+        namespace Virtual
         {
-            public:
 
-                /** PROPERTIES **/
-                uint Count()                                        const { return _workspace.Count(); }
-                VirtualVariable& First()                                  { return _workspace.First(); }
-                const VirtualVariable& First()                      const { return _workspace.First(); }
-                VirtualVariable& Last()                                   { return _workspace.Last(); }
-                const VirtualVariable& Last()                       const { return _workspace.Last(); }
+            class VirtualWorkspace
+            {
+                public:
 
-
-
-                /** CONSTRUCTOR **/
-                VMAPI VirtualWorkspace();
+                    /** PROPERTIES **/
+                    uint Count()                                        const { return _workspace.Count(); }
+                    Variable& First()                                  { return _workspace.First(); }
+                    const Variable& First()                      const { return _workspace.First(); }
+                    Variable& Last()                                   { return _workspace.Last(); }
+                    const Variable& Last()                       const { return _workspace.Last(); }
 
 
 
-                /** UTILITIES **/
-                VirtualVariable& Access(uint id)                          { return _locals[ _locals.Contains(id) ? id : 0 ]; }
-                const VirtualVariable& Access(uint id)              const { return _locals[ _locals.Contains(id) ? id : 0 ]; }
-                VirtualVariable Get(uint id)                        const { return Access(id); }
-                VirtualVariable Pop()                                     { return _workspace.Pop(); }
-                void Push(const VirtualVariable& value)                   { _workspace.Push(value); }
-                void Push(const Vector<VirtualVariable>& values)          { _workspace.Push(values); }
-                //void Remove(uint count)                           { _workspace.Remove(0); }
+                    /** CONSTRUCTOR **/
+                    VMAPI VirtualWorkspace();
 
-                VMAPI void Set(uint id, const VirtualVariable& value);
 
-            private:
 
-                BST<uint, VirtualVariable>      _locals;
-                Stack<VirtualVariable>          _workspace;
-        };
+                    /** UTILITIES **/
+                    Variable& Access(uint id)                          { return _locals[ _locals.Contains(id) ? id : 0 ]; }
+                    const Variable& Access(uint id)              const { return _locals[ _locals.Contains(id) ? id : 0 ]; }
+                    Variable Get(uint id)                        const { return Access(id); }
+                    Variable Pop()                                     { return _workspace.Pop(); }
+                    void Push(const Variable& value)                   { _workspace.Push(value); }
+                    void Push(const Vector<Variable>& values)          { _workspace.Push(values); }
+                    //void Remove(uint count)                           { _workspace.Remove(0); }
+
+                    VMAPI void Set(uint id, const Variable& value);
+
+                private:
+
+                    BST<uint, Variable>      _locals;
+                    Stack<Variable>          _workspace;
+            };
+
+        }
     }
 }

@@ -44,10 +44,10 @@ namespace Cyclone
 
             /* REGISTER ADDRESSING
              *  - 64-bit unsigned integer
-             *      > Base              (8)
-             *      > Offset            (8)
-             *      > Count             (8)
-             *      > Stride            (8)
+             *      > Base              (16)
+             *      > Offset            (16)
+             *      > Count             (16)
+             *      > Stride            (16)
              */
 
             /* MEMORY ADDRESSING
@@ -62,9 +62,6 @@ namespace Cyclone
             // add      @X @Y @Z
 
             // call     RX RY RZ    (Register-X(2:4:3) = Register-Y(Register-Z))
-            // call     R1          (Output = Register-1(Input))
-            // call     G1          (Global-1)
-            // call     G1 
 
             // call     @X
 

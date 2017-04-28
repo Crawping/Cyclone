@@ -22,31 +22,33 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VirtualMachine.cpp" />
-    <ClCompile Include="Storage\VirtualProperty.cpp">
-      <Filter>Storage</Filter>
-    </ClCompile>
-    <ClCompile Include="Storage\VirtualMemory.cpp">
-      <Filter>Storage</Filter>
-    </ClCompile>
     <ClCompile Include="Storage\VirtualWorkspace.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
     <ClCompile Include="Storage\StringLibrary.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
-    <ClCompile Include="Storage\VirtualClass.cpp">
-      <Filter>Storage</Filter>
+    <ClCompile Include="Virtual\Variable.cpp">
+      <Filter>Virtual</Filter>
     </ClCompile>
-    <ClCompile Include="Storage\VirtualVariable.cpp">
-      <Filter>Storage</Filter>
+    <ClCompile Include="Virtual\Array.cpp">
+      <Filter>Virtual</Filter>
     </ClCompile>
-    <ClCompile Include="Storage\VirtualArray.cpp" />
+    <ClCompile Include="Virtual\Class.cpp">
+      <Filter>Virtual</Filter>
+    </ClCompile>
+    <ClCompile Include="Virtual\Property.cpp">
+      <Filter>Virtual</Filter>
+    </ClCompile>
+    <ClCompile Include="Virtual\Machine.cpp">
+      <Filter>Virtual</Filter>
+    </ClCompile>
+    <ClCompile Include="Virtual\Memory.cpp">
+      <Filter>Virtual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
-    <ClInclude Include="Storage\VirtualProperty.h">
-      <Filter>Storage</Filter>
-    </ClInclude>
     <ClInclude Include="Execution\Instructions.h">
       <Filter>Execution</Filter>
     </ClInclude>
@@ -54,16 +56,10 @@
     <ClInclude Include="Interfaces\IVirtualData.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Storage\VirtualMemory.h">
-      <Filter>Storage</Filter>
-    </ClInclude>
     <ClInclude Include="Storage\VirtualWorkspace.h">
       <Filter>Storage</Filter>
     </ClInclude>
     <ClInclude Include="Storage\StringLibrary.h">
-      <Filter>Storage</Filter>
-    </ClInclude>
-    <ClInclude Include="Storage\VirtualClass.h">
       <Filter>Storage</Filter>
     </ClInclude>
     <ClInclude Include="Execution\Functions.h">
@@ -72,15 +68,37 @@
     <ClInclude Include="Execution\Classes.h">
       <Filter>Execution</Filter>
     </ClInclude>
-    <ClInclude Include="Storage\VirtualVariable.h">
+    <ClInclude Include="Virtual\Workspace.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual\Variable.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual\Array.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual\Class.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual\Property.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Execution\Shorthand.h">
+      <Filter>Execution</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual\Machine.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\StackFrame.h">
       <Filter>Storage</Filter>
     </ClInclude>
-    <ClInclude Include="Storage\VirtualStructure.h" />
-    <ClInclude Include="Storage\VirtualArray.h" />
-    <ClInclude Include="Execution\Shorthand.h" />
-    <ClInclude Include="Storage\VirtualReference.h" />
-    <ClInclude Include="Storage\VirtualFunction.h" />
-    <ClInclude Include="Virtual\Variable.h">
+    <ClInclude Include="Virtual\Memory.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual\Function.h">
+      <Filter>Virtual</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual\Address.h">
       <Filter>Virtual</Filter>
     </ClInclude>
   </ItemGroup>

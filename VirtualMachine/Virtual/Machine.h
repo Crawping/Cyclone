@@ -5,8 +5,8 @@
 #pragma once
 #include "VMAPI.h"
 #include "Collections/Stack.h"
-#include "Virtual/Memory.h"
 #include "Execution/Instructions.h"
+#include "Storage/StackFrame.h"
 
 
 namespace Cyclone
@@ -14,29 +14,46 @@ namespace Cyclone
     namespace VM
     {
         struct Instruction;
-
+        
         namespace Virtual
         {
-            using namespace Utilities;
+            class Memory;
+
 
             class Machine
             {
                 public:
 
+                    /** CONSTRUCTOR & DESTRUCTOR **/
+                    VMAPI Machine();
+                    VMAPI ~Machine();
+
+
+
+                    /** UTILITIES **/
                     VMAPI void Abort();
+                    VMAPI void Pause();
+                    VMAPI void Resume();
                     VMAPI void Execute(const ICollection<Instruction>& instructions);
 
-                private:
+                protected:
 
-                    struct StackFrame;
+                    RegisterFrame& Registers()  { return Workspace().Registers; }
+                    StackFrame& Workspace()     { return _scopes.First(); }
+
+                private:
 
                     Instructions        _interrupt;
                     Memory*             _memory;
                     Stack<StackFrame>   _scopes;
 
 
+
+                    /** UTILITIES **/
                     Variable& Access(double address);
-                    void Call(Variable& lhs, Variable& fcn, Variable& rhs);
+                    void Call(double address, Variable& lhs, Variable& rhs);
+                    void Delete()
+
             };
 
 

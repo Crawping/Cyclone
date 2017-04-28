@@ -7,8 +7,8 @@
 #include "Collections/Vector.h"
 #include "Execution/Instructions.h"
 #include "IO/Event.h"
-#include "Storage/VirtualMemory.h"
 #include "Storage/VirtualWorkspace.h"
+#include "Virtual/Memory.h"
 
 
 
@@ -16,61 +16,64 @@ namespace Cyclone
 {
     namespace VM
     {
-
-        class VirtualMachine
+        namespace Virtual
         {
-            public:
 
-                /** PROPERTIES **/
-                const VirtualMemory* Data() const { return _data; }
+            class VirtualMachine
+            {
+                public:
 
-                VMAPI VirtualMachine& Data(VirtualMemory* value);
+                    /** PROPERTIES **/
+                    const Memory* Data() const { return _data; }
 
-
-
-                /** CONSTRUCTOR & DESTRUCTOR **/
-                VMAPI VirtualMachine();
-                VMAPI ~VirtualMachine();
+                    VMAPI VirtualMachine& Data(Memory* value);
 
 
 
-                /** UTILITIES **/
-                void Input(const Vector<VirtualVariable>& values)   { Workspace().Push(values); }
-                void Clear()                                        { Workspace().Clear(); }
-
-                VMAPI void Abort();
-                VMAPI void Execute(const Vector<Instruction>& commands);
-                VMAPI void Pause();
-                VMAPI void Resume();
-                VMAPI void Run(const Vector<Instruction>& instructions);
-
-            private:
-
-                struct StackFrame
-                {
-                    uint                        Index;
-                    const Vector<Instruction>*  Instructions;
-                    Stack<VirtualVariable>      Workspace;
-                };
-
-                VirtualMemory*      _data;
-                Stack<StackFrame>   _frames;
-
-                Instructions        Interrupt;
+                    /** CONSTRUCTOR & DESTRUCTOR **/
+                    VMAPI VirtualMachine();
+                    VMAPI ~VirtualMachine();
 
 
 
-                /** PROPERTIES **/
-                Stack<VirtualVariable>& Workspace()                 { return _frames.First().Workspace; }
+                    /** UTILITIES **/
+                    void Input(const Vector<Variable>& values)   { Workspace().Push(values); }
+                    void Clear()                                        { Workspace().Clear(); }
+
+                    VMAPI void Abort();
+                    //VMAPI void Execute(const Vector<Instruction>& commands);
+                    VMAPI void Pause();
+                    VMAPI void Resume();
+                    //VMAPI void Run(const Vector<Instruction>& instructions);
+
+                private:
+
+                    struct StackFrame
+                    {
+                        uint                        Index;
+                        const Vector<Instruction>*  Instructions;
+                        Stack<Variable>             Workspace;
+                    };
+
+                    Memory*      _data;
+                    Stack<StackFrame>   _frames;
+
+                    Instructions        Interrupt;
 
 
 
-                /** UTILITIES **/
-                void Push(VirtualVariable value)                    { Workspace().Push(value); }
-                void Push(const Vector<VirtualVariable>& values)    { Workspace().Push(values); }
-                VirtualVariable Pop()                               { return Workspace().Pop(); }
+                    /** PROPERTIES **/
+                    Stack<Variable>& Workspace()                 { return _frames.First().Workspace; }
 
 
-        };
+
+                    /** UTILITIES **/
+                    void Push(Variable value)                    { Workspace().Push(value); }
+                    void Push(const Vector<Variable>& values)    { Workspace().Push(values); }
+                    Variable Pop()                               { return Workspace().Pop(); }
+
+
+            };
+        }
     }
 }

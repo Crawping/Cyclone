@@ -6,19 +6,23 @@ namespace Cyclone
 {
     namespace VM
     {
-
-        /** CONSTRUCTOR **/
-        VirtualWorkspace::VirtualWorkspace()
+        namespace Virtual
         {
-            _locals.Insert(0, VirtualVariable());
-        }
+
+            /** CONSTRUCTOR **/
+            VirtualWorkspace::VirtualWorkspace()
+            {
+                _locals.Insert(0, Variable());
+            }
 
 
 
-        /** UTILITIES **/
-        void VirtualWorkspace::Set(uint id, const VirtualVariable& value)
-        {
-            if (id) { _locals.Insert(id, value); }
+            /** UTILITIES **/
+            void VirtualWorkspace::Set(uint id, const Variable& value)
+            {
+                if (id) { _locals.Insert(id, value); }
+            }
+
         }
     }
 }
