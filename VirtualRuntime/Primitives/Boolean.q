@@ -11,13 +11,13 @@ namespace Core.Primitives
     {
 
 
-        ILogical operator ==(const @ILogical other);
-        ILogical operator !=(const @ILogical other);
+        @ILogical operator ==(const @ILogical other);
+        @ILogical operator !=(const @ILogical other);
 
-        ILogical operator &&(const @ILogical other);
-        ILogical operator ||(const @ILogical other);
+        @ILogical operator &&(const @ILogical other);
+        @ILogical operator ||(const @ILogical other);
 
-        ILogical operator !(const @ILogical other);
+        @ILogical operator !(const @ILogical other);
     }
 
 
@@ -27,7 +27,7 @@ namespace Core.Primitives
         interface   = ILogical;
     {
         
-        Literal 
+        
 
         literals
         {

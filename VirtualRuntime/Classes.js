@@ -22,7 +22,7 @@ export class InterfaceControl //implements IInteractive
         this.Size = [1, 1, 1];
     }
 }
-export class Mesh3D {
+export class Model3D {
     constructor() {
         this.Components = [];
         this.IsInteractive = false;

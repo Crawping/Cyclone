@@ -85,7 +85,7 @@ export class InterfaceControl //implements IInteractive
 }
 
 
-export class Mesh3D
+export class Model3D
 {
     Components:         number[] = [ ];
     IsInteractive:      boolean = false;

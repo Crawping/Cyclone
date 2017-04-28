@@ -4,7 +4,6 @@
 
 #pragma once
 #include "Enumerator.h"
-#include "Runtime/Variable.h"
 
 
 
@@ -43,9 +42,27 @@ namespace Cyclone
             };
 
 
-            struct Variable
+            class Variable
             {
+                public:
 
+                    Variable operator +(const Variable& other)  const; // { return Calculate(Instructions::Add, *this, other); }
+                    Variable operator /(const Variable& other)  const; // { return Calculate(Instructions::Divide, *this, other); }
+                    Variable operator -(const Variable& other)  const; // { return Calculate(Instructions::Subtract, *this, other); }
+                    Variable operator *(const Variable& other)  const; // { return Calculate(Instructions::Multiply, *this, other); }
+                    
+                    Variable operator |(const Variable& other)  const; // { return Calculate(Instructions::Or, *this, other); }
+                    Variable operator &(const Variable& other)  const;
+                    Variable operator ~()                       const;
+
+
+                    VMAPI Variable& operator =(const Variable& other);
+                    VMAPI Variable& operator ++();
+                    VMAPI Variable& operator ++(int);
+                    VMAPI Variable& operator --();
+                    VMAPI Variable& operator --(int);
+
+                private:
 
 
 

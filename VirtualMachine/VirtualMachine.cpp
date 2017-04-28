@@ -40,23 +40,7 @@ namespace Cyclone
         void VirtualMachine::Run(const Vector<Instruction>& instructions)
         {
             
-            for (uint a = 0; a < instructions.Count(); a++)
-            {
-                const auto& cmd = instructions(a);
-                switch (cmd.Command)
-                {
-                    case Instructions::Add:
-                    case Instructions::And:
-                    case Instructions::Divide:
-                    case Instructions::Multiply:
-                    case Instructions::Negate:
-                    case Instructions::Not:
-                    case Instructions::Or:
-                    case Instructions::Subtract:
-                    case Instructions::Xor:
-                        break;
-                }
-            }
+
         }
 
         void VirtualMachine::Execute(const Vector<Instruction>& instructions)
