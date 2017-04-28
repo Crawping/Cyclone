@@ -89,8 +89,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;UTILITIES_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;.\Imaging;.\Math;.\Spatial;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <AdditionalOptions>/std:c++14</AdditionalOptions>
       <CompileAs>Default</CompileAs>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>

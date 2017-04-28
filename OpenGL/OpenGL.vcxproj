@@ -91,6 +91,7 @@
       <AdditionalIncludeDirectories>.\;..\CoreGL;..\Utilities;..\..\libjpeg\jpeg-9b;</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalOptions>/std:c++14 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

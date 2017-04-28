@@ -84,7 +84,9 @@ namespace Cyclone
 
                 virtual void Insert(const T& key, U&& value)
                 {
-                    Root = Root ? Root->Insert(key, std::move(value)) : new Node<T, U>(key, std::move(value));
+                    Root = Root ? 
+                        Root->Insert(key, std::forward<U>(value)) : 
+                        new Node<T, U>(key, std::forward<U>(value));
                 }
                 /// <summary> Inserts a new node into the BST and automatically rebalances the tree, if necessary. </summary>
                 /// <param name="key"> The key for the new node being inserted. </param>
@@ -219,7 +221,7 @@ namespace Cyclone
                             Count(1),
                             Height(0),
                             Key(key),
-                            Value(std::move(value))
+                            Value(std::forward<U>(value))
                         {
 
                         }
@@ -284,12 +286,16 @@ namespace Cyclone
                         Node<T, U>* Insert(const T& key, U&& value)
                         {
                             if (key < Key)
-                                Left = Left ? Left->Insert(key, value) : new Node<T, U>(key, value);
+                                Left = Left ? 
+                                    Left->Insert(key, std::forward<U>(value)) : 
+                                    new Node<T, U>(key, std::forward<U>(value));
                             else if (key > Key)
-                                Right = Right ? Right->Insert(key, value) : new Node<T, U>(key, value);
+                                Right = Right ? 
+                                    Right->Insert(key, std::forward<U>(value)) : 
+                                    new Node<T, U>(key, std::forward<U>(value));
                             else
                             {
-                                Value = std::move(value);
+                                Value = std::forward<U>(value);
                                 return this;
                             }
 

@@ -76,6 +76,7 @@
       <AdditionalIncludeDirectories>../CoreGL;../OpenGL;../SVG;../UserInterface;../Utilities;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UI_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalOptions>/std:c++14 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);</AdditionalLibraryDirectories>

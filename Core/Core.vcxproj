@@ -90,6 +90,7 @@
       <PreprocessorDefinitions>GLFW_INCLUDE_COREARB;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\CoreGL;..\CoreGL\GL;..\OpenGL;..\Platform;..\Utilities;..\Utilities\Math;..\Utilities\Spatial;</AdditionalIncludeDirectories>
       <BrowseInformation>true</BrowseInformation>
+      <AdditionalOptions>/std:c++14 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
