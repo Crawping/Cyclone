@@ -58,6 +58,8 @@ namespace Cyclone
                 /** UTILITIES **/
                 template<typename T>
                 Reference<T>* Cast()                    const { return dynamic_cast<Reference<T>*>(Data); }
+                template<typename T>
+                T& DirectCast()                         { return static_cast<Reference<T>*>(Data)->Value(); }
 
 
 

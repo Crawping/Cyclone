@@ -73,7 +73,9 @@ namespace Cyclone
 
                 /** PROPERTIES **/
                 bool IsNull()                               const override { return false; }
-
+                T& Value()                                  { return _value; }
+                const T& Value()                            const { return _value; }
+                
 
 
                 /** CONSTRUCTOR **/
