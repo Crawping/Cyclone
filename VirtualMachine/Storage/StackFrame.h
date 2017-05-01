@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Collections/Vector.h"
-#include "Storage/Address.h"
+#include "Storage/Reference.h"
 #include "Primitives/Number.h"
 
 
@@ -16,34 +16,54 @@ namespace Cyclone
         namespace Virtual
         {
 
-            struct RegisterFrame
+            struct Array;
+            struct Class;
+            struct Function;
+
+            class StackFrame
             {
-                Vector<Array, 256>      Arrays;
-                Vector<Class, 256>      Classes;
-                Vector<Function, 256>   Functions;
-                Vector<Number, 256>     Numbers;
-                Vector<Reference, 256>  References;
+                public:
 
-                Vector<Reference, 256>  Input;
-                Vector<Reference, 256>  Output;
+                    /** UTILITIES **/
+                    template<typename T>
+                    VMAPI T& Access(Reference location);
 
-                /*template<typename T = Variable>
-                VMAPI T& Access(Reference address);*/
-                VMAPI Reference& Access(Reference location);
+                    template<typename T>
+                    VMAPI void Insert(Reference location, T& value);
 
-                void Reset()
-                {
-                    Reference r;
-                    Input.Fill(r);
-                    Output.Fill(r);
-                }
+                    VMAPI void Reset();
+
+                private:
+
+                    /** DATA **/
+                    Vector<Array*, 256>         Arrays;
+                    Vector<Class*, 256>         Classes;
+                    Vector<Function*, 256>      Functions;
+                    Vector<Number, 256>         Numbers;
+                    Vector<string*, 256>        Strings;
+
+                    Vector<Reference, 256>      Input;
+                    Vector<Reference, 256>      Local;
+                    Vector<Reference, 256>      Output;
+
             };
 
-            struct StackFrame
-            {
-                RegisterFrame   Registers;
-                uint            ReturnIndex;
-            };
+
+
+            /** TEMPLATE SPECIALIZATIONS **/
+            template<> VMAPI Array& StackFrame::Access<Array>(Reference location);
+            template<> VMAPI Class& StackFrame::Access<Class>(Reference location);
+            template<> VMAPI Function& StackFrame::Access<Function>(Reference location);
+            template<> VMAPI Number& StackFrame::Access<Number>(Reference location);
+            template<> VMAPI Reference& StackFrame::Access<Reference>(Reference location);
+            template<> VMAPI string& StackFrame::Access<string>(Reference location);
+
+            template<> VMAPI void StackFrame::Insert<Array>(Reference location, Array& value);
+            template<> VMAPI void StackFrame::Insert<Class>(Reference location, Class& value);
+            template<> VMAPI void StackFrame::Insert<Function>(Reference location, Function& value);
+            template<> VMAPI void StackFrame::Insert<Number>(Reference location, Number& value);
+            template<> VMAPI void StackFrame::Insert<Reference>(Reference location, Reference& value);
+            template<> VMAPI void StackFrame::Insert<string>(Reference location, string& value);
 
         }
     }
