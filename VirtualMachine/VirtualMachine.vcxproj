@@ -128,7 +128,7 @@
   <ItemGroup>
     <ClCompile Include="Primitives\Number.cpp" />
     <ClCompile Include="Primitives\NumericTypes.cpp" />
-    <ClCompile Include="Storage\Address.cpp" />
+    <ClCompile Include="Storage\Reference.cpp" />
     <ClCompile Include="Storage\StackFrame.cpp" />
     <ClCompile Include="Storage\StringLibrary.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
@@ -147,7 +147,7 @@
     <ClInclude Include="Primitives\Number.h" />
     <ClInclude Include="Primitives\NumericTypes.h" />
     <ClInclude Include="Primitives\Variable.h" />
-    <ClInclude Include="Storage\Address.h" />
+    <ClInclude Include="Storage\Reference.h" />
     <ClInclude Include="Storage\StackFrame.h" />
     <ClInclude Include="Storage\StringLibrary.h" />
     <ClInclude Include="VirtualMachine.h" />

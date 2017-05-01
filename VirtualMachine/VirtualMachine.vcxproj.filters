@@ -49,7 +49,7 @@
     <ClCompile Include="Storage\StackFrame.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
-    <ClCompile Include="Storage\Address.cpp">
+    <ClCompile Include="Storage\Reference.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,7 +107,7 @@
     <ClInclude Include="Primitives\Number.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="Storage\Address.h">
+    <ClInclude Include="Storage\Reference.h">
       <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
