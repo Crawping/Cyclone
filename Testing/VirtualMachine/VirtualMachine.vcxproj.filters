@@ -7,6 +7,12 @@
     <Filter Include="Execution">
       <UniqueIdentifier>{ae0b7cd0-1cb2-49a8-95a9-e4cfe59a1c77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Virtual">
+      <UniqueIdentifier>{8a109cfc-2ad4-4778-881f-6a95a8d54cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitives">
+      <UniqueIdentifier>{fa9c41d3-b41e-4054-bcb2-68a25ee49f58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Storage\VirtualClass.cpp">
@@ -19,10 +25,19 @@
     <ClCompile Include="Execution\VirtualMachine.cpp">
       <Filter>Execution</Filter>
     </ClCompile>
-    <ClCompile Include="Storage\Number.cpp">
+    <ClCompile Include="Virtual\Machine.cpp">
+      <Filter>Virtual</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\Memory.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
-    <ClCompile Include="Storage\Reference.cpp">
+    <ClCompile Include="Primitives\Number.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives\Reference.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\StackFrame.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
   </ItemGroup>

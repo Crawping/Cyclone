@@ -120,10 +120,13 @@
   <ItemGroup>
     <ClCompile Include="Execution\VirtualMachine.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Storage\Reference.cpp" />
-    <ClCompile Include="Storage\Number.cpp" />
+    <ClCompile Include="Primitives\Number.cpp" />
+    <ClCompile Include="Primitives\Reference.cpp" />
+    <ClCompile Include="Storage\Memory.cpp" />
+    <ClCompile Include="Storage\StackFrame.cpp" />
     <ClCompile Include="Storage\VirtualClass.cpp" />
     <ClCompile Include="Storage\VirtualMemory.cpp" />
+    <ClCompile Include="Virtual\Machine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
