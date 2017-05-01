@@ -17,7 +17,6 @@ namespace Cyclone
             /** UTILITIES **/
             Reference& Class::Access(Reference location)
             {
-                //return _properties[location.Offset()].Get(;
                 static Reference var;
                 return var;
             }
@@ -41,7 +40,7 @@ namespace Cyclone
             //{
             //    return _properties[ _properties.Contains(property) ? property : 0 ].Get(object);
             //}
-            //void Class::Insert(Function&& function)
+            //void Class::Insert(Function&& function)/
             //{
             //    if (ID() == 0 || function.ID() == 0) { return; }
             //    _methods.Insert(function.ID(), std::forward<Function>(function));

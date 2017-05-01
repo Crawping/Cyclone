@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Collections/Set.h"
-#include "Storage/Address.h"
+#include "Storage/Reference.h"
 #include "Virtual/Function.h"
 #include "Virtual/Property.h"
 
@@ -37,14 +37,6 @@ namespace Cyclone
                     /** CONSTRUCTOR **/
                     Class(uint id = 0):         _id(id) { }
                     Class(Class&& other)        = default;
-                    //Class(Class&& other)        noexcept:
-                    //    _id(other._id),
-                    //    _instances(std::move(other._instances)),
-                    //    _methods(std::move(other._methods)),
-                    //    _properties(std::move(other._properties))
-                    //{
-
-                    //}
                     Class(const Class& other)   = default;
                         
 
