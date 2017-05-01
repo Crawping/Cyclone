@@ -86,6 +86,16 @@ TEST_F(_Machine, Aborting)
 {
     Reference r1(0, 0, ReferenceTypes::Number, hash("Result"));
 
+    Vector<Instruction> cmds = 
+    {
+        { add, r1, _rn1, _rn2 },
+        { Instructions::Abort },
+        { sub, r1, r1, _rn2 },
+    };
+
+    _m1.Execute(cmds);
+    Number n1 = _m1.Memory().Access<Number>(r1);
+    ASSERT_EQ(n1,                               _n1 + _n2);
 }
 TEST_F(_Machine, Calculations)
 {
@@ -106,18 +116,28 @@ TEST_F(_Machine, Calculations)
     ASSERT_EQ(n2,                               _n1 - _n2);
     ASSERT_NE(n2,                               n1);
 
-    cmds = { { inc, r1 } };
+    cmds = { { add, r1, r1, _rn2 } };
     _m1.Execute(cmds);
 
     Number n3 = _m1.Memory().Access<Number>(r1);
     ASSERT_EQ(n3.Type(),                        NumericTypes::Float64);
-    ASSERT_EQ(n3,                               n2 + Number(1));
+    ASSERT_FLOAT_EQ(n3.Value(),                 _n1.Value());
     ASSERT_NE(n3,                               n2);
+
+    cmds = { { inc, r1 } };
+    _m1.Execute(cmds);
+
+    Number n4 = _m1.Memory().Access<Number>(r1);
+    ASSERT_EQ(n4.Type(),                        NumericTypes::Float64);
+    ASSERT_EQ(n4,                               n3 + Number(1));
+    ASSERT_NE(n4,                               n2);
 
     cmds = { { cast, r1, _rn2 } };
     _m1.Execute(cmds);
 
-    Number n4 = _m1.Memory().Access<Number>(r1);
-    ASSERT_EQ(n4.Type(),                        NumericTypes::Integer32);
-    ASSERT_EQ(n4,                               n3);
+    Number n5 = _m1.Memory().Access<Number>(r1);
+    ASSERT_EQ(n5.Type(),                        NumericTypes::Integer32);
+    ASSERT_EQ(n5,                               n4);
+
+    
 }

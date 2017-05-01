@@ -72,10 +72,8 @@ TEST_F(_Number, EqualityOperators)
     ASSERT_EQ(_d1 == _d2,       false);
     ASSERT_EQ(_d1 == _d1,       true);
 
-    ASSERT_FLOAT_EQ(_d1.Value(),        _f1.Value());
-    //ASSERT_EQ(_d1 == _f1,       true);
+    ASSERT_FLOAT_EQ(_d1.Value(), _f1.Value());
 }
-
 TEST_F(_Number, MathOperators)
 {
     Number i1(_i0 + _c1);
