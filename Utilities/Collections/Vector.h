@@ -46,6 +46,11 @@ namespace Cyclone
 
 
 
+                /** UTILITIES **/
+                virtual void Fill(const T& value)
+                {
+                    for (uint a = 0; a < U; a++) { Data[a] = value; }
+                }
                 /** OPERATORS **/
                 /// <summary> Gets an iterator that references the first element stored in the vector. </summary>
                 virtual Iterator begin()                    { return Iterator(0, this); }
