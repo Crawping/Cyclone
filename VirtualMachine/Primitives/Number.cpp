@@ -18,11 +18,11 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        constexpr Number Number::Cast(NumericTypes type)        const 
+        constexpr Number Number::Cast(NumericTypes type)        const
         {
-            return Number( Type() == NumericTypes::Null ? NumericTypes::Null : type, Value() ); 
+            return Number( Type() == NumericTypes::Null ? NumericTypes::Null : type, Value() );
         }
-        constexpr Number Number::Compare(Number other)          const 
+        constexpr Number Number::Compare(Number other)          const
         {
             return (Value() < other.Value())    ? -1 :
                 (Value() > other.Value())       ?  1 : 0;
@@ -37,12 +37,10 @@ namespace Cyclone
         }
         constexpr bool Number::operator ==(Number other)        const
         {
-            return 
-                (Type() == NumericTypes::Null)              ? 
-                    (other.Type() == NumericTypes::Null)    ? 
-                        true : false : 
-                (other.Type() == NumericTypes::Null)        ? 
-                    false : (Value() == other.Value());
+            return
+                (Type() == NumericTypes::Null)              ?
+                    (other.Type() == NumericTypes::Null)    ? true : false :
+                    (other.Type() == NumericTypes::Null)    ? false : (Value() == other.Value());
         }
         constexpr bool Number::operator !=(Number other)        const { return !(operator ==(other)); }
 
@@ -50,9 +48,9 @@ namespace Cyclone
         constexpr Number Number::operator -()                   const { return Number(Type(), -Value()); }
         constexpr Number Number::operator !()                   const { return Number(Type(), !Value()); }
         constexpr Number Number::operator ~()                   const { return Number(Type(), ~(ulong)Value()); }
-                            
-        constexpr Number Number::operator +(Number other)       const 
-        { 
+
+        constexpr Number Number::operator +(Number other)       const
+        {
             return Number
             (
                 NumericTypes::Max(Type(), other.Type()),
@@ -60,12 +58,12 @@ namespace Cyclone
             );
         }
         constexpr Number Number::operator /(Number other)       const
-        { 
+        {
             return Number
             (
                 NumericTypes::Max(Type(), other.Type()),
                 Value() / other.Value()
-            ); 
+            );
         }
         constexpr Number Number::operator -(Number other)       const
         {
@@ -83,7 +81,7 @@ namespace Cyclone
                 Value() * other.Value()
             );
         }
-        constexpr Number Number::operator |(Number other)       const 
+        constexpr Number Number::operator |(Number other)       const
         {
             return Number
             (
@@ -91,7 +89,7 @@ namespace Cyclone
                 (ulong)Value() | (ulong)other.Value()
             );
         }
-        constexpr Number Number::operator &(Number other)       const 
+        constexpr Number Number::operator &(Number other)       const
         {
             return Number
             (
@@ -99,7 +97,7 @@ namespace Cyclone
                 (ulong)Value() & (ulong)other.Value()
             );
         }
-        constexpr Number Number::operator ^(Number other)       const 
+        constexpr Number Number::operator ^(Number other)       const
         {
             return Number
             (
