@@ -39,6 +39,8 @@ class _Number : public testing::Test
 };
 
 
+
+/** OPERATORS **/
 TEST_F(_Number, Construction)
 {
     ASSERT_EQ(_i0.Type(),       NumericTypes::Integer32);
@@ -53,7 +55,14 @@ TEST_F(_Number, Construction)
     ASSERT_EQ(_f1.Type(),       NumericTypes::Float32);
     ASSERT_EQ(_f1.Value(),      3.14159f);
 }
+TEST_F(_Number, Casting)
+{
+    Number d1 = _i0.Cast(NumericTypes::Float64);
+    ASSERT_EQ(d1.Type(),        NumericTypes::Float64);
 
+    Number i1 = _f1.Cast(NumericTypes::Integer32);
+    ASSERT_EQ(i1.Type(),        NumericTypes::Integer32);
+}
 TEST_F(_Number, EqualityOperators)
 {
     ASSERT_EQ(_i0 != _c1,       true);
