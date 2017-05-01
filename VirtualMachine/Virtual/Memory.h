@@ -54,6 +54,8 @@ namespace Cyclone
                     template<typename T>
                     VMAPI void Insert(Reference location, const T& value);
 
+                    VMAPI void Remove(Reference location);
+
                     //VMAPI void CopyArray(uint source, uint destination);
                     //VMAPI void CopyObject(uint type, uint source, uint destination);
 
@@ -109,6 +111,7 @@ namespace Cyclone
             template<> VMAPI void Memory::Insert<Number>(Reference location, const Number& value);
             template<> VMAPI void Memory::Insert<Reference>(Reference location, const Reference& value);
             template<> VMAPI void Memory::Insert<string>(Reference location, const string& value);
+
         }
     }
 }

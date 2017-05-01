@@ -63,8 +63,6 @@ namespace Cyclone
                 return Strings[ isValid ? location.Offset() : 0 ];
             }
 
-
-
             template<> void Memory::Insert<Array>(Reference location, const Array& value)
             {
                 if (location.Type() == ReferenceTypes::Array)
@@ -94,6 +92,21 @@ namespace Cyclone
             {
                 if (location.Type() == ReferenceTypes::String)
                     Strings.Insert(location.Offset(), value);
+            }
+
+            void Memory::Remove(Reference location)
+            {
+                uint offset = location.Offset();
+                switch (location.Type())
+                {
+                    case ReferenceTypes::Array:         Arrays.Remove(offset);      break;
+                    case ReferenceTypes::Object:        Classes.Remove(offset);     break;
+                    case ReferenceTypes::Function:      Functions.Remove(offset);   break;
+                    case ReferenceTypes::Number:        Numbers.Remove(offset);     break;
+                    case ReferenceTypes::Reference:     References.Remove(offset);  break;
+                    case ReferenceTypes::String:        Strings.Remove(offset);     break;
+                    default:                            break;
+                }
             }
 
             //void Memory::CopyArray(uint source, uint destination)
