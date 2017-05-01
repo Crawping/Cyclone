@@ -6,6 +6,9 @@
 #include "Collections/Vector.h"
 #include "Storage/Reference.h"
 #include "Primitives/Number.h"
+#include "Virtual/Array.h"
+#include "Virtual/Class.h"
+#include "Virtual/Function.h"
 
 
 
@@ -15,10 +18,6 @@ namespace Cyclone
     {
         namespace Virtual
         {
-
-            struct Array;
-            struct Class;
-            struct Function;
 
             class StackFrame
             {
