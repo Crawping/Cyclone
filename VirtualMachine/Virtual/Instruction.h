@@ -39,20 +39,11 @@ namespace Cyclone
              *      > Variables
              */
 
-
-
-
-            /* REGISTER ADDRESSING
-             *  - 64-bit unsigned integer
-             *      > Base              (16)
-             *      > Offset            (16)
-             *      > Count             (16)
-             *      > Stride            (16)
-             */
-
             /* MEMORY ADDRESSING
              *  - 64-bit unsigned integer
              *      > Base              (32)
+             *          >> Storage      (16)
+             *          >> Slot         (16)
              *      > Offset            (32)
              */
 

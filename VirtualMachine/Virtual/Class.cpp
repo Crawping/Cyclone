@@ -15,13 +15,16 @@ namespace Cyclone
 
 
             /** UTILITIES **/
-            Variable& Class::Access(Address location)
+            Reference& Class::Access(Reference location)
             {
                 //return _properties[location.Offset()].Get(;
+                static Reference var;
+                return var;
             }
-            const Vector<Instruction>& Class::Call(Address location) const
+            const Vector<Instruction>& Class::Call(Reference location) const
             {
-
+                static Vector<Instruction> cmds;
+                return cmds;
             }
 
             //const Vector<Instruction>& Class::Call(uint method)                     const

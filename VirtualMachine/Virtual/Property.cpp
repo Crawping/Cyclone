@@ -13,7 +13,7 @@ namespace Cyclone
             Property::Property(uint id) :
                 _id(id)
             {
-                _instances.Insert(0, Variable());
+                _instances.Insert(0, Reference());
             }
 
 
@@ -23,11 +23,11 @@ namespace Cyclone
             {
                 _instances.Remove(instance);
             }
-            Variable& Property::Get(uint instance)
+            Reference& Property::Get(uint instance)
             {
                 return _instances[ _instances.Contains(instance) ? instance : 0 ];
             }
-            void Property::Set(uint instance, const Variable& value)
+            void Property::Set(uint instance, const Reference& value)
             {
                 _instances.Insert(instance, value);
             }

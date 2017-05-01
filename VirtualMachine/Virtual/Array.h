@@ -4,8 +4,7 @@
 
 #pragma once
 #include "Collections/ListVector.h"
-#include "Virtual/Variable.h"
-
+#include "Execution/Instructions.h"
 
 
 namespace Cyclone
@@ -26,12 +25,12 @@ namespace Cyclone
                     VMAPI Array(uint id = 0);
                 
                     VMAPI Array Calculate(Instructions operation, const Array& other);
-                    VMAPI Variable& Get(uint index);
-                    VMAPI void Set(uint index, const Variable& value);
+                    VMAPI Reference& Get(uint index);
+                    VMAPI void Set(uint index, const Reference& value);
 
                 private:
 
-                    ListVector<Variable>    _data;
+                    ListVector<Reference>   _data;
                     uint                    _id;
                 
             };

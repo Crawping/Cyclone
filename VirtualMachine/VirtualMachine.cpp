@@ -11,31 +11,31 @@ namespace Cyclone
         {
 
             /** PROPERTIES **/
-            VirtualMachine& VirtualMachine::Data(Memory* value)
-            {
-                _data = value;
-                return *this;
-            }
+            //VirtualMachine& VirtualMachine::Data(Memory* value)
+            //{
+            //    _data = value;
+            //    return *this;
+            //}
 
 
 
-            /** CONSTRUCTOR & DESTRUCTOR **/
-            VirtualMachine::VirtualMachine() :
-                _data(nullptr)
-            {
+            ///** CONSTRUCTOR & DESTRUCTOR **/
+            //VirtualMachine::VirtualMachine() :
+            //    _data(nullptr)
+            //{
 
-            }
-            VirtualMachine::~VirtualMachine()
-            {
+            //}
+            //VirtualMachine::~VirtualMachine()
+            //{
 
-            }
+            //}
 
 
 
-            /** UTILITIES **/
-            void VirtualMachine::Abort()    { Interrupt = Instructions::Abort; }
-            void VirtualMachine::Pause()    { Interrupt = Instructions::Pause; }
-            void VirtualMachine::Resume()   { Interrupt = Instructions::None; }
+            ///** UTILITIES **/
+            //void VirtualMachine::Abort()    { Interrupt = Instructions::Abort; }
+            //void VirtualMachine::Pause()    { Interrupt = Instructions::Pause; }
+            //void VirtualMachine::Resume()   { Interrupt = Instructions::None; }
 
             //void VirtualMachine::Execute(const Vector<Instruction>& instructions)
             //{
@@ -203,10 +203,10 @@ namespace Cyclone
             //                Push( _data->Get(Pop(), Pop()) );
             //                break;
             //            case Instructions::LoadArray:
-            //                Push( Variable(VariableTypes::Array, cmd.Operands(0)) );
+            //                Push( Variable(ReferenceTypes::Array, cmd.Operands(0)) );
             //                break;
             //            case Instructions::LoadObject:
-            //                Push( Variable(VariableTypes::Object, cmd.Operands(0), cmd.Operands(1)) );
+            //                Push( Variable(ReferenceTypes::Object, cmd.Operands(0), cmd.Operands(1)) );
             //                break;
 
             //            case Instructions::Print:

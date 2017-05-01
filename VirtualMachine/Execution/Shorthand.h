@@ -19,56 +19,58 @@ namespace Cyclone
 
                 abort,
 
-                add, adda, addv,
+                add,
 
-                and, anda, andv,
+                and,
 
-                call, callf, callm, callr,
+                call, callr,
 
                 cast,
 
-                cmp, cmpa, cmpv,
+                cmp, 
 
                 cat,
 
-                copy, copya, copyo, copyv,
+                copy,
 
-                dec, deco, decv,
+                dec,
 
-                del, dela, delo, dels, delv,
+                del,
 
-                defa, defm, defo, defp, defs, deft, defv,
+                //defa, defm, defo, defp, defs, deft, defv,
 
-                div, diva, divv,
+                div,
 
-                get, geta, geto, getv,
+                get,
 
-                inc, inca, incv,
+                inc,
+
+                ind,
 
                 jump, jumpi, jumpr, jumpri,
 
-                load, loada, loado,
+                load,
 
-                mul, mula, mulv,
+                mul,
 
-                neg, nega, negv,
+                neg,
 
-                not, nota, notv,
+                not,
 
-                or, ora, orv,
+                or,
 
                 pause,
                 disp,
                 rem,
                 ret,
 
-                set, seta, seto, setv,
+                set,
 
-                sub, suba, subv,
+                sub,
 
-                swp, swpa, swpv,
+                swp,
 
-                xor, xora, xorv,
+                xor,
             };
         }
     }

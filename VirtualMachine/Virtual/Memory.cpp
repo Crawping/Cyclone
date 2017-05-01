@@ -15,35 +15,81 @@ namespace Cyclone
                 Arrays.Insert(0, { });
                 Classes.Insert(0, { });
                 Functions.Insert(0, { });
-                Variables.Insert(0, Variable());
+                Numbers.Insert(0, { });
+                References.Insert(0, { });
+                Strings.Insert(0, "");
             }
 
 
 
             /** UTILITIES **/
-            Variable& Memory::Access(Address location)
+            //Variable& Memory::Access(Reference location)
+            //{
+            //    return location.Base() ?
+            //        Types[location.Base()].Access(location) :
+            //        Variables[location.Base()];
+            //}
+
+            template<> Array& Memory::Access<Array>(Reference location)
             {
-                return location.Base() ?
-                    Classes[location.Base()].Access(location) :
-                    Variables[location.Base()];
+                bool isValid = (location.Slot() == ReferenceTypes::Array) &&
+                    Arrays.Contains(location.Offset());
+                return Arrays[ isValid ? location.Offset() : 0 ];
             }
-            const Vector<Instruction>& Memory::Call(Address location) const
+            template<> Function& Memory::Access<Function>(Reference location)
             {
-                return location.Base() ?
-                    Classes[location.Base()].Call(location) :
-                    Functions[location.Base()].Logic();
+                bool isValid = (location.Slot() == ReferenceTypes::Function) &&
+                    Functions.Contains(location.Offset());
+                return Functions[ isValid ? location.Offset() : 0 ];
             }
+            template<> Number& Memory::Access<Number>(Reference location)
+            {
+                bool isValid = (location.Slot() == ReferenceTypes::Number) &&
+                    Numbers.Contains(location.Offset());
+                return Numbers[isValid ? location.Offset() : 0];
+            }
+            template<> string& Memory::Access<string>(Reference location)
+            {
+                bool isValid = (location.Slot() == ReferenceTypes::String) &&
+                    Strings.Contains(location.Offset());
+                return Strings[ isValid ? location.Offset() : 0 ];
+            }
+            template<> Class& Memory::Access<Class>(Reference location)
+            {
+                bool isValid = (location.Slot() == ReferenceTypes::Object) &&
+                    Classes.Contains(location.Offset());
+                return Classes[ isValid ? location.Offset() : 0 ];
+            }
+            template<> Reference& Memory::Access<Reference>(Reference location)
+            {
+                bool isValid = (location.Slot() == ReferenceTypes::Reference) &&
+                    References.Contains(location.Offset());
+                return References[ isValid ? location.Offset() : 0 ];
+            }
+
+
+
+            //Function& Memory::Call(Reference location)
+            //{
+            //    return Functions.Contains(location.Offset) ?
+            //        Functions[location.Offset] :
+            //        Functions[0];
+
+            //    //return location.Base() ?
+            //    //    Types[location.Base()].Call(location) :
+            //    //    Functions[location.Base()].Logic();
+            //}
             //const Vector<Instruction>& Memory::Call(const Variable& function) const
             //{
             //    switch (function.Type())
             //    {
-            //        case VariableTypes::Function:
+            //        case ReferenceTypes::Function:
             //            return CallFunction(function.FirstHalf());
-            //        case VariableTypes::Object:
+            //        case ReferenceTypes::Object:
             //            return CallMethod(function.FirstHalf(), function.SecondHalf());
-            //        case VariableTypes::Reference:
-            //            return (function.FirstHalf() > VariableTypes::Reference) ? 
-            //                Call( Variable(VariableTypes::Object, function.FirstHalf(), function.SecondHalf()) ) : 
+            //        case ReferenceTypes::Reference:
+            //            return (function.FirstHalf() > ReferenceTypes::Reference) ? 
+            //                Call( Variable(ReferenceTypes::Object, function.FirstHalf(), function.SecondHalf()) ) : 
             //                Call( Variable(function.FirstHalf(), function.SecondHalf()) );
             //        default:
             //            return Functions[0].Logic();
@@ -73,9 +119,9 @@ namespace Cyclone
             //    if (reference.IsNull()) { return; }
             //    switch (reference.Type())
             //    {
-            //        case VariableTypes::Array:
+            //        case ReferenceTypes::Array:
             //            return DeleteArray(reference.SecondHalf());
-            //        case VariableTypes::Object:
+            //        case ReferenceTypes::Object:
             //            return DeleteObject(reference.FirstHalf(), reference.SecondHalf());
             //    }
             //}
@@ -101,13 +147,13 @@ namespace Cyclone
             //{
             //    switch (reference.Type())
             //    {
-            //        case VariableTypes::Array:
+            //        case ReferenceTypes::Array:
             //            return property.IsInteger() ? GetArray(reference.SecondHalf(), property.SecondHalf()) : Variables[0];
-            //        case VariableTypes::Object:
+            //        case ReferenceTypes::Object:
             //            return GetObject(reference.FirstHalf(), property.SecondHalf(), reference.SecondHalf());
-            //        case VariableTypes::Reference:
-            //            return (reference.FirstHalf() > VariableTypes::Reference) ? 
-            //                Get( Variable(VariableTypes::Object, reference.FirstHalf(), reference.SecondHalf()), property ) : 
+            //        case ReferenceTypes::Reference:
+            //            return (reference.FirstHalf() > ReferenceTypes::Reference) ? 
+            //                Get( Variable(ReferenceTypes::Object, reference.FirstHalf(), reference.SecondHalf()), property ) : 
             //                Get( Variable(reference.FirstHalf(), reference.SecondHalf()), property );
             //        default:
             //            return Variables[0];

@@ -22,14 +22,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="VirtualMachine.cpp" />
-    <ClCompile Include="Storage\VirtualWorkspace.cpp">
-      <Filter>Storage</Filter>
-    </ClCompile>
     <ClCompile Include="Storage\StringLibrary.cpp">
       <Filter>Storage</Filter>
-    </ClCompile>
-    <ClCompile Include="Virtual\Variable.cpp">
-      <Filter>Virtual</Filter>
     </ClCompile>
     <ClCompile Include="Virtual\Array.cpp">
       <Filter>Virtual</Filter>
@@ -46,6 +40,18 @@
     <ClCompile Include="Virtual\Memory.cpp">
       <Filter>Virtual</Filter>
     </ClCompile>
+    <ClCompile Include="Primitives\NumericTypes.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Primitives\Number.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\StackFrame.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\Address.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
@@ -55,9 +61,6 @@
     <ClInclude Include="VMAPI.h" />
     <ClInclude Include="Interfaces\IVirtualData.h">
       <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Storage\VirtualWorkspace.h">
-      <Filter>Storage</Filter>
     </ClInclude>
     <ClInclude Include="Storage\StringLibrary.h">
       <Filter>Storage</Filter>
@@ -69,9 +72,6 @@
       <Filter>Execution</Filter>
     </ClInclude>
     <ClInclude Include="Virtual\Workspace.h">
-      <Filter>Virtual</Filter>
-    </ClInclude>
-    <ClInclude Include="Virtual\Variable.h">
       <Filter>Virtual</Filter>
     </ClInclude>
     <ClInclude Include="Virtual\Array.h">
@@ -98,8 +98,17 @@
     <ClInclude Include="Virtual\Function.h">
       <Filter>Virtual</Filter>
     </ClInclude>
-    <ClInclude Include="Virtual\Address.h">
-      <Filter>Virtual</Filter>
+    <ClInclude Include="Primitives\Variable.h">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\NumericTypes.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Number.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\Address.h">
+      <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

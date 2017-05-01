@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Collections/Set.h"
-#include "Virtual/Address.h"
+#include "Storage/Address.h"
 #include "Virtual/Function.h"
 #include "Virtual/Property.h"
 
@@ -36,21 +36,22 @@ namespace Cyclone
 
                     /** CONSTRUCTOR **/
                     Class(uint id = 0):         _id(id) { }
-                    Class(Class&& other)        noexcept:
-                        _id(other._id),
-                        _instances(std::move(other._instances)),
-                        _methods(std::move(other._methods)),
-                        _properties(std::move(other._properties))
-                    {
+                    Class(Class&& other)        = default;
+                    //Class(Class&& other)        noexcept:
+                    //    _id(other._id),
+                    //    _instances(std::move(other._instances)),
+                    //    _methods(std::move(other._methods)),
+                    //    _properties(std::move(other._properties))
+                    //{
 
-                    }
-                    Class(const Class& other)   = delete;
+                    //}
+                    Class(const Class& other)   = default;
                         
 
 
                     /** UTILITIES **/
-                    VMAPI Variable& Access(Address location);
-                    VMAPI const Vector<Instruction>& Call(Address location) const;
+                    VMAPI Reference& Access(Reference location);
+                    VMAPI const Vector<Instruction>& Call(Reference location) const;
 
                     //VMAPI void Delete(uint instance);
                     //VMAPI Variable& Get(uint object, uint property);
@@ -63,14 +64,19 @@ namespace Cyclone
 
 
                     /** OPERATORS **/
-                    Class& operator =(Class&& other)        noexcept
+                    Class& operator =(Class&& other)       noexcept
                     {
                         _id = other._id;
                         _instances = std::move(other._instances);
                         _methods = std::move(other._methods);
                         _properties = std::move(other._properties);
+                        return *this;
                     }
-                    Class& operator =(const Class& other)   = delete;
+                    Class& operator =(const Class& other)
+                    {
+
+                        return *this;
+                    }
 
                 private:
 

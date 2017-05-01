@@ -4,7 +4,8 @@
 
 #pragma once
 #include "Collections/Vector.h"
-#include "Virtual/Variable.h"
+#include "Storage/Address.h"
+#include "Primitives/Number.h"
 
 
 
@@ -12,38 +13,38 @@ namespace Cyclone
 {
     namespace VM
     {
-
-        struct RegisterFrame
+        namespace Virtual
         {
-            Vector<Virtual::Variable, 255> Input;
-            Vector<Virtual::Variable, 255> Local;
-            Vector<Virtual::Variable, 255> Output;
-            Vector<Virtual::Variable, 255> Temporary;
 
-
-            Virtual::Variable& Access(ulong address)
+            struct RegisterFrame
             {
-                ubyte stride    = (ubyte)address;
-                ubyte count     = (ubyte)(address >> 8);
-                ubyte offset    = (ubyte)(address >> 16);
-                ubyte base      = (ubyte)(address >> 24);
+                Vector<Array, 256>      Arrays;
+                Vector<Class, 256>      Classes;
+                Vector<Function, 256>   Functions;
+                Vector<Number, 256>     Numbers;
+                Vector<Reference, 256>  References;
 
-                switch (base)
+                Vector<Reference, 256>  Input;
+                Vector<Reference, 256>  Output;
+
+                /*template<typename T = Variable>
+                VMAPI T& Access(Reference address);*/
+                VMAPI Reference& Access(Reference location);
+
+                void Reset()
                 {
-                    case 0:     return Input(offset);
-                    case 1:     return Local(offset);
-                    case 2:     return Output(offset);
-                    case 3:     return Temporary(offset);
-                    default:    return Virtual::Variable();
+                    Reference r;
+                    Input.Fill(r);
+                    Output.Fill(r);
                 }
-            }
-        };
+            };
 
-        struct StackFrame
-        {
-            RegisterFrame   Registers;
-            uint            ReturnIndex;
-        };
+            struct StackFrame
+            {
+                RegisterFrame   Registers;
+                uint            ReturnIndex;
+            };
 
+        }
     }
 }

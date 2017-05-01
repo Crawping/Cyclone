@@ -72,7 +72,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>./;../Reflection;../Utilities;</AdditionalIncludeDirectories>
@@ -126,11 +126,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Primitives\Number.cpp" />
+    <ClCompile Include="Primitives\NumericTypes.cpp" />
+    <ClCompile Include="Storage\Address.cpp" />
+    <ClCompile Include="Storage\StackFrame.cpp" />
     <ClCompile Include="Storage\StringLibrary.cpp" />
-    <ClCompile Include="Storage\VirtualWorkspace.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
     <ClCompile Include="Virtual\Machine.cpp" />
-    <ClCompile Include="Virtual\Variable.cpp" />
     <ClCompile Include="Virtual\Array.cpp" />
     <ClCompile Include="Virtual\Class.cpp" />
     <ClCompile Include="Virtual\Property.cpp" />
@@ -142,13 +144,14 @@
     <ClInclude Include="Execution\Instructions.h" />
     <ClInclude Include="Execution\Shorthand.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />
+    <ClInclude Include="Primitives\Number.h" />
+    <ClInclude Include="Primitives\NumericTypes.h" />
+    <ClInclude Include="Primitives\Variable.h" />
+    <ClInclude Include="Storage\Address.h" />
     <ClInclude Include="Storage\StackFrame.h" />
     <ClInclude Include="Storage\StringLibrary.h" />
-    <ClInclude Include="Storage\VirtualWorkspace.h" />
     <ClInclude Include="VirtualMachine.h" />
-    <ClInclude Include="Virtual\Address.h" />
     <ClInclude Include="Virtual\Machine.h" />
-    <ClInclude Include="Virtual\Variable.h" />
     <ClInclude Include="Virtual\Array.h" />
     <ClInclude Include="Virtual\Class.h" />
     <ClInclude Include="Virtual\Property.h" />

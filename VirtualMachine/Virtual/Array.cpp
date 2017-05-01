@@ -15,11 +15,11 @@ namespace Cyclone
             {
                 return Array();
             }
-            Variable& Array::Get(uint index)
+            Reference& Array::Get(uint index)
             {
                 return _data(index);
             }
-            void Array::Set(uint index, const Variable& value)
+            void Array::Set(uint index, const Reference& value)
             {
                 if (index >= Count()) { return; }
                 _data(index) = value;

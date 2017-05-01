@@ -1,8 +1,7 @@
+#include "IO/Console.h"
 #include "Collections/Vector.h"
 #include "Virtual/Machine.h"
 #include "Virtual/Memory.h"
-#include "Virtual/Instruction.h"
-#include "Virtual/Variable.h"
 
 
 
@@ -14,14 +13,13 @@ namespace Cyclone
         {
 
             /** CONSTRUCTOR & DESTRUCTOR **/
-            Machine::Machine() :
-                _memory(new Memory())
+            Machine::Machine()
             {
 
             }
             Machine::~Machine()
             {
-                if (_memory) { delete _memory; }
+                //if (_memory) { delete _memory; }
             }
 
 
@@ -37,47 +35,42 @@ namespace Cyclone
                 {
                     const auto& cmd = instructions(a).Command;
                     const auto& ops = instructions(a).Operands;
-                    Variable& xop(Access(ops(0)));
-                    Variable& yop(Access(ops(1)));
-                    Variable& zop(Access(ops(2)));
 
+
+
+                    if (cmd >= Instructions::Add && cmd <= Instructions::Xor)
+                    {
+                        OperateNumbers(cmd, ops(0), ops(1), ops(2));
+                        continue;
+                    }
                     switch (cmd)
                     {
                         case Instructions::Abort:               return;
-                        case Instructions::Add:                 xop = yop + zop;                                break;
-                        case Instructions::Allocate:                                                            break;
-                        case Instructions::And:                 xop = yop & zop;                                break;
+                    //    case Instructions::Call:
+                    //        break;
 
-                        case Instructions::Call:                Call(ops(0), yop, zop);                         break;
-                        case Instructions::CallRelative:                                                        break;
+                    //    //case Instructions::Copy:                xop = yop;                                      break;
+                    //    //case Instructions::Delete:              xop = Variable();                               break;
+                    //    //case Instructions::Get:                 xop = yop;                                      break;
+                    //    //case Instructions::Index:                                                               break;
 
-                        case Instructions::Cast:                                                                break;
-                        case Instructions::Compare:             xop = yop.Compare(zop);                         break;
-                        case Instructions::Copy:                xop = yop;                                      break;
-                        case Instructions::Decrement:           xop--;                                          break;
-                        case Instructions::Delete:              xop = Variable();                               break;
-                        case Instructions::Divide:              xop = yop / zop;                                break;
-                        case Instructions::Get:                 xop = yop;                                      break;
-                        case Instructions::Increment:           xop++;                                          break;
-                        case Instructions::Index:                                                               break;
+                        case Instructions::Jump:                a = ops(0).Offset();                          break;
+                        case Instructions::JumpIf:
 
-                        case Instructions::Jump:                a = (uint)ops(0);                               break;
-                        case Instructions::JumpIf:              a = (uint)(xop ? ops(1) : ops(2));              break;
-                        case Instructions::JumpRelative:        a += (int)ops(0);                               break;
-                        case Instructions::JumpRelativeIf:      a += (int)(xop ? ops(1) : ops(2));              break;
+                            if (ops(0).Type() == ReferenceTypes::Reference)
+                                a = Access<Reference>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
+                            else
+                                a = Access<Number>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
+                            break;
 
-                        case Instructions::Load:                xop = yop;                                      break;
-                        case Instructions::Multiply:            xop = yop * zop;                                break;
-                        case Instructions::Negate:              xop = ~yop;                                     break;
-                        case Instructions::Not:                 xop = !yop;                                     break;
-                        case Instructions::Or:                  xop = yop | zop;                                break;
-                        case Instructions::Print:                                                               break;
-                        case Instructions::Set:                                                                 break;
-                        case Instructions::Subtract:            xop = yop - zop;                                break;
-                        case Instructions::Swap:                                                                break;
-                        case Instructions::Xor:                 xop = yop ^ zop;                                break;
+                    //    //case Instructions::Load:                xop = yop;                                      break;
+                        case Instructions::Print:
+                            Console::WriteLine(Access<string>(ops(0)));
+                            break;
+                    //    //case Instructions::Set:                                                                 break;
+                    //    //case Instructions::Swap:                                                                break;
 
-                        default:                                break;
+                    //    default:                                break;
                     }
                 }
             }
@@ -85,21 +78,50 @@ namespace Cyclone
 
 
             /** PRIVATE UTILITIES **/
-            Variable& Machine::Access(double address)
+            template<> Reference& Machine::Access<Reference>(Reference location)
             {
-                return (address < 0) ? Registers().Access((ulong)address) : _memory->Access((ulong)address);
+                return location.Storage() ? 
+                    Registers().Access(location) : 
+                    _memory.Access<Reference>(location);
             }
-            void Machine::Call(double address, Variable& lhs, Variable& rhs)
+
+            void Machine::OperateNumbers(Instructions cmd, Reference xop, Reference yop, Reference zop)
             {
-                StackFrame newFrame;
-                newFrame.Registers.Access(0) = rhs;
+                Number& x(Access<Number>(xop));
+                Number& y(Access<Number>(yop));
+                Number& z(Access<Number>(zop));
 
-                _scopes.Push(newFrame);
-                Execute(_memory->Call(address));
-                newFrame = _scopes.Pop();
-
-                Registers().Output = newFrame.Registers.Output;
+                switch (cmd)
+                {
+                    case Instructions::Add:             x = y + z;              break;
+                    case Instructions::Cast:            x.Cast(y.Type());       break;
+                    case Instructions::Compare:         x = y.Compare(z);       break;
+                    case Instructions::Copy:            x = y;                  break;
+                    case Instructions::Decrement:       x--;                    break;
+                    case Instructions::Divide:          x = y / z;              break;
+                    case Instructions::Increment:       x++;                    break;
+                    case Instructions::Multiply:        x = y * z;              break;
+                    case Instructions::Negate:          x = ~y;                 break;
+                    case Instructions::Not:             x = !y;                 break;
+                    case Instructions::Or:              x = y | z;              break;
+                    case Instructions::Subtract:        x = y - z;              break;
+                    case Instructions::Xor:             x = y ^ z;              break;
+                    default:                                                    break;
+                }
             }
+
+            
+            //void Machine::Call(double address, Variable& lhs, Variable& rhs)
+            //{
+            //    //StackFrame newFrame;
+            //    ////newFrame.Registers.Access(0) = rhs;
+
+            //    //_scopes.Push(newFrame);
+            //    ////Execute(_memory->Call(address));
+            //    //newFrame = _scopes.Pop();
+
+            //    //Registers().Output = newFrame.Registers.Output;
+            //}
         }
     }
 }

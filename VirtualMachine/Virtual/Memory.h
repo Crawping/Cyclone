@@ -4,8 +4,9 @@
 
 #pragma once
 #include "Collections/BST.h"
+#include "Primitives/Number.h"
+#include "Storage/Address.h"
 #include "Storage/StringLibrary.h"
-#include "Virtual/Address.h"
 #include "Virtual/Array.h"
 #include "Virtual/Class.h"
 
@@ -29,7 +30,7 @@ namespace Cyclone
                     /// <summary> Gets the number of functions that have been defined in virtual memory. </summary>
                     uint FunctionCount()    const { return Functions.Count() - 1; }
                     /// <summary> Gets the number of variables that have been defined in virtual memory. </summary>
-                    uint VariableCount()    const { return Variables.Count() - 1; }
+                    uint ReferenceCount()   const { return References.Count() - 1; }
 
 
 
@@ -40,8 +41,13 @@ namespace Cyclone
 
 
                     /** UTILITIES **/
-                    VMAPI Variable& Access(Address location);
-                    VMAPI const Vector<Instruction>& Call(Address location) const;
+                    //VMAPI Variable& Access(Reference location);
+                    template<typename T = Variable>
+                    VMAPI T& Access(Reference location);
+                    //VMAPI Function& Call(Reference location);
+                    //VMAPI void Delete(Reference location);
+                    //VMAPI Array& Index(Reference location);
+                    //VMAPI Class& TypeOf(Reference location);
 
                     //VMAPI const Vector<Instruction>& Call(const Variable& function)         const;
                     //VMAPI const Vector<Instruction>& CallFunction(uint id)                  const;
@@ -77,11 +83,12 @@ namespace Cyclone
 
                 private:
 
-                    BST<uint, Array>     Arrays;
-                    BST<uint, Class>     Classes;
-                    BST<uint, Function>  Functions;
-                    StringLibrary        Strings;
-                    BST<uint, Variable>  Variables;
+                    BST<uint, Array>        Arrays;
+                    BST<uint, Class>        Classes;
+                    BST<uint, Function>     Functions;
+                    BST<uint, Number>       Numbers;
+                    BST<uint, Reference>    References;
+                    BST<uint, string>       Strings;
 
             };
 

@@ -6,7 +6,6 @@
 #include "VMAPI.h"
 #include "Collections/Registry.h"
 #include "Virtual/Function.h"
-#include "Virtual/Variable.h"
 
 
 
@@ -34,13 +33,18 @@ namespace Cyclone
                     /** UTILITIES **/
 
                     VMAPI void Delete(uint instance);
-                    VMAPI Variable& Get(uint instance);
-                    VMAPI void Set(uint instance, const Variable& value);
+                    VMAPI Reference& Get(uint instance);
+                    VMAPI void Set(uint instance, const Reference& value);
+
+                    Property& operator =(const Property& other)
+                    {
+                        return *this;
+                    }
 
                 private:
 
                     uint                    _id;
-                    BST<uint, Variable>     _instances;
+                    BST<uint, Reference>     _instances;
             };
 
         }

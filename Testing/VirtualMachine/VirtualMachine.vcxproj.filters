@@ -19,5 +19,11 @@
     <ClCompile Include="Execution\VirtualMachine.cpp">
       <Filter>Execution</Filter>
     </ClCompile>
+    <ClCompile Include="Storage\Number.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="Storage\Address.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

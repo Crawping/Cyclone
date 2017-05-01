@@ -5,6 +5,7 @@
 #pragma once
 #include "Enumerator.h"
 #include "Collections/Vector.h"
+#include "Storage/Address.h"
 
 
 
@@ -24,21 +25,15 @@ namespace Cyclone
                 /// <summary> Terminates the process being executed. </summary>
                 /// <remarks> This command takes no input arguments. </remarks>
                 Abort,
-
-                Add,
                 Allocate,
-                And,
                 /// <summary> </summary>
                 /// <remarks> Address Register Register</remarks>
                 Call,
                 CallRelative,
-                Cast,
-                Compare,
                 Concatenate,
-                Copy,
-                Decrement,
                 /// <summary> Deletes a variable from memory. </summary>
                 Delete,
+
                 //DefineArray,
                 //DefineMethod,
                 //DefineObject,
@@ -47,10 +42,8 @@ namespace Cyclone
                 //DefineType,
                 //DefineVariable,
 
-                Divide,
                 /// <summary> Pushes an object property value onto the working variable stack. </summary>
                 Get,
-                Increment,
                 Index,
 
                 /// <summary> Sets the absolute position of the instruction pointer. </summary>
@@ -62,10 +55,6 @@ namespace Cyclone
 
                 /// <summary> Pushes a value from memory onto the working variable stack. </summary>
                 Load,
-                Multiply,
-                Negate,
-                Not,
-                Or,
                 /// <summary> Prevents any further execution of instructions until a resume command is received. </summary>
                 Pause,
                 /// <summary> Displays a string in the standard console output. </summary>
@@ -76,10 +65,24 @@ namespace Cyclone
                 Return,
 
                 Set,
-                Subtract,
-
                 /// <summary> Exchanges the positions of the two leading variables on the stack. </summary>
                 Swap,
+
+
+
+                Add,
+                And,
+                Cast,
+                Compare,
+                Copy,
+                Decrement,
+                Divide,
+                Increment,
+                Multiply,
+                Negate,
+                Not,
+                Or,
+                Subtract,
                 Xor,
             };
 
@@ -91,11 +94,14 @@ namespace Cyclone
 
         };
 
-
+       
+        using Virtual::Reference;
         struct Instruction
         {
-            Instructions        Command;
-            Vector<int, 3>      Operands;
+            
+
+            Instructions            Command;
+            Vector<Reference, 3>    Operands;
 
 
             /** CONSTRUCTORS **/
@@ -104,13 +110,13 @@ namespace Cyclone
             {
 
             }
-            Instruction(Instructions command, const Vector<int, 3>& operands) :
+            Instruction(Instructions command, const Vector<Reference, 3>& operands) :
                 Command(command),
                 Operands(operands)
             {
 
             }
-            Instruction(Instructions command, int x = 0, int y = 0, int z = 0) :
+            Instruction(Instructions command, Reference x = 0, Reference y = 0, Reference z = 0) :
                 Command(command),
                 Operands({ x, y, z })
             {

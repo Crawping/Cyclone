@@ -7,6 +7,8 @@
 #include "Collections/Stack.h"
 #include "Execution/Instructions.h"
 #include "Storage/StackFrame.h"
+#include "Storage/Address.h"
+#include "Virtual/Memory.h"
 
 
 namespace Cyclone
@@ -14,7 +16,7 @@ namespace Cyclone
     namespace VM
     {
         struct Instruction;
-        
+
         namespace Virtual
         {
             class Memory;
@@ -44,15 +46,22 @@ namespace Cyclone
                 private:
 
                     Instructions        _interrupt;
-                    Memory*             _memory;
+                    Memory              _memory;
                     Stack<StackFrame>   _scopes;
 
 
 
                     /** UTILITIES **/
-                    Variable& Access(double address);
-                    void Call(double address, Variable& lhs, Variable& rhs);
-                    void Delete()
+                    //Variable& Access(double address);
+                    //void Call(double address, Variable& lhs, Variable& rhs);
+                    //void Delete()
+
+                    template<typename T = Variable> 
+                    T& Access(Reference location)   { return _memory.Access<T>(location); }
+
+
+                    void OperateNumbers(Instructions cmd, Reference xop, Reference yop, Reference zop);
+
 
             };
 
