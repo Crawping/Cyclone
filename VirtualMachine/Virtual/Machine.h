@@ -6,7 +6,6 @@
 #include "VMAPI.h"
 #include "Collections/Stack.h"
 #include "Execution/Instructions.h"
-#include "Storage/Reference.h"
 #include "Storage/StackFrame.h"
 #include "Virtual/Memory.h"
 
@@ -27,7 +26,7 @@ namespace Cyclone
                 public:
 
                     /** PROPERTIES **/
-                    const Virtual::Memory& Memory() const { return _memory; }
+                    Virtual::Memory& Memory() { return _memory; }
 
 
 
@@ -42,6 +41,13 @@ namespace Cyclone
                     VMAPI void Pause();
                     VMAPI void Resume();
                     VMAPI void Execute(const ICollection<Instruction>& instructions);
+
+                    template<typename T> void Insert(Reference location, T& value)
+                    {
+                        location.Storage() ? 
+                            Workspace().Insert<T>(location, value) :
+                            _memory.Insert<T>(location, value);
+                    }
 
                 protected:
 
@@ -69,6 +75,7 @@ namespace Cyclone
                     }
 
 
+                    void Copy(Reference x, Reference y);
                     void Load(Reference x, Reference y);
                     void OperateNumbers(Instructions cmd, Reference xop, Reference yop, Reference zop);
 

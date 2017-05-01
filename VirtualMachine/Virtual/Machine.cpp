@@ -1,7 +1,8 @@
 #include "IO/Console.h"
 #include "Collections/Vector.h"
+#include "Virtual/Class.h"
+#include "Virtual/Function.h"
 #include "Virtual/Machine.h"
-#include "Virtual/Memory.h"
 
 
 
@@ -49,15 +50,8 @@ namespace Cyclone
                     //    case Instructions::Call:
                     //        break;
 
-                        case Instructions::Copy:
-                            switch (ops(0).Type())
-                            {
-                                case ReferenceTypes::Array:     Access<Array>(ops(0)) = Access<Array>(ops(1));          break;
-                                case ReferenceTypes::Number:    Access<Number>(ops(0)) = Access<Number>(ops(1));        break;
-                                case ReferenceTypes::Reference: Access<Reference>(ops(0)) = Access<Reference>(ops(1));  break;
-                                default:                        break;
-                            }
-                            break;
+                        case Instructions::Copy:                Copy(ops(0), ops(1)); break;
+
                     //    //case Instructions::Delete:              xop = Variable();                               break;
                     //    //case Instructions::Get:                 xop = yop;                                      break;
                     //    //case Instructions::Index:                                                               break;
@@ -86,19 +80,23 @@ namespace Cyclone
 
 
             /** PRIVATE UTILITIES **/
-            //template<> Reference& Machine::Access<Reference>(Reference location)
-            //{
-            //    return location.Storage() ? 
-            //        Registers().Access(location) : 
-            //        _memory.Access<Reference>(location);
-            //}
+            void Machine::Copy(Reference x, Reference y)
+            {
+                switch (x.Type())
+                {
+                    case ReferenceTypes::Array:         Access<Array>(x) = Access<Array>(y);            break;
+                    case ReferenceTypes::Number:        Access<Number>(x) = Access<Number>(y);          break;
+                    case ReferenceTypes::Reference:     Access<Reference>(y) = Access<Reference>(y);    break;
+                    default:                            break;
+                }
+            }
             void Machine::Load(Reference x, Reference y)
             {
                 switch (x.Type())
                 {
                     case ReferenceTypes::Array:         Workspace().Insert(x, Access<Array>(y));        break;
-                    //case ReferenceTypes::Object:        Workspace().Insert(x, Access<Class>(y));        break;
-                    //case ReferenceTypes::Function:      Workspace().Insert(x, Access<Function>(y));     break;
+                    case ReferenceTypes::Object:        Workspace().Insert(x, Access<Class>(y));        break;
+                    case ReferenceTypes::Function:      Workspace().Insert(x, Access<Virtual::Function>(y));     break;
                     case ReferenceTypes::Number:        Workspace().Insert(x, Access<Number>(y));       break;
                     case ReferenceTypes::Reference:     Workspace().Insert(x, Access<Reference>(y));    break;
                     case ReferenceTypes::String:        Workspace().Insert(x, Access<string>(y));       break;
@@ -114,7 +112,7 @@ namespace Cyclone
                 switch (cmd)
                 {
                     case Instructions::Add:             x = y + z;              break;
-                    case Instructions::Cast:            x.Cast(y.Type());       break;
+                    case Instructions::Cast:            x = x.Cast(y.Type());   break;
                     case Instructions::Compare:         x = y.Compare(z);       break;
                     case Instructions::Decrement:       x--;                    break;
                     case Instructions::Divide:          x = y / z;              break;
