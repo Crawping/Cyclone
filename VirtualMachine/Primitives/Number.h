@@ -11,8 +11,6 @@ namespace Cyclone
 {
     namespace VM
     {
-       
-
 
         class Number
         {

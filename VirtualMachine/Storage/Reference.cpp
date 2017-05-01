@@ -8,6 +8,7 @@ namespace Cyclone
     {
         namespace Virtual
         {
+
             string ReferenceTypes::ToString() const
             {
                 return
@@ -21,6 +22,7 @@ namespace Cyclone
 
 
 
+            /** CONSTRUCTOR **/
             constexpr Reference::Reference(ubyte storage, ubyte slot, ReferenceTypes type, uint offset):
                 _value( ((ulong)storage << 56) | ((ulong)slot << 48) | ((ulong)type << 40) | (ulong)offset )
             {

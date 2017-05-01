@@ -46,17 +46,16 @@ namespace Cyclone
                     }
                     switch (cmd)
                     {
-                        case Instructions::Abort:               return;
+                        case Instructions::Abort:       return;
                     //    case Instructions::Call:
                     //        break;
 
-                        case Instructions::Copy:                Copy(ops(0), ops(1)); break;
-
-                    //    //case Instructions::Delete:              xop = Variable();                               break;
+                        case Instructions::Copy:        Copy(ops(0), ops(1));                   break;
+                        case Instructions::Delete:      _memory.Remove(ops(0));                 break;
                     //    //case Instructions::Get:                 xop = yop;                                      break;
                     //    //case Instructions::Index:                                                               break;
 
-                        case Instructions::Jump:                a = ops(0).Offset();                                    break;
+                        case Instructions::Jump:        a = ops(0).Offset();                    break;
                         case Instructions::JumpIf:
 
                             if (ops(0).Type() == ReferenceTypes::Reference)
@@ -65,7 +64,7 @@ namespace Cyclone
                                 a = Access<Number>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
                             break;
 
-                        case Instructions::Load:                Load(ops(0), ops(1));                                   break;
+                        case Instructions::Load:        Load(ops(0), ops(1));                   break;
                         case Instructions::Print:
                             Console::WriteLine(Access<string>(ops(0)));
                             break;
@@ -96,7 +95,7 @@ namespace Cyclone
                 {
                     case ReferenceTypes::Array:         Workspace().Insert(x, Access<Array>(y));        break;
                     case ReferenceTypes::Object:        Workspace().Insert(x, Access<Class>(y));        break;
-                    case ReferenceTypes::Function:      Workspace().Insert(x, Access<Virtual::Function>(y));     break;
+                    case ReferenceTypes::Function:      Workspace().Insert(x, Access<Function>(y));     break;
                     case ReferenceTypes::Number:        Workspace().Insert(x, Access<Number>(y));       break;
                     case ReferenceTypes::Reference:     Workspace().Insert(x, Access<Reference>(y));    break;
                     case ReferenceTypes::String:        Workspace().Insert(x, Access<string>(y));       break;
