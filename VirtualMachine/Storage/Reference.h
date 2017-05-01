@@ -57,6 +57,7 @@ namespace Cyclone
                     constexpr ulong Value()           const { return _value; }
 
                     constexpr Reference(ulong value = 0):   _value(value) { }
+                    VMAPI constexpr Reference(ubyte storage, ubyte slot, ReferenceTypes type, uint offset);
 
                     constexpr operator bool()                   const
                     {
