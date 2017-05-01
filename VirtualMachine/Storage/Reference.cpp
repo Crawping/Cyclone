@@ -26,6 +26,20 @@ namespace Cyclone
             {
 
             }
+
+
+
+            /** OPERATORS **/
+            constexpr Reference::operator bool()                    const
+            {
+                return (Type() != ReferenceTypes::Null) && (Offset() != 0);
+            }
+            constexpr bool Reference::operator ==(Reference other)  const
+            {
+                return Type() == other.Type() && Offset() == other.Offset();
+            }
+            constexpr bool Reference::operator !=(Reference other)  const { return !(operator ==(other)); }
+
         }
     }
 }

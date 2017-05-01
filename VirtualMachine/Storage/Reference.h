@@ -59,15 +59,9 @@ namespace Cyclone
                     constexpr Reference(ulong value = 0):   _value(value) { }
                     VMAPI constexpr Reference(ubyte storage, ubyte slot, ReferenceTypes type, uint offset);
 
-                    constexpr operator bool()                   const
-                    {
-                        return (Type() != ReferenceTypes::Null) && (Offset() != 0);
-                    }
-                    constexpr bool operator ==(Reference other) const
-                    {
-                        return Type() == other.Type() && Offset() == other.Offset();
-                    }
-                    constexpr bool operator !=(Reference other) const { return !(operator ==(other)); }
+                    VMAPI constexpr operator bool()                   const;
+                    VMAPI constexpr bool operator ==(Reference other) const;
+                    VMAPI constexpr bool operator !=(Reference other) const;
 
                 private:
                     ulong _value;
