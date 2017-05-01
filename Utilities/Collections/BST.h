@@ -308,7 +308,7 @@ namespace Cyclone
                         /// <remarks>
                         ///     If automatic tree rebalancing is applied during an insert operation, then the root node of this subtree is
                         ///     liable to change. Thus, the node returned by this method is useful for tracking overall tree organization
-                        ///     at levels higher than the node on which this method gets invoked.
+                        ///     at higher levels.
                         /// </remarks>
                         Node<T, U>* Insert(const T& key, const U& value)
                         {
