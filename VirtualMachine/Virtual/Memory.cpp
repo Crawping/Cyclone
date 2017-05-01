@@ -1,4 +1,7 @@
 #include "Virtual/Memory.h"
+#include "Virtual/Array.h"
+#include "Virtual/Class.h"
+#include "Virtual/Function.h"
 
 
 
@@ -92,42 +95,6 @@ namespace Cyclone
                 if (location.Type() == ReferenceTypes::String)
                     Strings.Insert(location.Offset(), value);
             }
-
-
-            //Function& Memory::Call(Reference location)
-            //{
-            //    return Functions.Contains(location.Offset) ?
-            //        Functions[location.Offset] :
-            //        Functions[0];
-
-            //    //return location.Base() ?
-            //    //    Types[location.Base()].Call(location) :
-            //    //    Functions[location.Base()].Logic();
-            //}
-            //const Vector<Instruction>& Memory::Call(const Variable& function) const
-            //{
-            //    switch (function.Type())
-            //    {
-            //        case ReferenceTypes::Function:
-            //            return CallFunction(function.FirstHalf());
-            //        case ReferenceTypes::Object:
-            //            return CallMethod(function.FirstHalf(), function.SecondHalf());
-            //        case ReferenceTypes::Reference:
-            //            return (function.FirstHalf() > ReferenceTypes::Reference) ? 
-            //                Call( Variable(ReferenceTypes::Object, function.FirstHalf(), function.SecondHalf()) ) : 
-            //                Call( Variable(function.FirstHalf(), function.SecondHalf()) );
-            //        default:
-            //            return Functions[0].Logic();
-            //    }
-            //}
-            //const Vector<Instruction>& Memory::CallFunction(uint id)                 const
-            //{
-            //    return Functions[ Functions.Contains(id) ? id : 0 ].Logic();
-            //}
-            //const Vector<Instruction>& Memory::CallMethod(uint type, uint method)    const
-            //{
-            //    return Classes[ Classes.Contains(type) ? type : 0 ].Call(method);
-            //}
 
             //void Memory::CopyArray(uint source, uint destination)
             //{

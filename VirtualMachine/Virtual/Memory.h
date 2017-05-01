@@ -9,6 +9,7 @@
 #include "Storage/StringLibrary.h"
 #include "Virtual/Array.h"
 #include "Virtual/Class.h"
+#include "Virtual/Function.h"
 
 
 
@@ -44,7 +45,7 @@ namespace Cyclone
                     VMAPI Memory();
 
 
-
+                    
                     /** UTILITIES **/
                     //VMAPI Variable& Access(Reference location);
                     template<typename T = Variable>
@@ -52,15 +53,6 @@ namespace Cyclone
 
                     template<typename T>
                     VMAPI void Insert(Reference location, const T& value);
-
-                    //VMAPI Function& Call(Reference location);
-                    //VMAPI void Delete(Reference location);
-                    //VMAPI Array& Index(Reference location);
-                    //VMAPI Class& TypeOf(Reference location);
-
-                    //VMAPI const Vector<Instruction>& Call(const Variable& function)         const;
-                    //VMAPI const Vector<Instruction>& CallFunction(uint id)                  const;
-                    //VMAPI const Vector<Instruction>& CallMethod(uint type, uint method)     const;
 
                     //VMAPI void CopyArray(uint source, uint destination);
                     //VMAPI void CopyObject(uint type, uint source, uint destination);
@@ -104,12 +96,12 @@ namespace Cyclone
 
 
             /** TEMPLATE SPECIALIZATIONS **/
-            template<> VMAPI Array& Memory::Access(Reference location);
-            template<> VMAPI Class& Memory::Access(Reference location);
-            template<> VMAPI Function& Memory::Access(Reference location);
-            template<> VMAPI Number& Memory::Access(Reference location);
-            template<> VMAPI Reference& Memory::Access(Reference location);
-            template<> VMAPI string& Memory::Access(Reference location);
+            template<> VMAPI Array& Memory::Access<Array>(Reference location);
+            template<> VMAPI Class& Memory::Access<Class>(Reference location);
+            template<> VMAPI Function& Memory::Access<Function>(Reference location);
+            template<> VMAPI Number& Memory::Access<Number>(Reference location);
+            template<> VMAPI Reference& Memory::Access<Reference>(Reference location);
+            template<> VMAPI string& Memory::Access<string>(Reference location);
 
             template<> VMAPI void Memory::Insert<Array>(Reference location, const Array& value);
             template<> VMAPI void Memory::Insert<Class>(Reference location, const Class& value);
