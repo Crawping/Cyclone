@@ -49,12 +49,20 @@ namespace Cyclone
                     //    case Instructions::Call:
                     //        break;
 
-                    //    //case Instructions::Copy:                xop = yop;                                      break;
+                        case Instructions::Copy:
+                            switch (ops(0).Type())
+                            {
+                                case ReferenceTypes::Array:     Access<Array>(ops(0)) = Access<Array>(ops(1));          break;
+                                case ReferenceTypes::Number:    Access<Number>(ops(0)) = Access<Number>(ops(1));        break;
+                                case ReferenceTypes::Reference: Access<Reference>(ops(0)) = Access<Reference>(ops(1));  break;
+                                default:                        break;
+                            }
+                            break;
                     //    //case Instructions::Delete:              xop = Variable();                               break;
                     //    //case Instructions::Get:                 xop = yop;                                      break;
                     //    //case Instructions::Index:                                                               break;
 
-                        case Instructions::Jump:                a = ops(0).Offset();                          break;
+                        case Instructions::Jump:                a = ops(0).Offset();                                    break;
                         case Instructions::JumpIf:
 
                             if (ops(0).Type() == ReferenceTypes::Reference)
@@ -63,7 +71,7 @@ namespace Cyclone
                                 a = Access<Number>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
                             break;
 
-                    //    //case Instructions::Load:                xop = yop;                                      break;
+                        case Instructions::Load:                Load(ops(0), ops(1));                                   break;
                         case Instructions::Print:
                             Console::WriteLine(Access<string>(ops(0)));
                             break;
@@ -78,13 +86,25 @@ namespace Cyclone
 
 
             /** PRIVATE UTILITIES **/
-            template<> Reference& Machine::Access<Reference>(Reference location)
+            //template<> Reference& Machine::Access<Reference>(Reference location)
+            //{
+            //    return location.Storage() ? 
+            //        Registers().Access(location) : 
+            //        _memory.Access<Reference>(location);
+            //}
+            void Machine::Load(Reference x, Reference y)
             {
-                return location.Storage() ? 
-                    Registers().Access(location) : 
-                    _memory.Access<Reference>(location);
+                switch (x.Type())
+                {
+                    case ReferenceTypes::Array:         Workspace().Insert(x, Access<Array>(y));        break;
+                    //case ReferenceTypes::Object:        Workspace().Insert(x, Access<Class>(y));        break;
+                    //case ReferenceTypes::Function:      Workspace().Insert(x, Access<Function>(y));     break;
+                    case ReferenceTypes::Number:        Workspace().Insert(x, Access<Number>(y));       break;
+                    case ReferenceTypes::Reference:     Workspace().Insert(x, Access<Reference>(y));    break;
+                    case ReferenceTypes::String:        Workspace().Insert(x, Access<string>(y));       break;
+                    default:                            break;
+                }
             }
-
             void Machine::OperateNumbers(Instructions cmd, Reference xop, Reference yop, Reference zop)
             {
                 Number& x(Access<Number>(xop));
@@ -96,7 +116,6 @@ namespace Cyclone
                     case Instructions::Add:             x = y + z;              break;
                     case Instructions::Cast:            x.Cast(y.Type());       break;
                     case Instructions::Compare:         x = y.Compare(z);       break;
-                    case Instructions::Copy:            x = y;                  break;
                     case Instructions::Decrement:       x--;                    break;
                     case Instructions::Divide:          x = y / z;              break;
                     case Instructions::Increment:       x++;                    break;

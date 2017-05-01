@@ -6,8 +6,8 @@
 #include "VMAPI.h"
 #include "Collections/Stack.h"
 #include "Execution/Instructions.h"
+#include "Storage/Reference.h"
 #include "Storage/StackFrame.h"
-#include "Storage/Address.h"
 #include "Virtual/Memory.h"
 
 
@@ -26,6 +26,11 @@ namespace Cyclone
             {
                 public:
 
+                    /** PROPERTIES **/
+                    const Virtual::Memory& Memory() const { return _memory; }
+
+
+
                     /** CONSTRUCTOR & DESTRUCTOR **/
                     VMAPI Machine();
                     VMAPI ~Machine();
@@ -40,13 +45,12 @@ namespace Cyclone
 
                 protected:
 
-                    RegisterFrame& Registers()  { return Workspace().Registers; }
                     StackFrame& Workspace()     { return _scopes.First(); }
 
                 private:
 
                     Instructions        _interrupt;
-                    Memory              _memory;
+                    Virtual::Memory     _memory;
                     Stack<StackFrame>   _scopes;
 
 
@@ -57,9 +61,15 @@ namespace Cyclone
                     //void Delete()
 
                     template<typename T = Variable> 
-                    T& Access(Reference location)   { return _memory.Access<T>(location); }
+                    T& Access(Reference location)   
+                    { 
+                        return location.Storage()               ?  
+                            Workspace().Access<T>(location)     : 
+                            _memory.Access<T>(location); 
+                    }
 
 
+                    void Load(Reference x, Reference y);
                     void OperateNumbers(Instructions cmd, Reference xop, Reference yop, Reference zop);
 
 
