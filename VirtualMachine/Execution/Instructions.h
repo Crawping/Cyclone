@@ -5,7 +5,7 @@
 #pragma once
 #include "Enumerator.h"
 #include "Collections/Vector.h"
-#include "Storage/Address.h"
+#include "Storage/Reference.h"
 
 
 
@@ -31,6 +31,7 @@ namespace Cyclone
                 Call,
                 CallRelative,
                 Concatenate,
+                Copy,
                 /// <summary> Deletes a variable from memory. </summary>
                 Delete,
 
@@ -74,7 +75,6 @@ namespace Cyclone
                 And,
                 Cast,
                 Compare,
-                Copy,
                 Decrement,
                 Divide,
                 Increment,

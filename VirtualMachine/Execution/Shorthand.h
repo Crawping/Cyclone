@@ -18,32 +18,20 @@ namespace Cyclone
                 nop,
 
                 abort,
-
-                add,
-
-                and,
+                all,
 
                 call, callr,
-
-                cast,
-
-                cmp, 
 
                 cat,
 
                 copy,
 
-                dec,
-
                 del,
 
                 //defa, defm, defo, defp, defs, deft, defv,
 
-                div,
 
                 get,
-
-                inc,
 
                 ind,
 
@@ -51,25 +39,27 @@ namespace Cyclone
 
                 load,
 
-                mul,
-
-                neg,
-
-                not,
-
-                or,
-
                 pause,
                 disp,
                 rem,
                 ret,
 
                 set,
-
-                sub,
-
                 swp,
 
+
+                add,
+                and,
+                cast,
+                cmp,
+                dec,
+                div,
+                inc,
+                mul,
+                neg,
+                not,
+                or,
+                sub,
                 xor,
             };
         }
