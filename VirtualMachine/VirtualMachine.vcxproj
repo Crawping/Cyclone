@@ -139,8 +139,6 @@
     <ClCompile Include="Virtual\Memory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Execution\Classes.h" />
-    <ClInclude Include="Execution\Functions.h" />
     <ClInclude Include="Execution\Instructions.h" />
     <ClInclude Include="Execution\Shorthand.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />

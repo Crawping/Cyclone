@@ -65,12 +65,6 @@
     <ClInclude Include="Storage\StringLibrary.h">
       <Filter>Storage</Filter>
     </ClInclude>
-    <ClInclude Include="Execution\Functions.h">
-      <Filter>Execution</Filter>
-    </ClInclude>
-    <ClInclude Include="Execution\Classes.h">
-      <Filter>Execution</Filter>
-    </ClInclude>
     <ClInclude Include="Virtual\Workspace.h">
       <Filter>Virtual</Filter>
     </ClInclude>
