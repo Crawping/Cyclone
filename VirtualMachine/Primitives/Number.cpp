@@ -31,7 +31,7 @@ namespace Cyclone
 
 
         /** OPERATORS **/
-        constexpr Number::operator bool()                  const
+        constexpr Number::operator bool()                       const
         {
             return (Type() != NumericTypes::Null) && (_value != 0.0);
         }
