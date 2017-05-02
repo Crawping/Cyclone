@@ -37,40 +37,35 @@ namespace Cyclone
                     const auto& cmd = instructions(a).Command;
                     const auto& ops = instructions(a).Operands;
 
-
-
                     if (cmd >= Instructions::Add && cmd <= Instructions::Xor)
                     {
-                        OperateNumbers(cmd, ops(0), ops(1), ops(2));
+                        Compute(cmd, ops(0), ops(1), ops(2));
                         continue;
                     }
+
                     switch (cmd)
                     {
                         case Instructions::Abort:       return;
-                    //    case Instructions::Call:
-                    //        break;
-
+                        case Instructions::Call:        Call(ops(0), ops(1), ops(2));           break;
                         case Instructions::Copy:        Copy(ops(0), ops(1));                   break;
-                        case Instructions::Delete:      _memory.Remove(ops(0));                 break;
+                        case Instructions::Delete:      Delete(ops(0));                         break;
                     //    //case Instructions::Get:                 xop = yop;                                      break;
-                    //    //case Instructions::Index:                                                               break;
+                        case Instructions::Index:
+                            //Access<Array>(ops(0)).
+                            break;
 
                         case Instructions::Jump:        a = ops(0).Offset();                    break;
                         case Instructions::JumpIf:
-
-                            if (ops(0).Type() == ReferenceTypes::Reference)
-                                a = Access<Reference>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
-                            else
-                                a = Access<Number>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
+                            a = Access<Number>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
                             break;
 
                         case Instructions::Load:        Load(ops(0), ops(1));                   break;
                         case Instructions::Print:
                             Console::WriteLine(Access<string>(ops(0)));
                             break;
+                        case Instructions::Return:      return;
                     //    //case Instructions::Set:                                                                 break;
                     //    //case Instructions::Swap:                                                                break;
-
                     //    default:                                break;
                     }
                 }
@@ -79,34 +74,19 @@ namespace Cyclone
 
 
             /** PRIVATE UTILITIES **/
-            void Machine::Copy(Reference x, Reference y)
+            void Machine::Call(Reference x, Reference y, Reference z)
             {
-                switch (x.Type())
-                {
-                    case ReferenceTypes::Array:         Access<Array>(x) = Access<Array>(y);            break;
-                    case ReferenceTypes::Number:        Access<Number>(x) = Access<Number>(y);          break;
-                    case ReferenceTypes::Reference:     Access<Reference>(y) = Access<Reference>(y);    break;
-                    default:                            break;
-                }
+                auto& ws = Workspace();
+                _scopes.Push(StackFrame());
+                    auto& nws = Workspace();
+                    Execute( Access<Function>(x).Logic() );
+                _scopes.Pop();
             }
-            void Machine::Load(Reference x, Reference y)
+            void Machine::Compute(Instructions cmd, Reference xr, Reference yr, Reference zr)
             {
-                switch (x.Type())
-                {
-                    case ReferenceTypes::Array:         Workspace().Insert(x, Access<Array>(y));        break;
-                    case ReferenceTypes::Object:        Workspace().Insert(x, Access<Class>(y));        break;
-                    case ReferenceTypes::Function:      Workspace().Insert(x, Access<Function>(y));     break;
-                    case ReferenceTypes::Number:        Workspace().Insert(x, Access<Number>(y));       break;
-                    case ReferenceTypes::Reference:     Workspace().Insert(x, Access<Reference>(y));    break;
-                    case ReferenceTypes::String:        Workspace().Insert(x, Access<string>(y));       break;
-                    default:                            break;
-                }
-            }
-            void Machine::OperateNumbers(Instructions cmd, Reference xop, Reference yop, Reference zop)
-            {
-                Number& x(Access<Number>(xop));
-                Number& y(Access<Number>(yop));
-                Number& z(Access<Number>(zop));
+                Number& x(Access<Number>(xr));
+                Number& y(Access<Number>(yr));
+                Number& z(Access<Number>(zr));
 
                 switch (cmd)
                 {
@@ -122,22 +102,38 @@ namespace Cyclone
                     case Instructions::Or:              x = y | z;              break;
                     case Instructions::Subtract:        x = y - z;              break;
                     case Instructions::Xor:             x = y ^ z;              break;
-                    default:                                                    break;
+                    default:                            break;
                 }
             }
-
+            void Machine::Copy(Reference x, Reference y)
+            {
+                switch (x.Type())
+                {
+                    case ReferenceTypes::Array:         Access<Array>(x) = Access<Array>(y);            break;
+                    case ReferenceTypes::Number:        Access<Number>(x) = Access<Number>(y);          break;
+                    case ReferenceTypes::Reference:     Access<Reference>(y) = Access<Reference>(y);    break;
+                    default:                            break;
+                }
+            }
+            void Machine::Delete(Reference x)
+            {
+                if (x.Storage())    Workspace().Delete(x);
+                else                _memory.Delete(x);
+            }
+            void Machine::Load(Reference x, Reference y)
+            {
+                switch (x.Type())
+                {
+                    case ReferenceTypes::Array:         Workspace().Insert(x, Access<Array>(y));        break;
+                    case ReferenceTypes::Object:        Workspace().Insert(x, Access<Class>(y));        break;
+                    case ReferenceTypes::Function:      Workspace().Insert(x, Access<Function>(y));     break;
+                    case ReferenceTypes::Number:        Workspace().Insert(x, Access<Number>(y));       break;
+                    case ReferenceTypes::Reference:     Workspace().Insert(x, Access<Reference>(y));    break;
+                    case ReferenceTypes::String:        Workspace().Insert(x, Access<string>(y));       break;
+                    default:                            break;
+                }
+            }
             
-            //void Machine::Call(double address, Variable& lhs, Variable& rhs)
-            //{
-            //    //StackFrame newFrame;
-            //    ////newFrame.Registers.Access(0) = rhs;
-
-            //    //_scopes.Push(newFrame);
-            //    ////Execute(_memory->Call(address));
-            //    //newFrame = _scopes.Pop();
-
-            //    //Registers().Output = newFrame.Registers.Output;
-            //}
         }
     }
 }

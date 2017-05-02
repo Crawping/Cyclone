@@ -74,11 +74,11 @@ namespace Cyclone
                             _memory.Access<T>(location); 
                     }
 
-
+                    void Call(Reference x, Reference y, Reference z);
+                    void Compute(Instructions cmd, Reference xop, Reference yop, Reference zop);
                     void Copy(Reference x, Reference y);
+                    void Delete(Reference x);
                     void Load(Reference x, Reference y);
-                    void OperateNumbers(Instructions cmd, Reference xop, Reference yop, Reference zop);
-
 
             };
 
