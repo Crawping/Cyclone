@@ -43,7 +43,7 @@ namespace Cyclone
 
                     /** UTILITIES **/
                     VMAPI Reference& Access(Reference location);
-                    VMAPI const Vector<Instruction>& Call(Reference location) const;
+                    //VMAPI const Vector<Instruction>& Call(Reference location) const;
 
                     //VMAPI void Delete(uint instance);
                     //VMAPI Variable& Get(uint object, uint property);

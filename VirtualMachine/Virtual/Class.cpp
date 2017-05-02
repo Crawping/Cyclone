@@ -20,11 +20,11 @@ namespace Cyclone
                 static Reference var;
                 return var;
             }
-            const Vector<Instruction>& Class::Call(Reference location) const
-            {
-                static Vector<Instruction> cmds;
-                return cmds;
-            }
+            //const Vector<Instruction>& Class::Call(Reference location) const
+            //{
+            //    static Vector<Instruction> cmds;
+            //    return cmds;
+            //}
 
             //const Vector<Instruction>& Class::Call(uint method)                     const
             //{
