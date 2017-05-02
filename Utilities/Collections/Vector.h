@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Utilities.h"
 #include "Interfaces/IArray.h"
 
 
@@ -34,6 +35,13 @@ namespace Cyclone
                 {
                     for (uint a = 0; a < Count(); a++)
                         Data[a] = value;
+                }
+                template<uint V>
+                Vector(const Vector<T, V>& other, uint offset, uint count)
+                {
+                    count = Math::Min(V - offset, count, U);
+                    for (uint a = 0; a < count; a++)
+                        Data[a] = other(a + offset);
                 }
                 /// <summary> Constructs a new vector of data using the contents of an initializer list. </summary>
                 /// <param name="values"> An initialization list containing values to be copied into the new vector. </param>
