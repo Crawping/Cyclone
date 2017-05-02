@@ -54,15 +54,13 @@ class _Machine : public testing::Test
 /** CONSTRUCTION **/
 TEST_F(_Machine, Construction)
 {
-    ASSERT_EQ(_m0.Memory().ArrayCount(),       0);
-    ASSERT_EQ(_m0.Memory().ClassCount(),       0);
-    ASSERT_EQ(_m0.Memory().FunctionCount(),    0);
-    ASSERT_EQ(_m0.Memory().NumberCount(),      0);
-    ASSERT_EQ(_m0.Memory().ReferenceCount(),   0);
-    ASSERT_EQ(_m0.Memory().StringCount(),      0);
-
-    //ASSERT_EQ(_n2.Type(),   NumericTypes::Integer32);
-    //ASSERT_EQ(_m1.Memory().Access<Number>(_rn2).Type(),    NumericTypes::Integer32);
+    const Memory& m(_m0.Memory());
+    ASSERT_EQ(m.ArrayCount(),       0);
+    ASSERT_EQ(m.ClassCount(),       0);
+    ASSERT_EQ(m.FunctionCount(),    0);
+    ASSERT_EQ(m.NumberCount(),      0);
+    ASSERT_EQ(m.ReferenceCount(),   0);
+    ASSERT_EQ(m.StringCount(),      0);
 }
 
 
@@ -70,12 +68,13 @@ TEST_F(_Machine, Construction)
 /** UTILITIES **/
 TEST_F(_Machine, Insertion)
 {
-    ASSERT_EQ(_m1.Memory().ArrayCount(),       0);
-    ASSERT_EQ(_m1.Memory().ClassCount(),       0);
-    ASSERT_EQ(_m1.Memory().FunctionCount(),    0);
-    ASSERT_EQ(_m1.Memory().NumberCount(),      2);
-    ASSERT_EQ(_m1.Memory().ReferenceCount(),   0);
-    ASSERT_EQ(_m1.Memory().StringCount(),      2);
+    const Memory& m(_m1.Memory());
+    ASSERT_EQ(m.ArrayCount(),       0);
+    ASSERT_EQ(m.ClassCount(),       0);
+    ASSERT_EQ(m.FunctionCount(),    0);
+    ASSERT_EQ(m.NumberCount(),      2);
+    ASSERT_EQ(m.ReferenceCount(),   0);
+    ASSERT_EQ(m.StringCount(),      2);
 }
 
 
@@ -97,13 +96,14 @@ TEST_F(_Machine, Aborting)
     Number n1 = _m1.Memory().Access<Number>(r1);
     ASSERT_EQ(n1,                               _n1 + _n2);
 }
-TEST_F(_Machine, Calculations)
+TEST_F(_Machine, Computations)
 {
+    Memory& m(_m1.Memory());
     Reference r1(0, 0, ReferenceTypes::Number, hash("Result"));
     Vector<Instruction> cmds = { { add, r1, _rn1, _rn2 } };
     _m1.Execute(cmds);
 
-    Number n1 = _m1.Memory().Access<Number>(r1);
+    Number n1 = m.Access<Number>(r1);
     ASSERT_EQ(n1.Type(),                        NumericTypes::Float64);
     ASSERT_EQ(n1,                               _n1 + _n2);
     ASSERT_NE(n1,                               _n1 - _n2);
@@ -111,7 +111,7 @@ TEST_F(_Machine, Calculations)
     cmds = { { sub, r1, _rn1, _rn2 } };
     _m1.Execute(cmds);
 
-    Number n2 = _m1.Memory().Access<Number>(r1);
+    Number n2 = m.Access<Number>(r1);
     ASSERT_EQ(n2.Type(),                        NumericTypes::Float64);
     ASSERT_EQ(n2,                               _n1 - _n2);
     ASSERT_NE(n2,                               n1);
@@ -119,7 +119,7 @@ TEST_F(_Machine, Calculations)
     cmds = { { add, r1, r1, _rn2 } };
     _m1.Execute(cmds);
 
-    Number n3 = _m1.Memory().Access<Number>(r1);
+    Number n3 = m.Access<Number>(r1);
     ASSERT_EQ(n3.Type(),                        NumericTypes::Float64);
     ASSERT_FLOAT_EQ(n3.Value(),                 _n1.Value());
     ASSERT_NE(n3,                               n2);
@@ -127,7 +127,7 @@ TEST_F(_Machine, Calculations)
     cmds = { { inc, r1 } };
     _m1.Execute(cmds);
 
-    Number n4 = _m1.Memory().Access<Number>(r1);
+    Number n4 = m.Access<Number>(r1);
     ASSERT_EQ(n4.Type(),                        NumericTypes::Float64);
     ASSERT_EQ(n4,                               n3 + Number(1));
     ASSERT_NE(n4,                               n2);
@@ -135,9 +135,22 @@ TEST_F(_Machine, Calculations)
     cmds = { { cast, r1, _rn2 } };
     _m1.Execute(cmds);
 
-    Number n5 = _m1.Memory().Access<Number>(r1);
+    Number n5 = m.Access<Number>(r1);
     ASSERT_EQ(n5.Type(),                        NumericTypes::Integer32);
     ASSERT_EQ(n5,                               n4);
+}
+TEST_F(_Machine, Deletion)
+{
+    Memory& m(_m1.Memory());
+    Number n1 = m.Access<Number>(_rn1);
+    Number n2 = m.Access<Number>(_rn2);
 
-    
+    ASSERT_EQ(n1,                               _n1);
+    ASSERT_NE(n1,                               Number(0));
+
+    Vector<Instruction> cmds = { { del, _rn1 } };
+    _m1.Execute(cmds);
+
+    ASSERT_EQ(m.Access<Number>(_rn1),           Number(0));
+    ASSERT_EQ(m.Access<Number>(_rn2),           n2);
 }
