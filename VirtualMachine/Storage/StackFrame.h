@@ -23,6 +23,8 @@ namespace Cyclone
             {
                 public:
 
+
+
                     /** UTILITIES **/
                     template<typename T>
                     VMAPI T& Access(Reference location);
@@ -30,6 +32,8 @@ namespace Cyclone
                     template<typename T>
                     VMAPI void Insert(Reference location, T& value);
 
+                    VMAPI void Delete(Reference location);
+                    
                     VMAPI void Reset();
 
                 private:

@@ -54,35 +54,7 @@ namespace Cyclone
                     template<typename T>
                     VMAPI void Insert(Reference location, const T& value);
 
-                    VMAPI void Remove(Reference location);
-
-                    //VMAPI void CopyArray(uint source, uint destination);
-                    //VMAPI void CopyObject(uint type, uint source, uint destination);
-
-                    //VMAPI void Delete(const Variable& reference);
-                    //VMAPI void DeleteArray(uint id);
-                    //VMAPI void DeleteObject(uint type, uint id);
-                    //VMAPI void DeleteVariable(uint id);
-
-                    //VMAPI const string& Find(uint id)                                   const;
-                    //VMAPI uint Find(const string& name)                                 const;
-
-                    //VMAPI Variable& Get(const Variable& reference, const Variable& property);
-                    //VMAPI Variable& GetArray(uint id, uint index);
-                    //VMAPI Variable& GetObject(uint type, uint property, uint id);
-                    //VMAPI Variable& GetVariable(uint id);
-
-                    //VMAPI void Insert(const Class& type);
-                    //VMAPI void Insert(const Function& function);
-                    //VMAPI void Insert(uint type, const Property& property);
-                    //VMAPI uint Insert(const string& string);
-                    //VMAPI uint Insert(const string& name, const Variable& value);
-
-                    //VMAPI void Set(const Variable& reference, const Variable& property, const Variable& value);
-                    //VMAPI void SetArray(uint id, uint index, const Variable& value);
-                    //VMAPI void SetObject(uint type, uint property, uint id, const Variable& value);
-                    //VMAPI void SetVariable(uint id, const Variable& value);
-
+                    VMAPI void Delete(Reference location);
 
                 private:
 

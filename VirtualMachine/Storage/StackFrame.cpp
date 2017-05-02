@@ -87,6 +87,21 @@ namespace Cyclone
                     Strings(location.Offset()) = &value;
             }
 
+            void StackFrame::Delete(Reference location)
+            {
+                uint offset = location.Offset();
+                if (offset > 255) { return; }
+                switch (location.Type())
+                {
+                    case ReferenceTypes::Array:         Arrays(offset) = nullptr;           break;
+                    case ReferenceTypes::Object:        Classes(offset) = nullptr;          break;
+                    case ReferenceTypes::Function:      Functions(offset) = nullptr;        break;
+                    case ReferenceTypes::Number:        Numbers(offset) = 0;                break;
+                    case ReferenceTypes::Reference:     Access<Reference>(location) = 0;    break;
+                    case ReferenceTypes::String:        Strings(offset) = nullptr;          break;
+                    default:                            break;
+                }
+            }
             void StackFrame::Reset()
             {
                 Reference r;
