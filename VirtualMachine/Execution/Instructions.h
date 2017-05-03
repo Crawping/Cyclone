@@ -95,7 +95,6 @@ namespace Cyclone
         };
 
        
-        using Virtual::Reference;
         struct Instruction
         {
             
