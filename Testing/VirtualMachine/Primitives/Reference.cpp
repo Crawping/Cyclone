@@ -5,7 +5,7 @@
 #include "Storage/Reference.h"
 #include <gtest/gtest.h>
 
-using namespace Cyclone::VM;
+using namespace Cyclone::Virtual;
 
 
 

@@ -10,7 +10,7 @@
 namespace Cyclone
 {
     using namespace Utilities;
-    namespace VM
+    namespace Virtual
     {
 
         class IVirtualData

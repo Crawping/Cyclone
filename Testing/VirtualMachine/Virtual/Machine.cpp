@@ -8,9 +8,8 @@
 #include "Virtual/Machine.h"
 #include <gtest/gtest.h>
 
-using namespace Cyclone::VM;
-using namespace Cyclone::VM::Virtual;
-using namespace Cyclone::VM::Shorthand;
+using namespace Cyclone::Virtual;
+using namespace Cyclone::Virtual::Shorthand;
 
 
 

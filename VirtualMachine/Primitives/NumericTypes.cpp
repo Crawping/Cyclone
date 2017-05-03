@@ -9,7 +9,7 @@ using namespace Cyclone::Reflection;
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
 
         /** PROPERTIES **/

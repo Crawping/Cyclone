@@ -11,7 +11,7 @@
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-    namespace VM
+    namespace Virtual
     {
         class StringLibrary
         {

@@ -5,7 +5,7 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
         namespace Virtual
         {

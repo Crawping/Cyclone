@@ -8,11 +8,11 @@
 #include "Execution/Shorthand.h"
 #include <gtest/gtest.h>
 
-using namespace Cyclone::VM;
+using namespace Cyclone::Virtual;
 using namespace Cyclone::Utilities;
-using namespace Cyclone::VM::Shorthand;
+using namespace Cyclone::Virtual::Shorthand;
 
-namespace S = Cyclone::VM::Shorthand;
+namespace S = Cyclone::Virtual::Shorthand;
 
 
 //class _VirtualMachine : public testing::Test

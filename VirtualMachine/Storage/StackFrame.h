@@ -15,58 +15,55 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
-        namespace Virtual
+
+        class StackFrame
         {
+            public:
 
-            class StackFrame
-            {
-                public:
+                /** UTILITIES **/
+                template<typename T>
+                VMAPI T& Access(Reference location);
 
-                    /** UTILITIES **/
-                    template<typename T>
-                    VMAPI T& Access(Reference location);
+                template<typename T>
+                VMAPI void Insert(Reference location, T& value);
 
-                    template<typename T>
-                    VMAPI void Insert(Reference location, T& value);
-
-                    VMAPI void Delete(Reference location);
+                VMAPI void Delete(Reference location);
                     
-                    VMAPI void Reset();
+                VMAPI void Reset();
 
-                private:
+            private:
 
-                    /** DATA **/
-                    Vector<Array*, 256>         Arrays;
-                    Vector<Class*, 256>         Classes;
-                    Vector<Function*, 256>      Functions;
-                    Vector<Number, 256>         Numbers;
-                    Vector<String*, 256>        Strings;
+                /** DATA **/
+                Vector<Array*, 256>         Arrays;
+                Vector<Class*, 256>         Classes;
+                Vector<Function*, 256>      Functions;
+                Vector<Number, 256>         Numbers;
+                Vector<String*, 256>        Strings;
 
-                    Vector<Reference, 256>      Input;
-                    Vector<Reference, 256>      Local;
-                    Vector<Reference, 256>      Output;
+                Vector<Reference, 256>      Input;
+                Vector<Reference, 256>      Local;
+                Vector<Reference, 256>      Output;
 
-            };
+        };
 
 
 
-            /** TEMPLATE SPECIALIZATIONS **/
-            template<> VMAPI Array& StackFrame::Access<Array>(Reference location);
-            template<> VMAPI Class& StackFrame::Access<Class>(Reference location);
-            template<> VMAPI Function& StackFrame::Access<Function>(Reference location);
-            template<> VMAPI Number& StackFrame::Access<Number>(Reference location);
-            template<> VMAPI Reference& StackFrame::Access<Reference>(Reference location);
-            template<> VMAPI String& StackFrame::Access<String>(Reference location);
+        /** TEMPLATE SPECIALIZATIONS **/
+        template<> VMAPI Array& StackFrame::Access<Array>(Reference location);
+        template<> VMAPI Class& StackFrame::Access<Class>(Reference location);
+        template<> VMAPI Function& StackFrame::Access<Function>(Reference location);
+        template<> VMAPI Number& StackFrame::Access<Number>(Reference location);
+        template<> VMAPI Reference& StackFrame::Access<Reference>(Reference location);
+        template<> VMAPI String& StackFrame::Access<String>(Reference location);
 
-            template<> VMAPI void StackFrame::Insert<Array>(Reference location, Array& value);
-            template<> VMAPI void StackFrame::Insert<Class>(Reference location, Class& value);
-            template<> VMAPI void StackFrame::Insert<Function>(Reference location, Function& value);
-            template<> VMAPI void StackFrame::Insert<Number>(Reference location, Number& value);
-            template<> VMAPI void StackFrame::Insert<Reference>(Reference location, Reference& value);
-            template<> VMAPI void StackFrame::Insert<String>(Reference location, String& value);
+        template<> VMAPI void StackFrame::Insert<Array>(Reference location, Array& value);
+        template<> VMAPI void StackFrame::Insert<Class>(Reference location, Class& value);
+        template<> VMAPI void StackFrame::Insert<Function>(Reference location, Function& value);
+        template<> VMAPI void StackFrame::Insert<Number>(Reference location, Number& value);
+        template<> VMAPI void StackFrame::Insert<Reference>(Reference location, Reference& value);
+        template<> VMAPI void StackFrame::Insert<String>(Reference location, String& value);
 
-        }
     }
 }

@@ -12,7 +12,7 @@
 namespace Cyclone
 {
     namespace { using namespace Utilities; }
-    namespace VM
+    namespace Virtual
     {
 
         struct Instructions : public Enumerator

@@ -10,7 +10,7 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
         class Number
         {
@@ -70,5 +70,6 @@ namespace Cyclone
                 NumericTypes    _type;
                 double          _value;
         };
+
     }
 }

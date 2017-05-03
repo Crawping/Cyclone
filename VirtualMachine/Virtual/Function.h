@@ -10,37 +10,34 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
-        namespace Virtual
+        using namespace Utilities;
+
+        class Function
         {
-            using namespace Utilities;
+            public:
 
-            class Function
-            {
-                public:
-
-                    /** PROPERTIES **/
-                    int ID()                            const { return _id; }
-                    uint InputCount()                   const { return _inputCount; }
-                    const Vector<Instruction>& Logic()  const { return _logic; }
-                    uint OutputCount()                  const { return _outputCount; }
+                /** PROPERTIES **/
+                int ID()                            const { return _id; }
+                uint InputCount()                   const { return _inputCount; }
+                const Vector<Instruction>& Logic()  const { return _logic; }
+                uint OutputCount()                  const { return _outputCount; }
 
 
 
-                    /** CONSTRUCTOR **/
-                    Function(uint id = 0) : _id(id) { }
+                /** CONSTRUCTOR **/
+                Function(uint id = 0) : _id(id) { }
 
-                private:
+            private:
 
-                    /** DATA **/
-                    uint                    _id;
-                    uint                    _inputCount;
-                    Vector<Instruction>     _logic;
-                    uint                    _outputCount;
+                /** DATA **/
+                uint                    _id;
+                uint                    _inputCount;
+                Vector<Instruction>     _logic;
+                uint                    _outputCount;
 
-            };
+        };
 
-        }
     }
 }

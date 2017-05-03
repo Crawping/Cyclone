@@ -9,7 +9,7 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
         namespace Shorthand
         {

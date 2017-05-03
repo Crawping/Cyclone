@@ -154,7 +154,6 @@
     <ClInclude Include="Virtual\Property.h" />
     <ClInclude Include="Virtual\Memory.h" />
     <ClInclude Include="Virtual\Function.h" />
-    <ClInclude Include="Virtual\Workspace.h" />
     <ClInclude Include="VMAPI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

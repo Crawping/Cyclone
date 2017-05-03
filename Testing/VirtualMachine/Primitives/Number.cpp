@@ -5,7 +5,7 @@
 #include "Primitives/Number.h"
 #include <gtest/gtest.h>
 
-using namespace Cyclone::VM;
+using namespace Cyclone::Virtual;
 
 
 
@@ -13,16 +13,20 @@ class _Number : public testing::Test
 {
     protected:
 
-        Number _i0;
+        /** TEST DATA **/
+        Number      _c1;
+        Number      _c2;
 
-        Number _c1;
-        Number _c2;
+        Number      _d1;
+        Number      _d2;
 
-        Number _f1;
-        Number _f2;
+        Number      _f1;
+        Number      _f2;
 
-        Number _d1;
-        Number _d2;
+        Number      _i0;
+
+        Number      _r1;
+        Reference   _rn1;
 
 
 
@@ -32,9 +36,10 @@ class _Number : public testing::Test
             _d1(3.14159),
             _d2(-1234.5678),
             _f1(3.14159f),
-            _f2(-1234.5678f)
+            _f2(-1234.5678f),
+            _rn1(0, 0, ReferenceTypes::Array, 1)
         {
-
+            _r1 = _rn1;
         }
 };
 
@@ -54,6 +59,9 @@ TEST_F(_Number, Construction)
 
     ASSERT_EQ(_f1.Type(),       NumericTypes::Float32);
     ASSERT_EQ(_f1.Value(),      3.14159f);
+
+    ASSERT_EQ(_r1.Type(),       NumericTypes::Reference);
+    ASSERT_EQ(_r1.Value(),      _rn1.Value());
 }
 TEST_F(_Number, Casting)
 {

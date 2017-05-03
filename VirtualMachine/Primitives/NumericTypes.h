@@ -12,7 +12,7 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
         using namespace Utilities;
 

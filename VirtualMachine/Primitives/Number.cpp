@@ -4,7 +4,7 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
 
         /** CONSTRUCTORS **/

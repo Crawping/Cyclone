@@ -65,9 +65,6 @@
     <ClInclude Include="Storage\StringLibrary.h">
       <Filter>Storage</Filter>
     </ClInclude>
-    <ClInclude Include="Virtual\Workspace.h">
-      <Filter>Virtual</Filter>
-    </ClInclude>
     <ClInclude Include="Virtual\Class.h">
       <Filter>Virtual</Filter>
     </ClInclude>

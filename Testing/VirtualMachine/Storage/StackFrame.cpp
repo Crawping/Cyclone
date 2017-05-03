@@ -6,8 +6,7 @@
 #include "Storage/StackFrame.h"
 #include <gtest/gtest.h>
 
-using namespace Cyclone::VM;
-using namespace Cyclone::VM::Virtual;
+using namespace Cyclone::Virtual;
 
 
 

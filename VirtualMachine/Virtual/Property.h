@@ -11,42 +11,39 @@
 
 namespace Cyclone
 {
-    namespace VM
+    namespace Virtual
     {
-        namespace Virtual
+
+        class Property
         {
+            public:
 
-            class Property
-            {
-                public:
-
-                    /** PROPERTIES **/
-                    int ID()                            const { return _id; }
+                /** PROPERTIES **/
+                int ID()                            const { return _id; }
 
 
 
-                    /** CONSTRUCTOR **/
-                    VMAPI Property(uint id = 0);
+                /** CONSTRUCTOR **/
+                VMAPI Property(uint id = 0);
 
 
 
-                    /** UTILITIES **/
+                /** UTILITIES **/
 
-                    VMAPI void Delete(uint instance);
-                    VMAPI Reference& Get(uint instance);
-                    VMAPI void Set(uint instance, const Reference& value);
+                VMAPI void Delete(uint instance);
+                VMAPI Reference& Get(uint instance);
+                VMAPI void Set(uint instance, const Reference& value);
 
-                    Property& operator =(const Property& other)
-                    {
-                        return *this;
-                    }
+                Property& operator =(const Property& other)
+                {
+                    return *this;
+                }
 
-                private:
+            private:
 
-                    uint                    _id;
-                    BST<uint, Reference>     _instances;
-            };
+                uint                    _id;
+                BST<uint, Reference>    _instances;
+        };
 
-        }
     }
 }
