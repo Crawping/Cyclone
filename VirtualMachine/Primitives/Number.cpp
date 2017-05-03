@@ -7,7 +7,13 @@ namespace Cyclone
     namespace VM
     {
 
-        /** CONSTRUCTOR **/
+        /** CONSTRUCTORS **/
+        constexpr Number::Number(Reference location) :
+            _type(NumericTypes::Reference),
+            _value(location.Value())
+        {
+
+        }
         constexpr Number::Number(NumericTypes type, double value) :
             _type(type),
             _value(value)

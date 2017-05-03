@@ -13,8 +13,8 @@ namespace Cyclone
 {
     namespace VM
     {
-        namespace Virtual
-        {
+        //namespace Virtual
+        //{
             using namespace Utilities;
 
             struct ReferenceTypes : public Enumerator
@@ -67,6 +67,6 @@ namespace Cyclone
                     ulong _value;
             };
 
-        }
+        //}
     }
 }

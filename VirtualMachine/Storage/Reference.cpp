@@ -6,8 +6,8 @@ namespace Cyclone
 {
     namespace VM
     {
-        namespace Virtual
-        {
+        //namespace Virtual
+        ////{
 
             string ReferenceTypes::ToString() const
             {
@@ -42,6 +42,6 @@ namespace Cyclone
             }
             constexpr bool Reference::operator !=(Reference other)  const { return !(operator ==(other)); }
 
-        }
+        //}
     }
 }

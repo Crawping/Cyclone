@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Primitives/NumericTypes.h"
+#include "Storage/Reference.h"
 
 
 
@@ -11,7 +12,6 @@ namespace Cyclone
 {
     namespace VM
     {
-
         class Number
         {
             public:
@@ -23,6 +23,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS **/
+                VMAPI constexpr Number(Reference location);
                 VMAPI constexpr Number(NumericTypes type = NumericTypes::Integer32, double value = 0.0);
 
                 template<typename T>
@@ -32,7 +33,6 @@ namespace Cyclone
                 {
 
                 }
-
 
 
                 /** UTILITIES **/

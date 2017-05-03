@@ -22,28 +22,30 @@ namespace Cyclone
             {
                 Null        = 0,
 
-                Character   = 1,
+                Character,
 
-                Float32     = 2,
+                Float32,
 
-                Float64     = 3,
+                Float64,
 
                 /// <summary> A binary logical variable that can only take on values of either true or false. </summary>
-                Integer8    = 4,
+                Integer8,
 
-                Integer8U   = 5,
+                Integer8U,
 
-                Integer16   = 6,
+                Integer16,
 
-                Integer16U  = 7,
+                Integer16U,
 
-                Integer32   = 8,
+                Integer32,
 
-                Integer32U  = 9,
+                Integer32U,
 
-                Integer64   = 10,
+                Integer64,
 
-                Integer64U  = 11,
+                Integer64U,
+
+                Reference,
             };
 
 
