@@ -1,5 +1,5 @@
 #include "Storage/StackFrame.h"
-#include "Virtual/Array.h"
+#include "Primitives/Array.h"
 
 
 namespace Cyclone
@@ -41,7 +41,7 @@ namespace Cyclone
                     default:    return Output(offset);
                 }
             }
-            template<> string& StackFrame::Access<string>(Reference location)
+            template<> String& StackFrame::Access<String>(Reference location)
             {
                 bool isValid = (location.Type() == ReferenceTypes::String) && (location.Offset() < 256);
                 return *Strings(isValid ? location.Offset() : 0);
@@ -81,7 +81,7 @@ namespace Cyclone
                     default:    break;
                 }
             }
-            template<> void StackFrame::Insert<string>(Reference location, string& value)
+            template<> void StackFrame::Insert<String>(Reference location, String& value)
             {
                 if ((location.Type() == ReferenceTypes::String) && (location.Offset() < 256))
                     Strings(location.Offset()) = &value;

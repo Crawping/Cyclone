@@ -61,7 +61,7 @@ namespace Cyclone
 
                         case Instructions::Load:        Load(ops(0), ops(1));                   break;
                         case Instructions::Print:
-                            Console::WriteLine(Access<string>(ops(0)));
+                            Console::WriteLine(Access<String>(ops(0)));
                             break;
                         case Instructions::Return:      return;
                     //    //case Instructions::Set:                                                                 break;
@@ -129,7 +129,7 @@ namespace Cyclone
                     case ReferenceTypes::Function:      Workspace().Insert(x, Access<Function>(y));     break;
                     case ReferenceTypes::Number:        Workspace().Insert(x, Access<Number>(y));       break;
                     case ReferenceTypes::Reference:     Workspace().Insert(x, Access<Reference>(y));    break;
-                    case ReferenceTypes::String:        Workspace().Insert(x, Access<string>(y));       break;
+                    case ReferenceTypes::String:        Workspace().Insert(x, Access<String>(y));       break;
                     default:                            break;
                 }
             }

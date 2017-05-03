@@ -1,5 +1,5 @@
+#include "Primitives/Array.h"
 #include "Virtual/Memory.h"
-#include "Virtual/Array.h"
 #include "Virtual/Class.h"
 #include "Virtual/Function.h"
 
@@ -56,7 +56,7 @@ namespace Cyclone
                     References.Contains(location.Offset());
                 return References[ isValid ? location.Offset() : 0 ];
             }
-            template<> string& Memory::Access<string>(Reference location)
+            template<> String& Memory::Access<String>(Reference location)
             {
                 bool isValid = (location.Type() == ReferenceTypes::String) &&
                     Strings.Contains(location.Offset());
@@ -88,7 +88,7 @@ namespace Cyclone
                 if (location.Type() == ReferenceTypes::Reference)
                     References.Insert(location.Offset(), value);
             }
-            template<> void Memory::Insert<string>(Reference location, const string& value)
+            template<> void Memory::Insert<String>(Reference location, const String& value)
             {
                 if (location.Type() == ReferenceTypes::String)
                     Strings.Insert(location.Offset(), value);

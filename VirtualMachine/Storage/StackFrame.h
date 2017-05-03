@@ -4,9 +4,10 @@
 
 #pragma once
 #include "Collections/Vector.h"
-#include "Storage/Reference.h"
+#include "Collections/String.h"
+#include "Primitives/Array.h"
 #include "Primitives/Number.h"
-#include "Virtual/Array.h"
+#include "Storage/Reference.h"
 #include "Virtual/Class.h"
 #include "Virtual/Function.h"
 
@@ -22,8 +23,6 @@ namespace Cyclone
             class StackFrame
             {
                 public:
-
-
 
                     /** UTILITIES **/
                     template<typename T>
@@ -43,7 +42,7 @@ namespace Cyclone
                     Vector<Class*, 256>         Classes;
                     Vector<Function*, 256>      Functions;
                     Vector<Number, 256>         Numbers;
-                    Vector<string*, 256>        Strings;
+                    Vector<String*, 256>        Strings;
 
                     Vector<Reference, 256>      Input;
                     Vector<Reference, 256>      Local;
@@ -59,14 +58,14 @@ namespace Cyclone
             template<> VMAPI Function& StackFrame::Access<Function>(Reference location);
             template<> VMAPI Number& StackFrame::Access<Number>(Reference location);
             template<> VMAPI Reference& StackFrame::Access<Reference>(Reference location);
-            template<> VMAPI string& StackFrame::Access<string>(Reference location);
+            template<> VMAPI String& StackFrame::Access<String>(Reference location);
 
             template<> VMAPI void StackFrame::Insert<Array>(Reference location, Array& value);
             template<> VMAPI void StackFrame::Insert<Class>(Reference location, Class& value);
             template<> VMAPI void StackFrame::Insert<Function>(Reference location, Function& value);
             template<> VMAPI void StackFrame::Insert<Number>(Reference location, Number& value);
             template<> VMAPI void StackFrame::Insert<Reference>(Reference location, Reference& value);
-            template<> VMAPI void StackFrame::Insert<string>(Reference location, string& value);
+            template<> VMAPI void StackFrame::Insert<String>(Reference location, String& value);
 
         }
     }
