@@ -182,6 +182,7 @@
     <ClInclude Include="Collections\Registry.h" />
     <ClInclude Include="Collections\Set.h" />
     <ClInclude Include="Collections\Stack.h" />
+    <ClInclude Include="Collections\String.h" />
     <ClInclude Include="Enumerator.h" />
     <ClInclude Include="Imaging\Bitmap.h" />
     <ClInclude Include="Imaging\Color4.h" />
@@ -197,7 +198,6 @@
     <ClInclude Include="IO\Event.h" />
     <ClInclude Include="IO\Functions.h" />
     <ClInclude Include="IO\InputControls.h" />
-    <ClInclude Include="Math\Array.h" />
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Matrix4x4.h" />
     <ClInclude Include="Math\Vector2.h" />
