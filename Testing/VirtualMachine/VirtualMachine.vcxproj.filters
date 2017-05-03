@@ -40,5 +40,8 @@
     <ClCompile Include="Storage\StackFrame.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="Primitives\Array.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

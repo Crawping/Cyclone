@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="Execution\VirtualMachine.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Primitives\Array.cpp" />
     <ClCompile Include="Primitives\Number.cpp" />
     <ClCompile Include="Primitives\Reference.cpp" />
     <ClCompile Include="Storage\Memory.cpp" />
