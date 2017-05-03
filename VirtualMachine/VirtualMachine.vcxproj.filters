@@ -25,9 +25,6 @@
     <ClCompile Include="Storage\StringLibrary.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
-    <ClCompile Include="Virtual\Array.cpp">
-      <Filter>Virtual</Filter>
-    </ClCompile>
     <ClCompile Include="Virtual\Class.cpp">
       <Filter>Virtual</Filter>
     </ClCompile>
@@ -52,6 +49,9 @@
     <ClCompile Include="Storage\Reference.cpp">
       <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="Primitives\Array.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
@@ -66,9 +66,6 @@
       <Filter>Storage</Filter>
     </ClInclude>
     <ClInclude Include="Virtual\Workspace.h">
-      <Filter>Virtual</Filter>
-    </ClInclude>
-    <ClInclude Include="Virtual\Array.h">
       <Filter>Virtual</Filter>
     </ClInclude>
     <ClInclude Include="Virtual\Class.h">
@@ -92,9 +89,6 @@
     <ClInclude Include="Virtual\Function.h">
       <Filter>Virtual</Filter>
     </ClInclude>
-    <ClInclude Include="Primitives\Variable.h">
-      <Filter>Storage</Filter>
-    </ClInclude>
     <ClInclude Include="Primitives\NumericTypes.h">
       <Filter>Primitives</Filter>
     </ClInclude>
@@ -103,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Storage\Reference.h">
       <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitives\Array.h">
+      <Filter>Primitives</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

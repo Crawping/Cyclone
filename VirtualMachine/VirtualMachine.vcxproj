@@ -126,6 +126,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Primitives\Array.cpp" />
     <ClCompile Include="Primitives\Number.cpp" />
     <ClCompile Include="Primitives\NumericTypes.cpp" />
     <ClCompile Include="Storage\Reference.cpp" />
@@ -133,7 +134,6 @@
     <ClCompile Include="Storage\StringLibrary.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
     <ClCompile Include="Virtual\Machine.cpp" />
-    <ClCompile Include="Virtual\Array.cpp" />
     <ClCompile Include="Virtual\Class.cpp" />
     <ClCompile Include="Virtual\Property.cpp" />
     <ClCompile Include="Virtual\Memory.cpp" />
@@ -142,15 +142,14 @@
     <ClInclude Include="Execution\Instructions.h" />
     <ClInclude Include="Execution\Shorthand.h" />
     <ClInclude Include="Interfaces\IVirtualData.h" />
+    <ClInclude Include="Primitives\Array.h" />
     <ClInclude Include="Primitives\Number.h" />
     <ClInclude Include="Primitives\NumericTypes.h" />
-    <ClInclude Include="Primitives\Variable.h" />
     <ClInclude Include="Storage\Reference.h" />
     <ClInclude Include="Storage\StackFrame.h" />
     <ClInclude Include="Storage\StringLibrary.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="Virtual\Machine.h" />
-    <ClInclude Include="Virtual\Array.h" />
     <ClInclude Include="Virtual\Class.h" />
     <ClInclude Include="Virtual\Property.h" />
     <ClInclude Include="Virtual\Memory.h" />
