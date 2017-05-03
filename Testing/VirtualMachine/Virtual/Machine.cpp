@@ -2,6 +2,7 @@
  * Written by Josh Grooms on 20170501
  */
 
+#include "Collections/String.h"
 #include "Execution/Shorthand.h"
 #include "Primitives/Number.h"
 #include "Virtual/Machine.h"
@@ -22,8 +23,8 @@ class _Machine : public testing::Test
 
         Number      _n1;
         Number      _n2;
-        string      _s1;
-        string      _s2;
+        String      _s1;
+        String      _s2;
 
         Reference   _rn1;
         Reference   _rn2;
@@ -76,7 +77,6 @@ TEST_F(_Machine, Insertion)
     ASSERT_EQ(m.ReferenceCount(),   0);
     ASSERT_EQ(m.StringCount(),      2);
 }
-
 
 
 

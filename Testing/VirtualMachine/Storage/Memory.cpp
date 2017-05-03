@@ -18,7 +18,7 @@ class _Memory:  public testing::Test
         Number      _n1;
         Reference   _rn1;
         Reference   _rn2;
-        string      _s1;
+        String      _s1;
         Reference   _rs1;
         Reference   _rs2;
 
@@ -60,7 +60,7 @@ TEST_F(_Memory, Construction)
 /** UTILITIES **/
 TEST_F(_Memory, Access)
 {
-    ASSERT_EQ(_m1.Access<string>(_rs1), _s1);
+    ASSERT_EQ(_m1.Access<String>(_rs1), _s1);
     ASSERT_EQ(_m1.Access<Number>(_rn1), _n1);
 
     ASSERT_EQ(_m1.Access<Reference>(_rn2),  _rn1);

@@ -6,6 +6,7 @@
 #include "Storage/StackFrame.h"
 #include <gtest/gtest.h>
 
+using namespace Cyclone::VM;
 using namespace Cyclone::VM::Virtual;
 
 
@@ -18,7 +19,7 @@ class _StackFrame : public testing::Test
         Reference   _r1;
         Reference   _r2;
         Reference   _r3;
-        string      _s1;        
+        String      _s1;        
 
 
 
@@ -48,7 +49,7 @@ TEST_F(_StackFrame, Construction)
 TEST_F(_StackFrame, Access)
 {
     ASSERT_EQ(_f0.Access<Reference>(_r1),   _r2);
-    ASSERT_EQ(_f0.Access<string>(_r2),      _s1);
+    ASSERT_EQ(_f0.Access<String>(_r2),      _s1);
 }
 
 
