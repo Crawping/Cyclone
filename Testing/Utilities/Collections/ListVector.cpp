@@ -18,12 +18,15 @@ class _ListVector : public testing::Test
 
         ListVector<int>     _l0;
         ListVector<int>     _l1;
+        ListVector<ulong>   _l2;
 
 
         _ListVector() : 
-            _v2(512)
+            _v2(512),
+            _l2(1)
         {
             _v2.Fill(9);
+            _l2.Insert(0, 10);
         }
 
 };
@@ -131,4 +134,18 @@ TEST_F(_ListVector, ElementRemoval)
     _l1.Remove(2);
     ASSERT_EQ(_l1.Count(), _v1.Count() - 3);
     ASSERT_EQ(_l1(2), _v1(4));
+}
+TEST_F(_ListVector, Reallocation)
+{
+    ASSERT_EQ(_l2.Capacity(),       1);
+    ASSERT_EQ(_l2.First(),          10);
+
+    _l2.Insert(1, 20);
+    ASSERT_EQ(_l2.Capacity(),       2);
+
+    _l2.Insert(2, Vector<ulong, 3> { 30, 40, 50 });
+    ASSERT_EQ(_l2.Capacity(),       8);
+
+    for (uint a = 0; a < _l2.Count(); a++)
+        ASSERT_EQ(_l2(a),           (a + 1) * 10);
 }
