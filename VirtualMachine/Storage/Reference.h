@@ -19,14 +19,19 @@ namespace Cyclone
         {
             enum Types
             {
-                /// <summary> A blank default variable type that is invalid in nearly all operations. </summary>
+                /// <summary> A reference to nothing. </summary>
                 Null = 0,
+                /// <summary> A reference to an array. </summary>
                 Array,
+                /// <summary> A reference to a function. </summary>
                 Function,
+                /// <summary> A reference to a number. </summary>
                 Number,
+                /// <summary> A reference to a class. </summary>
                 Object,
+                /// <summary> A reference to another reference. </summary>
                 Reference,
-                /// <summary> An array of characters. </summary>
+                /// <summary> A reference to a string of characters. </summary>
                 String,
             };
 
@@ -48,13 +53,13 @@ namespace Cyclone
         {
             public:
 
-                constexpr uint Offset()           const { return (uint)_value; }
-                constexpr ubyte Slot()            const { return (ubyte)(_value >> 48); }
-                constexpr ubyte Storage()         const { return (ubyte)(_value >> 56); }
-                constexpr ReferenceTypes Type()   const { return (ubyte)(_value >> 40); }
-                constexpr ulong Value()           const { return _value; }
+                constexpr ubyte Base()              const { return (ubyte)(_value >> 56); }
+                constexpr ubyte Index()             const { return (ubyte)(_value >> 48); }
+                constexpr uint Offset()             const { return (uint)_value; }
+                constexpr ReferenceTypes Type()     const { return (ubyte)(_value >> 40); }
+                constexpr ulong Value()             const { return _value; }
 
-                constexpr Reference(ulong value = 0):   _value(value) { }
+                VMAPI constexpr Reference(ulong value = 0);
                 VMAPI constexpr Reference(ubyte storage, ubyte slot, ReferenceTypes type, uint offset);
 
                 VMAPI constexpr operator bool()                   const;

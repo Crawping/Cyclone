@@ -21,6 +21,11 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
+        constexpr Reference::Reference(ulong value) :
+            _value(value)
+        {
+
+        }
         constexpr Reference::Reference(ubyte storage, ubyte slot, ReferenceTypes type, uint offset):
             _value( ((ulong)storage << 56) | ((ulong)slot << 48) | ((ulong)type << 40) | (ulong)offset )
         {

@@ -32,7 +32,7 @@ namespace Cyclone
         {
             bool isValid = (location.Type() == ReferenceTypes::Reference) && (location.Offset() < 256);
             uint offset = isValid ? location.Offset() : 0;
-            switch (location.Slot())
+            switch (location.Index())
             {
                 case 0:     return Input(offset);
                 case 1:     return Local(offset);
@@ -71,7 +71,7 @@ namespace Cyclone
                 return;
 
             uint offset = location.Offset();
-            switch (location.Slot())
+            switch (location.Index())
             {
                 case 0:     Input(offset) = value;      break;
                 case 1:     Local(offset) = value;      break;

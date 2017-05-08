@@ -10,12 +10,12 @@
 #include "Virtual/Memory.h"
 
 
+
 namespace Cyclone
 {
     namespace Virtual
     {
         struct Instruction;
-
         class Memory;
 
 
@@ -42,7 +42,7 @@ namespace Cyclone
 
                 template<typename T> void Insert(Reference location, T& value)
                 {
-                    location.Storage() ? 
+                    location.Base() ? 
                         Workspace().Insert<T>(location, value) :
                         _memory.Insert<T>(location, value);
                 }
@@ -67,11 +67,12 @@ namespace Cyclone
                 template<typename T = Variable> 
                 T& Access(Reference location)   
                 { 
-                    return location.Storage()               ?  
+                    return location.Base()                  ?  
                         Workspace().Access<T>(location)     : 
                         _memory.Access<T>(location); 
                 }
 
+                void Allocate(Reference x, Reference y);
                 void Call(Reference x, Reference y, Reference z);
                 void Compute(Instructions cmd, Reference xop, Reference yop, Reference zop);
                 void Copy(Reference x, Reference y);

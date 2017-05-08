@@ -18,7 +18,7 @@ namespace Cyclone
         }
         Machine::~Machine()
         {
-            //if (_memory) { delete _memory; }
+            
         }
 
 
@@ -43,7 +43,8 @@ namespace Cyclone
 
                 switch (cmd)
                 {
-                    case Instructions::Abort:       return;
+                    case Instructions::Abort:       _interrupt = cmd;                       return;
+                    case Instructions::Allocate:    Allocate(ops(0), ops(1));               break;
                     case Instructions::Call:        Call(ops(0), ops(1), ops(2));           break;
                     case Instructions::Copy:        Copy(ops(0), ops(1));                   break;
                     case Instructions::Delete:      Delete(ops(0));                         break;
@@ -72,6 +73,21 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
+        void Machine::Allocate(Reference x, Reference y)
+        {
+            if (x.Type() != ReferenceTypes::Array) { return; }
+            Insert(x, Array(y.Type(), y.Offset()));
+            //switch (x.Type())
+            //{
+            //    case ReferenceTypes::Array:         Insert(x, Array());     break;
+            //    case ReferenceTypes::Function:      Insert(x, Function());  break;
+            //    case ReferenceTypes::Number:        Insert(x, Number());    break;
+            //    case ReferenceTypes::Object:        Insert(x, Class());     break;
+            //    case ReferenceTypes::Reference:     Insert(x, Reference()); break;
+            //    case ReferenceTypes::String:        Insert(x, String());    break;
+            //    default:                            break;
+            //}
+        }
         void Machine::Call(Reference x, Reference y, Reference z)
         {
             auto& ws = Workspace();
@@ -115,8 +131,8 @@ namespace Cyclone
         }
         void Machine::Delete(Reference x)
         {
-            if (x.Storage())    Workspace().Delete(x);
-            else                _memory.Delete(x);
+            if (x.Base())   Workspace().Delete(x);
+            else            _memory.Delete(x);
         }
         void Machine::Load(Reference x, Reference y)
         {

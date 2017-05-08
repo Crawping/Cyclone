@@ -30,18 +30,18 @@ class _Reference : public testing::Test
 /** CONSTRUCTORS **/
 TEST_F(_Reference, Construction)
 {
-    ASSERT_EQ(_r0.Storage(),        0);
-    ASSERT_EQ(_r0.Slot(),           0);
+    ASSERT_EQ(_r0.Base(),           0);
+    ASSERT_EQ(_r0.Index(),          0);
     ASSERT_EQ(_r0.Type(),           ReferenceTypes::Null);
     ASSERT_EQ(_r0.Offset(),         0);
 
-    ASSERT_EQ(_r1.Storage(),        1);
-    ASSERT_EQ(_r1.Slot(),           4);
+    ASSERT_EQ(_r1.Base(),           1);
+    ASSERT_EQ(_r1.Index(),          4);
     ASSERT_EQ(_r1.Type(),           ReferenceTypes::Number);
     ASSERT_EQ(_r1.Offset(),         0);
 
-    ASSERT_EQ(_r2.Storage(),        0);
-    ASSERT_EQ(_r2.Slot(),           1);
+    ASSERT_EQ(_r2.Base(),           0);
+    ASSERT_EQ(_r2.Index(),          1);
     ASSERT_EQ(_r2.Type(),           ReferenceTypes::Reference);
     ASSERT_EQ(_r2.Offset(),         2048);
 }
