@@ -19,23 +19,17 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                int ID()                            const { return _id; }
-                uint InputCount()                   const { return _inputCount; }
                 const Vector<Instruction>& Logic()  const { return _logic; }
-                uint OutputCount()                  const { return _outputCount; }
 
-
+                VMAPI Function& Logic(const ICollection<Instruction>& value);
 
                 /** CONSTRUCTOR **/
-                Function(uint id = 0) : _id(id) { }
+                //VMAPI Function(const Vector<Instruction>& logic = { });
 
             private:
 
                 /** DATA **/
-                uint                    _id;
-                uint                    _inputCount;
                 Vector<Instruction>     _logic;
-                uint                    _outputCount;
 
         };
 

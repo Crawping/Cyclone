@@ -52,6 +52,9 @@
     <ClCompile Include="Primitives\Array.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
+    <ClCompile Include="Virtual\Function.cpp">
+      <Filter>Virtual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VirtualMachine.h" />
@@ -97,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="Primitives\Array.h">
       <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage\Program.h">
+      <Filter>Storage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

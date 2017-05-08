@@ -20,7 +20,6 @@ namespace Cyclone
 
         class Memory
         {
-
             public:
 
                 /** PROPERTIES **/
@@ -53,9 +52,12 @@ namespace Cyclone
                 template<typename T = Variable>
                 VMAPI T& Access(Reference location);
 				/// <summary> Inserts a new data element into the virtual memory. </summary>
+				/// <typeparam name="T"> The of the element being inserted. </typeparam>
+				/// <param name="location"> The desired storage location of the new element. </param>
+				/// <param name="value"> The new element to be stored. </param>
                 template<typename T>
                 VMAPI void Insert(Reference location, const T& value);
-				/// <summary> erases a specific data element from virtual memory. </summary>
+				/// <summary> Erases a specific data element from virtual memory. </summary>
                 VMAPI void Delete(Reference location);
 
             private:

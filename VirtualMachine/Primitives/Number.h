@@ -35,6 +35,7 @@ namespace Cyclone
                 }
 
 
+
                 /** UTILITIES **/
                 VMAPI constexpr operator bool()                     const;
                 VMAPI constexpr Number Cast(NumericTypes type)      const;

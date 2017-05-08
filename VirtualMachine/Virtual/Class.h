@@ -12,7 +12,7 @@
 
 namespace Cyclone
 {
-    namespace { using namespace Utilities; }
+    using namespace Utilities;
     namespace Virtual
     {
 
@@ -25,15 +25,17 @@ namespace Cyclone
 
 
                 /** PROPERTIES **/
-                uint ID()                   const { return _id; }
+                /// <summary> Gets the number of existing class instances. </summary>
                 uint InstanceCount()        const { return _instances.Count(); }
+                /// <summary> Gets the number of methods associated with the class.  </summary>
                 uint MethodCount()          const { return _methods.Count(); }
+                /// <summary> Gets the number of properties associated with the class. </summary>
                 uint PropertyCount()        const { return _properties.Count(); }
 
 
 
                 /** CONSTRUCTOR **/
-                Class(uint id = 0):         _id(id) { }
+                Class(uint id = 0);
                 Class(Class&& other)        = default;
                 Class(const Class& other)   = default;
                         
@@ -70,7 +72,6 @@ namespace Cyclone
 
             private:
 
-                uint                    _id;
                 SortedSet<uint>         _instances;
                 BST<uint, Function>     _methods;
                 BST<uint, Property>     _properties;

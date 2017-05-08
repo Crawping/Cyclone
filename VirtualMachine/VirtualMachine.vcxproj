@@ -133,6 +133,7 @@
     <ClCompile Include="Storage\StackFrame.cpp" />
     <ClCompile Include="Storage\StringLibrary.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
+    <ClCompile Include="Virtual\Function.cpp" />
     <ClCompile Include="Virtual\Machine.cpp" />
     <ClCompile Include="Virtual\Class.cpp" />
     <ClCompile Include="Virtual\Property.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Primitives\Array.h" />
     <ClInclude Include="Primitives\Number.h" />
     <ClInclude Include="Primitives\NumericTypes.h" />
+    <ClInclude Include="Storage\Program.h" />
     <ClInclude Include="Storage\Reference.h" />
     <ClInclude Include="Storage\StackFrame.h" />
     <ClInclude Include="Storage\StringLibrary.h" />

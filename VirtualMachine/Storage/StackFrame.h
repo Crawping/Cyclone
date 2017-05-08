@@ -36,15 +36,15 @@ namespace Cyclone
             private:
 
                 /** DATA **/
-                Vector<Array*, 256>         Arrays;
-                Vector<Class*, 256>         Classes;
-                Vector<Function*, 256>      Functions;
-                Vector<Number, 256>         Numbers;
-                Vector<String*, 256>        Strings;
+                Vector<Array*,      256>  Arrays;
+                Vector<Class*,      256>  Classes;
+                Vector<Function*,   256>  Functions;
+                Vector<Number,      256>  Numbers;
+                Vector<String*,     256>  Strings;
 
-                Vector<Reference, 256>      Input;
-                Vector<Reference, 256>      Local;
-                Vector<Reference, 256>      Output;
+                Vector<Reference,   256>  Input;
+                Vector<Reference,   256>  Local;
+                Vector<Reference,   256>  Output;
 
         };
 

@@ -16,20 +16,19 @@ namespace Cyclone
         constexpr bool NumericTypes::IsIntegral() const
         {
             return
-                Value != Null    &&
-                Value != Float32 &&
+                Value != Null       &&
+                Value != Float32    &&
                 Value != Float64;
         }
         constexpr bool NumericTypes::IsSigned() const
         {
             return 
-            !(
-                Value == Null       ||
-                Value == Integer8U  || 
-                Value == Integer16U || 
-                Value == Integer32U || 
-                Value == Integer64U 
-            );
+                Value != Null       &&
+                Value != Integer8U  && 
+                Value != Integer16U && 
+                Value != Integer32U && 
+                Value != Integer64U &&
+                Value != Reference;
         }
         constexpr uint NumericTypes::Size() const
         {

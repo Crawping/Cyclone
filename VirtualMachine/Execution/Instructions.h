@@ -27,7 +27,6 @@ namespace Cyclone
                 Abort,
                 Allocate,
                 /// <summary> </summary>
-                /// <remarks> Address Register Register</remarks>
                 Call,
                 CallRelative,
                 Concatenate,
