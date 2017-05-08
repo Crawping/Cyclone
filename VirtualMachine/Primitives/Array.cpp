@@ -8,7 +8,8 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR **/
-        Array::Array(ReferenceTypes type):
+        Array::Array(ReferenceTypes type, uint capacity):
+            _data(capacity),
             _type(type)
         {
 
@@ -22,24 +23,15 @@ namespace Cyclone
             static Number null(ReferenceTypes::Null);
             return location.Offset() < Count() ? _data(location.Offset()) : null;
         }
-        //template<> Reference& Array::Access<Reference>(Reference location)
-        //{
-        //    bool isValid = 
-        //        (location.Type() == ReferenceTypes::Reference)  && 
-        //        (location.Offset() < _data.Count());
+        void Array::Insert(Reference location, Number value)
+        {
+            _data.Insert(location.Offset(), value);
+        }
+        void Array::Insert(Reference location, const ICollection<Number>& values)
+        {
+            _data.Insert(location.Offset(), values);
+        }
 
-        //    
-
-
-
-        //}
-        //template<> Number& Array::Access<Number>(Reference location)
-        //{
-
-        //}
-
-
-        //Array::Array(uint id) : _id(id) { }
 
         //Array Array::Calculate(Instructions operation, const Array& other)
         //{
