@@ -48,11 +48,7 @@ namespace Cyclone
                     case Instructions::Call:        Call(ops(0), ops(1), ops(2));           break;
                     case Instructions::Copy:        Copy(ops(0), ops(1));                   break;
                     case Instructions::Delete:      Delete(ops(0));                         break;
-                //    //case Instructions::Get:                 xop = yop;                                      break;
-                    case Instructions::Index:
-                        //Access<Array>(ops(0)).
-                        break;
-
+                    case Instructions::Index:       break;
                     case Instructions::Jump:        a = ops(0).Offset();                    break;
                     case Instructions::JumpIf:
                         a = Access<Number>(ops(0)) ? ops(1).Offset() : ops(2).Offset();
@@ -63,9 +59,7 @@ namespace Cyclone
                         Console::WriteLine(Access<String>(ops(0)));
                         break;
                     case Instructions::Return:      return;
-                //    //case Instructions::Set:                                                                 break;
-                //    //case Instructions::Swap:                                                                break;
-                //    default:                                break;
+                    default:                        break;
                 }
             }
         }

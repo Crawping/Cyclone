@@ -20,7 +20,7 @@ namespace Cyclone
         {
             enum Types
             {
-                Null        = 0,
+                Null = 0,
 
                 Character,
 
@@ -28,7 +28,6 @@ namespace Cyclone
 
                 Float64,
 
-                /// <summary> A binary logical variable that can only take on values of either true or false. </summary>
                 Integer8,
 
                 Integer8U,

@@ -35,7 +35,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                Class(uint id = 0);
+                Class() { }
                 Class(Class&& other)        = default;
                 Class(const Class& other)   = default;
                         
@@ -43,32 +43,12 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 VMAPI Reference& Access(Reference location);
-                //VMAPI const Vector<Instruction>& Call(Reference location) const;
-
-                //VMAPI void Delete(uint instance);
-                //VMAPI Variable& Get(uint object, uint property);
-                //VMAPI void Insert(Function&& function);
-                //VMAPI void Insert(Property&& property);
-                //VMAPI bool IsMethod(uint id)                                                const;
-                //VMAPI bool IsOfType(const Variable& object)                                 const;
-                //VMAPI void Set(uint object, uint property, const Variable& value);
 
 
 
                 /** OPERATORS **/
-                Class& operator =(Class&& other)       noexcept
-                {
-                    _id = other._id;
-                    _instances = std::move(other._instances);
-                    _methods = std::move(other._methods);
-                    _properties = std::move(other._properties);
-                    return *this;
-                }
-                Class& operator =(const Class& other)
-                {
-
-                    return *this;
-                }
+                VMAPI Class& operator =(Class&& other) noexcept;
+                VMAPI Class& operator =(const Class& other);
 
             private:
 
