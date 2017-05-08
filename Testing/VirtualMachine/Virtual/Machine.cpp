@@ -95,6 +95,22 @@ TEST_F(_Machine, Aborting)
     Number n1 = _m1.Memory().Access<Number>(r1);
     ASSERT_EQ(n1,                               _n1 + _n2);
 }
+TEST_F(_Machine, Allocation)
+{
+    Memory& m(_m1.Memory());
+    Reference r1 = { 0, 0, ReferenceTypes::Array, 128 };
+    Reference r2 = { 0, 0, ReferenceTypes::Number, 64 };
+
+    auto& a1 = m.Access<Array>(r1);
+    ASSERT_EQ(a1.Count(),                       0);
+    ASSERT_EQ(a1.Capacity(),                    1);
+    Vector<Instruction> cmds = { { all,  r1, r2 } };
+
+    _m1.Execute(cmds);
+    a1 = m.Access<Array>(r1);
+    ASSERT_EQ(a1.Count(),                       0);
+    ASSERT_EQ(a1.Capacity(),                    r2.Offset());
+}
 TEST_F(_Machine, Computations)
 {
     Memory& m(_m1.Memory());
@@ -137,6 +153,14 @@ TEST_F(_Machine, Computations)
     Number n5 = m.Access<Number>(r1);
     ASSERT_EQ(n5.Type(),                        NumericTypes::Integer32);
     ASSERT_EQ(n5,                               n4);
+}
+TEST_F(_Machine, Copying)
+{
+    Memory& m(_m1.Memory());
+    Vector<Instruction> cmds = { { copy, _rn1, _rn2 } };
+    _m1.Execute(cmds);
+
+    ASSERT_EQ(m.Access<Number>(_rn1),           _n2);
 }
 TEST_F(_Machine, Deletion)
 {
