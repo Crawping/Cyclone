@@ -27,7 +27,7 @@ namespace Cyclone
                 VMAPI constexpr Number(NumericTypes type = NumericTypes::Integer32, double value = 0.0);
 
                 template<typename T>
-                constexpr Number(T value) :
+                constexpr Number(T value):
                     _type(NumericTypes::TypeOf(value)),
                     _value(value)
                 {

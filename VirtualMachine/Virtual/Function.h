@@ -23,9 +23,6 @@ namespace Cyclone
 
                 VMAPI Function& Logic(const ICollection<Instruction>& value);
 
-                /** CONSTRUCTOR **/
-                //VMAPI Function(const Vector<Instruction>& logic = { });
-
             private:
 
                 /** DATA **/

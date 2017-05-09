@@ -38,8 +38,8 @@ namespace Cyclone
 
 
             /** CONSTRUCTORS **/
-            constexpr ReferenceTypes(uint type)           : Enumerator((int)type) { }
-            constexpr ReferenceTypes(enum Types t = Null) : Enumerator((int)t) { }
+            constexpr ReferenceTypes(uint type):            Enumerator((int)type) { }
+            constexpr ReferenceTypes(enum Types t = Null):  Enumerator((int)t) { }
 
 
 
@@ -47,6 +47,7 @@ namespace Cyclone
             VMAPI string ToString() const;
 
         };
+
 
 
         struct Reference

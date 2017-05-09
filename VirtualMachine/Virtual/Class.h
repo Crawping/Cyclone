@@ -35,10 +35,10 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                Class() { }
+                Class()                     = default;
                 Class(Class&& other)        = default;
                 Class(const Class& other)   = default;
-                        
+                
 
 
                 /** UTILITIES **/

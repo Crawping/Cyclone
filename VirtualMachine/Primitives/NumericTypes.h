@@ -48,6 +48,7 @@ namespace Cyclone
             };
 
 
+
             /** PROPERTIES **/
             VMAPI constexpr bool IsIntegral()       const;
             VMAPI constexpr bool IsSigned()         const;
@@ -55,16 +56,14 @@ namespace Cyclone
 
 
 
-
             /** CONSTRUCTORS **/
-            constexpr NumericTypes(uint type)                   : Enumerator((int)type) { }
-            constexpr NumericTypes(enum Types t = Integer32)    : Enumerator((int)t) { }
+            constexpr NumericTypes(uint type):                  Enumerator((int)type) { }
+            constexpr NumericTypes(enum Types t = Integer32):   Enumerator((int)t) { }
 
 
 
             /** UTILITIES **/
             VMAPI string ToString()                 const;
-
             VMAPI constexpr static NumericTypes Max(NumericTypes x, NumericTypes y);
 
             
