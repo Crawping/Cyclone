@@ -120,7 +120,7 @@
   <ItemGroup>
     <ClCompile Include="Collections\BST.cpp" />
     <ClCompile Include="Collections\List.cpp" />
-    <ClCompile Include="Collections\ListVector.cpp" />
+    <ClCompile Include="Collections\ArrayList.cpp" />
     <ClCompile Include="Collections\Quadtree.cpp" />
     <ClCompile Include="Collections\Registry.cpp" />
     <ClCompile Include="Collections\Set.cpp" />

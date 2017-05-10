@@ -51,9 +51,6 @@
     <ClCompile Include="Collections\List.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
-    <ClCompile Include="Collections\ListVector.cpp">
-      <Filter>Collections</Filter>
-    </ClCompile>
     <ClCompile Include="Collections\Quadtree.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
@@ -68,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Collections\String.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\ArrayList.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
   </ItemGroup>
