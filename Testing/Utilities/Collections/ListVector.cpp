@@ -2,26 +2,26 @@
  * Written by Josh Grooms on 20170110
  */
 
-#include "Collections/ListVector.h"
+#include "Collections/ArrayList.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;
 
 
 
-class _ListVector : public testing::Test
+class _ArrayList: public testing::Test
 {
     protected:
         
         Vector<int>         _v1 = { 0, 1, 2, 3, 4, 5 };
         Vector<int>         _v2;
 
-        ListVector<int>     _l0;
-        ListVector<int>     _l1;
-        ListVector<ulong>   _l2;
+        ArrayList<int>      _l0;
+        ArrayList<int>      _l1;
+        ArrayList<ulong>    _l2;
 
 
-        _ListVector() : 
+        _ArrayList() : 
             _v2(512),
             _l2(1)
         {
@@ -34,7 +34,7 @@ class _ListVector : public testing::Test
 
 
 /** CONSTRUCTION TESTS **/
-TEST_F(_ListVector, DefaultConstruction)
+TEST_F(_ArrayList, DefaultConstruction)
 {
     ASSERT_EQ(_l0.Count(), 0);
     ASSERT_EQ(_l0.Capacity(), 128);
@@ -44,7 +44,7 @@ TEST_F(_ListVector, DefaultConstruction)
 
 
 /** UTILITY TESTS **/
-TEST_F(_ListVector, CollectionAppending)
+TEST_F(_ArrayList, CollectionAppending)
 {
     _l1.Append(_v1);
     ASSERT_EQ(_l1.Count(), _v1.Count());
@@ -62,7 +62,7 @@ TEST_F(_ListVector, CollectionAppending)
     for (uint a = _v1.Count(); a < _l1.Count(); a++)
         ASSERT_EQ(_l1(a), _v2(a - _v1.Count()));
 }
-TEST_F(_ListVector, CollectionInsertion)
+TEST_F(_ArrayList, CollectionInsertion)
 {
     _l1.Append(_v2);
     _l1.Insert(256, _v1);
@@ -76,7 +76,7 @@ TEST_F(_ListVector, CollectionInsertion)
     for (uint a = 256 + _v1.Count(); a < _l1.Count(); a++)
         ASSERT_EQ(_l1(a), _v2(a - _v1.Count()));
 }
-TEST_F(_ListVector, CollectionPrepending)
+TEST_F(_ArrayList, CollectionPrepending)
 {
     _l1.Prepend(_v1);
     ASSERT_EQ(_l1.Count(), _v1.Count());
@@ -94,7 +94,7 @@ TEST_F(_ListVector, CollectionPrepending)
     for (uint a = _v2.Count(); a < _l1.Count(); a++)
         ASSERT_EQ(_l1(a), _v1(a - _v2.Count()));
 }
-TEST_F(_ListVector, ElementInsertion)
+TEST_F(_ArrayList, ElementInsertion)
 {
     _l1.Insert(0, 0);
     ASSERT_EQ(_l1(0), 0);
@@ -120,7 +120,7 @@ TEST_F(_ListVector, ElementInsertion)
     ASSERT_EQ(_l1.Count(), 4);
     ASSERT_EQ(_l1.Capacity(), 128);
 }
-TEST_F(_ListVector, ElementRemoval)
+TEST_F(_ArrayList, ElementRemoval)
 {
     _l1.Append(_v1);
     _l1.Remove(0);
@@ -135,7 +135,7 @@ TEST_F(_ListVector, ElementRemoval)
     ASSERT_EQ(_l1.Count(), _v1.Count() - 3);
     ASSERT_EQ(_l1(2), _v1(4));
 }
-TEST_F(_ListVector, Reallocation)
+TEST_F(_ArrayList, Reallocation)
 {
     ASSERT_EQ(_l2.Capacity(),       1);
     ASSERT_EQ(_l2.First(),          10);

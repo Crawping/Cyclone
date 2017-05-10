@@ -48,7 +48,7 @@ namespace Cyclone
 
             private:
 
-                ListVector<Number>		_data;
+                ArrayList<Number>		_data;
                 ReferenceTypes          _type;
                 
         };

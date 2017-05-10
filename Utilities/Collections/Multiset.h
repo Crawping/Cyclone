@@ -4,8 +4,7 @@
 
 #pragma once
 #include "Enumerator.h"
-#include "Collections/ListVector.h"
-#include "Interfaces/ICollection.h"
+#include "Collections/ArrayList.h"
 #include "IO/Functions.h"
 
 
@@ -32,7 +31,7 @@ namespace Cyclone
         {
             public:
 
-                using Iterator = typename ListVector<T>::Iterator;
+                using Iterator = typename ArrayList<T>::Iterator;
 
 
 
@@ -200,7 +199,7 @@ namespace Cyclone
 
                 Function<bool, const T&, const T&>      _comparator;
                 SortOrders                              _sortOrder;
-                ListVector<T>                           Data;
+                ArrayList<T>                           Data;
 
 
                 static bool GreaterThan(const T& x, const T& y)     { return x > y; }

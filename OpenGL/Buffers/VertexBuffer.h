@@ -5,9 +5,9 @@
 #pragma once
 #include "TypeDefinitions.h"
 #include "Buffers/VertexArray.h"
-#include "GL/OpenGLAPI.h"
-#include "Math/Array.h"
+#include "Collections/Vector.h"
 #include "Geometry/Vertex.h"
+#include "GL/OpenGLAPI.h"
 #include <vector>
 
 
@@ -41,7 +41,7 @@ namespace Cyclone
                 }
                 /// <summary> Constructs a GPU buffer object that is initialized by an array of vertex data. </summary>
                 /// <param name="vertices"> A reference to an array of vertex data. </param>
-                VertexBuffer(const Array<T>& vertices) :
+                VertexBuffer(const Vector<T>& vertices) :
                     VertexBuffer(vertices.Count(), vertices.ToArray())
                 {
                     

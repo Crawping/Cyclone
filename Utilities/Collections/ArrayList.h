@@ -15,7 +15,7 @@ namespace Cyclone
         /// <summary> A class that represents a doubly-linked list of generic data with contiguous element storage. </summary>
         /// <typeparam name="T"> The type name of the data elements held by the list. </typeparam>
         template<typename T>
-        class ListVector : public ICollection<T>
+        class ArrayList : public ICollection<T>
         {
 
             public:
@@ -37,19 +37,19 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                ListVector(uint n = 128) : 
+                ArrayList(uint n = 128) : 
                     _count(0),
                     _index(n / 4),
                     Data(n)
                 {
 
                 }
-                ListVector(const ICollection<T>& values) :
-                    ListVector(nextpow2(values.Count()))
+                ArrayList(const ICollection<T>& values) :
+                    ArrayList(nextpow2(values.Count()))
                 {
                     Append(values);
                 }
-                ListVector(std::initializer_list<T> values) :
+                ArrayList(std::initializer_list<T> values) :
                     _count(0),
                     _index(n / 4),
                     Data(nextpow2(values.size()))

@@ -1,7 +1,6 @@
 #include "GL/OpenGL.h"
 
 #include "Area.h"
-#include "Array.h"
 #include "CGL.h"
 #include "Program.h"
 #include "Utilities.h"

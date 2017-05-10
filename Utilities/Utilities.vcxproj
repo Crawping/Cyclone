@@ -175,7 +175,7 @@
   <ItemGroup>
     <ClInclude Include="Collections\BST.h" />
     <ClInclude Include="Collections\List.h" />
-    <ClInclude Include="Collections\ListVector.h" />
+    <ClInclude Include="Collections\ArrayList.h" />
     <ClInclude Include="Collections\Multiset.h" />
     <ClInclude Include="Collections\Octree.h" />
     <ClInclude Include="Collections\Quadtree.h" />

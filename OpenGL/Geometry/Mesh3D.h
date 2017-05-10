@@ -94,7 +94,7 @@ namespace Cyclone
             private:
 
                 mutable bool        _needsUpdate;
-                ListVector<Vertex>  _vertices;
+                ArrayList<Vertex>  _vertices;
 
         };
     }

@@ -129,9 +129,6 @@
     <ClInclude Include="Interfaces\ISpatialTransform.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Collections\ListVector.h">
-      <Filter>Collections</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\ICallback.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -154,6 +151,9 @@
       <Filter>IO</Filter>
     </ClInclude>
     <ClInclude Include="Collections\String.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Collections\ArrayList.h">
       <Filter>Collections</Filter>
     </ClInclude>
   </ItemGroup>

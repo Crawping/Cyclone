@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Buffers/ArrayBuffer.h"
-#include "Math/Array.h"
+#include "Collections/Vector.h"
 
 
 
@@ -27,7 +27,7 @@ namespace Cyclone
                 }
                 /// <summary> Constructs a GPU buffer object that is initialized by an array of vertex indices. </summary>
                 /// <param name="indices"> A reference to an array of vertex indices. </param>
-                IndexBuffer(const Array<uint>& indices) :
+                IndexBuffer(const Vector<uint>& indices) :
                     IndexBuffer(indices.Count(), indices.ToArray())
                 {
 
