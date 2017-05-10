@@ -77,7 +77,7 @@ namespace Cyclone
 
 
                 /** COLLECTIONS **/
-                BST<string, ISceneComponent&>               _components;
+                BST<string, ISceneComponent*>              _components;
                 BST<const IRenderable*, ResourceMapping>   Mappings;
 
 

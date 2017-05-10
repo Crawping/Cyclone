@@ -30,8 +30,8 @@ namespace Cyclone
             List<ISceneComponent&> components;
             components.Append((ISceneComponent&)*this);
 
-            for (auto& component : _components.Values())
-                components.Append(component);
+            for (auto* component : _components.Values())
+                components.Append(*component);
 
             return components;
         }
@@ -39,8 +39,8 @@ namespace Cyclone
         {
             List<IRenderStage&> stages = SceneComponent3D::Stages();
 
-            for (auto& stage : _components.Values())
-                stages.Append(stage.Stages());
+            for (auto* stage : _components.Values())
+                stages.Append(stage->Stages());
 
             if (!stages.IsEmpty())
             {
@@ -65,7 +65,7 @@ namespace Cyclone
         /** UTILITIES **/
         void SceneLayer3D::Insert(const string& name, ISceneComponent& stage)
         {
-            _components.Insert(name, stage);
+            _components.Insert(name, &stage);
         }
         void SceneLayer3D::Remove(const string& name)
         {
@@ -82,7 +82,7 @@ namespace Cyclone
             Transforms.Update();
 
             for (auto& c : _components.Values())
-                c.Update();
+                c->Update();
         }
         void SceneLayer3D::Update(const IRenderable& entity)
         {
