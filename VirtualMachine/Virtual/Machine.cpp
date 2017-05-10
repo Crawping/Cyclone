@@ -32,6 +32,14 @@ namespace Cyclone
         {
             for (uint a = 0; a < instructions.Count(); a++)
             {
+                switch (_interrupt)
+                {
+                    case Instructions::Abort:       
+                    case Instructions::Return:      return;
+                    case Instructions::Pause:       a--; continue;
+                    default:                        break;
+                }
+
                 const auto& cmd = instructions(a).Command;
                 const auto& ops = instructions(a).Operands;
 
@@ -127,6 +135,22 @@ namespace Cyclone
         {
             if (x.Base())   Workspace().Delete(x);
             else            _memory.Delete(x);
+        }
+        void Machine::Index(Reference x, Reference y, Reference z)
+        {
+            Number& n( Access<Array>(y).Access(z) );
+            Reference r( (ulong)n.Value() );
+
+            switch (x.Type())
+            {
+                //case ReferenceTypes::Array:         Access<Array>(x) = Access<Array>(y).Access(z);      break;
+                case ReferenceTypes::Object:        Access<Class>(x) = Access<Class>(r);            break;
+                case ReferenceTypes::Function:      Access<Function>(x) = Access<Function>(r);      break;
+                case ReferenceTypes::Number:        Access<Number>(x) = n;                          break;
+                case ReferenceTypes::Reference:     Access<Reference>(x) = r;                       break;
+                case ReferenceTypes::String:        Access<String>(x) = Access<String>(r);          break;
+                default:                            break;
+            }
         }
         void Machine::Load(Reference x, Reference y)
         {

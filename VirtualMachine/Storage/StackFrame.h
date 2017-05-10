@@ -22,6 +22,12 @@ namespace Cyclone
         {
             public:
 
+                /** PROPERTIES **/
+                Vector<Reference, 256>& Inputs()    { return Input; }
+                Vector<Reference, 256>& Outputs()   { return Output; }
+
+
+
                 /** UTILITIES **/
                 template<typename T>
                 VMAPI T& Access(Reference location);

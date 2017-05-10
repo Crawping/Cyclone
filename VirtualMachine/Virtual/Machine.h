@@ -77,6 +77,7 @@ namespace Cyclone
                 void Compute(Instructions cmd, Reference xop, Reference yop, Reference zop);
                 void Copy(Reference x, Reference y);
                 void Delete(Reference x);
+                void Index(Reference x, Reference y, Reference z);
                 void Load(Reference x, Reference y);
 
         };
