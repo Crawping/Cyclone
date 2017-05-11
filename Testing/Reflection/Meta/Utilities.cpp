@@ -49,13 +49,10 @@ TEST(_Utilities, Dereferencing)
 TEST(_Utilities, EqualityTesting)
 {
     ASSERT_EQ((Meta::IsEqual<int, double>()),       false);
+    ASSERT_EQ((Meta::IsEqual<int, uint>()),         false);
+    ASSERT_EQ((Meta::IsEqual<uint, uint>()),        true);
+    ASSERT_EQ(Meta::TypeEquals<int>(3.14159),       false);
 }
-//TEST(_Utilities, IsOfType)
-//{
-//    ulong x = 10;
-//    ASSERT_EQ((Meta::IsOfType<ulong*>(&x)),         true);
-//    ASSERT_EQ(Meta::IsOfType<string*>(&x),          false);
-//}
 TEST(_Utilities, IsPointer)
 {
     ASSERT_EQ(Meta::IsPointer<int*>(),              true);
