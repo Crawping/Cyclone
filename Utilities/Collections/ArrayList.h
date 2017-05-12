@@ -25,31 +25,30 @@ namespace Cyclone
                 virtual uint Capacity()         const { return Data.Count(); }
                 /// <summary> Gets the number of slots that are being used to store data elements. </summary>
                 virtual uint Count()            const { return _count; }
-                /// <summary> Gets a reference to the first data element stored in the vector. </summary>
+                /// <summary> Gets a reference to the first data element stored in the list. </summary>
                 virtual T& First()              { return Data(_index); }
-                /// <summary> Gets a constant reference to the first data element stored in the vector. </summary>
+                /// <summary> Gets a constant reference to the first data element stored in the list. </summary>
                 virtual const T& First()        const { return Data(_index); }
-                /// <summary> Gets a reference to the last data element stored in the vector. </summary>
+                /// <summary> Gets a reference to the last data element stored in the list. </summary>
                 virtual T& Last()               { return Data(_index + _count - 1); }
-                /// <summary> Gets a constant reference to the last data element stored in the vector. </summary>
+                /// <summary> Gets a constant reference to the last data element stored in the list. </summary>
                 virtual const T& Last()         const { return Data(_index + _count - 1); }
 
 
 
                 /** CONSTRUCTOR **/
-                ArrayList(uint n = 128) : 
+                /// <summary> Constructs a new empty array-like list that can be populated with data elements. </summary>
+                /// <param name="capacity"> The number of elements that can be initially stored in the list. </param>
+                ArrayList(uint capacity = 128): 
                     _count(0),
-                    _index(n / 4),
-                    Data(n)
+                    _index(capacity / 4),
+                    Data(capacity)
                 {
 
                 }
-                ArrayList(const ICollection<T>& values) :
-                    ArrayList(nextpow2(values.Count()))
-                {
-                    Append(values);
-                }
-                ArrayList(std::initializer_list<T> values) :
+                /// <summary> Constructs a new array-like list that stores the values found within an initializer list. </summary>
+                /// <param name="values"> An initialization list containing the values to tbe stored within the new list. </param>
+                ArrayList(std::initializer_list<T> values):
                     _count(0),
                     _index(n / 4),
                     Data(nextpow2(values.size()))
@@ -58,29 +57,49 @@ namespace Cyclone
                     for (const T& v : values)
                         Set(idx++, v);
                 }
+                explicit ArrayList(const ICollection<T>& values):
+                    ArrayList(nextpow2(values.Count()))
+                {
+                    Append(values);
+                }
 
 
 
                 /** UTILITIES **/
+                /// <summary> Inserts a new value at the end of the list. </summary>
+                /// <param name="value"> The data element to be copied and inserted into the list. </param>
                 virtual void Append(const T& value)                             { Insert(Count(), value); }
+                /// <summary> Inserts multiple values at the end of the list. </summary>
+                /// <param name="values"> A generic collection of data elements to be copied and inserted into the list. </param>
                 virtual void Append(const ICollection<T>& values)               { Insert(Count(), values); }
+                /// <summary> Resets the list to an empty state. </summary>
                 virtual void Clear()
                 {
                     _count = 0;
                     _index = Capacity() / 2;
                 }
-                virtual void Insert(uint idx, const T& value)
+                /// <summary> Inserts a new value into the list at the specified index. </summary>
+                /// <param name="index"> The numeric index at which the new value will be placed. </param>
+                /// <param name="value"> The data element to be copied and inserted into the list. </param>
+                virtual void Insert(uint index, const T& value)
                 {
-                    InsertBlock(idx, 1);
-                    Data(_index + idx) = value;
+                    InsertBlock(index, 1);
+                    Data(_index + index) = value;
                 }
-                virtual void Insert(uint idx, const ICollection<T>& values)
+                /// <summary> Inserts multiple values into the list at the specified index. </summary>
+                /// <param name="index"> The numeric index at which the new values will be placed. </param>
+                /// <param name="values"> A generic collection of data elements to be copied and inserted into the list. </param>
+                virtual void Insert(uint index, const ICollection<T>& values)
                 {
-                    InsertBlock(idx, values.Count());
+                    InsertBlock(index, values.Count());
                     for (uint a = 0; a < values.Count(); a++)
-                        Data(_index + idx++) = values(a);
+                        Data(_index + index++) = values(a);
                 }
+                /// <summary> Inserts a new value at the beginning of the list. </summary>
+                /// <param name="value"> The data element to be copied and inserted into the list. </param>
                 virtual void Prepend(const T& value)                            { Insert(0, value); }
+                /// <summary> Inserts multiple values at the beginning of the list. </summary>
+                /// <param name="values"> A generic collection of data elements to be copied and inserted into the list. </param>
                 virtual void Prepend(const ICollection<T>& values)              { Insert(0, values); }
                 virtual void Remove(uint idx, uint n = 1)
                 {
@@ -97,6 +116,10 @@ namespace Cyclone
                 {
                     Data.Swap(_index + idxFirst, _index + idxSecond);
                 }
+                virtual Vector<T> ToVector()                                    const
+                {
+                    return Vector<T>(Data, _index, _count);
+                }
 
 
 
@@ -104,10 +127,6 @@ namespace Cyclone
                 virtual Iterator begin()                    { return Iterator(_index, &Data); }
                 virtual Iterator end()                      { return Iterator(_index + Count(), &Data); }
 
-                virtual Vector<T> ToVector()                const
-                {
-                    return Vector<T>(Data, _index, _count);
-                }
                 virtual T& operator ()(uint index)          { return Data(_index + index); }
                 virtual const T& operator ()(uint index)    const override { return Data(_index + index); }
 

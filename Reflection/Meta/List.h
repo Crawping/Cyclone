@@ -23,14 +23,18 @@ namespace Cyclone
             struct List
             {
 
-                /** STATIC PROPERTIES **/
+                /** PROPERTIES **/
+                /// <summary> Gets the number of types present in the list. </summary>
                 using Count                                     = Integer32U<sizeof...(T)>;
+                /// <summary> Gets the first type present in the list. </summary>
                 using First                                     = Node<0, T...>;
+                /// <summary> Gets whether the list has any stored types. </summary>
                 using IsEmpty                                   = Boolean<false>;
+                /// <summary> Gets the last type present in the list. </summary>
                 using Last                                      = Node<sizeof...(T) - 1, T...>;
 
 
-                /** STATIC UTILITIES **/
+                /** UTILITIES **/
                 template<typename ... U> using Concatenate      = List<T..., U...>;
                 using Discard                                   = Sublist<T...>;
                 template<uint N> using Get                      = Node<N, T...>;
