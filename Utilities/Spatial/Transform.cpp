@@ -127,7 +127,7 @@ namespace Cyclone
         }
         Transform Transform::PerspectiveProjection(float fov, float aspect, float znear, float zfar)
         {
-            float hHeight = znear * tan(fov * Constants::Pi / 360.0);
+            float hHeight = znear * tan(fov * Constants::Pi<double> / 360.0);
             float hWidth = hHeight * aspect;
 
             Vector3 position(-hWidth, -hHeight, znear);

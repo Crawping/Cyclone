@@ -3,7 +3,6 @@
  */
 
 #include "PathRenderer.h"
-#include "Console.h"
 #include "EnumerationsSVG.h"
 #include "GPU.h"
 #include "NVPR.h"
@@ -14,6 +13,7 @@
 #include "Geometry/Geometry2D.h"
 #include "Geometry/Path2D.h"
 #include "Imaging/Color4.h"
+#include "IO/Console.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 

@@ -32,7 +32,7 @@ struct CanonicalTransforms
 
 
     CanonicalTransforms() : 
-        Orientation(Constants::QuarterPi, -Constants::ThirdPi, Constants::TwoPi),
+        Orientation(Constants::QuarterPi<float>, -Constants::ThirdPi<float>, Constants::TwoPi<float>),
         Position(-128.0f, 256.0f, -512.0f),
         Scale(4.0f, 8.0f, 16.0f)
     {

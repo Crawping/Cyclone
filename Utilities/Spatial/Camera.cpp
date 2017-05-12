@@ -28,9 +28,9 @@ namespace Cyclone
         {
             _needsUpdate = true;
 
-            _orientation.X = clamp(value.X, -(float)Constants::HalfPi + 0.001f, (float)Constants::HalfPi - 0.001f);
-            _orientation.Y = wrap(value.Y, 0.0f, (float)Constants::TwoPi - 0.001f);
-            _orientation.Z = wrap(value.Z, 0.0f, (float)Constants::TwoPi - 0.001f);
+            _orientation.X = clamp(value.X, -Constants::HalfPi<float> + 0.001f, Constants::HalfPi<float> - 0.001f);
+            _orientation.Y = wrap(value.Y, 0.0f, Constants::TwoPi<float> - 0.001f);
+            _orientation.Z = wrap(value.Z, 0.0f, Constants::TwoPi<float> - 0.001f);
             
             return *this;
         }

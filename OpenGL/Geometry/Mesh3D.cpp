@@ -268,7 +268,7 @@ namespace Cyclone
                 nfaces = Math::Max(3, nfaces);
                 Vector<Vertex> vertices(nfaces * 6);
 
-                float angleStep = Constants::TwoPi / nfaces;
+                float angleStep = Constants::TwoPi<float> / nfaces;
                 float hAngleStep = angleStep / 2.0f;
 
                 uint idx = 0;

@@ -47,7 +47,7 @@ TEST_F(_Vector3, MathOperators)
     ASSERT_EQ(_v3 + -25.0f, _v3 - 25.0f);
     ASSERT_EQ(_v3 + Vector3(-12.67f), _v3 - Vector3(12.67f));
 
-    ASSERT_EQ(_v3 / (float)Constants::Pi, Vector3(_v3.X / (float)Constants::Pi, _v3.Y / (float)Constants::Pi, _v3.Z / (float)Constants::Pi));
+    ASSERT_EQ(_v3 / Constants::Pi<float>, Vector3(_v3.X / Constants::Pi<float>, _v3.Y / Constants::Pi<float>, _v3.Z / Constants::Pi<float>));
 }
 
 TEST_F(_Vector3, VectorTranslation)

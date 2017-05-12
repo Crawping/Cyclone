@@ -128,8 +128,8 @@ namespace Renderers
         PointerPosition = evt.Position;
         if (IsFreeLookEnabled)
         {
-            float pitch = (evt.Delta.Y * Constants::Pi / RenderWindow->ClientArea().Height);
-            float yaw = evt.Delta.X * Constants::TwoPi * 2.0f / RenderWindow->ClientArea().Width;
+            float pitch = (evt.Delta.Y * Constants::Pi<float> / RenderWindow->ClientArea().Height);
+            float yaw = evt.Delta.X * Constants::TwoPi<float> * 2.0f / RenderWindow->ClientArea().Width;
             View.Rotate(Vector3(pitch, yaw, 0.0f));
             
             UpdateViewProjection();
