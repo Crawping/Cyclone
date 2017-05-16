@@ -36,10 +36,9 @@ namespace Cyclone
                     for (uint a = 0; a < Count(); a++)
                         Data[a] = value;
                 }
-                template<uint V>
-                Vector(const Vector<T, V>& other, uint offset, uint count)
+                Vector(const ICollection<T>& other, uint offset, uint count)
                 {
-                    count = Math::Min(V - offset, count, U);
+                    count = Math::Min(other.Count() - offset, count, U);
                     for (uint a = 0; a < count; a++)
                         Data[a] = other(a + offset);
                 }
@@ -59,6 +58,17 @@ namespace Cyclone
                 {
                     for (uint a = 0; a < U; a++) { Data[a] = value; }
                 }
+                virtual void Set(uint index, const ICollection<T>& values, uint offset = 0, uint count = 1)
+                {
+                    index = clamp(index, 0U, U - 1); 
+                    offset = clamp(offset, 0U, values.Count() - 1);
+                    count = Math::Min(U - index + 1, count, values.Count() - offset);
+                    for (uint a = 0; a < count; a++)
+                        Data[index + a] = values(offset + a);
+                }
+
+
+
                 /** OPERATORS **/
                 /// <summary> Gets an iterator that references the first element stored in the vector. </summary>
                 virtual Iterator begin()                    { return Iterator(0, this); }
