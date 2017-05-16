@@ -42,6 +42,12 @@ namespace Cyclone
 				{
 
 				}
+                constexpr String(const String& other, uint index, uint count):
+                    _count(count),
+                    _value(&other._value[index])
+                {
+
+                }
 
 
 
