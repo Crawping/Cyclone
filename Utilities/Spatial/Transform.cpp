@@ -3,9 +3,9 @@
  */
 
 #define _USE_MATH_DEFINES
-#include "Constants.h"
-#include "Transform.h"
-#include "Volume.h"
+#include "Math/Constants.h"
+#include "Spatial/Transform.h"
+#include "Spatial/Volume.h"
 #include <cmath>
 #include <sstream>
 
