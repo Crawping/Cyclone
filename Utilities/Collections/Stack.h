@@ -28,12 +28,12 @@ namespace Cyclone
 
                 /** CONSTRUCTOR **/
                 Stack() { }
-                Stack(const ICollection<T>& values) :
+                Stack(std::initializer_list<T> values) :
                     Data(values)
                 {
 
                 }
-                Stack(std::initializer_list<T> values) :
+                explicit Stack(const ICollection<T>& values) :
                     Data(values)
                 {
 

@@ -42,8 +42,6 @@ namespace Cyclone
                 using Size          = Primitive<uint, sizeof(T)>;
                 /// <summary> Gets the type that this class represents. </summary>
                 using Type          = T;
-
-                virtual ~Class() { }
             };
             template<> struct Class<void>
             {
@@ -55,8 +53,6 @@ namespace Cyclone
                 using IsPointer     = Boolean<false>;
                 using Size          = Primitive<uint, 0>;
                 using Type          = void;
-
-                virtual ~Class() { }
             };
 
         }
