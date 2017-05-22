@@ -23,8 +23,11 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                Vector<Reference, 256>& Inputs()    { return Input; }
-                Vector<Reference, 256>& Outputs()   { return Output; }
+                Vector<Reference, 128>& Inputs()    { return Input; }
+                Vector<Reference, 128>& Outputs()   { return Output; }
+
+                VMAPI StackFrame& Inputs(const Vector<Reference, 128>& value);
+                VMAPI StackFrame& Outputs(const Vector<Reference, 128>& value);
 
 
 
@@ -48,9 +51,9 @@ namespace Cyclone
                 Vector<Number,      256>  Numbers;
                 Vector<String*,     256>  Strings;
 
-                Vector<Reference,   256>  Input;
+                Vector<Reference,   128>  Input;
                 Vector<Reference,   256>  Local;
-                Vector<Reference,   256>  Output;
+                Vector<Reference,   128>  Output;
 
         };
 

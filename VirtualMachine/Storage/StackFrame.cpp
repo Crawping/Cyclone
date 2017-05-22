@@ -7,6 +7,20 @@ namespace Cyclone
     namespace Virtual
     {
 
+        /** PROPERTIES **/
+        StackFrame& StackFrame::Inputs(const Vector<Reference, 128>& value)
+        {
+            Input = Vector<Reference, 128>(value, 64, 64);
+            return *this;
+        }
+        StackFrame& StackFrame::Outputs(const Vector<Reference, 128>& value)
+        {
+
+            return *this;
+        }
+
+
+
         /** UTILITIES **/
         template<> Array& StackFrame::Access<Array>(Reference location)
         {
