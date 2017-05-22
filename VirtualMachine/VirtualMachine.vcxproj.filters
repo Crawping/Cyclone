@@ -62,9 +62,6 @@
       <Filter>Execution</Filter>
     </ClInclude>
     <ClInclude Include="VMAPI.h" />
-    <ClInclude Include="Interfaces\IVirtualData.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Storage\StringLibrary.h">
       <Filter>Storage</Filter>
     </ClInclude>

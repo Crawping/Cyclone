@@ -156,6 +156,30 @@
     <ClInclude Include="Collections\ArrayList.h">
       <Filter>Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Collections\Array.h">
+      <Filter>Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Array.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Class.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Function.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\List.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Primitives.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Utilities.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Arguments.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -175,6 +199,12 @@
     </Filter>
     <Filter Include="IO">
       <UniqueIdentifier>{d17670c7-deae-471a-843c-ab1707925ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collections\Specializations">
+      <UniqueIdentifier>{da8d03a3-00ca-419e-b2de-f38838c8e4fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meta">
+      <UniqueIdentifier>{e95f5526-e8ed-4197-a672-3e9fe37a95df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -16,6 +16,9 @@
     <Filter Include="Spatial">
       <UniqueIdentifier>{ed6cc478-0d35-4103-ac33-98a656bb07c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Meta">
+      <UniqueIdentifier>{8d86c5d9-89fa-4448-aaa1-7958d21a9621}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spatial\Area.cpp">
@@ -69,6 +72,24 @@
     </ClCompile>
     <ClCompile Include="Collections\ArrayList.cpp">
       <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\Array.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\Array.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\Class.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\List.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\Primitives.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\Utilities.cpp">
+      <Filter>Meta</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

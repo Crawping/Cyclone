@@ -9,23 +9,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Meta\Primitives.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
     <ClCompile Include="Meta\Structure.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Meta\Utilities.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
     <ClCompile Include="Meta\String.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
-    <ClCompile Include="Meta\List.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
-    <ClCompile Include="Meta\Class.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
     <ClCompile Include="Runtime\Metaclass.cpp">
