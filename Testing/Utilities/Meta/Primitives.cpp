@@ -5,11 +5,10 @@
 #include "Imaging/Color4.h"
 #include "Math/Vector4.h"
 #include "Meta/Function.h"
-#include "Meta/String.h"
 #include "Meta/Utilities.h"
 #include <gtest/gtest.h>
 
-using namespace Cyclone::Reflection;
+using namespace Cyclone::Utilities;
 
 
 

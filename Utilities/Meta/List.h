@@ -9,7 +9,7 @@
 
 namespace Cyclone
 {
-    namespace Reflection
+    namespace Utilities
     {
         namespace Meta
         {
@@ -40,7 +40,7 @@ namespace Cyclone
                 template<uint N> using Get                      = Node<N, T...>;
 
                 template<uint N, typename S>
-                constexpr static auto Cast(S x) -> decltype((Get<N>::Type)x)
+                constexpr static auto Cast(S x)
                 {
                     return (Get<N>::Type)x;
                 }

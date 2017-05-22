@@ -9,10 +9,8 @@
 
 namespace Cyclone
 {
-    namespace Reflection
+    namespace Utilities
     {
-        using namespace Utilities;
-
         namespace Meta
         {
 

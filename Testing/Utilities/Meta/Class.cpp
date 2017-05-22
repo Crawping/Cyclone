@@ -7,7 +7,7 @@
 #include "Meta/Utilities.h"
 #include <gtest/gtest.h>
 
-using namespace Cyclone::Reflection;
+using namespace Cyclone::Utilities;
 
 
 

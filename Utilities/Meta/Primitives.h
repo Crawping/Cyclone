@@ -10,16 +10,17 @@
 
 namespace Cyclone
 {
-    namespace Reflection
+    namespace Utilities
     {
-
-        using namespace Utilities;
-
         namespace Meta
         {
 
             /// <summary> A compile-time typed variable. </summary>
-            template<typename T, T U> struct Primitive          : public Class<T> { constexpr operator T() const { return U; } };
+            template<typename T, T U> struct Primitive: public Class<T> 
+            { 
+                constexpr const static T Value = U;
+                constexpr operator T() const { return U; }
+            };
             /// <summary> A compile-time Boolean primitive. </summary>
             template<bool value> using Boolean                  = Primitive<bool, value>;
             /// <summary> A compile-time character primitive. </summary>

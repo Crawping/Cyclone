@@ -8,7 +8,7 @@
 #include <gtest/gtest.h>
 #include <typeinfo>
 
-using namespace Cyclone::Reflection;
+using namespace Cyclone::Utilities;
 
 
 
