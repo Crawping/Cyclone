@@ -18,7 +18,6 @@ namespace Cyclone
             struct Array
             {
                 template<uint N, T V, T ... W> struct Element;
-                //template<uint N, T ... V> struct Take;
 
                 private:
 
