@@ -7,6 +7,7 @@
 
 #include <sstream>
 #include <jpeglib.h>
+#include <setjmp.h>
 
 
 
