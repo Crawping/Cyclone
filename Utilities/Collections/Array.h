@@ -40,7 +40,7 @@ namespace Cyclone
         struct Array //: public IArray<T>
         {
             private:
-                
+
                 /** STATIC DATA **/
                 constexpr static uint _rank         = sizeof...(U);
                 constexpr static uint _count        = Meta::Product(U...);
@@ -60,21 +60,13 @@ namespace Cyclone
 
                 }
 
-                template<typename ... V>
-                constexpr static uint IndexOf(V ... indices)
-                {
-                    return IndexOf(NativeArray<uint, sizeof...(V)>{ indices... }.Flip());
-                }
-
                 template<uint N>
-                constexpr static uint IndexOf(const NativeArray<uint, N>& indices)
+                constexpr static uint IndexOf(const Array<uint, N>& indices)
                 {
-                    using A = Meta::Array<uint, U...>;
-                    return indices(0) * A::Product<N - 1>() + IndexOf(indices.Pop());
-                }
-                template<> constexpr static uint IndexOf<1>(const NativeArray<uint, 1>& indices)
-                {
-                    return indices(0);
+                    uint idx = 0;
+                    for (uint a = indices.Count() - 1; a > 0; a--)
+                        idx += indices(a) * Count(a - 1);
+                    return idx + indices(0U);
                 }
 
             public:
@@ -88,20 +80,27 @@ namespace Cyclone
 
                 /** CONSTRUCTORS **/
                 constexpr Array():
-                    _values { 0 }
+                    _values{ 0 }
                 {
 
                 }
+                constexpr Array(const T& value):
+                    _values{ }
+                {
+                    for (uint a = 0; a < _count; a++)
+                        _values[a] = value;
+                }
                 template<typename V, V ... W>
                 constexpr Array(const Meta::Array<V, W...>& values):
-                    _values { W... }
+                    _values{ W... }
                 {
 
                 }
                 constexpr Array(const T values[_count]):
-                    Array(values, Meta::Range<uint, 0, _count - 1>())
+                    _values{ }
                 {
-
+                    for (uint a = 0; a < _count; a++)
+                        _values[a] = values[a];
                 }
                 constexpr Array(const std::initializer_list<T>& values):
                     _values{ }
@@ -113,7 +112,14 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                constexpr uint Size(uint dimension) const
+                constexpr static uint Count(uint dimension)
+                {
+                    uint count = Size(0);
+                    for (uint a = 1; a <= dimension; a++)
+                        count *= Size(a);
+                    return count;
+                }
+                constexpr static uint Size(uint dimension)
                 {
                     return (dimension >= _rank) ? 1 : _size[dimension];
                 }
@@ -126,7 +132,7 @@ namespace Cyclone
                 template<typename ... V>
                 constexpr const T& operator ()(V ... indices)   const
                 {
-                    return _values[ IndexOf(indices...) ];
+                    return _values[IndexOf(Array<uint, sizeof...(V)>{ indices... })];
                 }
 
         };
