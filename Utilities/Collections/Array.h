@@ -5,7 +5,6 @@
 #pragma once
 #include "Collections/Vector.h"
 #include "Meta/Array.h"
-//#include <array>
 
 
 
@@ -14,30 +13,8 @@ namespace Cyclone
     namespace Utilities
     {
 
-        template<typename T, uint N>
-        struct NativeArray
-        {
-            constexpr const static uint Count = N;
-
-            T Value[N];
-
-            constexpr const T& operator ()(uint index)  const { return Value[index]; }
-            T& operator ()(uint index)                  { return Value[index]; }
-
-            constexpr NativeArray Flip()                const { return Sort(Meta::Range<uint, N - 1, 0>()); }
-            constexpr NativeArray<T, N - 1> Pop()       const { return Sort(Meta::Range<uint, 1, N - 1>()); }
-
-            template<uint ... U>
-            constexpr NativeArray<T, sizeof...(U)> Sort(const Meta::Array<T, U...>& indices) const
-            {
-                return { Value[U]... };
-            }
-        };
-
-
-
         template<typename T, uint ... U>
-        struct Array //: public IArray<T>
+        struct Array
         {
             private:
 
@@ -53,27 +30,13 @@ namespace Cyclone
 
 
 
-                template<uint ... V>
-                constexpr Array(const T values[_count], const Meta::Array<uint, V...>& indices):
-                    _values{ values[V]... }
-                {
 
-                }
-
-                template<uint N>
-                constexpr static uint IndexOf(const Array<uint, N>& indices)
-                {
-                    uint idx = 0;
-                    for (uint a = indices.Count() - 1; a > 0; a--)
-                        idx += indices(a) * Count(a - 1);
-                    return idx + indices(0U);
-                }
 
             public:
 
                 /** PROPERTIES **/
-                constexpr uint Count()                          const /*override */{ return _count; }
-                constexpr uint Rank()                           const /*override */{ return _rank; }
+                constexpr static uint Count()                   { return _count; }
+                constexpr static uint Rank()                    { return _rank; }
                 constexpr static Array<uint, _rank> Size()      { return Array<uint, _rank>(_size); }
 
 
@@ -90,12 +53,6 @@ namespace Cyclone
                     for (uint a = 0; a < _count; a++)
                         _values[a] = value;
                 }
-                template<typename V, V ... W>
-                constexpr Array(const Meta::Array<V, W...>& values):
-                    _values{ W... }
-                {
-
-                }
                 constexpr Array(const T values[_count]):
                     _values{ }
                 {
@@ -109,6 +66,14 @@ namespace Cyclone
                         _values[a] = *(values.begin() + a);
                 }
 
+                template<uint N, uint ... V>
+                constexpr Array(const Array<T, V...>& values, const Array<T, N>& indices):
+                    _values{ }
+                {
+                    for (uint a = 0; a < indices.Count(); a++)
+                        _values[a] = values(indices(a));
+                }
+
 
 
                 /** UTILITIES **/
@@ -119,22 +84,45 @@ namespace Cyclone
                         count *= Size(a);
                     return count;
                 }
+                constexpr Array<T, _count> Flatten()                            const { return { _values }; }
+                constexpr static Array<uint, _rank> SubscriptsOf(uint index)
+                {
+
+                }
                 constexpr static uint Size(uint dimension)
                 {
                     return (dimension >= _rank) ? 1 : _size[dimension];
                 }
 
+                template<typename ... V>
+                constexpr static uint IndexOf(V ... indices)
+                { 
+                    return IndexOf( Array<uint, sizeof...(V)>{ uint(indices)... } );
+                }
+                template<uint N>
+                constexpr static uint IndexOf(const Array<uint, N>& indices)
+                {
+                    uint idx = indices(0U);
+                    for (uint a = 1; a < indices.Count(); a++)
+                        idx += indices(a) * Count(a - 1);
+                    return idx;
+                }
+
+
 
                 /** OPERATORS **/
-                virtual T& operator()(uint index)               { return _values[index]; }
-                constexpr const T& operator ()(uint index)      const /*override*/ { return _values[index]; }
+                virtual T& operator ()(uint index)                              { return _values[index]; }
+                constexpr const T& operator ()(uint index)                      const { return _values[index]; }
 
                 template<typename ... V>
-                constexpr const T& operator ()(V ... indices)   const
+                constexpr const T& operator ()(V ... indices)                   const { return _values[IndexOf(indices...)]; }
+                template<uint N>
+                constexpr Array<T, N> operator ()(const Array<T, N>& indices)   const
                 {
-                    return _values[IndexOf(Array<uint, sizeof...(V)>{ indices... })];
+                    return Array<T, N>(*this, indices);
                 }
 
         };
+
     }
 }
