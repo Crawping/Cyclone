@@ -23,6 +23,7 @@ namespace Cyclone
         using std::string;
 
 
+
         /** ALIASES **/
         /// <summary> An alias that represents a general parameterized function pointer with one return argument. </summary>
         /// <typeparam name="T"> The function's output argument class. </typeparam>

@@ -12,9 +12,8 @@
 
 namespace Cyclone
 {
+
     /** FORWARD DECLARATIONS **/
-    using namespace OpenGL;
-    using namespace Platform;
     namespace OpenGL
     {
         class FrameBuffer;
@@ -27,6 +26,9 @@ namespace Cyclone
         class Window3D;
     }
 
+    using namespace OpenGL;
+    using namespace Platform;
+    using namespace Utilities;
 
 
     class Program

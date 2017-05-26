@@ -20,11 +20,6 @@ const static string Help = "                        \n\
 
 namespace Cyclone
 {
-    using namespace OpenGL;
-    using namespace Platform;
-    using namespace Utilities;
-
-
 
     /** CONSTRUCTOR & DESTRUCTOR **/
     Program::Program(int nargs, char** args) :
