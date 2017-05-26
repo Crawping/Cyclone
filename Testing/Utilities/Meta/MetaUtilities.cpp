@@ -12,12 +12,12 @@ using namespace Cyclone::Utilities;
 
 
 
-TEST(_Utilities, Booleans)
+TEST(_MetaUtilities, Booleans)
 {
     ASSERT_TRUE(Meta::Boolean<true>());
     ASSERT_FALSE(Meta::Boolean<false>());
 }
-TEST(_Utilities, Conditionals)
+TEST(_MetaUtilities, Conditionals)
 {
     ASSERT_TRUE
     ((
@@ -39,21 +39,21 @@ TEST(_Utilities, Conditionals)
         >()
     ));
 }
-TEST(_Utilities, Dereferencing)
+TEST(_MetaUtilities, Dereferencing)
 {
     ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void>::Type).name());
     ASSERT_STREQ(typeid(void).name(),               typeid(Meta::Dereference<void*>::Type).name());
     ASSERT_STREQ(typeid(char).name(),               typeid(Meta::Dereference<const char*>::Type).name());
     ASSERT_STREQ(typeid(string).name(),             typeid(Meta::Dereference<const string&>::Type).name());
 }
-TEST(_Utilities, EqualityTesting)
+TEST(_MetaUtilities, EqualityTesting)
 {
     ASSERT_EQ((Meta::IsEqual<int, double>()),       false);
     ASSERT_EQ((Meta::IsEqual<int, uint>()),         false);
     ASSERT_EQ((Meta::IsEqual<uint, uint>()),        true);
     ASSERT_EQ(Meta::TypeEquals<int>(3.14159),       false);
 }
-TEST(_Utilities, IsPointer)
+TEST(_MetaUtilities, IsPointer)
 {
     ASSERT_EQ(Meta::IsPointer<int*>(),              true);
     ASSERT_EQ(Meta::IsPointer<const char*>(),       true);
@@ -63,7 +63,7 @@ TEST(_Utilities, IsPointer)
     ASSERT_EQ(Meta::IsPointer<void>(),              false);
     ASSERT_EQ(Meta::IsPointer<const string&>(),     false);
 }
-TEST(_Utilities, IsReference)
+TEST(_MetaUtilities, IsReference)
 {
     ASSERT_EQ(Meta::IsReference<int&>(),            true);
     ASSERT_EQ(Meta::IsReference<const string&>(),   true);
@@ -73,12 +73,12 @@ TEST(_Utilities, IsReference)
     ASSERT_EQ(Meta::IsReference<void>(),            false);
     ASSERT_EQ(Meta::IsReference<const char*>(),     false);
 }
-TEST(_Utilities, IsVoid)
+TEST(_MetaUtilities, IsVoid)
 {
     ASSERT_EQ(Meta::IsVoid<void>(),                 true);
     ASSERT_EQ(Meta::IsVoid<int>(),                  false);
 }
-TEST(_Utilities, SizeOf)
+TEST(_MetaUtilities, SizeOf)
 {
     ASSERT_EQ(Meta::SizeOf<void>(),                 0);
     ASSERT_EQ(Meta::SizeOf<int>(),                  sizeof(int));

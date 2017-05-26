@@ -12,7 +12,7 @@ using namespace Cyclone::Utilities;
 
 
 
-class _List : public testing::Test 
+class _MetaList : public testing::Test 
 {
     protected:
 
@@ -22,7 +22,7 @@ class _List : public testing::Test
 
 
 
-TEST_F(_List, Construction)
+TEST_F(_MetaList, Construction)
 {
     ASSERT_EQ(L1::Count(),      4);
     ASSERT_TRUE(( Meta::IsEqual<L1::Get<3>::Type, Vector4>() ));
@@ -35,7 +35,7 @@ TEST_F(_List, Construction)
 }
 
 
-TEST_F(_List, Concatenation)
+TEST_F(_MetaList, Concatenation)
 {
     ASSERT_EQ(L2::Count(),      7);
 

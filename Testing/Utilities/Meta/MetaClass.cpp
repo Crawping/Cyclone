@@ -11,7 +11,7 @@ using namespace Cyclone::Utilities;
 
 
 
-TEST(_Class, Properties)
+TEST(_MetaClass, Properties)
 {
     using c1 = Meta::Class<int>;
     using c2 = Meta::Class<int*>;
