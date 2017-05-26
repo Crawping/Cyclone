@@ -2,8 +2,8 @@
  * Written by Josh Grooms on 20150915
  */
 
-#include "Area.h"
-#include "Utilities.h"
+#include "Math/Math.h"
+#include "Spatial/Area.h"
 #include <sstream>
 
 using std::string;

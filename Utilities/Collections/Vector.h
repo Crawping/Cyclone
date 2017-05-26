@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Utilities.h"
+#include "Math/Math.h"
 #include "Interfaces/IArray.h"
 
 

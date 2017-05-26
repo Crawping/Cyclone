@@ -28,21 +28,6 @@ namespace Cyclone
         namespace Math
         {
 			UtilitiesAPI constexpr Vector3 Cross(const Vector3& x, const Vector3& y);
-
-            /// <summary> Returns the maximum of two values. </summary>
-            UtilitiesAPI constexpr float Max(float x, float y);
-            /// <summary> Returns the maximum of three values. </summary>
-            UtilitiesAPI constexpr float Max(float x, float y, float z);
-            /// <summary> Returns the maximum of four values. </summary>
-            UtilitiesAPI constexpr float Max(float x, float y, float z, float w);
-
-            /// <summary> Returns the minimum of two values. </summary>
-            UtilitiesAPI constexpr float Min(float x, float y);
-            /// <summary> Returns the minimum of three values. </summary>
-            UtilitiesAPI constexpr float Min(float x, float y, float z);
-            /// <summary> Returns the minimum of four values. </summary>
-            UtilitiesAPI constexpr float Min(float x, float y, float z, float w);
-
         }
 
 
@@ -64,9 +49,9 @@ namespace Cyclone
 
         template<typename T> constexpr int compare(const T& x, const T& y)
         {
-            return (x < y) ? -1 : (x > y) ? 1 : 0;
+            return (x < y) ? -1 : 
+                (x > y) ? 1 : 0;
         }
-
         template<typename T> T wrap(T x, T min, T max)
         {
             float notUsed;
@@ -83,6 +68,10 @@ namespace Cyclone
         {
             return std::to_string(number);
         }
+
+        template<bool E>
+        constexpr void StaticAssert(const char* message) { static_assert(E, message); }
+
 
 
 
