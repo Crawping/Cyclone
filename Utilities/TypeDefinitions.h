@@ -11,6 +11,7 @@ namespace Cyclone
 {
     namespace Utilities
     {
+
         /** PRIMITIVE NUMERIC TYPES **/
         typedef int8_t      byte;
         typedef uint8_t     ubyte;
@@ -41,6 +42,14 @@ namespace Cyclone
         /// <typeparam name="T"> A listing of the procedure's input argument classes. </typeparam>
         template<typename ... T>
         using ProcedurePointer = void(*)(T ... arguments);
+
+
+
+        /** STANDARD LIBRARY ALIASES **/
+        /// <summary> An alias for the C++ standard library's initializer list collection. </summary>
+        /// <typeparam name="T"> The type of the elements found within the initializer list. </typeparam>
+        template<typename T> using InitialList = std::initializer_list<T>;
+
     }
 }
 
