@@ -1,5 +1,6 @@
 #include "Utilities.h"
 #include "Math/Constants.h"
+#include "Math/Math.h"
 #include "Math/Matrix4x4.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
@@ -28,7 +29,7 @@ namespace Cyclone
         {
             _needsUpdate = true;
 
-            _orientation.X = clamp(value.X, -Constants::HalfPi<float> + 0.001f, Constants::HalfPi<float> - 0.001f);
+            _orientation.X = Math::Clamp(value.X, -Constants::HalfPi<float> + 0.001f, Constants::HalfPi<float> - 0.001f);
             _orientation.Y = wrap(value.Y, 0.0f, Constants::TwoPi<float> - 0.001f);
             _orientation.Z = wrap(value.Z, 0.0f, Constants::TwoPi<float> - 0.001f);
             

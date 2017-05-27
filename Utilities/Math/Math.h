@@ -13,10 +13,27 @@ namespace Cyclone
     {
         namespace Math
         {
+            /// <summary> Constrains numeric or comparable data to a range of values between some inputted minimum and maximum. </summary>
+            /// <param name="x"> The data point to be constrained. </param>
+            /// <param name="min"> The minimum value that <paramref name="x"/> is allowed to take. </param>
+            /// <param name="max"> The maximum value that <paramref name="x"/> is allowed to take. </param>
+            /// <returns> 
+            ///     The same value of <paramref name="x"/> if it lies between <paramref name="min"/> and <paramref name="max"/>, 
+            ///     inclusively. Otherwise, the closer of <paramref name="min"/> or <paramref name="max"/> is returned.
+            /// </returns>
+            template<typename T> constexpr T Clamp(T x, T min, T max)
+            {
+                return (x < min) ? min :
+                    (x > max) ? max : x;
+            }
+            template<typename T> constexpr int Compare(const T& x, const T& y)
+            {
+                return (x < y) ? -1 :
+                    (x > y) ? 1 : 0;
+            }
 
             /// <summary> Returns the maximum of a list of values. </summary>
-            template<typename T, typename ... U>
-            constexpr T Max(T first, U ... values)
+            template<typename T, typename ... U> constexpr T Max(T first, U ... values)
             {
                 constexpr int N = sizeof...(U);
                 const T vals[N] = { values... };
@@ -28,8 +45,7 @@ namespace Cyclone
                 return v;
             }
             /// <summary> Returns the minimum of a list of values. </summary>
-            template<typename T, typename ... U>
-            constexpr T Min(T first, U ... values)
+            template<typename T, typename ... U> constexpr T Min(T first, U ... values)
             {
                 constexpr int N = sizeof...(U);
                 const T vals[N] = { values... };

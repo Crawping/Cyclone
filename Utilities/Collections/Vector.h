@@ -61,8 +61,8 @@ namespace Cyclone
                 }
                 virtual void Set(uint index, const ICollection<T>& values, uint offset = 0, uint count = 1)
                 {
-                    index = clamp(index, 0U, U - 1); 
-                    offset = clamp(offset, 0U, values.Count() - 1);
+                    index = Math::Clamp(index, 0U, U - 1); 
+                    offset = Math::Clamp(offset, 0U, values.Count() - 1);
                     count = Math::Min(U - index + 1, count, values.Count() - offset);
                     for (uint a = 0; a < count; a++)
                         Data[index + a] = values(offset + a);

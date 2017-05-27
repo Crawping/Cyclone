@@ -28,7 +28,7 @@ namespace Cyclone
         {
             if (IsEmpty()) { return Color4::Transparent; }                
 
-            idx = clamp(idx, 0.0f, 1.0f);            
+            idx = Math::Clamp(idx, 0.0f, 1.0f);            
             if (_stops.count(idx))
                 return _stops.at(idx);
 

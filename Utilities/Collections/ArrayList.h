@@ -143,7 +143,7 @@ namespace Cyclone
                 {
                     if (n == 0) { return; }
 
-                    idx = clamp(idx, (uint)0, _count);
+                    idx = Math::Clamp(idx, (uint)0, _count);
                     uint newCount = Count() + n;
                     Reallocate(Count() + n);
 
@@ -171,7 +171,7 @@ namespace Cyclone
                 {
                     if (n == 0) { return; }
 
-                    idx = clamp(idx, (uint)0, Count());
+                    idx = Math::Clamp(idx, (uint)0, Count());
                     if (idx == 0)
                     {
                         _index += n;

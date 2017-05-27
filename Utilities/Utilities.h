@@ -33,25 +33,6 @@ namespace Cyclone
 
 
         /** TEMPLATED UTILITIES **/
-        /// <summary> Constrains numeric or comparable data to a range of values between some inputted minimum and maximum. </summary>
-        /// <param name="x"> The data point to be constrained. </param>
-        /// <param name="min"> The minimum value that <paramref name="x"/> is allowed to take. </param>
-        /// <param name="max"> The maximum value that <paramref name="x"/> is allowed to take. </param>
-        /// <returns> 
-        ///     The same value of <paramref name="x"/> if it lies between <paramref name="min"/> and <paramref name="max"/>, 
-        ///     inclusively. Otherwise, the closer of <paramref name="min"/> or <paramref name="max"/> is returned.
-        /// </returns>
-        template<typename T> constexpr T clamp(T x, T min, T max)
-        {
-            return (x < min) ? min :
-                (x > max) ? max : x;
-        }
-
-        template<typename T> constexpr int compare(const T& x, const T& y)
-        {
-            return (x < y) ? -1 : 
-                (x > y) ? 1 : 0;
-        }
         template<typename T> T wrap(T x, T min, T max)
         {
             float notUsed;
@@ -68,10 +49,6 @@ namespace Cyclone
         {
             return std::to_string(number);
         }
-
-        template<bool E>
-        constexpr void StaticAssert(const char* message) { static_assert(E, message); }
-
 
 
 
