@@ -16,7 +16,7 @@ namespace Cyclone
                 cmds(a) = ControlPoints(a).Command;
             return cmds;
         }
-        GeometryData Geometry2D::Data()                 const
+        const GeometryData& Geometry2D::Data()          const
         {
             GeometryData data =
             {

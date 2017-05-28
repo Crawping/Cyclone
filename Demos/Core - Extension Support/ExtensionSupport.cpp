@@ -3,9 +3,9 @@
  */
 
 #include "BasicRenderer.h"
-#include "Console.h"
 #include "GPU.h"
 #include "Collections/List.h"
+#include "IO/Console.h"
 using namespace Renderers;
 
 

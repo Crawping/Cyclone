@@ -3,8 +3,8 @@
  */
 
 #include "BasicRenderer.h"
-#include "Console.h"
 #include "Window3D.h"
+#include "IO/Console.h"
 
 using namespace Renderers;
 using namespace Cyclone::Platform;

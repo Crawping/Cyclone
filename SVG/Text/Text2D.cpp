@@ -1,5 +1,6 @@
 #include "NVPR.h"
 #include "Utilities.h"
+#include "Math/Math.h"
 #include "Text/Text2D.h"
 
 
