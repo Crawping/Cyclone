@@ -4,8 +4,8 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "TypeDefinitions.h"
 #include "Collections/Array.h"
+#include "Collections/String.h"
 #include "Math/Vector3.h"
 
 
@@ -25,35 +25,14 @@ namespace Cyclone
             /// <summary> The numeric type of each element present in the attribute. </summary>
             NumericFormats  Format;
             /// <summary> The name of the attribute. </summary>
-            string          Name;
+            String          Name;
             /// <summary> The byte offset into the vertex structure at which data for the attribute can be found. </summary>
             uint            Offset;
 
-            /// <summary> Constructs an empty vertex attribute with no elements, no name, and no offset. </summary>
-            VertexAttribute() :
-                Count(0),
-                Format(NumericFormats::Float),
-                Name(""),
-                Offset(0)
-            {
-
-            }
-            /// <summary> Constructs a new vertex attribute used to define a vertex layout. </summary>
-            /// <param name="count"> The number of elements present in the attribute. </param>
-            /// <param name="format"> The numeric type of each element present in the attribute. </param>
-            /// <param name="name"> The name of this attribute. </param>
-            /// <param name="offset"> The byte offset into the vertex structure at which the data for the attribute can be found. </param>
-            VertexAttribute(uint count, NumericFormats format, const string& name, uint offset) :
-                Count(count),
-                Format(format),
-                Name(name),
-                Offset(offset)
-            {
-
-            }
 
 
-            bool operator ==(const VertexAttribute& other) const
+            /** OPERATORS **/
+            constexpr bool operator ==(const VertexAttribute& other) const
             {
                 return 
                     (Count == other.Count)      && 
@@ -61,13 +40,14 @@ namespace Cyclone
                     (Name == other.Name)        && 
                     (Offset == other.Offset);
             }
-            bool operator !=(const VertexAttribute& other) const { return !operator ==(other); }
+            constexpr bool operator !=(const VertexAttribute& other) const { return !operator ==(other); }
         };
 
         
         /// <summary> A structure that defines a vertex consisting of positional, normal, and texture data. </summary>
-        struct Vertex //: public IVertex
+        struct Vertex
         {
+
             /** DATA **/
             /// <summary> The (x, y, z) position of the vertex in model space. </summary>
             Vector3 Position;
@@ -76,24 +56,34 @@ namespace Cyclone
             /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
             Vector2 UV;
 
-            Vector<VertexAttribute> Layout() const //override
+
+
+            /** STATIC DATA **/
+            constexpr static Array<VertexAttribute, 3> Layout()
             {
                 return
                 {
-                    VertexAttribute(3, NumericFormats::Float, "Position", offsetof(Vertex, Position)),
-                    VertexAttribute(3, NumericFormats::Float, "Normal", offsetof(Vertex, Normal)),
-                    VertexAttribute(2, NumericFormats::Float, "UV", offsetof(Vertex, UV)),
+                    { 3, NumericFormats::Float, "Position", offsetof(Vertex, Position) },
+                    { 3, NumericFormats::Float, "Normal", offsetof(Vertex, Normal) },
+                    { 2, NumericFormats::Float, "UV", offsetof(Vertex, UV) },
                 };
             }
 
-            constexpr Vertex() :
+
+
+            /** CONSTRUCTORS **/
+            /// <summary> Constructs a default 3D geometric vertex that can be used on the GPU. </summary>
+            constexpr Vertex():
                 Position(0.0f),
                 Normal(0.0f),
                 UV(0.0f)
             {
 
             }
-
+            /// <summary> Constructs a 3D polygon vertex that can used on the GPU. </summary>
+            /// <param name="position"> The desired position of the vertex in 3D space. </param>
+            /// <param name="normal"> The desired direction of the vector considered normal to the vertex. </param>
+            /// <param name="uv"> The mapping of the vertex into 2D texture UV space. </param>
             constexpr Vertex(const Vector3& position, const Vector3& normal, const Vector2& uv) :
                 Position(position),
                 Normal(normal),
@@ -125,14 +115,10 @@ namespace Cyclone
             {
 
             }
-            constexpr Vertex(const Array<float, 8>& values):
-                Position(values(0), values(1), values(2)),
-                Normal(values(3), values(4), values(5)),
-                UV(values(6), values(7))
-            {
 
-            }
 
+
+            /** OPERATORS **/
             constexpr bool operator ==(const Vertex& other) const
             {
                 return

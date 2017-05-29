@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Buffers/GraphicsBuffer.h"
+#include "Collections/Array.h"
 #include "Collections/Vector.h"
 #include "GL/OpenGLAPI.h"
 
@@ -52,10 +53,20 @@ namespace Cyclone
                 
             protected:
 
-                /** CONSTRUCTOR **/
+                /** CONSTRUCTORS **/
                 /// <summary> Constructs a new vertex array object on the GPU. </summary>
                 /// <param name="layout"> An array of attributes that define the structure of a vertex for the GPU. </param>
                 OpenGLAPI VertexArray(const Vector<VertexAttribute>& layout);
+                /// <summary> Constructs a new vertex array object on the GPU. </summary>
+                /// <param name="layout"> An array of attributes that define the structure of a vertex for the GPU. </param>
+                template<uint N> VertexArray(const Array<VertexAttribute, N>& layout) :
+                    GraphicsBuffer(BufferTypes::Array),
+                    Layout(N),
+                    VAOID(0)
+                {
+                    for (uint a = 0; a < N; a++)
+                        Layout(a) = layout(a);
+                }
 
                 
                 /** UTILITIES **/

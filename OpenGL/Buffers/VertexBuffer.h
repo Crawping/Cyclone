@@ -50,7 +50,7 @@ namespace Cyclone
                 /// <param name="n"> The number of vertices present in the inputted vertex array. </param>
                 /// <param name="vertices"> A pointer to the beginning of an n-length vertex array. </param>
                 VertexBuffer(uint n, const T* vertices) :
-                    VertexArray(T().Layout())
+                    VertexArray(T::Layout())
                 {
                     for (uint a = 0; a < n; a++)
                         Set(a, vertices[a]);
