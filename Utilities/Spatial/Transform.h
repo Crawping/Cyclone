@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Interfaces/ISpatialTransform.h"
+#include "Interfaces/ITransformable3D.h"
 #include "Math/Matrix4x4.h"
 #include "Math/Vector3.h"
 
@@ -16,93 +17,38 @@ namespace Cyclone
         struct Volume;
 
         /// <summary> A data structure representing a 4x4 transformation matrix used to translate, scale, and rotate entities in 3D space. </summary>
-        struct Transform : public ISpatialTransform
+        struct Transform3D: 
+            public virtual ISpatialTransform,
+            public virtual ITransformable3D
         {
 
             public:
                 
-                /** POSITIONAL PROPERTIES **/
-                /// <summary> Gets the translation along the x-axis. </summary>
-                virtual float X()                                       const { return _position.X; }
-                /// <summary> Gets the translation along the y-axis. </summary>
-                virtual float Y()                                       const { return _position.Y; }
-                /// <summary> Gets the translation along the z-axis. </summary>
-                virtual float Z()                                       const { return _position.Z; }
-
-                /// <summary> Sets the translation along the x-axis. </summary>
-                virtual Transform& X(float x)                                 { return Position(x, Y(), Z()); }
-                /// <summary> Sets the translation along the y-axis. </summary>
-                virtual Transform& Y(float y)                                 { return Position(X(), y, Z()); }
-                /// <summary> Sets the translation along the z-axis. </summary>
-                virtual Transform& Z(float z)                                 { return Position(X(), Y(), z); }
-
-
-
-                /** ROTATIONAL PROPERTIES **/
-                /// <summary> Gets the angle of rotation about the x-axis in radians. </summary>
-                virtual float Pitch()                                   const { return _orientation.X; }
-                /// <summary> Gets the angle of rotation about the z-axis in radians. </summary>
-                virtual float Roll()                                    const { return _orientation.Z; }
-                /// <summary> Gets the angle of rotation about the y-axis in radians. </summary>
-                virtual float Yaw()                                     const { return _orientation.Y; }
-
-                /// <summary> Sets the angle of rotation about the x-axis in radians. </summary>
-                virtual Transform& Pitch(float p)                             { return Orientation(p, Yaw(), Roll()); }
-                /// <summary> Sets the angle of rotation about the z-axis in radians. </summary>
-                virtual Transform& Roll(float r)                              { return Orientation(Pitch(), Yaw(), r); }
-                /// <summary> Sets the angle of rotation about the y-axis in radians. </summary>
-                virtual Transform& Yaw(float y)                               { return Orientation(Pitch(), y, Roll()); }
-
-                
-
-                /** SCALING PROPERTIES **/
-                /// <summary> Gets the scaling factor along the x-axis. </summary>
-                virtual float ScaleX()                                  const { return _size.X; }
-                /// <summary> Gets the scaling factor along the y-axis. </summary>
-                virtual float ScaleY()                                  const { return _size.Y; }
-                /// <summary> Gets the scaling factor along the z-axis. </summary>
-                virtual float ScaleZ()                                  const { return _size.Z; }
-
-                /// <summary> Sets the x-axis scaling component of the transformation matrix. </summary>
-                virtual Transform& ScaleX(float x)                            { return Scale(x, ScaleY(), ScaleZ()); }
-                /// <summary> Sets the y-axis scaling component of the transformation matrix. </summary>
-                virtual Transform& ScaleY(float y)                            { return Scale(ScaleX(), y, ScaleZ()); }
-                /// <summary> Sets the z-axis scaling component of the transformation matrix. </summary>
-                virtual Transform& ScaleZ(float z)                            { return Scale(ScaleX(), ScaleY(), z); }
-
-
-
-                /** BATCH SPATIAL PROPERTIES **/
+                /** PROPERTIES **/
                 /// <summary> Gets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                virtual const Vector3& Orientation()                    const override { return _orientation; }
+                const Vector3& Orientation()                    const override { return _orientation; }
                 /// <summary> Gets the (x, y, z) translation components of the transformation matrix. </summary>
-                virtual const Vector3& Position()                       const override { return _position; }
+                const Vector3& Position()                       const override { return _position; }
                 /// <summary> Gets the (x, y, z) scaling components of the transformation matrix. </summary>
-                virtual const Vector3& Scale()                          const override { return _size; }
+                const Vector3& Scale()                          const override { return _size; }
 
                 /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                virtual Transform& Orientation(float p, float y, float r)           { return Orientation(Vector3(p, y, r)); }
-                /// <summary> Sets the angles of rotation about the (x, y, z) axes in radians. </summary>
-                UtilitiesAPI virtual Transform& Orientation(const Vector3& value)   override;
+                UtilitiesAPI Transform3D& Orientation(const Vector3& value)   override;
                 /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
-                virtual Transform& Position(float x, float y, float z)              { return Position(Vector3(x, y, z)); }
-                /// <summary> Sets the (x, y, z) translation components of the transformation matrix. </summary>
-                UtilitiesAPI virtual Transform& Position(const Vector3& value)      override;
+                UtilitiesAPI Transform3D& Position(const Vector3& value)      override;
                 /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
-                virtual Transform& Scale(float x, float y, float z)                 { return Scale(Vector3(x, y, z)); }
-                /// <summary> Sets the (x, y, z) scaling components of the transformation matrix. </summary>
-                UtilitiesAPI virtual Transform& Scale(const Vector3& value)         override;
+                UtilitiesAPI Transform3D& Scale(const Vector3& value)         override;
 
 
 
                 /** CONSTRUCTORS **/
                 /// <summary> Constructs a default transformation data structure representing a 4x4 identity matrix. </summary>
-                UtilitiesAPI Transform();
+                UtilitiesAPI Transform3D();
                 /// <summary> Constructs a new transformation data structure that is a deep copy of another one. </summary>
                 /// <param name="other"> An existing transformation object whose contents are to be copied. </param>
-                UtilitiesAPI Transform(const Transform& other);
+                UtilitiesAPI Transform3D(const Transform3D& other);
                 /// <summary> Constructs a transformation data structure by copying an existing 4x4 transformation matrix. </summary>
-                UtilitiesAPI Transform(const float* m);
+                UtilitiesAPI Transform3D(const float* m);
                 /// <summary> Constructs a transformation matrix representing translation, rotation, and scaling in 3D space. </summary>
                 /// <param name="position"> A three-element vector containing the desired translations along the (x, y, z) axes. </param>
                 /// <param name="size">
@@ -117,7 +63,7 @@ namespace Cyclone
                 ///     A new data structure representing a transformation matrix that can be multiplied by a set of
                 ///     coordinates to translate, rotate, and scale them in 3D space.
                 /// </returns>
-                UtilitiesAPI Transform(const Vector3& position, const Vector3& size = Vector3::One, const Vector3& angles = Vector3::Zero);
+                UtilitiesAPI Transform3D(const Vector3& position, const Vector3& size = Vector3::One, const Vector3& angles = Vector3::Zero);
 
 
 
@@ -137,21 +83,21 @@ namespace Cyclone
                 ///     even with a single set of parameters. Therefore, while the result returned by this method will be 
                 ///     mathematically equivalent to the inputted matrix, it very likely will not be identical.
                 /// </remarks>
-                UtilitiesAPI static Transform Decompose(const Matrix4x4& transform);
+                UtilitiesAPI static Transform3D Decompose(const Matrix4x4& transform);
                 /// <summary> Constructs a right-handed orthographic projection transformation matrix. </summary>
                 /// <returns>
                 ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
                 ///     This transform assumes that the view-space follows a right-handed coordinate system.
                 /// </returns>
                 /// <param name="displayVolume"> The rectangular prism defining the volume of camera-space that is visible on the screen. </param>
-                UtilitiesAPI static Transform OrthographicProjection(const Volume& displayVolume);
+                UtilitiesAPI static Transform3D OrthographicProjection(const Volume& displayVolume);
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
                 /// <returns>
                 ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
                 ///     This transform assumes that the view-space follows a right-handed coordinate system.
                 /// </returns>
                 /// <param name="displayVolume"> The rectangular prism defining the volume of camera-space that is visible on the screen. </param>
-                UtilitiesAPI static Transform PerspectiveProjection(const Volume& displayVolume);
+                UtilitiesAPI static Transform3D PerspectiveProjection(const Volume& displayVolume);
                 /// <summary> Constructs a right-handed perspective projection transformation matrix. </summary>
                 /// <returns>
                 ///     A new transformation matrix that can be used to convert camera- or view-space coordinates into clip space.
@@ -168,64 +114,60 @@ namespace Cyclone
                 /// </param>
                 /// <param name="znear"> The desired position of the clipping plane closest to the camera in view-space. </param>
                 /// <param name="zfar"> The desired position of the clipping plane furthest from the camera in view-space. </param>
-                UtilitiesAPI static Transform PerspectiveProjection(float fov, float aspect, float znear, float zfar);
+                UtilitiesAPI static Transform3D PerspectiveProjection(float fov, float aspect, float znear, float zfar);
                 /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
                 /// <param name="angles"> A three-element vector representing the desired (pitch, yaw, roll) rotations of the transform in radians. </param>
                 /// <remarks> The transform constructed by this method follows the right-hand rule for rotation about any axis. </remarks>
-                UtilitiesAPI static Transform Rotation(const Vector3& angles);
+                UtilitiesAPI static Transform3D Rotation(const Vector3& angles);
                 /// <summary> Constructs a transformation matrix that can be used to rotate an entity about the three spatial axes. </summary>
                 /// <param name="pitch"> The rotation about the x-axis in radians. </param>
                 /// <param name="yaw"> The rotation about the y-axis in radians. </param>
                 /// <param name="roll"> The rotation about the z-axis in radians. </param>
                 /// <remarks> The transform constructed by this method follows the right-hand rule for rotation about any axis. </remarks>
-                UtilitiesAPI static Transform Rotation(float pitch, float yaw, float roll);
+                UtilitiesAPI static Transform3D Rotation(float pitch, float yaw, float roll);
                 /// <summary> Constructs a transformation matrix that can be used to scale an entity along the three spatial axes. </summary>
                 /// <param name="size"> A three-element vector containing the desired (width, height, depth) scaling factors of the transform. </param>
-                UtilitiesAPI static Transform Scaling(const Vector3& size);
+                UtilitiesAPI static Transform3D Scaling(const Vector3& size);
                 /// <summary> Constructs a transformation matrix that can be used to scale an entity along the three spatial axes. </summary>
                 /// <param name="x"> The desired scaling factor along the x-axis. </param>
                 /// <param name="y"> The desired scaling factor along the y-axis. </param>
                 /// <param name="z"> The desired scaling factor along the z-axis. </param>
-                UtilitiesAPI static Transform Scaling(float x, float y, float z);
+                UtilitiesAPI static Transform3D Scaling(float x, float y, float z);
                 /// <summary> Constructs a transformation matrix that can be used to translate an entity along the three spatial axes. </summary>
                 /// <param name="position"> A three-element vector containing the desired (x, y, z) translation amounts. </param>
-                UtilitiesAPI static Transform Translation(const Vector3& position);
+                UtilitiesAPI static Transform3D Translation(const Vector3& position);
                 /// <summary> Constructs a transformation matrix that can be used to translate an entity along the three spatial axes. </summary>
                 /// <param name="x"> The desired amount of translation along the x-axis. </param>
                 /// <param name="y"> The desired amount of translation along the y-axis. </param>
                 /// <param name="z"> The desired amount of translation along the z-axis. </param>
-                UtilitiesAPI static Transform Translation(float x, float y, float z);
+                UtilitiesAPI static Transform3D Translation(float x, float y, float z);
 
 
 
                 /** UTILITIES **/
                 /// <summary> Generates a new transformation object that represents the inverse of this one. </summary>
-                UtilitiesAPI Transform Inverse()                                    const;
+                UtilitiesAPI Transform3D Inverse()                                  const;
                 /// <summary> Generates a human-readable string detailing the current internal state of this data structure. </summary>
                 UtilitiesAPI virtual string Report()                                const;
                 /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Rotate(const Vector3& angles)                    override { return Orientation(_orientation + angles); }
-                /// <summary> Sets the rotation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Rotate(float p, float y, float r)                { return Rotate(Vector3(p, y, r)); }
+                UtilitiesAPI Transform3D& Rotate(const Vector3& value)              override;
                 /// <summary> Converts a transformation data structure into a native vector of values. </summary>
                 UtilitiesAPI virtual const float* ToArray()                         const override; 
                 /// <summary> Converts a transformation data structure into an ordinary 4x4 transformation matrix. </summary>
                 /// <returns> A reference to the transformation matrix that performs the desired rotation, scaling, and translation operations. </returns>
                 UtilitiesAPI virtual const Matrix4x4& ToMatrix4x4()                 const override;
                 /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Translate(const Vector3& t)                      override { return Position(_position + t); }
-                /// <summary> Sets the translation components of the transformation matrix relative to their current values. </summary>
-                virtual Transform& Translate(float x, float y, float z)             { return Translate(Vector3(x, y, z)); }
+                UtilitiesAPI Transform3D& Translate(const Vector3& value)           override;
 
 
 
                 /** OPERATORS **/
                 /// <summary> Determines whether one transformation is equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the both transformations are identical, or <c>false</c> otherwise. </returns>
-                UtilitiesAPI virtual bool operator ==(const Transform& other)       const;
+                UtilitiesAPI virtual bool operator ==(const Transform3D& other)       const;
                 /// <summary> Determines whether one transformation is not equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
-                virtual bool operator !=(const Transform& other)                    const { return !(*this == other); }
+                virtual bool operator !=(const Transform3D& other)                    const { return !(*this == other); }
 
                 /// <summary> Performs matrix multiplication between a 4x4 transformation matrix and a vector. </summary>
                 /// <returns> A four-element vector containing the results of the multiplication. </returns>
@@ -234,7 +176,7 @@ namespace Cyclone
                 /// <summary> Performs matrix multiplication for two 4x4 transformation matrices. </summary>
                 /// <returns> A transformation object containing the results of the multiplication. </returns>
                 /// <param name="other"> Another 4x4 transformation matrix that serves as the right operand of the multiplication. </param>
-                UtilitiesAPI virtual Transform operator *(const Transform& other)   const;
+                UtilitiesAPI virtual Transform3D operator *(const Transform3D& other)   const;
 
 
 

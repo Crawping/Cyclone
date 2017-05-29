@@ -17,19 +17,19 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Transform& Transform::Orientation(const Vector3& value)
+        Transform3D& Transform3D::Orientation(const Vector3& value)
         {
             _orientation = value;
             _needsUpdate = true;
             return *this;
         }
-        Transform& Transform::Position(const Vector3& value)
+        Transform3D& Transform3D::Position(const Vector3& value)
         {
             _position = value;
             _needsUpdate = true;
             return *this;
         }
-        Transform& Transform::Scale(const Vector3& value)
+        Transform3D& Transform3D::Scale(const Vector3& value)
         {
             _size = value;
             _needsUpdate = true;
@@ -39,12 +39,12 @@ namespace Cyclone
 
 
         /** CONSTRUCTORS **/
-        Transform::Transform() :
-            Transform(0.0f, 1.0f, 0.0f)
+        Transform3D::Transform3D() :
+            Transform3D(0.0f, 1.0f, 0.0f)
         {
 
         }
-        Transform::Transform(const Transform& other) :
+        Transform3D::Transform3D(const Transform3D& other) :
             _needsUpdate(other._needsUpdate),
             _orientation(other._orientation),
             _position(other._position),
@@ -53,12 +53,12 @@ namespace Cyclone
         {
 
         }
-        Transform::Transform(const float* m) :
-            Transform(Vector3(m[12], m[13], m[14]), Vector3(m[0], m[5], m[10]), 0.0f)
+        Transform3D::Transform3D(const float* m) :
+            Transform3D(Vector3(m[12], m[13], m[14]), Vector3(m[0], m[5], m[10]), 0.0f)
         {
 
         }
-        Transform::Transform(const Vector3& position, const Vector3& size, const Vector3& angles) :
+        Transform3D::Transform3D(const Vector3& position, const Vector3& size, const Vector3& angles) :
             _needsUpdate(true),
             _orientation(angles),
             _position(position),
@@ -70,7 +70,7 @@ namespace Cyclone
 
 
         /** STATIC CONSTRUCTORS **/
-        Transform Transform::Decompose(const Matrix4x4& transform)
+        Transform3D Transform3D::Decompose(const Matrix4x4& transform)
         {
             Vector3 xbasis(transform(0, 0), transform(1, 0), transform(2, 0));
             Vector3 ybasis(transform(0, 1), transform(1, 1), transform(2, 1));
@@ -90,11 +90,11 @@ namespace Cyclone
             orientation.X = atan2f(rotation(2, 1) / cy, rotation(2, 2) / cy);
             orientation.Z = atan2f(rotation(1, 0) / cy, rotation(0, 0) / cy);
 
-            return Transform(position, scale, orientation);
+            return Transform3D(position, scale, orientation);
         }
-        Transform Transform::OrthographicProjection(const Volume& displayVolume)
+        Transform3D Transform3D::OrthographicProjection(const Volume& displayVolume)
         {
-            Transform p;
+            Transform3D p;
             p.State(0)  = 2.0f / displayVolume.Width;
             p.State(5)  = 2.0f / displayVolume.Height;
             p.State(10) = -2.0f / displayVolume.Depth;
@@ -107,9 +107,9 @@ namespace Cyclone
 
             return p;
         }
-        Transform Transform::PerspectiveProjection(const Volume& displayVolume)
+        Transform3D Transform3D::PerspectiveProjection(const Volume& displayVolume)
         {
-            Transform p;
+            Transform3D p;
 
             p.State[0]  =  2.0f * displayVolume.Back() / displayVolume.Width;
             p.State[5]  =  2.0f * displayVolume.Back() / displayVolume.Height;
@@ -125,7 +125,7 @@ namespace Cyclone
 
             return p;
         }
-        Transform Transform::PerspectiveProjection(float fov, float aspect, float znear, float zfar)
+        Transform3D Transform3D::PerspectiveProjection(float fov, float aspect, float znear, float zfar)
         {
             float hHeight = znear * tan(fov * Constants::Pi<double> / 360.0);
             float hWidth = hHeight * aspect;
@@ -135,9 +135,9 @@ namespace Cyclone
 
             return PerspectiveProjection(Volume(position, size));
         }
-        Transform Transform::Rotation(const Vector3& angles)
+        Transform3D Transform3D::Rotation(const Vector3& angles)
         {
-            Transform r;
+            Transform3D r;
             float cr, cp, cy, sr, sp, sy;
             cr = (float)cos(angles.Z); cp = (float)cos(angles.X); cy = (float)cos(angles.Y);
             sr = (float)sin(angles.Z); sp = (float)sin(angles.X); sy = (float)sin(angles.Y);
@@ -158,13 +158,13 @@ namespace Cyclone
 
             return r;
         }
-        Transform Transform::Rotation(float pitch, float yaw, float roll)
+        Transform3D Transform3D::Rotation(float pitch, float yaw, float roll)
         {
             return Rotation(Vector3(pitch, yaw, roll));
         }
-        Transform Transform::Scaling(const Vector3& size)
+        Transform3D Transform3D::Scaling(const Vector3& size)
         {
-            Transform s;
+            Transform3D s;
             s._size = size;
 
             s.State[0]  = size.X;
@@ -173,13 +173,13 @@ namespace Cyclone
 
             return s;
         }
-        Transform Transform::Scaling(float x, float y, float z)
+        Transform3D Transform3D::Scaling(float x, float y, float z)
         {
             return Scaling(Vector3(x, y, z));
         }
-        Transform Transform::Translation(const Vector3& position)
+        Transform3D Transform3D::Translation(const Vector3& position)
         {
-            Transform t;
+            Transform3D t;
             t._position = position;
 
             t.State[12] = position.X;
@@ -187,7 +187,7 @@ namespace Cyclone
             t.State[14] = position.Z;
             return t;
         }
-        Transform Transform::Translation(float x, float y, float z)
+        Transform3D Transform3D::Translation(float x, float y, float z)
         {
             return Translation(Vector3(x, y, z));
         }
@@ -195,40 +195,50 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        Transform Transform::Inverse()                          const
+        Transform3D Transform3D::Inverse()                          const
         {
             Update();
-            return Transform::Decompose(State.Inverse());
+            return Transform3D::Decompose(State.Inverse());
         }
-        string Transform::Report()                              const
+        string Transform3D::Report()                                const
         {
             Update();
             std::stringstream msg;
             msg << "Transformation Matrix Details:\n" << State.ToString();
             return msg.str();
         }
-        const float* Transform::ToArray()                       const
+        Transform3D& Transform3D::Rotate(const Vector3& value)
+        {
+            IT3D::Rotate(value);
+            return *this;
+        }
+        const float* Transform3D::ToArray()                         const
         {
             Update();
             return State.ToArray();
         }
-        const Matrix4x4& Transform::ToMatrix4x4()               const
+        const Matrix4x4& Transform3D::ToMatrix4x4()                 const
         {
             Update();
             return State;
+        }
+        Transform3D& Transform3D::Translate(const Vector3& value)
+        {
+            IT3D::Translate(value);
+            return *this;
         }
 
 
 
         /** OPERATORS **/
-        Transform Transform::operator *(const Transform& other) const
+        Transform3D Transform3D::operator *(const Transform3D& other) const
         {
-            return Transform::Decompose(ToMatrix4x4() * other.ToMatrix4x4());
+            return Transform3D::Decompose(ToMatrix4x4() * other.ToMatrix4x4());
         }
 
-        bool Transform::operator ==(const Transform& other)     const
+        bool Transform3D::operator ==(const Transform3D& other)     const
         {
-            if (this == (const Transform*) &other)
+            if (this == (const Transform3D*) &other)
                 return true;
 
             const float* leftState = ToArray();
@@ -254,7 +264,7 @@ namespace Cyclone
         ///
         ///     The equations used in this method were derived using MATLAB.
         /// </remarks>
-        void Transform::Update()                                const
+        void Transform3D::Update()                                const
         {
             if (!_needsUpdate) { return; }
 
