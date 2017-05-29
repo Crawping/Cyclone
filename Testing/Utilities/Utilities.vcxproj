@@ -134,13 +134,14 @@
     <ClCompile Include="IO\Functions.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math\Matrix4x4.cpp" />
+    <ClCompile Include="Math\Math.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
-    <ClCompile Include="Meta\Array.cpp" />
-    <ClCompile Include="Meta\Class.cpp" />
-    <ClCompile Include="Meta\List.cpp" />
+    <ClCompile Include="Meta\MetaArray.cpp" />
+    <ClCompile Include="Meta\MetaClass.cpp" />
+    <ClCompile Include="Meta\MetaList.cpp" />
     <ClCompile Include="Meta\Primitives.cpp" />
-    <ClCompile Include="Meta\Utilities.cpp" />
+    <ClCompile Include="Meta\MetaUtilities.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
     <ClCompile Include="Spatial\Transform.cpp" />
   </ItemGroup>

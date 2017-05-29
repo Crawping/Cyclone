@@ -76,19 +76,22 @@
     <ClCompile Include="Collections\Array.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
-    <ClCompile Include="Meta\Array.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
-    <ClCompile Include="Meta\Class.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
-    <ClCompile Include="Meta\List.cpp">
-      <Filter>Meta</Filter>
-    </ClCompile>
     <ClCompile Include="Meta\Primitives.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
-    <ClCompile Include="Meta\Utilities.cpp">
+    <ClCompile Include="Meta\MetaUtilities.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\MetaList.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\MetaArray.cpp">
+      <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Math.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Meta\MetaClass.cpp">
       <Filter>Meta</Filter>
     </ClCompile>
   </ItemGroup>
