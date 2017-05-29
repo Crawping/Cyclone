@@ -1,4 +1,5 @@
 #include "Utilities.h"
+#include "GL/OpenGL.h"
 #include "IO/Console.h"
 #include "Pipelines/GraphicsPipeline.h"
 #include "Pipelines/Shader.h"

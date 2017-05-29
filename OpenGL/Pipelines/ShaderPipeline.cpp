@@ -2,6 +2,7 @@
  * Written by Josh Grooms on 20150918
  */
 
+#include "GL/OpenGL.h"
 #include "IO/Console.h"
 #include "EnumerationsGL.h"
 #include "Pipelines/Shader.h"

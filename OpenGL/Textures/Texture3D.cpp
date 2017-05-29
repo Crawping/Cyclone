@@ -1,3 +1,4 @@
+#include "GL/OpenGL.h"
 #include "Imaging/Bitmap.h"
 #include "IO/Console.h"
 #include "Math/Math.h"

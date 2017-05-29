@@ -6,8 +6,6 @@
 
 #include "Enumerator.h"
 #include "TypeDefinitions.h"
-#include "GL/OpenGL.h"
-#include "GL/OpenGLAPI.h"
 
 namespace
 {
@@ -276,15 +274,33 @@ struct RenderErrors : public Enumerator
 {
     enum Errors
     {
-        InsufficientMemory          = GL_OUT_OF_MEMORY,
-        InvalidEnum                 = GL_INVALID_ENUM,
-        InvalidFramebufferOperation = GL_INVALID_FRAMEBUFFER_OPERATION,
-        InvalidIndex                = GL_INVALID_INDEX,
-        InvalidOperation            = GL_INVALID_OPERATION,
-        InvalidValue                = GL_INVALID_VALUE,
-        Nothing                     = GL_NO_ERROR,
-        StackOverflow               = GL_STACK_OVERFLOW,
-        StackUnderflow              = GL_STACK_UNDERFLOW,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_OUT_OF_MEMORY. </remarks>
+        InsufficientMemory          = 0x0505,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_INVALID_ENUM. </remarks>
+        InvalidEnum                 = 0x0500,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_INVALID_FRAMEBUFFER_OPERATION. </remarks>
+        InvalidFramebufferOperation = 0x0506,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_INVALID_INDEX. </remarks>
+        InvalidIndex                = 0xFFFFFFFFu,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_INVALID_OPERATION. </remarks>
+        InvalidOperation            = 0x0502,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_INVALID_VALUE. </remarks>
+        InvalidValue                = 0x0501,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_NO_ERROR. </remarks>
+        Nothing                     = 0,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_STACK_OVERFLOW. </remarks>
+        StackOverflow               = 0x0503,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_STACK_UNDERFLOW. </remarks>
+        StackUnderflow              = 0x0504,
     };
 
     constexpr RenderErrors(enum Errors e = Nothing) : Enumerator((int)e) { }
@@ -295,10 +311,18 @@ struct ShaderTypes : public Enumerator
 {
     enum Shaders
     {
-        ComputeShader               = GL_COMPUTE_SHADER,
-        GeometryShader              = GL_GEOMETRY_SHADER,
-        PixelShader                 = GL_FRAGMENT_SHADER,
-        VertexShader                = GL_VERTEX_SHADER,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_COMPUTE_SHADER. </remarks>
+        ComputeShader               = 0x9189,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_GEOMETRY_SHADER. </remarks>
+        GeometryShader              = 0x8DD9,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_FRAGMENT_SHADER. </remarks>
+        PixelShader                 = 0x8B30,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_VERTEX_SHADER. </remarks>
+        VertexShader                = 0x8B31,
     };
 
     constexpr ShaderTypes(enum Shaders s) : Enumerator((int)s) { }
@@ -309,12 +333,24 @@ struct TextureFilters : public Enumerator
 {
     enum Filters
     {
-        Linear                      = GL_LINEAR,
-        LinearMipmapLinear          = GL_LINEAR_MIPMAP_LINEAR,
-        LinearMipmapNearest         = GL_LINEAR_MIPMAP_NEAREST,
-        Nearest                     = GL_NEAREST,
-        NearestMipmapLinear         = GL_NEAREST_MIPMAP_LINEAR,
-        NearestMipmapNearest        = GL_NEAREST_MIPMAP_NEAREST,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_LINEAR. </remarks>
+        Linear                      = 0x2601,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_LINEAR_MIPMAP_LINEAR. </remarks>
+        LinearMipmapLinear          = 0x2703,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_LINEAR_MIPMAP_NEAREST. </remarks>
+        LinearMipmapNearest         = 0x2701,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_NEAREST. </remarks>
+        Nearest                     = 0x2600,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_NEAREST_MIPMAP_LINEAR. </remarks>
+        NearestMipmapLinear         = 0x2702,
+        /// <summary> </summary>
+        /// <remarks> Equiavlent to GL_NEAREST_MIPMAP_NEAREST. </remarks>
+        NearestMipmapNearest        = 0x2700,
     };
 
     constexpr TextureFilters(enum Filters f = Linear) : Enumerator((int)f) { }
@@ -412,7 +448,7 @@ struct TextureFormats : public Enumerator
 	///     known, then the base format can also be determined. This method performs that conversion and makes it a bit
 	///     easier to automate certain aspects of texture usage.
 	/// </remarks>
-    GLenum ToBaseFormat() const
+    uint ToBaseFormat() const
     {
         switch ((int)*this)
         {
@@ -421,33 +457,33 @@ struct TextureFormats : public Enumerator
             case TextureFormats::Int1:
             case TextureFormats::Short1:
             case TextureFormats::UInt1:
-                return GL_RED;
+                return 0x1903;          // GL_RED      
 
             case TextureFormats::Byte2:
             case TextureFormats::Float2:
             case TextureFormats::Int2:
             case TextureFormats::Short2:
             case TextureFormats::UInt2:
-                return GL_RG;
+                return 0x8227;          // GL_RG
 
             case TextureFormats::Byte3:
             case TextureFormats::Float3:
             case TextureFormats::Int3:
             case TextureFormats::Short3:
             case TextureFormats::UInt3:
-                return GL_RGB;
+                return 0x1907;          // GL_RGB
 
             case TextureFormats::Byte4:
             case TextureFormats::Float4:
             case TextureFormats::Int4:
             case TextureFormats::Short4:
             case TextureFormats::UInt4:
-                return GL_RGBA;
+                return 0x1908;          // GL_RGBA
 
             case TextureFormats::DepthFloat:
             case TextureFormats::DepthInt:
             case TextureFormats::DepthShort:
-                return GL_DEPTH_COMPONENT;
+                return 0x1902;          // GL_DEPTH_COMPONENT
 
 			default:
 				return 0;

@@ -1,3 +1,4 @@
+#include "GL/OpenGL.h"
 #include "Math/Math.h"
 #include "Textures/GradientTexture.h"
 

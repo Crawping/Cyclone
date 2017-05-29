@@ -1,4 +1,5 @@
 #include "EnumerationsGL.h"
+#include "GL/OpenGL.h"
 #include "Pipelines/ComputePipeline.h"
 #include "Pipelines/Shader.h"
 
