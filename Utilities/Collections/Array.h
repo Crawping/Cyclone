@@ -3,7 +3,7 @@
  */
 
 #pragma once
-#include "Collections/Vector.h"
+#include "TypeDefinitions.h"
 #include "Math/Math.h"
 
 
@@ -144,16 +144,16 @@ namespace Cyclone
                 /// <param name="index"> A single linear index into the array. </param>
                 constexpr static Array<uint, _rank> SubscriptsOf(uint index)
                 {
-                    uint subs[_rank] = { 0 };
+                    Array<uint, _rank> subs;
                     uint count = 0;
                     for (uint a = _rank - 1; a > 0; a--)
                     {
                         count = Count(a - 1);
-                        subs[a] = index / count;
+                        subs(a) = index / count;
                         index %= count;
                     }
-                    subs[0U] = index;
-                    return { subs };
+                    subs(0U) = index;
+                    return subs;
                 }
 
 
@@ -161,13 +161,20 @@ namespace Cyclone
                 /** OPERATORS **/
                 constexpr const T* begin()                                      const { return &_values[0]; }
                 constexpr const T* end()                                        const { return begin() + Count(); }
+
+                template<uint ... V>
+                constexpr auto operator [](const Array<uint, V...>& indices)    const
+                {
+                    return Array<T, V...>(*this, indices.Flatten());
+                }
+
                 constexpr T& operator ()(uint index)                            { return _values[index]; }
                 constexpr const T& operator ()(uint index)                      const { return _values[index]; }
 
                 template<typename ... V>
                 constexpr const T& operator ()(V ... indices)                   const { return _values[IndexOf(indices...)]; }
                 template<uint N>
-                constexpr Array<T, N> operator ()(const Array<T, N>& indices)   const { return Array<T, N>(*this, indices); }
+                constexpr Array<T, N> operator ()(const Array<T, N>& indices)   const { return _values[IndexOf(indices)]; }
 
 
                 constexpr bool operator ==(const Array<T, U...>& other)         const

@@ -114,7 +114,7 @@ TEST_F(_Array, IndexByArray)
 {
     constexpr Array<uint, 3, 2, 1> a1 = _u61;
     constexpr Array<uint, 3> ids = { 1, 3, 5 };
-    constexpr const auto a2 = a1(ids);
+    constexpr const auto a2 = a1[ids];
     ASSERT_EQ(a2.Count(), 3);
 
     for (uint a = 0; a < a2.Count(); a++)
@@ -134,6 +134,12 @@ TEST_F(_Array, IndexOf)
                             ASSERT_EQ(_a61.IndexOf(a, b, c, d, e, f), idx++);
 
     ASSERT_EQ(_a31.IndexOf(0, 1, 2, 0, 0, 0), 5);
+}
+TEST_F(_Array, Iteration)
+{
+    uint idx = 0;
+    for (auto v : _a61)
+        ASSERT_EQ(v, _a61(idx++));
 }
 TEST_F(_Array, Reshaping)
 {
