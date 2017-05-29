@@ -14,9 +14,24 @@ namespace Cyclone
             _data = value;
             return *this;
         }
+        Material3D& Material3D::Orientation(const Vector3& value)
+        {
+            _transform.Orientation(value);
+            return *this;
+        }
+        Material3D& Material3D::Position(const Vector3& value)
+        {
+            _transform.Position(value);
+            return *this;
+        }
         Material3D& Material3D::PrimaryColor(const Color4& value)
         {
             _data.PrimaryColor = value;
+            return *this;
+        }
+        Material3D& Material3D::Scale(const Vector3& value)
+        {
+            _transform.Scale(value);
             return *this;
         }
         Material3D& Material3D::SecondaryColor(const Color4& value)
@@ -28,6 +43,11 @@ namespace Cyclone
         {
             _texture = value;
             _data.Texture = value ? value->Handle() : 0;
+            return *this;
+        }
+        Material3D& Material3D::Transform(const Transform3D& value)
+        {
+            _transform = value;
             return *this;
         }
 
@@ -45,7 +65,7 @@ namespace Cyclone
         /** UTILITIES **/
         Material3D* Material3D::CreateView() const
         {
-            return new Material3D(*this);
+            return nullptr;
         }
 
     }

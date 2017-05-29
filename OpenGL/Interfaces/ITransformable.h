@@ -36,27 +36,27 @@ namespace Cyclone
 
 
 
-        /// <summary> An interface that represents a set of generalized spatial transformations for renderable entities. </summary>
-        class ITransformable
-        {
+        ///// <summary> An interface that represents a set of generalized spatial transformations for renderable entities. </summary>
+        //class ITransformable
+        //{
 
-            public:
+        //    public:
 
-                /** PROPERTIES **/
+        //        /** PROPERTIES **/
 
-                virtual TransformData Data()                const = 0;
-                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in model space. </summary>
-                virtual const ISpatialTransform& Model()    const = 0;
-                /// <summary> Gets the transformation data that define the orientation, position, and scaling of texture mapping coordinates. </summary>
-                virtual const ISpatialTransform& Texture()  const = 0;
-                /// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in world space. </summary>
-                virtual const ISpatialTransform& World()    const = 0;
+        //        //virtual TransformData Data()                const = 0;
+        //        ///// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in model space. </summary>
+        //        //virtual const ISpatialTransform& Model()    const = 0;
+        //        ///// <summary> Gets the transformation data that define the orientation, position, and scaling of texture mapping coordinates. </summary>
+        //        //virtual const ISpatialTransform& Texture()  const = 0;
+        //        ///// <summary> Gets the transformation data that define the orientation, position, and scaling of the entity in world space. </summary>
+        //        //virtual const ISpatialTransform& World()    const = 0;
 
 
 
-                /** DESTRUCTOR **/
-                virtual ~ITransformable() { }
+        //        /** DESTRUCTOR **/
+        //        virtual ~ITransformable() { }
 
-        };
+        //};
     }
 }

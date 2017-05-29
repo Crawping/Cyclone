@@ -16,7 +16,7 @@ namespace Cyclone
     namespace OpenGL
     {
         /** FORWARD DECLARATIONS **/
-        struct GeometryData //: public virtual IResourceData
+        struct GeometryData
         {
             Volume              Bounds;
             Vector<uint>        Indices;

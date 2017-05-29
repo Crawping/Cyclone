@@ -4,7 +4,8 @@
 
 #pragma once
 #include "Buffers/VertexBuffer.h"
-#include "Geometry/Model3D.h"
+#include "Geometry/Entity3D.h"
+#include "Models/Model3D.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 
@@ -52,16 +53,17 @@ namespace Cyclone
             int             _display;
             bool            _showHelp;
 
-            Transform       Projection;
+            Transform3D     Projection;
             GPU*            Renderer;
             ShaderPipeline* RenderPipeline;
             Scene3D*        RenderScene;
             FrameBuffer*    RenderTarget;
             Window3D*       RenderWindow;
             Camera          View;
-            Model3D         Cube;
-            Model3D         PlaneXZ;
-            Model3D         Icosahedron;
+
+            Entity3D        Cube;
+            Entity3D        PlaneXZ;
+            Entity3D        Icosahedron;
             
 
 

@@ -6,7 +6,9 @@
 #include "GL/OpenGLAPI.h" 
 #include "Imaging/Color4.h"
 #include "Interfaces/IMaterial.h"
+#include "Interfaces/ITransformable3D.h"
 #include "Textures/Texture3D.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -15,13 +17,26 @@ namespace Cyclone
     namespace OpenGL
     {
         
-
-        class Material3D : public IMaterial
+        class Material3D:
+            public virtual IMaterial,
+            public ITransformable3D
         {
-            
             public:
 
-                /** PROPERTIES **/
+                /** SPATIAL PROPERTIES **/
+                const Vector3& Orientation()                        const override { return _transform.Orientation(); }
+                const Vector3& Position()                           const override { return _transform.Position(); }
+                const Vector3& Scale()                              const override { return _transform.Scale(); }
+                const Transform3D& Transform()                      const override { return _transform; }
+
+                OpenGLAPI Material3D& Orientation(const Vector3& value);
+                OpenGLAPI Material3D& Position(const Vector3& value);
+                OpenGLAPI Material3D& Scale(const Vector3& value);
+                OpenGLAPI Material3D& Transform(const Transform3D& value);
+
+
+
+                /** VISUAL PROPERTIES **/
                 /// <summary> Gets a structure containing all of the data needed to render the material. </summary>
                 const MaterialData& Data()                          const override { return _data; }
                 /// <summary> Gets the primary color of the material. </summary>
@@ -56,7 +71,8 @@ namespace Cyclone
                 /** PROPERTY DATA **/
                 MaterialData        _data;
                 Texture3D*          _texture;
-
+                Transform3D         _transform;
         };
+
     }
 }

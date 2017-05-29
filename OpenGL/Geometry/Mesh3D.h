@@ -3,7 +3,9 @@
  */
 
 #pragma once
+#include "Collections/ArrayList.h"
 #include "Geometry/Geometry3D.h"
+#include "Geometry/Vertex.h"
 
 
 
@@ -11,7 +13,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class Mesh3D : public Geometry3D
+        class Mesh3D: public Geometry3D
         {
             public:
 
@@ -94,7 +96,7 @@ namespace Cyclone
             private:
 
                 mutable bool        _needsUpdate;
-                ArrayList<Vertex>  _vertices;
+                ArrayList<Vertex>   _vertices;
 
         };
     }

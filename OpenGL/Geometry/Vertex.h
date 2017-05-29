@@ -5,7 +5,7 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "TypeDefinitions.h"
-#include "Interfaces/IVertex.h"
+#include "Collections/Array.h"
 #include "Math/Vector3.h"
 
 
@@ -66,7 +66,7 @@ namespace Cyclone
 
         
         /// <summary> A structure that defines a vertex consisting of positional, normal, and texture data. </summary>
-        struct Vertex : public IVertex
+        struct Vertex //: public IVertex
         {
             /** DATA **/
             /// <summary> The (x, y, z) position of the vertex in model space. </summary>
@@ -76,7 +76,7 @@ namespace Cyclone
             /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
             Vector2 UV;
 
-            Vector<VertexAttribute> Layout() const override
+            Vector<VertexAttribute> Layout() const //override
             {
                 return
                 {
@@ -118,14 +118,20 @@ namespace Cyclone
 
             }
 
-            constexpr Vertex(float x, float y, float z, float u = 0.0f, float v = 0.0f) :
+            constexpr Vertex(float x, float y, float z, float u = 0.0f, float v = 0.0f):
                 Position(x, y, z),
                 Normal(0.0f),
                 UV(u, v)
             {
 
             }
+            constexpr Vertex(const Array<float, 8>& values):
+                Position(values(0), values(1), values(2)),
+                Normal(values(3), values(4), values(5)),
+                UV(values(6), values(7))
+            {
 
+            }
 
             constexpr bool operator ==(const Vertex& other) const
             {

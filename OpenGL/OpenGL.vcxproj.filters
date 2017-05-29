@@ -53,14 +53,8 @@
     <ClInclude Include="Geometry\Entity3D.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Point3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\ArrayBuffer.h">
       <Filter>Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Interfaces\IVertex.h">
-      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\Vertex.h">
       <Filter>Geometry</Filter>
@@ -126,14 +120,8 @@
     <ClInclude Include="Interfaces\ITransformable.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Transform3D.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Textures\Texture3D.h">
       <Filter>Textures</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry\Model3D.h">
-      <Filter>Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Geometry\Mesh3D.h">
       <Filter>Geometry</Filter>
@@ -142,6 +130,15 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IGraphicsResource.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Model3D.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\Point3D.h">
+      <Filter>Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IModel.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
@@ -172,9 +169,6 @@
     </ClCompile>
     <ClCompile Include="Buffers\CommandBuffer.cpp">
       <Filter>Buffers</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry\Point3D.cpp">
-      <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Buffers\VertexArray.cpp">
       <Filter>Buffers</Filter>
@@ -209,14 +203,17 @@
     <ClCompile Include="Textures\Texture3D.cpp">
       <Filter>Textures</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Model3D.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\Mesh3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\Material3D.cpp">
       <Filter>Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Model3D.cpp">
+      <Filter>Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\Point3D.cpp">
+      <Filter>Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +244,12 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{f9bd0721-10e0-4621-8413-9203fa719a4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Materials">
+      <UniqueIdentifier>{99df7efd-b19e-4dcb-83bf-b944b8813af9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Models">
+      <UniqueIdentifier>{732632e1-6f9e-47ef-98eb-3b2ec5a91582}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Default.hsl">
@@ -270,6 +273,5 @@
     <None Include="Shaders\Occlusion.vsl">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

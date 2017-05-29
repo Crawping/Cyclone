@@ -63,7 +63,6 @@ namespace Cyclone
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IGeometric& entity);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IMaterial& material);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IRenderable& entity);
-                OpenGLAPI virtual void Register(ResourceMapping& map, const ITransformable& entity);
 
             private:
 

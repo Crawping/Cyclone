@@ -134,9 +134,9 @@ namespace Cyclone
             .View(&View);
 
 		PlaneXZ
+            .PrimaryColor(Color4::Blue)
             .Geometry(Mesh3D::Quad(true))
             .Pitch(-90)
-            .PrimaryColor(Color4::Blue)
             .Scale(5000).Translate(0, 50, 0);
 
         Cube
@@ -171,9 +171,9 @@ namespace Cyclone
 
         //Vector3 position(-2048, -2048, 2048);
         //Vector3 size(4096, 4096, 4096);
-        //Projection = Transform::OrthographicProjection(Volume(position, size));
+        //Projection = Transform3D::OrthographicProjection(Volume(position, size));
 
-		Projection = Transform::PerspectiveProjection
+		Projection = Transform3D::PerspectiveProjection
 		(
 			90,
 			clientArea.Width / clientArea.Height,

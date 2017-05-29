@@ -11,15 +11,16 @@
 
 namespace Cyclone
 {
-    namespace { using namespace Utilities; }
+    namespace Utilities { class ISpatialTransform; }
 
     namespace OpenGL
     {        
         /** FORWARD DECLARATIONS **/
         class ITexture;
+        using namespace Utilities;
 
 
-        struct MaterialData //: public virtual IResourceData
+        struct MaterialData
         {
             /// <summary> The primary color of a material. </summary>
             Color4      PrimaryColor;
@@ -44,7 +45,7 @@ namespace Cyclone
 
 
         /// <summary> An interface used to specify the material properties of an entity. </summary>
-        class IMaterial : 
+        class IMaterial: 
             public virtual IGraphicsResource
         {
             public:
@@ -61,6 +62,8 @@ namespace Cyclone
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
                 virtual const ITexture* Texture()			        const = 0;
+
+                virtual const ISpatialTransform& Transform()        const = 0;
 
                 virtual ~IMaterial() { }
         };

@@ -1,5 +1,6 @@
 #include "Interfaces/IRenderable.h"
-#include "Interfaces/ITransformable.h"
+#include "Interfaces/IGeometric.h"
+#include "Interfaces/IModel.h"
 #include "Interfaces/ISpatialTransform.h"
 #include "Libraries/Material3D.h"
 #include "Pipelines/RenderStage3D.h"
@@ -90,7 +91,7 @@ namespace Cyclone
 
             ResourceMapping& map = Mappings[&entity];
             Register(map, entity.Material());
-            Register(map, entity.Transforms());
+            //Register(map, entity.Transforms());
             Register(map, entity);
         }
 
@@ -104,9 +105,9 @@ namespace Cyclone
             Mappings.Insert(&entity, ResourceMapping());
             ResourceMapping& map = Mappings[&entity];
 
-            Register(map, entity.Geometry());
+            Register(map, entity.Model().Geometry());
             Register(map, entity.Material());
-            Register(map, entity.Transforms());
+            //Register(map, entity.Transforms());
             Register(map, entity);
 
             return map;
@@ -154,23 +155,29 @@ namespace Cyclone
         }
         void SceneLayer3D::Register(ResourceMapping& map, const IRenderable& entity)
         {
+            TransformData tdata =
+            {
+                Matrix4x4::Identity,
+                Matrix4x4::Identity,
+                entity.Model().Transform().ToMatrix4x4()
+            };
+
+            if (map.TransformKey.IsValid())
+                Transforms.Set(map.TransformKey, tdata);
+            else
+                map.TransformKey = Transforms.Register(tdata);
+
             EntityData data =
             {
                 (uint)map.MaterialKey.Index(),
                 (uint)map.TransformKey.Index(),
             };
 
+
             if (map.EntityKey.IsValid())
                 Entities.Set(map.EntityKey, data);
             else
                 map.EntityKey = Entities.Register(data);
-        }
-        void SceneLayer3D::Register(ResourceMapping& map, const ITransformable& entity)
-        {
-            if (map.TransformKey.IsValid())
-                Transforms.Set(map.TransformKey, entity.Data());
-            else
-                map.TransformKey = Transforms.Register(entity.Data());
         }
 
     }
