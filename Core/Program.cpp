@@ -11,9 +11,7 @@
 
 #include "Geometry/Mesh3D.h"
 
-
-
-const static string Help = "                        \n\
+const static std::string Help = "                   \n\
     CYCLONE - A cross-platform 3D rendering engine. \n\n";
 
 
