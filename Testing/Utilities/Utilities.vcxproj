@@ -143,7 +143,7 @@
     <ClCompile Include="Meta\Primitives.cpp" />
     <ClCompile Include="Meta\MetaUtilities.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
-    <ClCompile Include="Spatial\Transform.cpp" />
+    <ClCompile Include="Spatial\Transform3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

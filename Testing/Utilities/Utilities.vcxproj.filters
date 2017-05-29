@@ -24,9 +24,6 @@
     <ClCompile Include="Spatial\Area.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>
-    <ClCompile Include="Spatial\Transform.cpp">
-      <Filter>Spatial</Filter>
-    </ClCompile>
     <ClCompile Include="Math\Matrix4x4.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -93,6 +90,9 @@
     </ClCompile>
     <ClCompile Include="Meta\MetaClass.cpp">
       <Filter>Meta</Filter>
+    </ClCompile>
+    <ClCompile Include="Spatial\Transform3D.cpp">
+      <Filter>Spatial</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
