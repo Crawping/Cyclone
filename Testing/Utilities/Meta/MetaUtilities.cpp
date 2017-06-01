@@ -53,6 +53,11 @@ TEST(_MetaUtilities, EqualityTesting)
     ASSERT_EQ((Meta::IsEqual<uint, uint>()),        true);
     ASSERT_EQ(Meta::TypeEquals<int>(3.14159),       false);
 }
+TEST(_MetaUtilities, IsDerived)
+{
+    ASSERT_EQ((Meta::IsDerived<int, int>()), true);
+    ASSERT_EQ((Meta::IsDerived<int, string>()), false);
+}
 TEST(_MetaUtilities, IsPointer)
 {
     ASSERT_EQ(Meta::IsPointer<int*>(),              true);

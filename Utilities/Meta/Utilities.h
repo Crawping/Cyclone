@@ -15,6 +15,13 @@ namespace Cyclone
         namespace Meta
         {
 
+            template<typename T>
+            constexpr Boolean<true> IsBaseOf(const T*) { return { }; }
+            template<typename T>
+            constexpr Boolean<false> IsBaseOf(const void*) { return { }; }
+
+
+
             /// <summary> Returns one of two types depending on whether the inputted Boolean expression evaluates to true. </summary>
             /// <typeparam name="S"> A Boolean expression that resolves to either <c>true</c> or <c>false</c> at compile time. </typeparam>
             /// <typeparam name="T"> A type to be returned if the expression in <see cref="S"/> resolves to <c>true</c>. </typeparam>
@@ -42,6 +49,9 @@ namespace Cyclone
             template<typename T> struct IsConstant<const T*>    : Boolean<true> { };
             template<typename T> struct IsConstant<const T&>    : Boolean<true> { };
 
+            template<typename T, typename U> struct IsDerived:  decltype(IsBaseOf<U>(std::declval<T*>())) { };
+            template<typename T> struct IsDerived<T, T>:        Boolean<true> { };
+
             /// <summary> Determines whether the input represents a pointer type. </summary>
             template<typename T> struct IsPointer               : Boolean<false> { };
             template<typename T> struct IsPointer<T*>           : Boolean<true> { };
@@ -64,6 +74,14 @@ namespace Cyclone
             template<> struct SizeOf<void>                      : Integer32U<0> { };
 
 
+            template<typename T, typename ... U>
+            constexpr auto ReturnType(T function, U ... arguments) -> decltype(function(U))
+            {
+
+            }
+
+
+            
 
 
             template<typename T, typename U>
