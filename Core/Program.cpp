@@ -89,7 +89,7 @@ namespace Cyclone
 
 
     /** PRIVATE UTILITIES **/
-    void Program::BreakEventLoop()
+    void Program::Abort()
     {
         _canContinue = false;
     }
@@ -118,7 +118,7 @@ namespace Cyclone
 	void Program::CreateRenderingWindow()
 	{
 		RenderWindow = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window", 4);
-		RenderWindow->OnClose.Register(this, &Program::BreakEventLoop);
+		RenderWindow->OnClose.Register(this, &Program::Abort);
 		RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
 
 		Renderer->Window(RenderWindow);

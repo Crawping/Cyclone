@@ -67,7 +67,6 @@ namespace Cyclone
             
 
 
-
             /** UTILITIES **/
 			void CreateRenderingPipeline();
 			void CreateRenderingTarget();
@@ -77,7 +76,7 @@ namespace Cyclone
 			void CreateTransformations();
             void ParseInputArguments(int nargs, char** args);
 
-            void BreakEventLoop();
+            void Abort();
 
     };
 }

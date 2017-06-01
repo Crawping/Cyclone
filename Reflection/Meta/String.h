@@ -4,6 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
+#include "Meta/Primitives.h"
 #include "Meta/Utilities.h"
 
 
@@ -89,48 +90,5 @@ namespace Cyclone
             };
 
         }
-
-
-        struct String
-        {
-            public:
-                
-                /** PROPERTIES **/
-                constexpr uint Count()          const { return _count; }
-                constexpr bool IsEmpty()        const { return Count() == 0; }
-                constexpr const char* Value()   const { return _value; }
-
-
-
-                /** CONSTRUCTOR **/
-                constexpr String() :
-                    _count(0),
-                    _value(0)
-                {
-
-                }
-                template<uint N>
-                constexpr String(const char (&value)[N]) : 
-                    _count(N - 1),
-                    _value(value)
-                {
-
-                }
-
-
-
-                /** OPERATORS **/
-                operator std::string()                      const { return Value(); }
-                constexpr char operator ()(uint index)      const { return (index < Count()) ? Value()[index] : '\0'; }
-
-                bool operator ==(const std::string& other)  const { return string(*this) == other; }
-                bool operator !=(const std::string& other)  const { return !(operator ==(other)); }
-
-            private:
-
-                uint        _count;
-                const char* _value;
-
-        };
     }
 }

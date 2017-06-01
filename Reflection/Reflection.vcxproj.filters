@@ -23,23 +23,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Meta\Primitives.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
     <ClInclude Include="ReflectionAPI.h" />
-    <ClInclude Include="Meta\Utilities.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
-    <ClInclude Include="Meta\Class.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
     <ClInclude Include="Meta\String.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
-    <ClInclude Include="Meta\List.h">
-      <Filter>Meta</Filter>
-    </ClInclude>
-    <ClInclude Include="Meta\Function.h">
       <Filter>Meta</Filter>
     </ClInclude>
     <ClInclude Include="Runtime\Metaclass.h">

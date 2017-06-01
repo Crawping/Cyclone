@@ -3,13 +3,8 @@
  */
 
 #pragma once
-//#include "EnumerationsGL.h"
-//#include "Geometry/Geometry3D.h"
-//#include "GL/OpenGLAPI.h"
-//#include "Imaging/Color4.h"
 #include "Interfaces/IRenderable.h"
 #include "Libraries/Material3D.h"
-//#include "Spatial/Volume.h"
 #include "Models/Model3D.h"
 
 
@@ -122,9 +117,6 @@ namespace Cyclone
                 {
 
                 }
-                /// <summary> Destroys any special resources held by this entity. </summary>
-                /// <remarks> The destructor for this base class actually performs no actions whatsoever. </remarks>
-                virtual ~Entity3D() { }
 
 
 

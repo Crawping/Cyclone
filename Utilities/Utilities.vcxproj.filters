@@ -177,8 +177,17 @@
     <ClInclude Include="Meta\Utilities.h">
       <Filter>Meta</Filter>
     </ClInclude>
-    <ClInclude Include="Meta\Arguments.h">
-      <Filter>Meta</Filter>
+    <ClInclude Include="Collections\Specializations\NumericArray.h">
+      <Filter>Collections\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="Collections\Specializations\DynamicArray.h">
+      <Filter>Collections\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Math.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\ITransformable3D.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
