@@ -5,6 +5,7 @@
 #pragma once
 #include "TypeDefinitions.h"
 #include "Spatial/Area.h"
+#include "Math/Math.h"
 #include "Math/Vector3.h"
 
 
@@ -74,7 +75,7 @@ namespace Cyclone
             /// <summary> Sets the (x, y, z) coordinates of the front-lower-left corner of this volume. </summary>
             Volume& Position(const Vector3& p)                { X = p.X; Y = p.Y; Z = p.Z; return *this; }
             /// <summary> Sets the (x, y, z) coordinates of the front-lower-left corder of this volume. </summary>
-            Volume& Position(float x, float y, float z)       { X = x, Y = y, Z = z; return *this; }
+            Volume& Position(float x, float y, float z)       { X = x; Y = y; Z = z; return *this; }
 
             /// <summary> Gets the (width, height, depth) values of this volume. </summary>
             constexpr Vector3 Size()                    const { return Vector3(Width, Height, Depth); }
@@ -111,7 +112,7 @@ namespace Cyclone
             }
             /// <summary> Constructs a data structure describing a rectangular prism with a designated position and size. </summary>
             constexpr Volume(float x, float y, float z, float width, float height, float depth) :
-                X(x), Y(x), Z(z),
+                X(x), Y(y), Z(z),
                 Width(width), Height(height), Depth(depth)
             {
 
@@ -139,6 +140,17 @@ namespace Cyclone
             ///     to contain one another and thus will pass the inspection.
             /// </remarks>
             constexpr bool Contains(const Volume& volume) const;
+
+            constexpr bool Intersects(const Volume& volume) const;
+
+            constexpr Volume Rectify() const
+            {
+                return Volume
+                (
+                    Math::Min(Left(), Right()), Math::Min(Bottom(), Top()), Math::Min(Front(), Back()),
+                    Math::Abs(Width), Math::Abs(Height), Math::Abs(Depth)
+                );
+            }
             /// <summary> Generates a human-readable string detailing the current state of the data structure. </summary>
             string Report() const;
 

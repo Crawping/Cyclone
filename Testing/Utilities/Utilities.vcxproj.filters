@@ -94,5 +94,8 @@
     <ClCompile Include="Spatial\Transform3D.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="Spatial\Volume.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
