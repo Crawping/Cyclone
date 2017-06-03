@@ -4,9 +4,10 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Spatial/Area.h"
+#include "Collections/Array.h"
 #include "Math/Math.h"
 #include "Math/Vector3.h"
+#include "Spatial/Area.h"
 
 
 
@@ -24,9 +25,9 @@ namespace Cyclone
 
             /** CONSTANT DATA **/
             /// <summary> A rectangular prism whose position and size are all equal to zero. </summary>
-            const static Volume Empty;
+            const static Volume Empty; //= Volume { 0, 0, 0, 0, 0, 0 };
             /// <summary> A rectangular prism with unit volume positioned at the origin (0, 0, 0). </summary>
-            const static Volume Unit;
+            const static Volume Unit;// = Volume { 0, 0, 0, 1, 1, 1 };
 
 
 
@@ -129,7 +130,13 @@ namespace Cyclone
             ///     means any point whose coordinates fall exactly on the bounds of the rectangular prism is considered contained and 
             ///     thus will pass the inspection.
             /// </remarks>
-            constexpr bool Contains(const Vector3& point) const;
+            constexpr bool Contains(const Vector3& point, bool inclusive = true) const
+            {
+                return
+                    Math::IsBetween(point.X, Left(), Right(), inclusive) &&
+                    Math::IsBetween(point.Y, Bottom(), Top(), inclusive) &&
+                    Math::IsBetween(point.Z, Back(), Front(), inclusive);
+            }
             /// <summary> Determines whether this volume completely contains another one. </summary>
             /// <returns> A Boolean <c>true</c> if the inputted volume fits within this one, or <c>false</c> otherwise. </returns>
             /// <param name="volume"> Another <see cref="Volume"/> data structure to be tested. </param>
@@ -139,9 +146,39 @@ namespace Cyclone
             ///     smaller or equivalently sized volume (the input argument). Note that this means two identical volumes are considered 
             ///     to contain one another and thus will pass the inspection.
             /// </remarks>
-            constexpr bool Contains(const Volume& volume) const;
+            constexpr bool Contains(const Volume& volume, bool inclusive = true) const
+            {
+                return 
+                    Math::IsBetween(volume.Left(), Left(), Right(), inclusive)      &&
+                    Math::IsBetween(volume.Right(), Left(), Right(), inclusive)     &&
+                    Math::IsBetween(volume.Bottom(), Bottom(), Top(), inclusive)    &&
+                    Math::IsBetween(volume.Top(), Bottom(), Top(), inclusive)       &&
+                    Math::IsBetween(volume.Back(), Back(), Front(), inclusive)      &&
+                    Math::IsBetween(volume.Front(), Back(), Front(), inclusive);
+            }
+            constexpr Volume Intersection(const Volume& volume) const
+            {
+                if (!Intersects(volume)) return Volume(0, 0, 0, 0, 0, 0);
 
-            constexpr bool Intersects(const Volume& volume) const;
+                auto v1 = Rectify(), v2 = volume.Rectify();
+                float x = Math::Max(v1.Left(), v2.Left());
+                float y = Math::Max(v1.Bottom(), v2.Bottom());
+                float z = Math::Max(v1.Back(), v2.Back());
+
+                float w = Math::Min(v1.Right(), v2.Right()) - x;
+                float h = Math::Min(v1.Top(), v2.Top()) - y;
+                float d = Math::Min(v1.Front(), v2.Front()) - z;
+
+                return Volume(x, y, z, w, h, d);
+            }
+            constexpr bool Intersects(const Volume& volume) const
+            {
+                auto v1 = Rectify(), v2 = volume.Rectify();
+                return
+                    v1.Left() <= v2.Right() && v1.Right() >= v2.Left() &&
+                    v1.Bottom() <= v2.Top() && v1.Top() >= v2.Bottom() &&
+                    v1.Back() <= v2.Front() && v1.Front() >= v2.Back();
+            }
 
             constexpr Volume Rectify() const
             {
@@ -154,6 +191,21 @@ namespace Cyclone
             /// <summary> Generates a human-readable string detailing the current state of the data structure. </summary>
             string Report() const;
 
+            constexpr Array<float, 6> ToArray() const { return { X, Y, Z, Width, Height, Depth }; }
+
+            constexpr Volume Union(const Volume& volume) const
+            {
+                auto v1 = Rectify(), v2 = volume.Rectify();
+                float x = Math::Min(v1.Left(), v2.Left());
+                float y = Math::Min(v1.Bottom(), v2.Bottom());
+                float z = Math::Min(v1.Back(), v2.Back());
+
+                float w = Math::Max(v1.Right(), v2.Right()) - x;
+                float h = Math::Max(v1.Top(), v2.Top()) - y;
+                float d = Math::Max(v1.Front(), v2.Front()) - z;
+
+                return Volume(x, y, z, w, h, d);
+            }
 
 
             /** OPERATORS **/
