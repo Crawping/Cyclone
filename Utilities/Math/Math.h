@@ -51,8 +51,9 @@ namespace Cyclone
             /// <param name="inclusive"> An value of <c>true</c> if the bounds should be considered inside the range, or <c>false</c> otherwise. </param>
             template<typename T> constexpr bool IsBetween(T x, T min, T max, bool inclusive = true)
             {
-                return inclusive ? (x >= min && x <= max) :
-                    (x > min && x < max);
+                T lower = Min(min, max), upper = Max(min, max);
+                return inclusive ? (x >= lower && x <= upper) :
+                    (x > lower && x < upper);
             }
 
             /// <summary> Returns the maximum of a list of values. </summary>
