@@ -189,6 +189,9 @@
     <ClInclude Include="Interfaces\ITransformable3D.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Spatial\LineSegment.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

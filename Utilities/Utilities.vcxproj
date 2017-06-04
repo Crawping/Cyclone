@@ -220,6 +220,7 @@
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
     <ClInclude Include="Spatial\Camera.h" />
+    <ClInclude Include="Spatial\LineSegment.h" />
     <ClInclude Include="Spatial\Transform.h" />
     <ClInclude Include="Spatial\Volume.h" />
     <ClInclude Include="TypeDefinitions.h" />
