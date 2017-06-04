@@ -141,7 +141,6 @@ TEST_F(_ArrayList, Find)
     ASSERT_EQ(_l1.Find(3),       3);
     ASSERT_EQ(_l1.Find(5),       5);
     ASSERT_EQ(_l1.Find(-10),    -1);
-    //_l1.
 }
 TEST_F(_ArrayList, Reallocation)
 {

@@ -4,9 +4,7 @@
 
 #pragma once
 #include "Functions.h"
-#include "Collections/List.h"
-//#include <algorithm>
-//#include <vector>
+#include "Collections/ArrayList.h"
 
 
 
@@ -20,7 +18,7 @@ namespace Cyclone
 		{
 			private:
 
-                List<ICallback<void, T...>*> Subscriptions;
+                ArrayList<ICallback<void, T...>*> Subscriptions;
     
 			public:
 				/** PROPERTIES **/
@@ -76,9 +74,10 @@ namespace Cyclone
                         { 
                             delete s; 
                             Subscriptions.Remove(idx);
-                            break;
+                            return;
                         }
-                        else                { idx++; }
+                        else                
+                            idx++;
                 }
 
                 template<typename S>
