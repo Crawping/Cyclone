@@ -135,6 +135,14 @@ TEST_F(_ArrayList, ElementRemoval)
     ASSERT_EQ(_l1.Count(), _v1.Count() - 3);
     ASSERT_EQ(_l1(2), _v1(4));
 }
+TEST_F(_ArrayList, Find)
+{
+    _l1.Append(_v1);
+    ASSERT_EQ(_l1.Find(3),       3);
+    ASSERT_EQ(_l1.Find(5),       5);
+    ASSERT_EQ(_l1.Find(-10),    -1);
+    //_l1.
+}
 TEST_F(_ArrayList, Reallocation)
 {
     ASSERT_EQ(_l2.Capacity(),       1);

@@ -78,6 +78,18 @@ namespace Cyclone
                     _count = 0;
                     _index = Capacity() / 2;
                 }
+                /// <summary> Searches the list for the first occurrence of a particular value. </summary>
+                /// <returns> 
+                ///     The linear index of the first stored element equal to the inputted value, or a <c>-1</c> if no such 
+                ///     value is stored.
+                /// </returns>
+                /// <param name="value"> The value to be found within the list. </param>
+                virtual int Find(const T& value)                                const
+                {
+                    for (uint a = _index; a < _index + _count; a++)
+                        if (Data(a) == value) { return a - _index; }
+                    return -1;
+                }
                 /// <summary> Inserts a new value into the list at the specified index. </summary>
                 /// <param name="index"> The numeric index at which the new value will be placed. </param>
                 /// <param name="value"> The data element to be copied and inserted into the list. </param>
