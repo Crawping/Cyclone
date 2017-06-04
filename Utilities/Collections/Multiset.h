@@ -18,8 +18,7 @@ namespace Cyclone
             enum Orders
             {
                 Ascending   = 0,
-                Custom      = 1,
-                Descending  = 2,
+                Descending  = 1,
             };
 
             constexpr SortOrders(enum Orders value = Ascending) : Enumerator((int)value) { }
@@ -47,28 +46,21 @@ namespace Cyclone
                 /// <summary> Gets a constant reference to the last data element of the set. </summary>
                 virtual const T& Last()             const { return Data.Last(); }
                 /// <summary> Gets the ordering scheme used to sort elements of the set. </summary>
-                virtual SortOrders SortOrder()      const { return _sortOrder; }
+                virtual SortOrders Order()          const { return _order; }
 
                 /// <summary> Sets the function used to compare and sort elements of the set. </summary>
                 virtual Multiset& Comparator(Function<bool, const T&, const T&> value)
                 {
+                    if (_comparator == value) { return *this; }
                     _comparator = value;
                     Sort(0, Count());
                     return *this;
                 }
                 /// <summary> Sets the sorting order used to arrange elements of the set. </summary>
-                virtual Multiset& SortOrder(SortOrders value)
+                virtual Multiset& Order(SortOrders value)
                 {
-                    if (_sortOrder == value) { return *this; }
-
-                    switch (value)
-                    {
-                        case SortOrders::Ascending:         _comparator = Multiset::LessThan; break;
-                        case SortOrders::Descending:        _comparator = Multiset::GreaterThan; break;
-                        default:                            break;
-                    }
-
-                    _sortOrder = value;
+                    if (_order == value) { return *this; }
+                    _order = value;
                     Sort(0, Count());
                     return *this;
                 }
@@ -84,7 +76,7 @@ namespace Cyclone
                 }
                 /// <summary> Constructs a new set containing the values found within an initalizer list. </summary>
                 /// <param name="values"> An initialization list containing values to be to be inserted into the new set. </param>
-                Multiset(const std::initializer_list<T>& values) : 
+                Multiset(const InitialList<T>& values) : 
                     _comparator(Multiset::LessThan)
                 {
                     for (const T& v : values)
@@ -158,6 +150,10 @@ namespace Cyclone
             protected:
 
                 /** UTILITIES **/
+                virtual bool Compare(const T& x, const T& y)    const
+                {
+                    return _order == SortOrders::Descending ? !_comparator(x, y) : _comparator(x, y);
+                }
                 /// <summary> Gets the numeric index of a specific data element, if it exists in the set. </summary>
                 /// <param name="value"> The data element whose index is to be found. </param>
                 /// <returns></returns>
@@ -169,12 +165,13 @@ namespace Cyclone
                     while (idxLower < idxUpper)
                     {
                         idx = idxLower + ((idxUpper - idxLower) / 2);
-                        if (_comparator(Data(idx), value))      { idxLower = idx + 1; }
-                        else                                    { idxUpper = idx; }
+                        if (Compare(Data(idx), value))  { idxLower = idx + 1; }
+                        else                            { idxUpper = idx; }
                     }
 
-                    return Data(idx) < value ? idx + 1 : idx;
+                    return Compare(Data(idx), value) ? idx + 1 : idx;
                 }
+                /// <summary> Reorders elements of the set between a starting and ending index. </summary>
                 virtual void Sort(uint idxStart, uint idxEnd)
                 {
                     if (idxStart >= idxEnd) { return; }
@@ -184,7 +181,7 @@ namespace Cyclone
                     const T& pivot = Data(idxEnd);
 
                     for (uint a = idxStart; a < idxEnd; a++)
-                        if (_comparator(Data(a), pivot))
+                        if (Compare(Data(a), pivot))
                             Data.Swap(a, idxPivot++);
 
                     Data.Swap(idxEnd, idxPivot);
@@ -197,12 +194,11 @@ namespace Cyclone
 
             private:
 
-                Function<bool, const T&, const T&>      _comparator;
-                SortOrders                              _sortOrder;
-                ArrayList<T>                           Data;
+                Function<bool, const T&, const T&>  _comparator;
+                SortOrders                          _order;
+                ArrayList<T>                        Data;
 
 
-                static bool GreaterThan(const T& x, const T& y)     { return x > y; }
                 static bool LessThan(const T& x, const T& y)        { return x < y; }
 
         };

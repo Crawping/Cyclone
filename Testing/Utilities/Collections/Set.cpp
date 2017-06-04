@@ -50,7 +50,7 @@ class _Set : public testing::Test
 TEST_F(_Set, DefaultConstruction)
 {
     ASSERT_EQ(_s0.Count(), 0);
-    ASSERT_EQ(_s0.SortOrder(), SortOrders::Ascending);
+    ASSERT_EQ(_s0.Order(), SortOrders::Ascending);
 }
 TEST_F(_Set, InitializedConstruction)
 {
@@ -64,11 +64,11 @@ TEST_F(_Set, InitializedConstruction)
 /** UTILITY TESTS **/
 TEST_F(_Set, SortingOrders)
 {
-    ASSERT_EQ(_s1.SortOrder(), SortOrders::Ascending);
+    ASSERT_EQ(_s1.Order(), SortOrders::Ascending);
     for (uint a = 0; a < _s1.Count(); a++)
         ASSERT_EQ(_s1(a), Canon.SortedIntegers(a));
 
-    _s1.SortOrder(SortOrders::Descending);
+    _s1.Order(SortOrders::Descending);
     for (uint a = 0; a < _s1.Count(); a++)
         ASSERT_EQ(_s1(a), Canon.SortedIntegers(_s1.Count() - a - 1));
 }
