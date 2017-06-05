@@ -8,11 +8,14 @@
 
 namespace Cyclone
 {
+    namespace Utilities { struct LineSegment; }
     namespace OpenGL
     {        
         /** FORWARD DECLARATIONS **/
         class IMaterial;
         class IModel;
+
+        using namespace Utilities;
 
         /// <summary> An interface that represents a generalized three-dimensional renderable object. </summary>
         class IRenderable
@@ -31,6 +34,11 @@ namespace Cyclone
 
                 /** DESTRUCTOR **/
                 virtual ~IRenderable() { }
+
+
+
+                /** UTILITIES **/
+                virtual bool Intersects(const LineSegment& line)    const = 0;
         };
 
     }

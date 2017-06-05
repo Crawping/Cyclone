@@ -121,6 +121,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                bool Intersects(const LineSegment& line) const override { return false; }
                 Entity3D& Rotate(const Vector3& values)
                 {
                     _model.Rotate(values);
