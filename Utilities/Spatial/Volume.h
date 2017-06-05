@@ -8,6 +8,7 @@
 #include "Math/Math.h"
 #include "Math/Vector3.h"
 #include "Spatial/Area.h"
+#include "Spatial/LineSegment.h"
 
 
 
@@ -71,11 +72,11 @@ namespace Cyclone
             /// <summary> Determines whether this rectangular prism has a total volume of zero. </summary>
             constexpr bool IsEmpty()                    const { return !Width || !Height || !Depth; }
 
-            /// <summary> Gets the (x, y, z) coordinates of the front-lower-left corner of this volume. </summary>
+            /// <summary> Gets the (x, y, z) coordinates of the back-lower-left corner of this volume. </summary>
             constexpr Vector3 Position()                const { return Vector3(X, Y, Z); }
-            /// <summary> Sets the (x, y, z) coordinates of the front-lower-left corner of this volume. </summary>
+            /// <summary> Sets the (x, y, z) coordinates of the back-lower-left corner of this volume. </summary>
             Volume& Position(const Vector3& p)                { X = p.X; Y = p.Y; Z = p.Z; return *this; }
-            /// <summary> Sets the (x, y, z) coordinates of the front-lower-left corder of this volume. </summary>
+            /// <summary> Sets the (x, y, z) coordinates of the back-lower-left corder of this volume. </summary>
             Volume& Position(float x, float y, float z)       { X = x; Y = y; Z = z; return *this; }
 
             /// <summary> Gets the (width, height, depth) values of this volume. </summary>
@@ -124,7 +125,11 @@ namespace Cyclone
             /** UTILITIES **/
             /// <summary> Determines whether a point lies within the bounds of the volume. </summary>
             /// <returns> A Boolean <c>true</c> if the point's coordinates lie inside of the volume, or <c>false</c> otherwise. </returns>
-            /// <param name="point"> The </param>
+            /// <param name="point"> The point to be tested. </param>
+            /// <param name="inclusive"> 
+            ///     An Boolean <c>true</c> if points on the boundary of the volume should be considered contained, or <c>false</c> 
+            ///     otherwise. 
+            /// </param>
             /// <remarks>
             ///     This method tests whether a particular point lies within or on the bounds of a volume in 3D space. Note that this 
             ///     means any point whose coordinates fall exactly on the bounds of the rectangular prism is considered contained and 
@@ -139,7 +144,11 @@ namespace Cyclone
             }
             /// <summary> Determines whether this volume completely contains another one. </summary>
             /// <returns> A Boolean <c>true</c> if the inputted volume fits within this one, or <c>false</c> otherwise. </returns>
-            /// <param name="volume"> Another <see cref="Volume"/> data structure to be tested. </param>
+            /// <param name="volume"> Another volume data structure to be tested. </param>
+            /// <param name="inclusive"> 
+            ///     An Boolean <c>true</c> if points on the boundary of the volume should be considered contained, or <c>false</c> 
+            ///     otherwise. 
+            /// </param>
             /// <remarks>
             ///     This method tests the edge locations of two volume descriptions to determine if one fits within the other. Passing 
             ///     the test requires that one volume (on which this method is called) be positioned and sized such that it contains a 
@@ -156,6 +165,9 @@ namespace Cyclone
                     Math::IsBetween(volume.Back(), Back(), Front(), inclusive)      &&
                     Math::IsBetween(volume.Front(), Back(), Front(), inclusive);
             }
+            /// <summary> Determines the region of space shared by both this and another volume. </summary>
+            /// <returns> An empty volume if no intersection exists, or the region of space where the two volumes overlap. </returns>
+            /// <param name="volume"> Another overlapping volume of space. </param>
             constexpr Volume Intersection(const Volume& volume) const
             {
                 if (!Intersects(volume)) return Volume(0, 0, 0, 0, 0, 0);
@@ -171,6 +183,9 @@ namespace Cyclone
 
                 return Volume(x, y, z, w, h, d);
             }
+            /// <summary> Determines whether this volume shares any space with another one. </summary>
+            /// <param name="volume"> Another volume to be tested for overlap. </param>
+            /// <returns> A Boolean <c>true</c> if the two volumes have overlapping regions of space, or <c>false</c> otherwise. </returns>
             constexpr bool Intersects(const Volume& volume) const
             {
                 auto v1 = Rectify(), v2 = volume.Rectify();
@@ -179,7 +194,15 @@ namespace Cyclone
                     v1.Bottom() <= v2.Top() && v1.Top() >= v2.Bottom() &&
                     v1.Back() <= v2.Front() && v1.Front() >= v2.Back();
             }
-
+            /// <summary> Determines whether this volume intersects a line segment. </summary>
+            /// <returns> A Boolean <c>true</c> if the line segment intersects the volume, or <c>false</c> otherwise. </returns>
+            /// <param name="line"> A line segment to be tested for intersection. </param>
+            constexpr bool Intersects(const LineSegment& line) const
+            {
+                return false;
+            }
+            /// <summary> Converts this volume into an equivalent one whose size consists only of positive values. </summary>
+            /// <returns> A positive volume whose position represents the back-lower-left corner of the prism. </returns>
             constexpr Volume Rectify() const
             {
                 return Volume
@@ -191,9 +214,9 @@ namespace Cyclone
             /// <summary> Generates a human-readable string detailing the current state of the data structure. </summary>
             string Report() const;
 
-            constexpr Array<float, 6> ToArray() const { return { X, Y, Z, Width, Height, Depth }; }
-
-            constexpr Volume Union(const Volume& volume) const
+            constexpr Array<float, 6> ToArray()             const { return { X, Y, Z, Width, Height, Depth }; }
+            
+            constexpr Volume Union(const Volume& volume)    const
             {
                 auto v1 = Rectify(), v2 = volume.Rectify();
                 float x = Math::Min(v1.Left(), v2.Left());
