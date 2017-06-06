@@ -100,6 +100,15 @@ namespace Cyclone
                 /** UTILITIES **/
                 template<typename T>
                 bool Contains(Resource<T> value)                            const { return Contains(value._name, value._value); }
+                template<typename T>
+                bool Contains(const string& name)
+                {
+                    return
+                        Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(name)   :
+                        Meta::IsA<T, IGeometric>()          ? _geometry.Contains(name)  :
+                        Meta::IsA<T, GraphicsPipeline>()    ? _pipelines.Contains(name) :
+                        Meta::IsA<T, ITexture>()            ? _textures.Contains(name)  : false;
+                }
                 template<typename T, typename ... U>
                 Resource<T> Create(const string& name)
                 {
@@ -127,19 +136,12 @@ namespace Cyclone
                 template<typename T>
                 Resource<T> Get(const string& name)
                 {
-                    T* value = nullptr;
-                    if (!Contains(name, value))
-                        return Resource<T>(name, nullptr);
-                    else if (Meta::IsA<T, IGraphicsBuffer>())
-                        return Resource<T>(name, dynamic_cast<T*>(_buffers[name]));
-                    else if (Meta::IsA<T, IGeometric>())
-                        return Resource<T>(name, dynamic_cast<T*>(_geometry[name]));
-                    else if (Meta::IsA<T, GraphicsPipeline>())
-                        return Resource<T>(name, dynamic_cast<T*>(_pipelines[name]));
-                    else if (Meta::IsA<T, ITexture>())
-                        return Resource<T>(name, dynamic_cast<T*>(_textures[name]));
-                    else
-                        return Resource<T>(name, nullptr);
+                    return
+                        !Contains<T>(name)                  ? Resource<T>(name, nullptr)                            : 
+                        Meta::IsA<T, IGraphicsBuffer>()     ? Resource<T>(name, dynamic_cast<T*>(_buffers[name]))   :
+                        Meta::IsA<T, IGeometric>()          ? Resource<T>(name, dynamic_cast<T*>(_geometry[name]))  :
+                        Meta::IsA<T, GraphicsPipeline>()    ? Resource<T>(name, dynamic_cast<T*>(_pipelines[name])) :
+                        Resource<T>(name, dynamic_cast<T*>(_textures[name]));
                 }
 
             private:
