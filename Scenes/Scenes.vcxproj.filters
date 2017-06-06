@@ -27,9 +27,6 @@
     <ClInclude Include="Resources\Resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Resources\ResourceManager.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="Resources\ResourceLibrary.h">
       <Filter>Resources</Filter>
     </ClInclude>

@@ -128,7 +128,6 @@
     <ClInclude Include="Messaging\Message.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\ResourceLibrary.h" />
-    <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Scene3D.h" />
     <ClInclude Include="SceneAPI.h" />
   </ItemGroup>
