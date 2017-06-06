@@ -9,6 +9,7 @@
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IModel.h"
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/ITexture.h"
 #include "IO/Functions.h"
 #include "Libraries/Resource.h"
 #include "Meta/Utilities.h"
@@ -33,9 +34,19 @@ namespace Cyclone
 
             public:
 
+                /** PROPERTIES **/
                 bool IsNull()                               const { return _value == nullptr; }
                 const string& Name()                        const { return _name; }
 
+
+
+                /** CONSTRUCTOR **/
+                Resource():
+                    _name(""),
+                    _value(nullptr)
+                {
+
+                }
                 Resource(const string& name, T* value):     
                     _name(name),
                     _value(value)
@@ -43,8 +54,21 @@ namespace Cyclone
 
                 }
 
-                const T* operator ->()                      const { return _value; }
+
+
+                /** OPERATORS **/
                 T* operator ->()                            { return _value; }
+                const T* operator ->()                      const { return _value; }
+
+                bool operator ==(const Resource& other)     const
+                {
+                    return (_name == other._name) && _value == other._value;
+                }
+                template<typename U>
+                bool operator ==(const Resource<U>& other)  const { return false; }
+
+                template<typename U>
+                bool operator !=(const Resource<U>& other)  const { return !(operator ==(other)); }
         };
 
 
@@ -52,12 +76,16 @@ namespace Cyclone
         {
             public:
 
+                /** PROPERTIES **/
                 uint BufferCount()      const { return _buffers.Count(); }
                 uint Count()            const { return BufferCount() + GeometryCount() + PipelineCount() + TextureCount(); }
                 uint GeometryCount()    const { return _geometry.Count(); }
                 uint PipelineCount()    const { return _pipelines.Count(); }
                 uint TextureCount()     const { return _textures.Count(); }
                 
+
+
+                /** CONSTRUCTOR & DESTRUCTOR **/
                 ResourceLibrary2() { }
                 ~ResourceLibrary2()
                 {
@@ -67,6 +95,9 @@ namespace Cyclone
                     for (auto v : _textures.Values())    { delete v; }
                 }
 
+
+
+                /** UTILITIES **/
                 template<typename T>
                 bool Contains(Resource<T> value)                            const { return Contains(value._name, value._value); }
                 template<typename T, typename ... U>
@@ -96,7 +127,10 @@ namespace Cyclone
                 template<typename T>
                 Resource<T> Get(const string& name)
                 {
-                    if (Meta::IsA<T, IGraphicsBuffer>())
+                    T* value = nullptr;
+                    if (!Contains(name, value))
+                        return Resource<T>(name, nullptr);
+                    else if (Meta::IsA<T, IGraphicsBuffer>())
                         return Resource<T>(name, dynamic_cast<T*>(_buffers[name]));
                     else if (Meta::IsA<T, IGeometric>())
                         return Resource<T>(name, dynamic_cast<T*>(_geometry[name]));
@@ -110,11 +144,15 @@ namespace Cyclone
 
             private:
 
+                /** DATA **/
                 BST<string, IGraphicsBuffer*>   _buffers;
                 BST<string, IGeometric*>        _geometry;
                 BST<string, GraphicsPipeline*>  _pipelines;
                 BST<string, ITexture*>          _textures;
 
+
+
+                /** UTILITIES **/
                 bool Contains(const string& key, IGraphicsBuffer* value)    const
                 {
                     return _buffers.Contains(key) && _buffers[key] == value;

@@ -58,6 +58,26 @@ TEST_F(_ResourceLibrary, Destroy)
     auto r2 = _l0.Create<Geometry3D>("G2");
 
     _l0.Destroy(r1);
-    ASSERT_EQ(_l0.Count(),          0);
-    //ASSERT_EQ(r1->Count(),          0);
+    ASSERT_EQ(_l0.Count(),          1);
+}
+TEST_F(_ResourceLibrary, Get)
+{
+    auto r1 = _l0.Create<Mesh3D>("G1", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
+    auto r2 = _l0.Create<Mesh3D>("G2", Function<Mesh3D, bool>(&Mesh3D::Quad), false);
+    auto r3 = _l0.Create<Geometry3D>("G3");
+
+    auto r4 = _l0.Get<Mesh3D>("G1");
+    auto r5 = _l0.Get<Mesh3D>("G2");
+    auto r6 = _l0.Get<Geometry3D>("G3");
+
+    ASSERT_EQ(r1, r4);
+    ASSERT_EQ(r2, r5);
+    ASSERT_EQ(r3, r6);
+
+    ASSERT_NE(r1, r5);
+    ASSERT_NE(r1, r6);
+    ASSERT_NE(r2, r6);
+
+    //auto r7 = _l0.Get<Mesh3D>("G4");
+    //ASSERT_EQ(r7,   Resource<Mesh3D>());
 }
