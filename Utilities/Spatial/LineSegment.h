@@ -22,8 +22,8 @@ namespace Cyclone
 
 
             /** PROPERTIES **/
-            constexpr float Length()    const { return (B - A).Norm(); };
-            constexpr Vector3 Vector()  const { return (B - A).Normalize(); }
+            /*constexpr*/ float Length()    const { return (B - A).Norm(); };
+            /*constexpr*/ Vector3 Vector()  const { return (B - A).Normalize(); }
 
 
 
