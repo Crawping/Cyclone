@@ -4,11 +4,14 @@
 
 #pragma once
 #include "Collections/BST.h"
+#include "Interfaces/ICallback.h"
 #include "Interfaces/IGeometric.h"
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IModel.h"
 #include "Interfaces/IRenderable.h"
+#include "IO/Functions.h"
 #include "Libraries/Resource.h"
+#include "Meta/Utilities.h"
 #include "Pipelines/GraphicsPipeline.h"
 
 
@@ -30,9 +33,15 @@ namespace Cyclone
 
             public:
 
+                bool IsNull()                               const { return _value == nullptr; }
                 const string& Name()                        const { return _name; }
 
-                Resource(const string& name, T* value):     _value(value) { }
+                Resource(const string& name, T* value):     
+                    _name(name),
+                    _value(value)
+                {
+
+                }
 
                 const T* operator ->()                      const { return _value; }
                 T* operator ->()                            { return _value; }
@@ -49,20 +58,29 @@ namespace Cyclone
                 uint PipelineCount()    const { return _pipelines.Count(); }
                 uint TextureCount()     const { return _textures.Count(); }
                 
+                ResourceLibrary2() { }
                 ~ResourceLibrary2()
                 {
-                    for (auto v : _buffers)     { delete v.Value; }
-                    for (auto v : _geometry)    { delete v.Value; }
-                    for (auto v : _pipelines)   { delete v.Value; }
-                    for (auto v : _textures)    { delete v.Value; }
+                    for (auto v : _buffers.Values())     { delete v; }
+                    for (auto v : _geometry.Values())    { delete v; }
+                    for (auto v : _pipelines.Values())   { delete v; }
+                    for (auto v : _textures.Values())    { delete v; }
                 }
 
                 template<typename T>
                 bool Contains(Resource<T> value)                            const { return Contains(value._name, value._value); }
                 template<typename T, typename ... U>
-                Resource<T> Create(const string& name, U ... arguments)
+                Resource<T> Create(const string& name)
                 {
-                    T* value = new T(arguments...);
+                    T* value = new T();
+                    Register(name, value);
+                    return Resource<T>(name, value);
+                }
+                template<typename T, typename ... U>
+                Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
+                {
+                    T* value = new T();
+                    *value = constructor(arguments...);
                     Register(name, value);
                     return Resource<T>(name, value);
                 }
@@ -75,7 +93,20 @@ namespace Cyclone
                         delete value._value; 
                     }
                 }
-
+                template<typename T>
+                Resource<T> Get(const string& name)
+                {
+                    if (Meta::IsA<T, IGraphicsBuffer>())
+                        return Resource<T>(name, dynamic_cast<T*>(_buffers[name]));
+                    else if (Meta::IsA<T, IGeometric>())
+                        return Resource<T>(name, dynamic_cast<T*>(_geometry[name]));
+                    else if (Meta::IsA<T, GraphicsPipeline>())
+                        return Resource<T>(name, dynamic_cast<T*>(_pipelines[name]));
+                    else if (Meta::IsA<T, ITexture>())
+                        return Resource<T>(name, dynamic_cast<T*>(_textures[name]));
+                    else
+                        return Resource<T>(name, nullptr);
+                }
 
             private:
 
@@ -103,7 +134,7 @@ namespace Cyclone
 
                 void Register(const string& key, IGraphicsBuffer* value)
                 {
-                    if (_buffers.Contains(key) { delete _buffers[key]; }
+                    if (_buffers.Contains(key)) { delete _buffers[key]; }
                     _buffers.Insert(key, value);
                 }
                 void Register(const string& key, GraphicsPipeline* value)
