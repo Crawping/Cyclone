@@ -78,6 +78,6 @@ TEST_F(_ResourceLibrary, Get)
     ASSERT_NE(r1, r6);
     ASSERT_NE(r2, r6);
 
-    //auto r7 = _l0.Get<Mesh3D>("G4");
-    //ASSERT_EQ(r7,   Resource<Mesh3D>());
+    auto r7 = _l0.Get<Mesh3D>("G4");
+    ASSERT_EQ(r7, Resource<Mesh3D>("G4", nullptr));
 }

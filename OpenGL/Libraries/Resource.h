@@ -127,11 +127,12 @@ namespace Cyclone
                 template<typename T>
                 void Destroy(Resource<T> value)
                 {
-                    if (Contains(value._name, value._value)) 
-                    {
-                        Remove(value._name, value._value);
-                        delete value._value; 
-                    }
+                    if (!Contains(value)) { return; }
+                    Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Remove(value.Name())     : 
+                    Meta::IsA<T, IGeometric>()          ? _geometry.Remove(value.Name())    : 
+                    Meta::IsA<T, GraphicsPipeline>()    ? _pipelines.Remove(value.Name())   : _textures.Remove(value.Name());
+
+                    delete value._value;
                 }
                 template<typename T>
                 Resource<T> Get(const string& name)
@@ -208,11 +209,11 @@ namespace Cyclone
                 }
                 void Destroy(const string& key, IGeometric* value)
                 {
-
+                    if (Contains(key, value)) { delete value; }
                 }
                 void Destroy(const string& key, ITexture* value)
                 {
-
+                    if (Contains(key, value)) { delete value; }
                 }
 
         };
