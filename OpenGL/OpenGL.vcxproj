@@ -182,6 +182,7 @@
     <ClInclude Include="Interfaces\ITexture.h" />
     <ClInclude Include="Interfaces\ITransformable.h" />
     <ClInclude Include="Libraries\Material3D.h" />
+    <ClInclude Include="Libraries\Resource.h" />
     <ClInclude Include="Libraries\ResourceLibrary.h" />
     <ClInclude Include="Models\Model3D.h" />
     <ClInclude Include="Models\Point3D.h" />

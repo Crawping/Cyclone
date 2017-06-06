@@ -141,6 +141,9 @@
     <ClInclude Include="Interfaces\IModel.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\Resource.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
