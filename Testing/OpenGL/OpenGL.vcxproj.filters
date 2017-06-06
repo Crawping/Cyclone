@@ -4,6 +4,9 @@
     <Filter Include="Geometry">
       <UniqueIdentifier>{f4853690-cf8f-45a6-85a3-cfa7dffd627f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{4b5f9c1b-36c0-4151-a2de-bb9e942e2903}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Geometry\Geometry3D.cpp">
@@ -13,5 +16,8 @@
       <Filter>Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Resources\ResourceLibrary.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
