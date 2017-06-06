@@ -8,35 +8,36 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        SceneComponent3D& SceneComponent3D::IsVisible(bool value)
+        SceneComponent3D& SceneComponent3D::Orientation(const Vector3& value)
         {
-            _isVisible = value;
+            _transform.Orientation(value);
             return *this;
         }
-        SceneComponent3D& SceneComponent3D::Model(IRenderable* value)
+        SceneComponent3D& SceneComponent3D::Position(const Vector3& value)
         {
-            _model = value;
+            _transform.Position(value);
             return *this;
         }
-        SceneComponent3D& SceneComponent3D::Parent(ISceneComponent& value)
+        SceneComponent3D& SceneComponent3D::Scale(const Vector3& value)
         {
-            _parent = value;
+            _transform.Scale(value);
             return *this;
         }
-        SceneComponent3D& SceneComponent3D::Transformation(const Transform& value)
+        SceneComponent3D& SceneComponent3D::Transform(const Transform3D& value)
         {
-            _transformation = value;
+            _transform = value;
             return *this;
         }
 
 
 
         /** CONSTRUCTOR **/
-        SceneComponent3D::SceneComponent3D(ISceneComponent& parent) :
-            _isVisible(true),
-            _model(nullptr),
-            _parent(parent),
-            _tag("")
+        SceneComponent3D::SceneComponent3D(ISceneComponent& parent):
+            SceneComponent(parent),
+            //_isVisible(true),
+            _model(nullptr)
+            //_parent(parent),
+            //_tag("")
         {
 
         }
@@ -44,7 +45,7 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        bool SceneComponent3D::Contains(const Vector3& point)           const
+        /*bool SceneComponent3D::Contains(const Vector3& point)           const
         {
             return false;
         }
@@ -68,7 +69,7 @@ namespace Cyclone
         {
 
         }
-
+*/
 
 
 

@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="Components\Main.cpp" />
     <ClCompile Include="Components\SceneComponent3D.cpp" />
+    <ClCompile Include="Resources\ResourceManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

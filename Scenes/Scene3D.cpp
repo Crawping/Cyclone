@@ -14,7 +14,7 @@ namespace Cyclone
         //#define cond
 
 
-        Scene3D::Scene3D() : 
+        Scene3D::Scene3D(): 
             SceneComponent3D(*this)
         {
             
@@ -48,17 +48,17 @@ namespace Cyclone
         //}
 
 
-        void Scene3D::CreateEntityClass()
-        {
-            //VirtualClass entity( _memory.Insert("Entity3D") );
-            //propdef(entity, "Components");
-            //propdef(entity, "Geometry");
-            //propdef(entity, "IsVisible");
-            //propdef(entity, "Material");
-            //propdef(entity, "Transforms");
+        //void Scene3D::CreateEntityClass()
+        //{
+        //    //VirtualClass entity( _memory.Insert("Entity3D") );
+        //    //propdef(entity, "Components");
+        //    //propdef(entity, "Geometry");
+        //    //propdef(entity, "IsVisible");
+        //    //propdef(entity, "Material");
+        //    //propdef(entity, "Transforms");
 
-            //_memory.Insert(entity);
-        }
+        //    //_memory.Insert(entity);
+        //}
 
 
 

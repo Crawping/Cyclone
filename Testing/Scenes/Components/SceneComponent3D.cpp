@@ -7,18 +7,20 @@
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Scenes;
+using namespace Cyclone::Utilities;
 
 
 
-class _SceneComponent3D : public ::testing::Test
+class _SceneComponent3D: public testing::Test
 {
     protected:
 
-        SceneComponent3D    _c0;
-        Scene3D             _s0;
+        Scene3D      _s0;
+        //SceneComponent3D    _c0;
+        
 
-        _SceneComponent3D() : 
-            _c0(_s0)
+        _SceneComponent3D()
+            //_c0(_s0)
         {
 
         }
@@ -28,8 +30,10 @@ class _SceneComponent3D : public ::testing::Test
 
 
 /** CONSTRUCTION **/
-TEST_F(_SceneComponent3D, DefaultConstruction)
+TEST_F(_SceneComponent3D, Construction)
 {
-
+    ASSERT_EQ(_s0.Bounds(), Volume::Empty);
+    ASSERT_EQ(&(_s0.Parent()), &_s0);
+    ASSERT_EQ(_s0.Transform(), Transform3D());
 }
 

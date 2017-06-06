@@ -3,11 +3,14 @@
  */
 
 #pragma once
-#include "Collections/Set.h"
-#include "Interfaces/ISceneComponent.h"
-#include "Spatial/Volume.h"
-#include "Spatial/Transform.h"
-#include "SceneAPI.h"
+#include "Components/SceneComponent.h"
+#include "Geometry/Entity3D.h"
+//#include "Collections/Set.h", 
+//#include "Collections/String.h"
+//#include "Interfaces/ISceneComponent.h"
+//#include "Spatial/Volume.h"
+//#include "Spatial/Transform.h"
+//#include "SceneAPI.h"
 
 
 
@@ -15,24 +18,24 @@ namespace Cyclone
 {
     namespace Scenes
     {
-        class SceneComponent3D : public virtual ISceneComponent
+        class SceneComponent3D:
+            public SceneComponent
         {
 
             public:
 
                 /** PROPERTIES **/
-                const Volume& Bounds()                      const override { return _bounds; }
-                List<ISceneComponent*> Children()           const override { return _children; }
-                bool IsVisible()                            const override { return _isVisible; }
-                const IRenderable* Model()                  const override { return _model; }
-                const ISceneComponent& Parent()             const override { return _parent; }
-                const string& Tag()                         const override { return _tag; }
-                const Transform& Transformation()           const override { return _transformation; }
+                const Entity3D* Model()                     const override { return _model; }
+                const Vector3& Orientation()                const override { return _transform.Orientation(); }
+                const Vector3& Position()                   const override { return _transform.Position(); }
+                const Vector3& Scale()                      const override { return _transform.Scale(); }
+                const Transform3D& Transform()              const override { return _transform; }
                 
-                SceneAPI SceneComponent3D& IsVisible(bool value) override;
-                SceneAPI SceneComponent3D& Model(IRenderable* value);
-                SceneAPI SceneComponent3D& Parent(ISceneComponent& value);
-                SceneAPI SceneComponent3D& Transformation(const Transform& value);
+                SceneAPI SceneComponent3D& Model(const Entity3D* value);
+                SceneAPI SceneComponent3D& Orientation(const Vector3& value)    override;
+                SceneAPI SceneComponent3D& Position(const Vector3& value)       override;
+                SceneAPI SceneComponent3D& Scale(const Vector3& value)          override;
+                SceneAPI SceneComponent3D& Transform(const Transform3D& value);
 
 
 
@@ -42,26 +45,21 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                SceneAPI bool Contains(const Vector3& point)                const override;
-                SceneAPI bool Contains(const ISceneComponent& child)        const override;
-                SceneAPI void Insert(ISceneComponent& child);
-                SceneAPI bool Intersects(const Vector<Vector3, 2>& line)    const;
-                SceneAPI void Remove(const ISceneComponent& child);
-                SceneAPI void Update() override;
+                //SceneAPI bool Contains(const Vector3& point)                const override;
+                //SceneAPI bool Contains(const ISceneComponent& child)        const override;
+                //SceneAPI void Insert(ISceneComponent* child);
+                //SceneAPI bool Intersects(const Vector<Vector3, 2>& line)    const;
+                //SceneAPI void Remove(const ISceneComponent* child);
+                //SceneAPI void Update() override;
 
             protected:
-
                 
                 SceneAPI void UpdateBounds();
 
             private:
-                Volume                  _bounds;
-                Set<ISceneComponent*>   _children;
-                bool                    _isVisible;
-                IRenderable*            _model;
-                ISceneComponent&        _parent;
-                string                  _tag;
-                Transform               _transformation;
+
+                Entity3D*       _model;
+                Transform3D     _transform;
 
         };
     }

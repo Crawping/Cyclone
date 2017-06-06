@@ -119,17 +119,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\SceneComponent.h" />
     <ClInclude Include="Components\SceneComponent3D.h" />
     <ClInclude Include="Interfaces\IScene.h" />
     <ClInclude Include="Interfaces\ISceneComponent.h" />
     <ClInclude Include="Interfaces\ISceneLayer.h" />
     <ClInclude Include="Interfaces\ISceneMessage.h" />
     <ClInclude Include="Messaging\Message.h" />
+    <ClInclude Include="Resources\Resource.h" />
+    <ClInclude Include="Resources\ResourceLibrary.h" />
+    <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Scene3D.h" />
     <ClInclude Include="SceneAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\SceneComponent.cpp" />
     <ClCompile Include="Components\SceneComponent3D.cpp" />
+    <ClCompile Include="Interfaces\IComponentBehavior.h" />
     <ClCompile Include="Messaging\Message.cpp" />
     <ClCompile Include="Scene3D.cpp" />
   </ItemGroup>

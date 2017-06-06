@@ -4,11 +4,17 @@
     <Filter Include="Components">
       <UniqueIdentifier>{60b15fd9-e842-48e7-91c1-480927f4a2a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{a63e4500-ede2-4150-9026-490734047328}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\SceneComponent3D.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\Main.cpp" />
+    <ClCompile Include="Resources\ResourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

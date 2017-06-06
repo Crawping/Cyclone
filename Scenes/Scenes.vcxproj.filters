@@ -21,6 +21,18 @@
     <ClInclude Include="Components\SceneComponent3D.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\SceneComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceLibrary.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Messaging\Message.cpp">
@@ -28,6 +40,12 @@
     </ClCompile>
     <ClCompile Include="Scene3D.cpp" />
     <ClCompile Include="Components\SceneComponent3D.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Interfaces\IComponentBehavior.h">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\SceneComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,6 +61,12 @@
     </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{b73502a7-ce17-46c4-99d6-6ada78c5e1a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Behaviors">
+      <UniqueIdentifier>{f38fcdda-6882-4701-82d8-2e584cfcb9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{c78116a6-99ab-4119-8340-313b63360f7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

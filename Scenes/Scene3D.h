@@ -14,12 +14,6 @@
 
 namespace Cyclone
 {
-    namespace 
-    { 
-        using namespace OpenGL;
-        //using namespace VM;
-    }
-
     namespace Scenes
     {
 
@@ -27,9 +21,25 @@ namespace Cyclone
         {
             public:
 
+                /** PROPERTIES **/
+                //const Volume& Bounds()              const override { return Volume(); }
+                //List<ISceneComponent*> Children()   const override { return { }; }
+                const Entity3D* Model()             const override { return nullptr; }
+                const Scene3D& Parent()             const override { return *this; }
+                const Transform3D& Transform()      const override { return _transform; }
+
+
+
                 /** CONSTRUCTOR **/
                 SceneAPI Scene3D();
 
+
+
+                /** UTILITIES **/
+                //SceneAPI bool Contains(const ISceneComponent* child)    const override;
+                //SceneAPI void Insert(ISceneComponent* child)            override;
+                //SceneAPI bool Intersects(const LineSegment& line)       const override;
+                //SceneAPI void Update()                                  override;
                 //SceneAPI bool Contains(uint entity) const;
                 //SceneAPI uint Insert(const IRenderable& entity);
                 //SceneAPI void Remove(uint entity);
@@ -40,10 +50,11 @@ namespace Cyclone
 
             private:
 
+                Transform3D _transform;
                 //VirtualMemory   _memory;
                 //VirtualMachine  _vm;
 
-                void CreateEntityClass();
+                //void CreateEntityClass();
                 
         };
 
