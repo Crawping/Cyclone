@@ -253,7 +253,7 @@ namespace Cyclone
             geometry.Indices(indices);
             geometry.Vertices(vertices);
 
-            if (!isIndexed); geometry.Unindex();
+            if (!isIndexed) geometry.Unindex();
             return geometry;
         }
         Mesh3D Mesh3D::Cylinder(uint nfaces, bool isIndexed)
