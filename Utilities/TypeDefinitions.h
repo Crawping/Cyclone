@@ -38,6 +38,9 @@ namespace Cyclone
         template<typename T, typename U, typename ... V>
         using MethodPointer = T(U::*)(V ... arguments);
 
+        template<typename T, typename U, typename ... V>
+        using ConstMethodPointer = T(U::*)(V ... arguments) const;
+
         /// <summary> An alias that represents a general parameterized procedure pointer with no output arguments. </summary>
         /// <typeparam name="T"> A listing of the procedure's input argument classes. </typeparam>
         template<typename ... T>
