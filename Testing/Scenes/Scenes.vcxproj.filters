@@ -13,8 +13,5 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\Main.cpp" />
-    <ClCompile Include="Resources\ResourceManager.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

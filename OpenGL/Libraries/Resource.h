@@ -56,6 +56,26 @@ namespace Cyclone
 
 
 
+                /** UTILITIES **/
+                template<typename U, typename V = T>
+                U Get(MethodPointer<U, V> accessor)                         { return (_value->*accessor)(); }
+                template<typename U, typename V = T>
+                U Get(ConstMethodPointer<U, V> accessor)                    const { return (_value->*accessor)(); }
+
+                /*template<typename U, typename W>
+                auto Set(U accessor, W argument) -> 
+                { return (_value->*accessor)(argument); }*/
+
+                template<typename U, typename ... V>
+                U Set(MethodPointer<U, T, V...> accessor, V ... arguments)
+                {
+                    return (_value->*accessor)(arguments...);
+                }
+                //template<typename U, typename V, typename W>
+                //U Set(ConstMethodPointer<U, V, W> accessor, W argument)     const { return (_value->*accessor)(argument); }
+
+
+
                 /** OPERATORS **/
                 T* operator ->()                            { return _value; }
                 const T* operator ->()                      const { return _value; }
@@ -109,7 +129,7 @@ namespace Cyclone
                         Meta::IsA<T, GraphicsPipeline>()    ? _pipelines.Contains(name) :
                         Meta::IsA<T, ITexture>()            ? _textures.Contains(name)  : false;
                 }
-                template<typename T, typename ... U>
+                template<typename T>
                 Resource<T> Create(const string& name)
                 {
                     T* value = new T();
@@ -143,6 +163,13 @@ namespace Cyclone
                         Meta::IsA<T, IGeometric>()          ? Resource<T>(name, dynamic_cast<T*>(_geometry[name]))  :
                         Meta::IsA<T, GraphicsPipeline>()    ? Resource<T>(name, dynamic_cast<T*>(_pipelines[name])) :
                         Resource<T>(name, dynamic_cast<T*>(_textures[name]));
+                }
+
+                template<typename T, typename U, typename V>
+                Resource<T> Set(Resource<T> value, MethodPointer<T&, T, U> accessor, U argument)
+                {
+                    (value._value->*accessor)(argument);
+                    return value;
                 }
 
             private:
@@ -192,28 +219,6 @@ namespace Cyclone
                 {
                     if (_textures.Contains(key)) { delete _textures[key]; }
                     _textures.Insert(key, value);
-                }
-
-                void Remove(const string& key, IGraphicsBuffer* value)      { _buffers.Remove(key); }
-                void Remove(const string& key, GraphicsPipeline* value)     { _pipelines.Remove(key); }
-                void Remove(const string& key, IGeometric* value)           { _geometry.Remove(key); }
-                void Remove(const string& key, ITexture* value)             { _textures.Remove(key); }
-
-                void Destroy(const string& key, IGraphicsBuffer* value)
-                {
-                    if (Contains(key, value)) { delete value; }
-                }
-                void Destroy(const string& key, GraphicsPipeline* value)
-                {
-                    if (Contains(key, value)) { delete value; }
-                }
-                void Destroy(const string& key, IGeometric* value)
-                {
-                    if (Contains(key, value)) { delete value; }
-                }
-                void Destroy(const string& key, ITexture* value)
-                {
-                    if (Contains(key, value)) { delete value; }
                 }
 
         };

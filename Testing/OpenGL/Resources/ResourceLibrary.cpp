@@ -6,6 +6,7 @@
 #include "Geometry/Mesh3D.h"
 #include "IO/Functions.h"
 #include "Libraries/Resource.h"
+#include "Pipelines/ShaderPipeline.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::OpenGL;
@@ -47,6 +48,10 @@ TEST_F(_ResourceLibrary, Create)
     ASSERT_EQ(r2->IsEmpty(),        false);
     ASSERT_EQ(r2->IsIndexed(),      true);
     ASSERT_EQ(r2->Count(),          36);
+
+    auto r3 = _l0.Create("G3", Constructor<Geometry3D>());
+    ASSERT_EQ(r3->IsEmpty(),        true);
+    ASSERT_EQ(r3->IsIndexed(),      false);
 }
 TEST_F(_ResourceLibrary, Destroy)
 {
@@ -79,5 +84,21 @@ TEST_F(_ResourceLibrary, Get)
     ASSERT_NE(r2, r6);
 
     auto r7 = _l0.Get<Mesh3D>("G4");
-    ASSERT_EQ(r7, Resource<Mesh3D>("G4", nullptr));
+    ASSERT_EQ(r7.IsNull(), true);
+
+
+    uint c1 = r1->Count();
+    uint c2 = r1.Get(&Mesh3D::Count);
+
+    ASSERT_EQ(c1, c2);
+    ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Triangles);
+}
+TEST_F(_ResourceLibrary, Set)
+{
+    auto r1 = _l0.Create<Mesh3D>("G1", Constructor<Mesh3D>());
+    ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Triangles);
+
+    //r1.Set<Geometry3D&, Mesh3D, PointTopologies>(&Mesh3D::Topology, PointTopologies::Lines);
+    r1.Set(&Mesh3D::Topology, PointTopologies::Lines);
+    ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Lines);
 }
