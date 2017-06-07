@@ -4,9 +4,7 @@
 
 #include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
-#include "IO/Functions.h"
-#include "Libraries/Resource.h"
-#include "Pipelines/ShaderPipeline.h"
+#include "Resources/ResourceLibrary2.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::OpenGL;
@@ -31,6 +29,16 @@ class _ResourceLibrary: public testing::Test
 TEST_F(_ResourceLibrary, Construction)
 {
     ASSERT_EQ(_l0.Count(), 0);
+}
+TEST_F(_ResourceLibrary, Contains)
+{
+    auto r1 = _l0.Create<Mesh3D>("G1");
+    auto r2 = _l0.Create<Geometry3D>("G2");
+    auto r3 = Resource<IGeometric>("G1", nullptr);
+
+    ASSERT_EQ(_l0.Contains(r1),     true);
+    ASSERT_EQ(_l0.Contains(r2),     true);
+    ASSERT_EQ(_l0.Contains(r3),     false);
 }
 TEST_F(_ResourceLibrary, Create)
 {
@@ -100,9 +108,4 @@ TEST_F(_ResourceLibrary, Set)
 
     r1.Set<Geometry3D&, Mesh3D, PointTopologies>(&Mesh3D::Topology, PointTopologies::Lines);
     ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Lines);
-
-    const auto r2 = _l0.Get<Mesh3D>("G1");
-    ASSERT_EQ(r2.Get(&Mesh3D::Topology), PointTopologies::Lines);
-    r2.Set<Geometry3D&, Mesh3D, PointTopologies>(&Mesh3D::Topology, PointTopologies::Points);
-    ASSERT_EQ(r2.Get(&Mesh3D::Topology), PointTopologies::Points);
 }

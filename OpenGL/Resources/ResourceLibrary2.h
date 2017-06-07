@@ -1,5 +1,5 @@
 /* CHANGELOG
- * Written by Josh Grooms on 20170605
+ * Written by Josh Grooms on 20170607
  */
 
 #pragma once
@@ -10,10 +10,9 @@
 #include "Interfaces/IModel.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/ITexture.h"
-#include "IO/Functions.h"
-#include "Libraries/Resource.h"
 #include "Meta/Utilities.h"
 #include "Pipelines/GraphicsPipeline.h"
+#include "Resources/Resource.h"
 
 
 
@@ -21,69 +20,6 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        using namespace Utilities;
-
-        template<typename T>
-        struct Resource
-        {
-            friend class ResourceLibrary2;
-            private:
-
-                string  _name;
-                T*      _value;
-
-            public:
-
-                /** PROPERTIES **/
-                bool IsNull()                               const { return _value == nullptr; }
-                const string& Name()                        const { return _name; }
-
-
-
-                /** CONSTRUCTOR **/
-                Resource():
-                    _name(""),
-                    _value(nullptr)
-                {
-
-                }
-                Resource(const string& name, T* value):     
-                    _name(name),
-                    _value(value)
-                {
-
-                }
-
-
-
-                /** UTILITIES **/
-                template<typename U, typename V = T>
-                U Get(MethodPointer<U, V> accessor)                         { return (_value->*accessor)(); }
-                template<typename U, typename V = T>
-                U Get(ConstMethodPointer<U, V> accessor)                    const { return (_value->*accessor)(); }
-                template<typename U, typename V, typename W>
-                U Set(MethodPointer<U, V, W> accessor, W arguments)         { return (_value->*accessor)(arguments); }
-                template<typename U, typename V, typename W>
-                U Set(ConstMethodPointer<U, V, W> accessor, W argument)     const { return (_value->*accessor)(argument); }
-
-
-
-                /** OPERATORS **/
-                T* operator ->()                            { return _value; }
-                const T* operator ->()                      const { return _value; }
-
-                bool operator ==(const Resource& other)     const
-                {
-                    return (_name == other._name) && _value == other._value;
-                }
-                template<typename U>
-                bool operator ==(const Resource<U>& other)  const { return false; }
-
-                template<typename U>
-                bool operator !=(const Resource<U>& other)  const { return !(operator ==(other)); }
-        };
-
-
         class ResourceLibrary2
         {
             public:
@@ -110,9 +46,15 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                
+                /// <summary> Determines whether a particular resource is stored within the library. </summary>
+                /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
+                /// <param name="value"> An existing resource handle. </param>
                 template<typename T>
-                bool Contains(Resource<T> value)                            const { return Contains(value._name, value._value); }
+                bool Contains(Resource<T> value) const { return Contains(value.Name(), value._value); }
+                /// <summary> Determines whether a particular resource is stored within the library. </summary>
+                /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
+                /// <typeparam name="T"> The type of the desired resource. </typeparam>
+                /// <param name="name"> The string identifier of the resource. </param>
                 template<typename T>
                 bool Contains(const string& name)
                 {
@@ -122,6 +64,7 @@ namespace Cyclone
                         Meta::IsA<T, GraphicsPipeline>()    ? _pipelines.Contains(name) :
                         Meta::IsA<T, ITexture>()            ? _textures.Contains(name)  : false;
                 }
+                /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
                 template<typename T>
                 Resource<T> Create(const string& name)
                 {
@@ -129,6 +72,7 @@ namespace Cyclone
                     Register(name, value);
                     return Resource<T>(name, value);
                 }
+                /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
                 template<typename T, typename ... U>
                 Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
                 {
@@ -137,6 +81,7 @@ namespace Cyclone
                     Register(name, value);
                     return Resource<T>(name, value);
                 }
+                /// <summary> Destroys an existing graphics resource that is stored within the library. </summary>
                 template<typename T>
                 void Destroy(Resource<T> value)
                 {
@@ -147,6 +92,7 @@ namespace Cyclone
 
                     delete value._value;
                 }
+                /// <summary> Acquires a particular graphics resource stored within the library. </summary>
                 template<typename T>
                 Resource<T> Get(const string& name)
                 {
@@ -156,13 +102,6 @@ namespace Cyclone
                         Meta::IsA<T, IGeometric>()          ? Resource<T>(name, dynamic_cast<T*>(_geometry[name]))  :
                         Meta::IsA<T, GraphicsPipeline>()    ? Resource<T>(name, dynamic_cast<T*>(_pipelines[name])) :
                         Resource<T>(name, dynamic_cast<T*>(_textures[name]));
-                }
-
-                template<typename T, typename U, typename V>
-                Resource<T> Set(Resource<T> value, MethodPointer<T&, T, U> accessor, U argument)
-                {
-                    (value._value->*accessor)(argument);
-                    return value;
                 }
 
             private:
@@ -215,8 +154,5 @@ namespace Cyclone
                 }
 
         };
-
-
-
     }
 }

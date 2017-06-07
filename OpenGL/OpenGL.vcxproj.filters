@@ -141,8 +141,11 @@
     <ClInclude Include="Interfaces\IModel.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\Resource.h">
-      <Filter>Libraries</Filter>
+    <ClInclude Include="Resources\Resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceLibrary2.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +255,9 @@
     </Filter>
     <Filter Include="Models">
       <UniqueIdentifier>{732632e1-6f9e-47ef-98eb-3b2ec5a91582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{ca4a9c67-a291-4daf-9ca5-4585391a8c44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
