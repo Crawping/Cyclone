@@ -32,6 +32,9 @@ namespace Cyclone
         template<typename T, typename ... U>
         using FunctionPointer = T(*)(U ... arguments);
 
+        template<typename T, typename U>
+        using MemberPointer = T(U::*);
+
         /// <summary> An alias that represents a general parameterized class method pointer with no return argument. </summary>
         /// <typeparam name="T"> The class to which the method belongs. </typeparam>
         /// <typeparam name="U"> A listing of the method's input argument classes. </typeparam>
