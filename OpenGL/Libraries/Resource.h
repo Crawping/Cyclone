@@ -61,18 +61,10 @@ namespace Cyclone
                 U Get(MethodPointer<U, V> accessor)                         { return (_value->*accessor)(); }
                 template<typename U, typename V = T>
                 U Get(ConstMethodPointer<U, V> accessor)                    const { return (_value->*accessor)(); }
-
-                /*template<typename U, typename W>
-                auto Set(U accessor, W argument) -> 
-                { return (_value->*accessor)(argument); }*/
-
-                template<typename U, typename ... V>
-                U Set(MethodPointer<U, T, V...> accessor, V ... arguments)
-                {
-                    return (_value->*accessor)(arguments...);
-                }
-                //template<typename U, typename V, typename W>
-                //U Set(ConstMethodPointer<U, V, W> accessor, W argument)     const { return (_value->*accessor)(argument); }
+                template<typename U, typename V, typename W>
+                U Set(MethodPointer<U, V, W> accessor, W arguments)         { return (_value->*accessor)(arguments); }
+                template<typename U, typename V, typename W>
+                U Set(ConstMethodPointer<U, V, W> accessor, W argument)     const { return (_value->*accessor)(argument); }
 
 
 
@@ -118,6 +110,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                
                 template<typename T>
                 bool Contains(Resource<T> value)                            const { return Contains(value._name, value._value); }
                 template<typename T>
