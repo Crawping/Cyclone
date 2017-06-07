@@ -17,13 +17,16 @@ static void NumberFunction(int num1, float num2, double num3)   { Number += (num
 class NumberClass
 {
     public:
-        double Number;
+        double _number;
 
-        NumberClass() : Number(0) { }
+        double Number()                     { return _number; }
+        NumberClass& Number(double value)   { _number = value; return *this; }
 
-        void NumberMethod(void)                                 { Number += 1; }
-        void NumberMethod(int num)                              { Number += num; }
-        void NumberMethod(int num1, float num2, double num3)    { Number += (num1 + num2 + num3); }
+        NumberClass() : _number(0) { }
+
+        void NumberMethod(void)                                 { _number += 1; }
+        void NumberMethod(int num)                              { _number += num; }
+        void NumberMethod(int num1, float num2, double num3)    { _number += (num1 + num2 + num3); }
 };
 
 
@@ -32,15 +35,20 @@ class _Functions : public testing::Test
 {
     protected:
 
-        NumberClass                                 _c0;
+        NumberClass                                     _c0;
 
-        Procedure<>                                 _f1;
-        Procedure<int>                              _f2;
-        Procedure<int, float, double>               _f3;
+        Procedure<>                                     _f1;
+        Procedure<int>                                  _f2;
+        Procedure<int, float, double>                   _f3;
 
-        Method<void, NumberClass>                         _m1;
-        Method<void, NumberClass, int>                    _m2;
-        Method<void, NumberClass, int, float, double>     _m3;
+        Method<void, NumberClass>                       _m1;
+        Method<void, NumberClass, int>                  _m2;
+        Method<void, NumberClass, int, float, double>   _m3;
+
+        Method<double, NumberClass>                     _m4;
+        Method<NumberClass&, NumberClass, double>       _m5;
+
+        Property<double, NumberClass, double>           _p1;
         
 
         _Functions() :
@@ -49,7 +57,10 @@ class _Functions : public testing::Test
             _f3(NumberFunction),
             _m1(&_c0, &NumberClass::NumberMethod),
             _m2(&_c0, &NumberClass::NumberMethod),
-            _m3(&_c0, &NumberClass::NumberMethod)
+            _m3(&_c0, &NumberClass::NumberMethod),
+            _m4(&_c0, &NumberClass::Number),
+            _m5(&_c0, &NumberClass::Number),
+            _p1(&_c0, &NumberClass::Number, &NumberClass::Number)
         {
 
         }
@@ -83,13 +94,24 @@ TEST_F(_Functions, FunctionPointerInvocation)
 TEST_F(_Functions, MethodPointerInvocation)
 {
     _m1.Invoke();
-    ASSERT_EQ(_c0.Number, 1);
+    ASSERT_EQ(_c0._number, 1);
 
     _m2.Invoke(2);
-    ASSERT_EQ(_c0.Number, 3);
+    ASSERT_EQ(_c0._number, 3);
 
     _m3.Invoke(-5, 3, -1);
-    ASSERT_EQ(_c0.Number, 0);
+    ASSERT_EQ(_c0._number, 0);
+}
+TEST_F(_Functions, Properties)
+{
+    _m1.Invoke();
+    ASSERT_EQ(_c0._number, 1);
+    ASSERT_EQ(_p1.Invoke(), 1);
+
+    _p1.Invoke(2);
+    ASSERT_EQ(_c0._number, 2);
+    ASSERT_EQ(_p1.Invoke(), 2);
+    ASSERT_EQ(_p1(), 2);
 }
 
 
