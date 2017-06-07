@@ -51,7 +51,7 @@ namespace Cyclone
         /// <typeparam name="T"> The name of the class to which the method belongs. </typeparam>
         /// <typeparam name="U"> A list of types that match the class method's input argument signature. </typeparam>
         template<typename T, typename U, typename ... V>
-        struct Method : public ICallback<T, V...>
+        struct Method: public ICallback<T, V...>
         {
             private:
                 /// <summary> A pointer to the object instance needed to succesfully call a class method. </summary>
@@ -85,7 +85,7 @@ namespace Cyclone
         /// <summary> A structure that represents a pointer to an ordinary procedure. </summary>
         /// <typeparam name="T"> A list of types that match the procedure's input argument signature. </typeparam>
         template<typename ... T>
-        struct Procedure : public ICallback<void, T...>
+        struct Procedure: public ICallback<void, T...>
         {
             private:
 
@@ -111,6 +111,18 @@ namespace Cyclone
                     const auto* fcn = dynamic_cast<const Procedure<T...>*>(&other);
                     return fcn ? (_procedure == fcn->_procedure) : false;
                 }
+        };
+
+
+        template<typename T, typename ... U>
+        struct Constructor: public ICallback<T, U...>
+        {
+            T Invoke(U ... arguments)                                   const override { return T(arguments...); }
+
+            bool operator ==(const ICallback<T, U...>& other)           const override 
+            { 
+                return ( dynamic_cast<const Constructor<T, U...>*>(&other) != nullptr );
+            }
         };
 
     }
