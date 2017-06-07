@@ -4,6 +4,7 @@
 
 #include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
+#include "Libraries/Material3D.h"
 #include "Resources/ResourceLibrary2.h"
 #include <gtest/gtest.h>
 
@@ -60,18 +61,33 @@ TEST_F(_ResourceLibrary, Create)
     auto r3 = _l0.Create("G3", Constructor<Geometry3D>());
     ASSERT_EQ(r3->IsEmpty(),        true);
     ASSERT_EQ(r3->IsIndexed(),      false);
+
+    auto m1 = _l0.Create<Material3D>("M1");
+    ASSERT_EQ(_l0.Count(),          4);
+    ASSERT_EQ(_l0.GeometryCount(),  3);
+    ASSERT_EQ(_l0.MaterialCount(),  1);
 }
 TEST_F(_ResourceLibrary, Destroy)
 {
     auto r1 = _l0.Create("G1", Function<Mesh3D, bool>(&Mesh3D::Quad), false);
-    ASSERT_EQ(_l0.Count(),          1);
+    ASSERT_EQ(_l0.GeometryCount(),  1);
     ASSERT_EQ(r1.IsNull(),          false);
     ASSERT_EQ(r1->Count(),          6);
 
     auto r2 = _l0.Create<Geometry3D>("G2");
+    ASSERT_EQ(_l0.GeometryCount(),  2);
 
     _l0.Destroy(r1);
-    ASSERT_EQ(_l0.Count(),          1);
+    ASSERT_EQ(_l0.GeometryCount(),  1);
+    _l0.Destroy(r2);
+    ASSERT_EQ(_l0.GeometryCount(),  0);
+
+    auto m1 = _l0.Create<Material3D>("M1");
+    ASSERT_EQ(_l0.GeometryCount(),  0);
+    ASSERT_EQ(_l0.MaterialCount(),  1);
+
+    _l0.Destroy(m1);
+    ASSERT_EQ(_l0.MaterialCount(),  0);
 }
 TEST_F(_ResourceLibrary, Get)
 {
@@ -105,4 +121,10 @@ TEST_F(_ResourceLibrary, Set)
 
     r1.Set<Geometry3D&, Mesh3D, PointTopologies>(&Mesh3D::Topology, PointTopologies::Lines);
     ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Lines);
+
+    auto m1 = _l0.Create<Material3D>("M1");
+    ASSERT_EQ(m1.Get(&Material3D::Position), Vector3::Zero);
+
+    m1.Set<Material3D&, Material3D, const Vector3&>(&Material3D::Position, Vector3::One);
+    ASSERT_EQ(m1.Get(&Material3D::Position), Vector3::One);
 }
