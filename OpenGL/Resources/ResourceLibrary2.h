@@ -25,16 +25,23 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                uint BufferCount()      const { return _buffers.Count(); }
+                uint BufferCount()      const { return _buffers.Count() - 1; }
                 uint Count()            const { return BufferCount() + GeometryCount() + PipelineCount() + TextureCount(); }
-                uint GeometryCount()    const { return _geometry.Count(); }
-                uint PipelineCount()    const { return _pipelines.Count(); }
-                uint TextureCount()     const { return _textures.Count(); }
+                uint GeometryCount()    const { return _geometry.Count() - 1; }
+                uint PipelineCount()    const { return _pipelines.Count() - 1; }
+                uint TextureCount()     const { return _textures.Count() - 1; }
                 
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                ResourceLibrary2() { }
+                ResourceLibrary2() 
+                {
+                    _buffers.Insert("Null", nullptr);
+                    _geometry.Insert("Null", nullptr);
+                    _materials.Insert("Null", nullptr);
+                    _pipelines.Insert("Null", nullptr);
+                    _textures.Insert("Null", nullptr);
+                }
                 ~ResourceLibrary2()
                 {
                     for (auto v : _buffers.Values())     { delete v; }
@@ -85,7 +92,7 @@ namespace Cyclone
                 template<typename T>
                 void Destroy(Resource<T> value)
                 {
-                    if (!Contains(value)) { return; }
+                    if (value.IsNull() || !Contains(value)) { return; }
                     Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Remove(value.Name())     : 
                     Meta::IsA<T, IGeometric>()          ? _geometry.Remove(value.Name())    : 
                     Meta::IsA<T, GraphicsPipeline>()    ? _pipelines.Remove(value.Name())   : _textures.Remove(value.Name());
@@ -109,6 +116,7 @@ namespace Cyclone
                 /** DATA **/
                 BST<string, IGraphicsBuffer*>   _buffers;
                 BST<string, IGeometric*>        _geometry;
+                BST<string, IMaterial*>         _materials;
                 BST<string, GraphicsPipeline*>  _pipelines;
                 BST<string, ITexture*>          _textures;
 
