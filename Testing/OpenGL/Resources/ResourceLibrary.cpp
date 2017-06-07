@@ -94,12 +94,9 @@ TEST_F(_ResourceLibrary, Get)
     auto r7 = _l0.Get<Mesh3D>("G4");
     ASSERT_EQ(r7.IsNull(), true);
 
-
-    uint c1 = r1->Count();
-    uint c2 = r1.Get(&Mesh3D::Count);
-
-    ASSERT_EQ(c1, c2);
-    ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Triangles);
+    ASSERT_EQ(r1.Get(&Mesh3D::Count),       r1->Count());
+    ASSERT_EQ(r1.Get(&Mesh3D::Topology),    r1->Topology());
+    ASSERT_EQ(r1.Get(&Mesh3D::Topology),    PointTopologies::Triangles);
 }
 TEST_F(_ResourceLibrary, Set)
 {
