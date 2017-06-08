@@ -24,6 +24,8 @@ namespace Cyclone
 
 
             /** UTILITIES **/
+            /// <summary> Generates a deep copy of the callback structure on the heap. </summary>
+            virtual ICallback<T, U...>* Copy()                          const = 0;
             /// <summary> Executes the callback procedure using the specified input arguments. </summary>
             /// <param name="...arguments"> An argument list that matches the signature of the callback procedure. </param>
             virtual T Invoke(U ... arguments)                           const = 0;

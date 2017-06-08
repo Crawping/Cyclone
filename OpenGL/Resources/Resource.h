@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "IO/Functions.h"
+#include "IO/Members.h"
 
 
 
@@ -20,13 +20,16 @@ namespace Cyclone
             friend class ResourceLibrary2;
             private:
 
+                /** DATA **/
                 string  _name;
                 T*      _value;
 
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets whether the resource has a null value. </summary>
                 bool IsNull()                               const { return _value == nullptr; }
+                /// <summary> Gets the string identifier of the resource. </summary>
                 const string& Name()                        const { return _name; }
 
 
@@ -67,11 +70,6 @@ namespace Cyclone
                 template<typename U>
                 bool operator !=(const Resource<U>& other)                  const { return !(operator ==(other)); }
         };
-
-
-        
-
-
 
     }
 }

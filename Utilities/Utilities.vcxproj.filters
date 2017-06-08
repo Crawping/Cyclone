@@ -192,6 +192,9 @@
     <ClInclude Include="Spatial\LineSegment.h">
       <Filter>Spatial</Filter>
     </ClInclude>
+    <ClInclude Include="IO\Members.h">
+      <Filter>IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

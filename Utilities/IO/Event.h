@@ -3,8 +3,8 @@
  */
 
 #pragma once
-#include "Functions.h"
 #include "Collections/ArrayList.h"
+#include "IO/Members.h"
 
 
 
@@ -19,7 +19,7 @@ namespace Cyclone
 			private:
 
                 ArrayList<ICallback<void, T...>*> Subscriptions;
-    
+
 			public:
 				/** PROPERTIES **/
                 /// <summary> Gets the number of callback functions that are currently registered for this event. </summary>
@@ -40,19 +40,23 @@ namespace Cyclone
 
 				/** UTILITIES **/
                 /// <summary> Removes all callback functions that are currently registered for this event. </summary>
-				void Clear()              
-                { 
+				void Clear()
+                {
                     for (auto callback : Subscriptions)
                         delete callback;
-                    Subscriptions.Clear(); 
+                    Subscriptions.Clear();
+                }
+                void Register(const ICallback<void, T...>* callback)
+                {
+                    Subscriptions.Append(callback->Copy());
                 }
                 /// <summary> Subscribes a new callback function to be executed when this event is triggered. </summary>
-                /// <param name="callback"></param>                
+                /// <param name="callback"></param>
                 void Register(Procedure<T...> callback)
                 {
                     Subscriptions.Append(new Procedure<T...>(callback));
                 }
-                
+
                 template<typename S>
                 void Register(Method<void, S, T...> callback)
                 {
@@ -70,13 +74,13 @@ namespace Cyclone
                 {
                     uint idx = 0;
                     for (auto s : Subscriptions)
-                        if (callback == *s) 
-                        { 
-                            delete s; 
+                        if (callback == *s)
+                        {
+                            delete s;
                             Subscriptions.Remove(idx);
                             return;
                         }
-                        else                
+                        else
                             idx++;
                 }
 
