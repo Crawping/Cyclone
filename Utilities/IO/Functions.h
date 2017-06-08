@@ -84,8 +84,11 @@ namespace Cyclone
 
                 }
 
-                T Invoke()  const override { return (_object->*_field); }
+                T Invoke()                                      const override { return (_object->*_field); }
+                void Invoke(T value)                            { (_object->*_field) = value; }
 
+                T operator ()()                                 const override { return Invoke(); }
+                void operator ()(T value)                       { Invoke(value); }
                 bool operator ==(const ICallback<T>& other)     const override
                 {
                     return (dynamic_cast<Field<T, U>*>(&other) != nullptr);
@@ -96,11 +99,11 @@ namespace Cyclone
         /// <typeparam name="T"> The name of the class to which the method belongs. </typeparam>
         /// <typeparam name="U"> A list of types that match the class method's input argument signature. </typeparam>
         template<typename T, typename U, typename ... V>
-        struct Method: public ICallback<T, V...>
+        struct Method: public Member<T, U, V...>
         {
             private:
                 /// <summary> A pointer to the object instance needed to succesfully call a class method. </summary>
-                U*                          _object;
+                //U*                          _object;
                 /// <summary> A pointer to the method function that will eventually be called. </summary>
                 MethodPointer<T, U, V...>   _method;
 
@@ -110,7 +113,8 @@ namespace Cyclone
                 /// <param name="object"> An instance of the class on which the method will be called. </param>
                 /// <param name="method"> A specific class method to be called on the object. </param>
                 Method(U* object, MethodPointer<T, U, V...> method):
-                    _object(object),
+                    Member(object),
+                    //_object(object),
                     _method(method)
                 {
 
@@ -124,6 +128,30 @@ namespace Cyclone
                 {
                     const auto* mtd = dynamic_cast<const Method<T, U, V...>*>(&other);
                     return mtd ? (_object == mtd->_object) && (_method == mtd->_method) : false;
+                }
+        };
+
+        template<typename T, typename U, typename ... V>
+        struct ConstMethod: public Member<T, U, V...>
+        {
+            private:
+
+                ConstMethodPointer<T, U, V...>  _method;
+
+            public:
+
+                ConstMethod(U* object, ConstMethodPointer<T, U, V...> method):
+                    Member(object)
+                {
+
+                }
+
+                T Invoke(V ... arguments)                           const override { return (_object->*_method)(arguments...); }
+
+                bool operator ==(const ICallback<T, V...>& other)   const override
+                {
+                    const auto* fcn = dynamic_cast<const ConstMethod<T, U, V...>*>(&other);
+                    return (fcn != nullptr) && (_object == fcn->_object) && (_method == fcn->_method);
                 }
         };
 
@@ -153,7 +181,7 @@ namespace Cyclone
 
                 bool operator ==(const ICallback<void, T...>& other)    const override
                 {
-                    const auto* fcn = dynamic_cast<const Procedure<T...>*>(&other);
+                    const auto* fcn = dynamic_cast<const Procedure*>(&other);
                     return fcn ? (_procedure == fcn->_procedure) : false;
                 }
         };
@@ -164,34 +192,49 @@ namespace Cyclone
 
             private:
 
-                Method<T, U>        _get;
-                Method<U&, U, V>    _set;
+                Member<T, U>*       _get;
+                Member<U&, U, V>*   _set;
+
+                //Method<T, U>        _get;
+                //Method<U&, U, V>    _set;
 
             public:
 
                 Property(U* object, MethodPointer<T, U> get, MethodPointer<U&, U, V> set = nullptr):
+                    //Property(object, Method<T, U>(object, get), Method<U&, U, V>(object, set))
                     Member(object),
-                    _get(object, get),
-                    _set(object, set)
+                    _get(new Method<T, U>(object, get)),
+                    _set(new Method<U&, U, V>(object, set))
                 {
 
                 }
-                Property(U* object, Method<T, U> get, Method<U&, U, V> set):
+                Property(U* object, ConstMethodPointer<T, U> get, MethodPointer<U&, U, V> set = nullptr):
                     Member(object),
-                    _get(get),
-                    _set(set)
+                    _get(new ConstMethod<T, U>(object, get)),
+                    _set(new Method<U&, U, V>(object, set))
                 {
 
                 }
+                //Property(U* object, Method<T, U> get, Method<U&, U, V> set):
+                //    Member(object),
+                //    _get(get),
+                //    _set(set)
+                //{
 
-                T Invoke()                      const override { return _get(); }
-                U& Invoke(V argument)           { return _set(argument); }
-
-                T operator ()()                 const override { return Invoke(); }
-                U& operator ()(V argument)      { return Invoke(argument); }
-                bool operator ==(const ICallback<T>& other) const override
+                //}
+                ~Property()
                 {
-                    const auto* fcn = dynamic_cast<const Property<T, U, V>*>(&other);
+                    if (_get) { delete _get; }
+                    if (_set) { delete _set; }
+                }
+                T Invoke()                                              const override { return _get->Invoke(); }
+                U& Invoke(V argument)                                   { return _set->Invoke(argument); }
+
+                T operator ()()                                         const override { return Invoke(); }
+                U& operator ()(V argument)                              { return Invoke(argument); }
+                bool operator ==(const ICallback<T>& other)             const override
+                {
+                    const auto* fcn = dynamic_cast<const Property*>(&other);
                     return (fcn != nullptr) && (fcn->_get == _get) && (fcn->_set == _set);
                 }
 

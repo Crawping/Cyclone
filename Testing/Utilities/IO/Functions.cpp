@@ -112,6 +112,9 @@ TEST_F(_Functions, Properties)
     ASSERT_EQ(_c0._number, 2);
     ASSERT_EQ(_p1.Invoke(), 2);
     ASSERT_EQ(_p1(), 2);
+
+    _p1(_p1() + _p1());
+    ASSERT_EQ(_p1(), 4);
 }
 
 
