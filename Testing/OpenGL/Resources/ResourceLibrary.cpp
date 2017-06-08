@@ -48,21 +48,14 @@ TEST_F(_ResourceLibrary, Create)
     auto r1 = _l0.Create<Mesh3D>("G1");
     ASSERT_EQ(_l0.Count(),          1);
     ASSERT_EQ(_l0.GeometryCount(),  1);
-    ASSERT_EQ(r1.Name(),            "G1");
-    ASSERT_EQ(r1->IsEmpty(),        true);
-    ASSERT_EQ(r1->Count(),          0);
 
     auto r2 = _l0.Create("G2", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
     ASSERT_EQ(_l0.Count(),          2);
     ASSERT_EQ(_l0.GeometryCount(),  2);
-    ASSERT_EQ(r2.Name(),            "G2");
-    ASSERT_EQ(r2->IsEmpty(),        false);
-    ASSERT_EQ(r2->IsIndexed(),      true);
-    ASSERT_EQ(r2->Count(),          36);
 
     auto r3 = _l0.Create("G3", Constructor<Geometry3D>());
-    ASSERT_EQ(r3->IsEmpty(),        true);
-    ASSERT_EQ(r3->IsIndexed(),      false);
+    ASSERT_EQ(_l0.Count(),          3);
+    ASSERT_EQ(_l0.GeometryCount(),  3);
 
     auto m1 = _l0.Create<Material3D>("M1");
     ASSERT_EQ(_l0.Count(),          4);
@@ -73,8 +66,6 @@ TEST_F(_ResourceLibrary, Destroy)
 {
     auto r1 = _l0.Create("G1", Function<Mesh3D, bool>(&Mesh3D::Quad), false);
     ASSERT_EQ(_l0.GeometryCount(),  1);
-    ASSERT_EQ(r1.IsNull(),          false);
-    ASSERT_EQ(r1->Count(),          6);
 
     auto r2 = _l0.Create<Geometry3D>("G2");
     ASSERT_EQ(_l0.GeometryCount(),  2);
@@ -111,29 +102,4 @@ TEST_F(_ResourceLibrary, Get)
 
     auto r7 = _l0.Get<Mesh3D>("G4");
     ASSERT_EQ(r7.IsNull(), true);
-
-    ASSERT_EQ(r1.Get(&Mesh3D::Count),       r1->Count());
-    ASSERT_EQ(r1.Get(&Mesh3D::Topology),    r1->Topology());
-    ASSERT_EQ(r1.Get(&Mesh3D::Topology),    PointTopologies::Triangles);
-}
-TEST_F(_ResourceLibrary, Properties)
-{
-    //auto r1 = _l0.Create<Mesh3D>("M1");
-    auto m1 = Mesh3D::Cube();
-    //auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&m1, &Geometry3D::Topology, &Geometry3D::Topology);
-    auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&m1, &Geometry3D::Topology, &Geometry3D::Topology);
-}
-TEST_F(_ResourceLibrary, Set)
-{
-    auto r1 = _l0.Create<Mesh3D>("G1", Constructor<Mesh3D>());
-    ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Triangles);
-
-    r1.Set<Geometry3D&, Mesh3D, PointTopologies>(&Mesh3D::Topology, PointTopologies::Lines);
-    ASSERT_EQ(r1.Get(&Mesh3D::Topology), PointTopologies::Lines);
-
-    auto m1 = _l0.Create<Material3D>("M1");
-    ASSERT_EQ(m1.Get(&Material3D::Position), Vector3::Zero);
-
-    m1.Set<Material3D&, Material3D, const Vector3&>(&Material3D::Position, Vector3::One);
-    ASSERT_EQ(m1.Get(&Material3D::Position), Vector3::One);
 }
