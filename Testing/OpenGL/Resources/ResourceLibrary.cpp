@@ -4,11 +4,13 @@
 
 #include "Geometry/Geometry3D.h"
 #include "Geometry/Mesh3D.h"
+#include "IO/Functions.h"
 #include "Libraries/Material3D.h"
 #include "Resources/ResourceLibrary2.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::OpenGL;
+using namespace Cyclone::Utilities;
 
 
 
@@ -113,6 +115,13 @@ TEST_F(_ResourceLibrary, Get)
     ASSERT_EQ(r1.Get(&Mesh3D::Count),       r1->Count());
     ASSERT_EQ(r1.Get(&Mesh3D::Topology),    r1->Topology());
     ASSERT_EQ(r1.Get(&Mesh3D::Topology),    PointTopologies::Triangles);
+}
+TEST_F(_ResourceLibrary, Properties)
+{
+    //auto r1 = _l0.Create<Mesh3D>("M1");
+    auto m1 = Mesh3D::Cube();
+    //auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&m1, &Geometry3D::Topology, &Geometry3D::Topology);
+    auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&m1, &Geometry3D::Topology, &Geometry3D::Topology);
 }
 TEST_F(_ResourceLibrary, Set)
 {
