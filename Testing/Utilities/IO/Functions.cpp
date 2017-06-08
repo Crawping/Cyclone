@@ -3,6 +3,7 @@
  */
 
 #include "IO/Functions.h"
+#include "IO/Members.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;

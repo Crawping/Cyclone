@@ -3,9 +3,11 @@
  */
 
 #include "Geometry/Mesh3D.h"
+#include "IO/Members.h"
 #include "Libraries/Material3D.h"
 #include "Resources/Resource.h"
 #include "Resources/ResourceLibrary2.h"
+#include "Textures/Texture3D.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::OpenGL;
@@ -64,10 +66,19 @@ TEST_F(_Resource, Get)
 }
 TEST_F(_Resource, Properties)
 {
-    //auto r1 = _l0.Create<Mesh3D>("M1");
-    auto m1 = Mesh3D::Cube();
-    //auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&m1, &Geometry3D::Topology, &Geometry3D::Topology);
-    auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&m1, &Geometry3D::Topology, &Geometry3D::Topology);
+    auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&*_g1, &Geometry3D::Topology, &Geometry3D::Topology);
+    ////auto p2 = Property<
+    auto p2 = Property<const Texture3D*, Material3D, void>(&*_m1, &Material3D::Texture);
+
+    ASSERT_EQ(p1(), PointTopologies::Triangles);
+    ASSERT_EQ(p2(), nullptr);
+
+    p1(PointTopologies::Points);
+    ASSERT_EQ(p1(), PointTopologies::Points);
+
+    Texture3D* tex = nullptr;
+    p2(tex);
+    ASSERT_EQ(p2(), nullptr);
 }
 TEST_F(_Resource, Set)
 {

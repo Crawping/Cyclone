@@ -57,6 +57,7 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                T& operator *()                                             { return *_value; }
                 T* operator ->()                                            { return _value; }
                 const T* operator ->()                                      const { return _value; }
 
