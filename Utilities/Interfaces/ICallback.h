@@ -17,6 +17,12 @@ namespace Cyclone
         struct ICallback
         {
 
+            /** META PROPERTIES **/
+            //using ReturnType = T;
+            //using InputTypes = Meta::List<U...>;
+
+
+
             /** DESTRUCTOR **/
             /// <summary> Destroys any specially allocated resources held by the callback object. </summary>
             virtual ~ICallback() { }

@@ -97,5 +97,8 @@
     <ClCompile Include="Spatial\Volume.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="IO\Members.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

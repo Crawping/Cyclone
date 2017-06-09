@@ -91,40 +91,119 @@ namespace Cyclone
                 T& operator ()(U argument)                          const override { }
         };
 
-        //template<typename T, typename U> using Getter = Property<T, U, void>;
-        //template<typename T, typename U> using Setter = Property<void, T, U>;
-
-
-        template<typename T>
-        struct Getter: public ICallback< typename Meta::ReturnType<T>::Value >
+        template<typename T> struct Functor
         {
-            using ReturnType = Meta::ReturnType<T>::Value;
-
-            private:
-                T _get;
+            protected:
+                T _value;
 
             public:
+                Functor(T value):                               _value(value) { }
+        };
 
-                Getter(T get): _get(get) { }
+        template<typename T> struct Accessor { };
 
-                ReturnType Invoke()     const override { return _get(); }
-
-
+        template<typename T, typename ... U>
+        struct Accessor<FunctionPointer<T, U...>>:
+            public Functor<FunctionPointer<T>>
+        {
+            using Functor::Functor;
+            T operator ()(void* object, U ... arguments)        const { return (_value)(arguments...); }
+        };
+        template<typename T, typename U>
+        struct Accessor<MemberPointer<T, U>>:
+            public Functor<MemberPointer<T, U>>
+        {
+            using Functor::Functor;
+            T operator ()(U* object, T value)                   const { return (object->*_value) = value; }
+            T operator ()(U& object, T value)                   const { return (object.*_value) = value; }
+        };
+        template<typename T, typename U, typename ... V>
+        struct Accessor<ConstMethodPointer<T, U, V...>>:        public Functor<ConstMethodPointer<T, U, V...>>
+        {
+            using Functor::Functor;
+            T operator ()(U* object, V ... arguments)           const { return (object->*_value)(arguments...); }
+            T operator ()(U& object, V ... arguments)           const { return (object.*_value)(arguments...); }
+        };
+        template<typename T, typename U, typename ... V>
+        struct Accessor<MethodPointer<T, U, V...>>:             public Functor<MethodPointer<T, U, V...>>
+        {
+            using Functor::Functor;
+            T operator ()(U* object, V ... arguments)           const { return (object->*_value)(arguments...); }
+            T operator ()(U& object, V ... arguments)           const { return (object.*_value)(arguments...); }
         };
 
 
-        //template<typename T, typename U>
-        //struct Prop
-        //{
-        //    private:
-        //        
-        //        T _get;
-        //        U _set;
 
-        //    public:
+        template<typename T, typename U, typename V> struct Property2
+        {
+            using ValueType = typename Meta::Functor<U>::Output;
 
-        //        
-        //}
+            private:
+
+                Property2<void, U, V>   _accessors;
+                T*                      _object;
+
+            public:
+                
+                Property2(T* object, U get, V set): 
+                    _accessors(get, set),
+                    _object(object)
+                {
+
+                }
+                Property2(T* object, Property2<void, U, V> accessors):
+                    _accessors(accessors),
+                    _object(object)
+                {
+
+                }
+
+
+
+                template<typename ... W>
+                auto operator ()(W ... arguments)               const { return _accessors(_object, arguments...); }
+
+
+                operator ValueType() const { return operator ()(); }
+                Property2 operator =(ValueType value)           { _accessors(_object, value); return *this; }
+
+        };
+
+        template<typename U, typename V> struct Property2<void, U, V>
+        {
+            private:
+                Accessor<U> _get;
+                Accessor<V> _set;
+
+            public:
+                
+                Property2(Accessor<U> get, Accessor<V> set): 
+                    _get(get), 
+                    _set(set) 
+                {
+
+                }
+
+
+
+                /** UTILITIES **/
+                template<typename T>
+                Property<T, U, V> Bind(T* object)               const { return Property<T, U, V>(object, *this); }
+
+                /** OPERATORS **/
+                template<typename W>
+                auto operator ()(W& object)                     const { return _get(object); }
+
+                template<typename W>
+                auto operator ()(W* object)                     const { return _get(object); }
+
+                template<typename W, typename ... X>
+                void operator ()(W& object, X ... values)       const { _set(object, values...); }
+
+                template<typename W, typename ... X>
+                void operator ()(W* object, X ... values)       const { _set(object, values...); }
+        };
+
 
     }
 }
