@@ -205,6 +205,7 @@
     <ClInclude Include="IO\Functions.h" />
     <ClInclude Include="IO\InputControls.h" />
     <ClInclude Include="IO\Members.h" />
+    <ClInclude Include="IO\Specializations\Accessors.h" />
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="Math\Matrix4x4.h" />

@@ -195,6 +195,9 @@
     <ClInclude Include="IO\Members.h">
       <Filter>IO</Filter>
     </ClInclude>
+    <ClInclude Include="IO\Specializations\Accessors.h">
+      <Filter>IO\Specializations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -220,6 +223,9 @@
     </Filter>
     <Filter Include="Meta">
       <UniqueIdentifier>{e95f5526-e8ed-4197-a672-3e9fe37a95df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\Specializations">
+      <UniqueIdentifier>{74eeebdb-e9fd-49c5-ae93-d1c70d59b52e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

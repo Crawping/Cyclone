@@ -159,8 +159,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                //Property* Copy()                                        const override { return new Property(_object, _get, _set); }
-                Property* Copy()                                        const override { return nullptr; }
+                Property* Copy()                                        const override { return new Property(_object, _get, _set); }
+                //Property* Copy()                                        const override { return nullptr; }
                 T Invoke()                                              const override { return _get->Invoke(); }
                 U& Invoke(V argument)                                   { return _set->Invoke(argument); }
 
@@ -177,40 +177,11 @@ namespace Cyclone
 
         };
 
-        template<typename T, typename U>
-        struct Property<T, U, void>: public Member<T, U>
-        {
-            private:
-                
-                Member<T, U>*   _get;
-
-            public:
-
-                Property(U* object, MethodPointer<T, U> get):
-                    Member<T, U>(object),
-                    _get(new Method<T, U>(object, get))
-                {
-
-                }
-                Property(U* object, ConstMethodPointer<T, U> get):
-                    Member<T, U>(object),
-                    _get(new ConstMethod<T, U>(object, get))
-                {
-
-                }
-                ~Property() { if (_get) { delete _get; } }
 
 
-                Property Copy()                                         const override { return new Property(_object, get); }
-                T Invoke()                                              const override { return _get->Invoke(); }
-
-                T operator ()()                                         const override { return Invoke(); }
-                bool operator ==(const ICallback<T>& other)             const override
-                {
-                    const auto* fcn = dynamic_cast<const Property*>(&other);
-                    return (fcn != nullptr) && (_object == fcn->_object) && (_get == fcn->_get);
-                }
-        };
 
     }
 }
+
+
+#include "IO/Specializations/Accessors.h"
