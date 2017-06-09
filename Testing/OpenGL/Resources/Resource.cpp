@@ -69,6 +69,7 @@ TEST_F(_Resource, Properties)
     auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&*_g1, &Geometry3D::Topology, &Geometry3D::Topology);
     ////auto p2 = Property<
     auto p2 = Property<const Texture3D*, Material3D, void>(&*_m1, &Material3D::Texture);
+    //auto p3 = p2;
 
     ASSERT_EQ(p1(), PointTopologies::Triangles);
     ASSERT_EQ(p2(), nullptr);
@@ -76,9 +77,9 @@ TEST_F(_Resource, Properties)
     p1(PointTopologies::Points);
     ASSERT_EQ(p1(), PointTopologies::Points);
 
-    Texture3D* tex = nullptr;
-    p2(tex);
-    ASSERT_EQ(p2(), nullptr);
+    //Texture3D* tex = nullptr;
+    //p2(tex);
+    //ASSERT_EQ(p2(), nullptr);
 }
 TEST_F(_Resource, Set)
 {
