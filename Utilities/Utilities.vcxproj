@@ -205,6 +205,7 @@
     <ClInclude Include="IO\Functions.h" />
     <ClInclude Include="IO\InputControls.h" />
     <ClInclude Include="IO\Members.h" />
+    <ClInclude Include="IO\Property.h" />
     <ClInclude Include="IO\Specializations\Accessors.h" />
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Math.h" />
@@ -218,7 +219,6 @@
     <ClInclude Include="Meta\List.h" />
     <ClInclude Include="Meta\Primitives.h" />
     <ClInclude Include="Meta\Utilities.h" />
-    <ClInclude Include="Property.h" />
     <ClInclude Include="Spatial\Area.h" />
     <ClInclude Include="Spatial\Border.h" />
     <ClInclude Include="Spatial\Camera.h" />

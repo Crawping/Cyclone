@@ -86,7 +86,6 @@
     <ClInclude Include="Math\Constants.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Property.h" />
     <ClInclude Include="Collections\List.h">
       <Filter>Collections</Filter>
     </ClInclude>
@@ -197,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="IO\Specializations\Accessors.h">
       <Filter>IO\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Property.h">
+      <Filter>IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
