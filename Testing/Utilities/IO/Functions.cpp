@@ -49,8 +49,7 @@ class _Functions : public testing::Test
         Method<double, NumberClass>                     _m4;
         Method<NumberClass&, NumberClass, double>       _m5;
 
-        Property<double, NumberClass, double>           _p1;
-        
+
 
         _Functions() :
             _f1(NumberFunction),
@@ -60,8 +59,7 @@ class _Functions : public testing::Test
             _m2(&_c0, &NumberClass::NumberMethod),
             _m3(&_c0, &NumberClass::NumberMethod),
             _m4(&_c0, &NumberClass::Number),
-            _m5(&_c0, &NumberClass::Number),
-            _p1(&_c0, &NumberClass::Number, &NumberClass::Number)
+            _m5(&_c0, &NumberClass::Number)
         {
 
         }
@@ -103,22 +101,3 @@ TEST_F(_Functions, MethodPointerInvocation)
     _m3.Invoke(-5, 3, -1);
     ASSERT_EQ(_c0._number, 0);
 }
-TEST_F(_Functions, Properties)
-{
-    _m1.Invoke();
-    ASSERT_EQ(_c0._number, 1);
-    ASSERT_EQ(_p1.Invoke(), 1);
-
-    _p1.Invoke(2);
-    ASSERT_EQ(_c0._number, 2);
-    ASSERT_EQ(_p1.Invoke(), 2);
-    ASSERT_EQ(_p1(), 2);
-
-    _p1(_p1() + _p1());
-    ASSERT_EQ(_p1(), 4);
-}
-
-
-
-
-

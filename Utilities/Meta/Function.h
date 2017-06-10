@@ -57,20 +57,6 @@ namespace Cyclone
             template<typename T, typename U>                    using Member = Functor<MemberPointer<T, U>>;
             template<typename T, typename U, typename ... V>    using Method = Functor<MethodPointer<T, U, V...>>;
 
-
-            //template<typename T> struct InputTypes              { };
-            //template<typename T, typename U, typename ... V>
-            //struct InputTypes< MethodPointer<T, U, V...> >      { using Value = List<V...>; };
-
-            //template<typename T> struct ReturnType              { };
-            //template<typename T, typename U, typename ...V>
-            //struct ReturnType< MethodPointer<T, U, V...> >      { using Value = T; };
-
-            ////template<typename T, typename U>
-            ////struct ReturnType<MemberPointer<T, U>>              { using };
-
-            //template<typename T, typename ... U>
-            //struct ReturnType< ICallback<T, U...> >             { using Value = T; };
         }
     }
 }

@@ -15,13 +15,12 @@ namespace Cyclone
         namespace Meta
         {
 
-            template<typename T>
-            constexpr auto Declare()                            noexcept { return std::declval<T>(); }
+            template<typename T> constexpr auto Declare()       noexcept { return std::declval<T>(); }
 
             template<typename T>
-            constexpr Boolean<true> IsBaseOf(const T*)          { return { }; }
+            constexpr Boolean<true> IsDerived(const T*)         { return { }; }
             template<typename T>
-            constexpr Boolean<false> IsBaseOf(const void*)      { return { }; }
+            constexpr Boolean<false> IsDerived(const void*)     { return { }; }
 
             /// <summary> Returns one of two types depending on whether the inputted Boolean expression evaluates to true. </summary>
             /// <typeparam name="S"> A Boolean expression that resolves to either <c>true</c> or <c>false</c> at compile time. </typeparam>
@@ -47,7 +46,7 @@ namespace Cyclone
             template<typename T> struct IsConstant<const T*>:   Boolean<true> { };
             template<typename T> struct IsConstant<const T&>:   Boolean<true> { };
 
-            template<typename T, typename U> struct IsA:        decltype(IsBaseOf<U>(Declare<T*>())) { };
+            template<typename T, typename U> struct IsA:        decltype(IsDerived<U>(Declare<T*>())) { };
             template<typename T> struct IsA<T, T>:              Boolean<true> { };
 
             /// <summary> Determines whether the input represents a pointer type. </summary>

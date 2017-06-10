@@ -16,13 +16,6 @@ namespace Cyclone
         template<typename T, typename ... U>
         struct ICallback
         {
-
-            /** META PROPERTIES **/
-            //using ReturnType = T;
-            //using InputTypes = Meta::List<U...>;
-
-
-
             /** DESTRUCTOR **/
             /// <summary> Destroys any specially allocated resources held by the callback object. </summary>
             virtual ~ICallback() { }
@@ -50,7 +43,6 @@ namespace Cyclone
             /// <returns> A Boolean <c>true</c> if the two procedures are not the same, or <c>false</c> otherwise. </returns>
             /// <param name="other"> A reference to another callback procedure. </param>
             virtual bool operator !=(const ICallback<T, U...>& other)   const { return !(operator ==(other)); }
-
         };
 
     }
