@@ -51,3 +51,13 @@ TEST_F(_String, Indexing)
 	for (uint a = 0; a < _ss1.size(); a++)
 		ASSERT_EQ(_s1(a),		_ss1[a]);
 }
+TEST_F(_String, Equality)
+{
+    constexpr String s1 = "Testing";
+    constexpr String s2 = "testing";
+    constexpr bool b1 = (s1 == s1);
+    constexpr bool b2 = (s1 != s2);
+
+    ASSERT_TRUE(b1);
+    ASSERT_TRUE(b2);
+}

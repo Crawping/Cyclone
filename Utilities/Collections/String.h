@@ -53,14 +53,20 @@ namespace Cyclone
 
 				/** OPERATORS **/
 				/// <summary> Implicitly converts a static string object into a standard C++ string. </summary>
-				operator std::string()                      const { return Value(); }
+				operator std::string()                              const { return Value(); }
 				/// <summary> Gets the character at a specific position within the string. </summary>
-				constexpr char operator ()(uint index)      const { return (index < Count()) ? Value()[index] : '\0'; }
+				constexpr char operator ()(uint index)              const { return (index < Count()) ? Value()[index] : '\0'; }
 
 				/// <summary> Determines whether two strings are equivalent to one another. </summary>
-				bool operator ==(const std::string& other)  const { return string(*this) == other; }
+                constexpr bool operator ==(const String& other)     const
+                {
+                    if (Count() != other.Count()) { return false; }
+                    for (uint a = 0; a < _count; a++)
+                        if (_value[a] != other(a)) { return false; }
+                    return true;
+                }
 				/// <summary> Determines whether two strings are not equivalent to one another. </summary>
-				bool operator !=(const std::string& other)  const { return !(operator ==(other)); }
+                constexpr bool operator !=(const String& other)     const { return !operator ==(other); }
 
 			private:
 
