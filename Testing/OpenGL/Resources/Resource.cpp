@@ -28,11 +28,17 @@ class _Resource: public testing::Test
         Resource<Material3D>    _m0;
         Resource<Material3D>    _m1;
 
+        Attribute<Geometry3D, PointTopologies>  _p1;
+        Attribute<Material3D, const Color4&>    _p2;
+
+
         _Resource():
             _g1(_l0.Create<Mesh3D>("G1")),
             _g2(_l0.Create<Mesh3D>("G2", Constructor<Mesh3D>())),
             _g3(_l0.Create<Mesh3D>("G3", Function<Mesh3D, bool>(&Mesh3D::Cube), true)),
-            _m1(_l0.Create<Material3D>("M1"))
+            _m1(_l0.Create<Material3D>("M1")),
+            _p1(&Mesh3D::Topology, &Mesh3D::Topology),
+            _p2(&Material3D::PrimaryColor, &Material3D::PrimaryColor)
         {
             
         }
@@ -60,35 +66,20 @@ TEST_F(_Resource, Construction)
 }
 TEST_F(_Resource, Get)
 {
-    ASSERT_EQ(_g1.Get(&Mesh3D::Count),          _g1->Count());
-    ASSERT_EQ(_g1.Get(&Mesh3D::Topology),       _g1->Topology());
-    ASSERT_EQ(_g1.Get(&Mesh3D::Topology),       PointTopologies::Triangles);
-}
-TEST_F(_Resource, Properties)
-{
-    auto p1 = Property<PointTopologies, Geometry3D, PointTopologies>(&*_g1, &Geometry3D::Topology, &Geometry3D::Topology);
-    ////auto p2 = Property<
-    auto p2 = Property<const Texture3D*, Material3D, void>(&*_m1, &Material3D::Texture);
-    //auto p3 = p2;
-
-    ASSERT_EQ(p1(), PointTopologies::Triangles);
-    ASSERT_EQ(p2(), nullptr);
-
-    p1(PointTopologies::Points);
-    ASSERT_EQ(p1(), PointTopologies::Points);
-
-    //Texture3D* tex = nullptr;
-    //p2(tex);
-    //ASSERT_EQ(p2(), nullptr);
+    ASSERT_EQ(_g1[_p1],                     PointTopologies::Triangles);
+    ASSERT_EQ(_m1[_p2],                     Color4::Black);
 }
 TEST_F(_Resource, Set)
 {
-    ASSERT_EQ(_g1.Get(&Mesh3D::Topology),       PointTopologies::Triangles);
-    ASSERT_EQ(_m1.Get(&Material3D::Position),   Vector3::Zero);
+    _g1[_p1] = PointTopologies::Lines;
+    _m1[_p2] = Color4::White;
 
-    _g1.Set<Geometry3D&, Mesh3D, PointTopologies>(&Mesh3D::Topology, PointTopologies::Lines);
-    _m1.Set<Material3D&, Material3D, const Vector3&>(&Material3D::Position, Vector3::One);
-
-    ASSERT_EQ(_g1.Get(&Mesh3D::Topology),       PointTopologies::Lines);
-    ASSERT_EQ(_m1.Get(&Material3D::Position),   Vector3::One);
+    ASSERT_EQ(_g1[_p1],                     PointTopologies::Lines);
+    ASSERT_EQ(_m1[_p2],                     Color4::White);
+}
+TEST_F(_Resource, Upcast)
+{
+    Resource<IMaterial> m1 = _m1;
+    Attribute<IMaterial, const Color4&> p2(&IMaterial::PrimaryColor, nullptr);
+    ASSERT_EQ(m1[p2],                       Color4::Black);
 }

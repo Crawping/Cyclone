@@ -49,6 +49,7 @@ namespace Cyclone
                     _renderables.Insert("Null", nullptr);
                     _textures.Insert("Null", nullptr);
                 }
+                ResourceLibrary2(const ResourceLibrary2& other) = delete;
                 ~ResourceLibrary2()
                 {
                     for (auto v : _buffers.Values())        { delete v; }
