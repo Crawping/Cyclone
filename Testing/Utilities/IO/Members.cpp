@@ -28,9 +28,9 @@ class _Members: public testing::Test
         TestStruct  _t0;
         Transform3D _t1;
 
-        property<TestStruct, float>                     _p1;
-        property<Transform3D, const Vector3&>           _p2;
-        property<Transform3D, float, const Vector3&>    _p3;
+        Property<TestStruct, float>                     _p1;
+        Property<Transform3D, const Vector3&>           _p2;
+        Property<Transform3D, float, const Vector3&>    _p3;
 
 
 
@@ -72,4 +72,7 @@ TEST_F(_Members, Accessors)
     ASSERT_EQ(_p1,          3.14159f);
     ASSERT_EQ(_p2,          Vector3(2));
     ASSERT_EQ(_p3,          3.0f);
+
+    _p3 = _p2;
+    ASSERT_EQ(_p3,          2.0f);
 }

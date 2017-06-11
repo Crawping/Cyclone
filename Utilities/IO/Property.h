@@ -12,28 +12,29 @@ namespace Cyclone
     namespace Utilities
     {
         
-        template<typename T, typename U, typename ... V> struct Property { };
+        //template<typename T, typename U> struct FreeProperty;
+        template<typename T, typename ... U> struct PropertyBase { };
 
         template<typename T, typename U, typename V> 
-        struct Property<T, U, V>
+        struct PropertyBase<T, U, V>
         {
             using OutputType = typename Meta::Functor<U>::Output;
             using InputType = typename Meta::Functor<V>::Inputs::First::Type;
 
             private:
 
-                Property<void, U, V>    _accessors;
-                T*                      _object;
+                PropertyBase<void, U, V>    _accessors;
+                T*                          _object;
 
             public:
                 
-                Property(T* object, U get, V set):
+                PropertyBase(T* object, U get, V set):
                     _accessors(get, set),
                     _object(object)
                 {
 
                 }
-                Property(T* object, Property<void, U, V> accessors):
+                PropertyBase(T* object, PropertyBase<void, U, V> accessors):
                     _accessors(accessors),
                     _object(object)
                 {
@@ -43,7 +44,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                Property<void, U, V> Unbind()                   const { return _accessors; }
+                PropertyBase<void, U, V> Unbind()               const { return _accessors; }
 
 
                 template<typename ... W>
@@ -51,7 +52,18 @@ namespace Cyclone
 
 
                 operator OutputType()                           const { return _accessors(_object); }
-                Property& operator =(InputType value)           { _accessors(_object, value); return *this; }
+                PropertyBase& operator =(InputType value)       { _accessors(_object, value); return *this; }
+
+                template<typename W, typename ... X>
+                PropertyBase& operator =(PropertyBase<W, X...> value)
+                {
+                    using Other = PropertyBase<W, X...>;
+                    static_assert(Meta::IsA< Other::OutputType, InputType >(),
+                        "Types must agree.");
+
+                    _accessors(_object, value());
+                    return *this;
+                }
 
 
                 bool operator ==(OutputType value)              const { return (_accessors(_object) == value); }
@@ -59,16 +71,20 @@ namespace Cyclone
 
         };
 
-        template<typename U, typename V> struct Property<void, U, V>
+        template<typename T, typename U> 
+        struct PropertyBase<void, T, U>
         {
+            using OutputType = typename Meta::Functor<T>::Output;
+            using InputType = typename Meta::Functor<U>::Inputs::First::Type;
+
             private:
 
-                Accessor<U> _get;
-                Accessor<V> _set;
+                Accessor<T> _get;
+                Accessor<U> _set;
 
             public:
                 
-                Property(Accessor<U> get, Accessor<V> set): 
+                PropertyBase(Accessor<T> get, Accessor<U> set): 
                     _get(get), 
                     _set(set) 
                 {
@@ -78,8 +94,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                template<typename T>
-                Property<T, U, V> Bind(T* object)               const { return Property<T, U, V>(object, *this); }
+                template<typename V>
+                PropertyBase<V, T, U> Bind(T* object)           const { return PropertyBase<V, T, U>(object, *this); }
 
 
 
@@ -95,24 +111,43 @@ namespace Cyclone
 
                 template<typename W, typename ... X>
                 void operator ()(W* object, X ... values)       const { _set(object, values...); }
+
+
+                bool operator ==(const PropertyBase& other)     const { return (_get == other._get) && (_set == other._set); }
+                bool operator !=(const PropertyBase& other)     const { return !operator ==(other); }
         };
 
-
         template<typename T, typename ... U>
-        struct property { };
+        struct Property { };
 
         template<typename T, typename U>
-        struct property<T, U>:              public Property< T, ConstMethodPointer<U, T>, MethodPointer<T&, T, U> > 
+        struct Property<T, U>:              public PropertyBase< T, ConstMethodPointer<U, T>, MethodPointer<T&, T, U> > 
         { 
-            using Property::Property; 
-            using Property::operator =;
+            using PropertyBase::PropertyBase; 
+            using PropertyBase::operator =;
         };
 
         template<typename T, typename U, typename V>
-        struct property<T, U, V>:           public Property< T, ConstMethodPointer<U, T>, MethodPointer<T&, T, V> >
+        struct Property<T, U, V>:           public PropertyBase< T, ConstMethodPointer<U, T>, MethodPointer<T&, T, V> >
         {
-            using Property::Property;
-            using Property::operator =;
+            using PropertyBase::PropertyBase;
+            using PropertyBase::operator =;
+        };
+
+
+
+        template<typename T, typename ... U> struct Attribute { };
+
+        template<typename T, typename U>
+        struct Attribute<T, U>:             public PropertyBase< void, ConstMethodPointer<U, T>, MethodPointer<T&, T, U> > 
+        {
+            using PropertyBase::PropertyBase;
+        };
+
+        template<typename T, typename U, typename V>
+        struct Attribute<T, U, V>:          public PropertyBase< void, ConstMethodPointer<U, T>, MethodPointer<T&, T, V> >
+        {
+            using PropertyBase::PropertyBase;
         };
 
     }

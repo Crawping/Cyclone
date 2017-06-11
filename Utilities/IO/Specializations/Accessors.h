@@ -56,5 +56,12 @@ namespace Cyclone
             T operator ()(U& object, V ... arguments)           const { return (object.*_value)(arguments...); }
         };
 
+
+        template<typename T, typename U>
+        struct Getter:                                          public Accessor< ConstMethodPointer<T, U> >
+        {
+            using Accessor::Accessor;
+        };
+
     }
 }
