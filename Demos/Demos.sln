@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderers", "Renderers\Renderers.vcxproj", "{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}"
 EndProject
@@ -50,6 +50,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SVG3D - Drawing", "SVG3D - Drawing\SVG3D - Drawing.vcxproj", "{B41B6BB9-DA86-4040-803B-B762CBF86600}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core - Extension Support", "Core - Extension Support\Core - Extension Support.vcxproj", "{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI - Chromium Embedded Framework", "UI - Chromium Embedded Framework\UI - Chromium Embedded Framework.vcxproj", "{04060B8D-BC30-4A19-BE6B-22B9CE996754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -447,6 +449,22 @@ Global
 		{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}.UniversalDebug|x64.Build.0 = Debug|x64
 		{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}.UniversalDebug|x86.ActiveCfg = Debug|Win32
 		{AFAFD929-E2BB-4873-A3F3-DC290A6CC44C}.UniversalDebug|x86.Build.0 = Debug|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Debug|x64.ActiveCfg = Debug|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Debug|x64.Build.0 = Debug|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Debug|x86.ActiveCfg = Debug|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Debug|x86.Build.0 = Debug|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Release|x64.ActiveCfg = Release|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Release|x64.Build.0 = Release|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Release|x86.ActiveCfg = Release|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Release|x86.Build.0 = Release|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Universal|x64.ActiveCfg = Release|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Universal|x64.Build.0 = Release|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Universal|x86.ActiveCfg = Release|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.Universal|x86.Build.0 = Release|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.UniversalDebug|x64.ActiveCfg = Debug|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.UniversalDebug|x64.Build.0 = Debug|x64
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.UniversalDebug|x86.ActiveCfg = Debug|Win32
+		{04060B8D-BC30-4A19-BE6B-22B9CE996754}.UniversalDebug|x86.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
