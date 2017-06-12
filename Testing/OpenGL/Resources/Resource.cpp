@@ -24,6 +24,7 @@ class _Resource: public testing::Test
         Resource<Mesh3D>        _g1;
         Resource<Mesh3D>        _g2;
         Resource<Mesh3D>        _g3;
+        Resource<Geometry3D>    _g4;
         
         Resource<Material3D>    _m0;
         Resource<Material3D>    _m1;
@@ -36,6 +37,7 @@ class _Resource: public testing::Test
             _g1(_l0.Create<Mesh3D>("G1")),
             _g2(_l0.Create<Mesh3D>("G2", Constructor<Mesh3D>())),
             _g3(_l0.Create<Mesh3D>("G3", Function<Mesh3D, bool>(&Mesh3D::Cube), true)),
+            _g4(_l0.Create<Geometry3D>("G4")),
             _m1(_l0.Create<Material3D>("M1")),
             _p1(&Mesh3D::Topology, &Mesh3D::Topology),
             _p2(&Material3D::PrimaryColor, &Material3D::PrimaryColor)
@@ -77,9 +79,21 @@ TEST_F(_Resource, Set)
     ASSERT_EQ(_g1[_p1],                     PointTopologies::Lines);
     ASSERT_EQ(_m1[_p2],                     Color4::White);
 }
-TEST_F(_Resource, Upcast)
+TEST_F(_Resource, Casting)
 {
     Resource<IMaterial> m1 = _m1;
     Attribute<IMaterial, const Color4&> p2(&IMaterial::PrimaryColor, nullptr);
     ASSERT_EQ(m1[p2],                       Color4::Black);
+
+    Resource<Material3D> m2 = m1;
+    ASSERT_EQ(m2[_p2],                      Color4::Black);
+
+    /* Won't compile (by design) 
+     *
+     *  Resource<Mesh3D> g1 = m2;
+     *  ASSERT_EQ(g1.IsNull(),                  true);
+     */
+
+    Resource<Mesh3D> g2 = _g4;
+    ASSERT_EQ(g2.IsNull(),                  true);
 }

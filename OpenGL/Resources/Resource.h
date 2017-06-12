@@ -6,6 +6,7 @@
 
 #include "IO/Members.h"
 #include "IO/Property.h"
+#include "Meta/Utilities.h"
 
 
 
@@ -16,6 +17,7 @@ namespace Cyclone
         using namespace Utilities;
 
         /// <summary> A data structure that serves as a handle to a particular graphics resource. </summary>
+        /// <typeparam name="T"> The type of the resource referred to by this handle. </typeparam>
         template<typename T> struct Resource
         {
             friend class ResourceLibrary2;
@@ -75,8 +77,8 @@ namespace Cyclone
                 template<typename U>
                 operator Resource<U>()                                      const
                 {
-                    static_assert(Meta::IsA<T, U>(), "Invalid upcast attempted.");
-                    return Resource<U>(_name, _value);
+                    static_assert(Meta::IsA<T, U>() || Meta::IsA<U, T>(), "Invalid casting operation attempted.");
+                    return Resource<U>(_name, dynamic_cast<U*>(_value));
                 }
 
                 T* operator ->()                                            { return _value; }
