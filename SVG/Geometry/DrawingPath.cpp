@@ -39,23 +39,23 @@ namespace Cyclone
         /** UTILITIES **/
         void DrawingPath::Append(const ControlPoint2D& point)
         {
-            _geometry.Append(point);
-            if (point.Coordinates.IsEmpty()) { return; }
+            //_geometry.Append(point);
+            //if (point.Coordinates.IsEmpty()) { return; }
 
-            Vector2 ptCoords(point.Coordinates(0), point.Coordinates(1));
-            Path2D* pt = new Path2D(Geometry2D::Circle());
+            //Vector2 ptCoords(point.Coordinates(0), point.Coordinates(1));
+            //Path2D* pt = new Path2D(Geometry2D::Circle());
 
-            pt->
-                 Offset(ptCoords)
-                .Size(PointSize())
+            //pt->
+            //     Offset(ptCoords)
+            //    .Size(PointSize())
 
-                .JoinStyle(JoinStyles::Round)
-                .StrokeWidth(0)
-                .PrimaryColor(_pointColor)
-                .Z(Z() + 0.01f);
+            //    .JoinStyle(JoinStyles::Round)
+            //    .StrokeWidth(0)
+            //    .PrimaryColor(_pointColor)
+            //    .Z(Z() + 0.01f);
 
-            Points.Append(pt);
-            _needsUpdate = true;
+            //Points.Append(pt);
+            //_needsUpdate = true;
         }
         void DrawingPath::Clear()
         {

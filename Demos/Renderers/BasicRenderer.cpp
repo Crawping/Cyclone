@@ -4,7 +4,7 @@
 #include "Window3D.h"
 
 #include "Buffers/FrameBuffer.h"
-#include "Geometry/Model3D.h"
+#include "Models/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 #include "Spatial/Camera.h"
@@ -113,7 +113,7 @@ namespace Renderers
             .Orientation(Vector3::Zero)
             .Position(Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f));
 
-        Projection = Transform::PerspectiveProjection
+        Projection = Transform3D::PerspectiveProjection
         (
             90,
             clientArea.Width / clientArea.Height,

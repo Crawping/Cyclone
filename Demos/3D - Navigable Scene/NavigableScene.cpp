@@ -7,9 +7,10 @@
 #include "Utilities.h"
 #include "Window3D.h"
 
+#include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Model3D.h"
-#include "Geometry/Point3D.h"
+#include "Models/Model3D.h"
+#include "Models/Point3D.h"
 #include "Geometry/Vertex.h"
 #include "IO/Console.h"
 #include "Math/Constants.h"
@@ -36,59 +37,66 @@ class Program : public AdvancedRenderer
 
     protected:
 
-        Model3D  Cube;
-        Model3D  Cylinder;
-        Model3D  Icosahedron;
-        Point3D Point;
+        Entity3D Cube;
+        Entity3D Cylinder;
+        Entity3D Icosahedron;
+        //Model3D  Cube;
+        //Model3D  Cylinder;
+        //Model3D  Icosahedron;
+        //Point3D Point;
 
 
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
 
-            Cube = Model3D(Mesh3D::Cube(true));
-            Icosahedron = Model3D(Mesh3D::Icosahedron());
-            Cylinder = Model3D(Mesh3D::Cylinder(64));
+            //Cube = Entity3D()
+            //Cube = Model3D(Mesh3D::Cube(true));
+            //Icosahedron = Model3D(Mesh3D::Icosahedron());
+            //Cylinder = Model3D(Mesh3D::Cylinder(64));
         
             Vector2 ctrWin = RenderWindow->ClientArea().Center();
             Vector2 szWin = RenderWindow->Size();
 
             Cube
+                .Geometry(Mesh3D::Cube(true))
                 .PrimaryColor(Color4::Yellow)
-                .Scale(100, 100, 100)
-                .Translate(Vector3(ctrWin - (szWin / 8.0f), 50));
+                .Translate(Vector3(ctrWin - (szWin / 8.0f), 50))
+                .Scale(100, 100, 100);
 
             Cylinder
+                .Geometry(Mesh3D::Cylinder(64))
                 .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
-                .Scale(50, 125, 50)
-                .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50));
+                .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50))
+                .Scale(50, 125, 50);
 
             Icosahedron
+                .Geometry(Mesh3D::Icosahedron())
                 .PrimaryColor(Color4::Magenta)
-                .Scale(100, 100, 100)
-                .Translate(Vector3(ctrWin + (szWin / 8.0f), 50));
+                .Translate(Vector3(ctrWin + (szWin / 8.0f), 50))
+                .Scale(100, 100, 100);
 
-            Point
-                .PrimaryColor(Color4::Cyan)
-                .Scale(100, 100, 1)
-                .Translate(Vector3(ctrWin + (szWin / Vector2(-8.0f, 8.0f))));
+            //Point
+            //    .PrimaryColor(Color4::Cyan)
+            //    .Scale(100, 100, 1)
+            //    .Translate(Vector3(ctrWin + (szWin / Vector2(-8.0f, 8.0f))));
 
             RenderScene->Insert(Cube);
             RenderScene->Insert(Cylinder);
             RenderScene->Insert(Icosahedron);
-            RenderScene->Insert(Point);
+            //RenderScene->Insert(Point);
         }
         void UpdateScene() override
         {
             Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
             Cylinder.Rotate(Vector3(0.0f, 0.0f, 0.01f));
             Icosahedron.Rotate(Vector3(0.01f, 0.0f, 0.0f));
-            Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated, so this has no effect.
+            //Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated, so this has no effect.
 
             RenderScene->Update(Cube);
             RenderScene->Update(Cylinder);
             RenderScene->Update(Icosahedron);
-            RenderScene->Update(Point);
+            //RenderScene->Update(Point);
 
             AdvancedRenderer::UpdateScene();
         }

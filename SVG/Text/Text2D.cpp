@@ -52,7 +52,8 @@ namespace Cyclone
         /** PROTECTED UTILITIES **/
         void Text2D::CoverFill()                const
         {
-            Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+            //Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+            Matrix4x4 model = Model().Transform().ToMatrix4x4();
 
             nvCoverFillPathInstanced
             (
@@ -125,7 +126,8 @@ namespace Cyclone
         }
         void Text2D::UpdateGeometry()           const
         {
-            Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+            //Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+            Matrix4x4 model = Model().Transform().ToMatrix4x4();
             nvTransformPath(ID(), ID(), TransformTypes::TransposeAffine3D, model.Transpose().ToArray());
         }
 

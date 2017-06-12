@@ -17,21 +17,21 @@ namespace Cyclone
             NeedsUpdate = true;
             return *this;
         }
-        Rectangle2D& Rectangle2D::Offset(const Vector3& value)
-        {
-            Path2D::Offset(value);
-            NeedsUpdate = true;
-            return *this;
-        }
-        Rectangle2D& Rectangle2D::Size(const Vector3& value)
-        {
-            Path2D::Size(value);
-            float x = -value.X / 2.0f, y = -value.Y / 2.0f;
-            _geometry.Set(0, { PathCommands::RoundedRectangle, { x, y, value.X, value.Y, CornerRadius() } });
-            _geometry.Bounds(Area(x, y, value.X, value.Y));
-            NeedsUpdate = true;
-            return *this;
-        }
+        //Rectangle2D& Rectangle2D::Offset(const Vector3& value)
+        //{
+        //    Path2D::Offset(value);
+        //    NeedsUpdate = true;
+        //    return *this;
+        //}
+        //Rectangle2D& Rectangle2D::Size(const Vector3& value)
+        //{
+        //    Path2D::Size(value);
+        //    float x = -value.X / 2.0f, y = -value.Y / 2.0f;
+        //    _geometry.Set(0, { PathCommands::RoundedRectangle, { x, y, value.X, value.Y, CornerRadius() } });
+        //    _geometry.Bounds(Area(x, y, value.X, value.Y));
+        //    NeedsUpdate = true;
+        //    return *this;
+        //}
 
 
 
@@ -71,7 +71,7 @@ namespace Cyclone
                 crds.ToArray()
             );
 
-            nvTransformPath(ID(), ID(), TransformTypes::Translate3D, &(Entity2D::Offset().X));
+            //nvTransformPath(ID(), ID(), TransformTypes::Translate3D, &(Entity2D::Offset().X));
         }
     }
 }

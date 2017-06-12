@@ -26,11 +26,11 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                using Entity2D::Offset;
-                using Entity2D::Size;
+                //using Entity2D::Offset;
+                //using Entity2D::Size;
 
                 virtual const Volume& Bounds()          const { return _geometry.Bounds(); }
-                virtual const Geometry2D& Geometry()    const override { return _geometry; }
+                //virtual const Geometry2D& Geometry()    const override { return _geometry; }
                 /// <summary> Gets whether the path object has been terminated by a close command. </summary>
                 virtual bool IsClosed()                 const { return _geometry.IsClosed(); }
                 /// <summary> Gets whether the path has any stored commands. </summary>
@@ -38,8 +38,8 @@ namespace Cyclone
 
                 virtual bool NeedsUpdate()              const override { return _needsUpdate || Entity2D::NeedsUpdate(); }
 
-                SVGAPI virtual Path2D& Size(const Vector3& value)       override;
-                SVGAPI virtual Path2D& Offset(const Vector3& value)     override;
+                //SVGAPI virtual Path2D& Size(const Vector3& value)       override;
+                //SVGAPI virtual Path2D& Offset(const Vector3& value)     override;
 
 
 

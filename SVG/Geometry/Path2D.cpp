@@ -11,7 +11,7 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Path2D& Path2D::Offset(const Vector3& value)
+ /*       Path2D& Path2D::Offset(const Vector3& value)
         {
             Entity2D::Offset(value);
             _needsUpdate = true;
@@ -23,7 +23,7 @@ namespace Cyclone
             _needsUpdate = true;
             return *this;
         }
-
+*/
 
 
         /** CONSTRUCTORS & DESTRUCTOR **/
@@ -61,21 +61,21 @@ namespace Cyclone
         /** PROTECTED UTILITIES **/
         void Path2D::UpdateGeometry() const
         {
-            auto cmds = Geometry().Commands();
-            auto crds = Geometry().Parameters();
+            //auto cmds = Geometry().Commands();
+            //auto crds = Geometry().Parameters();
 
-            nvPathCommands
-            (
-                ID(),
-                cmds.Count(),
-                (const ubyte*)(cmds.ToArray()),
-                crds.Count(),
-                NumericFormats::Float,
-                crds.ToArray()
-            );
+            //nvPathCommands
+            //(
+            //    ID(),
+            //    cmds.Count(),
+            //    (const ubyte*)(cmds.ToArray()),
+            //    crds.Count(),
+            //    NumericFormats::Float,
+            //    crds.ToArray()
+            //);
 
-            Matrix4x4 model = Transforms().Model().ToMatrix4x4();
-            nvTransformPath(ID(), ID(), TransformTypes::TransposeAffine3D, model.Transpose().ToArray());
+            //Matrix4x4 model = Transforms().Model().ToMatrix4x4();
+            //nvTransformPath(ID(), ID(), TransformTypes::TransposeAffine3D, model.Transpose().ToArray());
         }
 
     }

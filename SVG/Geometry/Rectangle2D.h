@@ -16,16 +16,16 @@ namespace Cyclone
             public:
                             
                 /** PROPERTIES **/
-                using Path2D::Offset;
-                using Path2D::Size;
+                //using Path2D::Offset;
+                //using Path2D::Size;
 
                 /// <summary> Gets the radius of the curvature applied to the rectangle's corners in pixels. </summary>
                 float CornerRadius()            const { return _geometry(0).Coordinates.Last(); }
 
                 /// <summary> Sets the radius of curvature applied to the rectangle's corners in pixels. </summary>
                 SVGAPI Rectangle2D& CornerRadius(float value);
-                SVGAPI Rectangle2D& Offset(const Vector3& value)    override;
-                SVGAPI Rectangle2D& Size(const Vector3& value)      override;
+                //SVGAPI Rectangle2D& Offset(const Vector3& value)    override;
+                //SVGAPI Rectangle2D& Size(const Vector3& value)      override;
 
 
 

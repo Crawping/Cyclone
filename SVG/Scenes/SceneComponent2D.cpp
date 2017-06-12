@@ -66,12 +66,12 @@ namespace Cyclone
             Resources.Insert(entity2D, data);
             _stage.Insert(data->Map.EntityKey.Index(), *entity2D);
 
-            for (auto& c : entity2D->Components())
-            {
-                Insert(c);
-                if (auto* c2d = Downcast(c))
-                    data->Components.Insert(c2d);
-            }
+            //for (auto& c : entity2D->Components())
+            //{
+            //    Insert(c);
+            //    if (auto* c2d = Downcast(c))
+            //        data->Components.Insert(c2d);
+            //}
 
             _needsUpdate = true;
         }
@@ -115,12 +115,12 @@ namespace Cyclone
 
             entity2D->Update();
             ComponentData* data = Resources[entity2D];
-            for (const auto& cmp : entity2D->Components())
-            {
-                Insert(cmp);
-                if (auto* c2d = Downcast(cmp))
-                    data->Components.Insert(c2d);
-            }   
+            //for (const auto& cmp : entity2D->Components())
+            //{
+            //    Insert(cmp);
+            //    if (auto* c2d = Downcast(cmp))
+            //        data->Components.Insert(c2d);
+            //}   
         }
 
     }

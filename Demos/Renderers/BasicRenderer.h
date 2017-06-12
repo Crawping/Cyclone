@@ -66,7 +66,7 @@ namespace Renderers
 
             /** DATA **/
             Color4              ClearColor;
-            Transform           Projection;
+            Transform3D         Projection;
             GPU*                Renderer;
             ShaderPipeline*     RenderPipeline;
             Scene3D*            RenderScene;
