@@ -196,6 +196,10 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
+        ulong Window3D::ID() const
+        {
+            return (ulong)Internals->ID;
+        }
         Window3D& Window3D::IsTrackingKeyRepeat(bool value)
         {
             _isTrackingKeyRepeat = value;

@@ -83,8 +83,9 @@
       <AdditionalIncludeDirectories>..\..\..\CEF;..\..\Core; ..\..\CoreGL; ..\..\OpenGL; ..\..\Platform; ..\..\SVG;..\..\UserInterface;..\..\Utilities;..\Renderers;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);..\..\..\CEF\Debug;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);..\..\..\CEF\Debug;..\..\..\CEF\build\libcef_dll_wrapper\Debug;</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcef_dll_wrapper.lib;libcef.lib;..\..\Debug\OpenGL.lib;..\..\Debug\Platform.lib;..\..\Debug\SVG.lib;..\..\Debug\UserInterface.lib;..\..\Debug\Utilities.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>LinkVerbose</ShowProgress>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -129,6 +130,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DisplayHandler.h" />
     <ClInclude Include="EventHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
