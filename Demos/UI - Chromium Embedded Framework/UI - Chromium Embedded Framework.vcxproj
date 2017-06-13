@@ -80,10 +80,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>..\..\..\CEF;..\..\Core; ..\..\CoreGL; ..\..\OpenGL; ..\..\Platform; ..\..\SVG;..\..\UserInterface;..\..\Utilities;..\Renderers;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);C:\Source\Cyclone\Demos\Debug\CEF</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libcef.lib;..\..\Debug\OpenGL.lib;..\..\Debug\Platform.lib;..\..\Debug\SVG.lib;..\..\Debug\UserInterface.lib;..\..\Debug\Utilities.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);..\..\..\CEF\Debug;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcef_dll_wrapper.lib;libcef.lib;..\..\Debug\OpenGL.lib;..\..\Debug\Platform.lib;..\..\Debug\SVG.lib;..\..\Debug\UserInterface.lib;..\..\Debug\Utilities.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -126,6 +127,9 @@
     <ProjectReference Include="..\Renderers\Renderers.vcxproj">
       <Project>{0e5c9560-1acc-4ff7-b6a9-afc6e48b98f7}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EventHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

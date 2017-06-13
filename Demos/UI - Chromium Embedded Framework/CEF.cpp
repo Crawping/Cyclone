@@ -3,6 +3,7 @@
  */
 
 #include "BasicRenderer.h"
+#include "EventHandler.h"
 #include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
 #include "Scenes/Scene3D.h"
@@ -27,8 +28,8 @@ class Program: public BasicRenderer
 
     protected:
 
-        Entity3D Cube;
-
+        Entity3D        Cube;
+        //EventHandler    Events;
 
         void CreateSceneResources() override
         {
@@ -51,6 +52,13 @@ class Program: public BasicRenderer
 int main(int nargs, char** args)
 {
     Program app;
+
+    CefEnableHighDPISupport();
+    //CefMainArgs cefArgs;
+    //cefArgs.
+    //CefMainArgs cefArgs(nargs, args);
+    //CefMainArgs cefArgs = CefMainArgs()
+
     app.Execute();
     return 0;
 }

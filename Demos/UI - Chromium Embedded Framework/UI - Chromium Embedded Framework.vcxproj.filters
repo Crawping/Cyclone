@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="CEF.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EventHandler.h" />
+  </ItemGroup>
 </Project>
