@@ -2,7 +2,7 @@
  * Written by Josh Grooms on 20170612
  */
 
-#include "BasicRenderer.h"
+#include "AdvancedRenderer.h"
 #include "EventHandler.h"
 #include "GPU.h"
 
@@ -18,21 +18,22 @@ using namespace Cyclone::OpenGL;
 
 
 
-class Program: public BasicRenderer
+class Program: public AdvancedRenderer
 {
     public:
 
         Texture3D* Image()          { return BrowserImage; }
-        const Window3D* Window()    const { return RenderWindow; }
+        Window3D* Window()          { return RenderWindow; }
 
         Program():
-            BasicRenderer(Area(0, 0, 1024, 960), "UI - CEF"),
+            AdvancedRenderer(Area(0, 0, 1024, 960), "UI - CEF"),
             BrowserImage(nullptr),
             Cube()
         {
+            IsFreeLookEnabled = false;
             Initialize();
         }
-        ~Program() { if (BrowserImage) { delete BrowserImage; } }
+        ~Program()                  { if (BrowserImage) { delete BrowserImage; } }
 
 
         void Execute() override
@@ -45,7 +46,7 @@ class Program: public BasicRenderer
                 Render();
                 Renderer->Present();
 
-                Console::WriteLine(Renderer->Report());
+                //Console::WriteLine(Renderer->Report());
             }
         }
 
@@ -59,13 +60,13 @@ class Program: public BasicRenderer
 
         void CreateSceneResources() override
         {
-            BasicRenderer::CreateSceneResources();
+            AdvancedRenderer::CreateSceneResources();
 
             Cube
                 .Geometry(Mesh3D::Cube(true))
                 .PrimaryColor(Color4::Blue)
                 .Translate(Vector3(512, 480, 50))
-                .Scale(Vector3(200, 200, 200))
+                .Scale(200)
                 .Pitch(Constants::Pi<float> / 4)
                 .Yaw(Constants::Pi<float> / 4);
 
@@ -91,11 +92,6 @@ class Program: public BasicRenderer
 
         void CreateShaderPipeline() override
         {
-            //RenderPipeline = new ShaderPipeline
-            //(
-            //    "../Renderers/Shaders/BlinnPhong.vsl",
-            //    "../Renderers/Shaders/BlinnPhong.psl"
-            //);
             RenderPipeline = new ShaderPipeline
             (
                 "../Renderers/Shaders/Default.vsl",
@@ -107,7 +103,7 @@ class Program: public BasicRenderer
         {
             Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
             RenderScene->Update(Cube);
-            BasicRenderer::UpdateScene();
+            AdvancedRenderer::UpdateScene();
         }
 };
 
@@ -123,11 +119,6 @@ class ProgramCEF:
         virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override
         {
             return this;
-        }
-
-        void OnContextInitialized() override
-        {
-
         }
 
     private:
@@ -156,7 +147,7 @@ int main(int nargs, char** args)
 
     Program app;
 
-    CefRefPtr<EventHandler> handler(new EventHandler(app.Image()));
+    CefRefPtr<EventHandler> handler(new EventHandler(app.Window(), app.Image()));
     CefBrowserSettings browserSettings;
 
     string url = cmds->GetSwitchValue("url");

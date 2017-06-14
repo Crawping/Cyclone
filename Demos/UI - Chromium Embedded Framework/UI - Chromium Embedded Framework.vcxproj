@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CEF.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Renderers\Renderers.vcxproj">
