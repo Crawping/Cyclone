@@ -3,7 +3,8 @@
  */
 
 #include "BasicRenderer.h"
-#include "DisplayHandler.h"
+#include "EventHandler.h"
+#include "GPU.h"
 
 #include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
@@ -21,14 +22,31 @@ class Program: public BasicRenderer
 {
     public:
 
-        const Window3D* Window() const { return RenderWindow; }
+        Texture3D* Image()          { return BrowserImage; }
+        const Window3D* Window()    const { return RenderWindow; }
 
         Program():
             BasicRenderer(Area(0, 0, 1024, 960), "UI - CEF"),
+            BrowserImage(nullptr),
             Cube()
         {
-            
             Initialize();
+        }
+        ~Program() { if (BrowserImage) { delete BrowserImage; } }
+
+
+        void Execute() override
+        {
+            while (CanContinue())
+            {
+                RenderWindow->ProcessEvent();
+                CefDoMessageLoopWork();
+                UpdateScene();
+                Render();
+                Renderer->Present();
+
+                Console::WriteLine(Renderer->Report());
+            }
         }
 
 
@@ -36,7 +54,8 @@ class Program: public BasicRenderer
     protected:
 
         Entity3D        Cube;
-        //EventHandler    Events;
+        Entity3D        BrowserPage;
+        Texture3D*      BrowserImage;
 
         void CreateSceneResources() override
         {
@@ -50,17 +69,45 @@ class Program: public BasicRenderer
                 .Pitch(Constants::Pi<float> / 4)
                 .Yaw(Constants::Pi<float> / 4);
 
+            BrowserImage = new Texture3D
+            (
+                Vector4(RenderWindow->ClientArea().Scale()), 
+                TextureFormats::Byte4, 
+                TextureTargets::Texture2D
+            );
+
+            BrowserImage->MakeResident();
+
+            BrowserPage
+                .Geometry(Mesh3D::Quad(true))
+                .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, 10.0f))
+                .PrimaryColor(Color4::Green)
+                .Scale(RenderWindow->ClientArea().Scale())
+                .Texture(BrowserImage);
+
             RenderScene->Insert(Cube);
-            RenderScene->Update(Cube);
+            RenderScene->Insert(BrowserPage);
         }
 
         void CreateShaderPipeline() override
         {
+            //RenderPipeline = new ShaderPipeline
+            //(
+            //    "../Renderers/Shaders/BlinnPhong.vsl",
+            //    "../Renderers/Shaders/BlinnPhong.psl"
+            //);
             RenderPipeline = new ShaderPipeline
             (
-                "../Renderers/Shaders/BlinnPhong.vsl",
-                "../Renderers/Shaders/BlinnPhong.psl"
+                "../Renderers/Shaders/Default.vsl",
+                "../3D - Image Display/TexturedShading.psl"
             );
+        }
+
+        void UpdateScene() override
+        {
+            Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
+            RenderScene->Update(Cube);
+            BasicRenderer::UpdateScene();
         }
 };
 
@@ -71,7 +118,6 @@ class ProgramCEF:
 {
     public:
         
-        //ProgramCEF(const Program& app): Application(app) { }
         ProgramCEF() { }
 
         virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override
@@ -81,28 +127,10 @@ class ProgramCEF:
 
         void OnContextInitialized() override
         {
-            //CefRefPtr<CefCommandLine> cmds = CefCommandLine::GetGlobalCommandLine();
-            //bool useViews = cmds->HasSwitch("use-views");
-            //cmds->AppendSwitch("off-screen-rendering-enabled");
-            //cmds->AppendSwitch("enable-gpu");
 
-            //CefRefPtr<DisplayHandler> handler(new DisplayHandler());
-            //CefBrowserSettings settings;
-
-            //string url = cmds->GetSwitchValue("url");
-            //if (url.empty()) { url = "http://www.google.com"; }
-
-            //CefWindowInfo winSettings;
-            //winSettings.windowless_rendering_enabled = true;
-            ////winSettings.SetAsWindowless((HWND)Application.Window()->ID());
-            //winSettings.SetAsWindowless(nullptr);
-
-            //CefBrowserHost::CreateBrowser(winSettings, handler, url, settings, nullptr);
         }
 
     private:
-
-        //const Program& Application;
 
         IMPLEMENT_REFCOUNTING(ProgramCEF);
 };
@@ -119,36 +147,27 @@ int main(int nargs, char** args)
     CefSettings settings;
     settings.no_sandbox = true;
     settings.windowless_rendering_enabled = true;
-    //settings.external_message_pump = true;
 
-    //CefRefPtr<ProgramCEF> cefApp(new ProgramCEF(app));
     CefRefPtr<ProgramCEF> cefApp(new ProgramCEF());
     CefInitialize(cefArgs, settings, cefApp.get(), nullptr);
 
-
     CefRefPtr<CefCommandLine> cmds = CefCommandLine::GetGlobalCommandLine();
     bool useViews = cmds->HasSwitch("use-views");
-    cmds->AppendSwitch("off-screen-rendering-enabled");
-    cmds->AppendSwitch("enable-gpu");
 
-    CefRefPtr<DisplayHandler> handler(new DisplayHandler());
+    Program app;
+
+    CefRefPtr<EventHandler> handler(new EventHandler(app.Image()));
     CefBrowserSettings browserSettings;
 
     string url = cmds->GetSwitchValue("url");
     if (url.empty()) { url = "http://www.google.com"; }
 
-    Program app;
 
     CefWindowInfo winSettings;
     winSettings.windowless_rendering_enabled = true;
     winSettings.SetAsWindowless((HWND)app.Window()->ID());
-    //winSettings.SetAsWindowless(nullptr);
 
     CefBrowserHost::CreateBrowser(winSettings, handler, url, browserSettings, nullptr);
-
-
-    //CefInitialize(cefArgs, settings, nullptr, nullptr);
-    CefDoMessageLoopWork();
 
     app.Execute();
     CefShutdown();

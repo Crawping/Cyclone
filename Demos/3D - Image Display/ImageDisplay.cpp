@@ -7,10 +7,11 @@
 #include "GPU.h"
 #include "Window3D.h"
 
+#include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Model3D.h"
 #include "Imaging/Bitmap.h"
 #include "IO/Console.h"
+#include "Models/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Textures/Texture2D.h"
 using namespace Renderers;
@@ -39,7 +40,7 @@ class Program : public AdvancedRenderer
     protected:
 
         Vector<Texture2D*>  Images;
-        Vector<Model3D*> Quads;
+        Vector<Entity3D*> Quads;
 
 
         void CreateSceneResources() override
@@ -56,7 +57,7 @@ class Program : public AdvancedRenderer
 
             uint nimgs = images.Count();
             Images = Vector<Texture2D*>(nimgs);
-            Quads = Vector<Model3D*>(nimgs);
+            Quads = Vector<Entity3D*>(nimgs);
 
             for (uint a = 0; a < nimgs; a++)
             {
@@ -64,12 +65,12 @@ class Program : public AdvancedRenderer
                 Images(a)->GenerateMipmap();
                 Images(a)->MakeResident();
 
-                Quads(a) = new Model3D();
+                Quads(a) = new Entity3D();
                 Quads(a)->
                      Geometry(Mesh3D::Quad(true))
                     .PrimaryColor(Color4::Blue)
                     .Position(RenderWindow->ClientArea().Center())
-                    .Scale(Images(a)->Width() / 10.0f, Images(a)->Height() / 10.0f)
+                    .Scale(Vector3(Images(a)->Width() / 10.0f, Images(a)->Height() / 10.0f))
                     .Texture(Images(a))
                     .Z(a * 100);
 
@@ -78,7 +79,11 @@ class Program : public AdvancedRenderer
         }
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../3D - Image Display/TexturedShading.psl");
+            RenderPipeline = new ShaderPipeline
+            (
+                "../Renderers/Shaders/Default.vsl",
+                "../3D - Image Display/TexturedShading.psl"
+            );
         }
 
 

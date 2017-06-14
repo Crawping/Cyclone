@@ -5,6 +5,5 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventHandler.h" />
-    <ClInclude Include="DisplayHandler.h" />
   </ItemGroup>
 </Project>
