@@ -52,6 +52,7 @@ namespace Cyclone
                 /// <summary> Gets the width of this window (including borders) in pixels. </summary>
                 uint Width()                        const { return (uint)_displayArea.Width; }
 
+                /// <summary> Gets the numeric identifier for the window. </summary>
                 PlatformAPI ulong ID() const;
 
                 /// <summary> Sets the title string that is displayed on the upper window border. </summary>
