@@ -115,7 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="RotatingCube.cpp" />
+    <ClCompile Include="BasicCube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Renderers\Renderers.vcxproj">

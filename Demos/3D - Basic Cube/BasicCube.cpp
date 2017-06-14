@@ -2,8 +2,9 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
+#include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Model3D.h"
+#include "GL/OpenGL.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
@@ -24,7 +25,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Model3D Cube;
+        Entity3D Cube;
         Vector3 Rotation;
 
         void CreateSceneResources() override
@@ -35,7 +36,7 @@ class Program : public BasicRenderer
                 .Position(RenderWindow->ClientArea().Center())
                 .Pitch(90)
                 .Roll(90)
-                .Scale(200, 200, 200);
+                .Scale(200);
 
             RenderScene->Insert(Cube);
         }
@@ -48,7 +49,11 @@ class Program : public BasicRenderer
 
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
+            RenderPipeline = new ShaderPipeline
+            (
+                "../Renderers/Shaders/Default.vsl",
+                "../Renderers/Shaders/Depth.psl"
+            );
         }
 
         void UpdateScene() override
