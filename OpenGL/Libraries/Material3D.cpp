@@ -41,8 +41,9 @@ namespace Cyclone
         }
         Material3D& Material3D::Texture(Texture3D* value)
         {
-            _texture = value;
-            _data.Texture = value ? value->Handle() : 0;
+            _texture            = value;
+            _data.IsTextured    = (value != nullptr);
+            _data.Texture       = value ? value->Handle() : 0;
             return *this;
         }
         Material3D& Material3D::Transform(const Transform3D& value)

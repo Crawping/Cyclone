@@ -33,6 +33,6 @@ void main(void)
 
     OutputColor = vec4(diffuse + specular, Materials[ids.MaterialIndex].PrimaryColor.a);
 
-    if (ids.MaterialIndex > 0)
+    if (Materials[ids.MaterialIndex].IsTextured)
         OutputColor = mix(texture(Materials[ids.MaterialIndex].Texture, Input.TexUV), OutputColor, 0.125);
 }

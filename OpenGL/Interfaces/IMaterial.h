@@ -28,10 +28,18 @@ namespace Cyclone
             Color4      SecondaryColor;
             /// <summary> The numeric handle of a material's texture resource on the GPU. </summary>
             ulong       Texture;
+            /// <summary> A Boolean indicating whether the material is associated with a texture. </summary>
+            uint        IsTextured;
 
-            Vector2     _0;
+            uint        _0;
 
-            MaterialData() : Texture(0) { }
+
+            MaterialData():
+                Texture(0),
+                IsTextured(false)
+            {
+
+            }
 
             bool operator ==(const MaterialData& other) const
             {
