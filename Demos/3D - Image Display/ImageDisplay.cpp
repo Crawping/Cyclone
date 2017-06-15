@@ -14,7 +14,8 @@
 #include "Models/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Textures/Texture2D.h"
-using namespace Renderers;
+
+using namespace Cyclone::Renderers;
 
 
 
@@ -30,11 +31,8 @@ class Program : public AdvancedRenderer
 
         ~Program()
         {
-            for (auto i : Images)
-                delete i;
-
-            for (auto q : Quads)
-                delete q;
+            for (auto i : Images)   { delete i; }
+            for (auto q : Quads)    { delete q; }
         }
 
     protected:
@@ -77,16 +75,7 @@ class Program : public AdvancedRenderer
                 RenderScene->Insert(*Quads(a));
             }
         }
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline
-            (
-                "../Renderers/Shaders/Default.vsl",
-                "../3D - Image Display/TexturedShading.psl"
-            );
-        }
-
-
+        
 };
 
 
