@@ -2,111 +2,104 @@
  * Written by Josh Grooms on 20170612
  */
 
-#include "AdvancedRenderer.h"
+#include "CEF.h"
 #include "EventHandler.h"
 #include "GPU.h"
 
-#include "Geometry/Entity3D.h"
-#include "Geometry/Mesh3D.h"
-#include "Math/Constants.h"
-#include "Pipelines/ShaderPipeline.h"
-#include "Scenes/Scene3D.h"
-#include "include/cef_app.h"
-
-using namespace Renderers;
-using namespace Cyclone::OpenGL;
 
 
-
-class Program: public AdvancedRenderer
+Program::Program():
+    AdvancedRenderer(Area(0, 0, 1024, 960), "UI - CEF"),
+    BrowserImage(nullptr),
+    Cube()
 {
-    public:
+    IsFreeLookEnabled = false;
+    RenderWindow->OnButtonPress.Register(this, &Program::ProcessButtonPress);
+    RenderWindow->OnButtonRelease.Register(this, &Program::ProcessButtonRelease);
 
-        Texture3D* Image()          { return BrowserImage; }
-        Window3D* Window()          { return RenderWindow; }
+    Initialize();
+}
 
-        Program():
-            AdvancedRenderer(Area(0, 0, 1024, 960), "UI - CEF"),
-            BrowserImage(nullptr),
-            Cube()
-        {
-            IsFreeLookEnabled = false;
-            Initialize();
-        }
-        ~Program()                  { if (BrowserImage) { delete BrowserImage; } }
+void Program::Execute()
+{
+    bool runCEF = true;
+    while (CanContinue())
+    {
+        RenderWindow->ProcessEvent();
+        //if (runCEF) { CefDoMessageLoopWork(); }
+        runCEF = !runCEF;
+        CefDoMessageLoopWork();
 
+        UpdateScene();
+        Render();
+        Renderer->Present();
 
-        void Execute() override
-        {
-            while (CanContinue())
-            {
-                RenderWindow->ProcessEvent();
-                CefDoMessageLoopWork();
-                UpdateScene();
-                Render();
-                Renderer->Present();
+        //Console::WriteLine(Renderer->Report());
+    }
+}
 
-                //Console::WriteLine(Renderer->Report());
-            }
-        }
+void Program::CreateSceneResources() 
+{
+    AdvancedRenderer::CreateSceneResources();
 
+    Cube
+        .Geometry(Mesh3D::Cube(true))
+        .PrimaryColor(Color4::Blue)
+        .Translate(Vector3(512, 480, 50))
+        .Scale(200)
+        .Pitch(Constants::Pi<float> / 4)
+        .Yaw(Constants::Pi<float> / 4);
 
+    BrowserImage = new Texture3D
+    (
+        Vector4(RenderWindow->ClientArea().Scale()),
+        TextureFormats::Byte4,
+        TextureTargets::Texture2D
+    );
 
-    protected:
+    BrowserImage->MakeResident();
 
-        Entity3D        Cube;
-        Entity3D        BrowserPage;
-        Texture3D*      BrowserImage;
+    BrowserPage
+        .Geometry(Mesh3D::Quad(true))
+        .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
+        .PrimaryColor(Color4::Green)
+        .Scale(RenderWindow->ClientArea().Scale())
+        .Texture(BrowserImage);
 
-        void CreateSceneResources() override
-        {
-            AdvancedRenderer::CreateSceneResources();
-
-            Cube
-                .Geometry(Mesh3D::Cube(true))
-                .PrimaryColor(Color4::Blue)
-                .Translate(Vector3(512, 480, 50))
-                .Scale(200)
-                .Pitch(Constants::Pi<float> / 4)
-                .Yaw(Constants::Pi<float> / 4);
-
-            BrowserImage = new Texture3D
-            (
-                Vector4(RenderWindow->ClientArea().Scale()), 
-                TextureFormats::Byte4, 
-                TextureTargets::Texture2D
-            );
-
-            BrowserImage->MakeResident();
-
-            BrowserPage
-                .Geometry(Mesh3D::Quad(true))
-                .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, 10.0f))
-                .PrimaryColor(Color4::Green)
-                .Scale(RenderWindow->ClientArea().Scale())
-                .Texture(BrowserImage);
-
-            RenderScene->Insert(Cube);
-            RenderScene->Insert(BrowserPage);
-        }
-
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline
-            (
-                "../Renderers/Shaders/Default.vsl",
-                "../3D - Image Display/TexturedShading.psl"
-            );
-        }
-
-        void UpdateScene() override
-        {
-            Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
-            RenderScene->Update(Cube);
-            AdvancedRenderer::UpdateScene();
-        }
-};
-
+    RenderScene->Insert(Cube);
+    RenderScene->Insert(BrowserPage);
+}
+void Program::CreateShaderPipeline() 
+{
+    RenderPipeline = new ShaderPipeline
+    (
+        "../Renderers/Shaders/Default.vsl",
+        "../3D - Image Display/TexturedShading.psl"
+    );
+}
+void Program::UpdateScene() 
+{
+    Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
+    RenderScene->Update(Cube);
+    //RenderScene->Update(BrowserPage);
+    AdvancedRenderer::UpdateScene();
+}
+void Program::ProcessButtonPress(const PointerClickEvent& evt)
+{
+    if (evt.Button == PointerButtons::Button003)
+        IsFreeLookEnabled = true;
+}
+void Program::ProcessButtonRelease(const PointerClickEvent& evt)
+{
+    if (evt.Button == PointerButtons::Button003)
+        IsFreeLookEnabled = false;
+}
+void Program::ProcessPointerMotion(const PointerMotionEvent& evt)
+{
+    AdvancedRenderer::ProcessPointerMotion(evt);
+    _cursorPosition = CalculatePointerInWorld( (BrowserPage.Position() - View.Position()).Norm() );
+    Console::WriteLine("Cursor Position: " + _cursorPosition.ToString());
+}
 
 class ProgramCEF: 
     public CefApp, 
@@ -147,7 +140,7 @@ int main(int nargs, char** args)
 
     Program app;
 
-    CefRefPtr<EventHandler> handler(new EventHandler(app.Window(), app.Image()));
+    CefRefPtr<EventHandler> handler(new EventHandler(app));
     CefBrowserSettings browserSettings;
 
     string url = cmds->GetSwitchValue("url");

@@ -44,7 +44,7 @@ class EventHandler:
 
 
         /** CONSTRUCTOR **/
-        EventHandler(Window3D* window, Texture3D* image);
+        EventHandler(Program& app);
         ~EventHandler();
 
 
@@ -99,9 +99,9 @@ class EventHandler:
     private:
 
         CefRefPtr<CefBrowser>   _browser;
-        Texture3D*              _image;
-        Window3D*               _window;
-
+        //Texture3D*              _image;
+        //Window3D*               _window;
+        Program&                _app;
 
 
         void ProcessButtonPress(const PointerClickEvent& evt);
