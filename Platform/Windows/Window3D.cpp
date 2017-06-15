@@ -11,7 +11,7 @@ using namespace Cyclone::Utilities;
 
 
 /** INTERNAL FUNCTIONS **/
-static KeyboardKeys translateKeys(WPARAM keyCode)
+static KeyboardKeys TranslateKeys(WPARAM keyCode)
 {
     switch (keyCode)
     {
@@ -77,6 +77,16 @@ static KeyboardKeys translateKeys(WPARAM keyCode)
         default:            return KeyboardKeys::Nothing;
     }
 }
+static KeyboardKeys TranslateStateModifiers(SHORT keyCode)
+{
+    KeyboardKeys keys;
+    if ((keyCode >> 32) == 1) { keys.Press(KeyboardKeys::Shift); }
+    if ((keyCode >> 32) == 2) { keys.Press(KeyboardKeys::Control); }
+    if ((keyCode >> 32) == 3) { keys.Press(KeyboardKeys::Alt); }
+    //if ((keyCode >> 32) == 4) { keys.Press(KeyboardKeys::Shift); }
+    return keys;
+}
+
 /// <summary> Handles any events posted to a specific window on the Windows platform. </summary>
 /// <param name="win"> The handle of the window to which the event is being posted. </param>
 /// <param name="msg"> The type of event that is being posted. </param>
@@ -87,6 +97,7 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 {
     Window3D* win3D = (Window3D*)GetWindowLong(win, GWLP_USERDATA);
     KeyboardKeys key;
+    SHORT keycode;
 
     if (win3D)
     {
@@ -100,16 +111,24 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 
             case WM_KEYDOWN:
             case WM_SYSKEYDOWN:
-                key = translateKeys(wparam);
+                key = TranslateKeys(wparam);
                 if (key.Count())
-                    win3D->ProcessKeyPress(key, wparam);
+                    win3D->ProcessKeyPress(key, wparam, msg, lparam);
+                break;
+
+            case WM_CHAR:
+                keycode = VkKeyScan(wparam);
+                key = TranslateKeys((ubyte)keycode);
+                key.Press(TranslateStateModifiers(keycode));
+                //if (key.Count())
+                win3D->ProcessKeyPress(key, keycode, msg, lparam);
                 break;
 
             case WM_KEYUP:
             case WM_SYSKEYUP:
-                key = translateKeys(wparam);
+                key = TranslateKeys(wparam);
                 if (key.Count())
-                    win3D->ProcessKeyRelease(key, wparam);
+                    win3D->ProcessKeyRelease(key, wparam, msg, lparam);
                 break;
 
             case WM_LBUTTONDBLCLK:
@@ -333,7 +352,7 @@ namespace Cyclone
             };
             OnButtonRelease(evt);
         }
-        void Window3D::ProcessKeyPress(KeyboardKeys key, ubyte code)
+        void Window3D::ProcessKeyPress(KeyboardKeys key, ubyte code, uint message, ulong native)
         {
             if ( !IsTrackingKeyboard() || (!IsTrackingKeyRepeat() && _keyboardState.IsPressed(key)) )
                 return;
@@ -342,11 +361,13 @@ namespace Cyclone
             {
                 code,
                 key,
+                message,
+                native,
                 _keyboardState.Press(key),
             };
             OnKeyPress(evt);
         }
-        void Window3D::ProcessKeyRelease(KeyboardKeys key, ubyte code)
+        void Window3D::ProcessKeyRelease(KeyboardKeys key, ubyte code, uint message, ulong native)
         {
             if (!IsTrackingKeyboard()) { return; }
 
@@ -354,6 +375,8 @@ namespace Cyclone
             {
                 code,
                 key,
+                message,
+                native,
                 _keyboardState.Release(key),
             };
             OnKeyRelease(evt);

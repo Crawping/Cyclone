@@ -116,9 +116,9 @@ namespace Cyclone
 
                 InternalAPI void ProcessButtonRelease(PointerButtons button);
 
-                InternalAPI void ProcessKeyPress(KeyboardKeys key, ubyte code);
+                InternalAPI void ProcessKeyPress(KeyboardKeys key, ubyte code, uint message, ulong native);
 
-                InternalAPI void ProcessKeyRelease(KeyboardKeys key, ubyte code);
+                InternalAPI void ProcessKeyRelease(KeyboardKeys key, ubyte code, uint message, ulong native);
                 /// <summary> Updates the cached pointer position data. </summary>
                 /// <param name="x"> The new horizontal pixel position of the pointer relative to the left edge of the client area. </param>
                 /// <param name="y"> The new vertical pixel position of the pointer relative to the top edge of the client area. </param>

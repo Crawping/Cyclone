@@ -51,6 +51,10 @@ namespace Cyclone
             ubyte Code;
             /// <summary> The specific keyboard key that has been either pressed or released. </summary>
             const KeyboardKeys& Key;
+
+            uint Message;
+
+            ulong Native;
             /// <summary> The current state of all keyboard keys. </summary>
             const KeyboardKeys& State;
         };
