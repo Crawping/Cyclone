@@ -94,13 +94,14 @@ class EventHandler:
         {
             Console::WriteLine("Scroll Offset");
         }
-        void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title)               override { }
+        void OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title)               override 
+        {
+            Console::WriteLine("Title Change");
+        }
 
     private:
 
         CefRefPtr<CefBrowser>   _browser;
-        //Texture3D*              _image;
-        //Window3D*               _window;
         Program&                _app;
 
 

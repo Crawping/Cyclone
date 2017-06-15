@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderers", "Renderers\Renderers.vcxproj", "{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MixedGraphics", "MixedGraphics\MixedGraphics.vcxproj", "{FF04EB6B-0F01-47B6-B6B5-60111D96EB4B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Diagram3D", "Diagram3D\Diagram3D.vcxproj", "{1DBE21A2-CB87-48F5-91FD-134D3AB38268}"
@@ -65,22 +63,6 @@ Global
 		UniversalDebug|x86 = UniversalDebug|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Debug|x64.ActiveCfg = Debug|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Debug|x64.Build.0 = Debug|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Debug|x86.ActiveCfg = Debug|Win32
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Debug|x86.Build.0 = Debug|Win32
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Release|x64.ActiveCfg = Release|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Release|x64.Build.0 = Release|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Release|x86.ActiveCfg = Release|Win32
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Release|x86.Build.0 = Release|Win32
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Universal|x64.ActiveCfg = Release|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Universal|x64.Build.0 = Release|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Universal|x86.ActiveCfg = Release|Win32
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.Universal|x86.Build.0 = Release|Win32
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.UniversalDebug|x64.ActiveCfg = Debug|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.UniversalDebug|x64.Build.0 = Debug|x64
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.UniversalDebug|x86.ActiveCfg = Debug|Win32
-		{0E5C9560-1ACC-4FF7-B6A9-AFC6E48B98F7}.UniversalDebug|x86.Build.0 = Debug|Win32
 		{FF04EB6B-0F01-47B6-B6B5-60111D96EB4B}.Debug|x64.ActiveCfg = Debug|x64
 		{FF04EB6B-0F01-47B6-B6B5-60111D96EB4B}.Debug|x64.Build.0 = Debug|x64
 		{FF04EB6B-0F01-47B6-B6B5-60111D96EB4B}.Debug|x86.ActiveCfg = Debug|Win32

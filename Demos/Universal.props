@@ -6,11 +6,17 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);</AdditionalLibraryDirectories>
-      <AdditionalDependencies>..\..\Debug\OpenGL.lib;..\..\Debug\Platform.lib;..\..\Debug\SVG.lib;..\..\Debug\UserInterface.lib;..\..\Debug\Utilities.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\Debug\OpenGL.lib;..\..\Debug\Platform.lib;..\..\Debug\Renderers.lib;..\..\Debug\SVG.lib;..\..\Debug\UserInterface.lib;..\..\Debug\Utilities.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\Core; ..\..\CoreGL; ..\..\OpenGL; ..\..\Platform; ..\..\SVG;..\..\UserInterface;..\..\Utilities;..\Renderers;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Core; ..\..\CoreGL; ..\..\OpenGL; ..\..\Platform;..\..\Renderers;..\..\SVG;..\..\UserInterface;..\..\Utilities;..\Renderers;</AdditionalIncludeDirectories>
     </ClCompile>
+    <PreBuildEvent>
+      <Command>copy ..\..\$(Configuration)\*.dll "$(TargetDir)";</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy DLL Dependencies</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

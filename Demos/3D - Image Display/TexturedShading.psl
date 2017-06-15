@@ -3,7 +3,7 @@
  */
 
 #version 450 core
-#include "../Renderers/Shaders/Default.hsl"
+#include "../../Renderers/Shaders/Default.hsl"
 
 in vec2         TexUV;
 flat in int     EntityIndex;
