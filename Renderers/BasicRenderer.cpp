@@ -100,8 +100,8 @@ namespace Cyclone
         {
             RenderPipeline = new ShaderPipeline
             (
-                "../Renderers/Shaders/Default.vsl",
-                "../Renderers/Shaders/Default.psl"
+                "../../Renderers/Shaders/Default.vsl",
+                "../../Renderers/Shaders/Default.psl"
             );
         }
         void BasicRenderer::CreateSizedResources()
