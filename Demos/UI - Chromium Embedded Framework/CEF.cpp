@@ -62,20 +62,12 @@ void Program::CreateSceneResources()
     BrowserPage
         .Geometry(Mesh3D::Quad(true))
         .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
-        .PrimaryColor(Color4::Green)
+        .PrimaryColor(Color4::White)
         .Scale(RenderWindow->ClientArea().Scale())
         .Texture(BrowserImage);
 
     RenderScene->Insert(Cube);
     RenderScene->Insert(BrowserPage);
-}
-void Program::CreateShaderPipeline() 
-{
-    RenderPipeline = new ShaderPipeline
-    (
-        "../../Renderers/Shaders/Default.vsl",
-        "../3D - Image Display/TexturedShading.psl"
-    );
 }
 void Program::UpdateScene() 
 {

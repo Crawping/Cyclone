@@ -45,7 +45,7 @@ class Program: public AdvancedRenderer
 
         void CreateSceneResources()                                 override;
 
-        void CreateShaderPipeline()                                 override;
+        //void CreateShaderPipeline()                                 override;
 
         void UpdateScene()                                          override;
 
