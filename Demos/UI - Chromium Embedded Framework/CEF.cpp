@@ -26,9 +26,9 @@ void Program::Execute()
     while (CanContinue())
     {
         RenderWindow->ProcessEvent();
-        //if (runCEF) { CefDoMessageLoopWork(); }
+        if (runCEF) { CefDoMessageLoopWork(); }
         runCEF = !runCEF;
-        CefDoMessageLoopWork();
+        //CefDoMessageLoopWork();
 
         UpdateScene();
         Render();
@@ -73,7 +73,7 @@ void Program::CreateShaderPipeline()
 {
     RenderPipeline = new ShaderPipeline
     (
-        "../Renderers/Shaders/Default.vsl",
+        "../../Renderers/Shaders/Default.vsl",
         "../3D - Image Display/TexturedShading.psl"
     );
 }
@@ -81,17 +81,16 @@ void Program::UpdateScene()
 {
     Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
     RenderScene->Update(Cube);
-    //RenderScene->Update(BrowserPage);
     AdvancedRenderer::UpdateScene();
 }
 void Program::ProcessButtonPress(const PointerClickEvent& evt)
 {
-    if (evt.Button == PointerButtons::Button003)
+    if (evt.Button == PointerButtons::Button002)
         IsFreeLookEnabled = true;
 }
 void Program::ProcessButtonRelease(const PointerClickEvent& evt)
 {
-    if (evt.Button == PointerButtons::Button003)
+    if (evt.Button == PointerButtons::Button002)
         IsFreeLookEnabled = false;
 }
 void Program::ProcessPointerMotion(const PointerMotionEvent& evt)

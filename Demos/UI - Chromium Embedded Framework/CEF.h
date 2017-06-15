@@ -12,8 +12,8 @@
 #include "Scenes/Scene3D.h"
 #include "include/cef_app.h"
 
-using namespace Renderers;
 using namespace Cyclone::OpenGL;
+using namespace Cyclone::Renderers;
 
 
 

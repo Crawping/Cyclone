@@ -95,7 +95,12 @@ namespace Cyclone
     }
 	void Program::CreateRenderingPipeline()
 	{
-		RenderPipeline = new ShaderPipeline("../Demos/Renderers/Shaders/BlinnPhong.vsl", "../Demos/Renderers/Shaders/BlinnPhong.psl");
+		RenderPipeline = new ShaderPipeline
+        (
+            "../Renderers/Shaders/BlinnPhong.vsl",
+            "../Renderers/Shaders/BlinnPhong.psl"
+        );
+
 		Renderer->Pipeline(RenderPipeline);
 	}
 	void Program::CreateRenderingTarget()

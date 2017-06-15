@@ -18,8 +18,8 @@
 #include "Scenes/Scene3D.h"
 #include "Spatial/Camera.h"
 
-using namespace Renderers;
 using namespace Cyclone::Platform;
+using namespace Cyclone::Renderers;
 using namespace Cyclone::Utilities;
 
 

@@ -8,8 +8,8 @@
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
-using namespace Renderers;
 using namespace Cyclone::OpenGL;
+using namespace Cyclone::Renderers;
 
 
 
@@ -51,8 +51,8 @@ class Program : public BasicRenderer
         {
             RenderPipeline = new ShaderPipeline
             (
-                "../Renderers/Shaders/Default.vsl",
-                "../Renderers/Shaders/Depth.psl"
+                "../../Renderers/Shaders/Default.vsl",
+                "../../Renderers/Shaders/Depth.psl"
             );
         }
 

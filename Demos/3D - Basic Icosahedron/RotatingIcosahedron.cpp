@@ -1,13 +1,13 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
+#include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
-using namespace Renderers;
 using namespace Cyclone::OpenGL;
+using namespace Cyclone::Renderers;
 
 
 
@@ -22,7 +22,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Model3D Icosahedron;
+        Entity3D Icosahedron;
 
         void CreateSceneResources() override
         {
@@ -32,7 +32,7 @@ class Program : public BasicRenderer
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
                 .Roll(90)
-                .Scale(100, 100, 100);
+                .Scale(100);
 
             RenderScene->Insert(Icosahedron);
             RenderScene->CullingMode(CullingModes::Back);
@@ -46,7 +46,11 @@ class Program : public BasicRenderer
 
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/Default.vsl", "../Renderers/Shaders/Depth.psl");
+            RenderPipeline = new ShaderPipeline
+            (
+                "../../Renderers/Shaders/BlinnPhong.vsl",
+                "../../Renderers/Shaders/BlinnPhong.psl"
+            );
         }
 
         void UpdateScene() override
