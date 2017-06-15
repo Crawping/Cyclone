@@ -2,13 +2,13 @@
 #include "BasicRenderer.h"
 #include "GPU.h"
 #include "Window3D.h"
+#include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Model3D.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
-using namespace Renderers;
 using namespace Cyclone::OpenGL;
+using namespace Cyclone::Renderers;
 
 
 
@@ -23,7 +23,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Model3D Cube;
+        Entity3D Cube;
 
         void CreateSceneResources() override
         {
@@ -45,7 +45,11 @@ class Program : public BasicRenderer
 
         void CreateShaderPipeline() override
         {
-            RenderPipeline = new ShaderPipeline("../Renderers/Shaders/BlinnPhong.vsl", "../Renderers/Shaders/BlinnPhong.psl");
+            RenderPipeline = new ShaderPipeline
+            (
+                "../../Renderers/Shaders/BlinnPhong.vsl",
+                "../../Renderers/Shaders/BlinnPhong.psl"
+            );
         }
 
         void UpdateScene() override

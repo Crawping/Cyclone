@@ -4,11 +4,11 @@
 
 #include "BasicRenderer.h"
 #include "Window3D.h"
+#include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
-#include "Geometry/Model3D.h"
 #include "Scenes/Scene3D.h"
 
-using namespace Renderers;
+using namespace Cyclone::Renderers;
 using namespace Cyclone::OpenGL;
 using namespace Cyclone::Utilities;
 
@@ -25,7 +25,7 @@ class Program : public BasicRenderer
         }
 
     protected:
-        Model3D  Triangle;
+        Entity3D  Triangle;
 
         void CreateSceneResources() override
         {
