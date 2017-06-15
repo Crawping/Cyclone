@@ -45,8 +45,6 @@ class Program: public AdvancedRenderer
 
         void CreateSceneResources()                                 override;
 
-        //void CreateShaderPipeline()                                 override;
-
         void UpdateScene()                                          override;
 
         void ProcessButtonPress(const PointerClickEvent& evt);
