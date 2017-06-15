@@ -4,15 +4,28 @@
 
 
 
+/** INTERNAL UTILITIES **/
+static int TranslateModifiers(const KeyboardEvent evt)
+{
+    int mods = 0;
+    if (evt.State.IsPressed(KeyboardKeys::Alt))         { mods |= EVENTFLAG_ALT_DOWN; }
+    if (evt.State.IsPressed(KeyboardKeys::Control))     { mods |= EVENTFLAG_CONTROL_DOWN; }
+    if (evt.State.IsPressed(KeyboardKeys::Shift))       { mods |= EVENTFLAG_SHIFT_DOWN; }
+    return mods;
+}
+
+
+
+
 /** PROPERTIES **/
 bool EventHandler::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
     rect.x = 0;
     rect.y = 0;
-    rect.width = 2560;
-    rect.height = 1440;
-    //rect.width = 3840;
-    //rect.height = 2160;
+    //rect.width = 2560;
+    //rect.height = 1440;
+    rect.width = 3840;
+    rect.height = 2160;
     return true;
 }
 bool EventHandler::GetScreenInfo(CefRefPtr<CefBrowser> browser, CefScreenInfo& info)
@@ -41,8 +54,6 @@ bool EventHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 EventHandler::EventHandler(Program& app):
     _app(app),
     _browser(nullptr)
-    //_image(image),
-    //_window(window)
 {
     _app.Window()->OnButtonPress.Register(this, &EventHandler::ProcessButtonPress);
     _app.Window()->OnButtonRelease.Register(this, &EventHandler::ProcessButtonRelease);
@@ -67,6 +78,7 @@ void EventHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
     CEF_REQUIRE_UI_THREAD();
     _browser = browser;
+    _browser->GetHost()->SetWindowlessFrameRate(60);
 }
 void EventHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
@@ -99,27 +111,26 @@ void EventHandler::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHandler::Pain
 
 void EventHandler::ProcessButtonPress(const PointerClickEvent& evt)
 {
-    if (!_browser) { return; }
+    if (!_browser || evt.Button == PointerButtons::Button002) { return; }
     auto btn = (evt.Button == PointerButtons::Button001) ? MBT_LEFT : MBT_RIGHT;
-    
+
     CefMouseEvent cevt;
     const Vector2& ppos = _app.Window()->PointerPosition();
-    //const Vector2 ppos = _app.CursorPosition();
 
     cevt.x = ppos.X;
     cevt.y = ppos.Y;
-    
+
+    _browser->GetHost()->SendFocusEvent(true);
     _browser->GetHost()->SendMouseClickEvent(cevt, btn, false, 1);
     Console::WriteLine("Button Down Dispatched!");
 }
 void EventHandler::ProcessButtonRelease(const PointerClickEvent& evt)
 {
-    if (!_browser) { return; }
+    if (!_browser || evt.Button == PointerButtons::Button002) { return; }
     auto btn = (evt.Button == PointerButtons::Button001) ? MBT_LEFT : MBT_RIGHT;
 
     CefMouseEvent cevt;
     const Vector2& ppos = _app.Window()->PointerPosition();
-    //const Vector2& ppos = _app.CursorPosition();
 
     cevt.x = ppos.X;
     cevt.y = ppos.Y;
@@ -129,11 +140,31 @@ void EventHandler::ProcessButtonRelease(const PointerClickEvent& evt)
 }
 void EventHandler::ProcessKeyPress(const KeyboardEvent& evt)
 {
+    if (!_browser || _app.IsNavigationEnabled()) { return; }
 
+    CefKeyEvent cevt;
+    cevt.is_system_key      = false;
+    cevt.modifiers          = TranslateModifiers(evt);
+    cevt.native_key_code    = evt.Native;
+    cevt.windows_key_code   = evt.Code;
+    cevt.type               = (evt.Message == WM_CHAR) ? KEYEVENT_CHAR : KEYEVENT_RAWKEYDOWN;
+
+    _browser->GetHost()->SendKeyEvent(cevt);
+
+    Console::WriteLine("Key Down Dispatched!");
 }
 void EventHandler::ProcessKeyRelease(const KeyboardEvent& evt)
 {
+    if (!_browser || _app.IsNavigationEnabled()) { return; }
 
+    CefKeyEvent cevt;
+    cevt.is_system_key      = false;
+    cevt.modifiers          = TranslateModifiers(evt);
+    cevt.native_key_code    = evt.Native;
+    cevt.windows_key_code   = evt.Code;
+    cevt.type               = KEYEVENT_KEYUP;
+
+    _browser->GetHost()->SendKeyEvent(cevt);
 }
 void EventHandler::ProcessPointerMotion(const PointerMotionEvent& evt)
 {

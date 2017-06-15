@@ -21,15 +21,13 @@ class Program: public AdvancedRenderer
 {
     public:
 
-        //Camera& ViewMatrix()                { return View; }
-        //Entity3D& Browser()                 { return BrowserPage; }
         Texture3D* Image()                  { return BrowserImage; }
-        //const Vector2& PointerPosition()    { return _pointerPosition; }
+        bool IsNavigationEnabled()          { return _isNavigationEnabled; }
         const Vector2& CursorPosition()     { return _cursorPosition; }
         Window3D* Window()                  { return RenderWindow; }
 
         Program();
-            
+
         ~Program()                          { if (BrowserImage) { delete BrowserImage; } }
 
 
@@ -41,6 +39,7 @@ class Program: public AdvancedRenderer
         Entity3D        Cube;
         Entity3D        BrowserPage;
         Texture3D*      BrowserImage;
+        bool            _isNavigationEnabled;
         Vector2         _cursorPosition;
 
         void CreateSceneResources()                                 override;
@@ -51,6 +50,9 @@ class Program: public AdvancedRenderer
 
         void ProcessButtonRelease(const PointerClickEvent& evt);
 
+        void ProcessKeyPress(const KeyboardEvent& evt)              override;
+
+        void ProcessKeyRelease(const KeyboardEvent& evt)            override;
+
         void ProcessPointerMotion(const PointerMotionEvent& evt)    override;
 };
-

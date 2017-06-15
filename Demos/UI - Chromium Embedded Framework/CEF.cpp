@@ -9,11 +9,13 @@
 
 
 Program::Program():
-    AdvancedRenderer(Area(0, 0, 1024, 960), "UI - CEF"),
+    AdvancedRenderer(Area(0, 0, 2560, 1440), "UI - CEF"),
     BrowserImage(nullptr),
-    Cube()
+    Cube(),
+    _isNavigationEnabled(false)
 {
     IsFreeLookEnabled = false;
+    RenderWindow->IsTrackingKeyRepeat(true);
     RenderWindow->OnButtonPress.Register(this, &Program::ProcessButtonPress);
     RenderWindow->OnButtonRelease.Register(this, &Program::ProcessButtonRelease);
 
@@ -26,26 +28,21 @@ void Program::Execute()
     while (CanContinue())
     {
         RenderWindow->ProcessEvent();
-        if (runCEF) { CefDoMessageLoopWork(); }
-        runCEF = !runCEF;
-        //CefDoMessageLoopWork();
-
+        CefDoMessageLoopWork();
         UpdateScene();
         Render();
         Renderer->Present();
-
-        //Console::WriteLine(Renderer->Report());
     }
 }
 
-void Program::CreateSceneResources() 
+void Program::CreateSceneResources()
 {
     AdvancedRenderer::CreateSceneResources();
 
     Cube
         .Geometry(Mesh3D::Cube(true))
         .PrimaryColor(Color4::Blue)
-        .Translate(Vector3(512, 480, 50))
+        .Translate(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, 50))
         .Scale(200)
         .Pitch(Constants::Pi<float> / 4)
         .Yaw(Constants::Pi<float> / 4);
@@ -69,7 +66,7 @@ void Program::CreateSceneResources()
     RenderScene->Insert(Cube);
     RenderScene->Insert(BrowserPage);
 }
-void Program::UpdateScene() 
+void Program::UpdateScene()
 {
     Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
     RenderScene->Update(Cube);
@@ -85,6 +82,20 @@ void Program::ProcessButtonRelease(const PointerClickEvent& evt)
     if (evt.Button == PointerButtons::Button002)
         IsFreeLookEnabled = false;
 }
+void Program::ProcessKeyPress(const KeyboardEvent& evt)
+{
+    if (_isNavigationEnabled || evt.Key == KeyboardKeys::F1)
+        AdvancedRenderer::ProcessKeyPress(evt);
+    else if (evt.Key == KeyboardKeys::Alt)
+        _isNavigationEnabled = true;
+}
+void Program::ProcessKeyRelease(const KeyboardEvent& evt)
+{
+    if (evt.Key == KeyboardKeys::Alt)
+        _isNavigationEnabled = false;
+    else if (_isNavigationEnabled || evt.Key == KeyboardKeys::F1)
+        AdvancedRenderer::ProcessKeyRelease(evt);
+}
 void Program::ProcessPointerMotion(const PointerMotionEvent& evt)
 {
     AdvancedRenderer::ProcessPointerMotion(evt);
@@ -92,12 +103,15 @@ void Program::ProcessPointerMotion(const PointerMotionEvent& evt)
     Console::WriteLine("Cursor Position: " + _cursorPosition.ToString());
 }
 
-class ProgramCEF: 
-    public CefApp, 
+
+
+
+class ProgramCEF:
+    public CefApp,
     public CefBrowserProcessHandler
 {
     public:
-        
+
         ProgramCEF() { }
 
         virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override
@@ -115,7 +129,7 @@ class ProgramCEF:
 int main(int nargs, char** args)
 {
     CefEnableHighDPISupport();
-    
+
     CefMainArgs cefArgs;
     if (CefExecuteProcess(cefArgs, nullptr, nullptr) >= 0) { return 0; }
 
