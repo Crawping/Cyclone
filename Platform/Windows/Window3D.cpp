@@ -120,8 +120,7 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
                 keycode = VkKeyScan(wparam);
                 key = TranslateKeys((ubyte)keycode);
                 key.Press(TranslateStateModifiers(keycode));
-                //if (key.Count())
-                win3D->ProcessKeyPress(key, keycode, msg, lparam);
+                win3D->ProcessKeyPress(key, wparam, msg, lparam);
                 break;
 
             case WM_KEYUP:
