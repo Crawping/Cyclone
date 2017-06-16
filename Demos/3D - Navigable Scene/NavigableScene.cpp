@@ -40,20 +40,12 @@ class Program : public AdvancedRenderer
         Entity3D Cube;
         Entity3D Cylinder;
         Entity3D Icosahedron;
-        //Model3D  Cube;
-        //Model3D  Cylinder;
-        //Model3D  Icosahedron;
         //Point3D Point;
 
 
         void CreateSceneResources() override
         {
             AdvancedRenderer::CreateSceneResources();
-
-            //Cube = Entity3D()
-            //Cube = Model3D(Mesh3D::Cube(true));
-            //Icosahedron = Model3D(Mesh3D::Icosahedron());
-            //Cylinder = Model3D(Mesh3D::Cylinder(64));
         
             Vector2 ctrWin = RenderWindow->ClientArea().Center();
             Vector2 szWin = RenderWindow->Size();

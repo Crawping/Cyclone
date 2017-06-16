@@ -83,7 +83,6 @@ static KeyboardKeys TranslateStateModifiers(SHORT keyCode)
     if ((keyCode >> 32) == 1) { keys.Press(KeyboardKeys::Shift); }
     if ((keyCode >> 32) == 2) { keys.Press(KeyboardKeys::Control); }
     if ((keyCode >> 32) == 3) { keys.Press(KeyboardKeys::Alt); }
-    //if ((keyCode >> 32) == 4) { keys.Press(KeyboardKeys::Shift); }
     return keys;
 }
 
