@@ -43,6 +43,8 @@ namespace Cyclone
                 const Color4& PrimaryColor()                        const override { return _data.PrimaryColor; }
                 /// <summary> Gets the secondary color of the material. </summary>
                 const Color4& SecondaryColor()                      const override { return _data.SecondaryColor; }
+                
+                float SpecularPower()                               const { return _data.SpecularPower; }
                 /// <summary> Gets a pointer to the texture of a material. </summary>
                 const Texture3D* Texture()                          const override { return _texture; }
 
@@ -52,6 +54,8 @@ namespace Cyclone
                 OpenGLAPI Material3D& PrimaryColor(const Color4& value);
                 /// <summary> Sets the secondary color of the material. </summary>
                 OpenGLAPI Material3D& SecondaryColor(const Color4& value);
+
+                OpenGLAPI Material3D& SpecularPower(float value);
                 /// <summary> Sets the texture of a material. </summary>
                 OpenGLAPI Material3D& Texture(Texture3D* value);
 

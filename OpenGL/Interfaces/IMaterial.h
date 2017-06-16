@@ -14,7 +14,7 @@ namespace Cyclone
     namespace Utilities { class ISpatialTransform; }
 
     namespace OpenGL
-    {        
+    {
         /** FORWARD DECLARATIONS **/
         class ITexture;
         using namespace Utilities;
@@ -28,14 +28,16 @@ namespace Cyclone
             Color4      SecondaryColor;
             /// <summary> The numeric handle of a material's texture resource on the GPU. </summary>
             ulong       Texture;
+
+            float       SpecularPower;
             /// <summary> A Boolean indicating whether the material is associated with a texture. </summary>
             uint        IsTextured;
 
             uint        _0;
 
-
             MaterialData():
                 Texture(0),
+                SpecularPower(200),
                 IsTextured(false)
             {
 
@@ -43,7 +45,7 @@ namespace Cyclone
 
             bool operator ==(const MaterialData& other) const
             {
-                return 
+                return
                     (Texture == other.Texture)                  &&
                     (PrimaryColor == other.PrimaryColor)        &&
                     (SecondaryColor == other.SecondaryColor);
@@ -53,7 +55,7 @@ namespace Cyclone
 
 
         /// <summary> An interface used to specify the material properties of an entity. </summary>
-        class IMaterial: 
+        class IMaterial:
             public virtual IGraphicsResource
         {
             public:

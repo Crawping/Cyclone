@@ -6,6 +6,7 @@
 #include "Interfaces/IRenderable.h"
 #include "Libraries/Material3D.h"
 #include "Models/Model3D.h"
+#include "Resources/Resource.h"
 
 
 
@@ -56,8 +57,11 @@ namespace Cyclone
                 virtual const Color4& PrimaryColor()                    const { return Material().PrimaryColor(); }
                 /// <summary> Gets a reference to the secondary color of the entity. </summary>
                 virtual const Color4& SecondaryColor()                  const { return Material().SecondaryColor(); }
+
+                virtual float SpecularPower()                           const { return Material().SpecularPower(); }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        virtual const Texture3D* Texture()                      const { return Material().Texture(); }
+                //virtual Resource<Texture3D> Texture()                   const { return Material().Texture(); }
 
                 /// <summary> Sets the primary color of the entity. </summary>
                 virtual Entity3D& PrimaryColor(const Color4& value)
@@ -71,7 +75,13 @@ namespace Cyclone
                     _material.SecondaryColor(value);
                     return *this;
                 }
+                virtual Entity3D& SpecularPower(float value)
+                {
+                    _material.SpecularPower(value);
+                    return *this;
+                }
                 /// <summary> Sets the texture to be used when rendering the entity. </summary>
+                //virtual Entity3D& Texture(const Resource<Texture3D>& value)
                 virtual Entity3D& Texture(Texture3D* value)
                 {
                     _material.Texture(value);
