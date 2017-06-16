@@ -87,6 +87,10 @@ namespace Cyclone
         {
             ControlPoints.Clear();
         }
+        bool Geometry2D::Intersects(const LineSegment& line) const
+        {
+            return false;
+        }
 
 
 

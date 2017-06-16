@@ -73,6 +73,12 @@ namespace Cyclone
                 /** DESTRUCTOR **/
                 virtual ~IGeometric() { }
 
+
+
+                /** UTILITIES **/
+
+                virtual bool Intersects(const LineSegment& line) const = 0;
+
         };
     }
 }

@@ -77,9 +77,13 @@ namespace Cyclone
 
 
         /** PUBLIC UTILITIES **/
-        Geometry3D* Geometry3D::CreateView() const
+        Geometry3D* Geometry3D::CreateView()                    const
         {
             return nullptr;
+        }
+        bool Geometry3D::Intersects(const LineSegment& line)    const
+        {
+            return false;
         }
 
     }

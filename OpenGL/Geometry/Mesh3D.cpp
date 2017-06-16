@@ -81,6 +81,11 @@ namespace Cyclone
 
             Normals(newNormals);
         }
+        bool Mesh3D::Intersects(const LineSegment& line) const
+        {
+
+            return false;
+        }
         void Mesh3D::Tessellate(uint n)
         {
             if (n == 0)         return;
