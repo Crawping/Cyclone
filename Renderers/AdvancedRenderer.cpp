@@ -32,8 +32,10 @@ namespace Cyclone
         Vector2 AdvancedRenderer::CalculatePointerInWorld(float depth)
         {
             Vector3 pt1 = PointerWorldRay(0), pt2 = PointerWorldRay(1);
-            float scale = depth / (pt2.Z - pt1.Z);
-            return Vector2( scale * (pt2.X - pt1.X) + pt1.X, scale * (pt2.Y - pt1.Y) + pt1.Y );
+            return (Vector2)( (pt2 - pt1) * depth + pt1 );
+            //float scale = (pt2 - pt1) * depth + 
+            //float scale = depth / (pt2.Z - pt1.Z);
+            //return Vector2( scale * (pt2.X - pt1.X) + pt1.X, scale * (pt2.Y - pt1.Y) + pt1.Y );
         }
         void AdvancedRenderer::CreateTransformations()
         {
@@ -45,8 +47,8 @@ namespace Cyclone
             Area clArea(RenderWindow->ClientArea());
         
             Vector4 pt1 = Vector4(PointerPosition.X, clArea.Height - PointerPosition.Y, -1, 1);
-            pt1.X = (2.0f * pt1.X / clArea.Width) - 1.0f;
-            pt1.Y = (2.0f * pt1.Y / clArea.Height) - 1.0f;
+            pt1.X = (2.0f * pt1.X / clArea.Width) - 2.0f;
+            pt1.Y = (2.0f * pt1.Y / clArea.Height) - 2.0f;
 
             Vector4 pt2 = pt1;
             pt2.Z = -pt1.Z;
