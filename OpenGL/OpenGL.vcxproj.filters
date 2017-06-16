@@ -221,6 +221,9 @@
     <ClCompile Include="Models\Point3D.cpp">
       <Filter>Models</Filter>
     </ClCompile>
+    <ClCompile Include="Resources\ResourceLibrary.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">

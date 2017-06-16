@@ -40,25 +40,9 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                ResourceLibrary2() 
-                {
-                    _buffers.Insert("Null", nullptr);
-                    _geometry.Insert("Null", nullptr);
-                    _materials.Insert("Null", nullptr);
-                    _pipelines.Insert("Null", nullptr);
-                    _renderables.Insert("Null", nullptr);
-                    _textures.Insert("Null", nullptr);
-                }
+                OpenGLAPI ResourceLibrary2();
                 ResourceLibrary2(const ResourceLibrary2& other) = delete;
-                ~ResourceLibrary2()
-                {
-                    for (auto v : _buffers.Values())        { delete v; }
-                    for (auto v : _geometry.Values())       { delete v; }
-                    for (auto v : _materials.Values())      { delete v; }
-                    for (auto v : _pipelines.Values())      { delete v; }
-                    for (auto v : _renderables.Values())    { delete v; }
-                    for (auto v : _textures.Values())       { delete v; }
-                }
+                OpenGLAPI ~ResourceLibrary2();
 
 
 
@@ -66,14 +50,15 @@ namespace Cyclone
                 /// <summary> Determines whether a particular resource is stored within the library. </summary>
                 /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
                 /// <param name="value"> An existing resource handle. </param>
-                template<typename T>
-                bool Contains(Resource<T> value) const { return Contains(value.Name(), value._value); }
+                template<typename T> bool Contains(Resource<T> value) const 
+                {
+                    return Contains(value.Name(), value._value);
+                }
                 /// <summary> Determines whether a particular resource is stored within the library. </summary>
                 /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
                 /// <typeparam name="T"> The type of the desired resource. </typeparam>
                 /// <param name="name"> The string identifier of the resource. </param>
-                template<typename T>
-                bool Contains(const string& name)
+                template<typename T> bool Contains(const string& name) const
                 {
                     return
                         Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(name)       :
@@ -84,8 +69,7 @@ namespace Cyclone
                         Meta::IsA<T, ITexture>()            ? _textures.Contains(name)      : false;
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
-                template<typename T>
-                Resource<T> Create(const string& name)
+                template<typename T> Resource<T> Create(const string& name)
                 {
                     T* value = new T();
                     Register(name, value);
@@ -100,8 +84,7 @@ namespace Cyclone
                     return Resource<T>(name, value);
                 }
                 /// <summary> Destroys an existing graphics resource that is stored within the library. </summary>
-                template<typename T>
-                void Destroy(Resource<T> value)
+                template<typename T> void Destroy(Resource<T> value)
                 {
                     const string& key = value.Name();
                     if (value.IsNull() || !Contains(value)) { return; }
@@ -114,8 +97,7 @@ namespace Cyclone
                     delete value._value;
                 }
                 /// <summary> Acquires a particular graphics resource stored within the library. </summary>
-                template<typename T>
-                Resource<T> Get(const string& name)
+                template<typename T> Resource<T> Get(const string& name)
                 {
                     return
                         !Contains<T>(name)                  ? Resource<T>(name, nullptr)                                : 

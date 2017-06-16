@@ -219,6 +219,7 @@
     <ClCompile Include="Pipelines\RenderStage3D.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />
     <ClCompile Include="Pipelines\ShaderPipeline.cpp" />
+    <ClCompile Include="Resources\ResourceLibrary.cpp" />
     <ClCompile Include="Scenes\Scene3D.cpp" />
     <ClCompile Include="Scenes\SceneComponent.cpp" />
     <ClCompile Include="Scenes\SceneComponent3D.cpp" />
