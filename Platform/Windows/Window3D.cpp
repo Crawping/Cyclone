@@ -77,12 +77,12 @@ static KeyboardKeys TranslateKeys(WPARAM keyCode)
         default:            return KeyboardKeys::Nothing;
     }
 }
-static KeyboardKeys TranslateStateModifiers(SHORT keyCode)
+static KeyboardKeys TranslateModifiers(SHORT keyCode)
 {
     KeyboardKeys keys;
-    if ((keyCode >> 32) == 1) { keys.Press(KeyboardKeys::Shift); }
-    if ((keyCode >> 32) == 2) { keys.Press(KeyboardKeys::Control); }
-    if ((keyCode >> 32) == 3) { keys.Press(KeyboardKeys::Alt); }
+    if ((keyCode >> 8) == 1)    { keys.Press(KeyboardKeys::Shift); }
+    if ((keyCode >> 8) == 2)    { keys.Press(KeyboardKeys::Control); }
+    if ((keyCode >> 8) == 3)    { keys.Press(KeyboardKeys::Alt); }
     return keys;
 }
 
@@ -118,7 +118,7 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
             case WM_CHAR:
                 keycode = VkKeyScan(wparam);
                 key = TranslateKeys((ubyte)keycode);
-                key.Press(TranslateStateModifiers(keycode));
+                key.Press(TranslateModifiers(keycode));
                 win3D->ProcessKeyPress(key, wparam, msg, lparam);
                 break;
 
@@ -269,9 +269,9 @@ namespace Cyclone
                 WGL_SAMPLE_BUFFERS_ARB,             GL_TRUE,
                 WGL_SAMPLES_ARB,					nsamples,
                 NULL,
-            };          
+            };
 
-			WindowSettings settings = 
+			WindowSettings settings =
 			{
                 winClass.c_str(),
 				{ (int)displayArea.Left(), (int)displayArea.Bottom(), (int)displayArea.Right(), (int)displayArea.Top() },
@@ -297,7 +297,7 @@ namespace Cyclone
         }
 
 
-        
+
         /** PUBLIC UTILITIES **/
         void Window3D::Close()
         {
@@ -321,7 +321,7 @@ namespace Cyclone
             }
 
             return true;
-        }        
+        }
 
 
 
@@ -354,7 +354,7 @@ namespace Cyclone
         {
             if ( !IsTrackingKeyboard() || (!IsTrackingKeyRepeat() && _keyboardState.IsPressed(key)) )
                 return;
-            
+
             KeyboardEvent evt =
             {
                 code,
@@ -383,7 +383,7 @@ namespace Cyclone
         {
             if (!IsTrackingPointer())                                   { return; }
             if (x == PointerPosition().X && y == PointerPosition().Y)   { return; }
-            
+
             Vector2 oldPosition = PointerPosition();
             _pointerPosition = Vector2(x, y);
 
@@ -407,7 +407,7 @@ namespace Cyclone
             );
 
             if (_displayArea == displayArea) { return; }
-            
+
             RECT renderRect;
             GetClientRect(Internals->ID, &renderRect);
 
