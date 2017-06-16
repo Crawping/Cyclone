@@ -4,6 +4,8 @@
 
 
 #pragma once
+#include "Interfaces/ISpatialTransform.h"
+#include "Math/Matrix4x4.h"
 #include "Math/Vector3.h"
 
 
@@ -30,7 +32,7 @@ namespace Cyclone
             /** UTILITIES **/
             constexpr Vector3 Intersection(const LineSegment& other) const
             {
-                if (!Intersects(other)) return Vector3(0);
+                return Vector3();
             }
             constexpr bool Intersects(const LineSegment& other) const
             {
@@ -49,7 +51,9 @@ namespace Cyclone
             /** OPERATORS **/
             constexpr bool operator ==(const LineSegment& other) const { return (A == other.A) && (B == other.B); }
 
-
         };
+
+        UtilitiesAPI LineSegment operator *(const ISpatialTransform& x, const LineSegment& y);
+
     }
 }
