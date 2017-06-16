@@ -38,7 +38,9 @@ struct MaterialData
     vec4        PrimaryColor;
     vec4        SecondaryColor;
     sampler2D   Texture;
+    float       SpecularPower;
     bool        IsTextured;
+
 };
 
 struct TransformData

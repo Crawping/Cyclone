@@ -7,6 +7,7 @@
 #include "TypeDefinitions.h"
 #include "Window3D.h"
 #include "Imaging/Color4.h"
+#include "Resources/ResourceLibrary2.h"
 #include "Spatial/Area.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
@@ -59,6 +60,17 @@ namespace Cyclone
                 RendererAPI virtual void Execute();
 
 
+                //template<typename T, typename ... U>
+                //Resource<T> Create(const string& name, U ... arguments)         { return _resources.Create<T>(name, arguments...); }
+
+
+                template<typename T> Resource<T> Create(const string& name)     { return _resources.Create<T>(name); }
+                template<typename T, typename ... U>
+                Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
+                {
+                    return _resources.Create(name, constructor, arguments...);
+                }
+                template<typename T> Resource<T> Get(const string& name)        { return _resources.Get<T>(name); }
 
             protected:
 
@@ -73,7 +85,6 @@ namespace Cyclone
 			    int					SamplesMSAA;
                 string              Title;
                 Camera              View;
-
 
 
                 /** CONSTRUCTOR **/
@@ -120,8 +131,10 @@ namespace Cyclone
                 RendererAPI virtual void Initialize();
 
 
+
                 /** RENDERING UTILITIES **/
                 RendererAPI virtual void Render();
+
 
 
                 /** PROTECTED UTILITIES **/
@@ -135,7 +148,9 @@ namespace Cyclone
 
             
             private:
-                bool    _canContinue;
+
+                bool                _canContinue;
+                ResourceLibrary2    _resources;
 
 
         };

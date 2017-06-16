@@ -22,19 +22,17 @@ in PixelShaderInput
 void main(void)
 {
     EntityData ids = Entities[Input.EntityIndex];
+    MaterialData mat = Materials[ids.MaterialIndex];
 
     vec3 normal     = normalize(Input.WorldNormal);
     vec3 toEye      = normalize(Input.ToEye);
     vec3 toLight    = normalize(Input.ToLight);
     vec3 halfway    = normalize(toLight + toEye);
 
-    vec3 color = 
-        Materials[ids.MaterialIndex].IsTextured                         ? 
-        texture(Materials[ids.MaterialIndex].Texture, Input.TexUV).rgb  : 
-        Materials[ids.MaterialIndex].PrimaryColor.rgb;
+    vec3 color      = mat.IsTextured ? texture(mat.Texture, Input.TexUV).rgb : mat.PrimaryColor.rgb;
 
-    vec3 diffuse    = max(dot(normal, toLight), 0.25) * color;
-    vec3 specular   = SpecularBlinnPhong(normal, toLight, toEye, 200) * vec3(0.25);
+    vec3 diffuse    = max(dot(normal, toLight), 0.25) * mat.PrimaryColor.rgb;
+    vec3 specular   = SpecularBlinnPhong(normal, toLight, toEye, mat.SpecularPower) * mat.SecondaryColor.rgb;
 
-    OutputColor = vec4(diffuse + specular, Materials[ids.MaterialIndex].PrimaryColor.a);
+    OutputColor = vec4(color * (diffuse + specular), mat.PrimaryColor.a);
 }
