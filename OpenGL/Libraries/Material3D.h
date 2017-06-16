@@ -37,6 +37,8 @@ namespace Cyclone
 
 
                 /** VISUAL PROPERTIES **/
+
+                float Ambience()                                    const override { return _data.Ambience; }
                 /// <summary> Gets a structure containing all of the data needed to render the material. </summary>
                 const MaterialData& Data()                          const override { return _data; }
                 /// <summary> Gets the primary color of the material. </summary>
@@ -44,10 +46,12 @@ namespace Cyclone
                 /// <summary> Gets the secondary color of the material. </summary>
                 const Color4& SecondaryColor()                      const override { return _data.SecondaryColor; }
                 
-                float SpecularPower()                               const { return _data.SpecularPower; }
+                float SpecularPower()                               const override { return _data.SpecularPower; }
                 /// <summary> Gets a pointer to the texture of a material. </summary>
                 const Texture3D* Texture()                          const override { return _texture; }
 
+
+                OpenGLAPI Material3D& Ambience(float value);
                 /// <summary> Summarily sets all of the data needed to render the material. </summary>
                 OpenGLAPI Material3D& Data(const MaterialData& value);
                 /// <summary> Sets the primary color of the material. </summary>

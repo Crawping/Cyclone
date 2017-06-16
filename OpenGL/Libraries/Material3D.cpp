@@ -9,6 +9,11 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
+        Material3D& Material3D::Ambience(float value)
+        {
+            _data.Ambience = value;
+            return *this;
+        }
         Material3D& Material3D::Data(const MaterialData& value)
         {
             _data = value;

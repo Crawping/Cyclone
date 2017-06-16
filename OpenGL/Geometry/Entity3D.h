@@ -53,6 +53,7 @@ namespace Cyclone
 
 
                 /** MATERIAL PROPERTIES **/
+                virtual float Ambience()                                const { return Material().Ambience(); }
                 /// <summary> Gets a reference to the primary color of the entity. </summary>
                 virtual const Color4& PrimaryColor()                    const { return Material().PrimaryColor(); }
                 /// <summary> Gets a reference to the secondary color of the entity. </summary>
@@ -63,6 +64,11 @@ namespace Cyclone
 		        virtual const Texture3D* Texture()                      const { return Material().Texture(); }
                 //virtual Resource<Texture3D> Texture()                   const { return Material().Texture(); }
 
+                virtual Entity3D& Ambience(float value)
+                {
+                    _material.Ambience(value);
+                    return *this;
+                }
                 /// <summary> Sets the primary color of the entity. </summary>
                 virtual Entity3D& PrimaryColor(const Color4& value)
                 { 

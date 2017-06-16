@@ -66,7 +66,8 @@ void Program::CreateSceneResources()
 
     _browser = Create<Entity3D>("Browser");
     _browser->
-         Geometry(Mesh3D::Quad(true))
+         Ambience(1)
+        .Geometry(Mesh3D::Quad(true))
         .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
         .PrimaryColor(Color4::White)
         .SecondaryColor(Color4::White)
