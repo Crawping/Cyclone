@@ -69,7 +69,7 @@ void Program::CreateSceneResources()
         .Geometry(Mesh3D::Quad(true))
         .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
         .PrimaryColor(Color4::White)
-        .SecondaryColor(Color4::White)
+        .SecondaryColor(Color4::Black)
         .SpecularPower(1)
         .Scale(RenderWindow->ClientArea().Scale())
         .Texture(&*_image);
