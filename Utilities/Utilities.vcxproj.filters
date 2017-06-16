@@ -47,6 +47,9 @@
     <ClCompile Include="IO\InputControls.cpp">
       <Filter>IO</Filter>
     </ClCompile>
+    <ClCompile Include="Spatial\LineSegment.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TypeDefinitions.h" />
@@ -199,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="IO\Property.h">
       <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Spatial\Triangle3D.h">
+      <Filter>Spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="Collections\Specializations\Matrix.h">
+      <Filter>Collections\Specializations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
