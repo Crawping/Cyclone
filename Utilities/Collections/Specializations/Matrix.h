@@ -1,10 +1,8 @@
 /* CHANGELOG
- * Written by Josh Grooms on 20170513
+ * Written by Josh Grooms on 20170616
  */
 
 #pragma once
-#include "TypeDefinitions.h"
-#include "Math/Math.h"
 
 
 
@@ -12,17 +10,16 @@ namespace Cyclone
 {
     namespace Utilities
     {
-
-        /// <summary> A class that represents a multidimensional array of data elements. </summary>
-        template<typename T, uint ... U>
-        class Array
+        template<typename T, uint U, uint V>
+        struct Array<T, U, V>
         {
+
             private:
 
                 /** STATIC DATA **/
-                constexpr static uint _rank                     = sizeof...(U);
-                constexpr static uint _count                    = Math::Product(U...);
-                constexpr static uint _size[_rank]              = { U... };
+                constexpr static uint _rank                     = 2;
+                constexpr static uint _count                    = U * V;
+                constexpr static uint _size[_rank]              = { U, V };
 
 
 
@@ -187,12 +184,8 @@ namespace Cyclone
                 
         };
 
+
+        template<typename T, uint U, uint V> using Matrix = Array<T, U, V>;
+
     }
 }
-
-
-
-/** SPECIALIZATIONS **/
-//#include "Specializations/DynamicArray.h"
-//#include "Specializations/NumericArray.h"
-#include "Specializations/Matrix.h"
