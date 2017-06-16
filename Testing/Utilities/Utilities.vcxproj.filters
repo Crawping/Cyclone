@@ -100,5 +100,8 @@
     <ClCompile Include="IO\Members.cpp">
       <Filter>IO</Filter>
     </ClCompile>
+    <ClCompile Include="Spatial\LineSegment.cpp">
+      <Filter>Spatial</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
