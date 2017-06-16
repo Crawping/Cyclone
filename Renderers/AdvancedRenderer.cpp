@@ -35,14 +35,6 @@ namespace Cyclone
             float scale = depth / (pt2.Z - pt1.Z);
             return Vector2( scale * (pt2.X - pt1.X) + pt1.X, scale * (pt2.Y - pt1.Y) + pt1.Y );
         }
-        void AdvancedRenderer::CreateShaderPipeline()
-        {
-            RenderPipeline = new ShaderPipeline
-            (
-                "../../Renderers/Shaders/BlinnPhong.vsl",
-                "../../Renderers/Shaders/BlinnPhong.psl"
-            );
-        }
         void AdvancedRenderer::CreateTransformations()
         {
             BasicRenderer::CreateTransformations();

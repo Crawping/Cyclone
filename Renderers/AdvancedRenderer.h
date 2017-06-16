@@ -39,9 +39,6 @@ namespace Cyclone
 
 
                 /** INITIALIZATION UTILITIES **/
-                /// <summary> Creates a rendering pipeline using the Blinn-Phong shader programs. </summary>
-                RendererAPI virtual void CreateShaderPipeline() override;
-
                 RendererAPI virtual void CreateTransformations() override;
 
 

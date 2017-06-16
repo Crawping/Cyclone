@@ -59,11 +59,6 @@ namespace Cyclone
                 /// <summary> Executes the main event loop for the rendering engine. </summary>
                 RendererAPI virtual void Execute();
 
-
-                //template<typename T, typename ... U>
-                //Resource<T> Create(const string& name, U ... arguments)         { return _resources.Create<T>(name, arguments...); }
-
-
                 template<typename T> Resource<T> Create(const string& name)     { return _resources.Create<T>(name); }
                 template<typename T, typename ... U>
                 Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
@@ -75,16 +70,17 @@ namespace Cyclone
             protected:
 
                 /** DATA **/
-                Color4              ClearColor;
-                Transform3D         Projection;
-                GPU*                Renderer;
-                ShaderPipeline*     RenderPipeline;
-                Scene3D*            RenderScene;
-                FrameBuffer*        RenderTarget;
-                Window3D*           RenderWindow;
-			    int					SamplesMSAA;
-                string              Title;
-                Camera              View;
+                Color4                      ClearColor;
+                Transform3D                 Projection;
+                GPU*                        Renderer;
+                Resource<ShaderPipeline>    _pipeline;
+                Scene3D*                    RenderScene;
+                FrameBuffer*                RenderTarget;
+                Window3D*                   RenderWindow;
+			    int					        SamplesMSAA;
+                string                      Title;
+                Camera                      View;
+
 
 
                 /** CONSTRUCTOR **/
@@ -108,6 +104,9 @@ namespace Cyclone
                 /// </remarks>
                 RendererAPI virtual void CreateSceneResources();
                 /// <summary> Initializes the rendering pipeline containing the shader programs used to render 3D geometry. </summary>
+                /// <remarks>
+                ///     By default, this renderer loads a simple Blinn-Phong shading pipeline to render 3D geometry.
+                /// </remarks>
                 RendererAPI virtual void CreateShaderPipeline();
                 /// <summary> Initializes any resources that depend on the size of the size of the rendering window. </summary>
                 /// <remarks>

@@ -21,7 +21,6 @@ namespace Cyclone
             _canContinue(true),
             ClearColor(Color4::Gray),
             Renderer(nullptr),
-            RenderPipeline(nullptr),
             RenderScene(nullptr),
             RenderTarget(nullptr),
             RenderWindow(nullptr),
@@ -41,11 +40,9 @@ namespace Cyclone
 		    RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
 		    Renderer->Window(RenderWindow);
         }
-
         BasicRenderer::~BasicRenderer()
         {
             if (RenderScene)    { delete RenderScene; }
-            if (RenderPipeline) { delete RenderPipeline; }
             if (RenderTarget)   { delete RenderTarget; }
             if (RenderWindow)   { delete RenderWindow; }
             if (Renderer)       { delete Renderer; }
@@ -91,17 +88,18 @@ namespace Cyclone
                  IsBlendEnabled(true)
                 .IsDepthTestEnabled(true)
                 .IsStencilTestEnabled(false)
-                .Pipeline(RenderPipeline)
+                .Pipeline(&*_pipeline)
                 .Projection(&Projection)
                 .Target(RenderTarget)
                 .View(&View);
         }
         void BasicRenderer::CreateShaderPipeline()
         {
-            RenderPipeline = new ShaderPipeline
+            _pipeline = Create<ShaderPipeline, string, string>
             (
-                "../../Renderers/Shaders/Default.vsl",
-                "../../Renderers/Shaders/Default.psl"
+                "BlinnPhong", Constructor<ShaderPipeline, string, string>(),
+                "../../Renderers/Shaders/BlinnPhong.vsl",
+                "../../Renderers/Shaders/BlinnPhong.psl"
             );
         }
         void BasicRenderer::CreateSizedResources()
