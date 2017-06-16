@@ -112,31 +112,36 @@ void EventHandler::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHandler::Pain
 void EventHandler::ProcessButtonPress(const PointerClickEvent& evt)
 {
     if (!_browser || evt.Button == PointerButtons::Button002) { return; }
-    auto btn = (evt.Button == PointerButtons::Button001) ? MBT_LEFT : MBT_RIGHT;
+    auto btn = (evt.Button == PointerButtons::Button001) ? MBT_LEFT : 
+        (evt.Button == PointerButtons::Button003) ? MBT_RIGHT : MBT_MIDDLE;
 
-    CefMouseEvent cevt;
     const Vector2& ppos = _app.Window()->PointerPosition();
 
+    CefMouseEvent cevt;
     cevt.x = ppos.X;
     cevt.y = ppos.Y;
 
-    _browser->GetHost()->SendFocusEvent(true);
-    _browser->GetHost()->SendMouseClickEvent(cevt, btn, false, 1);
-    Console::WriteLine("Button Down Dispatched!");
+    if (btn != MBT_MIDDLE)  { _browser->GetHost()->SendMouseClickEvent(cevt, btn, false, 1); }
+    else
+    {
+        int delta = evt.Button == PointerButtons::Button004 ? -100 : 100;
+        _browser->GetHost()->SendMouseWheelEvent(cevt, 0, delta);
+    }
 }
 void EventHandler::ProcessButtonRelease(const PointerClickEvent& evt)
 {
     if (!_browser || evt.Button == PointerButtons::Button002) { return; }
-    auto btn = (evt.Button == PointerButtons::Button001) ? MBT_LEFT : MBT_RIGHT;
+    auto btn = (evt.Button == PointerButtons::Button001)    ? MBT_LEFT : 
+        (evt.Button == PointerButtons::Button003)           ? MBT_RIGHT : MBT_MIDDLE;
 
-    CefMouseEvent cevt;
     const Vector2& ppos = _app.Window()->PointerPosition();
 
+    CefMouseEvent cevt;
     cevt.x = ppos.X;
     cevt.y = ppos.Y;
 
-    _browser->GetHost()->SendMouseClickEvent(cevt, btn, true, 1);
-    Console::WriteLine("Button Up Dispatched!");
+    if (btn == MBT_MIDDLE)  { _browser->GetHost()->SendMouseWheelEvent(cevt, 0, 1); }
+    else                    { _browser->GetHost()->SendMouseClickEvent(cevt, btn, true, 1); }
 }
 void EventHandler::ProcessKeyPress(const KeyboardEvent& evt)
 {

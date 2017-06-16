@@ -168,6 +168,7 @@ static LRESULT CALLBACK WindowMessageLoop(HWND win, UINT msg, WPARAM wparam, LPA
 
             case WM_MOUSEWHEEL:
             case WM_MOUSEHWHEEL:
+                win3D->ProcessButtonPress( ((short)HIWORD(wparam) < 0) ? PointerButtons::Button004 : PointerButtons::Button005 );
                 break;
 
             case WM_SIZE:

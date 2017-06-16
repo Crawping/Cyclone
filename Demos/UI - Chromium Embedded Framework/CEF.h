@@ -28,9 +28,6 @@ class Program: public AdvancedRenderer
 
         Program();
 
-        //~Program()                          { if (_image) { delete BrowserImage; } }
-
-
         void Execute() override;
         void UpdateBrowser()                { RenderScene->Update(*_browser); }
 
