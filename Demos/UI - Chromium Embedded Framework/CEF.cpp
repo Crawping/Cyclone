@@ -110,31 +110,14 @@ void Program::ProcessKeyRelease(const KeyboardEvent& evt)
 void Program::ProcessPointerMotion(const PointerMotionEvent& evt)
 {
     AdvancedRenderer::ProcessPointerMotion(evt);
+    //_cursorRay = _browser()->Transform().Inverse() * LineSegment{ PointerWorldRay(0), PointerWorldRay(1) };
     _cursorPosition = CalculatePointerInWorld( (_browser->Position() - View.Position()).Norm() );
+
 }
 
 
 
-class ProgramCEF:
-    public CefApp,
-    public CefBrowserProcessHandler
-{
-    public:
-
-        ProgramCEF() { }
-
-        virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() override
-        {
-            return this;
-        }
-
-    private:
-
-        IMPLEMENT_REFCOUNTING(ProgramCEF);
-};
-
-
-
+/** MAIN ENTRY POINT **/
 int main(int nargs, char** args)
 {
     CefEnableHighDPISupport();
@@ -146,25 +129,21 @@ int main(int nargs, char** args)
     settings.no_sandbox = true;
     settings.windowless_rendering_enabled = true;
 
-    CefRefPtr<ProgramCEF> cefApp(new ProgramCEF());
-    CefInitialize(cefArgs, settings, cefApp.get(), nullptr);
+    Program app;
+    CefRefPtr<EventHandler> handler(new EventHandler(app));
+    CefInitialize(cefArgs, settings, handler.get(), nullptr);
 
     CefRefPtr<CefCommandLine> cmds = CefCommandLine::GetGlobalCommandLine();
     bool useViews = cmds->HasSwitch("use-views");
 
-    Program app;
-
-    CefRefPtr<EventHandler> handler(new EventHandler(app));
-    CefBrowserSettings browserSettings;
-
     string url = cmds->GetSwitchValue("url");
     if (url.empty()) { url = "http://www.google.com"; }
-
 
     CefWindowInfo winSettings;
     winSettings.windowless_rendering_enabled = true;
     winSettings.SetAsWindowless((HWND)app.Window()->ID());
 
+    CefBrowserSettings browserSettings;
     CefBrowserHost::CreateBrowser(winSettings, handler, url, browserSettings, nullptr);
 
     app.Execute();

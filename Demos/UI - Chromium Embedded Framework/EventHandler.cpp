@@ -16,7 +16,6 @@ static int TranslateModifiers(const KeyboardEvent evt)
 
 
 
-
 /** PROPERTIES **/
 bool EventHandler::GetRootScreenRect(CefRefPtr<CefBrowser> browser, CefRect& rect)
 {
@@ -73,6 +72,23 @@ EventHandler::~EventHandler()
 
 
 
+/** UTILITIES **/
+bool EventHandler::DoClose(CefRefPtr<CefBrowser> browser)
+{
+    return true;
+}
+bool EventHandler::StartDragging(CefRefPtr<CefBrowser> browser, CefRefPtr<CefDragData> data, CefRenderHandler::DragOperationsMask allowedOps, int x, int y)
+{
+    Console::WriteLine("Begin Drag");
+    return false;
+}
+void EventHandler::UpdateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation)
+{
+    Console::WriteLine("Update Drag");
+}
+
+
+
 /** EVENT HANDLERS **/
 void EventHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
@@ -84,6 +100,18 @@ void EventHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
     CEF_REQUIRE_UI_THREAD();
     _browser = nullptr;
+}
+void EventHandler::OnCursorChange(CefRefPtr<CefBrowser> browser, CefCursorHandle cursor, CefRenderHandler::CursorType type, const CefCursorInfo& cursorInfo)
+{
+    Console::WriteLine("Cursor");
+}
+void EventHandler::OnImeCompositionRangeChanged(CefRefPtr<CefBrowser> browser, const CefRange& range, const CefRenderHandler::RectList& bounds)
+{
+    Console::WriteLine("Composition");
+}
+void EventHandler::OnLoadError(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, ErrorCode code, const CefString& msg, const CefString& url)
+{
+
 }
 void EventHandler::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHandler::PaintElementType type, const CefRenderHandler::RectList& dirtyRects, const void* buffer, int width, int height)
 {
@@ -105,9 +133,28 @@ void EventHandler::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHandler::Pain
 
     _app.UpdateBrowser();
 }
-
-
-
+void EventHandler::OnPopupShow(CefRefPtr<CefBrowser> browser, bool show)
+{
+    Console::WriteLine("Show Popup!");
+}
+void EventHandler::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect& rect)
+{
+    Console::WriteLine("Popup Size");
+}
+void EventHandler::OnScrollOffsetChanged(CefRefPtr<CefBrowser> browser, double x, double y)
+{
+    Console::WriteLine("Scroll Offset");
+}
+void EventHandler::OnTitleChange(CefRefPtr<CefBrowser> browser, const CefString& title)
+{
+    Console::WriteLine("Title Change");
+}
+bool EventHandler::OnTooltip(CefRefPtr<CefBrowser> browser, CefString& text)
+{
+    Console::WriteLine("Generate Tooltip!");
+    Console::WriteLine("Text: " + (string)text);
+    return false;
+}
 
 void EventHandler::ProcessButtonPress(const PointerClickEvent& evt)
 {
@@ -116,6 +163,7 @@ void EventHandler::ProcessButtonPress(const PointerClickEvent& evt)
         (evt.Button == PointerButtons::Button003) ? MBT_RIGHT : MBT_MIDDLE;
 
     const Vector2& ppos = _app.Window()->PointerPosition();
+    //const Vector2& ppos = _app.CursorPosition();
 
     CefMouseEvent cevt;
     cevt.x = ppos.X;
@@ -135,6 +183,7 @@ void EventHandler::ProcessButtonRelease(const PointerClickEvent& evt)
         (evt.Button == PointerButtons::Button003)           ? MBT_RIGHT : MBT_MIDDLE;
 
     const Vector2& ppos = _app.Window()->PointerPosition();
+    //const Vector2& ppos = _app.CursorPosition();
 
     CefMouseEvent cevt;
     cevt.x = ppos.X;
@@ -176,7 +225,9 @@ void EventHandler::ProcessPointerMotion(const PointerMotionEvent& evt)
     if (!_browser) { return; }
     CefMouseEvent cevt;
 
-    cevt.x = evt.Position.X;
-    cevt.y = evt.Position.Y;
+    cevt.x = _app.CursorPosition().X;
+    cevt.y = _app.CursorPosition().Y;
+    //cevt.x = evt.Position.X;
+    //cevt.y = evt.Position.Y;
     _browser->GetHost()->SendMouseMoveEvent(cevt, false);
 }
