@@ -95,8 +95,7 @@ namespace Cyclone
                 template<typename T, typename ... U>
                 Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
                 {
-                    T* value = new T();
-                    *value = constructor(arguments...);
+                    T* value = new T(constructor(arguments...));
                     Register(name, value);
                     return Resource<T>(name, value);
                 }
