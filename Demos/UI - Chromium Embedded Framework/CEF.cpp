@@ -43,9 +43,8 @@ void Program::CreateSceneResources()
 {
     AdvancedRenderer::CreateSceneResources();
 
-    Cube = Create<Entity3D>("Cube");
-
-    Cube->
+    _cube = Create<Entity3D>("Cube");
+    _cube->
          Geometry(Mesh3D::Cube(true))
         .PrimaryColor(Color4::Gray)
         .SecondaryColor(Color4::White)
@@ -75,13 +74,13 @@ void Program::CreateSceneResources()
         .Scale(RenderWindow->ClientArea().Scale())
         .Texture(&*_image);
 
-    RenderScene->Insert(*Cube);
+    RenderScene->Insert(*_cube);
     RenderScene->Insert(*_browser);
 }
 void Program::UpdateScene()
 {
-    Cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
-    RenderScene->Update(*Cube);
+    _cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
+    RenderScene->Update(*_cube);
     AdvancedRenderer::UpdateScene();
 }
 void Program::ProcessButtonPress(const PointerClickEvent& evt)

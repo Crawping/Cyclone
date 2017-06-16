@@ -36,13 +36,6 @@ class Program: public AdvancedRenderer
 
     protected:
 
-        Resource<Entity3D>  Cube;
-
-        Resource<Entity3D>  _browser;
-        Resource<Texture3D> _image;
-        bool                _isNavigationEnabled;
-        Vector2             _cursorPosition;
-
         void CreateSceneResources()                                 override;
 
         void UpdateScene()                                          override;
@@ -56,4 +49,12 @@ class Program: public AdvancedRenderer
         void ProcessKeyRelease(const KeyboardEvent& evt)            override;
 
         void ProcessPointerMotion(const PointerMotionEvent& evt)    override;
+
+    private:
+
+        Resource<Entity3D>  _browser;
+        Resource<Entity3D>  _cube;
+        Resource<Texture3D> _image;
+        bool                _isNavigationEnabled;
+        Vector2             _cursorPosition;
 };
