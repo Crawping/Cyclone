@@ -74,6 +74,8 @@ namespace Cyclone
                 template<typename U, typename V>
                 Property<U, V> operator [](Attribute<U, V> property)        const { return Property<U, V>(_value, property); }
 
+                T& operator *()                                             { return *_value; }
+
                 template<typename U>
                 operator Resource<U>()                                      const
                 {
