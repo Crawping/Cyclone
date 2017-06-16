@@ -9,9 +9,7 @@
 
 
 Program::Program():
-    AdvancedRenderer(Area(0, 0, 2560, 1440), "UI - CEF"),
-    BrowserImage(nullptr),
-    Cube(),
+    AdvancedRenderer(Area(0, 0, 1920, 1080), "UI - CEF"),
     _isNavigationEnabled(false)
 {
     IsFreeLookEnabled = false;
@@ -22,6 +20,9 @@ Program::Program():
     Initialize();
 }
 
+
+
+/** UTILITIES **/
 void Program::Execute()
 {
     bool runCEF = true;
@@ -35,41 +36,51 @@ void Program::Execute()
     }
 }
 
+
+
+/** PROTECTED UTILITIES **/
 void Program::CreateSceneResources()
 {
     AdvancedRenderer::CreateSceneResources();
 
-    Cube
-        .Geometry(Mesh3D::Cube(true))
-        .PrimaryColor(Color4::Blue)
+    Cube = Create<Entity3D>("Cube");
+
+    Cube->
+         Geometry(Mesh3D::Cube(true))
+        .PrimaryColor(Color4::Gray)
+        .SecondaryColor(Color4::White)
+        .SpecularPower(10)
         .Translate(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, 50))
         .Scale(200)
         .Pitch(Constants::Pi<float> / 4)
         .Yaw(Constants::Pi<float> / 4);
 
-    BrowserImage = new Texture3D
+    _image = Create<Texture3D, Vector4, TextureFormats, TextureTargets>
     (
+        "Browser", Constructor<Texture3D, Vector4, TextureFormats, TextureTargets>(),
         Vector4(RenderWindow->ClientArea().Scale()),
         TextureFormats::Byte4,
         TextureTargets::Texture2D
     );
+    _image->MakeResident();
 
-    BrowserImage->MakeResident();
-
-    BrowserPage
-        .Geometry(Mesh3D::Quad(true))
+    _browser = Create<Entity3D>("Browser");
+    _browser->
+         Geometry(Mesh3D::Quad(true))
         .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
         .PrimaryColor(Color4::White)
+        .SecondaryColor(Color4::White)
+        .SpecularPower(1)
         .Scale(RenderWindow->ClientArea().Scale())
-        .Texture(BrowserImage);
+        .Texture(&*_image);
 
-    RenderScene->Insert(Cube);
-    RenderScene->Insert(BrowserPage);
+    RenderScene->Insert(*Cube);
+    RenderScene->Insert(*_browser);
 }
 void Program::UpdateScene()
 {
-    Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
-    RenderScene->Update(Cube);
+    Cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
+    RenderScene->Update(*Cube);
     AdvancedRenderer::UpdateScene();
 }
 void Program::ProcessButtonPress(const PointerClickEvent& evt)
@@ -99,10 +110,8 @@ void Program::ProcessKeyRelease(const KeyboardEvent& evt)
 void Program::ProcessPointerMotion(const PointerMotionEvent& evt)
 {
     AdvancedRenderer::ProcessPointerMotion(evt);
-    _cursorPosition = CalculatePointerInWorld( (BrowserPage.Position() - View.Position()).Norm() );
-    Console::WriteLine("Cursor Position: " + _cursorPosition.ToString());
+    _cursorPosition = CalculatePointerInWorld( (_browser->Position() - View.Position()).Norm() );
 }
-
 
 
 

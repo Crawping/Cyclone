@@ -21,26 +21,27 @@ class Program: public AdvancedRenderer
 {
     public:
 
-        Texture3D* Image()                  { return BrowserImage; }
+        Resource<Texture3D> Image()         { return _image; }
         bool IsNavigationEnabled()          { return _isNavigationEnabled; }
         const Vector2& CursorPosition()     { return _cursorPosition; }
         Window3D* Window()                  { return RenderWindow; }
 
         Program();
 
-        ~Program()                          { if (BrowserImage) { delete BrowserImage; } }
+        //~Program()                          { if (_image) { delete BrowserImage; } }
 
 
         void Execute() override;
-        void UpdateBrowser()                { RenderScene->Update(BrowserPage); }
+        void UpdateBrowser()                { RenderScene->Update(*_browser); }
 
     protected:
 
-        Entity3D        Cube;
-        Entity3D        BrowserPage;
-        Texture3D*      BrowserImage;
-        bool            _isNavigationEnabled;
-        Vector2         _cursorPosition;
+        Resource<Entity3D>  Cube;
+
+        Resource<Entity3D>  _browser;
+        Resource<Texture3D> _image;
+        bool                _isNavigationEnabled;
+        Vector2             _cursorPosition;
 
         void CreateSceneResources()                                 override;
 
