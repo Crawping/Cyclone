@@ -15,13 +15,18 @@ namespace Cyclone
         using namespace Utilities;
 
 
+
+        /// <summary> An interface that represents a three-dimensional geometric model. </summary>
         class IModel
         {
             public:
                 
                 virtual const IGeometric& Geometry()            const = 0;
+                /// <summary> Gets whether the model has any geometric data. </summary>
                 virtual bool IsEmpty()                          const { return Geometry().IsEmpty(); }
+                /// <summary> Gets the transformation that converts between local and model space. </summary>
                 virtual const ISpatialTransform& Transform()    const = 0;
+
         };
     }
 }

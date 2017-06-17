@@ -27,6 +27,10 @@ namespace Cyclone
                 /** SPATIAL PROPERTIES **/
                 /// <summary> Gets the orientation of the texture transformation. </summary>
                 const Vector3& Orientation()                        const override { return _transform.Orientation(); }
+                /// <summary> 
+                /// 
+                /// </summary>
+                /// <returns></returns>
                 const Vector3& Position()                           const override { return _transform.Position(); }
                 const Vector3& Scale()                              const override { return _transform.Scale(); }
                 const Transform3D& Transform()                      const override { return _transform; }
@@ -39,7 +43,11 @@ namespace Cyclone
 
 
                 /** VISUAL PROPERTIES **/
-
+                /// <summary> Gets the minimum value of the material's ambient light term during shading. </summary>
+                /// <remarks> 
+                ///     This parameter is used during shading to determine the uniform lighting across a material and should 
+                ///     take on a value between [0.0f, 1.0f].
+                /// </remarks>
                 float Ambience()                                    const override { return _data.Ambience; }
                 /// <summary> Gets a structure containing all of the data needed to render the material. </summary>
                 const MaterialData& Data()                          const override { return _data; }
@@ -47,14 +55,17 @@ namespace Cyclone
                 const Color4& PrimaryColor()                        const override { return _data.PrimaryColor; }
                 /// <summary> Gets the secondary color of the material. </summary>
                 const Color4& SecondaryColor()                      const override { return _data.SecondaryColor; }
-                
+                /// <summary> Gets the exponent of the material's specular reflection term during shading. </summary>
+                /// <remarks> 
+                ///     This parameter is used during shading to determine the size of specular light reflections on a material.
+                /// </remarks>
                 float SpecularPower()                               const override { return _data.SpecularPower; }
                 /// <summary> Gets a pointer to the texture of a material. </summary>
                 Resource<ITexture> Texture()                        const override { return _texture; }
 
                 
 
-                /// <summary> The minimum value of the material's ambient light term during shading. </summary>
+                /// <summary> Sets the minimum value of the material's ambient light term during shading. </summary>
                 /// <remarks> 
                 ///     This parameter is used during shading to determine the uniform lighting across a material and should 
                 ///     take on a value between [0.0f, 1.0f].
@@ -66,7 +77,7 @@ namespace Cyclone
                 OpenGLAPI Material3D& PrimaryColor(const Color4& value);
                 /// <summary> Sets the secondary color of the material. </summary>
                 OpenGLAPI Material3D& SecondaryColor(const Color4& value);
-                /// <summary> The exponent of the material's specular reflection term during shading. </summary>
+                /// <summary> Sets the exponent of the material's specular reflection term during shading. </summary>
                 /// <remarks> 
                 ///     This parameter is used during shading to determine the size of specular light reflections on a material.
                 /// </remarks>
