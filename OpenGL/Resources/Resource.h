@@ -41,7 +41,6 @@ namespace Cyclone
 
 
 
-
                 /** CONSTRUCTOR **/
                 Resource(const string& name = "", T* value = nullptr):
                     _name(name),
@@ -74,15 +73,15 @@ namespace Cyclone
                 template<typename U, typename V>
                 Property<U, V> operator [](Attribute<U, V> property)        const { return Property<U, V>(_value, property); }
 
-                T& operator *()                                             { return *_value; }
 
-                template<typename U>
-                operator Resource<U>()                                      const
+                template<typename U> operator Resource<U>()                 const
                 {
                     static_assert(Meta::IsA<T, U>() || Meta::IsA<U, T>(), "Invalid casting operation attempted.");
                     return Resource<U>(_name, dynamic_cast<U*>(_value));
                 }
 
+                T& operator *()                                             { return *_value; }
+                const T& operator *()                                       const { return *_value; }
                 T* operator ->()                                            { return _value; }
                 const T* operator ->()                                      const { return _value; }
 

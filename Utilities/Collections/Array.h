@@ -12,7 +12,6 @@ namespace Cyclone
 {
     namespace Utilities
     {
-
         /// <summary> A class that represents a multidimensional array of data elements. </summary>
         template<typename T, uint ... U>
         class Array
@@ -104,11 +103,11 @@ namespace Cyclone
                 }
                 /// <summary> Converts the array into an equivalent one-dimensional vector of values. </summary>
                 /// <returns> A flattened array of values copied from the multidimensional array. </returns>
-                constexpr Array<T, _count> Flatten()                            const { return { _values }; }
+                constexpr Array<T, _count> Flatten()                                const { return { _values }; }
                 /// <summary> Gets the size of the array across a specific dimension. </summary>
                 /// <returns> The size of the array along the inputted dimension. </returns>
                 /// <param name="dimension"> A single array dimension. </param>
-                constexpr static uint Size(uint dimension)                      { return (dimension >= _rank) ? 1 : _size[dimension]; }
+                constexpr static uint Size(uint dimension)                          { return (dimension >= _rank) ? 1 : _size[dimension]; }
                 /// <summary> Calculates a linear index that is equivalent to a set of array subscripts. </summary>
                 /// <returns> A linear array index that references the same location as the inputted subscripts. </returns>
                 /// <param name="subscripts"> Any number of unsigned integers representing the array subscripts to convert. </param>
@@ -132,8 +131,7 @@ namespace Cyclone
                     return idx;
                 }
                 /// <summary> Copies the array into a new one with different dimensions. </summary>
-                template<uint ... V>
-                constexpr Array<T, V...> Reshape()                              const
+                template<uint ... V> constexpr Array<T, V...> Reshape()             const
                 {
                     static_assert(Math::Product(V...) == _count,
                         "The number of elements in an array must not change during reshaping operations.");
@@ -159,31 +157,31 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-                constexpr const T* begin()                                      const { return &_values[0]; }
-                constexpr const T* end()                                        const { return begin() + Count(); }
+                constexpr const T* begin()                                          const { return &_values[0]; }
+                constexpr const T* end()                                            const { return begin() + Count(); }
 
                 template<uint ... V>
-                constexpr auto operator [](const Array<uint, V...>& indices)    const
+                constexpr auto operator [](const Array<uint, V...>& indices)        const
                 {
                     return Array<T, V...>(*this, indices.Flatten());
                 }
 
-                constexpr T& operator ()(uint index)                            { return _values[index]; }
-                constexpr const T& operator ()(uint index)                      const { return _values[index]; }
+                constexpr T& operator ()(uint index)                                { return _values[index]; }
+                constexpr const T& operator ()(uint index)                          const { return _values[index]; }
 
                 template<typename ... V>
-                constexpr const T& operator ()(V ... indices)                   const { return _values[IndexOf(indices...)]; }
+                constexpr const T& operator ()(V ... indices)                       const { return _values[IndexOf(indices...)]; }
                 template<uint N>
-                constexpr Array<T, N> operator ()(const Array<T, N>& indices)   const { return _values[IndexOf(indices)]; }
+                constexpr Array<T, N> operator ()(const Array<T, N>& indices)       const { return _values[IndexOf(indices)]; }
 
 
-                constexpr bool operator ==(const Array<T, U...>& other)         const
+                constexpr bool operator ==(const Array<T, U...>& other)             const
                 {
                     for (uint a = 0; a < _count; a++)
                         if (_values[a] != other(a)) return false;
                     return true;
                 }
-                constexpr bool operator !=(const Array<T, U...>& other)         const { return !operator ==(other); }
+                constexpr bool operator !=(const Array<T, U...>& other)             const { return !operator ==(other); }
                 
         };
 

@@ -14,8 +14,7 @@ namespace Cyclone
     namespace OpenGL
     {
         /// <summary> An interface that represents a generalized GPU texture resource. </summary>
-        class ITexture : 
-            public virtual IBindable
+        class ITexture: public virtual IBindable
         {
             public:
 
