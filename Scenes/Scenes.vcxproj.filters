@@ -24,12 +24,6 @@
     <ClInclude Include="Components\SceneComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Resources\Resource.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Resources\ResourceLibrary.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Messaging\Message.cpp">
@@ -61,9 +55,6 @@
     </Filter>
     <Filter Include="Behaviors">
       <UniqueIdentifier>{f38fcdda-6882-4701-82d8-2e584cfcb9ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{c78116a6-99ab-4119-8340-313b63360f7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
