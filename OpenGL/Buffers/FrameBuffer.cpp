@@ -1,9 +1,9 @@
 #include "EnumerationsGL.h"
 #include "Buffers/FrameBuffer.h"
 #include "GL/OpenGL.h"
-#include "Textures/Texture2D.h"
 #include "Utilities.h"
 #include <sstream>
+
 
 
 namespace Cyclone
@@ -119,12 +119,6 @@ namespace Cyclone
                    "\tID:                 " << _id                          << "\n" <<
                    "\tStatus:             " << ReportCompletionStatus()     << "\n\n";
 
-            if (_colorTexture)
-                msg << "\tFramebuffer Color " << _colorTexture->Report();
-
-            if (_depthTexture)
-                msg << "\n\tFramebuffer Depth " << _depthTexture->Report();
-
             return msg.str();
         }
         void FrameBuffer::Unbind() const
@@ -141,15 +135,18 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void FrameBuffer::CreateColorAttachment(TextureFormats format, TextureTargets target)
         {
-            _colorTexture = new Texture2D(_size, format, target);
+            _colorTexture = new Texture3D(_size, format, target);
             _colorTexture->EdgeWrap(WrapModes::Repeat);
+            _colorTexture->Update();
 
             glNamedFramebufferTexture(_id, GL_COLOR_ATTACHMENT0, _colorTexture->ID(), 0);
             glNamedFramebufferDrawBuffer(_id, GL_COLOR_ATTACHMENT0);
         }
         void FrameBuffer::CreateDepthAttachment(TextureFormats format, TextureTargets target)
         {
-            _depthTexture = new Texture2D(_size, format, target);
+            _depthTexture = new Texture3D(_size, format, target);
+            _depthTexture->Update();
+
             if (HasStencilBuffer())
                 glNamedFramebufferTexture(ID(), GL_DEPTH_STENCIL_ATTACHMENT, _depthTexture->ID(), 0);
             else

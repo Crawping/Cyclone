@@ -5,7 +5,7 @@
 #pragma once
 #include "Interfaces/IBindable.h"
 #include "Spatial/Area.h"
-#include "Textures/Texture2D.h"
+#include "Textures/Texture3D.h"
 #include "Math/Vector2.h"
 
 
@@ -22,9 +22,9 @@ namespace Cyclone
                 
                 /** PROPERTIES **/
                 /// <summary> Gets the texture currently serving as the color attachment for this framebuffer. </summary>
-                const Texture2D* ColorTexture()     const { return _colorTexture; }
+                const Texture3D* ColorTexture()     const { return _colorTexture; }
                 /// <summary> The texture currently serving as the depth attachment for this framebuffer. </summary>
-                const Texture2D* DepthTexture()     const { return _depthTexture; }
+                const Texture3D* DepthTexture()     const { return _depthTexture; }
                 /// <summary> Gets the size and position of this framebuffer in pixels. </summary>
                 Area DisplayArea()                  const { return Area(0, 0, Width(), Height()); }
                 /// <summary> Gets the height of this framebuffer in pixels. </summary>
@@ -171,8 +171,8 @@ namespace Cyclone
             private:
 
                 /** PROPERTY DATA **/
-                Texture2D*      _colorTexture;
-                Texture2D*      _depthTexture;
+                Texture3D*      _colorTexture;
+                Texture3D*      _depthTexture;
                 uint            _id;
                 Vector4         _size;
                 TextureTargets  _target;
