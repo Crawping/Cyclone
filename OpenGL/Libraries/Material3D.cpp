@@ -49,11 +49,11 @@ namespace Cyclone
             _data.SpecularPower = value;
             return *this;
         }
-        Material3D& Material3D::Texture(Texture3D* value)
+        Material3D& Material3D::Texture(Resource<ITexture> value)
         {
             _texture            = value;
-            _data.IsTextured    = (value != nullptr);
-            _data.Texture       = value ? value->Handle() : 0;
+            _data.IsTextured    = !value.IsNull();
+            _data.Texture       = value.IsNull() ? 0 : value->Handle();
             return *this;
         }
         Material3D& Material3D::Transform(const Transform3D& value)
@@ -65,8 +65,8 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        Material3D::Material3D() :
-            _texture(nullptr)
+        Material3D::Material3D():
+            _texture("Null", nullptr)
         {
 
         }

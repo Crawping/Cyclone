@@ -61,8 +61,9 @@ namespace Cyclone
 
                 virtual float SpecularPower()                           const { return Material().SpecularPower(); }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
-		        virtual const Texture3D* Texture()                      const { return Material().Texture(); }
+		        //virtual const Texture3D* Texture()                      const { return Material().Texture(); }
                 //virtual Resource<Texture3D> Texture()                   const { return Material().Texture(); }
+                virtual Resource<ITexture> Texture()                    const { return Material().Texture(); }
 
                 virtual Entity3D& Ambience(float value)
                 {
@@ -87,8 +88,9 @@ namespace Cyclone
                     return *this;
                 }
                 /// <summary> Sets the texture to be used when rendering the entity. </summary>
+                virtual Entity3D& Texture(Resource<ITexture> value)
                 //virtual Entity3D& Texture(const Resource<Texture3D>& value)
-                virtual Entity3D& Texture(Texture3D* value)
+                //virtual Entity3D& Texture(Texture3D* value)
                 {
                     _material.Texture(value);
                     return *this;

@@ -72,7 +72,7 @@ void Program::CreateSceneResources()
         .SecondaryColor(Color4::Black)
         .SpecularPower(1)
         .Scale(RenderWindow->ClientArea().Scale())
-        .Texture(&*_image);
+        .Texture(_image);
 
     RenderScene->Insert(*_cube);
     RenderScene->Insert(*_browser);

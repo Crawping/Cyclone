@@ -17,6 +17,7 @@ namespace Cyclone
     {
         /** FORWARD DECLARATIONS **/
         class ITexture;
+        template<typename T> struct Resource;
         using namespace Utilities;
 
 
@@ -46,7 +47,7 @@ namespace Cyclone
 
             MaterialData():
                 Texture(0),
-                Ambience(0.0f),
+                Ambience(0.1f),
                 SpecularPower(200),
                 IsTextured(false)
             {
@@ -91,7 +92,8 @@ namespace Cyclone
                 ///     Not all materials or material-like entities will have textured associated with them. In those cases, this
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
-                virtual const ITexture* Texture()			        const = 0;
+                //virtual const ITexture* Texture()			        const = 0;
+                virtual Resource<ITexture> Texture()                const = 0;
 
                 virtual const ISpatialTransform& Transform()        const = 0;
 
