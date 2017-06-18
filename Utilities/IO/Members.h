@@ -42,7 +42,7 @@ namespace Cyclone
 
                 }
 
-                Field* Copy()                                   const override { return Field(_object, _field); }
+                Field* Copy()                                   const override { return new Field(_object, _field); }
                 T Invoke()                                      const override { return (_object->*_field); }
                 void Invoke(T value)                            { (_object->*_field) = value; }
 
