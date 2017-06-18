@@ -19,8 +19,8 @@ namespace Cyclone
             private:
 
                 /** STATIC DATA **/
-                constexpr static uint _rank                     = sizeof...(U);
                 constexpr static uint _count                    = Math::Product(U...);
+                constexpr static uint _rank                     = sizeof...(U);
                 constexpr static uint _size[_rank]              = { U... };
 
 
