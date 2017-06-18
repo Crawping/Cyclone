@@ -4,7 +4,6 @@
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IRenderable2D.h"
-#include "Interfaces/ITransformable.h"
 #include "Interfaces/ISpatialTransform.h"
 #include "Models/Model3D.h"
 #include "Pipelines/GraphicsPipeline.h"
@@ -50,7 +49,6 @@ namespace Cyclone
 
             for (uint a = 0; a < Entities.Count(); a++)
             {
-                //const auto& world = keys(a)->Transforms().World();
                 const auto& world = keys(a)->Model().Transform();
                 nvMatrixLoadf(TransformMatrices::ModelView, world.ToMatrix4x4().ToArray());
 

@@ -17,53 +17,9 @@ namespace Cyclone
     {
         /** FORWARD DECLARATIONS **/
         class ITexture;
+        struct MaterialData;
         template<typename T> struct Resource;
         using namespace Utilities;
-
-
-        struct MaterialData
-        {
-            /// <summary> The primary color of a material. </summary>
-            Color4      PrimaryColor;
-            /// <summary> The secondary color of a material. </summary>
-            Color4      SecondaryColor;
-            /// <summary> The numeric handle of a material's texture resource on the GPU. </summary>
-            ulong       Texture;
-            /// <summary> The minimum value of the material's ambient light term during shading. </summary>
-            /// <remarks> 
-            ///     This parameter is used during shading to determine the uniform lighting across a material and should 
-            ///     take on a value between [0.0f, 1.0f].
-            /// </remarks>
-            float       Ambience;
-            /// <summary> The exponent of the material's specular reflection term during shading. </summary>
-            /// <remarks> 
-            ///     This parameter is used during shading to determine the size of specular light reflections on a material.
-            /// </remarks>
-            float       SpecularPower;
-            /// <summary> A Boolean indicating whether the material is associated with a texture. </summary>
-            uint        IsTextured;
-
-            Vector3     _0;
-
-            MaterialData():
-                Texture(0),
-                Ambience(0.1f),
-                SpecularPower(200),
-                IsTextured(false)
-            {
-
-            }
-
-            bool operator ==(const MaterialData& other) const
-            {
-                return
-                    (Texture == other.Texture)                  &&
-                    (PrimaryColor == other.PrimaryColor)        &&
-                    (SecondaryColor == other.SecondaryColor);
-            }
-        };
-
-
 
         /// <summary> An interface used to specify the material properties of an entity. </summary>
         class IMaterial:
@@ -92,7 +48,7 @@ namespace Cyclone
                 ///     Not all materials or material-like entities will have textured associated with them. In those cases, this
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
-                virtual Resource<ITexture> Texture()                const = 0;
+                virtual const ITexture* Texture()                   const = 0;
 
                 virtual const ISpatialTransform& Transform()        const = 0;
 

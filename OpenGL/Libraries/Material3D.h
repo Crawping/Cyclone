@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Buffers/UniformData.h"
 #include "GL/OpenGLAPI.h" 
 #include "Imaging/Color4.h"
 #include "Interfaces/IMaterial.h"
@@ -59,7 +60,7 @@ namespace Cyclone
                 /// </remarks>
                 float SpecularPower()                               const override { return _data.SpecularPower; }
                 /// <summary> Gets a pointer to the texture of a material. </summary>
-                Resource<ITexture> Texture()                        const override { return _texture; }
+                const ITexture* Texture()                           const override { return &*_texture; }
 
                 /// <summary> Sets the minimum value of the material's ambient light term during shading. </summary>
                 /// <remarks> 
