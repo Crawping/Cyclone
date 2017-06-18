@@ -159,7 +159,7 @@ namespace Cyclone
             {
                 Matrix4x4::Identity,
                 Matrix4x4::Identity,
-                entity.Model().Transform().ToMatrix4x4()
+                entity.Transform().ToMatrix4x4()
             };
 
             if (map.TransformKey.IsValid())

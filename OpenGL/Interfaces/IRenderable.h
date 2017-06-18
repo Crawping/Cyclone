@@ -8,7 +8,11 @@
 
 namespace Cyclone
 {
-    namespace Utilities { struct LineSegment; }
+    namespace Utilities 
+    {
+        class ISpatialTransform;
+        struct LineSegment;
+    }
     namespace OpenGL
     {        
         /** FORWARD DECLARATIONS **/
@@ -29,6 +33,8 @@ namespace Cyclone
                 virtual const IMaterial& Material()                 const = 0;
                 /// <summary> Gets the data that define the spatial properties of a renderable entity. </summary>
                 virtual const IModel& Model()                       const = 0;
+
+                virtual const ISpatialTransform& Transform()        const = 0;
 
 
 

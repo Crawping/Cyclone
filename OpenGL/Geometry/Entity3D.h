@@ -7,6 +7,7 @@
 #include "Libraries/Material3D.h"
 #include "Models/Model3D.h"
 #include "Resources/Resource.h"
+#include "Spatial/Transform.h"
 
 
 
@@ -24,10 +25,12 @@ namespace Cyclone
             public:
 
                 /** MODEL PROPERTIES **/
-                const Geometry3D& Geometry()                            const { return _model.Geometry(); }
-                const Vector3& Orientation()                            const override { return _model.Orientation(); }    
-                const Vector3& Position()                               const override { return _model.Orientation(); }
-                const Vector3& Scale()                                  const override { return _model.Orientation(); }
+                /// <summary> Gets the data that define the spatial properties of the entity. </summary>
+                const Geometry3D& Geometry()                            const { return Model().Geometry(); }
+                /// <summary> Gets the orientation of the entity in world space. </summary>
+                const Vector3& Orientation()                            const override { return _transform.Orientation(); }    
+                const Vector3& Position()                               const override { return _transform.Orientation(); }
+                const Vector3& Scale()                                  const override { return _transform.Orientation(); }
 
                 Entity3D& Geometry(const Geometry3D& value)
                 {
@@ -36,17 +39,17 @@ namespace Cyclone
                 }
                 Entity3D& Orientation(const Vector3& value)             override
                 {
-                    _model.Orientation(value);
+                    _transform.Orientation(value);
                     return *this;
                 }
                 Entity3D& Position(const Vector3& value)                override
                 {
-                    _model.Position(value);
+                    _transform.Position(value);
                     return *this;
                 }
                 Entity3D& Scale(const Vector3& value)                   override
                 {
-                    _model.Scale(value);
+                    _transform.Scale(value);
                     return *this;
                 }
 
@@ -100,11 +103,16 @@ namespace Cyclone
                 
                 /** RENDERABLE INTERFACE PROPERTIES **/
                 /// <summary> Gets whether the entity is visible in the rendered environment. </summary>
-                virtual bool IsVisible()                                const override { return _isVisible; }
+                bool IsVisible()                                        const override { return _isVisible; }
                 /// <summary> Gets the material used to style the entity in the rendered environment. </summary>
-                virtual const Material3D& Material()                    const override { return _material; }
+                //Resource<IMaterial> Material()                          const override { return _material; }
+                const Material3D& Material()                            const override { return _material; }
 
-                virtual const Model3D& Model()                          const override { return _model; }
+                const Model3D& Model()                                  const override { return _model; }
+
+                const Transform3D& Transform()                          const override { return _transform; }
+
+
 
                 /// <summary> Sets whether the entity is visible in a rendered environment. </summary>
                 virtual Entity3D& IsVisible(bool value)
@@ -114,6 +122,7 @@ namespace Cyclone
                 }
                 /// <summary> Sets the material used to style the entity in the rendered environment. </summary>
                 virtual Entity3D& Material(const Material3D& value)
+                //virtual Entity3D& Material(Resource<IMaterial> value)
                 { 
                     _material = value;
                     return *this;
@@ -122,6 +131,12 @@ namespace Cyclone
                 virtual Entity3D& Model(const Model3D& value)
                 {
                     _model = value;
+                    return *this;
+                }
+
+                virtual Entity3D& Transform(const Transform3D& value)
+                {
+                    _transform = value;
                     return *this;
                 }
 
@@ -140,23 +155,15 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 bool Intersects(const LineSegment& line) const override { return false; }
-                Entity3D& Rotate(const Vector3& values)
-                {
-                    _model.Rotate(values);
-                    return *this;
-                }
-
-
-            protected:
-
-                //virtual Transform3D& Transform() { return _model.Transform(); }
 
             private:
                 
                 /** PROPERTY DATA **/
-                bool            _isVisible;
-                Material3D      _material;
-                Model3D         _model;
+                bool                _isVisible;
+                //Resource<IMaterial> _material;
+                Material3D          _material;
+                Model3D             _model;
+                Transform3D         _transform;
 
         };
     }
