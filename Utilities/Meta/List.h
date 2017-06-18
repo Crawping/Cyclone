@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Math/Math.h"
 #include "Meta/Primitives.h"
 
 
@@ -24,8 +25,9 @@ namespace Cyclone
             {
 
                 /** PROPERTIES **/
+                constexpr static uint ByteSize                  = Math::Sum(sizeof(T)...);
                 /// <summary> Gets the number of types present in the list. </summary>
-                using Count                                     = Integer32U<sizeof...(T)>;
+                constexpr static uint Count                     = sizeof...(T);
                 /// <summary> Gets the first type present in the list. </summary>
                 using First                                     = Node<0, T...>;
                 /// <summary> Gets whether the list has any stored types. </summary>
@@ -37,12 +39,12 @@ namespace Cyclone
                 /** UTILITIES **/
                 template<typename ... U> using Concatenate      = List<T..., U...>;
                 using Discard                                   = Sublist<T...>;
-                template<uint N> using Get                      = Node<N, T...>;
+                template<uint N> using Get                      = typename Node<N, T...>::Type;
 
                 template<uint N, typename S>
                 constexpr static auto Cast(S x)
                 {
-                    return (Get<N>::Type)x;
+                    return (Get<N>)x;
                 }
             };
         }

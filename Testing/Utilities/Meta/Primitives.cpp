@@ -15,9 +15,9 @@ using namespace Cyclone::Utilities;
 TEST(_Primitives, Functions)
 {
     using fcn = Meta::Function<void, Color4, ulong, Vector4, Vector4>;
-    ASSERT_EQ(fcn::Inputs::Count(),   4);
+    ASSERT_EQ(fcn::Inputs::Count,   4);
 
-    Meta::IsEqual<fcn::Inputs::Get<1>::Type, ulong> c1;
+    Meta::IsEqual<fcn::Inputs::Get<1>, ulong> c1;
     ASSERT_TRUE(c1);
 
     Meta::IsEqual<fcn::Output, void> c2;

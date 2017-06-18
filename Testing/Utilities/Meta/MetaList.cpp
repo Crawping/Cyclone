@@ -24,8 +24,8 @@ class _MetaList : public testing::Test
 
 TEST_F(_MetaList, Construction)
 {
-    ASSERT_EQ(L1::Count(),      4);
-    ASSERT_TRUE(( Meta::IsEqual<L1::Get<3>::Type, Vector4>() ));
+    ASSERT_EQ(L1::Count,      4);
+    ASSERT_TRUE(( Meta::IsEqual<L1::Get<3>, Vector4>() ));
 
     uint x = 0;
     auto y = L1::Cast<3>(x);
@@ -37,7 +37,7 @@ TEST_F(_MetaList, Construction)
 
 TEST_F(_MetaList, Concatenation)
 {
-    ASSERT_EQ(L2::Count(),      7);
+    ASSERT_EQ(L2::Count,      7);
 
     ASSERT_TRUE(( Meta::IsEqual<L2::First::Type, L1::First::Type>() ));
     ASSERT_TRUE(( Meta::IsEqual<L2::Last::Type, ulong*>() ));
