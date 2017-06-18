@@ -92,7 +92,6 @@ namespace Cyclone
                 ///     Not all materials or material-like entities will have textured associated with them. In those cases, this
                 ///     method will return a <c>nullptr</c>.
                 /// </remarks>
-                //virtual const ITexture* Texture()			        const = 0;
                 virtual Resource<ITexture> Texture()                const = 0;
 
                 virtual const ISpatialTransform& Transform()        const = 0;

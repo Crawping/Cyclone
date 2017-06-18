@@ -27,11 +27,9 @@ namespace Cyclone
                 /** SPATIAL PROPERTIES **/
                 /// <summary> Gets the orientation of the texture transformation. </summary>
                 const Vector3& Orientation()                        const override { return _transform.Orientation(); }
-                /// <summary> 
-                /// 
-                /// </summary>
-                /// <returns></returns>
+                /// <summary> Gets the translation of the texture transformation. </summary>
                 const Vector3& Position()                           const override { return _transform.Position(); }
+                /// <summary> Gets the scale of the texture transformation. </summary>
                 const Vector3& Scale()                              const override { return _transform.Scale(); }
                 const Transform3D& Transform()                      const override { return _transform; }
 
@@ -62,8 +60,6 @@ namespace Cyclone
                 float SpecularPower()                               const override { return _data.SpecularPower; }
                 /// <summary> Gets a pointer to the texture of a material. </summary>
                 Resource<ITexture> Texture()                        const override { return _texture; }
-
-                
 
                 /// <summary> Sets the minimum value of the material's ambient light term during shading. </summary>
                 /// <remarks> 
