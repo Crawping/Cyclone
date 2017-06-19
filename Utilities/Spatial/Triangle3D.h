@@ -4,6 +4,8 @@
 
 #pragma once
 #include "Collections/Array.h"
+#include "Math/Vector3.h"
+#include "Spatial/LineSegment.h"
 
 
 
@@ -24,7 +26,9 @@ namespace Cyclone
             /** PROPERTIES **/
             constexpr T Area()                                      const
             {
-                return T(0.25) * (B - C) * (B + C)
+                Vector3 AB = Vector3(B(0) - A(0), B(1) - A(1), B(2) - A(2));
+                Vector3 AC = Vector3(C(0) - A(0), C(1) - A(1), C(2) - A(2));
+                return T(0.5 * AB.Cross(AC).Norm());
             }
             constexpr bool IsDegenerate()                           const 
             {
