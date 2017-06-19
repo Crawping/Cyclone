@@ -3,7 +3,6 @@
  */
 
 #pragma once
-#include "TypeDefinitions.h"
 #include "GL/OpenGLAPI.h"
 
 
@@ -11,6 +10,8 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        using uint = uint32_t;
+
 
         /// <summary> An interface used to specify the behavior of any entity that is bindable as a GPU resource. </summary>
         class IBindable
