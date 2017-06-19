@@ -66,6 +66,15 @@ namespace Cyclone
 
 
             /** UTILITIES **/
+            constexpr Vector3 Cross(const Vector3& v)           const
+            {
+                return Vector3
+                (
+                    (Y * v.Z) - (Z * v.Y),
+                    (Z * v.X) - (X * v.Z),
+                    (X * v.Y) - (Y * v.X)
+                );
+            }
             /// <summary> Moves the vector relative to its current position. </summary>
             /// <returns> A reference to the modified vector, which is useful for chaining operations together. </returns>
             /// <param name="x"> The amount by which the x-coordinate of this vector should move. </param>
@@ -88,6 +97,7 @@ namespace Cyclone
             Vector3& Translate(const Vector3& t)                { return Translate(t.X, t.Y, t.Z); }
 
             Vector3& Normalize()                                { return operator /=(Norm()); }
+
 
 
             /** OPERATORS **/

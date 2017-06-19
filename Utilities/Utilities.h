@@ -23,14 +23,6 @@ namespace Cyclone
         UtilitiesAPI int sub2ind(int nrows, int ncols, int a, int b);
 
 
-        
-        /** MATH UTILITIES **/
-        namespace Math
-        {
-			UtilitiesAPI constexpr Vector3 Cross(const Vector3& x, const Vector3& y);
-        }
-
-
 
         /** TEMPLATED UTILITIES **/
         template<typename T> T wrap(T x, T min, T max)

@@ -44,23 +44,6 @@ namespace Cyclone
 
 
 
-
-        /** MATH UTILITIES **/
-        namespace Math
-        {
-			constexpr Vector3 Cross(const Vector3& u, const Vector3& v)
-			{
-				return Vector3
-				(
-					(u.Y * v.Z) - (u.Z * v.Y),
-					(u.Z * v.X) - (u.X * v.Z),
-					(u.X * v.Y) - (u.Y * v.X)
-				);
-			}
-        }
-
-
-
         /** IO UTILITIES **/
         string readfile(const string& filename)
         {

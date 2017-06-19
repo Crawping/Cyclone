@@ -74,9 +74,9 @@ namespace Cyclone
                     Vector3 diff2 = pts(a + 2) - pts(a);
                     Vector3 diff3 = pts(a + 2) - pts(a + 1);
 
-                    newNormals(a) = Math::Cross(diff1, diff2).Normalize();
-                    newNormals(a + 1) = Math::Cross(diff3, -diff1).Normalize();
-                    newNormals(a + 2) = Math::Cross(-diff2, -diff3).Normalize();
+                    newNormals(a) = diff1.Cross(diff2).Normalize();
+                    newNormals(a + 1) = diff3.Cross(-diff1).Normalize();
+                    newNormals(a + 2) = (-diff2).Cross(-diff3).Normalize();
                 }
 
             Normals(newNormals);
