@@ -43,9 +43,12 @@ void Program::CreateSceneResources()
 {
     AdvancedRenderer::CreateSceneResources();
 
+    auto cube = Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
+    auto browser = Create("Browser", Function<Mesh3D>(&Mesh3D::Triangle));
+
     _cube = Create<Entity3D>("Cube");
     _cube->
-         Geometry(Mesh3D::Cube(true))
+         Geometry(cube)
         .PrimaryColor(Color4::Gray)
         .SecondaryColor(Color4::White)
         .SpecularPower(10)
@@ -66,12 +69,12 @@ void Program::CreateSceneResources()
     _browser = Create<Entity3D>("Browser");
     _browser->
          Ambience(1)
-        .Geometry(Mesh3D::Quad(true))
+        .Geometry(cube)
         .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
         .PrimaryColor(Color4::White)
         .SecondaryColor(Color4::Black)
         .SpecularPower(1)
-        .Scale(RenderWindow->ClientArea().Scale())
+        .Scale(Vector3(RenderWindow->ClientArea().Scale(), RenderWindow->Width()))
         .Texture(_image);
 
     RenderScene->Insert(*_cube);
