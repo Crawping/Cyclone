@@ -79,9 +79,9 @@ namespace Cyclone
                     stage = CreateStage(ids->Topology);
 
                 if (ids->IndicesCount)
-                    stage->Indexed.Add(IndexedDrawCommand(ids->IndicesCount, 1, ids->IndicesIndex, ids->VertexIndex, ids->EntityKey.Index()));
+                    stage->Indexed.Append(IndexedDrawCommand(ids->IndicesCount, 1, ids->IndicesIndex, ids->VertexIndex, ids->EntityKey.Index()));
                 else
-                    stage->NonIndexed.Add(DrawCommand(ids->VertexCount, 1, 0, ids->VertexIndex, ids->EntityKey.Index()));
+                    stage->NonIndexed.Append(DrawCommand(ids->VertexCount, 1, 0, ids->VertexIndex, ids->EntityKey.Index()));
             }
 
             for (auto* stage : Staging.Values())

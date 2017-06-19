@@ -69,14 +69,14 @@ namespace Cyclone
 
 
         /** PUBLIC UTILITIES **/
-        void RenderStage::Add(const BufferBinding& binding)
+        void RenderStage::Append(const BufferBinding& binding)
         {
             _buffers.Append(binding);
         }
-        void RenderStage::Add(const List<BufferBinding>& bindings)
+        void RenderStage::Append(const List<BufferBinding>& bindings)
         {
             for (const auto& b : bindings)
-                Add(b);
+                Append(b);
         }
         void RenderStage::ClearBuffers()
         {

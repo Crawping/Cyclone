@@ -46,7 +46,7 @@ namespace Cyclone
             if (!stages.IsEmpty())
             {
                 stages.First().ClearBuffers();
-                stages.First().Add(Buffers());
+                stages.First().Append(Buffers());
             }
 
             return stages;

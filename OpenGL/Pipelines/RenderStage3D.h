@@ -24,7 +24,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Add(const T& command);
+                OpenGLAPI void Append(const T& command);
                 OpenGLAPI void ClearBuffers()           override;
                 OpenGLAPI void ClearCommands();
                 OpenGLAPI void Render()                 const override;

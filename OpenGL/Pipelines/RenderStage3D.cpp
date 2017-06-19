@@ -11,20 +11,20 @@ namespace Cyclone
         /** CONSTRUCTOR **/
         template<typename T> RenderStage3D<T>::RenderStage3D()
         {
-            RenderStage::Add({ Commands, 0 });
+            RenderStage::Append({ Commands, 0 });
         }
 
 
 
         /** UTILITIES **/
-        template<typename T> void RenderStage3D<T>::Add(const T& command)   { Commands.Add(command); }
+        template<typename T> void RenderStage3D<T>::Append(const T& command)    { Commands.Add(command); }
         template<typename T> void RenderStage3D<T>::ClearBuffers()
         {
             RenderStage::ClearBuffers();
-            RenderStage::Add(BufferBinding { Commands, 0 });
+            RenderStage::Append(BufferBinding { Commands, 0 });
         }
-        template<typename T> void RenderStage3D<T>::ClearCommands()         { Commands.Clear(); }
-        template<typename T> void RenderStage3D<T>::Update()                { Commands.Update(); }
+        template<typename T> void RenderStage3D<T>::ClearCommands()             { Commands.Clear(); }
+        template<typename T> void RenderStage3D<T>::Update()                    { Commands.Update(); }
 
 
 
