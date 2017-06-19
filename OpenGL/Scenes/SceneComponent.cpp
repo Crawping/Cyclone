@@ -37,7 +37,7 @@ namespace Cyclone
             _needsUpdate = true;
             return *this;
         }
-        SceneComponent& SceneComponent::Pipeline(GraphicsPipeline* value)
+        SceneComponent& SceneComponent::Pipeline(IGraphicsPipeline* value)
         {
             _settings.Pipeline = value;
             _needsUpdate = true;

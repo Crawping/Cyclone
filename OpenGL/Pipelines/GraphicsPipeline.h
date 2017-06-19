@@ -3,11 +3,9 @@
  */
 
 #pragma once
-#include "EnumerationsGL.h"
-#include "Interfaces/IBindable.h"
-#include "Interfaces/IRenderable.h"
-#include "Buffers/UniformBuffer.h"
-#include "Buffers/UniformData.h"
+#include "TypeDefinitions.h"
+#include "Interfaces/IGraphicsPipeline.h"
+#include "GL/OpenGLAPI.h"
 
 
 
@@ -15,11 +13,12 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        using namespace Utilities;
         class FrameBuffer;
         class Shader;
 
         /// <summary> An abstract base class that represents the rendering or compute pipelines used by GPUs. </summary>
-        class GraphicsPipeline : public IBindable
+        class GraphicsPipeline: public IGraphicsPipeline
         {
 
             public:

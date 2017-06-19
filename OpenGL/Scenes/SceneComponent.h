@@ -34,7 +34,7 @@ namespace Cyclone
                 virtual const string& Name()                                        const override { return _name; }
                 /// <summary> Gets the parent scene layer to which the component belongs. </summary>
                 virtual ISceneLayer& Parent()                                       const override { return _parent; }
-                virtual const GraphicsPipeline* Pipeline()                          const { return _settings.Pipeline; }
+                virtual const IGraphicsPipeline* Pipeline()                         const { return _settings.Pipeline; }
                 virtual const ISpatialTransform* Projection()                       const { return _settings.Projection; }
                 /// <summary> Gets the GPU configuration used to render the contents of the scene component. </summary>
                 virtual const GraphicsSettings& Settings()                          const { return _settings; }
@@ -47,7 +47,7 @@ namespace Cyclone
                 OpenGLAPI virtual SceneComponent& IsDepthTestEnabled(bool value);
                 OpenGLAPI virtual SceneComponent& IsStencilTestEnabled(bool value);
                 OpenGLAPI virtual SceneComponent& IsVisible(bool value)                     override;
-                OpenGLAPI virtual SceneComponent& Pipeline(GraphicsPipeline* value);
+                OpenGLAPI virtual SceneComponent& Pipeline(IGraphicsPipeline* value);
                 OpenGLAPI virtual SceneComponent& Projection(ISpatialTransform* value);
                 /// <summary> Sets the GPU configuration used to render the contents of the scene component. </summary>
                 OpenGLAPI virtual SceneComponent& Settings(const GraphicsSettings& value)   override;

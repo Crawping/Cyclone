@@ -17,7 +17,7 @@ namespace Cyclone
     namespace OpenGL
     {
         class FrameBuffer;
-        class GraphicsPipeline;
+        class IGraphicsPipeline;
 
         
 
@@ -28,7 +28,7 @@ namespace Cyclone
             bool                IsStencilTestEnabled;
 
             CullingModes        CullingMode;
-            GraphicsPipeline*   Pipeline;
+            IGraphicsPipeline*  Pipeline;
             ISpatialTransform*  Projection;
             FrameBuffer*        Target;
             ISpatialTransform*  View;

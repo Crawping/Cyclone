@@ -34,12 +34,10 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void ResourceLibrary2::Insert(const string& key, IGraphicsBuffer* value)
         {
-            //if (_buffers.Contains(key)) { delete _buffers[key]; }
             _buffers.Insert(key, value);
         }
-        void ResourceLibrary2::Insert(const string& key, GraphicsPipeline* value)
+        void ResourceLibrary2::Insert(const string& key, IGraphicsPipeline* value)
         {
-            //if (_pipelines.Contains(key)) { delete _pipelines[key]; }
             _pipelines.Insert(key, value);
         }
         void ResourceLibrary2::Insert(const string& key, GraphicsSettings* value)
@@ -48,22 +46,18 @@ namespace Cyclone
         }
         void ResourceLibrary2::Insert(const string& key, IMaterial* value)
         {
-            //if (_materials.Contains(key)) { delete _materials[key]; }
             _materials.Insert(key, value);
         }
         void ResourceLibrary2::Insert(const string& key, IGeometric* value)
         {
-            //if (_geometry.Contains(key)) { delete _geometry[key]; }
             _geometry.Insert(key, value);
         }
         void ResourceLibrary2::Insert(const string& key, IRenderable* value)
         {
-            //if (_renderables.Contains(key)) { delete _renderables[key]; }
             _renderables.Insert(key, value);
         }
         void ResourceLibrary2::Insert(const string& key, ITexture* value)
         {
-            //if (_textures.Contains(key)) { delete _textures[key]; }
             _textures.Insert(key, value);
         }
 

@@ -28,7 +28,7 @@ namespace Cyclone
             _settings.CullingMode = value;
             return *this;
         }
-        RenderStage& RenderStage::Pipeline(GraphicsPipeline* value)
+        RenderStage& RenderStage::Pipeline(IGraphicsPipeline* value)
         { 
             _settings.Pipeline = value;
             return *this;

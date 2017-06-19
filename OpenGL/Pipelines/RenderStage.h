@@ -41,7 +41,7 @@ namespace Cyclone
                 /// <summary> Sets whether stencil testing is enabled for the rendering stage. </summary>
                 OpenGLAPI RenderStage& IsStencilTestEnabled(bool value);
                 /// <summary> Sets the OpenGL rendering pipeline to be used by the rendering stage. </summary>
-                OpenGLAPI RenderStage& Pipeline(GraphicsPipeline* value);
+                OpenGLAPI RenderStage& Pipeline(IGraphicsPipeline* value);
                 /// <summary> Sets the perspective projection transformation to be used by the rendering stage. </summary>
                 OpenGLAPI RenderStage& Projection(ISpatialTransform* value);
                 /// <summary> Sets the overall GPU configuration settings that are used by the rendering stage. </summary>

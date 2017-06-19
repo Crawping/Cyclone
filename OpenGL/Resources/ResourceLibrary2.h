@@ -7,12 +7,13 @@
 #include "Collections/BST.h"
 #include "Interfaces/ICallback.h"
 #include "Interfaces/IGeometric.h"
+#include "Interfaces/IGraphicsBuffer.h"
+#include "Interfaces/IGraphicsPipeline.h"
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IModel.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/ITexture.h"
 #include "Meta/Utilities.h"
-#include "Pipelines/GraphicsPipeline.h"
 #include "Resources/Resource.h"
 
 
@@ -69,7 +70,7 @@ namespace Cyclone
                         Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(name)       :
                         Meta::IsA<T, IGeometric>()          ? _geometry.Contains(name)      :
                         Meta::IsA<T, IMaterial>()           ? _materials.Contains(name)     :
-                        Meta::IsA<T, GraphicsPipeline>()    ? _pipelines.Contains(name)     :
+                        Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Contains(name)     :
                         Meta::IsA<T, IRenderable>()         ? _renderables.Contains(name)   : 
                         Meta::IsA<T, GraphicsSettings>()    ? _settings.Contains(name)      :
                         Meta::IsA<T, ITexture>()            ? _textures.Contains(name)      : false;
@@ -96,7 +97,7 @@ namespace Cyclone
                     Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Remove(key)      :
                     Meta::IsA<T, IGeometric>()          ? _geometry.Remove(key)     :
                     Meta::IsA<T, IMaterial>()           ? _materials.Remove(key)    :
-                    Meta::IsA<T, GraphicsPipeline>()    ? _pipelines.Remove(key)    : 
+                    Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Remove(key)    : 
                     Meta::IsA<T, IRenderable>()         ? _renderables.Remove(key)  : 
                     Meta::IsA<T, GraphicsSettings>()    ? _settings.Remove(key)     : _textures.Remove(key);
 
@@ -110,7 +111,7 @@ namespace Cyclone
                         Meta::IsA<T, IGraphicsBuffer>()     ? Resource<T>(name, dynamic_cast<T*>(_buffers[name]))       :
                         Meta::IsA<T, IMaterial>()           ? Resource<T>(name, dynamic_cast<T*>(_materials[name]))     :
                         Meta::IsA<T, IGeometric>()          ? Resource<T>(name, dynamic_cast<T*>(_geometry[name]))      :
-                        Meta::IsA<T, GraphicsPipeline>()    ? Resource<T>(name, dynamic_cast<T*>(_pipelines[name]))     :
+                        Meta::IsA<T, IGraphicsPipeline>()   ? Resource<T>(name, dynamic_cast<T*>(_pipelines[name]))     :
                         Meta::IsA<T, IRenderable>()         ? Resource<T>(name, dynamic_cast<T*>(_renderables[name]))   : 
                         Meta::IsA<T, GraphicsSettings>()    ? Resource<T>(name, dynamic_cast<T*>(_settings[name]))      :
                         Meta::IsA<T, ITexture>()            ? Resource<T>(name, dynamic_cast<T*>(_textures[name]))      : 
@@ -135,7 +136,7 @@ namespace Cyclone
                 BST<string, IGraphicsBuffer*>   _buffers;
                 BST<string, IGeometric*>        _geometry;
                 BST<string, IMaterial*>         _materials;
-                BST<string, GraphicsPipeline*>  _pipelines;
+                BST<string, IGraphicsPipeline*> _pipelines;
                 BST<string, IRenderable*>       _renderables;
                 BST<string, GraphicsSettings*>  _settings;
                 BST<string, ITexture*>          _textures;
@@ -144,7 +145,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 OpenGLAPI void Insert(const string& key, IGraphicsBuffer* value);
-                OpenGLAPI void Insert(const string& key, GraphicsPipeline* value);
+                OpenGLAPI void Insert(const string& key, IGraphicsPipeline* value);
                 OpenGLAPI void Insert(const string& key, GraphicsSettings* value);
                 OpenGLAPI void Insert(const string& key, IMaterial* value);
                 OpenGLAPI void Insert(const string& key, IGeometric* value);

@@ -51,7 +51,7 @@ namespace Cyclone
                 /// <summary> Gets a pointer to the projection transformation being used by the rendering pipeline. </summary>
                 const ISpatialTransform* Projection()       const { return _settings.Projection; }
                 /// <summary> Gets a pointer to the shader pipeline currently being used to render images. </summary>
-                const GraphicsPipeline* Pipeline()          const { return _settings.Pipeline; }
+                const IGraphicsPipeline* Pipeline()         const { return _settings.Pipeline; }
 
                 const GraphicsSettings& Settings()          const { return _settings; }
                 /// <summary> Gets a pointer to the framebuffer to which all rendering currently occurs. </summary>
@@ -69,7 +69,7 @@ namespace Cyclone
                 PlatformAPI GPU& IsStencilTestEnabled(bool value);
 
                 /// <summary> Sets the shader pipeline that will be used by the GPU to render images. </summary>
-                PlatformAPI GPU& Pipeline(GraphicsPipeline* pipeline);
+                PlatformAPI GPU& Pipeline(IGraphicsPipeline* pipeline);
                 /// <summary> Sets the projection transformation matrix that will be used by GPU shader pipeline. </summary>
                 PlatformAPI GPU& Projection(ISpatialTransform* projection);
                 /// <summary> Sets the 3D rendering scene that will be displayed for the user. </summary>

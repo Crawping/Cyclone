@@ -90,7 +90,7 @@ namespace Cyclone
             _settings.IsStencilTestEnabled = value;
             return *this;
         }
-        GPU& GPU::Pipeline(GraphicsPipeline* value)
+        GPU& GPU::Pipeline(IGraphicsPipeline* value)
         {
             if (value == _settings.Pipeline) { return *this; }
 
