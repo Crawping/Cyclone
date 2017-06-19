@@ -30,7 +30,9 @@ namespace Cyclone
         
 
 
-        template<typename ... T> struct Structure 
+        struct IStructure {  };
+
+        template<typename ... T> struct Structure: public IStructure
         {
 
             using Types = Meta::List<T...>;
@@ -43,12 +45,15 @@ namespace Cyclone
 
                 Array<byte, Size> _data;
 
-                template<typename T, typename U> 
-                constexpr static T Cast(U& value) { return reinterpret_cast<T>(std::addressof(value)); }
+                template<typename U, typename V> 
+                static U Cast(V& value)
+                {
+                    return reinterpret_cast<U>( std::addressof(value) );
+                }
 
             public:
 
-                constexpr Structure() { }
+                Structure() { }
                 Structure(T ... values)
                 {
                     Array<byte*, Count> v = { Cast<byte*>(values)... };
@@ -68,15 +73,24 @@ namespace Cyclone
                     return *this;
                 }
 
+
+                template<typename U> auto Append(U value)
+                {
+                    Structure<T..., U> output;
+                    std::memcpy(&output, this, Size);
+                    output.Set<Count>(value);
+                    return output;
+                }
+
         };
 
 
 
-        
-        
 
+        template<typename ... T> struct Object
+        {
 
+        };
 
-        
     }
 }
