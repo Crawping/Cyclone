@@ -91,7 +91,6 @@ namespace Cyclone
 
             ResourceMapping& map = Mappings[&entity];
             Register(map, entity.Material());
-            //Register(map, entity.Transforms());
             Register(map, entity);
         }
 
@@ -107,7 +106,6 @@ namespace Cyclone
 
             Register(map, entity.Model().Geometry());
             Register(map, entity.Material());
-            //Register(map, entity.Transforms());
             Register(map, entity);
 
             return map;
@@ -157,8 +155,8 @@ namespace Cyclone
         {
             TransformData tdata =
             {
-                Matrix4x4::Identity,
-                Matrix4x4::Identity,
+                entity.Model().Transform().ToMatrix4x4(),
+                entity.Material().Transform().ToMatrix4x4(),
                 entity.Transform().ToMatrix4x4()
             };
 
