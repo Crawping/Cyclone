@@ -126,7 +126,9 @@
     <ClCompile Include="Collections\Quadtree.cpp" />
     <ClCompile Include="Collections\Registry.cpp" />
     <ClCompile Include="Collections\Set.cpp" />
+    <ClCompile Include="Collections\Specializations\NumericArray.cpp" />
     <ClCompile Include="Collections\String.cpp" />
+    <ClCompile Include="Collections\Structure.cpp" />
     <ClCompile Include="Collections\Vector.cpp" />
     <ClCompile Include="Imaging\Bitmap.cpp" />
     <ClCompile Include="Imaging\Color4.cpp" />
