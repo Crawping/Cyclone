@@ -5,12 +5,6 @@
 #pragma once
 #include "Components/SceneComponent.h"
 #include "Geometry/Entity3D.h"
-//#include "Collections/Set.h", 
-//#include "Collections/String.h"
-//#include "Interfaces/ISceneComponent.h"
-//#include "Spatial/Volume.h"
-//#include "Spatial/Transform.h"
-//#include "SceneAPI.h"
 
 
 
@@ -58,10 +52,7 @@ namespace Cyclone
 
             private:
 
-                //Entity3D*       _model;
                 Resource<Entity3D>      _model;
-                //Resource<Material3D>    _material;
-                //Resource<Model3D>       _model;
                 Transform3D             _transform;
 
         };

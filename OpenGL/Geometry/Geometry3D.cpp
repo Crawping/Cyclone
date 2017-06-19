@@ -10,21 +10,6 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        //const GeometryData& Geometry3D::Data()             const
-        //{
-        //    GeometryData data =
-        //    {
-        //        _bounds,
-        //        _indices.ToVector(),
-        //        _mapping.ToVector(),
-        //        _normals.ToVector(),
-        //        _points.ToVector(),
-        //        _topology,
-        //    };
-
-        //    return data;
-        //}
-
         Geometry3D& Geometry3D::Bounds(const Volume& value)
         {
             _data.Bounds = value;
