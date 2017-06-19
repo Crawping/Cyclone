@@ -42,7 +42,7 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                Resource(const string& name = "", T* value = nullptr):
+                Resource(const string& name = "Null", T* value = nullptr):
                     _name(name),
                     _value(value)
                 {
@@ -98,3 +98,4 @@ namespace Cyclone
 
     }
 }
+

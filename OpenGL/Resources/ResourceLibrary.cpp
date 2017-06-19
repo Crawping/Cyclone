@@ -85,5 +85,6 @@ namespace Cyclone
             if (_textures.Contains(key)) { delete _textures[key]; }
             _textures.Insert(key, value);
         }
+
     }
 }

@@ -63,7 +63,7 @@ namespace Cyclone
                 template<typename T, typename ... U>
                 Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
                 {
-                    return _resources.Create(name, constructor, arguments...);
+                    return _resources.Create<T, U...>(name, constructor, arguments...);
                 }
                 template<typename T> Resource<T> Get(const string& name)        { return _resources.Get<T>(name); }
 

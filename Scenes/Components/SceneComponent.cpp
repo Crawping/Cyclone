@@ -35,7 +35,7 @@ namespace Cyclone
 
         }
 
-
+        
 
         /** UTILITIES **/
         bool SceneComponent::Contains(const ISceneComponent* child) const
