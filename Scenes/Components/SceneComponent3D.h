@@ -25,13 +25,13 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                const Entity3D* Model()                     const override { return _model; }
+                Resource<IRenderable> Model()               const override { return _model; }
                 const Vector3& Orientation()                const override { return _transform.Orientation(); }
                 const Vector3& Position()                   const override { return _transform.Position(); }
                 const Vector3& Scale()                      const override { return _transform.Scale(); }
                 const Transform3D& Transform()              const override { return _transform; }
                 
-                SceneAPI SceneComponent3D& Model(const Entity3D* value);
+                SceneAPI SceneComponent3D& Model(Resource<Entity3D> value);
                 SceneAPI SceneComponent3D& Orientation(const Vector3& value)    override;
                 SceneAPI SceneComponent3D& Position(const Vector3& value)       override;
                 SceneAPI SceneComponent3D& Scale(const Vector3& value)          override;
@@ -58,8 +58,11 @@ namespace Cyclone
 
             private:
 
-                Entity3D*       _model;
-                Transform3D     _transform;
+                //Entity3D*       _model;
+                Resource<Entity3D>      _model;
+                //Resource<Material3D>    _material;
+                //Resource<Model3D>       _model;
+                Transform3D             _transform;
 
         };
     }

@@ -5,6 +5,7 @@
 #pragma once
 #include "Collections/List.h"
 #include "Interfaces/ITransformable3D.h"
+#include "Resources/Resource.h"
 
 
 
@@ -41,7 +42,8 @@ namespace Cyclone
                 virtual List<ISceneComponent*> Children()                   const = 0;
                 /// <summary> Gets whether the scene component is visible in the rendered environment. </summary>
                 virtual bool IsVisible()                                    const = 0;
-                virtual const IRenderable* Model()                          const = 0;
+
+                virtual Resource<IRenderable> Model()                       const = 0;
                 /// <summary> Gets the parent layer that contains the scene component. </summary>
                 virtual const ISceneComponent& Parent()                     const = 0;
                 virtual const String& Tag()                                 const = 0;

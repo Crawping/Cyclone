@@ -8,6 +8,7 @@
 #include "Components/SceneComponent3D.h"
 #include "Interfaces/IRenderable.h"
 #include "Interfaces/IScene.h"
+#include "Resources/ResourceLibrary2.h"
 //#include "Interfaces/ISceneComponent.h"
 
 
@@ -24,7 +25,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 //const Volume& Bounds()              const override { return Volume(); }
                 //List<ISceneComponent*> Children()   const override { return { }; }
-                const Entity3D* Model()             const override { return nullptr; }
+                //const Entity3D* Model()             const override { return nullptr; }
                 const Scene3D& Parent()             const override { return *this; }
                 const Transform3D& Transform()      const override { return _transform; }
 
@@ -36,6 +37,20 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                template<typename T> Resource<T> Create(const string& name)
+                {
+                    return Resources.Create<T>(name);
+                }
+                template<typename T, typename ... U>
+                Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
+                {
+                    return Resources.Create<T, U...>(name, constructor, arguments...);
+                }
+                template<typename T> void Destroy(Resource<T> value)
+                {
+                    
+                }
+
                 //SceneAPI bool Contains(const ISceneComponent* child)    const override;
                 //SceneAPI void Insert(ISceneComponent* child)            override;
                 //SceneAPI bool Intersects(const LineSegment& line)       const override;
@@ -51,6 +66,8 @@ namespace Cyclone
             private:
 
                 Transform3D _transform;
+
+                ResourceLibrary2 Resources;
                 //VirtualMemory   _memory;
                 //VirtualMachine  _vm;
 

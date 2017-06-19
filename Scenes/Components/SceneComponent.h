@@ -22,15 +22,15 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
-                const Volume& Bounds()                                      const override { return _bounds; }
-                List<ISceneComponent*> Children()                           const override { return _children; }
-                bool IsVisible()                                            const override { return _isVisible; }
-                const ISceneComponent& Parent()                             const override { return _parent; }
-                const String& Tag()                                         const override { return _tag; }
+                const Volume& Bounds()                                              const override { return _bounds; }
+                List<ISceneComponent*> Children()                                   const override { return _children; }
+                bool IsVisible()                                                    const override { return _isVisible; }
+                const ISceneComponent& Parent()                                     const override { return _parent; }
+                const String& Tag()                                                 const override { return _tag; }
                 
-                SceneAPI SceneComponent& IsVisible(bool value)              override;
-                SceneAPI SceneComponent& Parent(ISceneComponent& value)     override;
-                SceneAPI SceneComponent& Tag(const String& value)           override;
+                SceneAPI SceneComponent& IsVisible(bool value)                      override;
+                SceneAPI SceneComponent& Parent(ISceneComponent& value)             override;
+                SceneAPI SceneComponent& Tag(const String& value)                   override;
 
 
 
