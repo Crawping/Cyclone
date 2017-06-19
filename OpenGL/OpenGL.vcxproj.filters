@@ -117,9 +117,6 @@
     <ClInclude Include="Scenes\SceneComponent.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\ITransformable.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Textures\Texture3D.h">
       <Filter>Textures</Filter>
     </ClInclude>
@@ -223,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="Resources\ResourceLibrary.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\Entity3D.cpp">
+      <Filter>Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

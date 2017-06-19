@@ -180,7 +180,6 @@
     <ClInclude Include="Interfaces\IRenderStage.h" />
     <ClInclude Include="Interfaces\IScene.h" />
     <ClInclude Include="Interfaces\ITexture.h" />
-    <ClInclude Include="Interfaces\ITransformable.h" />
     <ClInclude Include="Libraries\Material3D.h" />
     <ClInclude Include="Libraries\ResourceLibrary.h" />
     <ClInclude Include="Models\Model3D.h" />
@@ -208,6 +207,7 @@
     <ClCompile Include="Buffers\FrameBuffer.cpp" />
     <ClCompile Include="Buffers\GraphicsBuffer.cpp" />
     <ClCompile Include="Buffers\VertexArray.cpp" />
+    <ClCompile Include="Geometry\Entity3D.cpp" />
     <ClCompile Include="Geometry\Geometry3D.cpp" />
     <ClCompile Include="Geometry\Mesh3D.cpp" />
     <ClCompile Include="Libraries\Material3D.cpp" />
