@@ -5,16 +5,23 @@
 #version 450 core
 #include "Default.hsl"
 
-in vec2         TexUV;
-flat in int     EntityIndex;
-
 out vec4 OutputColor;
+
+in PixelShaderInput
+{
+    flat int    EntityIndex;
+    vec2        TexUV;
+} Input;
+
 
 
 
 void main(void)
 {
-    EntityData ids = Entities[EntityIndex];
+    EntityData ids      = Entities[Input.EntityIndex];
+    MaterialData mat    = Materials[ids.MaterialIndex];
 
-    OutputColor = Materials[ids.MaterialIndex].PrimaryColor;
+    OutputColor = mat.IsTextured            ? 
+        texture(mat.Texture, Input.TexUV)   : 
+        mat.PrimaryColor;
 }
