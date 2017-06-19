@@ -6,6 +6,7 @@
 #include "Buffers/VertexBuffer.h"
 #include "Geometry/Entity3D.h"
 #include "Models/Model3D.h"
+#include "Resources/ResourceLibrary2.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 
@@ -53,17 +54,19 @@ namespace Cyclone
             int             _display;
             bool            _showHelp;
 
-            Transform3D     Projection;
-            GPU*            Renderer;
-            ShaderPipeline* RenderPipeline;
-            Scene3D*        RenderScene;
-            FrameBuffer*    RenderTarget;
-            Window3D*       RenderWindow;
-            Camera          View;
+            Transform3D                 Projection;
+            GPU*                        Renderer;
+            Resource<ShaderPipeline>    RenderPipeline;
+            Scene3D*                    RenderScene;
+            FrameBuffer*                RenderTarget;
+            Window3D*                   RenderWindow;
+            Camera                      View;
 
-            Entity3D        Cube;
-            Entity3D        PlaneXZ;
-            Entity3D        Icosahedron;
+            Resource<Entity3D>          Cube;
+            Resource<Entity3D>          Icosahedron;
+            Resource<Entity3D>          PlaneXZ;
+
+            ResourceLibrary2            Resources;
             
 
 

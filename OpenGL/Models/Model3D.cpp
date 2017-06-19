@@ -8,7 +8,8 @@ namespace Cyclone
     {
 
         /** PROPERTIES **/
-        Model3D& Model3D::Geometry(const Geometry3D& value)
+        //Model3D& Model3D::Geometry(const Geometry3D& value)
+        Model3D& Model3D::Geometry(Resource<Geometry3D> value)
         {
             _geometry = value;
             return *this;
@@ -38,7 +39,7 @@ namespace Cyclone
 
         /** CONSTRUCTORS **/
         Model3D::Model3D() { }
-        Model3D::Model3D(const Geometry3D& geometry) :
+        Model3D::Model3D(Resource<Geometry3D> geometry) :
             _geometry(geometry)
         {
 

@@ -28,8 +28,7 @@ namespace Cyclone
         Renderer(nullptr),
         RenderScene(nullptr),
         RenderTarget(nullptr),
-        RenderWindow(nullptr),
-        RenderPipeline(nullptr)
+        RenderWindow(nullptr)
     {
         ParseInputArguments(nargs, args);
 
@@ -51,7 +50,6 @@ namespace Cyclone
     {
         if (RenderTarget)       { delete RenderTarget; }
         if (RenderScene)        { delete RenderScene; }
-        if (RenderPipeline)     { delete RenderPipeline; }
         if (RenderWindow)       { delete RenderWindow; }
         if (Renderer)           { delete Renderer; }
 
@@ -68,10 +66,10 @@ namespace Cyclone
             if (!RenderWindow->ProcessEvent())
                 break;
 
-            Cube.Rotate(Vector3(0.01f, 0.01f, 0.01f));
-            Icosahedron.Rotate(-0.01f);
-            RenderScene->Update(Cube);
-            RenderScene->Update(Icosahedron);
+            Cube->Rotate(Vector3(0.01f, 0.01f, 0.01f));
+            Icosahedron->Rotate(-0.01f);
+            RenderScene->Update(*Cube);
+            RenderScene->Update(*Icosahedron);
 
 
             Console::WriteLine("1. " + Renderer->Report());
@@ -95,13 +93,12 @@ namespace Cyclone
     }
 	void Program::CreateRenderingPipeline()
 	{
-		RenderPipeline = new ShaderPipeline
+        RenderPipeline = Resources.Create<ShaderPipeline, string, string>
         (
+            "BlinnPhong", Constructor<ShaderPipeline, string, string>(),
             "../Renderers/Shaders/BlinnPhong.vsl",
             "../Renderers/Shaders/BlinnPhong.psl"
         );
-
-		Renderer->Pipeline(RenderPipeline);
 	}
 	void Program::CreateRenderingTarget()
 	{
@@ -131,32 +128,40 @@ namespace Cyclone
 	void Program::CreateSceneResources()
 	{
 		RenderScene = new Scene3D();
-        RenderScene->Pipeline(RenderPipeline)
+        RenderScene->Pipeline(&*RenderPipeline)
             .Projection(&Projection)
             .Target(RenderTarget)
             .View(&View);
 
-		PlaneXZ
+        auto gcube = Resources.Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
+        auto gplane = Resources.Create("Plane", Function<Mesh3D, bool>(&Mesh3D::Quad), true);
+        auto gicos = Resources.Create("Icosahedron", Function<Mesh3D, bool>(&Mesh3D::Icosahedron), false);
+
+        PlaneXZ = Resources.Create<Entity3D>("PlaneXZ");
+        Cube = Resources.Create<Entity3D>("Cube");
+        Icosahedron = Resources.Create<Entity3D>("Icosahedron");
+
+		PlaneXZ->
+             Geometry(gplane)
             .PrimaryColor(Color4::Blue)
-            .Geometry(Mesh3D::Quad(true))
             .Pitch(-90)
             .Scale(5000).Translate(0, 50, 0);
 
-        Cube
-            .Geometry(Mesh3D::Cube(true))
+        Cube->
+             Geometry(gcube)
             .PrimaryColor(Color4::Gray)
             .Scale(Vector3(50, 50, 50))
             .Translate(250, 250, -10);
 
-        Icosahedron
-            .Geometry(Mesh3D::Icosahedron())
+        Icosahedron->
+             Geometry(gicos)
             .PrimaryColor(Color4::Red)
             .Scale(Vector3(50, 50, 50))
             .Translate(750, 250, -10);
 
-        RenderScene->Insert(Icosahedron);
-        RenderScene->Insert(Cube);
-        RenderScene->Insert(PlaneXZ);
+        RenderScene->Insert(*Icosahedron);
+        RenderScene->Insert(*Cube);
+        RenderScene->Insert(*PlaneXZ);
 
         Renderer->Scene(RenderScene);
 	}
