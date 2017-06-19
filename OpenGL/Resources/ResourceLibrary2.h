@@ -117,6 +117,11 @@ namespace Cyclone
                         Meta::IsA<T, ITexture>()            ? Resource<T>(name, dynamic_cast<T*>(_textures[name]))      : 
                         Resource<T>(name, nullptr);
                 }
+                /// <summary> Checks an externally created resource into the library for management. </summary>
+                /// <returns> A resource handle that represents the inputted value. </returns>
+                /// <param name="name"> The desired name of the resource. </param>
+                /// <param name="value"> A pointer to a resource constructed externally on the heap. </param>
+                /// <remarks> Naming conflicts are resolved by deleting and overwriting the previously stored value. </remarks>
                 template<typename T> Resource<T> Register(const string& name, T* value)
                 {
                     if (!value || (name == "Null"))
