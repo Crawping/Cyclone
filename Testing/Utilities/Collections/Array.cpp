@@ -14,13 +14,13 @@ class _Array : public testing::Test
 {
     protected:
         
-        Array<uint, 1>          _a10;
-        Array<uint, 1, 1>       _a20;
-        Array<uint, 1, 1, 1>    _a30;
-        Array<uint, 1, 2, 3>    _a31;
-        Array<double, 3, 3, 3>  _a32;
+        Array<uint, 1>                  _a10;
+        Array<uint, 1, 1>               _a20;
+        Array<uint, 1, 1, 1>            _a30;
+        Array<uint, 1, 2, 3>            _a31;
+        Array<double, 3, 3, 3>          _a32;
 
-        Array<double, 10, 20, 30, 40> _a40;
+        Array<double, 10, 20, 30, 40>   _a40;
         Array<float, 5, 6, 7, 8, 9, 10> _a61;
 
         constexpr const static uint _u61[] = { 1, 2, 3, 4, 5, 6 };

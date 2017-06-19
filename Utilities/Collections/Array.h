@@ -157,31 +157,47 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                /// <summary> Gets a pointer to the first element stored in the array. </summary>
                 constexpr const T* begin()                                          const { return &_values[0]; }
+                /// <summary> Gets a pointer to a non-existent element just beyond the end of the array. </summary>
+                /// <remarks> Like nearly all end-iterators, this value must never be dereferenced. </remarks>
                 constexpr const T* end()                                            const { return begin() + Count(); }
 
+                /// <summary> Creates a new array containing only the values found at the inputted indices. </summary>
+                /// <returns> An array containing copies of the values found at the provided indices. </returns>
+                /// <param name="indices"> An array containing the linear indices of the elements to be copied. </param>
+                /// <remarks> 
+                ///     The dimensions of the array returned by this method are the same as those of the provided 
+                ///     <paramref name="indices"/> array.
+                /// </remarks>
                 template<uint ... V>
                 constexpr auto operator [](const Array<uint, V...>& indices)        const
                 {
                     return Array<T, V...>(*this, indices.Flatten());
                 }
-
+                /// <summary> Gets the value stored at a particular linear index within the array. </summary>
+                /// <returns> A reference to the value found at the given index. </returns>
+                /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 constexpr T& operator ()(uint index)                                { return _values[index]; }
+                /// <summary> Gets the value stored at a particular linear index within the array. </summary>
+                /// <returns> A reference to the value found at the given index. </returns>
+                /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 constexpr const T& operator ()(uint index)                          const { return _values[index]; }
-
+                /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
+                /// <returns> A reference to the value found at the given indices. </returns>
+                /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... V>
                 constexpr const T& operator ()(V ... indices)                       const { return _values[IndexOf(indices...)]; }
-                template<uint N>
-                constexpr Array<T, N> operator ()(const Array<T, N>& indices)       const { return _values[IndexOf(indices)]; }
 
-
-                constexpr bool operator ==(const Array<T, U...>& other)             const
+                /// <summary> Determines if two identically dimensioned arrays are equivalent. </summary>
+                constexpr bool operator ==(const Array& other)                      const
                 {
                     for (uint a = 0; a < _count; a++)
                         if (_values[a] != other(a)) return false;
                     return true;
                 }
-                constexpr bool operator !=(const Array<T, U...>& other)             const { return !operator ==(other); }
+                /// <summary> Determines if two identically dimensioned arrays are not equivalent. </summary>
+                constexpr bool operator !=(const Array& other)                      const { return !operator ==(other); }
                 
         };
 
