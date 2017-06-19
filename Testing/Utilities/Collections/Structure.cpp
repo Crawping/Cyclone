@@ -3,6 +3,7 @@
  */
 
 #include "Collections/Structure.h"
+#include "IO/Property.h"
 #include "Math/Constants.h"
 #include "Spatial/Transform.h"
 #include <gtest/gtest.h>
@@ -18,7 +19,6 @@ class _Structure: public testing::Test
         Structure<int>                                  _s0;
         Structure<int, Transform3D>                     _s1;
         Structure<uint, Vector3, double, Transform3D>   _s2;
-
 
         _Structure():
             _s1(10, Transform3D()),
@@ -56,6 +56,30 @@ TEST_F(_Structure, Construction)
     ASSERT_EQ(_s2.Size,         sizeof(_s2));
 }
 
+
+
+TEST_F(_Structure, Append)
+{
+    auto s1 = _s1.Append(Vector4(1.0f));
+
+    ASSERT_EQ(s1.Count,         3);
+    ASSERT_EQ(s1.Size,          _s1.Size + sizeof(Vector4));
+    ASSERT_EQ(s1.Get<2>(),      Vector4(1.0f));
+
+    Transform3D t1(10, 20, 30);
+
+    auto p1 = Property<Transform3D, const Vector3&>(&t1, &Transform3D::Position, &Transform3D::Position);
+    auto s2 = s1.Append(p1);
+
+    ASSERT_EQ(s2.Count,         s1.Count + 1);
+    ASSERT_EQ(s2.Size,          s1.Size + sizeof(p1));
+
+    ASSERT_EQ(s2.Get<s1.Count>(),   Vector3(10));
+
+    s2.Get<s1.Count>() = Vector3::One;
+    ASSERT_EQ(s2.Get<s1.Count>(),   Vector3::One);
+    ASSERT_EQ(t1.Position(),        Vector3::One);
+}
 TEST_F(_Structure, Get)
 {
     ASSERT_EQ(_s1.Get<0>(),     10);
