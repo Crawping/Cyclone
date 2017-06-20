@@ -13,5 +13,8 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Components\Main.cpp" />
+    <ClCompile Include="Components\Scene3D.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

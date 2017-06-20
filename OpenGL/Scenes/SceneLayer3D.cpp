@@ -125,6 +125,10 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
+        void SceneLayer3D::Register(ResourceMapping& map, Resource<IGeometric> entity)
+        {
+            if (entity.IsNull()) { return; }
+        }
         void SceneLayer3D::Register(ResourceMapping& map, const IGeometric& entity)
         {
             const auto& indices = entity.Indices();

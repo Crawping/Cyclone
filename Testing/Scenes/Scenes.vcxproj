@@ -121,6 +121,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Components\Main.cpp" />
+    <ClCompile Include="Components\Scene3D.cpp" />
     <ClCompile Include="Components\SceneComponent3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

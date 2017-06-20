@@ -32,8 +32,8 @@ class _SceneComponent3D: public testing::Test
 /** CONSTRUCTION **/
 TEST_F(_SceneComponent3D, Construction)
 {
-    ASSERT_EQ(_s0.Bounds(), Volume::Empty);
-    ASSERT_EQ(&(_s0.Parent()), &_s0);
-    ASSERT_EQ(_s0.Transform(), Transform3D());
+    ASSERT_EQ(_s0.Bounds(),     Volume::Empty);
+    ASSERT_EQ(&(_s0.Parent()),  &_s0);
+    ASSERT_EQ(_s0.Transform(),  Transform3D());
 }
 

@@ -99,6 +99,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\Utilities;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -142,9 +143,6 @@
     </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\VirtualMachine\VirtualMachine.vcxproj">
-      <Project>{4275937d-182c-4385-90f1-f96dfa513a09}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
