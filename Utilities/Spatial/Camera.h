@@ -89,7 +89,9 @@ namespace Cyclone
                 /// <returns> A reference to the transformation matrix that performs the camera's translation, scaling, and rotation operations. </returns>
                 const Matrix4x4& ToMatrix4x4()                                  const override { Update(); return State; }
 
+                UtilitiesAPI bool operator ==(const Camera& other)              const;
 
+                bool operator !=(const Camera& other)                           const { return !operator ==(other); }
 
 
             private:

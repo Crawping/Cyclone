@@ -73,6 +73,13 @@ namespace Cyclone
 
 
 
+        /** OPERATORS **/
+        bool Camera::operator ==(const Camera& other) const
+        {
+            return ToMatrix4x4() == other.ToMatrix4x4();
+        }
+
+
         /** PRIVATE UTILITIES **/
         /// <summary> Calculates the value for each element of the state matrix. </summary>
         /// <remarks>
