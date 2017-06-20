@@ -146,7 +146,7 @@
     <ClCompile Include="Meta\Primitives.cpp" />
     <ClCompile Include="Meta\MetaUtilities.cpp" />
     <ClCompile Include="Spatial\Area.cpp" />
-    <ClCompile Include="Spatial\LineSegment.cpp" />
+    <ClCompile Include="Spatial\LineSegment3D.cpp" />
     <ClCompile Include="Spatial\Transform3D.cpp" />
     <ClCompile Include="Spatial\Volume.cpp" />
   </ItemGroup>

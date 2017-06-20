@@ -103,14 +103,14 @@
     <ClCompile Include="IO\Members.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="Spatial\LineSegment.cpp">
-      <Filter>Spatial</Filter>
-    </ClCompile>
     <ClCompile Include="Collections\Specializations\NumericArray.cpp">
       <Filter>Collections\Specializations</Filter>
     </ClCompile>
     <ClCompile Include="Collections\Structure.cpp">
       <Filter>Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="Spatial\LineSegment3D.cpp">
+      <Filter>Spatial</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
