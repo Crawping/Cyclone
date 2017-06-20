@@ -23,20 +23,25 @@ namespace Cyclone
             Event<T...>*            Parent;
         };
 
+        /// <summary> A structure that represents a callback subscription to an event. </summary>
+        /// <typeparam name="T"> A list of input argument types matching those of some governing event structure. </typeparam>
         template<typename ... T> struct Subscription
         {
             friend class Event<T...>;
-
             private:
                 
                 SubscriptionData<T...>*     _data;
 
+                /// <summary> Constructs a new live event subscription. </summary>
+                /// <param name="data"> The event subscription data. </param>
                 Subscription(SubscriptionData<T...>* data):         _data(data) { }
                 
             public:
 
+                /// <summary> Gets whether the subscription has been temporarily suspended. </summary>
                 bool IsSuspended()                                  const { return _data ? _data->IsSuspended : true; }
 
+                /// <summary> Constructs an empty event subscription. </summary>
                 Subscription():                                     _data(nullptr) { }
 
                 /// <summary> Removes the subscription data from the event's callback queue. </summary>
@@ -70,7 +75,8 @@ namespace Cyclone
         };
 
 
-
+        /// <summary> A structure that represents a collection of callback routines that can be executed on demand. </summary>
+        /// <typeparam name="T"> A list of input argument types used to invoke the stored callback routines. </typeparam>
 		template<typename ... T> class Event
 		{
 			private:
@@ -102,7 +108,7 @@ namespace Cyclone
 
 
 				/** UTILITIES **/
-                /// <summary> Removes all callback functions that are currently registered for this event. </summary>
+                /// <summary> Removes all callback functions that are currently registered for the event. </summary>
 				void Clear()
                 {
                     for (auto& s : Subscriptions)
@@ -112,25 +118,30 @@ namespace Cyclone
                     }
                     Subscriptions.Clear();
                 }
-                /// <summary> Registers a new callback routine to be executed when this event is triggered. </summary>
+                /// <summary> Registers a new callback routine to be executed when the event is triggered. </summary>
                 /// <returns> A structure that represents a live subscription to the event. </returns>
-                /// <param name="callback"> The callback function to be invoked. </param>
-                
+                /// <param name="callback"> The callback routine to be invoked. </param>
                 Subscription<T...> Subscribe(const ICallback<void, T...>& callback)
                 {
                     auto* data = new SubscriptionData<T...>{ callback.Copy(), false, this };
                     Subscriptions.Append(data);
                     return Subscription<T...>(data);
                 }
+                /// <summary> Registers a new callback function to be executed when this event is triggered.  </summary>
+                /// <returns> A structure that represents a live subscription to the event. </returns>
+                /// <param name="callback"> A pointer to the function that will be called when the event is triggered. </param>
                 Subscription<T...> Subscribe(FunctionPointer<void, T...> callback)
                 {
                     return Subscribe(Function<void, T...>(callback));
                 }
+                /// <summary> Registers a new callback method to be executed when the event is triggered.  </summary>
                 template<typename S>
                 Subscription<T...> Subscribe(S* object, MethodPointer<void, S, T...> callback)
                 {
                     return Subscribe(Method<void, S, T...>(object, callback));
                 }
+                /// <summary> Cancels a particular subscription to the event. </summary>
+                /// <param name="subscription"> The subscription to be cancelled. </param>
                 void Unsubscribe(Subscription<T...>& subscription)
                 {
                     int idx = Subscriptions.Find(subscription._data);
