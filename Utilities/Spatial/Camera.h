@@ -108,7 +108,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                void Update() const;
+                UtilitiesAPI void Update() const;
         };
     }
 }
