@@ -34,17 +34,22 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR **/
-                SceneAPI SceneComponent3D(ISceneComponent& parent);
+                SceneAPI SceneComponent3D();
 
 
 
                 /** UTILITIES **/
                 //SceneAPI bool Contains(const Vector3& point)                const override;
-                //SceneAPI bool Contains(const ISceneComponent& child)        const override;
-                //SceneAPI void Insert(ISceneComponent* child);
+                //SceneAPI bool Contains(const IComponent& child)        const override;
+                //SceneAPI void Insert(IComponent* child);
                 //SceneAPI bool Intersects(const Vector<Vector3, 2>& line)    const;
-                //SceneAPI void Remove(const ISceneComponent* child);
+                //SceneAPI void Remove(const IComponent* child);
                 //SceneAPI void Update() override;
+
+
+                /** EVENTS **/
+                SceneAPI Subscription<const IComponent&, const ISpatialTransform&>
+                    OnTransformUpdate(const ICallback<void, const IComponent&, const ISpatialTransform&>& callback) override;
 
             protected:
                 
@@ -54,6 +59,8 @@ namespace Cyclone
 
                 Resource<Entity3D>      _model;
                 Transform3D             _transform;
+
+                Event<const IComponent&, const ISpatialTransform&> _onTransformUpdate;
 
         };
     }

@@ -11,31 +11,35 @@ namespace Cyclone
         SceneComponent3D& SceneComponent3D::Orientation(const Vector3& value)
         {
             _transform.Orientation(value);
+            _onTransformUpdate(*this, Transform());
             return *this;
         }
         SceneComponent3D& SceneComponent3D::Position(const Vector3& value)
         {
             _transform.Position(value);
+            _onTransformUpdate(*this, Transform());
             return *this;
         }
         SceneComponent3D& SceneComponent3D::Scale(const Vector3& value)
         {
             _transform.Scale(value);
+            _onTransformUpdate(*this, Transform());
             return *this;
         }
         SceneComponent3D& SceneComponent3D::Transform(const Transform3D& value)
         {
             _transform = value;
+            _onTransformUpdate(*this, value);
             return *this;
         }
 
 
 
         /** CONSTRUCTOR **/
-        SceneComponent3D::SceneComponent3D(ISceneComponent& parent):
-            SceneComponent(parent),
+        SceneComponent3D::SceneComponent3D()
+            //SceneComponent(parent)
             //_isVisible(true),
-            _model(nullptr)
+            //_model(nullptr)
             //_parent(parent),
             //_tag("")
         {
@@ -49,11 +53,11 @@ namespace Cyclone
         {
             return false;
         }
-        bool SceneComponent3D::Contains(const ISceneComponent& child)   const
+        bool SceneComponent3D::Contains(const IComponent& child)   const
         {
-            return _children.Contains((ISceneComponent* const) &child);
+            return _children.Contains((IComponent* const) &child);
         }
-        void SceneComponent3D::Insert(ISceneComponent& child)
+        void SceneComponent3D::Insert(IComponent& child)
         {
             _children.Insert(&child);
         }
@@ -61,15 +65,24 @@ namespace Cyclone
         {
             return false;
         }
-        void SceneComponent3D::Remove(const ISceneComponent& child)
+        void SceneComponent3D::Remove(const IComponent& child)
         {
-            _children.Remove((ISceneComponent* const) &child);
+            _children.Remove((IComponent* const) &child);
         }
         void SceneComponent3D::Update()
         {
 
         }
 */
+
+
+
+        /** EVENTS **/
+        Subscription<const IComponent&, const ISpatialTransform&>
+            SceneComponent3D::OnTransformUpdate(const ICallback<void, const IComponent&, const ISpatialTransform&>& callback)
+        {
+            return _onTransformUpdate.Subscribe(callback);
+        }
 
 
 

@@ -23,7 +23,7 @@ namespace Cyclone
 
     namespace Scenes
     {
-        class ISceneLayer : public ISceneComponent
+        class ISceneLayer : public IComponent
         {
             public:
 

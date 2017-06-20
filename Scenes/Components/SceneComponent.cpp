@@ -14,11 +14,11 @@ namespace Cyclone
             _isVisible = value;
             return *this;
         }
-        SceneComponent& SceneComponent::Parent(ISceneComponent& value)
-        {
-            _parent = value;
-            return *this;
-        }
+        //SceneComponent& SceneComponent::Parent(IComponent& value)
+        //{
+        //    _parent = value;
+        //    return *this;
+        //}
         SceneComponent& SceneComponent::Tag(const String& value)
         {
             _tag = value;
@@ -28,9 +28,10 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR **/
-        SceneComponent::SceneComponent(ISceneComponent& parent):
-            _isVisible(true),
-            _parent(parent)
+        SceneComponent::SceneComponent():
+            _bounds(Volume::Empty),
+            _isVisible(true)
+            //_parent(parent)
         {
 
         }
@@ -38,7 +39,7 @@ namespace Cyclone
         
 
         /** UTILITIES **/
-        bool SceneComponent::Contains(const ISceneComponent* child) const
+        bool SceneComponent::Contains(const IComponent* child) const
         {
             //return _children.Contains(child);
             return false;
@@ -51,10 +52,10 @@ namespace Cyclone
         {
             return _bounds.Intersects(volume);
         }*/
-        ISceneComponent* SceneComponent::Intersection(const LineSegment3D& line) const
+        IComponent* SceneComponent::Intersection(const LineSegment3D& line) const
         {
             if (!Bounds().Intersects(line))                         { return nullptr; }
-            if (!Model().IsNull() && Model()->Intersects(line))     { return (ISceneComponent*)this; }
+            if (!Model().IsNull() && Model()->Intersects(line))     { return (IComponent*)this; }
 
             for (uint a = 0; a < _children.Count(); a++)
                 if (_children(a)->Intersects(line))     { return _children(a); }
@@ -69,13 +70,13 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void SceneComponent::Insert(ISceneComponent* child)
+        void SceneComponent::Insert(IComponent* child)
         {
             if (!child) { return; }
             _children.Insert(child);
             UpdateBounds();
         }
-        void SceneComponent::Remove(ISceneComponent* child)
+        void SceneComponent::Remove(IComponent* child)
         {
             if (!child) { return; }
             _children.Remove(child);

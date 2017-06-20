@@ -9,7 +9,7 @@
 
 namespace Cyclone
 {
-    namespace Utilities { struct ISpatialTransform; }
+    namespace Utilities { class ISpatialTransform; }
 
     namespace Scenes
     {
