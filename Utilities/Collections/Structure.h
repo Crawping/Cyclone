@@ -35,10 +35,14 @@ namespace Cyclone
         template<typename ... T> struct Structure: public IStructure
         {
 
+            /// <summary> A list of the types that are stored in the structure. </summary>
             using Types = Meta::List<T...>;
 
+            /// <summary> The number of data fields in the structure. </summary>
             constexpr const static uint Count       = Types::Count;
+            /// <summary> The byte offsets of the data fields in the structure. </summary>
             constexpr const static auto Offsets     = cumsum(0U, sizeof(T)...);
+            /// <summary> The total size of one structure instance in bytes. </summary>
             constexpr const static uint Size        = Types::Size;
 
             private:
@@ -53,7 +57,11 @@ namespace Cyclone
 
             public:
 
+                /// <summary> Creates a new data structure instance whose fields are uninitialized. </summary>
                 Structure() { }
+                /// <summary> Constructs a new data structure whose fields are initialized with the given values. </summary>
+                /// <param name="...values"> A list of values with which the structure should be initialized. </param>
+                /// <remarks> Field values must be provided in the same order as the structure field type list. </remarks>
                 Structure(T ... values)
                 {
                     Array<byte*, Count> v = { Cast<byte*>(values)... };
@@ -61,11 +69,16 @@ namespace Cyclone
                         std::copy( v(a), v(a) + Types::Sizes[a], &_data(Offsets(a)) );
                 }
 
-
+                /// <summary> Gets the value of a particular structure field. </summary>
+                /// <returns> The value at the inputted field index. </returns>
+                /// <typeparam name="N"> The numeric index of the desired field. </typeparam>
                 template<uint N> auto Get()
                 {
                     return *Cast< Types::Get<N>* >(_data(Offsets(N)));
                 }
+                /// <summary> Sets the value of a particular structure field. </summary>
+                /// <typeparam name="N"> The numeric index of the desired field. </typeparam>
+                /// <param name="value"> The value to be copied into the structure. </param>
                 template<uint N> Structure& Set(Types::Get<N> value)
                 { 
                     byte* v1 = Cast<byte*>(value);
