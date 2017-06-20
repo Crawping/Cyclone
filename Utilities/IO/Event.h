@@ -108,16 +108,6 @@ namespace Cyclone
 
 
 				/** UTILITIES **/
-                /// <summary> Removes all callback functions that are currently registered for the event. </summary>
-				void Clear()
-                {
-                    for (auto& s : Subscriptions)
-                    {
-                        delete s.Callback;
-                        delete s;
-                    }
-                    Subscriptions.Clear();
-                }
                 /// <summary> Registers a new callback routine to be executed when the event is triggered. </summary>
                 /// <returns> A structure that represents a live subscription to the event. </returns>
                 /// <param name="callback"> The callback routine to be invoked. </param>
