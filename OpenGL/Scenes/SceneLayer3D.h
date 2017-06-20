@@ -59,6 +59,7 @@ namespace Cyclone
                 /** UTILITIES **/
                 OpenGLAPI ResourceMapping& Register(const IRenderable& entity)          override;
 
+                OpenGLAPI virtual void Register(ResourceMapping& map, Resource<IGeometric> entity);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IGeometric& entity);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IMaterial& material);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IRenderable& entity);
