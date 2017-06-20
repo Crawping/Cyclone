@@ -38,7 +38,7 @@ namespace Cyclone
 
 
             /** UTILITIES **/
-            constexpr bool Intersects(const LineSegment& other)     const { return false; }
+            constexpr bool Intersects(const LineSegment3D& other)     const { return false; }
 
 
 

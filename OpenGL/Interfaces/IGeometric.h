@@ -77,7 +77,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
 
-                virtual bool Intersects(const LineSegment& line) const = 0;
+                virtual bool Intersects(const LineSegment3D& line) const = 0;
 
         };
     }

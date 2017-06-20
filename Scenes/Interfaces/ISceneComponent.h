@@ -19,7 +19,7 @@ namespace Cyclone
     namespace Utilities
     {
         struct ISpatialTransform;
-        struct LineSegment;
+        struct LineSegment3D;
         struct String;
         struct Volume;
     }
@@ -64,9 +64,9 @@ namespace Cyclone
                 /** UTILITIES **/
                 //virtual bool Contains(const Vector3& point)                         const = 0;
                 virtual bool Contains(const ISceneComponent* child)             const = 0;
-                virtual bool Intersects(const LineSegment& line)                const = 0;
+                virtual bool Intersects(const LineSegment3D& line)                const = 0;
                 //virtual bool Intersects(const Volume& volume)                   const = 0;
-                virtual ISceneComponent* Intersection(const LineSegment& line)  const = 0;
+                virtual ISceneComponent* Intersection(const LineSegment3D& line)  const = 0;
                 //virtual bool Intersects(const Vector<Vector3, 2>& line)             const = 0;
                 /// <summary> Determines whether the scene component contains a specific renderable entity. </summary>
                 //virtual bool Contains(const IRenderable& entity)                    const = 0;

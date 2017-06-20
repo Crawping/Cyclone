@@ -65,7 +65,7 @@ namespace Cyclone
                 SVGAPI void Set(uint index, const ControlPoint2D& point);
                 SVGAPI void Remove(uint index);
                 SVGAPI void Clear();
-                SVGAPI bool Intersects(const LineSegment& line) const override;
+                SVGAPI bool Intersects(const LineSegment3D& line) const override;
 
                 Geometry2D* CreateView() const override { return nullptr; }
 

@@ -14,7 +14,7 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        struct LineSegment
+        struct LineSegment3D
         {
 
             /** DATA **/
@@ -30,30 +30,31 @@ namespace Cyclone
 
 
             /** UTILITIES **/
-            constexpr Vector3 Intersection(const LineSegment& other) const
+            constexpr Vector3 Intersection(const LineSegment3D& other) const
             {
                 return Vector3();
             }
-            constexpr bool Intersects(const LineSegment& other) const
+            constexpr bool Intersects(const LineSegment3D& other) const
             {
                 return false;
             }
-            constexpr bool IsParallel(const LineSegment& other) const
+            constexpr bool IsParallel(const LineSegment3D& other) const
             {
                 return false;
             }
-            constexpr bool IsPerpendicular(const LineSegment& other) const
+            constexpr bool IsPerpendicular(const LineSegment3D& other) const
             {
                 return false;
             }
+
             
 
             /** OPERATORS **/
-            constexpr bool operator ==(const LineSegment& other) const { return (A == other.A) && (B == other.B); }
+            constexpr bool operator ==(const LineSegment3D& other) const { return (A == other.A) && (B == other.B); }
 
         };
 
-        UtilitiesAPI LineSegment operator *(const ISpatialTransform& x, const LineSegment& y);
+        UtilitiesAPI LineSegment3D operator *(const ISpatialTransform& x, const LineSegment3D& y);
 
     }
 }

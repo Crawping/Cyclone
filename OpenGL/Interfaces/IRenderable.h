@@ -11,7 +11,7 @@ namespace Cyclone
     namespace Utilities 
     {
         class ISpatialTransform;
-        struct LineSegment;
+        struct LineSegment3D;
     }
     namespace OpenGL
     {        
@@ -44,7 +44,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                virtual bool Intersects(const LineSegment& line)    const = 0;
+                virtual bool Intersects(const LineSegment3D& line)    const = 0;
         };
 
     }

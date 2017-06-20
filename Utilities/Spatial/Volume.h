@@ -197,7 +197,7 @@ namespace Cyclone
             /// <summary> Determines whether this volume intersects a line segment. </summary>
             /// <returns> A Boolean <c>true</c> if the line segment intersects the volume, or <c>false</c> otherwise. </returns>
             /// <param name="line"> A line segment to be tested for intersection. </param>
-            constexpr bool Intersects(const LineSegment& line) const
+            constexpr bool Intersects(const LineSegment3D& line) const
             {
                 return false;
             }

@@ -67,7 +67,7 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 OpenGLAPI Geometry3D* CreateView() const;
-                OpenGLAPI bool Intersects(const LineSegment& line) const;
+                OpenGLAPI bool Intersects(const LineSegment3D& line) const;
 
             protected:
 

@@ -66,7 +66,7 @@ namespace Cyclone
         {
             return nullptr;
         }
-        bool Geometry3D::Intersects(const LineSegment& line)    const
+        bool Geometry3D::Intersects(const LineSegment3D& line)    const
         {
             return false;
         }

@@ -105,7 +105,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                bool Intersects(const LineSegment& line) const override { return false; }
+                bool Intersects(const LineSegment3D& line) const override { return false; }
 
             private:
                 

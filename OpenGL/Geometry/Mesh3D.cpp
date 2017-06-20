@@ -81,7 +81,7 @@ namespace Cyclone
 
             Normals(newNormals);
         }
-        bool Mesh3D::Intersects(const LineSegment& line) const
+        bool Mesh3D::Intersects(const LineSegment3D& line) const
         {
 
             return false;

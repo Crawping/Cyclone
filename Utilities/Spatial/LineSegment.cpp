@@ -6,10 +6,10 @@ namespace Cyclone
 {
     namespace Utilities
     {
-        LineSegment operator *(const ISpatialTransform& x, const LineSegment& y)
+        LineSegment3D operator *(const ISpatialTransform& x, const LineSegment3D& y)
         {
             const auto& xform = x.ToMatrix4x4();
-            return LineSegment
+            return LineSegment3D
             {
                 (Vector3)(xform * Vector4(y.A, 1.0f)),
                 (Vector3)(xform * Vector4(y.B, 1.0f))

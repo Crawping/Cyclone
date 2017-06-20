@@ -36,9 +36,9 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 SceneAPI bool Contains(const ISceneComponent* child)                const override;
-                SceneAPI bool Intersects(const LineSegment& line)                   const override;
+                SceneAPI bool Intersects(const LineSegment3D& line)                 const override;
                 //SceneAPI bool Intersects(const Volume& volume)                      const override;
-                SceneAPI ISceneComponent* Intersection(const LineSegment& line)     const override;
+                SceneAPI ISceneComponent* Intersection(const LineSegment3D& line)   const override;
                 SceneAPI void Update()                                              override;
 
             protected:
