@@ -14,12 +14,16 @@ Program::Program():
 {
     IsFreeLookEnabled = false;
     RenderWindow->IsTrackingKeyRepeat(true);
-    RenderWindow->OnButtonPress.Register(this, &Program::ProcessButtonPress);
-    RenderWindow->OnButtonRelease.Register(this, &Program::ProcessButtonRelease);
+    OnButtonPress = RenderWindow->OnButtonPress.Subscribe(this, &Program::ProcessButtonPress);
+    OnButtonRelease = RenderWindow->OnButtonRelease.Subscribe(this, &Program::ProcessButtonRelease);
 
     Initialize();
 }
-
+Program::~Program()
+{
+    OnButtonPress.Cancel();
+    OnButtonRelease.Cancel();
+}
 
 
 /** UTILITIES **/
@@ -44,7 +48,7 @@ void Program::CreateSceneResources()
     AdvancedRenderer::CreateSceneResources();
 
     auto cube = Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
-    auto browser = Create("Browser", Function<Mesh3D>(&Mesh3D::Triangle));
+    auto browser = Create("Browser", Function<Mesh3D, bool>(&Mesh3D::Quad), true);
 
     _cube = Create<Entity3D>("Cube");
     _cube->
@@ -69,7 +73,7 @@ void Program::CreateSceneResources()
     _browser = Create<Entity3D>("Browser");
     _browser->
          Ambience(1)
-        .Geometry(cube)
+        .Geometry(browser)
         .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
         .PrimaryColor(Color4::White)
         .SecondaryColor(Color4::Black)

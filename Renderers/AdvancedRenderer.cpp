@@ -21,9 +21,15 @@ namespace Cyclone
             MoveSpeed(16.0f)
         {
 		    RenderWindow->IsTrackingKeyRepeat(false);
-		    RenderWindow->OnPointerMotion.Register(this, &AdvancedRenderer::ProcessPointerMotion);
-		    RenderWindow->OnKeyPress.Register(this, &AdvancedRenderer::ProcessKeyPress);
-		    RenderWindow->OnKeyRelease.Register(this, &AdvancedRenderer::ProcessKeyRelease);
+		    OnPointerMotion = RenderWindow->OnPointerMotion.Subscribe(this, &AdvancedRenderer::ProcessPointerMotion);
+		    OnKeyPress      = RenderWindow->OnKeyPress.Subscribe(this, &AdvancedRenderer::ProcessKeyPress);
+		    OnKeyRelease    = RenderWindow->OnKeyRelease.Subscribe(this, &AdvancedRenderer::ProcessKeyRelease);
+        }
+        AdvancedRenderer::~AdvancedRenderer()
+        {
+            OnPointerMotion.Cancel();
+            OnKeyPress.Cancel();
+            OnKeyRelease.Cancel();
         }
 
 

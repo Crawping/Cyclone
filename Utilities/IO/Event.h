@@ -13,28 +13,91 @@ namespace Cyclone
 	namespace Utilities
 	{
 
-		template<typename ... T>
-		class Event
+        template<typename ... T> class Event;
+
+
+        template<typename ... T> struct SubscriptionData
+        {
+            ICallback<void, T...>*  Callback;
+            bool                    IsSuspended;
+            Event<T...>*            Parent;
+        };
+
+        template<typename ... T> struct Subscription
+        {
+            friend class Event<T...>;
+
+            private:
+                
+                SubscriptionData<T...>*     _data;
+
+                Subscription(SubscriptionData<T...>* data):         _data(data) { }
+                
+            public:
+
+                bool IsSuspended()                                  const { return _data ? _data->IsSuspended : true; }
+
+                Subscription():                                     _data(nullptr) { }
+
+                /// <summary> Removes the subscription data from the event's callback queue. </summary>
+                /// <remarks> 
+                ///     Calls to this method permanently disable an event subscription by deleting all of the backing data, 
+                ///     making the subscription structure useless afterward. 
+                /// </remarks>
+                void Cancel()                                       { if (_data) { _data->Parent->Unsubscribe(*this); } }
+                /// <summary> Enables a suspended event subscription. </summary>
+                /// <remarks>
+                ///     Calls to this method re-enable a suspended event subscription, which allows the governing event to 
+                ///     once again execute the associated callback routine. Invoking this method on subscriptions that are 
+                ///     not suspended has no effect.
+                /// </remarks>
+                void Resume()                                       { if (_data) { _data->IsSuspended = false; } }
+                /// <summary> Temporarily disables the event subscription. </summary>
+                /// <remarks> 
+                ///     Calls to this method temporarily disable an event subscription, preventing further executions of 
+                ///     the callback routine when the governing event is triggered. However, unlike the <see cref="Cancel"/> 
+                ///     method, the backing data is persisted, and the subscription can subsequently be re-enabled by calling 
+                ///     the <see cref="Resume"/> method.
+                /// </remarks>
+                void Suspend()                                      { if (_data) { _data->IsSuspended = true; } }
+
+                /// <summary> Determines whether two event subscriptions are equivalent. </summary>
+                /// <returns> A Boolean <c>true</c> if the subscriptions are equivalent, or <c>false</c> otherwise. </returns>
+                /// <param name="other"> Another event subscription to be tested. </param>
+                template<typename ... U> 
+                bool operator ==(const Subscription<U...>& other)   const { return false; }
+                bool operator ==(const Subscription& other)         const { return (_data == other._data); }
+        };
+
+
+
+		template<typename ... T> class Event
 		{
 			private:
 
-                ArrayList<ICallback<void, T...>*> Subscriptions;
+                ArrayList<SubscriptionData<T...>*> Subscriptions;
 
 			public:
+
 				/** PROPERTIES **/
                 /// <summary> Gets the number of callback functions that are currently registered for this event. </summary>
-				uint Count()        const { return Subscriptions.size(); }
+				uint Count()        const { return Subscriptions.Count(); }
                 /// <summary> Determines whether this event has any registered callback functions. </summary>
-				bool IsEmpty()      const { return Subscriptions.empty(); }
+				bool IsEmpty()      const { return Subscriptions.IsEmpty(); }
 
 
 
 				/** CONSTRUCTOR **/
-				Event() : Subscriptions() { }
+				Event() { }
+                Event(Event&& other)        = delete;
+                Event(const Event& other)   = delete;
                 ~Event()
                 {
-                    for (auto callback : Subscriptions)
-                        delete callback;
+                    for (auto* s : Subscriptions)
+                    {
+                        delete s->Callback;
+                        delete s;
+                    }
                 }
 
 
@@ -42,50 +105,41 @@ namespace Cyclone
                 /// <summary> Removes all callback functions that are currently registered for this event. </summary>
 				void Clear()
                 {
-                    for (auto callback : Subscriptions)
-                        delete callback;
+                    for (auto& s : Subscriptions)
+                    {
+                        delete s.Callback;
+                        delete s;
+                    }
                     Subscriptions.Clear();
                 }
-                void Register(const ICallback<void, T...>* callback)
+                /// <summary> Registers a new callback routine to be executed when this event is triggered. </summary>
+                /// <returns> A structure that represents a live subscription to the event. </returns>
+                /// <param name="callback"> The callback function to be invoked. </param>
+                
+                Subscription<T...> Subscribe(const ICallback<void, T...>& callback)
                 {
-                    Subscriptions.Append(callback->Copy());
+                    auto* data = new SubscriptionData<T...>{ callback.Copy(), false, this };
+                    Subscriptions.Append(data);
+                    return Subscription<T...>(data);
                 }
-                /// <summary> Subscribes a new callback function to be executed when this event is triggered. </summary>
-                /// <param name="callback"></param>
-                void Register(Procedure<T...> callback)
+                Subscription<T...> Subscribe(FunctionPointer<void, T...> callback)
                 {
-                    Subscriptions.Append(new Procedure<T...>(callback));
+                    return Subscribe(Function<void, T...>(callback));
                 }
-
                 template<typename S>
-                void Register(Method<void, S, T...> callback)
+                Subscription<T...> Subscribe(S* object, MethodPointer<void, S, T...> callback)
                 {
-                    Subscriptions.Append(new Method<void, S, T...>(callback));
+                    return Subscribe(Method<void, S, T...>(object, callback));
                 }
-
-                template<typename S>
-                void Register(S* object, MethodPointer<void, S, T...> callback)
+                void Unsubscribe(Subscription<T...>& subscription)
                 {
-                    Subscriptions.Append(new Method<void, S, T...>(object, callback));
-                }
+                    int idx = Subscriptions.Find(subscription._data);
+                    if (idx < 0)    { return; }
+                    else            { Subscriptions.Remove(idx); }
 
-                /// <summary> Unsubscribes a callback function, preventing its future execution when this event is triggered. </summary>
-                void Remove(const ICallback<void, T...>& callback)
-                {
-                    uint idx = 0;
-                    for (auto s : Subscriptions)
-                        if (callback == *s)
-                        {
-                            delete s;
-                            Subscriptions.Remove(idx);
-                            return;
-                        }
-                        else
-                            idx++;
+                    delete subscription._data->Callback;
+                    delete subscription._data;
                 }
-
-                template<typename S>
-                void Remove(S* object, MethodPointer<void, S, T...> callback) { Remove(Method<void, S, T...>(object, callback)); }
 
 
 
@@ -93,8 +147,9 @@ namespace Cyclone
                 /// <summary> Serially executes each of the callback functions within the event queue. </summary>
 				void operator ()(T ... arguments)
 				{
-					for (auto callback : Subscriptions)
-						callback->Invoke(arguments...);
+					for (auto* s : Subscriptions)
+                        if (!s->IsSuspended)
+                            s->Callback->Invoke(arguments...);
 				}
 
 		};

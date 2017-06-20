@@ -36,8 +36,8 @@ namespace Cyclone
 			    return;
 		    }
 
-		    RenderWindow->OnClose.Register(this, &BasicRenderer::BreakEventLoop);
-		    RenderWindow->OnResize.Register(this, &BasicRenderer::CreateSizedResources);
+		    RenderWindow->OnClose.Subscribe(this, &BasicRenderer::BreakEventLoop);
+		    RenderWindow->OnResize.Subscribe(this, &BasicRenderer::CreateSizedResources);
 		    Renderer->Window(RenderWindow);
         }
         BasicRenderer::~BasicRenderer()

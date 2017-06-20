@@ -21,6 +21,10 @@ namespace Cyclone
     {
         class AdvancedRenderer : public BasicRenderer
         {
+            public:
+
+                RendererAPI ~AdvancedRenderer();
+
             protected:
 
                 bool                IsFreeLookEnabled;
@@ -62,6 +66,12 @@ namespace Cyclone
                 RendererAPI virtual void UpdateViewProjection();
 
                 RendererAPI virtual void UpdateWalkingDirection();
+
+            private:
+
+                Subscription<const KeyboardEvent&>          OnKeyPress;
+                Subscription<const KeyboardEvent&>          OnKeyRelease;
+                Subscription<const PointerMotionEvent&>     OnPointerMotion;
 
         };
     }

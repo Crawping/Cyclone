@@ -96,6 +96,8 @@ namespace Cyclone
         RenderPipeline = Resources.Create<ShaderPipeline, string, string>
         (
             "BlinnPhong", Constructor<ShaderPipeline, string, string>(),
+            //"../Renderers/Shaders/Default.vsl",
+            //"../Renderers/Shaders/Default.psl"
             "../Renderers/Shaders/BlinnPhong.vsl",
             "../Renderers/Shaders/BlinnPhong.psl"
         );
@@ -120,8 +122,8 @@ namespace Cyclone
 	void Program::CreateRenderingWindow()
 	{
 		RenderWindow = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window", 4);
-		RenderWindow->OnClose.Register(this, &Program::Abort);
-		RenderWindow->OnResize.Register(this, &Program::CreateSizedResources);
+		RenderWindow->OnClose.Subscribe(this, &Program::Abort);
+		RenderWindow->OnResize.Subscribe(this, &Program::CreateSizedResources);
 
 		Renderer->Window(RenderWindow);
 	}

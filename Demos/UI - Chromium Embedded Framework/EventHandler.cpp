@@ -54,20 +54,21 @@ EventHandler::EventHandler(Program& app):
     _app(app),
     _browser(nullptr)
 {
-    _app.Window()->OnButtonPress.Register(this, &EventHandler::ProcessButtonPress);
-    _app.Window()->OnButtonRelease.Register(this, &EventHandler::ProcessButtonRelease);
-    _app.Window()->OnKeyPress.Register(this, &EventHandler::ProcessKeyPress);
-    _app.Window()->OnKeyRelease.Register(this, &EventHandler::ProcessKeyRelease);
-    _app.Window()->OnPointerMotion.Register(this, &EventHandler::ProcessPointerMotion);
+    OnButtonPress   = _app.Window()->OnButtonPress.Subscribe(this, &EventHandler::ProcessButtonPress);
+    OnButtonRelease = _app.Window()->OnButtonRelease.Subscribe(this, &EventHandler::ProcessButtonRelease);
+    OnKeyPress      = _app.Window()->OnKeyPress.Subscribe(this, &EventHandler::ProcessKeyPress);
+    OnKeyRelease    = _app.Window()->OnKeyRelease.Subscribe(this, &EventHandler::ProcessKeyRelease);
+    OnPointerMotion = _app.Window()->OnPointerMotion.Subscribe(this, &EventHandler::ProcessPointerMotion);
 }
 EventHandler::~EventHandler()
 {
+    OnButtonPress.Cancel();
+    OnButtonRelease.Cancel();
+    OnKeyPress.Cancel();
+    OnKeyRelease.Cancel();
+    OnPointerMotion.Cancel();
+    
     _browser = nullptr;
-    _app.Window()->OnButtonPress.Remove(this, &EventHandler::ProcessButtonPress);
-    _app.Window()->OnButtonRelease.Remove(this, &EventHandler::ProcessButtonRelease);
-    _app.Window()->OnKeyPress.Remove(this, &EventHandler::ProcessKeyPress);
-    _app.Window()->OnKeyRelease.Remove(this, &EventHandler::ProcessKeyRelease);
-    _app.Window()->OnPointerMotion.Remove(this, &EventHandler::ProcessPointerMotion);
 }
 
 

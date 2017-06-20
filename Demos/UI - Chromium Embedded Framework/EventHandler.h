@@ -79,6 +79,13 @@ class EventHandler:
         Program&                _app;
         CefRefPtr<CefBrowser>   _browser;
 
+        Subscription<const PointerClickEvent&>      OnButtonPress;
+        Subscription<const PointerClickEvent&>      OnButtonRelease;
+        Subscription<const KeyboardEvent&>          OnKeyPress;
+        Subscription<const KeyboardEvent&>          OnKeyRelease;
+        Subscription<const PointerMotionEvent&>     OnPointerMotion;
+
+
         void ProcessButtonPress(const PointerClickEvent& evt);
         void ProcessButtonRelease(const PointerClickEvent& evt);
         void ProcessKeyPress(const KeyboardEvent& evt);

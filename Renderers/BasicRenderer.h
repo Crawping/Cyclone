@@ -151,7 +151,6 @@ namespace Cyclone
                 bool                _canContinue;
                 ResourceLibrary2    _resources;
 
-
         };
 
     }

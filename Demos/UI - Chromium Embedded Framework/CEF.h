@@ -28,6 +28,7 @@ class Program: public AdvancedRenderer
         Window3D* Window()                  { return RenderWindow; }
 
         Program();
+        ~Program();
 
         void Execute() override;
         void UpdateBrowser()                { RenderScene->Update(*_browser); }
@@ -50,5 +51,8 @@ class Program: public AdvancedRenderer
         Resource<Texture3D> _image;
         bool                _isNavigationEnabled;
         Vector2             _cursorPosition;
-        LineSegment         _cursorRay;
+        LineSegment3D       _cursorRay;
+
+        Subscription<const PointerClickEvent&> OnButtonPress;
+        Subscription<const PointerClickEvent&> OnButtonRelease;
 };
