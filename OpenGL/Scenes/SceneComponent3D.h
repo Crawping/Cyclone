@@ -37,7 +37,7 @@ namespace Cyclone
                 /** UTILITIES **/
                 OpenGLAPI bool Contains(const IRenderable& entity)      const override;
                 OpenGLAPI void Insert(const IRenderable& entity)        override;
-                OpenGLAPI void Insert(Resource<Entity3D> entity);
+                OpenGLAPI void Insert(Component<Entity3D> entity);
                 OpenGLAPI void Remove(const IRenderable& entity)        override;
                 OpenGLAPI void Update()                                 override;
                 OpenGLAPI void Update(const IRenderable& entity)        override;

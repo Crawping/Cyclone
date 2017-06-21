@@ -2,6 +2,7 @@
  * Written by Josh Grooms on 20170608
  */
 
+#include "GraphicsSettings.h"
 #include "Geometry/Mesh3D.h"
 #include "IO/Members.h"
 #include "Libraries/Material3D.h"
@@ -26,11 +27,14 @@ class _Resource: public testing::Test
         Resource<Mesh3D>        _g3;
         Resource<Geometry3D>    _g4;
         
-        Resource<Material3D>    _m0;
-        Resource<Material3D>    _m1;
+        Resource<Material3D>        _m0;
+        Resource<Material3D>        _m1;
+        Resource<Material3D, true>  _m2;
 
         Attribute<Geometry3D, PointTopologies>  _p1;
         Attribute<Material3D, const Color4&>    _p2;
+
+        
 
 
         _Resource():
@@ -39,6 +43,7 @@ class _Resource: public testing::Test
             _g3(_l0.Create<Mesh3D>("G3", Function<Mesh3D, bool>(&Mesh3D::Cube), true)),
             _g4(_l0.Create<Geometry3D>("G4")),
             _m1(_l0.Create<Material3D>("M1")),
+            _m2("M2", new Material3D()),
             _p1(&Mesh3D::Topology, &Mesh3D::Topology),
             _p2(&Material3D::PrimaryColor, &Material3D::PrimaryColor)
         {
@@ -51,17 +56,24 @@ class _Resource: public testing::Test
 
 TEST_F(_Resource, Construction)
 {
-    ASSERT_EQ(_g1.Name(),                   "G1");
+    //ASSERT_EQ( (Meta::IsA<GraphicsSettings, GraphicsSettings>()), true );
+    auto s1 = _l0.Create<GraphicsSettings>("Test");
+    ASSERT_EQ(s1.IsNull(), false);
+
+    //ASSERT_EQ(_g1.Name(),                   "G1");
+    ASSERT_EQ(_g1.ID(),                     hash("G1"));
     ASSERT_EQ(_g1->IsEmpty(),               true);
     ASSERT_EQ(_g1->IsIndexed(),             false);
     ASSERT_EQ(_g1->Count(),                 0);
 
-    ASSERT_EQ(_g2.Name(),                   "G2");
+    //ASSERT_EQ(_g2.Name(),                   "G2");
+    ASSERT_EQ(_g2.ID(),                     hash("G2"));
     ASSERT_EQ(_g2->IsEmpty(),               true);
     ASSERT_EQ(_g2->IsIndexed(),             false);
     ASSERT_EQ(_g2->Count(),                 0);
 
-    ASSERT_EQ(_g3.Name(),                   "G3");
+    //ASSERT_EQ(_g3.Name(),                   "G3");
+    ASSERT_EQ(_g3.ID(),                     hash("G3"));
     ASSERT_EQ(_g3->IsEmpty(),               false);
     ASSERT_EQ(_g3->IsIndexed(),             true);
     ASSERT_EQ(_g3->Count(),                 36);
@@ -96,4 +108,8 @@ TEST_F(_Resource, Casting)
 
     Resource<Mesh3D> g2 = _g4;
     ASSERT_EQ(g2.IsNull(),                  true);
+
+
+    //Component<Material3D> m3 = _m2;
+    //Component<IMaterial> m4 = _m2;
 }

@@ -97,9 +97,9 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void SceneLayer3D::Register(Resource<Entity3D> entity)
+        void SceneLayer3D::Register(Component<Entity3D> entity)
         {
-            if (_entities.Contains(entity.Name())) { return; }
+            //if (_entities.Contains(entity.Name())) { return; }
 
 
 
@@ -136,12 +136,12 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        void SceneLayer3D::Register(ResourceMapping& map, Resource<IMaterial> material)
+        void SceneLayer3D::Register(ResourceMapping& map, Component<IMaterial> material)
         {
             if (material.IsNull()) { return; }
 
         }
-        void SceneLayer3D::Register(ResourceMapping& map, Resource<IGeometric> geometry)
+        void SceneLayer3D::Register(ResourceMapping& map, Component<IGeometric> geometry)
         {
             if (geometry.IsNull()) { return; }
 

@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Collections/List.h"
-
+#include <type_traits>
 
 
 namespace Cyclone
@@ -82,11 +82,12 @@ namespace Cyclone
                 /// <returns> A linear index that corresponds with <paramref name="key"/>, or the <see cref="Count"/> if no such index exists. </returns>
                 virtual uint IndexOf(const T& key)          const { return Root ? Root->IndexOf(key) : 0; }
 
-                virtual void Insert(const T& key, U&& value)
+                template<typename V>
+                void Insert(const T& key, V&& value)
                 {
                     Root = Root ? 
-                        Root->Insert(key, std::forward<U>(value)) : 
-                        new Node<T, U>(key, std::forward<U>(value));
+                        Root->Insert(key, std::forward<V>(value)) : 
+                        new Node<T, U>(key, std::forward<V>(value));
                 }
                 /// <summary> Inserts a new node into the BST and automatically rebalances the tree, if necessary. </summary>
                 /// <param name="key"> The key for the new node being inserted. </param>
@@ -95,10 +96,11 @@ namespace Cyclone
                 ///     This method will either create a new node with the inputted key-value pair (if one does not exist within the
                 ///     BST) or overwrite the value of any node whose key matches the 'key' input argument.
                 /// </remarks>
-                virtual void Insert(const T& key, const U& value)
-                {
-                    Root = Root ? Root->Insert(key, value) : new Node<T, U>(key, value);
-                }
+                //virtual void Insert(const T& key, const U& value)
+                //{
+                //    static_assert(std::is_copy_constructible<U>::value, "Inputted value must be copyable.");
+                //    Root = Root ? Root->Insert(key, value) : new Node<T, U>(key, value);
+                //}
                 /// <summary> Removes the specified node from the binary search tree. </summary>
                 /// <param name="key"> The key of the node to be removed. </param>
                 virtual void Remove(const T& key)
@@ -125,7 +127,7 @@ namespace Cyclone
                 /// <param name="index"> A linear index into the tree, as if it were a flattened list of values sorted by its keys. </param>
                 /// <returns> A constant reference to the value that corresponds with the inputted index. </returns>
                 /// <remarks> Attempting to use an index that is not present in the tree will result in exceptions being thrown. </remarks>
-                virtual const U& operator ()(uint index)    const { return Root->Index(index)->Value; }
+                virtual const U& operator ()(uint index)    const { return (const U&)(Root->Index(index)->Value); }
 
                 virtual BST& operator =(BST&& other)
                 {
@@ -214,28 +216,29 @@ namespace Cyclone
                         /// <summary> Constructs a new node with a specific key-value pair. </summary>
                         /// <param name="key"> The key that will be used to index the new node within a tree. </param>
                         /// <param name="value"> The value held by the node that is associated with its key. </param>
-                        Node(const T& key, U&& value) : 
+                        template<typename V>
+                        Node(const T& key, V&& value): 
                             Left(nullptr),
                             Right(nullptr),
                             Balance(0),
                             Count(1),
                             Height(0),
                             Key(key),
-                            Value(std::forward<U>(value))
+                            Value(std::forward<V>(value))
                         {
 
                         }
-                        Node(const T& key, const U& value) :
-                            Left(nullptr),
-                            Right(nullptr),
-                            Balance(0),
-                            Count(1),
-                            Height(0),
-                            Key(key),
-                            Value(value)
-                        {
+                        //Node(const T& key, const U& value) :
+                        //    Left(nullptr),
+                        //    Right(nullptr),
+                        //    Balance(0),
+                        //    Count(1),
+                        //    Height(0),
+                        //    Key(key),
+                        //    Value(value)
+                        //{
 
-                        }
+                        //}
                         /// <summary> Destroys this node and all other nodes within the subtree rooted by it. </summary>
                         ~Node()
                         {
@@ -287,15 +290,15 @@ namespace Cyclone
                         {
                             if (key < Key)
                                 Left = Left ? 
-                                    Left->Insert(key, std::forward<U>(value)) : 
-                                    new Node<T, U>(key, std::forward<U>(value));
+                                    Left->Insert(key, std::move(value)) : 
+                                    new Node<T, U>(key, std::move(value));
                             else if (key > Key)
                                 Right = Right ? 
-                                    Right->Insert(key, std::forward<U>(value)) : 
-                                    new Node<T, U>(key, std::forward<U>(value));
+                                    Right->Insert(key, std::move(value)) : 
+                                    new Node<T, U>(key, std::move(value));
                             else
                             {
-                                Value = std::forward<U>(value);
+                                Value = std::move(value);
                                 return this;
                             }
 
@@ -312,6 +315,7 @@ namespace Cyclone
                         /// </remarks>
                         Node<T, U>* Insert(const T& key, const U& value)
                         {
+                            //return Insert(key, std::forward<U>(value));
                             if (key < Key)
                                 Left = Left ? Left->Insert(key, value) : new Node<T, U>(key, value);
                             else if (key > Key)

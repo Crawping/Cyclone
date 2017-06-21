@@ -34,7 +34,7 @@ namespace Cyclone
 
                 /// <summary> Sets the geometric data that define the shape of the mesh. </summary>
                 //OpenGLAPI virtual Model3D& Geometry(const Geometry3D& value);
-                OpenGLAPI virtual Model3D& Geometry(Resource<Geometry3D> value);
+                OpenGLAPI virtual Model3D& Geometry(Component<Geometry3D> value);
                 OpenGLAPI virtual Model3D& Transform(const Transform3D& value);
                 OpenGLAPI Model3D& Orientation(const Vector3& value);
                 OpenGLAPI Model3D& Position(const Vector3& value);
@@ -46,12 +46,12 @@ namespace Cyclone
                 OpenGLAPI Model3D();
                 /// <summary> Constructs a new 3D mesh that is initialized with pre-defined geometric data. </summary>
                 /// <param name="geometry"> An existing 3D geometry data object. </param>
-                OpenGLAPI Model3D(Resource<Geometry3D> geometry);
+                OpenGLAPI Model3D(Component<Geometry3D> geometry);
 
             private:
             
                 /** DATA **/
-                Resource<Geometry3D>    _geometry;
+                Component<Geometry3D>    _geometry;
                 Transform3D             _transform;
 
         };

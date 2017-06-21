@@ -4,6 +4,7 @@
 
 #pragma once
 //#include "GraphicsSettings.h"
+#include "Utilities.h"
 #include "Collections/BST.h"
 #include "Interfaces/ICallback.h"
 #include "Interfaces/IGeometric.h"
@@ -47,7 +48,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 OpenGLAPI ResourceLibrary2();
-                ResourceLibrary2(const ResourceLibrary2& other) = delete;
+                ResourceLibrary2(const ResourceLibrary2& other)         = delete;
                 OpenGLAPI ~ResourceLibrary2();
 
 
@@ -56,44 +57,49 @@ namespace Cyclone
                 /// <summary> Determines whether a particular resource is stored within the library. </summary>
                 /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
                 /// <param name="value"> An existing resource handle. </param>
-                template<typename T> bool Contains(Resource<T> value) const 
+                template<typename T> bool Contains(Component<T> value)  const 
                 {
-                    auto r = Get<T>(value.Name());
-                    return !r.IsNull() && (r._value == value._value);
+                    auto r = Get<T>(value.ID());
+                    return !r.IsNull() && (r == value);
                 }
                 /// <summary> Determines whether a particular resource is stored within the library. </summary>
                 /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
                 /// <typeparam name="T"> The type of the desired resource. </typeparam>
                 /// <param name="name"> The string identifier of the resource. </param>
-                template<typename T> bool Contains(const string& name) const
+                template<typename T> bool Contains(const string& name)  const
+                {
+                    return Contains<T>(hash(name));
+                }
+                template<typename T> bool Contains(uint key)            const
                 {
                     return
-                        Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(name)       :
-                        Meta::IsA<T, IGeometric>()          ? _geometry.Contains(name)      :
-                        Meta::IsA<T, IMaterial>()           ? _materials.Contains(name)     :
-                        Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Contains(name)     :
-                        Meta::IsA<T, IRenderable>()         ? _renderables.Contains(name)   : 
-                        Meta::IsA<T, IGraphicsSettings>()   ? _settings.Contains(name)      :
-                        Meta::IsA<T, ITexture>()            ? _textures.Contains(name)      : false;
+                        Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(key)       :
+                        Meta::IsA<T, IGeometric>()          ? _geometry.Contains(key)      :
+                        Meta::IsA<T, IMaterial>()           ? _materials.Contains(key)     :
+                        Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Contains(key)     :
+                        Meta::IsA<T, IRenderable>()         ? _renderables.Contains(key)   :
+                        Meta::IsA<T, IGraphicsSettings>()   ? _settings.Contains(key)      :
+                        Meta::IsA<T, ITexture>()            ? _textures.Contains(key)      : false;
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
-                template<typename T> Resource<T> Create(const string& name)
+                template<typename T> Component<T> Create(const string& name)
                 {
                     T* value = new T();
                     return Register<T>(name, value);
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
                 template<typename T, typename ... U>
-                Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
+                Component<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
                 {
                     T* value = new T(constructor(arguments...));
                     return Register<T>(name, value);
                 }
                 /// <summary> Destroys an existing graphics resource that is stored within the library. </summary>
-                template<typename T> void Destroy(Resource<T> value)
+                template<typename T> void Destroy(Component<T> value)
                 {
-                    const string& key = value.Name();
-                    if ( value.IsNull() || !Contains(value) ) { return; }
+                    //const string& key = value.Name();
+                    uint key = value.ID();
+                    if ( value.IsNull() || !Contains<T>(key) ) { return; }
 
                     Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Remove(key)      :
                     Meta::IsA<T, IGeometric>()          ? _geometry.Remove(key)     :
@@ -102,54 +108,57 @@ namespace Cyclone
                     Meta::IsA<T, IRenderable>()         ? _renderables.Remove(key)  : 
                     Meta::IsA<T, IGraphicsSettings>()   ? _settings.Remove(key)     : _textures.Remove(key);
 
-                    delete value._value;
+                    //delete value._value;
                 }
                 /// <summary> Acquires a particular graphics resource stored within the library. </summary>
-                template<typename T> Resource<T> Get(const string& name) const
+                template<typename T> Component<T> Get(const string& name)   const
                 {
-                    return
-                        !Contains<T>(name)                  ? Resource<T>(name, nullptr)                                : 
-                        Meta::IsA<T, IGraphicsBuffer>()     ? Resource<T>(name, dynamic_cast<T*>(_buffers[name]))       :
-                        Meta::IsA<T, IMaterial>()           ? Resource<T>(name, dynamic_cast<T*>(_materials[name]))     :
-                        Meta::IsA<T, IGeometric>()          ? Resource<T>(name, dynamic_cast<T*>(_geometry[name]))      :
-                        Meta::IsA<T, IGraphicsPipeline>()   ? Resource<T>(name, dynamic_cast<T*>(_pipelines[name]))     :
-                        Meta::IsA<T, IRenderable>()         ? Resource<T>(name, dynamic_cast<T*>(_renderables[name]))   : 
-                        Meta::IsA<T, IGraphicsSettings>()   ? Resource<T>(name, dynamic_cast<T*>(_settings[name]))      :
-                        Meta::IsA<T, ITexture>()            ? Resource<T>(name, dynamic_cast<T*>(_textures[name]))      : 
-                        Resource<T>(name, nullptr);
+                    return Get<T>(hash(name));
+                }
+                template<typename T> Component<T> Get(uint key)             const
+                {
+                    return Component<T>(key, Contains<T>(key) ? const_cast<T*>(Access<const T>(key)) : nullptr);
                 }
                 /// <summary> Checks an externally created resource into the library for management. </summary>
                 /// <returns> A resource handle that represents the inputted value. </returns>
                 /// <param name="name"> The desired name of the resource. </param>
                 /// <param name="value"> A pointer to a resource constructed externally on the heap. </param>
                 /// <remarks> Naming conflicts are resolved by deleting and overwriting the previously stored value. </remarks>
-                template<typename T> Resource<T> Register(const string& name, T* value)
+                template<typename T> Component<T> Register(const string& name, T* value)
                 {
                     if (!value || (name == "Null"))
-                        return Resource<T>(name, nullptr);
-
-                    auto r = Get<T>(name);
-                    if (!r.IsNull() && r._value != value)
-                        delete r._value;
+                        return Component<T>(name, nullptr);
 
                     Insert(name, value);
-                    return Resource<T>(name, value);
+                    return Component<T>(name, value);
                 }
                 
             private:
 
                 /** DATA **/
-                BST<string, IGraphicsBuffer*>   _buffers;
-                BST<string, IGeometric*>        _geometry;
-                BST<string, IMaterial*>         _materials;
-                BST<string, IGraphicsPipeline*> _pipelines;
-                BST<string, IRenderable*>       _renderables;
-                BST<string, IGraphicsSettings*> _settings;
-                BST<string, ITexture*>          _textures;
+                BST<uint, Resource<IGraphicsBuffer, true>>     _buffers;
+                BST<uint, Resource<IGeometric, true>>          _geometry;
+                BST<uint, Resource<IMaterial, true>>           _materials;
+                BST<uint, Resource<IGraphicsPipeline, true>>   _pipelines;
+                BST<uint, Resource<IRenderable, true>>         _renderables;
+                BST<uint, Resource<IGraphicsSettings, true>>   _settings;
+                BST<uint, Resource<ITexture, true>>            _textures;
 
 
 
                 /** UTILITIES **/
+                template<typename T> T* Access(uint key) const
+                {
+                    return
+                        Meta::IsA<T, IGraphicsBuffer>()     ? dynamic_cast<T*>(&*_buffers[key])     :
+                        Meta::IsA<T, IGeometric>()          ? dynamic_cast<T*>(&*_geometry[key])    :
+                        Meta::IsA<T, IMaterial>()           ? dynamic_cast<T*>(&*_materials[key])   :
+                        Meta::IsA<T, IGraphicsPipeline>()   ? dynamic_cast<T*>(&*_pipelines[key])   :
+                        Meta::IsA<T, IRenderable>()         ? dynamic_cast<T*>(&*_renderables[key]) :
+                        Meta::IsA<T, IGraphicsSettings>()   ? dynamic_cast<T*>(&*_settings[key])    : 
+                        dynamic_cast<T*>(&*_textures[key]);
+                }
+
                 OpenGLAPI void Insert(const string& key, IGraphicsBuffer* value);
                 OpenGLAPI void Insert(const string& key, IGraphicsPipeline* value);
                 OpenGLAPI void Insert(const string& key, IGraphicsSettings* value);

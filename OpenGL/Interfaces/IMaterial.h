@@ -18,7 +18,7 @@ namespace Cyclone
         /** FORWARD DECLARATIONS **/
         class ITexture;
         struct MaterialData;
-        template<typename T> struct Resource;
+        //template<typename T> struct Component;
         using namespace Utilities;
 
         /// <summary> An interface used to specify the material properties of an entity. </summary>

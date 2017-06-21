@@ -150,6 +150,9 @@
     <ClInclude Include="Interfaces\IGraphicsSettings.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Resources\Specializations\OwnedResource.h">
+      <Filter>Resources\Specializations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -267,6 +270,9 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{ca4a9c67-a291-4daf-9ca5-4585391a8c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Specializations">
+      <UniqueIdentifier>{f57f1ed7-2ff9-4aec-aba2-b3458a122f5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

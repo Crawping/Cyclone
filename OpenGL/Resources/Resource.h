@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "Utilities.h"
 #include "IO/Members.h"
 #include "IO/Property.h"
 #include "Meta/Utilities.h"
@@ -18,33 +19,34 @@ namespace Cyclone
 
         /// <summary> A data structure that serves as a handle to a particular graphics resource. </summary>
         /// <typeparam name="T"> The type of the resource referred to by this handle. </typeparam>
-        template<typename T> struct Resource
+        template<typename T, bool U = false> struct Resource
         {
             friend class ResourceLibrary2;
-            private:
+             private:
 
                 /** DATA **/
-                string  _name;
+                uint    _id;
                 T*      _value;
 
             public:
 
                 /** PROPERTIES **/
-                /// <summary> Gets whether the resource has a null value. </summary>
-                bool IsNull()                               const { return _value == nullptr; }
                 /// <summary> Gets the string identifier of the resource. </summary>
-                const string& Name()                        const { return _name; }
+                uint ID()                                   const { return _id; }
+                /// <summary> Gets whether the resource has a null v alue. </summary>
+                bool IsNull()                               const { return _value == nullptr; }
 
                 
 
-                /** EVENTS **/
-
-
-
                 /** CONSTRUCTOR **/
-                Resource(const string& name = "Null", T* value = nullptr):
-                    _name(name),
+                Resource(uint id = 0, T* value = nullptr):
+                    _id(id),
                     _value(value)
+                {
+
+                }
+                Resource(const string& name, T* value = nullptr):
+                    Resource(hash(name), value)
                 {
 
                 }
@@ -77,7 +79,7 @@ namespace Cyclone
                 template<typename U> operator Resource<U>()                 const
                 {
                     static_assert(Meta::IsA<T, U>() || Meta::IsA<U, T>(), "Invalid casting operation attempted.");
-                    return Resource<U>(_name, dynamic_cast<U*>(_value));
+                    return Resource<U>(ID(), dynamic_cast<U*>(_value));
                 }
 
                 T& operator *()                                             { return *_value; }
@@ -87,7 +89,7 @@ namespace Cyclone
 
                 bool operator ==(const Resource& other)                     const
                 {
-                    return (_name == other._name) && _value == other._value;
+                    return (_id == other._id) && _value == other._value;
                 }
                 template<typename U>
                 bool operator ==(const Resource<U>& other)                  const { return false; }
@@ -96,6 +98,10 @@ namespace Cyclone
                 bool operator !=(const Resource<U>& other)                  const { return !(operator ==(other)); }
         };
 
+
+        template<typename T> using Component = Resource<T, false>;
+
     }
 }
 
+#include "Resources/Specializations/OwnedResource.h"

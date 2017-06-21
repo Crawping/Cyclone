@@ -80,7 +80,7 @@ namespace Cyclone
                 /// </remarks>
                 OpenGLAPI Material3D& SpecularPower(float value);
                 /// <summary> Sets the texture of a material. </summary>
-                OpenGLAPI Material3D& Texture(Resource<ITexture> value);
+                OpenGLAPI Material3D& Texture(Component<ITexture> value);
 
 
 
@@ -97,7 +97,7 @@ namespace Cyclone
                 
                 /** PROPERTY DATA **/
                 MaterialData        _data;
-                Resource<ITexture>  _texture;
+                Component<ITexture>  _texture;
                 Transform3D         _transform;
         };
 
