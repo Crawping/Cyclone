@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Buffers/IndexBuffer.h"
+#include "Buffers/UniformMap.h"
 #include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
@@ -57,9 +58,12 @@ namespace Cyclone
             protected:
 
                 /** UTILITIES **/
+                OpenGLAPI void Register(Resource<Entity3D> entity);
                 OpenGLAPI ResourceMapping& Register(const IRenderable& entity)          override;
 
-                OpenGLAPI virtual void Register(ResourceMapping& map, Resource<IGeometric> entity);
+                OpenGLAPI virtual void Register(ResourceMapping& map, Resource<IMaterial> material);
+                OpenGLAPI virtual void Register(ResourceMapping& map, Resource<IGeometric> geometry);
+
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IGeometric& entity);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IMaterial& material);
                 OpenGLAPI virtual void Register(ResourceMapping& map, const IRenderable& entity);
@@ -72,6 +76,11 @@ namespace Cyclone
                 ResourceLibrary<MaterialData>       Materials;
                 ResourceLibrary<TransformData>      Transforms;
                 VertexBuffer<Vertex>                Vertices;
+
+                UniformMap<string, EntityData>      _entities;
+                UniformMap<string, MaterialData>    _materials;
+                UniformMap<string, TransformData>   _transforms;
+
 
 
 

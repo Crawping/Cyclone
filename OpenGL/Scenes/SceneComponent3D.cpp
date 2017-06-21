@@ -59,6 +59,10 @@ namespace Cyclone
             Resources.Insert(&entity, &map);
             NeedsUpdate = true;
         }
+        void SceneComponent3D::Insert(Resource<IRenderable> entity)
+        {
+            
+        }
         void SceneComponent3D::Remove(const IRenderable& entity)
         {
             Resources.Remove(&entity);
