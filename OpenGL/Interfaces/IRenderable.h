@@ -16,6 +16,7 @@ namespace Cyclone
     namespace OpenGL
     {        
         /** FORWARD DECLARATIONS **/
+        struct IGraphicsSettings;
         class IMaterial;
         class IModel;
 
@@ -35,6 +36,8 @@ namespace Cyclone
                 virtual const IModel& Model()                       const = 0;
 
                 virtual const ISpatialTransform& Transform()        const = 0;
+
+                virtual const IGraphicsSettings* Settings()         const = 0;
 
 
 

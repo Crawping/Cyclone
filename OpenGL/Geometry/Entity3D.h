@@ -74,6 +74,7 @@ namespace Cyclone
 
                 const Model3D& Model()                                  const override { return _model; }
 
+                const IGraphicsSettings* Settings()                     const override { return &*_settings; }
                 const Transform3D& Transform()                          const override { return _transform; }
 
 
@@ -84,6 +85,8 @@ namespace Cyclone
                 OpenGLAPI virtual Entity3D& Material(const Material3D& value);
 
                 OpenGLAPI virtual Entity3D& Model(const Model3D& value);
+
+                OpenGLAPI virtual Entity3D& Settings(Resource<IGraphicsSettings> value);
 
                 OpenGLAPI virtual Entity3D& Transform(const Transform3D& value);
 
@@ -110,10 +113,11 @@ namespace Cyclone
             private:
                 
                 /** PROPERTY DATA **/
-                bool                _isVisible;
-                Material3D          _material;
-                Model3D             _model;
-                Transform3D         _transform;
+                bool                            _isVisible;
+                Material3D                      _material;
+                Model3D                         _model;
+                Resource<IGraphicsSettings>     _settings;
+                Transform3D                     _transform;
 
         };
     }

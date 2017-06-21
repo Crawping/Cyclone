@@ -76,6 +76,11 @@ namespace Cyclone
             _model = value;
             return *this;
         }
+        Entity3D& Entity3D::Settings(Resource<IGraphicsSettings> value)
+        {
+            _settings = value;
+            return *this;
+        }
         Entity3D& Entity3D::Transform(const Transform3D& value)
         {
             _transform = value;
