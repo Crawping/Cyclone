@@ -5,6 +5,8 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "GL/OpenGLAPI.h"
+#include "Interfaces/IGraphicsSettings.h"
+
 
 
 
@@ -21,7 +23,7 @@ namespace Cyclone
 
         
 
-        struct GraphicsSettings
+        struct GraphicsSettings: public virtual IGraphicsSettings
         {
             bool                IsBlendEnabled;
             bool                IsDepthTestEnabled;
@@ -45,7 +47,6 @@ namespace Cyclone
             {
 
             }
-            virtual ~GraphicsSettings() { }
 
         };
     }

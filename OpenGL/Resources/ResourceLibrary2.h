@@ -3,12 +3,13 @@
  */
 
 #pragma once
-#include "GraphicsSettings.h"
+//#include "GraphicsSettings.h"
 #include "Collections/BST.h"
 #include "Interfaces/ICallback.h"
 #include "Interfaces/IGeometric.h"
 #include "Interfaces/IGraphicsBuffer.h"
 #include "Interfaces/IGraphicsPipeline.h"
+#include "Interfaces/IGraphicsSettings.h"
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IModel.h"
 #include "Interfaces/IRenderable.h"
@@ -72,7 +73,7 @@ namespace Cyclone
                         Meta::IsA<T, IMaterial>()           ? _materials.Contains(name)     :
                         Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Contains(name)     :
                         Meta::IsA<T, IRenderable>()         ? _renderables.Contains(name)   : 
-                        Meta::IsA<T, GraphicsSettings>()    ? _settings.Contains(name)      :
+                        Meta::IsA<T, IGraphicsSettings>()   ? _settings.Contains(name)      :
                         Meta::IsA<T, ITexture>()            ? _textures.Contains(name)      : false;
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
@@ -99,7 +100,7 @@ namespace Cyclone
                     Meta::IsA<T, IMaterial>()           ? _materials.Remove(key)    :
                     Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Remove(key)    : 
                     Meta::IsA<T, IRenderable>()         ? _renderables.Remove(key)  : 
-                    Meta::IsA<T, GraphicsSettings>()    ? _settings.Remove(key)     : _textures.Remove(key);
+                    Meta::IsA<T, IGraphicsSettings>()   ? _settings.Remove(key)     : _textures.Remove(key);
 
                     delete value._value;
                 }
@@ -113,7 +114,7 @@ namespace Cyclone
                         Meta::IsA<T, IGeometric>()          ? Resource<T>(name, dynamic_cast<T*>(_geometry[name]))      :
                         Meta::IsA<T, IGraphicsPipeline>()   ? Resource<T>(name, dynamic_cast<T*>(_pipelines[name]))     :
                         Meta::IsA<T, IRenderable>()         ? Resource<T>(name, dynamic_cast<T*>(_renderables[name]))   : 
-                        Meta::IsA<T, GraphicsSettings>()    ? Resource<T>(name, dynamic_cast<T*>(_settings[name]))      :
+                        Meta::IsA<T, IGraphicsSettings>()   ? Resource<T>(name, dynamic_cast<T*>(_settings[name]))      :
                         Meta::IsA<T, ITexture>()            ? Resource<T>(name, dynamic_cast<T*>(_textures[name]))      : 
                         Resource<T>(name, nullptr);
                 }
@@ -143,7 +144,7 @@ namespace Cyclone
                 BST<string, IMaterial*>         _materials;
                 BST<string, IGraphicsPipeline*> _pipelines;
                 BST<string, IRenderable*>       _renderables;
-                BST<string, GraphicsSettings*>  _settings;
+                BST<string, IGraphicsSettings*> _settings;
                 BST<string, ITexture*>          _textures;
 
 
@@ -151,9 +152,9 @@ namespace Cyclone
                 /** UTILITIES **/
                 OpenGLAPI void Insert(const string& key, IGraphicsBuffer* value);
                 OpenGLAPI void Insert(const string& key, IGraphicsPipeline* value);
-                OpenGLAPI void Insert(const string& key, GraphicsSettings* value);
-                OpenGLAPI void Insert(const string& key, IMaterial* value);
+                OpenGLAPI void Insert(const string& key, IGraphicsSettings* value);
                 OpenGLAPI void Insert(const string& key, IGeometric* value);
+                OpenGLAPI void Insert(const string& key, IMaterial* value);
                 OpenGLAPI void Insert(const string& key, IRenderable* value);
                 OpenGLAPI void Insert(const string& key, ITexture* value);
 

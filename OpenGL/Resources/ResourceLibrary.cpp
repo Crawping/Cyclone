@@ -40,7 +40,7 @@ namespace Cyclone
         {
             _pipelines.Insert(key, value);
         }
-        void ResourceLibrary2::Insert(const string& key, GraphicsSettings* value)
+        void ResourceLibrary2::Insert(const string& key, IGraphicsSettings* value)
         {
             _settings.Insert(key, value);
         }
