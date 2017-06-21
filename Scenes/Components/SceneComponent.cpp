@@ -58,7 +58,7 @@ namespace Cyclone
             if (!Model().IsNull() && Model()->Intersects(line))     { return (IComponent*)this; }
 
             for (uint a = 0; a < _children.Count(); a++)
-                if (_children(a)->Intersects(line))     { return _children(a); }
+                if (_children(a)->Intersects(line))                 { return _children(a); }
 
             return nullptr;
         }
@@ -83,6 +83,12 @@ namespace Cyclone
             UpdateBounds();
         }
         void SceneComponent::UpdateBounds()
+        {
+
+        }
+
+
+        void SceneComponent::ProcessTransformUpdate(const IComponent& src, const ISpatialTransform& evt)
         {
 
         }

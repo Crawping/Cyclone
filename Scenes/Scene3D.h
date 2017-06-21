@@ -21,6 +21,15 @@ namespace Cyclone
         {
             public:
 
+                /** ALIASES **/
+                template<typename T, typename U>
+                using Callback = const ICallback<void, const T&, const U&>&;
+
+                template<typename T, typename U>
+                using Listener = Subscription<const T&, const U&>;
+
+
+
                 /** PROPERTIES **/
                 //using SceneComponent3D::Transform;
                 //const Scene3D& Parent()                         const override { return *this; }
@@ -44,16 +53,16 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                SceneAPI Subscription<const Scene3D&, const IComponent&>
-                    OnComponentInsertion(const ICallback<void, const Scene3D&, const IComponent&>& callback);
-                SceneAPI Subscription<const Scene3D&, const IComponent&>
-                    OnComponentRemoval(const ICallback<void, const Scene3D&, const IComponent&>& callback);
-                SceneAPI Subscription<const Scene3D&, Resource<IGeometric>>
-                    OnGeometryUpdate(const ICallback<void, const Scene3D&, Resource<IGeometric>>& callback);
-                //SceneAPI Subscription<const Scene3D&, const Transform3D&>
-                //    OnTransformUpdate(const ICallback<void, const Scene3D&, const Transform3D&>& callback);
-                SceneAPI Subscription<const Scene3D&, const Camera&>
-                    OnViewUpdate(const ICallback<void, const Scene3D&, const Camera&>& callback);
+
+
+
+                /** EVENTS **/
+                SceneAPI Listener<Scene3D, IComponent>                  OnComponentInsertion(Callback<Scene3D, IComponent> callback);
+                SceneAPI Listener<Scene3D, IComponent>                  OnComponentRemoval(Callback<Scene3D, IComponent> callback);
+                SceneAPI Listener<IComponent, Resource<IGeometric>>     OnGeometryUpdate(Callback<IComponent, Resource<IGeometric>> callback);
+                SceneAPI Listener<IComponent, IMaterial>                OnMaterialUpdate(Callback<IComponent, IMaterial> callback);
+                SceneAPI Listener<IComponent, ISpatialTransform>        OnTransformUpdate(Callback<IComponent, ISpatialTransform> callback);
+                SceneAPI Listener<Scene3D, Camera>                      OnViewUpdate(Callback<Scene3D, Camera> callback);
 
                 //template<typename T> Resource<T> Create(const string& name)
                 //{
@@ -83,18 +92,19 @@ namespace Cyclone
                 //{
 
                 //}
+                SceneAPI void ProcessTransformUpdate(const IComponent& src, const ISpatialTransform& evt) override;
 
             private:
 
                 //Transform3D     _transform;
                 Camera          _view;
 
-                using S3D = const Scene3D&;
-                Event<S3D, const IComponent&>       _onComponentInsertion;
-                Event<S3D, const IComponent&>       _onComponentRemoval;
-                Event<S3D, Resource<IGeometric>>    _onGeometryUpdate;
-                Event<S3D, const Transform3D&>      _onTransformUpdate;
-                Event<S3D, const Camera&>           _onViewUpdate;
+                Event<const Scene3D&, const IComponent&>                _onComponentInsertion;
+                Event<const Scene3D&, const IComponent&>                _onComponentRemoval;
+                Event<const IComponent&, const Resource<IGeometric>&>   _onGeometryUpdate;
+                Event<const IComponent&, const IMaterial&>              _onMaterialUpdate;
+                Event<const IComponent&, const ISpatialTransform&>      _onTransformUpdate;
+                Event<const Scene3D&, const Camera&>                    _onViewUpdate;
 
 
                 //VirtualMemory   _memory;

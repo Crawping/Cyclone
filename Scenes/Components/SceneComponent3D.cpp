@@ -11,25 +11,25 @@ namespace Cyclone
         SceneComponent3D& SceneComponent3D::Orientation(const Vector3& value)
         {
             _transform.Orientation(value);
-            _onTransformUpdate(*this, Transform());
+            //_onTransformUpdate(*this, Transform());
             return *this;
         }
         SceneComponent3D& SceneComponent3D::Position(const Vector3& value)
         {
             _transform.Position(value);
-            _onTransformUpdate(*this, Transform());
+            //_onTransformUpdate(*this, Transform());
             return *this;
         }
         SceneComponent3D& SceneComponent3D::Scale(const Vector3& value)
         {
             _transform.Scale(value);
-            _onTransformUpdate(*this, Transform());
+            //_onTransformUpdate(*this, Transform());
             return *this;
         }
         SceneComponent3D& SceneComponent3D::Transform(const Transform3D& value)
         {
             _transform = value;
-            _onTransformUpdate(*this, value);
+            //_onTransformUpdate(*this, value);
             return *this;
         }
 
@@ -74,15 +74,11 @@ namespace Cyclone
 
         }
 */
-
+        //Event<const IComponent&, const ISpatialTransform&> _onTransformUpdate;
 
 
         /** EVENTS **/
-        Subscription<const IComponent&, const ISpatialTransform&>
-            SceneComponent3D::OnTransformUpdate(const ICallback<void, const IComponent&, const ISpatialTransform&>& callback)
-        {
-            return _onTransformUpdate.Subscribe(callback);
-        }
+
 
 
 

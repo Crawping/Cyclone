@@ -48,8 +48,8 @@ namespace Cyclone
 
 
                 /** EVENTS **/
-                SceneAPI Subscription<const IComponent&, const ISpatialTransform&>
-                    OnTransformUpdate(const ICallback<void, const IComponent&, const ISpatialTransform&>& callback) override;
+                //SceneAPI Subscription<const IComponent&, const ISpatialTransform&>
+                //    OnTransformUpdate(const ICallback<void, const IComponent&, const ISpatialTransform&>& callback) override;
 
             protected:
                 
@@ -60,7 +60,7 @@ namespace Cyclone
                 Resource<Entity3D>      _model;
                 Transform3D             _transform;
 
-                Event<const IComponent&, const ISpatialTransform&> _onTransformUpdate;
+                
 
         };
     }

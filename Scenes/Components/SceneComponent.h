@@ -54,6 +54,9 @@ namespace Cyclone
                 SceneAPI void Remove(IComponent* child)                override;
                 SceneAPI void UpdateBounds();
 
+
+                SceneAPI void ProcessTransformUpdate(const IComponent& src, const ISpatialTransform& evt) override;
+
             private:
 
                 Volume                  _bounds;

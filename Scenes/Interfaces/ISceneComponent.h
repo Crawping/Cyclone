@@ -84,8 +84,8 @@ namespace Cyclone
 
 
                 /** EVENTS **/
-                virtual Subscription<const IComponent&, const ISpatialTransform&> 
-                    OnTransformUpdate(const ICallback<void, const IComponent&, const ISpatialTransform&>& callback) = 0;
+                //virtual Subscription<const IComponent&, const ISpatialTransform&> 
+                //    OnTransformUpdate(const ICallback<void, const IComponent&, const ISpatialTransform&>& callback) = 0;
                 
 
 
@@ -93,6 +93,8 @@ namespace Cyclone
 
                 virtual void Insert(IComponent* child)                 = 0;
                 virtual void Remove(IComponent* child)                 = 0;
+
+                virtual void ProcessTransformUpdate(const IComponent& src, const ISpatialTransform& evt) = 0;
 
 
 

@@ -23,6 +23,7 @@ namespace Cyclone
         }
 
 
+
         /** CONSTRUCTOR **/
         Scene3D::Scene3D()
             //SceneComponent3D(*this)
@@ -33,27 +34,36 @@ namespace Cyclone
 
 
         /** EVENTS **/
-        Subscription<const Scene3D&, const IComponent&>
-            Scene3D::OnComponentInsertion(const ICallback<void, const Scene3D&, const IComponent&>& callback)
+        Scene3D::Listener<Scene3D, IComponent> Scene3D::OnComponentInsertion(Callback<Scene3D, IComponent> callback)
         {
             return _onComponentInsertion.Subscribe(callback);
         }
-        Subscription<const Scene3D&, const IComponent&>
-            Scene3D::OnComponentRemoval(const ICallback<void, const Scene3D&, const IComponent&>& callback)
+        Scene3D::Listener<Scene3D, IComponent> Scene3D::OnComponentRemoval(Callback<Scene3D, IComponent> callback)
         {
             return _onComponentRemoval.Subscribe(callback);
         }
-        Subscription<const Scene3D&, Resource<IGeometric>>
-            Scene3D::OnGeometryUpdate(const ICallback<void, const Scene3D&, Resource<IGeometric>>& callback)
+        Scene3D::Listener<IComponent, Resource<IGeometric>> Scene3D::OnGeometryUpdate(Callback<IComponent, Resource<IGeometric>> callback)
         {
             return _onGeometryUpdate.Subscribe(callback);
         }
-
-        Subscription<const Scene3D&, const Camera&>
-            Scene3D::OnViewUpdate(const ICallback<void, const Scene3D&, const Camera&>& callback)
+        Scene3D::Listener<IComponent, IMaterial> Scene3D::OnMaterialUpdate(Callback<IComponent, IMaterial> callback)
+        {
+            return _onMaterialUpdate.Subscribe(callback);
+        }
+        Scene3D::Listener<IComponent, ISpatialTransform> Scene3D::OnTransformUpdate(Callback<IComponent, ISpatialTransform> callback)
+        {
+            return _onTransformUpdate.Subscribe(callback);
+        }
+        Scene3D::Listener<Scene3D, Camera> Scene3D::OnViewUpdate(Callback<Scene3D, Camera> callback)
         {
             return _onViewUpdate.Subscribe(callback);
         }
 
+
+
+        void Scene3D::ProcessTransformUpdate(const IComponent& src, const ISpatialTransform& evt)
+        {
+            _onTransformUpdate(src, evt);
+        }
     }
 }
