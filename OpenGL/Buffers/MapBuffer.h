@@ -85,12 +85,8 @@ namespace Cyclone
 
             protected:
 
-                const BST<T, U>& Data() const { return _data; }
-
                 /** CONSTRUCTOR **/
                 MapBuffer(BufferTypes type) : GraphicsBuffer(type) { }
-
-                virtual const U& Get(const T& key) const { return _data[key]; }
 
             private:
 
