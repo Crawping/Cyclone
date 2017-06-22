@@ -70,6 +70,7 @@ namespace Cyclone
                 {
                     return Contains<T>(hash(name));
                 }
+
                 template<typename T> bool Contains(uint key)            const
                 {
                     return
@@ -107,17 +108,13 @@ namespace Cyclone
                     Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Remove(key)    : 
                     Meta::IsA<T, IRenderable>()         ? _renderables.Remove(key)  : 
                     Meta::IsA<T, IGraphicsSettings>()   ? _settings.Remove(key)     : _textures.Remove(key);
-
-                    //delete value._value;
                 }
                 /// <summary> Acquires a particular graphics resource stored within the library. </summary>
-                template<typename T> Component<T> Get(const string& name)   const
-                {
-                    return Get<T>(hash(name));
-                }
+                template<typename T> Component<T> Get(const string& name)   const { return Get<T>(hash(name)); }
+
                 template<typename T> Component<T> Get(uint key)             const
                 {
-                    return Component<T>(key, Contains<T>(key) ? const_cast<T*>(Access<const T>(key)) : nullptr);
+                    return Component<T>(key, Contains<T>(key) ? const_cast<T*>(Access<T>(key)) : nullptr);
                 }
                 /// <summary> Checks an externally created resource into the library for management. </summary>
                 /// <returns> A resource handle that represents the inputted value. </returns>
@@ -147,7 +144,7 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                template<typename T> T* Access(uint key) const
+                template<typename T> const T* Access(uint key)  const
                 {
                     return
                         Meta::IsA<T, IGraphicsBuffer>()     ? dynamic_cast<T*>(&*_buffers[key])     :
