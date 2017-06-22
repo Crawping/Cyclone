@@ -37,9 +37,16 @@ namespace Cyclone
                     Data.Clear();
                     GraphicsBuffer::Clear();
                 }
-                /// <summary> Appends a data element to the end of the buffer array. </summary>
-                /// <param name="data"> A reference to the data element that will be added to the buffer. </param>
+                /// <summary> Inserts a value at the end of the buffer. </summary>
+                /// <param name="data"> The data element to be copied and inserted into the buffer. </param>
                 virtual void Append(const T& data)
+                {
+                    Data.Append(data);
+                    NeedsUpdate(true);
+                }
+                /// <summary> Inserts multiple values at the end of the buffer. </summary>
+                /// <param name="data"> A generic collection of data elements to be copied and inserted into the buffer. </param>
+                virtual void Append(const ICollection<T>& data)
                 {
                     Data.Append(data);
                     NeedsUpdate(true);
@@ -106,14 +113,12 @@ namespace Cyclone
                 /** OPERATORS **/
 		        virtual const T& operator ()(int index)        const { return Data(index); }
 
-
-
             protected:
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs an empty one-dimensional storage buffer whose data can be accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
-		        ArrayBuffer(BufferTypes type) : GraphicsBuffer(type) { }
+		        ArrayBuffer(BufferTypes type): GraphicsBuffer(type) { }
                 /// <summary> Constructs a one-dimensional storage buffer of a specified size whose data can accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
                 /// <param name="length"> The desired number of data elements to stored within the buffer. </param>
@@ -123,8 +128,6 @@ namespace Cyclone
                 {
                     Allocate();
                 }
-
-
 
             private:
 
