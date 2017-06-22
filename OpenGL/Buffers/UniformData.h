@@ -32,6 +32,15 @@ namespace Cyclone
             Vector3     CameraPosition;
             /// <summary> A time measurement provided by the application for use on the GPU. </summary>
             uint        Time;
+
+            bool operator ==(const PerFrame& other) const
+            {
+                return 
+                    (Projection == other.Projection)            &&
+                    (View == other.View)                        &&
+                    (CameraPosition == other.CameraPosition)    &&
+                    (Time == other.Time);
+            }
         };
 
 

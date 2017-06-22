@@ -36,6 +36,14 @@ namespace Cyclone
             /// <summary> The position of the first entity data structure within the per-entity buffer. </summary>
             uint FirstInstance;
 
+            constexpr DrawCommand():
+                VertexCount(0),
+                InstanceCount(0),
+                FirstVertex(0),
+                FirstInstance(0)
+            {
+
+            }
             constexpr DrawCommand(uint nVertices, uint nInstances, uint firstIndex, uint firstVertex, uint firstInstance) :
                 VertexCount(nVertices),
                 InstanceCount(nInstances),
@@ -43,6 +51,15 @@ namespace Cyclone
                 FirstInstance(firstInstance)
             {
 
+            }
+
+            constexpr bool operator ==(const DrawCommand& other) const
+            {
+                return 
+                    (VertexCount == other.VertexCount)      &&
+                    (InstanceCount == other.InstanceCount)  &&
+                    (FirstVertex == other.FirstVertex)      &&
+                    (FirstInstance == other.FirstInstance);
             }
         };
 
@@ -71,6 +88,15 @@ namespace Cyclone
             /// <summary> The position of the first entity data structure within the per-entity buffer. </summary>
             uint FirstInstance;
 
+            constexpr IndexedDrawCommand():
+                VertexCount(0),
+                InstanceCount(0),
+                FirstIndex(0),
+                FirstVertex(0),
+                FirstInstance(0)
+            {
+
+            }
             constexpr IndexedDrawCommand(uint nVertices, uint nInstances, uint firstIndex, uint firstVertex, uint firstInstance) :
                 VertexCount(nVertices),
                 InstanceCount(nInstances),
@@ -79,6 +105,16 @@ namespace Cyclone
                 FirstInstance(firstInstance)
             {
 
+            }
+
+            constexpr bool operator ==(const IndexedDrawCommand& other) const
+            {
+                return 
+                    (VertexCount == other.VertexCount)      &&
+                    (InstanceCount == other.InstanceCount)  &&
+                    (FirstIndex == other.FirstIndex)        &&
+                    (FirstVertex == other.FirstVertex)      &&
+                    (FirstInstance == other.FirstInstance);
             }
         };
 

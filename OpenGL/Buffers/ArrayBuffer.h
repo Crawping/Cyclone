@@ -4,8 +4,9 @@
 
 #pragma once
 #include "EnumerationsGL.h"
+#include "Collections/ArrayList.h"
 #include "Buffers/GraphicsBuffer.h"
-#include <vector>
+//#include <vector>
 
 
 
@@ -13,6 +14,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        using namespace Utilities;
 
         template<typename T>
         class ArrayBuffer : public GraphicsBuffer
@@ -21,7 +23,7 @@ namespace Cyclone
 
                 /** PROPERTIES **/
 		        /// <summary> Gets the number of individual elements stored within this buffer. </summary>
-		        virtual uint Count()            const override { return Data.size(); }
+		        virtual uint Count()            const override { return Data.Count(); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
 		        virtual ulong Stride()          const override { return sizeof(T); }
 
@@ -32,14 +34,14 @@ namespace Cyclone
 		        virtual void Clear()                        override
                 {
                     if (IsEmpty()) { return; }
-                    Data.clear();
+                    Data.Clear();
                     GraphicsBuffer::Clear();
                 }
                 /// <summary> Appends a data element to the end of the buffer array. </summary>
                 /// <param name="data"> A reference to the data element that will be added to the buffer. </param>
                 virtual void Append(const T& data)
                 {
-                    Data.push_back(data);
+                    Data.Append(data);
                     NeedsUpdate(true);
                 }
                 /// <summary> Removes the data element at a specific array index from the GPU buffer. </summary>
@@ -47,7 +49,7 @@ namespace Cyclone
                 virtual void Remove(uint index)
                 {
                     if (index >= Count()) { return; }
-                    Data.erase(Data.begin() + index);
+                    Data.Remove(index);
                     NeedsUpdate(true);
                 }
                 /// <summary> Writes the contents of a single data element to the application-side memory held by this buffer. </summary>
@@ -70,11 +72,18 @@ namespace Cyclone
 		        /// </remarks>
 		        virtual void Set(uint index, const T& data)
                 {
-                    if (index == Count())
+                    if (index >= Count())
                         return Append(data);
                     else
-                        Data[index] = data;
+                        Data(index) = data;
 
+                    NeedsUpdate(true);
+                }
+
+                virtual void Set(uint index, const ICollection<T>& data)
+                {
+                    for (uint a = 0; a < data.Count(); a++)
+                        Data(index + a) = data(a);
                     NeedsUpdate(true);
                 }
 		        /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
@@ -87,7 +96,7 @@ namespace Cyclone
                     T* handles = (T*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
                     if (handles)
                         for (uint a = 0; a < Count(); a++)
-                            handles[a] = Data[a];
+                            handles[a] = Data(a);
 
                     GraphicsBuffer::Unmap();
                 }
@@ -95,7 +104,7 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
-		        virtual const T& operator ()(int index)        const { return Data[index]; }
+		        virtual const T& operator ()(int index)        const { return Data(index); }
 
 
 
@@ -121,7 +130,7 @@ namespace Cyclone
 
 		        /** PRIVATE DATA **/
 		        /// <summary> A copy of the data in the GPU buffer that is held in system memory. </summary>
-		        std::vector<T> Data;
+		        ArrayList<T> Data;
 
         };
     }
