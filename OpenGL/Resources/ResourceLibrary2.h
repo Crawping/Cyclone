@@ -50,7 +50,6 @@ namespace Cyclone
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 OpenGLAPI ResourceLibrary2();
                 ResourceLibrary2(const ResourceLibrary2& other)         = delete;
-                OpenGLAPI ~ResourceLibrary2();
 
 
 

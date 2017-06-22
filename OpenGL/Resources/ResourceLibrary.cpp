@@ -21,10 +21,6 @@ namespace Cyclone
             Insert("Null", (IGraphicsSettings*)nullptr);
             Insert("Null", (ITexture*)nullptr);
         }
-        ResourceLibrary2::~ResourceLibrary2()
-        {
-
-        }
 
 
 
