@@ -3,8 +3,8 @@
  */
 
 #pragma once
-#include "AdvancedRenderer.h"
-#include "Scenes/SceneComponent2D.h"
+//#include "AdvancedRenderer.h"
+//#include "Scenes/SceneComponent2D.h"
 
 
 
@@ -12,34 +12,34 @@ namespace Cyclone
 {
     namespace Renderers
     {
-        namespace { using namespace Cyclone::SVG; }
-        class PathRenderer : public AdvancedRenderer
-        {
-            public:
+        //namespace { using namespace Cyclone::SVG; }
+        //class PathRenderer : public AdvancedRenderer
+        //{
+        //    public:
 
-                RendererAPI ~PathRenderer();
+        //        RendererAPI ~PathRenderer();
 
-            protected:
+        //    protected:
 
-                SceneComponent2D*   PathScene;
-                ShaderPipeline*     PipelineSVG;
-
-
-
-                /** CONSTRUCTOR **/
-                RendererAPI PathRenderer(const Area& displayArea, const string& title);
+        //        SceneComponent2D*   PathScene;
+        //        ShaderPipeline*     PipelineSVG;
 
 
 
-                /** INITIALIZATION UTILITIES **/
-                RendererAPI virtual void CreateSceneResources() override;
-                RendererAPI virtual void CreateShaderPipeline() override;
+        //        /** CONSTRUCTOR **/
+        //        RendererAPI PathRenderer(const Area& displayArea, const string& title);
 
 
 
-                /** RENDERING UTILITIES **/
-                RendererAPI virtual void UpdateScene() override;
+        //        /** INITIALIZATION UTILITIES **/
+        //        RendererAPI virtual void CreateSceneResources() override;
+        //        RendererAPI virtual void CreateShaderPipeline() override;
 
-        };
+
+
+        //        /** RENDERING UTILITIES **/
+        //        RendererAPI virtual void UpdateScene() override;
+
+        //};
     }
 }

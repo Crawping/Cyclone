@@ -161,9 +161,6 @@
     <ProjectReference Include="..\Platform\Platform.vcxproj">
       <Project>{370c8556-be34-4242-a8e1-8ed733d0a50e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\SVG\SVG.vcxproj">
-      <Project>{5f6fcd7f-8a86-4c08-bb2a-104e876f48bb}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
       <Project>{e94e40bd-4cf8-4fb8-a897-be777c5cf16a}</Project>
     </ProjectReference>
