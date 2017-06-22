@@ -158,7 +158,6 @@
     <ClInclude Include="Buffers\GraphicsBuffer.h" />
     <ClInclude Include="Buffers\IndexBuffer.h" />
     <ClInclude Include="Buffers\MapBuffer.h" />
-    <ClInclude Include="Buffers\RegistryBuffer.h" />
     <ClInclude Include="Buffers\UniformBuffer.h" />
     <ClInclude Include="Buffers\UniformData.h" />
     <ClInclude Include="Buffers\UniformMap.h" />

@@ -78,9 +78,6 @@
     <ClInclude Include="Textures\GradientTexture.h">
       <Filter>Textures</Filter>
     </ClInclude>
-    <ClInclude Include="Buffers\RegistryBuffer.h">
-      <Filter>Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\Material3D.h">
       <Filter>Libraries</Filter>
     </ClInclude>
