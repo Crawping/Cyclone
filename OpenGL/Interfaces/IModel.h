@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Resources/Resource.h"
 
 
 
@@ -26,6 +27,8 @@ namespace Cyclone
                 virtual bool IsEmpty()                          const = 0;
                 /// <summary> Gets the transformation that converts between local and model space. </summary>
                 virtual const ISpatialTransform& Transform()    const = 0;
+
+                virtual ~IModel() { }
 
         };
     }
