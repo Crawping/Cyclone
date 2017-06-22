@@ -6,7 +6,7 @@
 #include "Buffers/VertexBuffer.h"
 #include "Geometry/Entity3D.h"
 #include "Models/Model3D.h"
-#include "Resources/ResourceLibrary2.h"
+#include "Resources/ResourceLibrary.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
 
@@ -66,7 +66,7 @@ namespace Cyclone
             Component<Entity3D>         Icosahedron;
             Component<Entity3D>         PlaneXZ;
 
-            ResourceLibrary2            Resources;
+            ResourceLibrary             Resources;
             
 
 

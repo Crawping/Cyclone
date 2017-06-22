@@ -183,7 +183,6 @@
     <ClInclude Include="Interfaces\IScene.h" />
     <ClInclude Include="Interfaces\ITexture.h" />
     <ClInclude Include="Libraries\Material3D.h" />
-    <ClInclude Include="Libraries\ResourceLibrary.h" />
     <ClInclude Include="Models\Model3D.h" />
     <ClInclude Include="Models\Point3D.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
@@ -193,7 +192,7 @@
     <ClInclude Include="Pipelines\Shader.h" />
     <ClInclude Include="Pipelines\ShaderPipeline.h" />
     <ClInclude Include="Resources\Resource.h" />
-    <ClInclude Include="Resources\ResourceLibrary2.h" />
+    <ClInclude Include="Resources\ResourceLibrary.h" />
     <ClInclude Include="Resources\Specializations\UniqueResource.h" />
     <ClInclude Include="Scenes\Scene3D.h" />
     <ClInclude Include="Scenes\SceneComponent.h" />

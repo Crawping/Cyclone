@@ -78,9 +78,6 @@
     <ClInclude Include="Textures\GradientTexture.h">
       <Filter>Textures</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\ResourceLibrary.h">
-      <Filter>Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\RegistryBuffer.h">
       <Filter>Buffers</Filter>
     </ClInclude>
@@ -141,9 +138,6 @@
     <ClInclude Include="Resources\Resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Resources\ResourceLibrary2.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IGraphicsPipeline.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -152,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="Resources\Specializations\UniqueResource.h">
       <Filter>Resources\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceLibrary.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

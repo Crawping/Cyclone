@@ -9,7 +9,6 @@
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
 #include "Collections/BST.h"
-#include "Libraries/ResourceLibrary.h"
 #include "Scenes/SceneComponent3D.h"
 
 

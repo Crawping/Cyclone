@@ -20,7 +20,7 @@ namespace Cyclone
         /// <typeparam name="T"> The type of the resource referred to by this handle. </typeparam>
         template<typename T> struct Resource<T, true>
         {
-            friend class ResourceLibrary2;
+            friend class ResourceLibrary;
             private:
 
                 /** DATA **/
