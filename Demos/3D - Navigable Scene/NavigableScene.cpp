@@ -59,19 +59,25 @@ class Program : public AdvancedRenderer
             Vector2 szWin   = RenderWindow->Size();
 
             Cube->
-                 Geometry(cube)
-                .PrimaryColor(Color4(0.0f, 0.5f, 0.5f, 0.25f))
+                 Material(Create<Material3D>("Cube"))
+                .Model(Create<Model3D>("Cube"))
+                .Geometry(cube)
+                .PrimaryColor(Color4(0.0f, 0.5f, 0.5f))
                 .Translate(Vector3(ctrWin - (szWin / 8.0f), 50))
                 .Scale(100, 100, 100);
 
             Cylinder->
-                 Geometry(cyl)
-                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f, 0.25f))
+                 Material(Create<Material3D>("Cylinder"))
+                .Model(Create<Model3D>("Cylinder"))
+                .Geometry(cyl)
+                .PrimaryColor(Color4(0.0f, 0.75f, 1.0f))
                 .Translate(Vector3(ctrWin + (szWin / Vector2(8.0f, -8.0f)), 50))
                 .Scale(50, 125, 50);
 
             Icosahedron->
-                 Geometry(icos)
+                 Material(Create<Material3D>("Icosahedron"))
+                .Model(Create<Model3D>("Icosahedron"))
+                .Geometry(icos)
                 .PrimaryColor(Color4::Magenta)
                 .Translate(Vector3(ctrWin + (szWin / 8.0f), 50))
                 .Scale(100, 100, 100);
@@ -81,9 +87,9 @@ class Program : public AdvancedRenderer
             //    .Scale(100, 100, 1)
             //    .Translate(Vector3(ctrWin + (szWin / Vector2(-8.0f, 8.0f))));
 
-            RenderScene->Insert(*Cube);
-            RenderScene->Insert(*Cylinder);
-            RenderScene->Insert(*Icosahedron);
+            RenderScene->Insert(Cube);
+            RenderScene->Insert(Cylinder);
+            RenderScene->Insert(Icosahedron);
             //RenderScene->Insert(Point);
         }
         void UpdateScene() override
@@ -93,9 +99,9 @@ class Program : public AdvancedRenderer
             Icosahedron->Rotate(Vector3(0.01f, 0.0f, 0.0f));
             //Point.Rotate(Vector3(0.01f));                       // <-- Points can only be scaled and translated, so this has no effect.
 
-            RenderScene->Update(*Cube);
-            RenderScene->Update(*Cylinder);
-            RenderScene->Update(*Icosahedron);
+            RenderScene->Update(Cube);
+            RenderScene->Update(Cylinder);
+            RenderScene->Update(Icosahedron);
             //RenderScene->Update(Point);
 
             AdvancedRenderer::UpdateScene();
