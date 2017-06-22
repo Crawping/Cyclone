@@ -24,7 +24,7 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class ResourceLibrary2
+        class ResourceLibrary
         {
             public:
 
@@ -48,8 +48,8 @@ namespace Cyclone
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                OpenGLAPI ResourceLibrary2();
-                ResourceLibrary2(const ResourceLibrary2& other)         = delete;
+                OpenGLAPI ResourceLibrary();
+                ResourceLibrary(const ResourceLibrary& other)         = delete;
 
 
 

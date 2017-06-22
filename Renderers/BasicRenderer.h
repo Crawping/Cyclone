@@ -7,7 +7,7 @@
 #include "TypeDefinitions.h"
 #include "Window3D.h"
 #include "Imaging/Color4.h"
-#include "Resources/ResourceLibrary2.h"
+#include "Resources/ResourceLibrary.h"
 #include "Spatial/Area.h"
 #include "Spatial/Camera.h"
 #include "Spatial/Transform.h"
@@ -149,7 +149,7 @@ namespace Cyclone
             private:
 
                 bool                _canContinue;
-                ResourceLibrary2    _resources;
+                ResourceLibrary     _resources;
 
         };
 

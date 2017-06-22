@@ -7,7 +7,7 @@
 #include "IO/Members.h"
 #include "Libraries/Material3D.h"
 #include "Resources/Resource.h"
-#include "Resources/ResourceLibrary2.h"
+#include "Resources/ResourceLibrary.h"
 #include "Textures/Texture3D.h"
 #include <gtest/gtest.h>
 
@@ -19,7 +19,7 @@ class _Resource: public testing::Test
 {
     protected:
 
-        ResourceLibrary2        _l0;
+        ResourceLibrary         _l0;
 
         Resource<Mesh3D>        _g0;
         Resource<Mesh3D>        _g1;

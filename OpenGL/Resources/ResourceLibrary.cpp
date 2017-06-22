@@ -1,5 +1,5 @@
 #include "Utilities.h"
-#include "Resources/ResourceLibrary2.h"
+#include "Resources/ResourceLibrary.h"
 
 
 
@@ -9,7 +9,7 @@ namespace Cyclone
     {
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        ResourceLibrary2::ResourceLibrary2()
+        ResourceLibrary::ResourceLibrary()
         {
             uint idNull = hash("Null");
             Insert("Null", (IGraphicsBuffer*)nullptr);
@@ -25,35 +25,35 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        void ResourceLibrary2::Insert(const string& key, IGraphicsBuffer* value)
+        void ResourceLibrary::Insert(const string& key, IGraphicsBuffer* value)
         {
             _buffers.Insert(hash(key), std::move(Resource<IGraphicsBuffer, true>(key, value)));
         }
-        void ResourceLibrary2::Insert(const string& key, IGraphicsPipeline* value)
+        void ResourceLibrary::Insert(const string& key, IGraphicsPipeline* value)
         {
             _pipelines.Insert(hash(key), std::move(Resource<IGraphicsPipeline, true>(key, value)));
         }
-        void ResourceLibrary2::Insert(const string& key, IGraphicsSettings* value)
+        void ResourceLibrary::Insert(const string& key, IGraphicsSettings* value)
         {
             _settings.Insert(hash(key), std::move(Resource<IGraphicsSettings, true>(key, value)));
         }
-        void ResourceLibrary2::Insert(const string& key, IMaterial* value)
+        void ResourceLibrary::Insert(const string& key, IMaterial* value)
         {
             _materials.Insert(hash(key), std::move(Resource<IMaterial, true>(key, value)));
         }
-        void ResourceLibrary2::Insert(const string& key, IModel* value)
+        void ResourceLibrary::Insert(const string& key, IModel* value)
         {
             _models.Insert(hash(key), std::move(Resource<IModel, true>(key, value)));
         }
-        void ResourceLibrary2::Insert(const string& key, IGeometric* value)
+        void ResourceLibrary::Insert(const string& key, IGeometric* value)
         {
             _geometry.Insert(hash(key), std::move(Resource<IGeometric, true>(key, value)));
         }
-        void ResourceLibrary2::Insert(const string& key, IRenderable* value)
+        void ResourceLibrary::Insert(const string& key, IRenderable* value)
         {
             _renderables.Insert(hash(key), std::move(Resource<IRenderable, true>(key, value)));
         }
-        void ResourceLibrary2::Insert(const string& key, ITexture* value)
+        void ResourceLibrary::Insert(const string& key, ITexture* value)
         {
             _textures.Insert(hash(key), std::move(Resource<ITexture, true>(key, value)));
         }

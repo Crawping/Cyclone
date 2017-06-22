@@ -6,7 +6,7 @@
 #include "Geometry/Mesh3D.h"
 #include "IO/Functions.h"
 #include "Libraries/Material3D.h"
-#include "Resources/ResourceLibrary2.h"
+#include "Resources/ResourceLibrary.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::OpenGL;
@@ -18,7 +18,7 @@ class _ResourceLibrary: public testing::Test
 {
     protected:
 
-        ResourceLibrary2 _l0;
+        ResourceLibrary _l0;
 
 
         _ResourceLibrary()

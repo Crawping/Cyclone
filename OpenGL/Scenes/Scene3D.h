@@ -6,7 +6,6 @@
 #include "Buffers/UniformData.h"
 #include "GL/OpenGLAPI.h"
 #include "Libraries/Material3D.h"
-#include "Libraries/ResourceLibrary.h"
 #include "Scenes/SceneLayer3D.h"
 
 
@@ -20,14 +19,16 @@ namespace Cyclone
 
         struct ResourceMapping
         {
-            uint EntityID;
-            uint GeometryID;
+            //uint EntityID;
+            //uint GeometryID;
             uint IndicesCount;
             uint IndicesIndex;
-            uint MaterialID;
-            uint TransformID;
+            //uint MaterialID;
+            //uint TransformID;
             uint VertexCount;
             uint VertexIndex;
+
+
 
             //RegistryKey<EntityData>     EntityKey;
             //RegistryKey<MaterialData>   MaterialKey;
