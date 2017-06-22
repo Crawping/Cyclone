@@ -3,7 +3,6 @@
  */
 
 #pragma once
-//#include "GraphicsSettings.h"
 #include "Utilities.h"
 #include "Collections/BST.h"
 #include "Interfaces/ICallback.h"
@@ -14,6 +13,7 @@
 #include "Interfaces/IMaterial.h"
 #include "Interfaces/IModel.h"
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/IRenderStage.h"
 #include "Interfaces/ITexture.h"
 #include "Meta/Utilities.h"
 #include "Resources/Resource.h"
@@ -43,6 +43,7 @@ namespace Cyclone
                 uint PipelineCount()    const { return _pipelines.Count() - 1; }
                 uint RenderableCount()  const { return _renderables.Count() - 1; }
                 uint SettingsCount()    const { return _settings.Count() - 1; }
+                uint StageCount()       const { return _stages.Count() - 1; }
                 uint TextureCount()     const { return _textures.Count() - 1; }
                 
 
@@ -81,6 +82,7 @@ namespace Cyclone
                         Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Contains(key)      :
                         Meta::IsA<T, IRenderable>()         ? _renderables.Contains(key)    :
                         Meta::IsA<T, IGraphicsSettings>()   ? _settings.Contains(key)       :
+                        Meta::IsA<T, IRenderStage>()        ? _stages.Contains(key)         : 
                         Meta::IsA<T, ITexture>()            ? _textures.Contains(key)       : false;
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
@@ -109,7 +111,8 @@ namespace Cyclone
                     Meta::IsA<T, IModel>()              ? _models.Remove(key)       :
                     Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Remove(key)    : 
                     Meta::IsA<T, IRenderable>()         ? _renderables.Remove(key)  : 
-                    Meta::IsA<T, IGraphicsSettings>()   ? _settings.Remove(key)     : _textures.Remove(key);
+                    Meta::IsA<T, IGraphicsSettings>()   ? _settings.Remove(key)     : 
+                    Meta::IsA<T, IRenderStage>()        ? _stages.Remove(key)       : _textures.Remove(key);
                 }
                 /// <summary> Acquires a particular graphics resource stored within the library. </summary>
                 template<typename T> Resource<T> Get(const string& name)    const { return Get<T>(hash(name)); }
@@ -142,6 +145,7 @@ namespace Cyclone
                 BST<uint, UniqueResource<IGraphicsPipeline>>    _pipelines;
                 BST<uint, UniqueResource<IRenderable>>          _renderables;
                 BST<uint, UniqueResource<IGraphicsSettings>>    _settings;
+                BST<uint, UniqueResource<IRenderStage>>         _stages;
                 BST<uint, UniqueResource<ITexture>>             _textures;
 
 
@@ -156,17 +160,19 @@ namespace Cyclone
                         Meta::IsA<T, IModel>()              ? dynamic_cast<const T*>(&*_models[key])      :
                         Meta::IsA<T, IGraphicsPipeline>()   ? dynamic_cast<const T*>(&*_pipelines[key])   :
                         Meta::IsA<T, IRenderable>()         ? dynamic_cast<const T*>(&*_renderables[key]) :
+                        Meta::IsA<T, IRenderStage>()        ? dynamic_cast<const T*>(&*_stages[key])      : 
                         Meta::IsA<T, IGraphicsSettings>()   ? dynamic_cast<const T*>(&*_settings[key])    : 
                         dynamic_cast<const T*>(&*_textures[key]);
                 }
 
                 OpenGLAPI void Insert(const string& key, IGraphicsBuffer* value);
-                OpenGLAPI void Insert(const string& key, IGraphicsPipeline* value);
-                OpenGLAPI void Insert(const string& key, IGraphicsSettings* value);
                 OpenGLAPI void Insert(const string& key, IGeometric* value);
                 OpenGLAPI void Insert(const string& key, IMaterial* value);
                 OpenGLAPI void Insert(const string& key, IModel* value);
+                OpenGLAPI void Insert(const string& key, IGraphicsPipeline* value);
                 OpenGLAPI void Insert(const string& key, IRenderable* value);
+                OpenGLAPI void Insert(const string& key, IGraphicsSettings* value);
+                OpenGLAPI void Insert(const string& key, IRenderStage* value);
                 OpenGLAPI void Insert(const string& key, ITexture* value);
 
         };
