@@ -42,7 +42,10 @@ namespace Cyclone
                     _data.Clear();
                     NeedsUpdate(true);
                 }
-
+                virtual uint IndexOf(const T& key)              const
+                {
+                    return _data.IndexOf(key);
+                }
                 virtual void Set(const T& key, const U& value)
                 {
                     _data.Insert(key, value);
