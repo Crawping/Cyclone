@@ -27,7 +27,7 @@ namespace Cyclone
 
                 /** MODEL PROPERTIES **/
                 /// <summary> Gets the data that define the spatial properties of the entity. </summary>
-                const Geometry3D& Geometry()                            const { return Model().Geometry(); }
+                Resource<Geometry3D> Geometry()                         const { return Model()->Geometry(); }
                 /// <summary> Gets the orientation of the entity in world space. </summary>
                 const Vector3& Orientation()                            const override { return _transform.Orientation(); }    
                 const Vector3& Position()                               const override { return _transform.Orientation(); }
@@ -41,18 +41,18 @@ namespace Cyclone
 
 
                 /** MATERIAL PROPERTIES **/
-                virtual float Ambience()                                const { return Material().Ambience(); }
+                virtual float Ambience()                                const { return Material()->Ambience(); }
                 /// <summary> Gets a reference to the primary color of the entity. </summary>
-                virtual const Color4& PrimaryColor()                    const { return Material().PrimaryColor(); }
+                virtual const Color4& PrimaryColor()                    const { return Material()->PrimaryColor(); }
                 /// <summary> Gets a reference to the secondary color of the entity. </summary>
-                virtual const Color4& SecondaryColor()                  const { return Material().SecondaryColor(); }
+                virtual const Color4& SecondaryColor()                  const { return Material()->SecondaryColor(); }
 
-                virtual float SpecularPower()                           const { return Material().SpecularPower(); }
+                virtual float SpecularPower()                           const { return Material()->SpecularPower(); }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
 		        //virtual const Texture3D* Texture()                      const { return Material().Texture(); }
                 //virtual Component<Texture3D> Texture()                   const { return Material().Texture(); }
                 //virtual Component<ITexture> Texture()                    const { return Material().Texture(); }
-                virtual const ITexture* Texture()                       const { return Material().Texture(); }
+                virtual const ITexture* Texture()                       const { return Material()->Texture(); }
 
                 OpenGLAPI virtual Entity3D& Ambience(float value);
                 /// <summary> Sets the primary color of the entity. </summary>
@@ -70,11 +70,12 @@ namespace Cyclone
                 /// <summary> Gets whether the entity is visible in the rendered environment. </summary>
                 bool IsVisible()                                        const override { return _isVisible; }
                 /// <summary> Gets the material used to style the entity in the rendered environment. </summary>
-                const Material3D& Material()                            const override { return _material; }
+                Resource<IMaterial> Material()                          const override { return _material; }
 
-                const Model3D& Model()                                  const override { return _model; }
+                Resource<IModel> Model()                                const override { return _model; }
 
-                const IGraphicsSettings* Settings()                     const override { return &*_settings; }
+                //const IGraphicsSettings* Settings()                     const override { return &*_settings; }
+                Resource<IGraphicsSettings> Settings()                  const override { return _settings; }
                 const Transform3D& Transform()                          const override { return _transform; }
 
 
@@ -82,11 +83,11 @@ namespace Cyclone
                 /// <summary> Sets whether the entity is visible in a rendered environment. </summary>
                 OpenGLAPI virtual Entity3D& IsVisible(bool value);
                 /// <summary> Sets the material used to style the entity in the rendered environment. </summary>
-                OpenGLAPI virtual Entity3D& Material(const Material3D& value);
+                OpenGLAPI virtual Entity3D& Material(Resource<Material3D> value);
 
-                OpenGLAPI virtual Entity3D& Model(const Model3D& value);
+                OpenGLAPI virtual Entity3D& Model(Resource<Model3D> value);
 
-                OpenGLAPI virtual Entity3D& Settings(Component<IGraphicsSettings> value);
+                OpenGLAPI virtual Entity3D& Settings(Resource<IGraphicsSettings> value);
 
                 OpenGLAPI virtual Entity3D& Transform(const Transform3D& value);
 
@@ -98,7 +99,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 Entity3D(): _isVisible(true) { }
-                Entity3D(const Model3D& model):
+                Entity3D(Resource<Model3D> model):
                     _isVisible(true),
                     _model(model)
                 {
@@ -114,9 +115,9 @@ namespace Cyclone
                 
                 /** PROPERTY DATA **/
                 bool                            _isVisible;
-                Material3D                      _material;
-                Model3D                         _model;
-                Component<IGraphicsSettings>     _settings;
+                Resource<Material3D>            _material;
+                Resource<Model3D>               _model;
+                Resource<IGraphicsSettings>     _settings;
                 Transform3D                     _transform;
 
         };

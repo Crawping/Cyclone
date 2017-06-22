@@ -10,7 +10,7 @@ namespace Cyclone
         /** GEOMETRY PROPERTIES **/
         Entity3D& Entity3D::Geometry(Component<Geometry3D> value)
         {
-            _model.Geometry(value);
+            _model->Geometry(value);
             return *this;
         }
         Entity3D& Entity3D::Orientation(const Vector3& value)
@@ -66,12 +66,12 @@ namespace Cyclone
             _isVisible = value;
             return *this;
         }
-        Entity3D& Entity3D::Material(const Material3D& value)
+        Entity3D& Entity3D::Material(Resource<Material3D> value)
         {
             _material = value;
             return *this;
         }
-        Entity3D& Entity3D::Model(const Model3D& value)
+        Entity3D& Entity3D::Model(Resource<Model3D> value)
         {
             _model = value;
             return *this;

@@ -24,7 +24,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 virtual const Volume& Bounds()              const { return _geometry->Bounds(); }
                 /// <summary> Gets the geometric data that define the shape of the mesh. </summary>
-                const Geometry3D& Geometry()                const override { return *_geometry; }
+                Resource<IGeometric> Geometry()             const override { return _geometry; }
 
                 const Vector3& Orientation()                const override { return _transform.Orientation(); }
                 const Vector3& Position()                   const override { return _transform.Position(); }
@@ -46,12 +46,12 @@ namespace Cyclone
                 OpenGLAPI Model3D();
                 /// <summary> Constructs a new 3D mesh that is initialized with pre-defined geometric data. </summary>
                 /// <param name="geometry"> An existing 3D geometry data object. </param>
-                OpenGLAPI Model3D(Component<Geometry3D> geometry);
+                OpenGLAPI Model3D(Resource<Geometry3D> geometry);
 
             private:
             
                 /** DATA **/
-                Component<Geometry3D>    _geometry;
+                Resource<Geometry3D>    _geometry;
                 Transform3D             _transform;
 
         };

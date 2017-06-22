@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Resources/Resource.h"
 
 
 
@@ -31,13 +32,13 @@ namespace Cyclone
                 /// <summary> Gets whether the renderable entity is currently visible in a scene. </summary>
                 virtual bool IsVisible()                            const = 0;
                 /// <summary> Gets the material associated with the renderable entity. </summary>
-                virtual const IMaterial& Material()                 const = 0;
+                virtual Resource<IMaterial> Material()              const = 0;
                 /// <summary> Gets the data that define the spatial properties of a renderable entity. </summary>
-                virtual const IModel& Model()                       const = 0;
+                virtual Resource<IModel> Model()                    const = 0;
 
                 virtual const ISpatialTransform& Transform()        const = 0;
 
-                virtual const IGraphicsSettings* Settings()         const = 0;
+                virtual Resource<IGraphicsSettings> Settings()      const = 0;
 
 
 

@@ -20,15 +20,19 @@ namespace Cyclone
 
         struct ResourceMapping
         {
+            uint EntityID;
+            uint GeometryID;
             uint IndicesCount;
             uint IndicesIndex;
+            uint MaterialID;
+            uint TransformID;
             uint VertexCount;
             uint VertexIndex;
 
-            RegistryKey<EntityData>     EntityKey;
-            RegistryKey<MaterialData>   MaterialKey;
-            PointTopologies             Topology;
-            RegistryKey<TransformData>  TransformKey;
+            //RegistryKey<EntityData>     EntityKey;
+            //RegistryKey<MaterialData>   MaterialKey;
+            //PointTopologies             Topology;
+            //RegistryKey<TransformData>  TransformKey;
         };
 
 

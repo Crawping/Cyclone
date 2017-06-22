@@ -21,9 +21,9 @@ namespace Cyclone
         {
             public:
                 
-                virtual const IGeometric& Geometry()            const = 0;
+                virtual Resource<IGeometric> Geometry()         const = 0;
                 /// <summary> Gets whether the model has any geometric data. </summary>
-                virtual bool IsEmpty()                          const { return Geometry().IsEmpty(); }
+                virtual bool IsEmpty()                          const = 0;
                 /// <summary> Gets the transformation that converts between local and model space. </summary>
                 virtual const ISpatialTransform& Transform()    const = 0;
 

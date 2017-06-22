@@ -97,9 +97,44 @@ namespace Cyclone
 
 
         /** PROTECTED UTILITIES **/
-        void SceneLayer3D::Register(Component<Entity3D> entity)
+        void SceneLayer3D::Register(Resource<Entity3D> entity)
         {
             //if (_entities.Contains(entity.Name())) { return; }
+            uint id = entity.ID();
+            if ( entity.IsNull() || _entities.Contains(id) )
+                return;
+
+            _mappings.Insert(id, ResourceMapping());
+            auto& map = _mappings[id];
+            map.EntityID = id;
+            
+            Register(map, entity->Material());
+            Register(map, entity->Geometry());
+
+            map.TransformID = id;
+            if (!_transforms.Contains(id)
+            {
+                TransformData xforms =
+                {
+                    entity->Model()->Transform().ToMatrix4x4(),
+                    entity->Material()->Transform().ToMatrix4x4(),
+                    entity->Transform().ToMatrix4x4()
+                };
+
+                _transforms.Set(id, xforms);
+            }
+
+            EntityData data =
+            {
+                _materials.IndexOf(map.MaterialID),
+                map.EntityID,
+            };
+            _entities.Set(id, EntityData());
+            auto& data = _entities[entity.ID()];
+            
+            //auto mat = entity->Material();
+            //if ( !_materials.Contains(entit))
+            //data.
 
 
 
@@ -108,6 +143,21 @@ namespace Cyclone
 
             //};
         }
+        void SceneLayer3D::Register(ResourceMapping& map, Component<IGeometric> geometry)
+        {
+            if (geometry.IsNull()) { map.GeometryID = 0; return; }
+
+            map.GeometryID = geometry.ID();
+
+        }
+        void SceneLayer3D::Register(ResourceMapping& map, Resource<IMaterial> material)
+        {
+            if (material.IsNull) { map.MaterialID = 0; return; }
+
+            map.MaterialID = material.ID();
+            if (!_materials.Contains(material.ID()))
+                _materials.Set(material.ID(), material->Data());
+        }
         ResourceMapping& SceneLayer3D::Register(const IRenderable& entity)
         {
             if (Mappings.Contains(&entity)) { return Mappings[&entity]; }
@@ -115,7 +165,7 @@ namespace Cyclone
             Mappings.Insert(&entity, ResourceMapping());
             ResourceMapping& map = Mappings[&entity];
 
-            Register(map, entity.Model().Geometry());
+            Register(map, entity.Model()->Geometry());
             Register(map, entity.Material());
             Register(map, entity);
 
@@ -136,16 +186,6 @@ namespace Cyclone
 
 
         /** PRIVATE UTILITIES **/
-        void SceneLayer3D::Register(ResourceMapping& map, Component<IMaterial> material)
-        {
-            if (material.IsNull()) { return; }
-
-        }
-        void SceneLayer3D::Register(ResourceMapping& map, Component<IGeometric> geometry)
-        {
-            if (geometry.IsNull()) { return; }
-
-        }
         void SceneLayer3D::Register(ResourceMapping& map, const IGeometric& entity)
         {
             const auto& indices = entity.Indices();
