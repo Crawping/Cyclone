@@ -12,7 +12,7 @@ namespace Cyclone
         Scene3D& Scene3D::Transform(const Transform3D& value)
         {
             SceneComponent3D::Transform(value);
-            _onTransformUpdate(*this, value);
+            
             return *this;
         }
         Scene3D& Scene3D::View(const Camera& value)
@@ -63,6 +63,7 @@ namespace Cyclone
 
         void Scene3D::ProcessTransformUpdate(const IComponent& src, const ISpatialTransform& evt)
         {
+            if (&src == this) { return; }
             _onTransformUpdate(src, evt);
         }
     }
