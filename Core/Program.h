@@ -3,12 +3,9 @@
  */
 
 #pragma once
-#include "Buffers/VertexBuffer.h"
+#include "BasicRenderer.h"
 #include "Geometry/Entity3D.h"
 #include "Models/Model3D.h"
-#include "Resources/ResourceLibrary.h"
-#include "Spatial/Camera.h"
-#include "Spatial/Transform.h"
 
 
 
@@ -30,10 +27,11 @@ namespace Cyclone
 
     using namespace OpenGL;
     using namespace Platform;
+    using namespace Renderers;
     using namespace Utilities;
 
 
-    class Program
+    class Program: public BasicRenderer
     {
         public:
 
@@ -47,39 +45,22 @@ namespace Cyclone
             /// <summary> Runs the main event loop for the program. </summary>
             void Execute();
 
-        private:
+        protected:
 
-            bool            _canContinue;
-            bool            _debug;
-            int             _display;
-            bool            _showHelp;
+			void CreateSceneResources() override;
+            void CreateShaderPipeline() override;
 
-            Transform3D                 Projection;
-            GPU*                        Renderer;
-            Resource<ShaderPipeline>    RenderPipeline;
-            Scene3D*                    RenderScene;
-            FrameBuffer*                RenderTarget;
-            Window3D*                   RenderWindow;
-            Camera                      View;
-
-            Resource<Entity3D>          Cube;
-            Resource<Entity3D>          Icosahedron;
-            Resource<Entity3D>          PlaneXZ;
-
-            ResourceLibrary             Resources;
+            void UpdateScene()          override;
             
 
+        private:
 
-            /** UTILITIES **/
-			void CreateRenderingPipeline();
-			void CreateRenderingTarget();
-			void CreateRenderingWindow();
-			void CreateSceneResources();
-            void CreateSizedResources();
-			void CreateTransformations();
-            void ParseInputArguments(int nargs, char** args);
+            bool            _debug;
+            bool            _showHelp;
 
-            void Abort();
+            Resource<Entity3D>         Cube;
+            Resource<Entity3D>         Icosahedron;
+            Resource<Entity3D>         PlaneXZ;
 
     };
 }

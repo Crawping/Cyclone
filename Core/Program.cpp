@@ -1,18 +1,8 @@
-#include "CGL.h"
 #include "Program.h"
 #include "GPU.h"
-#include "Utilities.h"
-#include "Window3D.h"
-
-#include "Buffers/FrameBuffer.h"
-#include "IO/Console.h"
 #include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
-
 #include "Geometry/Mesh3D.h"
-
-const static std::string Help = "                   \n\
-    CYCLONE - A cross-platform 3D rendering engine. \n\n";
 
 
 
@@ -21,39 +11,15 @@ namespace Cyclone
 
     /** CONSTRUCTOR & DESTRUCTOR **/
     Program::Program(int nargs, char** args) :
-        _canContinue(true),
+        BasicRenderer(Area(0, 0, 1280, 800), "Core Test", 4),
         _debug(false),
-        _display(0),
-        _showHelp(false),
-        Renderer(nullptr),
-        RenderScene(nullptr),
-        RenderTarget(nullptr),
-        RenderWindow(nullptr)
+        _showHelp(false)
     {
-        ParseInputArguments(nargs, args);
-
-        Renderer = new GPU();
-
-		CreateRenderingWindow();
-
-        if (!cglLoadAPI())
-        {
-            PostInfo("Failed to initialize the OpenGL library.");
-            return;
-        }
-
-		CreateRenderingPipeline();
-        CreateSizedResources();
-		CreateSceneResources();
+        Initialize();
     }
     Program::~Program()
     {
-        if (RenderTarget)       { delete RenderTarget; }
-        if (RenderScene)        { delete RenderScene; }
-        if (RenderWindow)       { delete RenderWindow; }
-        if (Renderer)           { delete Renderer; }
 
-        cglClearAPI();
     }
 
 
@@ -61,169 +27,96 @@ namespace Cyclone
     /** UTILITIES **/
     void Program::Execute()
     {
-        while (_canContinue)
+        while (CanContinue())
         {
-            if (!RenderWindow->ProcessEvent())
-                break;
-
-            Cube->Rotate(Vector3(0.01f, 0.01f, 0.01f));
-            Icosahedron->Rotate(-0.01f);
-            RenderScene->Update(Cube);
-            RenderScene->Update(Icosahedron);
-
-
-            Console::WriteLine("1. " + Renderer->Report());
-            Renderer->Clear(Color4(0.5f));
-            //Console::WriteLine("2. " + Renderer->Report());
-            Renderer->Update();
-            //Console::WriteLine("3. " + Renderer->Report());
-            Renderer->Execute();
-            //Console::WriteLine("4. " + Renderer->Report());
+            RenderWindow->ProcessEvent();
+            UpdateScene();
+            Render();
             Renderer->Present();
-            //Console::WriteLine("5. " + Renderer->Report());
+            Console::WriteLine("1. " + Renderer->Report());
         }
     }
 
 
 
     /** PRIVATE UTILITIES **/
-    void Program::Abort()
-    {
-        _canContinue = false;
-    }
-	void Program::CreateRenderingPipeline()
+	void Program::CreateShaderPipeline()
 	{
-        RenderPipeline = Resources.Create<ShaderPipeline, string, string>
+         _pipeline = Create<ShaderPipeline, string, string>
         (
             "BlinnPhong", Constructor<ShaderPipeline, string, string>(),
-            //"../Renderers/Shaders/Default.vsl",
-            //"../Renderers/Shaders/Default.psl"
             "../Renderers/Shaders/BlinnPhong.vsl",
             "../Renderers/Shaders/BlinnPhong.psl"
         );
 	}
-	void Program::CreateRenderingTarget()
-	{
-		if (RenderTarget)
-		{
-			delete RenderTarget;
-			RenderTarget = nullptr;
-		}
-
-        Vector2 szWin = RenderWindow->ClientArea().Scale();
-		RenderTarget = new FrameBuffer
-		(
-			Vector4(szWin.X, szWin.Y, 1.0f, 4.0f),
-			TextureFormats::Byte4,
-			TextureFormats::DepthStencil,
-			TextureTargets::Texture2DMS
-		);
-	}
-	void Program::CreateRenderingWindow()
-	{
-		RenderWindow = new Window3D(Area(0, 0, 960, 540), "OpenGL Test Window", 4);
-		RenderWindow->OnClose.Subscribe(this, &Program::Abort);
-		RenderWindow->OnResize.Subscribe(this, &Program::CreateSizedResources);
-
-		Renderer->Window(RenderWindow);
-	}
 	void Program::CreateSceneResources()
 	{
-		RenderScene = new Scene3D();
-        RenderScene->Pipeline(&*RenderPipeline)
-            .Projection(&Projection)
-            .Target(RenderTarget)
-            .View(&View);
+        BasicRenderer::CreateSceneResources();
 
-        auto gcube = Resources.Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
-        auto gplane = Resources.Create("Plane", Function<Mesh3D, bool>(&Mesh3D::Quad), true);
-        auto gicos = Resources.Create("Icosahedron", Function<Mesh3D, bool>(&Mesh3D::Icosahedron), false);
+        auto gcube = Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
+        auto gplane = Create("Plane", Function<Mesh3D, bool>(&Mesh3D::Quad), true);
+        auto gicos = Create("Icosahedron", Function<Mesh3D, bool>(&Mesh3D::Icosahedron), false);
 
-        PlaneXZ = Resources.Create<Entity3D>("PlaneXZ");
-        Cube = Resources.Create<Entity3D>("Cube");
-        Icosahedron = Resources.Create<Entity3D>("Icosahedron");
+        PlaneXZ = Create<Entity3D>("PlaneXZ");
+        Cube = Create<Entity3D>("Cube");
+        Icosahedron = Create<Entity3D>("Icosahedron");
 
 		PlaneXZ->
-             Material(Resources.Create<Material3D>("Plane"))
-            .Model(Resources.Create<Model3D>("Plane"))
+             Material(Create<Material3D>("Plane"))
+            .Model(Create<Model3D>("Plane"))
             .Geometry(gplane)
             .PrimaryColor(Color4::Blue)
             .Pitch(-90)
             .Scale(5000).Translate(0, 50, 0);
 
         Cube->
-             Material(Resources.Create<Material3D>("Cube"))
-            .Model(Resources.Create<Model3D>("Cube"))
+             Material(Create<Material3D>("Cube"))
+            .Model(Create<Model3D>("Cube"))
             .Geometry(gcube)
             .PrimaryColor(Color4::Gray)
-            .Scale(Vector3(50, 50, 50))
+            .Scale(50)
             .Translate(250, 250, -10);
 
         Icosahedron->
-             Material(Resources.Create<Material3D>("Icosahedron"))
-            .Model(Resources.Create<Model3D>("Icosahedron"))
+             Material(Create<Material3D>("Icosahedron"))
+            .Model(Create<Model3D>("Icosahedron"))
             .Geometry(gicos)
             .PrimaryColor(Color4::Red)
-            .Scale(Vector3(50, 50, 50))
+            .Scale(50)
             .Translate(750, 250, -10);
+
+        auto cube2 = Create<Entity3D>("Cube2");
+        cube2->
+             Material(Icosahedron->Material())
+            .Model(Cube->Model())
+            .Scale(100)
+            .Translate(500, 250, -150);
 
         RenderScene->Insert(Icosahedron);
         RenderScene->Insert(Cube);
         RenderScene->Insert(PlaneXZ);
-
-        Renderer->Scene(RenderScene);
+        RenderScene->Insert(cube2);
 	}
-    void Program::CreateSizedResources()
+
+    void Program::UpdateScene()
     {
-		CreateRenderingTarget();
-		CreateTransformations();
+        Cube->Rotate(Vector3(0.01f, 0.05f, 0.01f));
+        Icosahedron->Rotate(-0.05f);
+
+        Color4 color
+        (
+            0.5f * sinf(Cube->Pitch()) + 0.5f,
+            0.25f * cosf(Cube->Yaw()) + 0.75f,
+            0.125f * sinf(Cube->Roll()) + 0.875f
+        );
+
+        auto cube2 = Get<Entity3D>("Cube2");
+        cube2->PrimaryColor(color);
+
+        RenderScene->Update(Cube);
+        RenderScene->Update(Icosahedron);
+        RenderScene->Update(cube2);
+        BasicRenderer::UpdateScene();
     }
-	void Program::CreateTransformations()
-	{
-		Area clientArea = RenderWindow->ClientArea();
-		View
-			.Orientation(Vector3::Zero)
-			.Position(Vector3(clientArea.Scale() / 2.0f, clientArea.Height / 2.0f));
 
-        //Vector3 position(-2048, -2048, 2048);
-        //Vector3 size(4096, 4096, 4096);
-        //Projection = Transform3D::OrthographicProjection(Volume(position, size));
-
-		Projection = Transform3D::PerspectiveProjection
-		(
-			90,
-			clientArea.Width / clientArea.Height,
-			1,
-			4.0f * clientArea.Width
-		);
-	}
-    void Program::ParseInputArguments(int nargs, char** args)
-    {
-        if (nargs == 1)
-            return;
-
-        string ctArg, ntArg;
-        for (int a = 1; a < nargs; a++)
-        {
-            ctArg = args[a];
-            if (ctArg == "-h" || ctArg == "--help")
-                _showHelp = true;
-            else if (ctArg == "--debug")
-                _debug = true;
-            else if (ctArg == "--display")
-            {
-                if (a < nargs - 1)
-                {
-                    ntArg = args[++a];
-                    if (ntArg[0] == ':')
-                        ntArg.erase(ntArg.begin());
-                    _display = std::stoi(ntArg);
-                }
-                else
-                    PostInfo("The display option was invoked at the command line, but no display index was provided.");
-            }
-            else
-                PostInfo("Unrecognized command line input argument: " + ctArg);
-        }
-    }
 }
