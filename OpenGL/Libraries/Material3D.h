@@ -26,17 +26,22 @@ namespace Cyclone
             public:
 
                 /** SPATIAL PROPERTIES **/
-                /// <summary> Gets the orientation of the texture transformation. </summary>
+                /// <summary> Gets the orientation component of the material transformation. </summary>
                 const Vector3& Orientation()                        const override { return _transform.Orientation(); }
-                /// <summary> Gets the translation of the texture transformation. </summary>
+                /// <summary> Gets the translation component of the material transformation. </summary>
                 const Vector3& Position()                           const override { return _transform.Position(); }
-                /// <summary> Gets the scale of the texture transformation. </summary>
+                /// <summary> Gets the scaling component of the material transformation. </summary>
                 const Vector3& Scale()                              const override { return _transform.Scale(); }
+                /// <summary> Gets the spatial transformation associated with the material.  </summary>
                 const Transform3D& Transform()                      const override { return _transform; }
 
-                OpenGLAPI Material3D& Orientation(const Vector3& value);
-                OpenGLAPI Material3D& Position(const Vector3& value);
-                OpenGLAPI Material3D& Scale(const Vector3& value);
+                /// <summary> Sets the orientation component of the material transformation. </summary>
+                OpenGLAPI Material3D& Orientation(const Vector3& value)     override;
+                /// <summary> Sets the translation component of the material transformation. </summary>
+                OpenGLAPI Material3D& Position(const Vector3& value)        override;
+                /// <summary> Sets the scaling component of the material transformation. </summary>
+                OpenGLAPI Material3D& Scale(const Vector3& value)           override;
+                /// <summary> Sets the spatial transformation associated with the material. </summary>
                 OpenGLAPI Material3D& Transform(const Transform3D& value);
 
 
