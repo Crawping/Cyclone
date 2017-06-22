@@ -319,10 +319,11 @@ namespace Cyclone
                     T           Value;
 
                     /** CONSTRUCTOR **/
-                    Node(const T& value, Node<T>* previous = nullptr, Node<T>* next = nullptr) :
+                    template<typename U>
+                    Node(U&& value, Node<T>* previous = nullptr, Node<T>* next = nullptr) :
                         Next(next),
                         Previous(previous),
-                        Value(value)
+                        Value(std::forward<U>(value))
                     {
 
                     }
