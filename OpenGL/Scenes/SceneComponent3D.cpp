@@ -111,10 +111,10 @@ namespace Cyclone
                     stage->Indexed.Append(IndexedDrawCommand(indices.Count(), 1, _indices.Count(), _vertices.Count(), idxEntity));
 
                 for (uint a = 0; a < indices.Count(); a++)
-                    _indices.Add(indices(a));
+                    _indices.Append(indices(a));
 
                 for (uint a = 0; a < points.Count(); a++)
-                    _vertices.Add(Vertex(points(a), normals(a), (Vector2)mapping(a)));
+                    _vertices.Append(Vertex(points(a), normals(a), (Vector2)mapping(a)));
             }
             
             for (auto* stage : Staging.Values())

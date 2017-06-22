@@ -18,8 +18,8 @@ namespace Cyclone
     {
         /// <summary> A class that represents a GPU buffer containing a list of vertices that make up geometric primitives. </summary>
         /// <typeparam name="T"> The type name of the vertex data structure used by the buffer. </typeparam>
-        template<typename T = Vertex::Standard>
-        class VertexBuffer : public VertexArray
+        template<typename T = Vertex>
+        class VertexBuffer: public VertexArray
         {
 
             public:
@@ -59,7 +59,7 @@ namespace Cyclone
 
 
                 /** BUFFER UTILITIES **/
-                virtual void Add(const T& data)
+                virtual void Append(const T& data)
                 {
                     Data.push_back(data);
                     NeedsUpdate(true);
@@ -79,7 +79,7 @@ namespace Cyclone
                 virtual void Set(uint index, const T& data)
                 {
                     if (index == Count())
-                        return Add(data);
+                        return Append(data);
                     else
                         Data[index] = data;
 
@@ -98,9 +98,8 @@ namespace Cyclone
                     GraphicsBuffer::Unmap();
                 }
 
-
-
             private:
+
                 std::vector<T> Data;
 
         };

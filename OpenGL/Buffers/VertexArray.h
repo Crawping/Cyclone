@@ -21,7 +21,7 @@ namespace Cyclone
 
 
         /// <summary> A class that holds and manages a vertex array object (VAO) for inputting geometry to the GPU. </summary>
-        class VertexArray : public GraphicsBuffer
+        class VertexArray: public GraphicsBuffer
         {
 
             public:
@@ -29,6 +29,7 @@ namespace Cyclone
                 /** DESTRUCTOR **/
                 /// <summary> Frees the vertex array allocated on the GPU. </summary>
                 OpenGLAPI virtual ~VertexArray();
+
 
                 
                 /** BINDING UTILITIES **/
@@ -92,7 +93,7 @@ namespace Cyclone
                 /// <summary> The numeric identifier for the vertex array object (VAO) on the GPU. </summary>
                 uint                    VAOID;
                 /// <summary> An array of vertex attributes that define the structure of a vertex for the GPU. </summary>
-                Vector<VertexAttribute>  Layout;
+                Vector<VertexAttribute> Layout;
 
         };
 

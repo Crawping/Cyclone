@@ -37,7 +37,7 @@ namespace Cyclone
                 }
                 /// <summary> Appends a data element to the end of the buffer array. </summary>
                 /// <param name="data"> A reference to the data element that will be added to the buffer. </param>
-                virtual void Add(const T& data)
+                virtual void Append(const T& data)
                 {
                     Data.push_back(data);
                     NeedsUpdate(true);
@@ -71,7 +71,7 @@ namespace Cyclone
 		        virtual void Set(uint index, const T& data)
                 {
                     if (index == Count())
-                        return Add(data);
+                        return Append(data);
                     else
                         Data[index] = data;
 

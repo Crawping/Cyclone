@@ -17,7 +17,7 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        template<typename T> void RenderStage3D<T>::Append(const T& command)    { Commands.Add(command); }
+        template<typename T> void RenderStage3D<T>::Append(const T& command)    { Commands.Append(command); }
         template<typename T> void RenderStage3D<T>::ClearBuffers()
         {
             RenderStage::ClearBuffers();
