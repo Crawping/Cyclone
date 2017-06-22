@@ -33,7 +33,7 @@ namespace Cyclone
                 /** PROPERTIES **/
                 /// <summary> Gets the string identifier of the resource. </summary>
                 uint ID()                                   const { return _id; }
-                /// <summary> Gets whether the resource has a null v alue. </summary>
+                /// <summary> Gets whether the resource has a null value. </summary>
                 bool IsNull()                               const { return _value == nullptr; }
 
                 
@@ -104,4 +104,4 @@ namespace Cyclone
     }
 }
 
-#include "Resources/Specializations/OwnedResource.h"
+#include "Resources/Specializations/UniqueResource.h"

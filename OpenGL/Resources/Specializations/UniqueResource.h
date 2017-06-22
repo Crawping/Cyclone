@@ -44,17 +44,17 @@ namespace Cyclone
                 {
 
                 }
-                Resource(Resource&& other) = default;
-                //    Resource()
-                //{
-                //    std::swap(_name, other._name);
-                //    std::swap(_value, other._value);
-                //    other._value = nullptr;
-                //}
-                //Resource(const Resource&)
-                //{
-                //    Console::WriteLine("Copy Constructor");
-                //}
+                Resource(Resource&& other) noexcept:
+                    Resource()
+                {
+                    std::swap(_name, other._name);
+                    std::swap(_value, other._value);
+                    other._value = nullptr;
+                }
+                Resource(const Resource&)
+                {
+                    throw std::exception("True resources cannot be copied.");
+                }
                 ~Resource()                                                 { if (_value) { delete _value; } }
                     
 
@@ -100,14 +100,15 @@ namespace Cyclone
 
                 Resource& operator =(const Resource&)
                 {
+                    throw std::exception("True resources cannot be copied.");
                     return *this;
                 }
-                Resource& operator =(Resource&& other) = default;
-                //{
-                //    std::swap(_name, other._name);
-                //    std::swap(_value, other._value);
-                //    return *this;
-                //}
+                Resource& operator =(Resource&& other)                      noexcept
+                {
+                    std::swap(_name, other._name);
+                    std::swap(_value, other._value);
+                    return *this;
+                }
 
                 bool operator ==(const Resource& other)                     const
                 {

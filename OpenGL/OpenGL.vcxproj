@@ -98,6 +98,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>jpeg.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)..\$(Configuration);..\..\libjpeg\jpeg-9b\Release;</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>UseFastLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -121,7 +122,6 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OPENGL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -194,6 +194,7 @@
     <ClInclude Include="Pipelines\ShaderPipeline.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\ResourceLibrary2.h" />
+    <ClInclude Include="Resources\Specializations\UniqueResource.h" />
     <ClInclude Include="Scenes\Scene3D.h" />
     <ClInclude Include="Scenes\SceneComponent.h" />
     <ClInclude Include="Scenes\SceneComponent3D.h" />
