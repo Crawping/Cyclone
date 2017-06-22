@@ -59,6 +59,12 @@ namespace Cyclone
             {
 
             }
+            constexpr EntityData(uint material, uint transform):
+                MaterialIndex(material),
+                TransformIndex(transform)
+            {
+
+            }
 
             constexpr bool operator ==(const EntityData& other) const
             {
