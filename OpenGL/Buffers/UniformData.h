@@ -47,9 +47,18 @@ namespace Cyclone
         /// <summary> A structure containing uniform shader data that are expected to change between every rendered object. </summary>
         struct EntityData
         {
+            /// <summary> The linear index of the entity's material data in the associated uniform buffer. </summary>
             uint        MaterialIndex;
+            /// <summary> The linear index of the entity's transformation data in the associated uniform buffer. </summary>
             uint        TransformIndex;
             Vector2     _0;
+
+            constexpr EntityData():
+                MaterialIndex(0),
+                TransformIndex(0)
+            {
+
+            }
 
             constexpr bool operator ==(const EntityData& other) const
             {
@@ -57,6 +66,7 @@ namespace Cyclone
             }
         };
 
+        /// <summary> A structure containing uniform shader data that defines the appearance of every rendered object. </summary>
         struct MaterialData
         {
             /// <summary> The primary color of a material. </summary>
@@ -81,7 +91,8 @@ namespace Cyclone
 
             Vector3     _0;
 
-            MaterialData():
+            /// <summary> Constructs a default material data structure that can be used on the GPU. </summary>
+            constexpr MaterialData():
                 Texture(0),
                 Ambience(0.1f),
                 SpecularPower(200),
@@ -90,7 +101,8 @@ namespace Cyclone
 
             }
 
-            bool operator ==(const MaterialData& other) const
+            /// <summary> Determines whether two material data structures are equivalent. </summary>
+            constexpr bool operator ==(const MaterialData& other) const
             {
                 return
                     (Texture == other.Texture)                  &&
@@ -99,6 +111,7 @@ namespace Cyclone
             }
         };
 
+        /// <summary> A structure containing uniform shader data that defines the model, texture, and world transformations for every rendered object. </summary>
         struct TransformData
         {
             /** DATA **/
