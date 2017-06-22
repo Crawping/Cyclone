@@ -56,15 +56,15 @@ namespace Cyclone
 
             Transform3D                 Projection;
             GPU*                        Renderer;
-            Component<ShaderPipeline>   RenderPipeline;
+            Resource<ShaderPipeline>    RenderPipeline;
             Scene3D*                    RenderScene;
             FrameBuffer*                RenderTarget;
             Window3D*                   RenderWindow;
             Camera                      View;
 
-            Component<Entity3D>         Cube;
-            Component<Entity3D>         Icosahedron;
-            Component<Entity3D>         PlaneXZ;
+            Resource<Entity3D>          Cube;
+            Resource<Entity3D>          Icosahedron;
+            Resource<Entity3D>          PlaneXZ;
 
             ResourceLibrary             Resources;
             

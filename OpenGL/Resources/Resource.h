@@ -97,11 +97,8 @@ namespace Cyclone
 
                 template<typename U>
                 bool operator !=(const Resource<U>& other)                  const { return !(operator ==(other)); }
+
         };
-
-
-        template<typename T> using Component = Resource<T, false>;
-
     }
 }
 

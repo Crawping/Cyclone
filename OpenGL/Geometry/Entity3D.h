@@ -33,7 +33,7 @@ namespace Cyclone
                 const Vector3& Position()                               const override { return _transform.Orientation(); }
                 const Vector3& Scale()                                  const override { return _transform.Orientation(); }
 
-                OpenGLAPI Entity3D& Geometry(Component<Geometry3D> value);
+                OpenGLAPI Entity3D& Geometry(Resource<Geometry3D> value);
                 OpenGLAPI Entity3D& Orientation(const Vector3& value)             override;
                 OpenGLAPI Entity3D& Position(const Vector3& value)                override;
                 OpenGLAPI Entity3D& Scale(const Vector3& value)                   override;
@@ -49,9 +49,6 @@ namespace Cyclone
 
                 virtual float SpecularPower()                           const { return Material()->SpecularPower(); }
                 /// <summary> Gets a pointer to the texture associated with an entity. </summary>
-		        //virtual const Texture3D* Texture()                      const { return Material().Texture(); }
-                //virtual Component<Texture3D> Texture()                   const { return Material().Texture(); }
-                //virtual Component<ITexture> Texture()                    const { return Material().Texture(); }
                 virtual const ITexture* Texture()                       const { return Material()->Texture(); }
 
                 OpenGLAPI virtual Entity3D& Ambience(float value);
@@ -62,7 +59,7 @@ namespace Cyclone
 
                 OpenGLAPI virtual Entity3D& SpecularPower(float value);
                 /// <summary> Sets the texture to be used when rendering the entity. </summary>
-                OpenGLAPI virtual Entity3D& Texture(Component<ITexture> value);
+                OpenGLAPI virtual Entity3D& Texture(Resource<ITexture> value);
 
 
                 
@@ -91,10 +88,6 @@ namespace Cyclone
 
                 OpenGLAPI virtual Entity3D& Transform(const Transform3D& value);
 
-
-
-                /** EVENTS **/
-                //Event<
 
 
                 /** CONSTRUCTOR & DESTRUCTOR **/

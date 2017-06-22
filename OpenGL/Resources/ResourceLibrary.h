@@ -49,7 +49,7 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 OpenGLAPI ResourceLibrary();
-                ResourceLibrary(const ResourceLibrary& other)         = delete;
+                ResourceLibrary(const ResourceLibrary& other)               = delete;
 
 
 
@@ -57,7 +57,7 @@ namespace Cyclone
                 /// <summary> Determines whether a particular resource is stored within the library. </summary>
                 /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
                 /// <param name="value"> An existing resource handle. </param>
-                template<typename T> bool Contains(Component<T> value)  const 
+                template<typename T> bool Contains(Resource<T> value)       const 
                 {
                     auto r = Get<T>(value.ID());
                     return !r.IsNull() && (r == value);
@@ -66,12 +66,12 @@ namespace Cyclone
                 /// <returns> A Boolean <c>true</c> if the resource is stored within the library, or <c>false</c> otherwise. </returns>
                 /// <typeparam name="T"> The type of the desired resource. </typeparam>
                 /// <param name="name"> The string identifier of the resource. </param>
-                template<typename T> bool Contains(const string& name)  const
+                template<typename T> bool Contains(const string& name)      const
                 {
                     return Contains<T>(hash(name));
                 }
 
-                template<typename T> bool Contains(uint key)            const
+                template<typename T> bool Contains(uint key)                const
                 {
                     return
                         Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(key)        :
@@ -84,20 +84,20 @@ namespace Cyclone
                         Meta::IsA<T, ITexture>()            ? _textures.Contains(key)       : false;
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
-                template<typename T> Component<T> Create(const string& name)
+                template<typename T> Resource<T> Create(const string& name)
                 {
                     T* value = new T();
                     return Register<T>(name, value);
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
                 template<typename T, typename ... U>
-                Component<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
+                Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
                 {
                     T* value = new T(constructor(arguments...));
                     return Register<T>(name, value);
                 }
                 /// <summary> Destroys an existing graphics resource that is stored within the library. </summary>
-                template<typename T> void Destroy(Component<T> value)
+                template<typename T> void Destroy(Resource<T> value)
                 {
                     //const string& key = value.Name();
                     uint key = value.ID();
@@ -112,24 +112,24 @@ namespace Cyclone
                     Meta::IsA<T, IGraphicsSettings>()   ? _settings.Remove(key)     : _textures.Remove(key);
                 }
                 /// <summary> Acquires a particular graphics resource stored within the library. </summary>
-                template<typename T> Component<T> Get(const string& name)   const { return Get<T>(hash(name)); }
+                template<typename T> Resource<T> Get(const string& name)    const { return Get<T>(hash(name)); }
 
-                template<typename T> Component<T> Get(uint key)             const
+                template<typename T> Resource<T> Get(uint key)              const
                 {
-                    return Component<T>(key, Contains<T>(key) ? const_cast<T*>(Access<T>(key)) : nullptr);
+                    return Resource<T>(key, Contains<T>(key) ? const_cast<T*>(Access<T>(key)) : nullptr);
                 }
                 /// <summary> Checks an externally created resource into the library for management. </summary>
                 /// <returns> A resource handle that represents the inputted value. </returns>
                 /// <param name="name"> The desired name of the resource. </param>
                 /// <param name="value"> A pointer to a resource constructed externally on the heap. </param>
                 /// <remarks> Naming conflicts are resolved by deleting and overwriting the previously stored value. </remarks>
-                template<typename T> Component<T> Register(const string& name, T* value)
+                template<typename T> Resource<T> Register(const string& name, T* value)
                 {
                     if (!value || (name == "Null"))
-                        return Component<T>(name, nullptr);
+                        return Resource<T>(name, nullptr);
 
                     Insert(name, value);
-                    return Component<T>(name, value);
+                    return Resource<T>(name, value);
                 }
                 
             private:

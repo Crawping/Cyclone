@@ -90,7 +90,7 @@ namespace Cyclone
                 }
                 operator Resource<T, false>()                               const
                 {
-                    return Component<T>(_name, _value);
+                    return Resource<T>(_name, _value);
                 }
 
                 T& operator *()                                             { return *_value; }

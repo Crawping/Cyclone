@@ -8,7 +8,7 @@ namespace Cyclone
     {
 
         /** GEOMETRY PROPERTIES **/
-        Entity3D& Entity3D::Geometry(Component<Geometry3D> value)
+        Entity3D& Entity3D::Geometry(Resource<Geometry3D> value)
         {
             _model->Geometry(value);
             return *this;
@@ -52,7 +52,7 @@ namespace Cyclone
             _material->SpecularPower(value);
             return *this;
         }
-        Entity3D& Entity3D::Texture(Component<ITexture> value)
+        Entity3D& Entity3D::Texture(Resource<ITexture> value)
         {
             _material->Texture(value);
             return *this;
@@ -76,7 +76,7 @@ namespace Cyclone
             _model = value;
             return *this;
         }
-        Entity3D& Entity3D::Settings(Component<IGraphicsSettings> value)
+        Entity3D& Entity3D::Settings(Resource<IGraphicsSettings> value)
         {
             _settings = value;
             return *this;

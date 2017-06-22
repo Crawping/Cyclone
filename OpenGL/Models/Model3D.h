@@ -34,8 +34,7 @@ namespace Cyclone
                 const Transform3D& Transform()              const override { return _transform; }
 
                 /// <summary> Sets the geometric data that define the shape of the mesh. </summary>
-                //OpenGLAPI virtual Model3D& Geometry(const Geometry3D& value);
-                OpenGLAPI virtual Model3D& Geometry(Component<Geometry3D> value);
+                OpenGLAPI virtual Model3D& Geometry(Resource<Geometry3D> value);
                 OpenGLAPI virtual Model3D& Transform(const Transform3D& value);
                 OpenGLAPI Model3D& Orientation(const Vector3& value);
                 OpenGLAPI Model3D& Position(const Vector3& value);

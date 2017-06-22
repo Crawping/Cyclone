@@ -49,7 +49,7 @@ namespace Cyclone
             _data.SpecularPower = value;
             return *this;
         }
-        Material3D& Material3D::Texture(Component<ITexture> value)
+        Material3D& Material3D::Texture(Resource<ITexture> value)
         {
             _texture            = value;
             _data.IsTextured    = !value.IsNull();
