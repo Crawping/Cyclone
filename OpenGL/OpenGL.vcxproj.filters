@@ -270,15 +270,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\Default.hsl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Default.psl">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\Default.vsl">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Shaders\FBO.psl">
       <Filter>Shaders</Filter>
     </None>

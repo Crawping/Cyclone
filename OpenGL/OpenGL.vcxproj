@@ -231,9 +231,6 @@
     <ClCompile Include="Textures\TextureSampler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\Default.hsl" />
-    <None Include="Shaders\Default.psl" />
-    <None Include="Shaders\Default.vsl" />
     <None Include="Shaders\FBO.psl" />
     <None Include="Shaders\FBO.vsl" />
     <None Include="Shaders\Occlusion.psl" />
