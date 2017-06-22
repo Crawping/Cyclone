@@ -17,14 +17,18 @@ namespace Cyclone
         /** PROPERTIES **/
         List<BufferBinding> SceneLayer3D::Buffers() const
         {
-            return
-            {
-                { Vertices,     0 },
-                { Indices,      0 },
-                { Entities,     2 },
-                { Materials,    3 },
-                { Transforms,   4 },
-            };
+            auto buffers = SceneComponent3D::Buffers();
+            buffers.Append({ _materials, 3 });
+            buffers.Append({ _transforms, 4 });
+            return buffers;
+            //return
+            //{
+            //    { Vertices,     0 },
+            //    { Indices,      0 },
+            //    { Entities,     2 },
+            //    { Materials,    3 },
+            //    { Transforms,   4 },
+            //};
         }
         List<ISceneComponent&> SceneLayer3D::Components() const
         {
@@ -64,9 +68,24 @@ namespace Cyclone
 
 
         /** UTILITIES **/
+        uint SceneLayer3D::IndexOf(const Resource<IMaterial>& material) const
+        {
+            return _materials.IndexOf(material.ID());
+        }
+        uint SceneLayer3D::IndexOf(const Resource<IRenderable>& entity) const
+        {
+            return _entities.IndexOf(entity.ID());
+        }
         void SceneLayer3D::Insert(const string& name, ISceneComponent& stage)
         {
             _components.Insert(name, &stage);
+        }
+        void SceneLayer3D::Insert(const Resource<IRenderable>& entity)
+        {
+            if (entity.IsNull() || _entities.Contains(entity.ID())) { return; }
+            _entities.Insert(entity.ID(), entity);
+            SceneComponent3D::Insert(entity);
+            Update(entity);
         }
         void SceneLayer3D::Remove(const string& name)
         {
@@ -74,169 +93,50 @@ namespace Cyclone
         }
         void SceneLayer3D::Update()
         {
-            SceneComponent3D::Update();
-
-            Indices.Update();
-            Vertices.Update();
-            Entities.Update();
-            Materials.Update();
-            Transforms.Update();
-
             for (auto& c : _components.Values())
                 c->Update();
-        }
-        void SceneLayer3D::Update(const IRenderable& entity)
-        {
-            if (!Mappings.Contains(&entity)) { return; }
 
-            ResourceMapping& map = Mappings[&entity];
-            Register(map, entity.Material());
-            Register(map, entity);
+            for (const auto& entity : _updates)
+            {
+                UpdateMaterial(entity);
+                UpdateTransforms(entity);
+            }
+
+            _updates.Clear();
+            _materials.Update();
+            _transforms.Update();
+
+            SceneComponent3D::Update();
+        }
+        void SceneLayer3D::Update(const Resource<IRenderable>& entity)
+        {
+            if (!_entities.Contains(entity.ID())) { return; }
+            _updates.Append(entity);
         }
 
 
 
         /** PROTECTED UTILITIES **/
-        void SceneLayer3D::Register(Resource<Entity3D> entity)
+        void SceneLayer3D::UpdateMaterial(const Resource<IRenderable>& entity)
         {
-            //if (_entities.Contains(entity.Name())) { return; }
-            uint id = entity.ID();
-            if ( entity.IsNull() || _entities.Contains(id) )
-                return;
-
-            _mappings.Insert(id, ResourceMapping());
-            auto& map = _mappings[id];
-            map.EntityID = id;
-            
-            Register(map, entity->Material());
-            Register(map, entity->Geometry());
-
-            map.TransformID = id;
-            if (!_transforms.Contains(id)
+            if (entity.IsNull() || entity->Material().IsNull())   { return; }
+            _materials.Set(entity->Material().ID(), entity->Material()->Data());
+        }
+        void SceneLayer3D::UpdateTransforms(const Resource<IRenderable>& entity)
+        {
+            if (entity.IsNull()) { return; }
+            TransformData xforms =
             {
-                TransformData xforms =
-                {
-                    entity->Model()->Transform().ToMatrix4x4(),
-                    entity->Material()->Transform().ToMatrix4x4(),
-                    entity->Transform().ToMatrix4x4()
-                };
-
-                _transforms.Set(id, xforms);
-            }
-
-            EntityData data =
-            {
-                _materials.IndexOf(map.MaterialID),
-                map.EntityID,
-            };
-            _entities.Set(id, EntityData());
-            auto& data = _entities[entity.ID()];
-            
-            //auto mat = entity->Material();
-            //if ( !_materials.Contains(entit))
-            //data.
-
-
-
-            //EntityData data = 
-            //{
-
-            //};
-        }
-        void SceneLayer3D::Register(ResourceMapping& map, Component<IGeometric> geometry)
-        {
-            if (geometry.IsNull()) { map.GeometryID = 0; return; }
-
-            map.GeometryID = geometry.ID();
-
-        }
-        void SceneLayer3D::Register(ResourceMapping& map, Resource<IMaterial> material)
-        {
-            if (material.IsNull) { map.MaterialID = 0; return; }
-
-            map.MaterialID = material.ID();
-            if (!_materials.Contains(material.ID()))
-                _materials.Set(material.ID(), material->Data());
-        }
-        ResourceMapping& SceneLayer3D::Register(const IRenderable& entity)
-        {
-            if (Mappings.Contains(&entity)) { return Mappings[&entity]; }
-
-            Mappings.Insert(&entity, ResourceMapping());
-            ResourceMapping& map = Mappings[&entity];
-
-            Register(map, entity.Model()->Geometry());
-            Register(map, entity.Material());
-            Register(map, entity);
-
-            return map;
-        }
-        void SceneLayer3D::Remove(const IRenderable& entity)
-        {
-            if (!Mappings.Contains(&entity)) { return; }
-
-            ResourceMapping& map = Mappings[&entity];
-            Entities.Remove(map.EntityKey);
-            Materials.Remove(map.MaterialKey);
-            Transforms.Remove(map.TransformKey);
-
-            Mappings.Remove(&entity);
-        }
-
-
-
-        /** PRIVATE UTILITIES **/
-        void SceneLayer3D::Register(ResourceMapping& map, const IGeometric& entity)
-        {
-            const auto& indices = entity.Indices();
-            const auto& mapping = entity.Mapping();
-            const auto& normals = entity.Normals();
-            const auto& points = entity.Points();
-
-            map.IndicesCount = indices.Count();
-            map.IndicesIndex = Indices.Count();
-            map.Topology = entity.Topology();
-            map.VertexCount = points.Count();
-            map.VertexIndex = Vertices.Count();
-
-            for (uint a = 0; a < indices.Count(); a++)
-                Indices.Add(indices(a));
-
-            for (uint a = 0; a < points.Count(); a++)
-                Vertices.Add(Vertex(points(a), normals(a), (Vector2)mapping(a)));
-        }
-        void SceneLayer3D::Register(ResourceMapping& map, const IMaterial& material)
-        {
-            if (map.MaterialKey.IsValid())
-                Materials.Set(map.MaterialKey, material.Data());
-            else
-                map.MaterialKey = Materials.Register(material.Data());
-        }
-        void SceneLayer3D::Register(ResourceMapping& map, const IRenderable& entity)
-        {
-            TransformData tdata =
-            {
-                entity.Model().Transform().ToMatrix4x4(),
-                entity.Material().Transform().ToMatrix4x4(),
-                entity.Transform().ToMatrix4x4()
+                entity->Model()                                     ? 
+                    entity->Model()->Transform().ToMatrix4x4()      : 
+                    Matrix4x4::Identity,
+                entity->Material()                                  ? 
+                    entity->Material()->Transform().ToMatrix4x4()   : 
+                    Matrix4x4::Identity,
+                entity->Transform().ToMatrix4x4()
             };
 
-            if (map.TransformKey.IsValid())
-                Transforms.Set(map.TransformKey, tdata);
-            else
-                map.TransformKey = Transforms.Register(tdata);
-
-            EntityData data =
-            {
-                (uint)map.MaterialKey.Index(),
-                (uint)map.TransformKey.Index(),
-            };
-
-
-            if (map.EntityKey.IsValid())
-                Entities.Set(map.EntityKey, data);
-            else
-                map.EntityKey = Entities.Register(data);
+            _transforms.Set(entity.ID(), xforms);
         }
 
     }

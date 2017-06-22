@@ -1,3 +1,9 @@
+#include "Collections/List.h"
+#include "Interfaces/IGeometric.h"
+#include "Interfaces/IGraphicsBuffer.h"
+#include "Interfaces/IModel.h"
+#include "Interfaces/IRenderable.h"
+#include "Interfaces/ITexture.h"
 #include "Scenes/Scene3D.h"
 #include "Scenes/SceneComponent3D.h"
 #include "Pipelines/RenderStage3D.h"
@@ -17,6 +23,15 @@ namespace Cyclone
 
 
         /** PROPERTIES **/
+        List<BufferBinding> SceneComponent3D::Buffers() const
+        {
+            return
+            {
+                { _vertices,     0 },
+                { _indices,      0 },
+                { _resources,    2 },
+            };
+        }
         List<IRenderStage&> SceneComponent3D::Stages() const
         {
             List<IRenderStage&> stages;
@@ -49,23 +64,11 @@ namespace Cyclone
 
 
         /** UTILITIES **/
-        bool SceneComponent3D::Contains(const IRenderable& entity) const
+        void SceneComponent3D::Insert(const Resource<IRenderable>& entity)
         {
-            return Resources.Contains(&entity);
-        }
-        void SceneComponent3D::Insert(const IRenderable& entity)
-        {
-            ResourceMapping& map = Parent().Register(entity);
-            Resources.Insert(&entity, &map);
-            NeedsUpdate = true;
-        }
-        void SceneComponent3D::Insert(Component<Entity3D> entity)
-        {
-            //Parent.Register(entity);
-        }
-        void SceneComponent3D::Remove(const IRenderable& entity)
-        {
-            Resources.Remove(&entity);
+            if (entity.IsNull() || _entities.Contains(entity.ID())) { return; }
+            _entities.Insert(entity.ID(), entity);
+            Parent().Insert(entity);
             NeedsUpdate = true;
         }
         void SceneComponent3D::Update()
@@ -73,34 +76,74 @@ namespace Cyclone
             if (!NeedsUpdate) { return; }
 
             ClearCommands();
+            _indices.Clear();
+            _vertices.Clear();
 
-            for (const auto* ids : Resources.Values())
+            for (uint a = 0; a < _entities.Count(); a++)
             {
+                const auto& entity = _entities(a);
+                uint idxEntity = Parent().IndexOf(entity);
+
+                _resources.Set(entity.ID(), { Parent().IndexOf(entity->Material()), idxEntity });
+
+                const auto& model = entity->Model();
+                if (model.IsNull()) { continue; }
+
+                const auto& geometry = model->Geometry();
+                if (geometry.IsNull()) { continue; }
+
+                const auto& indices = geometry->Indices();
+                const auto& mapping = geometry->Mapping();
+                const auto& normals = geometry->Normals();
+                const auto& points  = geometry->Points();
+
                 StageGroup3D* stage;
-                if (Staging.Contains(ids->Topology))
-                    stage = Staging[ids->Topology];
-                else
-                    stage = CreateStage(ids->Topology);
+                PointTopologies topology = geometry->Topology();
 
-                if (ids->IndicesCount)
-                    stage->Indexed.Append(IndexedDrawCommand(ids->IndicesCount, 1, ids->IndicesIndex, ids->VertexIndex, ids->EntityKey.Index()));
+                if (Staging.Contains(topology))
+                    stage = Staging[topology];
                 else
-                    stage->NonIndexed.Append(DrawCommand(ids->VertexCount, 1, 0, ids->VertexIndex, ids->EntityKey.Index()));
+                    stage = CreateStage(topology);
+
+                if (indices.IsEmpty())
+                    stage->NonIndexed.Append(DrawCommand(points.Count(), 1, 0, _vertices.Count(), idxEntity));
+                else
+                    stage->Indexed.Append(IndexedDrawCommand(indices.Count(), 1, _indices.Count(), _vertices.Count(), idxEntity));
+
+                for (uint a = 0; a < indices.Count(); a++)
+                    _indices.Add(indices(a));
+
+                for (uint a = 0; a < points.Count(); a++)
+                    _vertices.Add(Vertex(points(a), normals(a), (Vector2)mapping(a)));
             }
-
+            
             for (auto* stage : Staging.Values())
             {
                 stage->Indexed.Update();
                 stage->NonIndexed.Update();
             }
 
+            _indices.Update();
+            _resources.Update();
+            _vertices.Update();
+
             NeedsUpdate = false;
         }
-        void SceneComponent3D::Update(const IRenderable& entity)
+        void SceneComponent3D::Update(const Resource<IRenderable>& entity)
         {
-            if (!Contains(entity)) { return; }
+            if (!_entities.Contains(entity.ID())) { return; }
             Parent().Update(entity);
-            Resources.Insert( &entity, &(Parent().Register(entity)) );
+        }
+
+
+
+        /** PROTECTED UTILITIES **/
+        void SceneComponent3D::UpdateGeometry(const Resource<IRenderable>& entity)
+        {
+            if ( entity.IsNull() || entity->Model().IsNull() || entity->Model()->Geometry().IsNull() )
+                return;
+
+
         }
 
 
@@ -114,11 +157,6 @@ namespace Cyclone
                 stage->NonIndexed.ClearCommands();
             }
 
-            NeedsUpdate = true;
-        }
-        void SceneComponent3D::ClearMappings()
-        {
-            Resources.Clear();
             NeedsUpdate = true;
         }
         StageGroup3D* SceneComponent3D::CreateStage(PointTopologies topology)

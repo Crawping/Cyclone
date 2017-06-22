@@ -76,6 +76,7 @@ namespace Cyclone
                 Property<U, V> operator [](Attribute<U, V> property)        const { return Property<U, V>(_value, property); }
 
 
+                operator bool()                                             const { return !IsNull(); }
                 template<typename U> operator Resource<U>()                 const
                 {
                     static_assert(Meta::IsA<T, U>() || Meta::IsA<U, T>(), "Invalid casting operation attempted.");

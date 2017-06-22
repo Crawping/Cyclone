@@ -31,7 +31,7 @@ class Program: public AdvancedRenderer
         ~Program();
 
         void Execute() override;
-        void UpdateBrowser()                { RenderScene->Update(*_browser); }
+        void UpdateBrowser()                { RenderScene->Update(_browser); }
 
     protected:
 

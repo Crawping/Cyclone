@@ -17,6 +17,7 @@ namespace Cyclone
     {
 
         /** FORWARD DECLARATIONS **/
+        class IMaterial;
         class IRenderable;
         class IRenderStage;
         class ISceneLayer;
@@ -31,6 +32,7 @@ namespace Cyclone
             public:
             
                 /** PROPERTIES **/
+                virtual List<BufferBinding> Buffers()                               const = 0;
                 /// <summary> Gets whether the scene component is visible in the rendered environment. </summary>
                 virtual bool IsVisible()                                            const = 0;
 
@@ -55,16 +57,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                /// <summary> Determines whether the scene component contains a specific renderable entity. </summary>
-                virtual bool Contains(const IRenderable& entity)                    const = 0;
-                /// <summary> Adds a renderable object to the scene component. </summary>
-                virtual void Insert(const IRenderable& entity)                      = 0;
-
-                virtual void Remove(const IRenderable& entity)                      = 0;
-
+                virtual void Insert(const Resource<IRenderable>& entity)            = 0;
                 virtual void Update()                                               = 0;
-
-                virtual void Update(const IRenderable& entity)                      = 0;
+                virtual void Update(const Resource<IRenderable>& entity)            = 0;
 
         };
 
@@ -74,17 +69,16 @@ namespace Cyclone
         {
             public:
 
-                virtual List<BufferBinding> Buffers()                               const = 0;
                 /// <summary> Gets a list of all components that are stored within the scene layer. </summary>
                 virtual List<ISceneComponent&> Components()                         const = 0;
 
                 virtual ~ISceneLayer() { }
 
                 /** UTILITIES **/
-                using ISceneComponent::Remove;
-
+                using ISceneComponent::Insert;
+                virtual uint IndexOf(const Resource<IRenderable>& entity)           const = 0;
+                virtual uint IndexOf(const Resource<IMaterial>& material)           const = 0;
                 virtual void Insert(const string& name, ISceneComponent& component) = 0;
-                virtual ResourceMapping& Register(const IRenderable& entity)        = 0;
                 virtual void Remove(const string& name)                             = 0;
         };
 

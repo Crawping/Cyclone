@@ -68,8 +68,8 @@ namespace Cyclone
 
             Cube->Rotate(Vector3(0.01f, 0.01f, 0.01f));
             Icosahedron->Rotate(-0.01f);
-            RenderScene->Update(*Cube);
-            RenderScene->Update(*Icosahedron);
+            RenderScene->Update(Cube);
+            RenderScene->Update(Icosahedron);
 
 
             Console::WriteLine("1. " + Renderer->Report());
@@ -144,26 +144,32 @@ namespace Cyclone
         Icosahedron = Resources.Create<Entity3D>("Icosahedron");
 
 		PlaneXZ->
-             Geometry(gplane)
+             Material(Resources.Create<Material3D>("Plane"))
+            .Model(Resources.Create<Model3D>("Plane"))
+            .Geometry(gplane)
             .PrimaryColor(Color4::Blue)
             .Pitch(-90)
             .Scale(5000).Translate(0, 50, 0);
 
         Cube->
-             Geometry(gcube)
+             Material(Resources.Create<Material3D>("Cube"))
+            .Model(Resources.Create<Model3D>("Cube"))
+            .Geometry(gcube)
             .PrimaryColor(Color4::Gray)
             .Scale(Vector3(50, 50, 50))
             .Translate(250, 250, -10);
 
         Icosahedron->
-             Geometry(gicos)
+             Material(Resources.Create<Material3D>("Icosahedron"))
+            .Model(Resources.Create<Model3D>("Icosahedron"))
+            .Geometry(gicos)
             .PrimaryColor(Color4::Red)
             .Scale(Vector3(50, 50, 50))
             .Translate(750, 250, -10);
 
-        RenderScene->Insert(*Icosahedron);
-        RenderScene->Insert(*Cube);
-        RenderScene->Insert(*PlaneXZ);
+        RenderScene->Insert(Icosahedron);
+        RenderScene->Insert(Cube);
+        RenderScene->Insert(PlaneXZ);
 
         Renderer->Scene(RenderScene);
 	}

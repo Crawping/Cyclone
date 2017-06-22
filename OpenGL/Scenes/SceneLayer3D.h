@@ -49,40 +49,29 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 using SceneComponent3D::Insert;
-                OpenGLAPI void Insert(const string& name, ISceneComponent& stage)      override;
-                OpenGLAPI void Remove(const string& name)                              override;
-                OpenGLAPI void Remove(const IRenderable& entity)                       override;
-                OpenGLAPI void Update()                                                override;
-                OpenGLAPI void Update(const IRenderable& entity)                       override;
+                OpenGLAPI uint IndexOf(const Resource<IRenderable>& entity)             const override;
+                OpenGLAPI uint IndexOf(const Resource<IMaterial>& material)             const override;
+                OpenGLAPI void Insert(const string& name, ISceneComponent& stage)       override;
+                OpenGLAPI void Insert(const Resource<IRenderable>& entity)              override;
+                OpenGLAPI void Remove(const string& name)                               override;
+                OpenGLAPI void Update()                                                 override;
+                OpenGLAPI void Update(const Resource<IRenderable>& entity)              override;;
 
             protected:
 
                 /** UTILITIES **/
-                OpenGLAPI void Register(Resource<Entity3D> entity);
-                OpenGLAPI ResourceMapping& Register(const IRenderable& entity)          override;
-
-                OpenGLAPI virtual void Register(ResourceMapping& map, Resource<IMaterial> material);
-                OpenGLAPI virtual void Register(ResourceMapping& map, Resource<IGeometric> geometry);
-
-                OpenGLAPI virtual void Register(ResourceMapping& map, const IGeometric& entity);
-                OpenGLAPI virtual void Register(ResourceMapping& map, const IMaterial& material);
-                OpenGLAPI virtual void Register(ResourceMapping& map, const IRenderable& entity);
+                OpenGLAPI virtual void UpdateMaterial(const Resource<IRenderable>& entity);
+                OpenGLAPI virtual void UpdateTransforms(const Resource<IRenderable>& entity);
 
             private:
 
                 /** BUFFERS **/
-                ResourceLibrary<EntityData>         Entities;
-                IndexBuffer                         Indices;
-                ResourceLibrary<MaterialData>       Materials;
-                ResourceLibrary<TransformData>      Transforms;
-                VertexBuffer<Vertex>                Vertices;
-
-                UniformMap<uint, EntityData>        _entities;
                 UniformMap<uint, MaterialData>      _materials;
                 UniformMap<uint, TransformData>     _transforms;
 
-                BST<uint, ResourceMapping>          _mappings;
 
+                BST<uint, Resource<IRenderable>>    _entities;
+                ArrayList<Resource<IRenderable>>    _updates;
 
 
 

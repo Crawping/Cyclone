@@ -25,6 +25,7 @@ namespace Cyclone
                 virtual const Volume& Bounds()              const { return _geometry->Bounds(); }
                 /// <summary> Gets the geometric data that define the shape of the mesh. </summary>
                 Resource<IGeometric> Geometry()             const override { return _geometry; }
+                bool IsEmpty()                              const override { return _geometry.IsNull() || _geometry->IsEmpty(); }
 
                 const Vector3& Orientation()                const override { return _transform.Orientation(); }
                 const Vector3& Position()                   const override { return _transform.Position(); }

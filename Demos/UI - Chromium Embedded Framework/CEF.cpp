@@ -52,7 +52,9 @@ void Program::CreateSceneResources()
 
     _cube = Create<Entity3D>("Cube");
     _cube->
-         Geometry(cube)
+         Material(Create<Material3D>("Cube"))
+        .Model(Create<Model3D>("Cube"))
+        .Geometry(cube)
         .PrimaryColor(Color4::Gray)
         .SecondaryColor(Color4::White)
         .SpecularPower(10)
@@ -72,7 +74,9 @@ void Program::CreateSceneResources()
 
     _browser = Create<Entity3D>("Browser");
     _browser->
-         Ambience(1)
+         Material(Create<Material3D>("Browser"))
+        .Model(Create<Model3D>("Browser"))
+        .Ambience(1)
         .Geometry(browser)
         .Position(Vector3(RenderWindow->ClientArea().Scale() / 2.0f, -1.0f))
         .PrimaryColor(Color4::White)
@@ -81,13 +85,13 @@ void Program::CreateSceneResources()
         .Scale(Vector3(RenderWindow->ClientArea().Scale(), RenderWindow->Width()))
         .Texture(_image);
 
-    RenderScene->Insert(*_cube);
-    RenderScene->Insert(*_browser);
+    RenderScene->Insert(_cube);
+    RenderScene->Insert(_browser);
 }
 void Program::UpdateScene()
 {
     _cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
-    RenderScene->Update(*_cube);
+    RenderScene->Update(_cube);
     AdvancedRenderer::UpdateScene();
 }
 void Program::ProcessButtonPress(const PointerClickEvent& evt)

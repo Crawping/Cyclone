@@ -34,27 +34,27 @@ namespace Cyclone
         /** MATERIAL PROPERTIES **/
         Entity3D& Entity3D::Ambience(float value)
         {
-            _material.Ambience(value);
+            _material->Ambience(value);
             return *this;
         }
         Entity3D& Entity3D::PrimaryColor(const Color4& value)
         {
-            _material.PrimaryColor(value);
+            _material->PrimaryColor(value);
             return *this;
         }
         Entity3D& Entity3D::SecondaryColor(const Color4& value)
         {
-            _material.SecondaryColor(value);
+            _material->SecondaryColor(value);
             return *this;
         }
         Entity3D& Entity3D::SpecularPower(float value)
         {
-            _material.SpecularPower(value);
+            _material->SpecularPower(value);
             return *this;
         }
         Entity3D& Entity3D::Texture(Component<ITexture> value)
         {
-            _material.Texture(value);
+            _material->Texture(value);
             return *this;
         }
 

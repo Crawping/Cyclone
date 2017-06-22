@@ -34,11 +34,12 @@ namespace Cyclone
                 { 
                     return 
                         BufferCount() + GeometryCount() + MaterialCount() + 
-                        PipelineCount() + RenderableCount() + TextureCount() + 
-                        SettingsCount();
+                        ModelCount() + PipelineCount() + RenderableCount() + 
+                        TextureCount() + SettingsCount();
                 }
                 uint GeometryCount()    const { return _geometry.Count() - 1; }
                 uint MaterialCount()    const { return _materials.Count() - 1; }
+                uint ModelCount()       const { return _models.Count() - 1; }
                 uint PipelineCount()    const { return _pipelines.Count() - 1; }
                 uint RenderableCount()  const { return _renderables.Count() - 1; }
                 uint SettingsCount()    const { return _settings.Count() - 1; }
@@ -74,13 +75,14 @@ namespace Cyclone
                 template<typename T> bool Contains(uint key)            const
                 {
                     return
-                        Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(key)       :
-                        Meta::IsA<T, IGeometric>()          ? _geometry.Contains(key)      :
-                        Meta::IsA<T, IMaterial>()           ? _materials.Contains(key)     :
-                        Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Contains(key)     :
-                        Meta::IsA<T, IRenderable>()         ? _renderables.Contains(key)   :
-                        Meta::IsA<T, IGraphicsSettings>()   ? _settings.Contains(key)      :
-                        Meta::IsA<T, ITexture>()            ? _textures.Contains(key)      : false;
+                        Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Contains(key)        :
+                        Meta::IsA<T, IGeometric>()          ? _geometry.Contains(key)       :
+                        Meta::IsA<T, IMaterial>()           ? _materials.Contains(key)      :
+                        Meta::IsA<T, IModel>()              ? _models.Contains(key)         :
+                        Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Contains(key)      :
+                        Meta::IsA<T, IRenderable>()         ? _renderables.Contains(key)    :
+                        Meta::IsA<T, IGraphicsSettings>()   ? _settings.Contains(key)       :
+                        Meta::IsA<T, ITexture>()            ? _textures.Contains(key)       : false;
                 }
                 /// <summary> Creates a new graphics resource that can be used on the GPU. </summary>
                 template<typename T> Component<T> Create(const string& name)
@@ -105,6 +107,7 @@ namespace Cyclone
                     Meta::IsA<T, IGraphicsBuffer>()     ? _buffers.Remove(key)      :
                     Meta::IsA<T, IGeometric>()          ? _geometry.Remove(key)     :
                     Meta::IsA<T, IMaterial>()           ? _materials.Remove(key)    :
+                    Meta::IsA<T, IModel>()              ? _models.Remove(key)       :
                     Meta::IsA<T, IGraphicsPipeline>()   ? _pipelines.Remove(key)    : 
                     Meta::IsA<T, IRenderable>()         ? _renderables.Remove(key)  : 
                     Meta::IsA<T, IGraphicsSettings>()   ? _settings.Remove(key)     : _textures.Remove(key);
@@ -133,13 +136,14 @@ namespace Cyclone
             private:
 
                 /** DATA **/
-                BST<uint, Resource<IGraphicsBuffer, true>>     _buffers;
-                BST<uint, Resource<IGeometric, true>>          _geometry;
-                BST<uint, Resource<IMaterial, true>>           _materials;
-                BST<uint, Resource<IGraphicsPipeline, true>>   _pipelines;
-                BST<uint, Resource<IRenderable, true>>         _renderables;
-                BST<uint, Resource<IGraphicsSettings, true>>   _settings;
-                BST<uint, Resource<ITexture, true>>            _textures;
+                BST<uint, Resource<IGraphicsBuffer, true>>      _buffers;
+                BST<uint, Resource<IGeometric, true>>           _geometry;
+                BST<uint, Resource<IMaterial, true>>            _materials;
+                BST<uint, Resource<IModel, true>>               _models;
+                BST<uint, Resource<IGraphicsPipeline, true>>    _pipelines;
+                BST<uint, Resource<IRenderable, true>>          _renderables;
+                BST<uint, Resource<IGraphicsSettings, true>>    _settings;
+                BST<uint, Resource<ITexture, true>>             _textures;
 
 
 
@@ -147,13 +151,14 @@ namespace Cyclone
                 template<typename T> const T* Access(uint key)  const
                 {
                     return
-                        Meta::IsA<T, IGraphicsBuffer>()     ? dynamic_cast<T*>(&*_buffers[key])     :
-                        Meta::IsA<T, IGeometric>()          ? dynamic_cast<T*>(&*_geometry[key])    :
-                        Meta::IsA<T, IMaterial>()           ? dynamic_cast<T*>(&*_materials[key])   :
-                        Meta::IsA<T, IGraphicsPipeline>()   ? dynamic_cast<T*>(&*_pipelines[key])   :
-                        Meta::IsA<T, IRenderable>()         ? dynamic_cast<T*>(&*_renderables[key]) :
-                        Meta::IsA<T, IGraphicsSettings>()   ? dynamic_cast<T*>(&*_settings[key])    : 
-                        dynamic_cast<T*>(&*_textures[key]);
+                        Meta::IsA<T, IGraphicsBuffer>()     ? dynamic_cast<const T*>(&*_buffers[key])     :
+                        Meta::IsA<T, IGeometric>()          ? dynamic_cast<const T*>(&*_geometry[key])    :
+                        Meta::IsA<T, IMaterial>()           ? dynamic_cast<const T*>(&*_materials[key])   :
+                        Meta::IsA<T, IModel>()              ? dynamic_cast<const T*>(&*_models[key])      :
+                        Meta::IsA<T, IGraphicsPipeline>()   ? dynamic_cast<const T*>(&*_pipelines[key])   :
+                        Meta::IsA<T, IRenderable>()         ? dynamic_cast<const T*>(&*_renderables[key]) :
+                        Meta::IsA<T, IGraphicsSettings>()   ? dynamic_cast<const T*>(&*_settings[key])    : 
+                        dynamic_cast<const T*>(&*_textures[key]);
                 }
 
                 OpenGLAPI void Insert(const string& key, IGraphicsBuffer* value);
@@ -161,6 +166,7 @@ namespace Cyclone
                 OpenGLAPI void Insert(const string& key, IGraphicsSettings* value);
                 OpenGLAPI void Insert(const string& key, IGeometric* value);
                 OpenGLAPI void Insert(const string& key, IMaterial* value);
+                OpenGLAPI void Insert(const string& key, IModel* value);
                 OpenGLAPI void Insert(const string& key, IRenderable* value);
                 OpenGLAPI void Insert(const string& key, ITexture* value);
 

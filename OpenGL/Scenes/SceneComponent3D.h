@@ -3,9 +3,15 @@
  */
 
 #pragma once
+#include "Buffers/IndexBuffer.h"
+#include "Buffers/UniformMap.h"
+#include "Buffers/UniformBuffer.h"
+#include "Buffers/UniformData.h"
+#include "Buffers/VertexBuffer.h"
 #include "Collections/BST.h"
 #include "Collections/Set.h"
-#include "Geometry/Entity3D.h"
+//#include "Geometry/Entity3D.h"
+#include "Resources/Resource.h"
 #include "Scenes/SceneComponent.h"
 
 
@@ -23,6 +29,7 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                OpenGLAPI List<BufferBinding> Buffers()                 const override;
                 /// <summary> Gets a list of all rendering stages that must be executed to display the scene component. </summary>
                 OpenGLAPI List<IRenderStage&> Stages()                  const override;
 
@@ -35,26 +42,31 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI bool Contains(const IRenderable& entity)      const override;
-                OpenGLAPI void Insert(const IRenderable& entity)        override;
-                OpenGLAPI void Insert(Component<Entity3D> entity);
-                OpenGLAPI void Remove(const IRenderable& entity)        override;
-                OpenGLAPI void Update()                                 override;
-                OpenGLAPI void Update(const IRenderable& entity)        override;
+                OpenGLAPI void Insert(const Resource<IRenderable>& entity)  override;
+                OpenGLAPI void Update()                                     override;
+                OpenGLAPI void Update(const Resource<IRenderable>& entity)  override;
+
+            protected:
+
+                OpenGLAPI void UpdateGeometry(const Resource<IRenderable>& entity);
 
             private:
 
                 bool NeedsUpdate;
 
                 /** COLLECTIONS **/
-                BST<const IRenderable*, const ResourceMapping*>     Resources;
                 BST<PointTopologies, StageGroup3D*>                 Staging;
+
+                IndexBuffer                                         _indices;
+                UniformMap<uint, EntityData>                        _resources;
+                VertexBuffer<Vertex>                                _vertices;
+
+                BST<uint, Resource<IRenderable>>                    _entities;
 
 
 
                 /** UTILITIES **/
                 void ClearCommands();
-                void ClearMappings();
                 StageGroup3D* CreateStage(PointTopologies topology);
 
         };

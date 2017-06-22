@@ -12,13 +12,14 @@ namespace Cyclone
         ResourceLibrary2::ResourceLibrary2()
         {
             uint idNull = hash("Null");
-            _buffers.Insert     (idNull, std::move(Resource<IGraphicsBuffer,      true>()));
-            _geometry.Insert    (idNull, std::move(Resource<IGeometric,           true>()));
-            _materials.Insert   (idNull, std::move(Resource<IMaterial,            true>()));
-            _pipelines.Insert   (idNull, std::move(Resource<IGraphicsPipeline,    true>()));
-            _renderables.Insert (idNull, std::move(Resource<IRenderable,          true>()));
-            _settings.Insert    (idNull, std::move(Resource<IGraphicsSettings,    true>()));
-            _textures.Insert    (idNull, std::move(Resource<ITexture,             true>()));
+            Insert("Null", (IGraphicsBuffer*)nullptr);
+            Insert("Null", (IGeometric*)nullptr);
+            Insert("Null", (IMaterial*)nullptr);
+            Insert("Null", (IModel*)nullptr);
+            Insert("Null", (IGraphicsPipeline*)nullptr);
+            Insert("Null", (IRenderable*)nullptr);
+            Insert("Null", (IGraphicsSettings*)nullptr);
+            Insert("Null", (ITexture*)nullptr);
         }
         ResourceLibrary2::~ResourceLibrary2()
         {
@@ -43,6 +44,10 @@ namespace Cyclone
         void ResourceLibrary2::Insert(const string& key, IMaterial* value)
         {
             _materials.Insert(hash(key), std::move(Resource<IMaterial, true>(key, value)));
+        }
+        void ResourceLibrary2::Insert(const string& key, IModel* value)
+        {
+            _models.Insert(hash(key), std::move(Resource<IModel, true>(key, value)));
         }
         void ResourceLibrary2::Insert(const string& key, IGeometric* value)
         {
