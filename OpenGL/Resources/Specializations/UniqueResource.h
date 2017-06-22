@@ -120,5 +120,12 @@ namespace Cyclone
                 template<typename U>
                 bool operator !=(const Resource<U>& other)                  const { return !(operator ==(other)); }
         };
+
+
+
+        /** ALIASES **/
+        /// <summary> A data structure that holds a single uniquely allocated resource of which no copies can be made. </summary>
+        template<typename T> using UniqueResource = Resource<T, true>;
+
     }
 }

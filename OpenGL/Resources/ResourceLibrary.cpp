@@ -27,35 +27,35 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void ResourceLibrary::Insert(const string& key, IGraphicsBuffer* value)
         {
-            _buffers.Insert(hash(key), std::move(Resource<IGraphicsBuffer, true>(key, value)));
+            _buffers.Insert(hash(key), std::move(UniqueResource<IGraphicsBuffer>(key, value)));
         }
         void ResourceLibrary::Insert(const string& key, IGraphicsPipeline* value)
         {
-            _pipelines.Insert(hash(key), std::move(Resource<IGraphicsPipeline, true>(key, value)));
+            _pipelines.Insert(hash(key), std::move(UniqueResource<IGraphicsPipeline>(key, value)));
         }
         void ResourceLibrary::Insert(const string& key, IGraphicsSettings* value)
         {
-            _settings.Insert(hash(key), std::move(Resource<IGraphicsSettings, true>(key, value)));
+            _settings.Insert(hash(key), std::move(UniqueResource<IGraphicsSettings>(key, value)));
         }
         void ResourceLibrary::Insert(const string& key, IMaterial* value)
         {
-            _materials.Insert(hash(key), std::move(Resource<IMaterial, true>(key, value)));
+            _materials.Insert(hash(key), std::move(UniqueResource<IMaterial>(key, value)));
         }
         void ResourceLibrary::Insert(const string& key, IModel* value)
         {
-            _models.Insert(hash(key), std::move(Resource<IModel, true>(key, value)));
+            _models.Insert(hash(key), std::move(UniqueResource<IModel>(key, value)));
         }
         void ResourceLibrary::Insert(const string& key, IGeometric* value)
         {
-            _geometry.Insert(hash(key), std::move(Resource<IGeometric, true>(key, value)));
+            _geometry.Insert(hash(key), std::move(UniqueResource<IGeometric>(key, value)));
         }
         void ResourceLibrary::Insert(const string& key, IRenderable* value)
         {
-            _renderables.Insert(hash(key), std::move(Resource<IRenderable, true>(key, value)));
+            _renderables.Insert(hash(key), std::move(UniqueResource<IRenderable>(key, value)));
         }
         void ResourceLibrary::Insert(const string& key, ITexture* value)
         {
-            _textures.Insert(hash(key), std::move(Resource<ITexture, true>(key, value)));
+            _textures.Insert(hash(key), std::move(UniqueResource<ITexture>(key, value)));
         }
 
     }

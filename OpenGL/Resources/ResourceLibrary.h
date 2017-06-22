@@ -135,14 +135,14 @@ namespace Cyclone
             private:
 
                 /** DATA **/
-                BST<uint, Resource<IGraphicsBuffer, true>>      _buffers;
-                BST<uint, Resource<IGeometric, true>>           _geometry;
-                BST<uint, Resource<IMaterial, true>>            _materials;
-                BST<uint, Resource<IModel, true>>               _models;
-                BST<uint, Resource<IGraphicsPipeline, true>>    _pipelines;
-                BST<uint, Resource<IRenderable, true>>          _renderables;
-                BST<uint, Resource<IGraphicsSettings, true>>    _settings;
-                BST<uint, Resource<ITexture, true>>             _textures;
+                BST<uint, UniqueResource<IGraphicsBuffer>>      _buffers;
+                BST<uint, UniqueResource<IGeometric>>           _geometry;
+                BST<uint, UniqueResource<IMaterial>>            _materials;
+                BST<uint, UniqueResource<IModel>>               _models;
+                BST<uint, UniqueResource<IGraphicsPipeline>>    _pipelines;
+                BST<uint, UniqueResource<IRenderable>>          _renderables;
+                BST<uint, UniqueResource<IGraphicsSettings>>    _settings;
+                BST<uint, UniqueResource<ITexture>>             _textures;
 
 
 
