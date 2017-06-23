@@ -41,6 +41,8 @@ namespace Cyclone
                 virtual uint Count()                const = 0;
                 /// <summary> Gets a structure containing all of the data used to render the 3D geometric shape. </summary>
                 virtual const GeometryData& Data()  const = 0;
+
+                virtual uint IndexCount()           const = 0;
                 /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
                 /// <remarks>
                 ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will
@@ -57,6 +59,8 @@ namespace Cyclone
                 virtual Vector<Vector3> Mapping()   const = 0;
                 /// <summary> Gets an array of normal vectors associated with each point of the geometric shape. </summary>
                 virtual Vector<Vector3> Normals()   const = 0;
+
+                virtual uint PointCount()           const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
                 ///     This property is meant to be interpretted in one of a few possible ways. Most commonly, the name 'Points' will

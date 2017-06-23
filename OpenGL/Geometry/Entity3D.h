@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/IRenderStage.h"
 #include "IO/Event.h"
 #include "Libraries/Material3D.h"
 #include "Models/Model3D.h"
@@ -73,6 +74,9 @@ namespace Cyclone
 
                 //const IGraphicsSettings* Settings()                     const override { return &*_settings; }
                 Resource<IGraphicsSettings> Settings()                  const override { return _settings; }
+
+                Resource<IRenderStage> Stage()                          const override { return _stage; }
+
                 const Transform3D& Transform()                          const override { return _transform; }
 
 
@@ -111,6 +115,7 @@ namespace Cyclone
                 Resource<Material3D>            _material;
                 Resource<Model3D>               _model;
                 Resource<IGraphicsSettings>     _settings;
+                Resource<IRenderStage>          _stage;
                 Transform3D                     _transform;
 
         };

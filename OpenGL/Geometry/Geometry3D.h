@@ -3,9 +3,11 @@
  */
 
 #pragma once
+#include "Collections/ArrayList.h"
+#include "GL/OpenGLAPI.h"
+#include "Geometry/Vertex.h"
 #include "Interfaces/IGeometric.h"
 #include "Spatial/Volume.h"
-#include "GL/OpenGLAPI.h"
 
 
 
@@ -28,6 +30,8 @@ namespace Cyclone
                 uint Count()                            const override { return IsIndexed() ? _data.Indices.Count() : _data.Points.Count(); }
                 /// <summary> Gets a structure containing all of the data needed to render the 3D geometric shape. </summary>
                 const GeometryData& Data()              const override { return _data; }
+
+                uint IndexCount()                       const override { return _data.Indices.Count(); }
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
                 Vector<uint> Indices()                  const override { return _data.Indices; }
                 /// <summary> Gets whether the list of geometric points is indexed. </summary>
@@ -36,6 +40,8 @@ namespace Cyclone
                 Vector<Vector3> Mapping()               const override { return _data.Mapping; }
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>
                 Vector<Vector3> Normals()               const override { return _data.Normals; }
+
+                uint PointCount()                       const override { return _data.Points.Count(); }
                 /// <summary> Gets an array of points that define the prototypical shape of some geometry in 3D space. </summary>
                 Vector<Vector3> Points()                const override { return _data.Points; }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
@@ -86,6 +92,7 @@ namespace Cyclone
 
                 /** PROPERTY DATA **/
                 GeometryData        _data;
+                ArrayList<Vertex>   _vertices;
                 WindingOrders       _winding;
 
         };

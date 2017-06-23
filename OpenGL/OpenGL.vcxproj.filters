@@ -150,6 +150,9 @@
     <ClInclude Include="Pipelines\RenderLayer3D.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
+    <ClInclude Include="Pipelines\RenderLayer.h">
+      <Filter>Pipelines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
@@ -230,6 +233,10 @@
     <ClCompile Include="Geometry\Entity3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="Pipelines\RenderLayer3D.cpp">
+      <Filter>Pipelines</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipelines\RenderLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">

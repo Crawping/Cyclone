@@ -4,13 +4,8 @@
 
 #pragma once
 #include "Buffers/IndexBuffer.h"
-#include "Buffers/UniformData.h"
-#include "Buffers/UniformMap.h"
 #include "Buffers/VertexBuffer.h"
-#include "GL/OpenGLAPI.h"
-#include "Interfaces/IRenderable.h"
-#include "Interfaces/IGeometric.h"
-#include "Resources/ResourceLibrary.h"
+#include "Pipelines/RenderLayer.h"
 
 
 
@@ -18,57 +13,52 @@ namespace Cyclone
 {
     namespace OpenGL
     {
-        class RenderLayer3D
+        class RenderLayer3D: public RenderLayer
         {
             public:
 
-                template<typename T> using ResourceList = List< Resource<T> >;
+                //template<typename T> using ResourceList = List< Resource<T> >;
+
+
+                /** PROPERTIES **/
+                //ResourceList<IRenderStage> Stages()                             const { return _stages.Values(); }
 
 
 
-                ResourceList<IRenderStage> Stages()                             const { return _stages.Values(); }
+                /** CONSTRUCTOR **/
+                RenderLayer3D() { }
 
 
 
-
-                template<typename T> 
-                Resource<T> Create(const string& name)                          { return _resources.Create<T>(name); }
-                template<typename T, typename ... U>
-                Resource<T> Create(const string& name, const ICallback<T, U...>& constructor, U ... arguments)
-                {
-                    auto r = _resource.Create<T, U...>(name, constructor, arguments...);
-                    Insert(r);
-                    return r;
-                }
-                template<typename T> Resource<T> Get(const string& name)        { return _resources.Get<T>(name); }
-
-
-                OpenGLAPI void Update();
+                /** UTILITIES **/
+                OpenGLAPI void Insert(const Resource<IRenderable>& entity)  override;
+                OpenGLAPI void Insert(const Resource<IGeometric>& geometry);
+                OpenGLAPI void Update()                                     override;
+                OpenGLAPI void Update(const Resource<IGeometric>& geometry);
 
             private:
 
-                ResourceLibrary                     _resources;
+                struct GeometryData 
+                {
+                    uint IndicesCount;
+                    uint IndicesIndex;
+                    uint VertexCount;
+                    uint VertexIndex; 
+                };
 
-                UniformMap<uint, EntityData>        _entities;
                 IndexBuffer                         _indices;
-                UniformMap<uint, MaterialData>      _materials;
-                UniformMap<uint, TransformData>     _transforms;
                 VertexBuffer<Vertex>                _vertices;
-                
+
+                BST<uint, GeometryData>             _data;
                 BST<uint, Resource<IGeometric>>     _geometry;
-                BST<uint, Resource<IRenderable>>    _renderables;
-                BST<uint, Resource<IRenderStage>>   _stages;
+                ArrayList<Resource<IGeometric>>     _geometryUpdates;
 
 
-                template<typename T> void Insert(const Resource<T>&) const { }
+                OpenGLAPI bool Contains(const Resource<IGeometric>& geometry)   const;
+                OpenGLAPI Vector<Vector2> GatherCounts()                        const;
+                OpenGLAPI void UpdateGeometryData(const Resource<IGeometric>& geometry);
 
-                OpenGLAPI void Insert(const Resource<IRenderable>& entity);
-                OpenGLAPI void Insert(const Resource<IMaterial>& material);
-                OpenGLAPI void Insert(const Resource<IGeometric>& geometry);
 
-                OpenGLAPI void Update(const Resource<IRenderable>& entity);
-                OpenGLAPI void Update(const Resource<IMaterial>& material);
-                OpenGLAPI void Update(const Resource<IGeometric>& geometry);
         };
     }
 }

@@ -186,6 +186,7 @@
     <ClInclude Include="Models\Point3D.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
+    <ClInclude Include="Pipelines\RenderLayer.h" />
     <ClInclude Include="Pipelines\RenderLayer3D.h" />
     <ClInclude Include="Pipelines\RenderStage.h" />
     <ClInclude Include="Pipelines\RenderStage3D.h" />
@@ -217,6 +218,8 @@
     <ClCompile Include="Models\Point3D.cpp" />
     <ClCompile Include="Pipelines\ComputePipeline.cpp" />
     <ClCompile Include="Pipelines\GraphicsPipeline.cpp" />
+    <ClCompile Include="Pipelines\RenderLayer.cpp" />
+    <ClCompile Include="Pipelines\RenderLayer3D.cpp" />
     <ClCompile Include="Pipelines\RenderStage.cpp" />
     <ClCompile Include="Pipelines\RenderStage3D.cpp" />
     <ClCompile Include="Pipelines\Shader.cpp" />

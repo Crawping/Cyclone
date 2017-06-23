@@ -20,6 +20,7 @@ namespace Cyclone
         struct IGraphicsSettings;
         class IMaterial;
         class IModel;
+        class IRenderStage;
 
         using namespace Utilities;
 
@@ -39,6 +40,8 @@ namespace Cyclone
                 virtual const ISpatialTransform& Transform()        const = 0;
 
                 virtual Resource<IGraphicsSettings> Settings()      const = 0;
+
+                virtual Resource<IRenderStage> Stage()              const = 0;
 
 
 
