@@ -20,7 +20,7 @@ namespace Cyclone
         class GraphicsPipeline;
 
         /// <summary> A base structure that holds and manages the GPU settings needed to execute some rendering procedure. </summary>
-        struct RenderStage : public virtual IRenderStage
+        struct RenderStage: public virtual IRenderStage
         {
             public:
 
@@ -58,10 +58,10 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Adds a new buffer to the list of those used by the rendering stage. </summary>
                 /// <param name="binding"> A binding configuration containing the buffer and its associated attachment point. </param>
-                OpenGLAPI void Append(const BufferBinding& binding)            override;
+                OpenGLAPI void Append(const BufferBinding& binding)                 override;
                 /// <summary> Adds a collection of buffers to the list of those used by the rendering stage. </summary>
                 /// <param name="bindings"> A list of binding configurations containing the buffers and their associated attachment points. </param>
-                OpenGLAPI void Append(const List<BufferBinding>& bindings)     override;
+                OpenGLAPI void Append(const ICollection<BufferBinding>& bindings)   override;
                 /// <summary> Clears the list of buffers used by the rendering stage. </summary>
                 OpenGLAPI void ClearBuffers();
 

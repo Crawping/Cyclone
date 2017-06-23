@@ -101,7 +101,7 @@ namespace Cyclone
     void Program::UpdateScene()
     {
         Cube->Rotate(Vector3(0.01f, 0.05f, 0.01f));
-        Icosahedron->Rotate(-0.05f);
+        Icosahedron->Rotate(-0.025f);
 
         Color4 color
         (

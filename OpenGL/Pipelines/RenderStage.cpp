@@ -73,10 +73,10 @@ namespace Cyclone
         {
             _buffers.Append(binding);
         }
-        void RenderStage::Append(const List<BufferBinding>& bindings)
+        void RenderStage::Append(const ICollection<BufferBinding>& bindings)
         {
-            for (const auto& b : bindings)
-                Append(b);
+            for (uint a = 0; a < bindings.Count(); a++)
+                Append(bindings(a));
         }
         void RenderStage::ClearBuffers()
         {

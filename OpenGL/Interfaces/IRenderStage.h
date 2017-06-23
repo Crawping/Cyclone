@@ -4,7 +4,8 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "Collections/List.h"
+//#include "Collections/List.h"
+#include "Interfaces/ICollection.h"
 #include "Interfaces/IGraphicsBuffer.h"
 
 
@@ -45,14 +46,14 @@ namespace Cyclone
                 /** UTILITIES **/
                 /// <summary> Adds a resource buffer binding to the list of those used by the rendering stage. </summary>
                 /// <param name="binding"> A binding configuration containing the buffer and its associated attachment point. </param>
-                virtual void Append(const BufferBinding& buffer)        = 0;
+                virtual void Append(const BufferBinding& buffer)                = 0;
                 /// <summary> Adds a collection of buffer bindings to the list of those used by the rendering stage. </summary>
                 /// <param name="bindings"> A list of binding configurations containing the buffers and their associated attachment points. </param>
-                virtual void Append(const List<BufferBinding>& buffers) = 0;
+                virtual void Append(const ICollection<BufferBinding>& buffers)  = 0;
                 /// <summary> Resets the internal list of buffer bindings to its default configuration. </summary>
-                virtual void ClearBuffers()                             = 0;
+                virtual void ClearBuffers()                                     = 0;
                 /// <summary> Executes the rendering logic needed to display the contents of the stage's resource buffers. </summary>
-                virtual void Render()                                   const = 0;
+                virtual void Render()                                           const = 0;
         };
 
     }

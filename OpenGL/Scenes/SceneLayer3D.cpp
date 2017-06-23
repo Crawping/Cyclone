@@ -18,17 +18,9 @@ namespace Cyclone
         List<BufferBinding> SceneLayer3D::Buffers() const
         {
             auto buffers = SceneComponent3D::Buffers();
-            buffers.Append({ _materials, 3 });
-            buffers.Append({ _transforms, 4 });
+            buffers.Append({ _materials,    3 });
+            buffers.Append({ _transforms,   4 });
             return buffers;
-            //return
-            //{
-            //    { Vertices,     0 },
-            //    { Indices,      0 },
-            //    { Entities,     2 },
-            //    { Materials,    3 },
-            //    { Transforms,   4 },
-            //};
         }
         List<ISceneComponent&> SceneLayer3D::Components() const
         {
@@ -59,7 +51,7 @@ namespace Cyclone
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        SceneLayer3D::SceneLayer3D(const string& name, ISceneLayer& parent) : 
+        SceneLayer3D::SceneLayer3D(const string& name, ISceneLayer& parent): 
             SceneComponent3D(name, parent)
         {
 

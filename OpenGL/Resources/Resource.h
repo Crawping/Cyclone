@@ -45,6 +45,7 @@ namespace Cyclone
                 {
 
                 }
+                Resource(const Resource&) = default;
                 Resource(const string& name, T* value = nullptr):
                     Resource(hash(name), value)
                 {
