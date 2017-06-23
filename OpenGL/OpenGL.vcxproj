@@ -186,6 +186,7 @@
     <ClInclude Include="Models\Point3D.h" />
     <ClInclude Include="Pipelines\ComputePipeline.h" />
     <ClInclude Include="Pipelines\GraphicsPipeline.h" />
+    <ClInclude Include="Pipelines\RenderLayer3D.h" />
     <ClInclude Include="Pipelines\RenderStage.h" />
     <ClInclude Include="Pipelines\RenderStage3D.h" />
     <ClInclude Include="Pipelines\Shader.h" />

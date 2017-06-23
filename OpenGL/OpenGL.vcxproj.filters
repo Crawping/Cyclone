@@ -147,6 +147,9 @@
     <ClInclude Include="Resources\ResourceLibrary.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="Pipelines\RenderLayer3D.h">
+      <Filter>Pipelines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">
