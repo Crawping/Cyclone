@@ -6,7 +6,7 @@
 #include "EnumerationsGL.h"
 #include "Collections/ArrayList.h"
 #include "Buffers/GraphicsBuffer.h"
-//#include <vector>
+#include "Collections/Array.h"
 
 
 
@@ -22,42 +22,64 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                virtual uint Capacity()         const { return _data.Capacity(); }
 		        /// <summary> Gets the number of individual elements stored within this buffer. </summary>
-		        virtual uint Count()            const override { return Data.Count(); }
+		        virtual uint Count()            const override { return _data.Count(); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
 		        virtual ulong Stride()          const override { return sizeof(T); }
 
 
 
                 /** UTILITIES **/
-		        /// <summary> Removes all of the data currently stored within this buffer. </summary>
-		        virtual void Clear()                        override
-                {
-                    if (IsEmpty()) { return; }
-                    Data.Clear();
-                    GraphicsBuffer::Clear();
-                }
                 /// <summary> Inserts a value at the end of the buffer. </summary>
                 /// <param name="data"> The data element to be copied and inserted into the buffer. </param>
-                virtual void Append(const T& data)
+                virtual void Append(const T& value)
                 {
-                    Data.Append(data);
-                    NeedsUpdate(true);
+                    _data.Append(value);
+                    _updateRange = { Math::Min(_updateRange(0), Count() - 1), Count() };
+                    _needsUpdate = true;
                 }
                 /// <summary> Inserts multiple values at the end of the buffer. </summary>
                 /// <param name="data"> A generic collection of data elements to be copied and inserted into the buffer. </param>
-                virtual void Append(const ICollection<T>& data)
+                virtual void Append(const ICollection<T>& value)
                 {
-                    Data.Append(data);
-                    NeedsUpdate(true);
+                    _data.Append(value);
+                    _updateRange = { Math::Min(_updateRange(0), Count() - 1), Count() };
+                    _needsUpdate = true;
+                }
+		        /// <summary> Erases all of the data currently stored within this buffer. </summary>
+		        virtual void Clear()                        override
+                {
+                    if (IsEmpty()) { return; }
+                    _data.Clear();
+                    GraphicsBuffer::Clear();
+                }
+                /// <summary> Inserts a data element into the buffer at a specific location. </summary>
+                /// <param name="index"> The linear array index at which the value will be inserted into the buffer. </param>
+                /// <param name="value"> The value to be copied and inserted into the buffer. </param>
+                virtual void Insert(uint index, const T& value)
+                {
+                    _data.Insert(index, value);
+                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
+                    _needsUpdate = true;
+                }
+                /// <summary> Inserts multiple data elements into the buffer at a specific location. </summary>
+                /// <param name="index"> The linear array index at which to begin inserting values into the buffer. </param>
+                /// <param name="values"> A generic collection of values to be copied and inserted into the buffer. </param>
+                virtual void Insert(uint index, const ICollection<T>& values)
+                {
+                    _data.Insert(index, values);
+                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
+                    _needsUpdate = true;
                 }
                 /// <summary> Removes the data element at a specific array index from the GPU buffer. </summary>
                 /// <param name="index"> The array index of the data element to be removed from the buffer. </param>
-                virtual void Remove(uint index)
+                virtual void Remove(uint index, uint count = 1)
                 {
                     if (index >= Count()) { return; }
-                    Data.Remove(index);
-                    NeedsUpdate(true);
+                    _data.Remove(index, count);
+                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
+                    _needsUpdate = true;
                 }
                 /// <summary> Writes the contents of a single data element to the application-side memory held by this buffer. </summary>
 		        /// <param name="index">
@@ -81,37 +103,43 @@ namespace Cyclone
                 {
                     if (index >= Count())
                         return Append(data);
-                    else
-                        Data(index) = data;
 
-                    NeedsUpdate(true);
+                    _data.Set(index, data);
+                    _updateRange = { Math::Min(_updateRange(0), index), Math::Max(_updateRange(1), index + 1) };
+                    _needsUpdate = true;
                 }
-
+                /// <summary> Overwrites multiple data elements stored within the buffer. </summary>
+                /// <param name="index"> The linear array index at which to begin overwriting values in the buffer. </param>
+                /// <param name="data"> A generic collection of data elements to be copied into the buffer. </param>
                 virtual void Set(uint index, const ICollection<T>& data)
                 {
                     for (uint a = 0; a < data.Count(); a++)
-                        Data(index + a) = data(a);
-                    NeedsUpdate(true);
+                        _data.Set(index + a, data(a));
+
+                    _updateRange = { Math::Min(_updateRange(0), index), Math::Max(_updateRange(1), index + data.Count()) };
+                    _needsUpdate = true;
                 }
 		        /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
 		        virtual void Update()                       override
                 {
-                    if (!NeedsUpdate())     { return; }
-
+                    if (NeedsReallocation()) { Reallocate(Capacity()); }
                     GraphicsBuffer::Update();
+                    if (!_needsUpdate) { return; }
 
                     T* handles = (T*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
                     if (handles)
                         for (uint a = 0; a < Count(); a++)
-                            handles[a] = Data(a);
+                            handles[a] = _data(a);
 
                     GraphicsBuffer::Unmap();
+                    _needsUpdate = false;
+                    _updateRange = { Count(), 0 };
                 }
 
 
 
                 /** OPERATORS **/
-		        virtual const T& operator ()(int index)        const { return Data(index); }
+		        virtual const T& operator ()(int index)        const { return _data(index); }
 
             protected:
 
@@ -119,21 +147,23 @@ namespace Cyclone
                 /// <summary> Constructs an empty one-dimensional storage buffer whose data can be accessed on the GPU. </summary>
                 /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
 		        ArrayBuffer(BufferTypes type): GraphicsBuffer(type) { }
-                /// <summary> Constructs a one-dimensional storage buffer of a specified size whose data can accessed on the GPU. </summary>
-                /// <param name="type"> One of the <see cref="BufferTypes"/> enumerators specifying the type of buffer to be created. </param>
-                /// <param name="length"> The desired number of data elements to stored within the buffer. </param>
-		        ArrayBuffer(BufferTypes type, uint length) :
-                    GraphicsBuffer(type),
-                    Data(length)
+
+
+
+                /** UTILITIES **/
+                void Reallocate(uint count) override
                 {
-                    Allocate();
+                    GraphicsBuffer::Reallocate(count);
+                    _updateRange = { 0, Count() };
                 }
 
             private:
 
 		        /** PRIVATE DATA **/
 		        /// <summary> A copy of the data in the GPU buffer that is held in system memory. </summary>
-		        ArrayList<T> Data;
+		        ArrayList<T>    _data;
+                bool            _needsUpdate;
+                Array<uint, 2>  _updateRange;
 
         };
     }

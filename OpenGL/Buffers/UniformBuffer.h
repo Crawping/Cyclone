@@ -13,27 +13,26 @@ namespace Cyclone
     namespace OpenGL
     {
         template<typename T>
-        class UniformBuffer : public ArrayBuffer<T>
+        class UniformBuffer: public ArrayBuffer<T>
         {
 
             public:
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
-                UniformBuffer() : 
+                UniformBuffer(): 
                     ArrayBuffer<T>(BufferTypes::Uniform) 
                 { 
                     if (Stride() % 16 != 0)
                         Console::WriteLine("WARNING: A uniform buffer is being created with a type that is not aligned to a 16 byte boundary.");
                 }
-                ~UniformBuffer() { }
-
 
             protected:
-                void Reallocate() override
+
+                void Reallocate(uint count) override
                 {
                     Destroy();
                     Create();
-                    Allocate(BufferAccessIntents::Write | BufferAccessIntents::Dynamic);
+                    Allocate(BufferAccessIntents::Write | BufferAccessIntents::Dynamic, count);
                 }
 
         };

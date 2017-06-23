@@ -69,18 +69,18 @@ namespace Cyclone
         }
         void GraphicsBuffer::Update()
         {
-            if (NeedsReallocation()) { Reallocate(); }
+            if (NeedsReallocation()) { Reallocate(Count()); }
             _needsUpdate = false;
         }
 
 
 
         /** PROTECTED UTILITIES **/
-        void GraphicsBuffer::Allocate(BufferAccessIntents intent)
+        void GraphicsBuffer::Allocate(BufferAccessIntents intent, uint count)
         {
             if (!IsEmpty())
-                glNamedBufferStorage(ID(), ByteSize(), NULL, intent);
-            _gpuCount = Count();
+                glNamedBufferStorage(ID(), count * Stride(), NULL, intent);
+            _gpuCount = count;
         }
         void GraphicsBuffer::Create()
         {
@@ -103,6 +103,12 @@ namespace Cyclone
         void* GraphicsBuffer::Map(BufferAccessIntents intent)
         {
             return glMapNamedBufferRange(ID(), 0, ByteSize(), intent);
+        }
+        void GraphicsBuffer::Reallocate(uint count)
+        {
+            Destroy();
+            Create();
+            Allocate(BufferAccessIntents::Write, count);
         }
         void GraphicsBuffer::Unmap()
         {

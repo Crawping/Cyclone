@@ -20,26 +20,10 @@ namespace Cyclone
 
                 /** CONSTRUCTORS **/
                 /// <summary> Constructs an empty GPU buffer object that can be populated with a list of vertex indices. </summary>
-                IndexBuffer() : 
-                    IndexBuffer(0, nullptr)
-                {
-
-                }
-                /// <summary> Constructs a GPU buffer object that is initialized by an array of vertex indices. </summary>
-                /// <param name="indices"> A reference to an array of vertex indices. </param>
-                IndexBuffer(const Vector<uint>& indices) :
-                    IndexBuffer(indices.Count(), indices.ToArray())
-                {
-
-                }
-                /// <summary> Constructs a GPU buffer object that is initialized by an array of vertex indices. </summary>
-                /// <param name="n"> The number of indices present in the inputted index array. </param>
-                /// <param name="indices"> A pointer to the beginning of an n-length index array. </param>
-                IndexBuffer(uint n, const uint* indices) : 
+                IndexBuffer(): 
                     ArrayBuffer<uint>(BufferTypes::ElementArray)
                 {
-                    for (uint a = 0; a < n; a++)
-                        Set(a, indices[a]);
+
                 }
 
         };

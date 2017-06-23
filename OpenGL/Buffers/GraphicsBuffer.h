@@ -41,7 +41,7 @@ namespace Cyclone
                 /** BUFFER UTILITIES **/
 		        /// <summary> Removes all of the data currently stored within this buffer. </summary>
                 OpenGLAPI virtual void Clear();
-		        /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
+		        /// <summary> Transfers all application-side data fo und within this buffer over to its corresponding GPU storage. </summary>
                 OpenGLAPI virtual void Update();
 
 
@@ -65,7 +65,7 @@ namespace Cyclone
 
                 /** PROTECTED PROPERTIES **/
                 /// <summary> Gets whether this buffer needs to be reallocated on the GPU. </summary>
-                bool NeedsReallocation()                const { return _gpuCount != Count(); }
+                bool NeedsReallocation()                const { return Count() > _gpuCount; }
 
                 /// <summary> Sets whether this buffer needs any kind of update on the GPU side. </summary>
                 void NeedsUpdate(bool value)            { _needsUpdate = NeedsUpdate() ? true : value; }
@@ -81,7 +81,7 @@ namespace Cyclone
 
                 /** PROTECTED UTILITIES **/
 		        /// <summary> Reserves memory on the GPU for storing all of the data found within this buffer. </summary>
-                OpenGLAPI virtual void Allocate(BufferAccessIntents intent);
+                OpenGLAPI virtual void Allocate(BufferAccessIntents intent, uint count);
 		        /// <summary> Generates a new buffer object on the GPU that can be used to store data. </summary>
                 OpenGLAPI virtual void Create();
 		        /// <summary> Deletes the buffer object on the GPU. </summary>
@@ -93,12 +93,7 @@ namespace Cyclone
                 /// </remarks>
                 OpenGLAPI virtual void* Map(BufferAccessIntents intent);
 		        /// <summary> Summarily destroys, recreates, and reallocates this buffer on the GPU. </summary>
-                OpenGLAPI virtual void Reallocate()
-                {
-                    Destroy();
-                    Create();
-                    Allocate(BufferAccessIntents::Write);
-                }
+                OpenGLAPI virtual void Reallocate(uint count);
                 /// <summary> Destroys the array of handles that were created by <see cref="Map"/>. </summary>
                 /// <remarks>
                 ///     This method should always be called after editing GPU resources using <see cref="Map"/>.
