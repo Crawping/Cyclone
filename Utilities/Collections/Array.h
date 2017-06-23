@@ -175,6 +175,7 @@ namespace Cyclone
                 {
                     return Array<T, V...>(*this, indices.Flatten());
                 }
+
                 /// <summary> Gets the value stored at a particular linear index within the array. </summary>
                 /// <returns> A reference to the value found at the given index. </returns>
                 /// <param name="index"> The linear array index at which the desired element is stored. </param>
@@ -183,6 +184,9 @@ namespace Cyclone
                 /// <returns> A reference to the value found at the given index. </returns>
                 /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 constexpr const T& operator ()(uint index)                          const { return _values[index]; }
+
+                template<typename ... V>
+                constexpr T& operator ()(V ... indices)                             { return _values[IndexOf(indices...)]; }
                 /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
                 /// <returns> A reference to the value found at the given indices. </returns>
                 /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
