@@ -68,7 +68,6 @@ namespace Cyclone
                 UniformMap<uint, MaterialData>      _materials;
                 UniformMap<uint, TransformData>     _transforms;
 
-
                 BST<uint, Resource<IRenderable>>    _entities;
                 ArrayList<Resource<IRenderable>>    _updates;
 

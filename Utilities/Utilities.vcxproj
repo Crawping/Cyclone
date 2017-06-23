@@ -182,7 +182,6 @@
     <ClInclude Include="Collections\List.h" />
     <ClInclude Include="Collections\ArrayList.h" />
     <ClInclude Include="Collections\Multiset.h" />
-    <ClInclude Include="Collections\Object.h" />
     <ClInclude Include="Collections\Octree.h" />
     <ClInclude Include="Collections\Quadtree.h" />
     <ClInclude Include="Collections\Registry.h" />

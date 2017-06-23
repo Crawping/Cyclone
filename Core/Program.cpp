@@ -53,6 +53,8 @@ namespace Cyclone
 	{
         BasicRenderer::CreateSceneResources();
 
+        auto clArea = RenderWindow->ClientArea();
+
         auto gcube = Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
         auto gplane = Create("Plane", Function<Mesh3D, bool>(&Mesh3D::Quad), true);
         auto gicos = Create("Icosahedron", Function<Mesh3D, bool>(&Mesh3D::Icosahedron), false);
@@ -67,7 +69,8 @@ namespace Cyclone
             .Geometry(gplane)
             .PrimaryColor(Color4::Blue)
             .Pitch(-90)
-            .Scale(5000).Translate(0, 50, 0);
+            .Scale(5000)
+            .Translate(0, 50, 0);
 
         Cube->
              Material(Create<Material3D>("Cube"))
@@ -75,7 +78,7 @@ namespace Cyclone
             .Geometry(gcube)
             .PrimaryColor(Color4::Gray)
             .Scale(50)
-            .Translate(250, 250, -10);
+            .Translate(Vector3(0.25f * clArea.Width, 0.5f * clArea.Height, -10));
 
         Icosahedron->
              Material(Create<Material3D>("Icosahedron"))
@@ -83,14 +86,14 @@ namespace Cyclone
             .Geometry(gicos)
             .PrimaryColor(Color4::Red)
             .Scale(50)
-            .Translate(750, 250, -10);
+            .Translate(0.75f * clArea.Width, 0.5f * clArea.Height, -10);
 
         auto cube2 = Create<Entity3D>("Cube2");
         cube2->
              Material(Icosahedron->Material())
             .Model(Cube->Model())
             .Scale(100)
-            .Translate(500, 250, -150);
+            .Translate(0.5f * clArea.Width, 0.5f * clArea.Height, -10);
 
         RenderScene->Insert(Icosahedron);
         RenderScene->Insert(Cube);

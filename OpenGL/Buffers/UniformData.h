@@ -106,6 +106,16 @@ namespace Cyclone
             {
 
             }
+            constexpr MaterialData(Color4 primary, Color4 secondary, ulong texture, float ambience, float specularity, bool isTextured):
+                PrimaryColor(primary),
+                SecondaryColor(secondary),
+                Texture(texture),
+                Ambience(ambience),
+                SpecularPower(specularity),
+                IsTextured(isTextured)
+            {
+
+            }
 
             /// <summary> Determines whether two material data structures are equivalent. </summary>
             constexpr bool operator ==(const MaterialData& other) const

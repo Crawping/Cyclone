@@ -215,9 +215,6 @@
     <ClInclude Include="Collections\Structure.h">
       <Filter>Collections</Filter>
     </ClInclude>
-    <ClInclude Include="Collections\Object.h">
-      <Filter>Collections</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
