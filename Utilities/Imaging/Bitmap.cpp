@@ -17,18 +17,6 @@ namespace Cyclone
         {
             Reallocate(size);
         }
-        Bitmap::Bitmap(Bitmap&& other) :
-            _size(other._size),
-            _pixels(other._pixels)
-        {
-            
-        }
-        Bitmap::Bitmap(const Bitmap& other) :
-            _size(other.Size()),
-            _pixels(other._pixels)
-        {
-            
-        }
 
 
 
@@ -77,18 +65,6 @@ namespace Cyclone
         {
             int idx = (c * Height() * Width()) + sub2ind(Height(), Width(), a, b);
             return _pixels(idx);
-        }
-        Bitmap& Bitmap::operator =(Bitmap& other)
-        {
-            _size = other._size;
-            _pixels = other._pixels;
-            return *this;
-        }
-        Bitmap& Bitmap::operator =(Bitmap&& other)
-        {
-            std::swap(_size, other._size);
-            std::swap(_pixels, other._pixels);
-            return *this;
         }
 
     }
