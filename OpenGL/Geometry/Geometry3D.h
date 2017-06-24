@@ -27,27 +27,30 @@ namespace Cyclone
                 /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
                 const Volume& Bounds()                  const override { return _data.Bounds; }
                 /// <summary> Gets the number of points that are used to define the 3D geometric shape. </summary>
-                uint Count()                            const override { return IsIndexed() ? _data.Indices.Count() : _data.Points.Count(); }
+                uint Count()                            const override { return IsIndexed() ? _indices.Count() : _vertices.Count(); }
                 /// <summary> Gets a structure containing all of the data needed to render the 3D geometric shape. </summary>
                 const GeometryData& Data()              const override { return _data; }
 
-                uint IndexCount()                       const override { return _data.Indices.Count(); }
+                uint IndexCount()                       const override { return _indices.Count(); }
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
-                Vector<uint> Indices()                  const override { return _data.Indices; }
+                Vector<uint> Indices()                  const override { return _indices.ToVector(); }
                 /// <summary> Gets whether the list of geometric points is indexed. </summary>
-                bool IsIndexed()                        const { return !_data.Indices.IsEmpty(); }
+                bool IsIndexed()                        const { return !_indices.IsEmpty(); }
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
-                Vector<Vector3> Mapping()               const override { return _data.Mapping; }
+                Vector<Vector3> Mapping()               const override { return _vertices.Gather(Field<Vector3, Vertex>(&Vertex::UV)); }
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>
-                Vector<Vector3> Normals()               const override { return _data.Normals; }
+                Vector<Vector3> Normals()               const override { return _vertices.Gather(Field<Vector3, Vertex>(&Vertex::Normal)); }
 
-                uint PointCount()                       const override { return _data.Points.Count(); }
+                uint PointCount()                       const override { return _vertices.Count(); }
                 /// <summary> Gets an array of points that define the prototypical shape of some geometry in 3D space. </summary>
-                Vector<Vector3> Points()                const override { return _data.Points; }
+                Vector<Vector3> Points()                const override { return _vertices.Gather(Field<Vector3, Vertex>(&Vertex::Position)); }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
                 PointTopologies Topology()              const override { return _data.Topology; }
 
+                Vector<Vertex> Vertices()               const override { return _vertices.ToVector(); }
+
                 virtual WindingOrders Winding()         const { return _winding; }
+
 
                 OpenGLAPI virtual Geometry3D& Indices(const ICollection<uint>& value);
                 OpenGLAPI virtual Geometry3D& Mapping(const ICollection<Vector3>& value);
@@ -60,6 +63,8 @@ namespace Cyclone
                 OpenGLAPI virtual Geometry3D& Data(const GeometryData& value);
                 /// <summary> Sets the type of primitive that the points of the geometry construct. </summary>
                 OpenGLAPI virtual Geometry3D& Topology(PointTopologies value);
+
+                OpenGLAPI virtual Geometry3D& Vertices(const ICollection<Vertex>& value);
 
 
 
@@ -77,21 +82,17 @@ namespace Cyclone
 
             protected:
 
-                /// <summary> Sets the (x, y, z) position of the back-lower-left bounding box corner in 3D space. </summary>
-                virtual Geometry3D& BoundaryPosition(const Vector3& value)
-                {
-                    return Bounds(Volume(value, Bounds().Size()));
-                }
-                /// <summary> Sets the (width, height, depth) size of the bounding volume in 3D space. </summary>
-                virtual Geometry3D& BoundarySize(const Vector3& value)
-                {
-                    return Bounds(Volume(Bounds().Position(), value));
-                }
+                OpenGLAPI virtual void Append(uint index);
+                OpenGLAPI virtual void Append(const Vertex& vertex);
+                OpenGLAPI virtual void Append(const ICollection<uint>& indices);
+                OpenGLAPI virtual void Append(const ICollection<Vertex>& vertices);
+                OpenGLAPI virtual void Append(const Vector3& position, const Vector3& normal, const Vector3& mapping);
 
             private:
 
                 /** PROPERTY DATA **/
                 GeometryData        _data;
+                ArrayList<uint>     _indices;
                 ArrayList<Vertex>   _vertices;
                 WindingOrders       _winding;
 

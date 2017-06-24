@@ -26,38 +26,6 @@ namespace Cyclone
 
 
 
-        /** PROPERTIES **/
-        Vector<Vertex> Mesh3D::Vertices() const
-        {
-            Vector<Vector3> mapping(Mapping()), normals(Normals()), points(Points());
-            Vector<Vertex> vertices(points.Count());
-            for (uint a = 0; a < points.Count(); a++)
-                vertices(a) = Vertex( points(a), normals(a), mapping(a) );
-
-            return vertices;
-        }
-
-        Mesh3D& Mesh3D::Vertices(const ICollection<Vertex>& value)
-        {
-            uint count = value.Count();
-            Vector<Vector3> mapping(count), normals(count), points(count);
-            for (uint a = 0; a < count; a++)
-            {
-                Vertex vertex = value(a);
-                mapping(a) = vertex.UV;
-                normals(a) = vertex.Normal;
-                points(a) = vertex.Position;
-            }
-
-            Mapping(mapping)
-                .Normals(normals)
-                .Points(points);
-
-            return *this;
-        }
-
-
-
         /** PUBLIC UTILITIES **/
         void Mesh3D::CalculateNormals()
         {
@@ -178,27 +146,7 @@ namespace Cyclone
 
 
 
-        /** PROTECTED UTILITIES **/
-        void Mesh3D::Append(uint index)
-        {
 
-        }
-        void Mesh3D::Append(const Vertex& vertex)
-        {
-
-        }
-        void Mesh3D::Append(const ICollection<uint>& indices)
-        {
-
-        }
-        void Mesh3D::Append(const ICollection<Vertex>& vertices)
-        {
-
-        }
-        void Mesh3D::Append(const Vector3& position, const Vector3& normal, const Vector3& mapping)
-        {
-
-        }
 
 
 
@@ -313,7 +261,7 @@ namespace Cyclone
                 10,  1,  6,    11,  0,  9,     2, 11,  9,     5,  2,  9,    11,  2,  7,
             };
 
-            Vector<Vector3> points =
+            Vector<Vertex> vertices =
             {
                 { -0.525731f,          0,  0.850651f }, // 0
                 {  0.525731f,          0,  0.850651f }, // 1
@@ -330,7 +278,7 @@ namespace Cyclone
             };
 
             geometry.Indices(indices);
-            geometry.Points(points);
+            geometry.Vertices(vertices);
 
             if (!isIndexed)
                 geometry.Unindex();

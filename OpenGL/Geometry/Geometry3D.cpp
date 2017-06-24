@@ -25,25 +25,29 @@ namespace Cyclone
                 .Points(value.Points)
                 .Topology(value.Topology);
         }
-        
         Geometry3D& Geometry3D::Indices(const ICollection<uint>& value)
         {
-            _data.Indices = Vector<uint>(value, 0, value.Count());
+            _indices.Clear();
+            _indices.Append(value);
             return *this;
         }
         Geometry3D& Geometry3D::Mapping(const ICollection<Vector3>& value)
         {
-            _data.Mapping = Vector<Vector3>(value, 0, value.Count());
+            
+            for (uint a = 0; a < Math::Max(Count(), value.Count()); a++)
+                _vertices(a).UV = value(a);
             return *this;
         }
         Geometry3D& Geometry3D::Normals(const ICollection<Vector3>& value)
         {
-            _data.Normals = Vector<Vector3>(value, 0, value.Count());
+            for (uint a = 0; a < Math::Max(Count(), value.Count()); a++)
+                _vertices(a).Normal = value(a);
             return *this;
         }
         Geometry3D& Geometry3D::Points(const ICollection<Vector3>& value)
         {
-            _data.Points = Vector<Vector3>(value, 0, value.Count());
+            for (uint a = 0; a < Math::Max(Count(), value.Count()); a++)
+                _vertices(a).Position = value(a);
             return *this;
         }
         Geometry3D& Geometry3D::Topology(PointTopologies value)
@@ -51,6 +55,13 @@ namespace Cyclone
             _data.Topology = value;
             return *this;
         }
+        Geometry3D& Geometry3D::Vertices(const ICollection<Vertex>& value)
+        {
+            _vertices.Clear();
+            _vertices.Append(value);
+            return *this;
+        }
+
 
 
         /** CONSTRUCTOR **/
@@ -69,6 +80,30 @@ namespace Cyclone
         bool Geometry3D::Intersects(const LineSegment3D& line)    const
         {
             return false;
+        }
+
+
+
+        /** PROTECTED UTILITIES **/
+        void Geometry3D::Append(uint index)
+        {
+            _indices.Append(index);
+        }
+        void Geometry3D::Append(const Vertex& vertex)
+        {
+            _vertices.Append(vertex);
+        }
+        void Geometry3D::Append(const ICollection<uint>& indices)
+        {
+            _indices.Append(indices);
+        }
+        void Geometry3D::Append(const ICollection<Vertex>& vertices)
+        {
+            _vertices.Append(vertices);
+        }
+        void Geometry3D::Append(const Vector3& position, const Vector3& normal, const Vector3& mapping)
+        {
+            _vertices.Append(Vertex(position, normal, mapping));
         }
 
     }

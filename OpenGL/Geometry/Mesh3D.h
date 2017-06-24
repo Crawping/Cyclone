@@ -17,15 +17,6 @@ namespace Cyclone
         {
             public:
 
-                /** PROPERTIES **/
-                /// <summary> Gets a vector of vertices containing the mapping, normal, and point data for the mesh. </summary>
-                OpenGLAPI Vector<Vertex> Vertices() const;
-                /// <summary> Sets the mapping, normal, and point data for the mesh. </summary>
-                /// <param name="value"> A vector of vertex data structures. </param>
-                OpenGLAPI Mesh3D& Vertices(const ICollection<Vertex>& value);
-
-
-
                 /** STATIC CONSTRUCTORS **/
                 /// <summary> Constructs a cube with unit dimensions spanning the coordinates (-0.5, -0.5, -0.5) to (0.5, 0.5, 0.5). </summary>
                 /// <param name="isIndexed"> Indicates whether the vertices of the cube should be indexed or shared. </param>
@@ -86,14 +77,6 @@ namespace Cyclone
                 ///     decompresses all internal data stores.
                 /// </remarks>
                 OpenGLAPI void Unindex();
-
-            protected:
-                
-                OpenGLAPI virtual void Append(uint index);
-                OpenGLAPI virtual void Append(const Vertex& vertex);
-                OpenGLAPI virtual void Append(const ICollection<uint>& indices);
-                OpenGLAPI virtual void Append(const ICollection<Vertex>& vertices);
-                OpenGLAPI virtual void Append(const Vector3& position, const Vector3& normal, const Vector3& mapping);
 
             private:
 

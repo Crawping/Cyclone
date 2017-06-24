@@ -5,6 +5,7 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "Collections/Vector.h"
+#include "Geometry/Vertex.h"
 #include "Interfaces/IGraphicsResource.h"
 #include "Spatial/Volume.h"
 
@@ -71,6 +72,8 @@ namespace Cyclone
                 virtual Vector<Vector3> Points()    const = 0;
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual PointTopologies Topology()  const = 0;
+
+                virtual Vector<Vertex> Vertices()   const = 0;
 
 
 
