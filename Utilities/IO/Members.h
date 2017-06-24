@@ -26,34 +26,6 @@ namespace Cyclone
                 Member* Copy()                                  const = 0;
         };
 
-        template<typename T, typename U>
-        struct Field: public Member<T, U>
-        {
-            private:
-                
-                MemberPointer<T, U>     _field;
-
-            public:
-
-                Field(U* object, MemberPointer<T, U> field):
-                    Member(object),
-                    _field(field)
-                {
-
-                }
-
-                Field* Copy()                                   const override { return new Field(_object, _field); }
-                T Invoke()                                      const override { return (_object->*_field); }
-                void Invoke(T value)                            { (_object->*_field) = value; }
-
-                T operator ()()                                 const override { return Invoke(); }
-                void operator ()(T value)                       { Invoke(value); }
-                bool operator ==(const ICallback<T>& other)     const override
-                {
-                    return (dynamic_cast<Field<T, U>*>(&other) != nullptr);
-                }
-        };
-
         /// <summary> A structure that represents a pointer to a class method. </summary>
         /// <typeparam name="T"> The name of the class to which the method belongs. </typeparam>
         /// <typeparam name="U"> A list of types that match the class method's input argument signature. </typeparam>
