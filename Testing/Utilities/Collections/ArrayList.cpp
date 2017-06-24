@@ -3,6 +3,7 @@
  */
 
 #include "Collections/ArrayList.h"
+#include "Math/Vector3.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;
@@ -19,7 +20,7 @@ class _ArrayList: public testing::Test
         ArrayList<int>      _l0;
         ArrayList<int>      _l1;
         ArrayList<ulong>    _l2;
-
+        ArrayList<Vector3>  _l3;
 
         _ArrayList() : 
             _v2(512),
@@ -27,6 +28,9 @@ class _ArrayList: public testing::Test
         {
             _v2.Fill(9);
             _l2.Insert(0, 10);
+
+            for (uint a = 0; a < 10; a++)
+                _l3.Append(Vector3(a));
         }
 
 };
@@ -141,6 +145,19 @@ TEST_F(_ArrayList, Find)
     ASSERT_EQ(_l1.Find(3),       3);
     ASSERT_EQ(_l1.Find(5),       5);
     ASSERT_EQ(_l1.Find(-10),    -1);
+}
+TEST_F(_ArrayList, Gather)
+{
+    auto lengths = _l3.Gather(Getter<float, const Vector3>(&Vector3::Norm));
+    auto x = _l3.Gather(Field<float, Vector3>(&Vector3::X));
+    auto y = _l3.Gather(Field<float, Vector3>(&Vector3::Y));
+
+    for (uint a = 0; a < lengths.Count(); a++)
+    {
+        ASSERT_EQ(lengths(a),   _l3(a).Norm());
+        ASSERT_EQ(x(a),         _l3(a).X);
+        ASSERT_EQ(y(a),         _l3(a).Y);
+    }
 }
 TEST_F(_ArrayList, Reallocation)
 {
