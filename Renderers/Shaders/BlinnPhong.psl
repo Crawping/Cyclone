@@ -11,7 +11,7 @@ out vec4 OutputColor;
 in PixelShaderInput
 {
     flat int    EntityIndex;
-    vec2        TexUV;
+    vec3        TexUVW;
     vec3        ToEye;
     vec3        ToLight;
     vec3        WorldNormal;
@@ -29,7 +29,7 @@ void main(void)
     vec3 toLight    = normalize(Input.ToLight);
     vec3 halfway    = normalize(toLight + toEye);
 
-    vec3 color      = mat.IsTextured ? texture(mat.Texture, Input.TexUV).rgb : mat.PrimaryColor.rgb;
+    vec3 color      = mat.IsTextured ? texture(mat.Texture, Input.TexUVW.xy).rgb : mat.PrimaryColor.rgb;
 
     vec3 diffuse    = max(dot(normal, toLight), mat.Ambience) * mat.PrimaryColor.rgb;
     vec3 specular   = SpecularBlinnPhong(normal, toLight, toEye, mat.SpecularPower) * mat.SecondaryColor.rgb;

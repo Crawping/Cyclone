@@ -35,7 +35,7 @@ namespace Cyclone
         {
             
             for (uint a = 0; a < Math::Max(Count(), value.Count()); a++)
-                _vertices(a).UV = value(a);
+                _vertices(a).UVW = value(a);
             return *this;
         }
         Geometry3D& Geometry3D::Normals(const ICollection<Vector3>& value)

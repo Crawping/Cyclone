@@ -53,8 +53,8 @@ namespace Cyclone
             Vector3 Position;
             /// <summary> The (x, y, z) direction of a vector that is perpendicular to the surface surrounding the vertex. </summary>
             Vector3 Normal;
-            /// <summary> The (u, v) texture coordinates associated with the vertex. </summary>
-            Vector2 UV;
+            /// <summary> The (u, v, w) texture coordinates associated with the vertex. </summary>
+            Vector3 UVW;
 
 
 
@@ -65,7 +65,7 @@ namespace Cyclone
                 {
                     { 3, NumericFormats::Float, "Position", offsetof(Vertex, Position) },
                     { 3, NumericFormats::Float, "Normal", offsetof(Vertex, Normal) },
-                    { 2, NumericFormats::Float, "UV", offsetof(Vertex, UV) },
+                    { 3, NumericFormats::Float, "UVW", offsetof(Vertex, UVW) },
                 };
             }
 
@@ -76,42 +76,34 @@ namespace Cyclone
             constexpr Vertex():
                 Position(0.0f),
                 Normal(0.0f),
-                UV(0.0f)
+                UVW(0.0f)
             {
 
             }
             /// <summary> Constructs a 3D polygon vertex that can used on the GPU. </summary>
             /// <param name="position"> The desired position of the vertex in 3D space. </param>
             /// <param name="normal"> The desired direction of the vector considered normal to the vertex. </param>
-            /// <param name="uv"> The mapping of the vertex into 2D texture UV space. </param>
-            constexpr Vertex(const Vector3& position, const Vector3& normal, const Vector2& uv) :
+            /// <param name="uvw"> The mapping of the vertex into 3D texture UVW space. </param>
+            constexpr Vertex(const Vector3& position, const Vector3& normal, const Vector3& uvw) :
                 Position(position),
                 Normal(normal),
-                UV(uv)
+                UVW(uvw)
             {
 
             }
 
-            constexpr Vertex(const Vector3& position, const Vector3& normal, const Vector3& uv) :
-                Position(position),
-                Normal(normal),
-                UV((Vector2)uv)
-            {
-
-            }
-
-            constexpr Vertex(float x, float y, float z, float nx, float ny, float nz, float u, float v) :
+            constexpr Vertex(float x, float y, float z, float nx, float ny, float nz, float u, float v, float w) :
                 Position(x, y, z),
                 Normal(nx, ny, nz),
-                UV(u, v)
+                UVW(u, v, w)
             {
 
             }
 
-            constexpr Vertex(float x, float y, float z, float u = 0.0f, float v = 0.0f):
+            constexpr Vertex(float x, float y, float z, float u = 0.0f, float v = 0.0f, float w = 0.0f):
                 Position(x, y, z),
                 Normal(0.0f),
-                UV(u, v)
+                UVW(u, v, w)
             {
 
             }
@@ -124,7 +116,7 @@ namespace Cyclone
                 return
                     (Position == other.Position)    && 
                     (Normal == other.Normal)        && 
-                    (UV == other.UV);
+                    (UVW == other.UVW);
             }
             constexpr bool operator !=(const Vertex& other) const { return !operator ==(other); }
 

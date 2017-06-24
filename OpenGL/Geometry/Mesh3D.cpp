@@ -20,7 +20,7 @@ namespace Cyclone
             (
                 midpoint(u.Position, v.Position),
                 midpoint(u.Normal, v.Normal),
-                (Vector2)midpoint(u.UV, v.UV)
+                midpoint(u.UVW, v.UVW)
             );
         }
 

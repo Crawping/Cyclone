@@ -10,7 +10,7 @@ out vec4 OutputColor;
 in PixelShaderInput
 {
     flat int    EntityIndex;
-    vec2        TexUV;
+    vec3        TexUVW;
 } Input;
 
 
@@ -21,7 +21,7 @@ void main(void)
     EntityData ids      = Entities[Input.EntityIndex];
     MaterialData mat    = Materials[ids.MaterialIndex];
 
-    OutputColor = mat.IsTextured            ? 
-        texture(mat.Texture, Input.TexUV)   : 
+    OutputColor = mat.IsTextured                ? 
+        texture(mat.Texture, Input.TexUVW.xy)   : 
         mat.PrimaryColor;
 }

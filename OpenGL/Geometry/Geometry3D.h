@@ -37,7 +37,7 @@ namespace Cyclone
                 /// <summary> Gets whether the list of geometric points is indexed. </summary>
                 bool IsIndexed()                        const { return !_indices.IsEmpty(); }
                 /// <summary> Gets an array of values that map each geometric point onto some other resource. </summary>
-                Vector<Vector3> Mapping()               const override { return _vertices.Gather(Field<Vector3, Vertex>(&Vertex::UV)); }
+                Vector<Vector3> Mapping()               const override { return _vertices.Gather(Field<Vector3, Vertex>(&Vertex::UVW)); }
                 /// <summary> Gets an array of normal vectors associated with each point of the geometry. </summary>
                 Vector<Vector3> Normals()               const override { return _vertices.Gather(Field<Vector3, Vertex>(&Vertex::Normal)); }
 
