@@ -35,6 +35,12 @@ namespace Cyclone
         struct Accessor<MemberPointer<T, U>>:                   public Functor<MemberPointer<T, U>>
         {
             using Functor::Functor;
+
+            T operator ()(U* object)                            const { return (object->*_value); }
+            T operator ()(U& object)                            const { return (object.*_value); }
+            T operator ()(const U* object)                      const { return (object->*_value); }
+            T operator ()(const U& object)                      const { return (object.*_value); }
+
             T operator ()(U* object, T value)                   const { return (object->*_value) = value; }
             T operator ()(U& object, T value)                   const { return (object.*_value) = value; }
         };
@@ -43,8 +49,8 @@ namespace Cyclone
         struct Accessor<ConstMethodPointer<T, U, V...>>:        public Functor<ConstMethodPointer<T, U, V...>>
         {
             using Functor::Functor;
-            T operator ()(U* object, V ... arguments)           const { return (object->*_value)(arguments...); }
-            T operator ()(U& object, V ... arguments)           const { return (object.*_value)(arguments...); }
+            T operator ()(const U* object, V ... arguments)     const { return (object->*_value)(arguments...); }
+            T operator ()(const U& object, V ... arguments)     const { return (object.*_value)(arguments...); }
         };
 
         template<typename T, typename U, typename ... V>
@@ -56,11 +62,24 @@ namespace Cyclone
         };
 
 
+
         template<typename T, typename U>
-        struct Getter:                                          public Accessor< ConstMethodPointer<T, U> >
+        struct Field:                                           public Accessor< MemberPointer<T, U> > 
         {
             using Accessor::Accessor;
         };
 
+
+
+        template<typename T, typename U>
+        struct Getter:                                          public Accessor< MethodPointer<T, U> >
+        {
+            using Accessor::Accessor;
+        };
+        template<typename T, typename U>
+        struct Getter<T, const U>:                              public Accessor< ConstMethodPointer<T, U> >
+        {
+            using Accessor::Accessor;
+        };
     }
 }
