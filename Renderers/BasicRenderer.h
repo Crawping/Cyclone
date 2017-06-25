@@ -97,6 +97,8 @@ namespace Cyclone
                 ///     <see cref="CreateSizedResources"/> method. 
                 /// </remarks>            
                 RendererAPI virtual void CreateRenderTarget();
+
+                RendererAPI virtual void CreateScene();
                 /// <summary> Initializes any resources related to rendering 3D scenes of geometric primitives. </summary>
                 /// <remarks>
                 ///     This base implementation creates and initializes the 3D scene object. It should be overridden by any 

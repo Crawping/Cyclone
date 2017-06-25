@@ -81,7 +81,7 @@ namespace Cyclone
 			    SamplesMSAA ? TextureTargets::Texture2DMS : TextureTargets::Texture2D
 		    );
         }
-        void BasicRenderer::CreateSceneResources()
+        void BasicRenderer::CreateScene()
         {
             RenderScene = new Scene3D();
             RenderScene->
@@ -93,13 +93,17 @@ namespace Cyclone
                 .Target(RenderTarget)
                 .View(&View);
         }
+        void BasicRenderer::CreateSceneResources()
+        {
+
+        }
         void BasicRenderer::CreateShaderPipeline()
         {
-            _pipeline = Create<ShaderPipeline, string, string>
+            _pipeline = Create
             (
                 "BlinnPhong", Constructor<ShaderPipeline, string, string>(),
-                "../../Renderers/Shaders/BlinnPhong.vsl",
-                "../../Renderers/Shaders/BlinnPhong.psl"
+                string("../../Renderers/Shaders/BlinnPhong.vsl"),
+                string("../../Renderers/Shaders/BlinnPhong.psl")
             );
         }
         void BasicRenderer::CreateSizedResources()
@@ -129,6 +133,7 @@ namespace Cyclone
         {
             CreateShaderPipeline();
             CreateSizedResources();
+            CreateScene();
             CreateSceneResources();
         }
 
