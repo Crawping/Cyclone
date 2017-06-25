@@ -22,7 +22,7 @@ void main(void)
     EntityData ids          = Entities[gl_BaseInstanceARB];
     TransformData xforms    = Transformations[ids.TransformIndex];
     Output.EntityIndex      = gl_BaseInstanceARB;
-    Output.TexUVW           = (xforms.TextureTransform * vec4(UVW, 1.0)).xy;
+    Output.TexUVW           = (xforms.TextureTransform * vec4(UVW, 1.0)).xyz;
 
     gl_Position = 
         PerFrameData[0].Projection  * 
