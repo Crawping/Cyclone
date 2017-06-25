@@ -227,7 +227,5 @@ namespace Cyclone
                 T*      Data;
                 
         };
-
-
     }
 }
