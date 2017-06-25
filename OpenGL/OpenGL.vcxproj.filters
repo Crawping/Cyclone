@@ -153,6 +153,9 @@
     <ClInclude Include="Pipelines\RenderLayer.h">
       <Filter>Pipelines</Filter>
     </ClInclude>
+    <ClInclude Include="Buffers\GeometryBuffer.h">
+      <Filter>Buffers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffers\FrameBuffer.cpp">

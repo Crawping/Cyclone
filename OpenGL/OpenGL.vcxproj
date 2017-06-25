@@ -155,6 +155,7 @@
     <ClInclude Include="Buffers\CommandBuffer.h" />
     <ClInclude Include="Buffers\FrameBuffer.h" />
     <ClInclude Include="Buffers\ArrayBuffer.h" />
+    <ClInclude Include="Buffers\GeometryBuffer.h" />
     <ClInclude Include="Buffers\GraphicsBuffer.h" />
     <ClInclude Include="Buffers\IndexBuffer.h" />
     <ClInclude Include="Buffers\MapBuffer.h" />
