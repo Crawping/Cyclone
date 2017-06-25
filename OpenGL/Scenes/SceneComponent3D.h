@@ -3,14 +3,11 @@
  */
 
 #pragma once
-#include "Buffers/IndexBuffer.h"
+#include "Buffers/GeometryBuffer.h"
 #include "Buffers/UniformMap.h"
-#include "Buffers/UniformBuffer.h"
 #include "Buffers/UniformData.h"
-#include "Buffers/VertexBuffer.h"
 #include "Collections/BST.h"
 #include "Collections/Set.h"
-//#include "Geometry/Entity3D.h"
 #include "Resources/Resource.h"
 #include "Scenes/SceneComponent.h"
 
@@ -55,13 +52,11 @@ namespace Cyclone
                 bool NeedsUpdate;
 
                 /** COLLECTIONS **/
-                BST<PointTopologies, StageGroup3D*>                 Staging;
+                BST<PointTopologies, StageGroup3D*>     Staging;
 
-                IndexBuffer                                         _indices;
-                UniformMap<uint, EntityData>                        _resources;
-                VertexBuffer<Vertex>                                _vertices;
-
-                BST<uint, Resource<IRenderable>>                    _entities;
+                GeometryBuffer<Vertex>                  _geometry;
+                UniformMap<uint, EntityData>            _resources;
+                BST<uint, Resource<IRenderable>>        _entities;
 
 
 

@@ -27,8 +27,7 @@ namespace Cyclone
         {
             return
             {
-                { _vertices,     0 },
-                { _indices,      0 },
+                { _geometry,     0 },
                 { _resources,    2 },
             };
         }
@@ -76,8 +75,7 @@ namespace Cyclone
             if (!NeedsUpdate) { return; }
 
             ClearCommands();
-            _indices.Clear();
-            _vertices.Clear();
+            _geometry.Clear();
 
             for (uint a = 0; a < _entities.Count(); a++)
             {
@@ -87,15 +85,11 @@ namespace Cyclone
                 _resources.Set(entity.ID(), { Parent().IndexOf(entity->Material()), idxEntity });
 
                 const auto& model = entity->Model();
-                if (model.IsNull()) { continue; }
-
                 const auto& geometry = model->Geometry();
-                if (geometry.IsNull()) { continue; }
+                if (model.IsNull() || geometry.IsNull()) { continue; }
 
                 const auto& indices = geometry->Indices();
-                const auto& mapping = geometry->Mapping();
-                const auto& normals = geometry->Normals();
-                const auto& points  = geometry->Points();
+                const auto& vertices = geometry->Vertices();
 
                 StageGroup3D* stage;
                 PointTopologies topology = geometry->Topology();
@@ -106,13 +100,12 @@ namespace Cyclone
                     stage = CreateStage(topology);
 
                 if (indices.IsEmpty())
-                    stage->NonIndexed.Append(DrawCommand(points.Count(), 1, 0, _vertices.Count(), idxEntity));
+                    stage->NonIndexed.Append(DrawCommand(vertices.Count(), 1, 0, _geometry.PointCount(), idxEntity));
                 else
-                    stage->Indexed.Append(IndexedDrawCommand(indices.Count(), 1, _indices.Count(), _vertices.Count(), idxEntity));
+                    stage->Indexed.Append(IndexedDrawCommand(indices.Count(), 1, _geometry.IndexCount(), _geometry.PointCount(), idxEntity));
 
-                _indices.Append(indices);
-                for (uint a = 0; a < points.Count(); a++)
-                    _vertices.Append(Vertex(points(a), normals(a), (Vector2)mapping(a)));
+                _geometry.Append(indices);
+                _geometry.Append(vertices);
             }
             
             for (auto* stage : Staging.Values())
@@ -121,9 +114,8 @@ namespace Cyclone
                 stage->NonIndexed.Update();
             }
 
-            _indices.Update();
+            _geometry.Update();
             _resources.Update();
-            _vertices.Update();
 
             NeedsUpdate = false;
         }
