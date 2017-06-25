@@ -115,7 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="RotatingIcosahedron.cpp" />
+    <ClCompile Include="BasicIcosahedron.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Renderers\Renderers.vcxproj">

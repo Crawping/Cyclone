@@ -5,7 +5,6 @@
 #include "Geometry/Entity3D.h"
 #include "Geometry/Mesh3D.h"
 #include "GL/OpenGL.h"
-#include "Pipelines/ShaderPipeline.h"
 #include "Scenes/Scene3D.h"
 
 using namespace Cyclone::OpenGL;
@@ -17,21 +16,24 @@ class Program : public BasicRenderer
 {
     public:
         Program() : 
-            BasicRenderer(Area(0, 0, 1024, 960), "Rotating Cube"),
-            Cube(Mesh3D::Cube())
+            BasicRenderer(Area(0, 0, 1024, 960), "Rotating Cube")
         {
             Initialize();
             glEnable(GL_CULL_FACE);
         }
 
     protected:
-        Entity3D Cube;
-        Vector3 Rotation;
+
+        Resource<Entity3D> Cube;
 
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Cube
+            Cube = Create<Entity3D>("Cube");
+            Cube->
+                 Material(Create<Material3D>("Cube"))
+                .Model(Create<Model3D>("Cube"))
+                .Geometry(Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), false))
                 .PrimaryColor(Color4::Green)
                 .Position(RenderWindow->ClientArea().Center())
                 .Pitch(90)
@@ -41,24 +43,9 @@ class Program : public BasicRenderer
             RenderScene->Insert(Cube);
         }
 
-        void CreateSizedResources() override
-        {
-            BasicRenderer::CreateSizedResources();
-            Cube.Position(Vector3(RenderWindow->ClientArea().Center(), 50));
-        }
-
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline
-            (
-                "../../Renderers/Shaders/Default.vsl",
-                "../../Renderers/Shaders/Depth.psl"
-            );
-        }
-
         void UpdateScene() override
         {
-            Cube.Rotate(Vector3(0.0f, 0.01f, 0.0f));
+            Cube->Rotate(Vector3(0.0f, 0.01f, 0.0f));
             RenderScene->Update(Cube);
             BasicRenderer::UpdateScene();
         }

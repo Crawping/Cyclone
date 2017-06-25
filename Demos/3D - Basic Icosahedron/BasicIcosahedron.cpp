@@ -15,19 +15,24 @@ class Program : public BasicRenderer
 {
     public:
         Program() :
-            BasicRenderer(Area(0, 0, 1024, 960), "Rotating Cube"),
-            Icosahedron(Mesh3D::Icosahedron())
+            BasicRenderer(Area(0, 0, 1024, 960), "Rotating Cube")
         {
             Initialize();
         }
 
     protected:
-        Entity3D Icosahedron;
+
+        Resource<Entity3D> Icosahedron;
 
         void CreateSceneResources() override
         {
             BasicRenderer::CreateSceneResources();
-            Icosahedron
+            Icosahedron = Create<Entity3D>("Icosahedron");
+
+            Icosahedron->
+                 Material(Create<Material3D>("Icosahedron"))
+                .Model(Create<Model3D>("Icosahedron"))
+                .Geometry(Create("Icosahedron", Function<Mesh3D, bool>(&Mesh3D::Icosahedron), false))
                 .PrimaryColor(Color4::Cyan)
                 .Position(Vector3(RenderWindow->ClientArea().Center(), 50))
                 .Pitch(90)
@@ -38,24 +43,9 @@ class Program : public BasicRenderer
             RenderScene->CullingMode(CullingModes::Back);
         }
 
-        void CreateSizedResources() override
-        {
-            BasicRenderer::CreateSizedResources();
-            Icosahedron.Position(Vector3(RenderWindow->ClientArea().Center(), 50));
-        }
-
-        void CreateShaderPipeline() override
-        {
-            RenderPipeline = new ShaderPipeline
-            (
-                "../../Renderers/Shaders/BlinnPhong.vsl",
-                "../../Renderers/Shaders/BlinnPhong.psl"
-            );
-        }
-
         void UpdateScene() override
         {
-            Icosahedron.Rotate(0.01f);
+            Icosahedron->Rotate(0.01f);
             RenderScene->Update(Icosahedron);
             BasicRenderer::UpdateScene();
         }
