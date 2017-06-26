@@ -39,16 +39,18 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                void Append(const Vertex& vertex)                   { _vertices.Append(vertex); }
-                void Append(const ICollection<Vertex>& vertices)    { _vertices.Append(vertices); }
-                void Append(uint index)                             { _indices.Append(index); }
-                void Append(const ICollection<uint>& indices)       { _indices.Append(indices); }
-                void Clear()                                        override
+                void Append(const Vertex& vertex)                           { _vertices.Append(vertex); }
+                void Append(const ICollection<Vertex>& vertices)            { _vertices.Append(vertices); }
+                void Append(uint index)                                     { _indices.Append(index); }
+                void Append(const ICollection<uint>& indices)               { _indices.Append(indices); }
+                void Clear()                                                override
                 {
                     _vertices.Clear();
                     _indices.Clear();
                 }
-                void Update()                                       override
+                void Set(uint index, const ICollection<Vertex>& vertices)   { _vertices.Set(index, vertices); }
+                void Set(uint index, const ICollection<uint>& indices)      { _indices.Set(index, indices); }
+                void Update()                                               override
                 {
                     _indices.Update();
                     _vertices.Update();
@@ -57,28 +59,28 @@ namespace Cyclone
 
 
                 /** BINDING UTILITIES **/
-                void Bind(int slot = 0)                         const override
+                void Bind(int slot = 0)                             const override
                 {
                     BindEntity(slot);
                     BindResources();
                 }
-                void BindEntity(int slot = 0)                   const override
+                void BindEntity(int slot = 0)                       const override
                 {
                     _vertices.Bind(slot);
                     if (IsIndexed()) { _indices.Bind(slot); }
                 }
-                void BindResources()                            const override { }
-                void Unbind()                                   const override
+                void BindResources()                                const override { }
+                void Unbind()                                       const override
                 {
                     UnbindResources();
                     UnbindEntity();
                 }
-                void UnbindEntity()                             const override
+                void UnbindEntity()                                 const override
                 {
                     if (IsIndexed()) { _indices.Unbind(); }
                     _vertices.Unbind();
                 }
-                void UnbindResources()                          const override { }
+                void UnbindResources()                              const override { }
 
             private:
 

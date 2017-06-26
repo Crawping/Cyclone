@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Buffers/GeometryBuffer.h"
 #include "Buffers/IndexBuffer.h"
 #include "Buffers/VertexBuffer.h"
 #include "Pipelines/RenderLayer.h"
@@ -38,26 +39,35 @@ namespace Cyclone
 
             private:
 
-                struct GeometryData 
+                struct BufferIndices 
                 {
                     uint IndicesCount;
                     uint IndicesIndex;
                     uint VertexCount;
                     uint VertexIndex; 
+
+                    bool operator ==(const BufferIndices& other) const
+                    {
+                        return 
+                            (IndicesCount == other.IndicesCount)    &&
+                            (IndicesIndex == other.IndicesIndex)    &&
+                            (VertexCount == other.VertexCount)      &&
+                            (VertexIndex == other.VertexIndex);
+                    }
                 };
 
-                IndexBuffer                         _indices;
-                VertexBuffer<Vertex>                _vertices;
-
-                BST<uint, GeometryData>             _data;
-                BST<uint, Resource<IGeometric>>     _geometry;
-                ArrayList<Resource<IGeometric>>     _geometryUpdates;
+                GeometryBuffer<Vertex>              _vertices;
+                ArrayList<BufferIndices>            _keys;
+                ArrayList<Resource<IGeometric>>     _geometry;
+                Array<uint, 2>                      _invalidRange;
+                BST<uint, uint>                     _mapping;
 
 
                 OpenGLAPI bool Contains(const Resource<IGeometric>& geometry)   const;
-                OpenGLAPI Vector<Vector2> GatherCounts()                        const;
+                OpenGLAPI void Invalidate(uint geometry);
+                OpenGLAPI void InvalidateAll(uint geometry);
+                OpenGLAPI Vector<Vector2> UpdateCounts()                        const;
                 OpenGLAPI void UpdateGeometryData(const Resource<IGeometric>& geometry);
-
 
         };
     }

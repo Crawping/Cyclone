@@ -23,50 +23,34 @@ namespace Cyclone
         void RenderLayer3D::Insert(const Resource<IGeometric>& geometry)
         {
             if (geometry.IsNull() || Contains(geometry)) { return; }
-            _data.Insert(geometry.ID(), GeometryData());
-            _geometry.Insert(geometry.ID(), geometry);
-            _geometryUpdates.Append(geometry);
+            uint gID = geometry.ID();
+            _keys.Insert(gID, BufferIndices());
+            _mapping.Insert(gID, _geometry.Count());
+            _geometry.Append(geometry);
+            Invalidate(gID);
         }
         void RenderLayer3D::Update()
         {
             RenderLayer::Update();
 
-            auto counts = GatherCounts();
-            for (uint a = 0; a < _geometryUpdates.Count(); a++)
-            {
-                auto& geometry = _geometryUpdates(a);
-                GeometryData& data = _data[geometry.ID()];
-                uint idxG = _data.IndexOf(geometry.ID());
-                
-                data.IndicesCount = geometry->IndexCount();
-                data.IndicesIndex = counts(idxG).X;
-                data.VertexCount = geometry->PointCount();
-                data.VertexIndex = counts(idxG).Y;
-
-                if (data.IndicesCount)
-                    _indices.Set(data.IndicesIndex, geometry->Indices());
-                
-                auto& mapping = geometry->Mapping();
-                auto& normals = geometry->Normals();
-                auto& points = geometry->Points();
-
-                for (uint a = 0; a < points.Count(); a++)
-                    _vertices.Append(Vertex(points(a), normals(a), (Vector2)mapping(a)));
-            }
+            for (uint a = _invalidRange(0); a < _invalidRange(1); a++)
+                UpdateGeometryData(_geometry(a));
             
-            _geometryUpdates.Clear();
-            _indices.Update();
+            _invalidRange = { _geometry.Count(), 0 };
             _vertices.Update();
         }
         void RenderLayer3D::Update(const Resource<IGeometric>& geometry)
         {
             if (!Contains(geometry)) { return; }
-            _geometryUpdates.Append(geometry);
+            uint idxG = _mapping[geometry.ID()];
+            auto& keys = _keys(idxG);
 
-            auto& oldGeometry = _data[geometry.ID()];
-            if (oldGeometry.IndicesCount && oldGeometry.IndicesCount != geometry->Count())
-                for (uint a = _geometry.IndexOf(geometry.ID()) + 1; a < _geometry.Count(); a++)
-                    _geometryUpdates.Append(_geometry(a));
+            bool sameSize =
+                (geometry->IndexCount() == keys.IndicesCount) &&
+                (geometry->PointCount() == keys.VertexCount);
+
+            if (sameSize)   { Invalidate(geometry.ID()); }
+            else            { InvalidateAll(geometry.ID()); }
         }
 
 
@@ -74,35 +58,52 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         bool RenderLayer3D::Contains(const Resource<IGeometric>& geometry)  const
         {
-            return _geometry.Contains(geometry.ID());
+            return _mapping.Contains(geometry.ID());
         }
-        Vector<Vector2> RenderLayer3D::GatherCounts()                       const
+        void RenderLayer3D::Invalidate(uint geometry)
         {
-            Vector<Vector2> counts(_geometry.Count() + 1);
-
-            counts(0) = Vector2::Zero;
-            for (uint a = 0; a < _geometry.Count(); a++)
-                counts(a + 1) = Vector2(counts(a).X + _geometry(a)->IndexCount(), counts(a).Y + _geometry(a)->PointCount());
-
-            return counts;
+            uint index = _mapping[geometry];
+            _invalidRange = 
+            { 
+                Math::Min(_invalidRange(0), index), 
+                Math::Max(_invalidRange(1), index + 1),
+            };
+        }
+        void RenderLayer3D::InvalidateAll(uint geometry)
+        {
+            uint index = _mapping[geometry];
+            _invalidRange =
+            {
+                Math::Min(_invalidRange(0), index),
+                _geometry.Count(),
+            };
         }
         void RenderLayer3D::UpdateGeometryData(const Resource<IGeometric>& geometry)
         {
-            auto& data = _data[geometry.ID()];
+            uint idxData = _mapping[geometry.ID()];
+            BufferIndices& data = _keys(idxData);
 
-            auto& indices = geometry->Indices();
-            auto& mapping = geometry->Mapping();
-            auto& normals = geometry->Normals();
-            auto& points = geometry->Points();
+            data.IndicesCount = geometry->IndexCount();
+            data.VertexCount = geometry->PointCount();
 
-            data.IndicesCount = indices.Count();
-            data.IndicesIndex = _indices.Count();
-            data.VertexCount = points.Count();
-            data.VertexIndex = _vertices.Count();
+            if (idxData > 0)
+            {
+                const auto& ltData = _keys(idxData - 1);
+                data.IndicesIndex = ltData.IndicesIndex + ltData.IndicesCount;
+                data.VertexIndex = ltData.VertexIndex + ltData.VertexCount;
+            }
+            else
+            {
+                data.IndicesIndex = 0;
+                data.VertexIndex = 0;
+            }
 
-            _indices.Append(indices);
-            for (uint a = 0; a < points.Count(); a++)
-                _vertices.Append(Vertex(points(a), normals(a), (Vector2)mapping(a)));
+            if (data.IndicesCount)
+                _vertices.Set(data.IndicesIndex, geometry->Indices());
+
+            if (data.VertexCount)
+                _vertices.Set(data.VertexIndex, geometry->Vertices());
         }
+
     }
 }
