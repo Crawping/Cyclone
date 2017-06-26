@@ -108,7 +108,7 @@ namespace Cyclone
             if (!_needsUpdate) { return; }
 
             for (uint a = 0; a < PointCount(); a++)
-                _bounds.Union(_vertices(a).Position);
+                _bounds = _bounds.Union(_vertices(a).Position);
 
             _needsUpdate = false;
         }

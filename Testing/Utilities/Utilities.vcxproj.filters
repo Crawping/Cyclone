@@ -103,9 +103,6 @@
     <ClCompile Include="IO\Members.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="Collections\Specializations\NumericArray.cpp">
-      <Filter>Collections\Specializations</Filter>
-    </ClCompile>
     <ClCompile Include="Collections\Structure.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
