@@ -88,8 +88,8 @@ namespace Cyclone
                 const auto& geometry = model->Geometry();
                 if (model.IsNull() || geometry.IsNull()) { continue; }
 
-                const auto& indices = geometry->Indices();
-                const auto& vertices = geometry->Vertices();
+                auto indices = geometry->Indices();
+                auto vertices = geometry->Vertices();
 
                 StageGroup3D* stage;
                 PointTopologies topology = geometry->Topology();
