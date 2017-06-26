@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Geometry\Geometry3D.cpp" />
+    <ClCompile Include="Geometry\Mesh3D.cpp" />
     <ClCompile Include="Geometry\Vertex.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Resources\Resource.cpp" />

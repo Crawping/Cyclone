@@ -16,8 +16,7 @@ namespace Cyclone
     namespace OpenGL
     {
         /// <summary> A class that holds and manages data related to 3D geometric shapes. </summary>
-        class Geometry3D:
-            public virtual IGeometric
+        class Geometry3D: public virtual IGeometric
         {
             public:
 
