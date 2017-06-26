@@ -16,23 +16,9 @@ namespace Cyclone
     namespace { using namespace Utilities; }
     namespace OpenGL
     {
-        /** FORWARD DECLARATIONS **/
-        struct GeometryData
-        {
-            Volume              Bounds;
-            Vector<uint>        Indices;
-            Vector<Vector3>     Mapping;
-            Vector<Vector3>     Normals;
-            Vector<Vector3>     Points;
-            PointTopologies     Topology;
-        };
-
-
-
         /// <summary> An interface that represents a generalized three-dimensional geometric shape. </summary>
-        class IGeometric : public virtual IGraphicsResource
+        class IGeometric
         {
-
             public:
 
                 /** PROPERTIES **/
@@ -40,11 +26,9 @@ namespace Cyclone
                 virtual const Volume& Bounds()      const = 0;
                 /// <summary> Gets the number of points that are used to define the 3D geometric shape. </summary>
                 virtual uint Count()                const = 0;
-                /// <summary> Gets a structure containing all of the data used to render the 3D geometric shape. </summary>
-                virtual const GeometryData& Data()  const = 0;
-
+                /// <summary> Gets the number of indices used to specify the ordering of geometric points. </summary>
                 virtual uint IndexCount()           const = 0;
-                /// <summary> Gets an array of indices that define the order in which <see cref="Points"/> is rendered. </summary>
+                /// <summary> Gets an array of indices that define the order in which the geometric points are rendered. </summary>
                 /// <remarks>
                 ///     Not all geometry will be composed of indexable control points or vertices. In those cases, this method will
                 ///     return an empty array.
@@ -60,7 +44,7 @@ namespace Cyclone
                 virtual Vector<Vector3> Mapping()   const = 0;
                 /// <summary> Gets an array of normal vectors associated with each point of the geometric shape. </summary>
                 virtual Vector<Vector3> Normals()   const = 0;
-
+                /// <summary> Gets the number spatial points used to define the geometric shape. </summary>
                 virtual uint PointCount()           const = 0;
                 /// <summary> Gets an array of points that define a 3D geometric shape. </summary>
                 /// <remarks>
@@ -72,7 +56,7 @@ namespace Cyclone
                 virtual Vector<Vector3> Points()    const = 0;
                 /// <summary> Gets an enumerator that represents the type of primitive geometry defined by the <see cref="Points"/> property. </summary>
                 virtual PointTopologies Topology()  const = 0;
-
+                /// <summary> Gets the array of vertices that define the geometric shape. </summary>
                 virtual Vector<Vertex> Vertices()   const = 0;
 
 
@@ -83,7 +67,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-
+                /// <summary> Determines whether the geometric shape is intersected by a particular line segment. </summary>
+                /// <returns> A Boolean <c>true</c> if the line intersects the shape, or <c>false</c> otherwise. </returns>
+                /// <param name="line"> The line segment to test for intersection with the geometry. </param>
                 virtual bool Intersects(const LineSegment3D& line) const = 0;
 
         };

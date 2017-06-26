@@ -248,6 +248,7 @@ namespace Cyclone
             }
 
 
+
             /** OPERATORS **/
             /// <summary> Determines whether two volumes of space are equivalent to one another. </summary>
             /// <param name="other"> Another volume of 3D space. </param>

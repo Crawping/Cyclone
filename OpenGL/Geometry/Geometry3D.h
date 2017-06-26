@@ -23,12 +23,10 @@ namespace Cyclone
 
                 /** GEOMETRIC PROPERTIES **/
                 /// <summary> A rectangular prism that defines the bounding volume of the entity in 3D space. </summary>
-                const Volume& Bounds()                  const override { return _data.Bounds; }
+                const Volume& Bounds()                  const override { Update(); return _bounds; }
                 /// <summary> Gets the total number of points that are used to define the 3D geometric shape. </summary>
                 /// <returns> The number of indices, if the geometry is indexed, or the number of points otherwise. </returns>
                 uint Count()                            const override { return IsIndexed() ? IndexCount() : PointCount(); }
-                /// <summary> Gets a structure containing all of the data needed to render the 3D geometric shape. </summary>
-                const GeometryData& Data()              const override { return _data; }
                 /// <summary> Gets the number of indices used to specify vertex ordering. </summary>
                 uint IndexCount()                       const override { return _indices.Count(); }
                 /// <summary> Gets an array of indices that specify the order in which geometric points are rendered. </summary>
@@ -44,16 +42,12 @@ namespace Cyclone
                 /// <summary> Gets an array of points that define the prototypical shape of some geometry in 3D space. </summary>
                 Vector<Vector3> Points()                const override { return _vertices.Gather(Field<Vector3, Vertex>(&Vertex::Position)); }
                 /// <summary> Gets the type of primitive that the points in the vertex array construct. </summary>
-                PointTopologies Topology()              const override { return _data.Topology; }
+                PointTopologies Topology()              const override { return _topology; }
                 /// <summary> Gets the array of vertices that define the geometric shape in 3D space. </summary>
                 Vector<Vertex> Vertices()               const override { return _vertices.ToVector(); }
                 /// <summary> Gets the winding order of the stored vertex data.</summary>
                 virtual WindingOrders Winding()         const { return _winding; }
 
-                /// <summary> Sets the bounding volume of the entity in 3D space. </summary>
-                OpenGLAPI virtual Geometry3D& Bounds(const Volume& value);
-                /// <summary> Summarily sets all of the data needed to render the 3D geometric shape. </summary>
-                OpenGLAPI virtual Geometry3D& Data(const GeometryData& value);
                 /// <summary> Sets the array of indices that specify the order in which geometric points are rendered. </summary>
                 OpenGLAPI virtual Geometry3D& Indices(const ICollection<uint>& value);
                 /// <summary> Sets the array of values that map each geometric point onto some other resource. </summary>
@@ -73,17 +67,22 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 /// <summary> Constructs a new empty 3D geometric object. </summary>
-                Geometry3D() { }
-                /// <summary> Constructs a new 3D geometric object that is initialized with externally defined data. </summary>
-                OpenGLAPI Geometry3D(const GeometryData& data);
+                OpenGLAPI Geometry3D();
 
 
 
                 /** UTILITIES **/
-                OpenGLAPI Geometry3D* CreateView() const;
+                /// <summary> Determines whether the geometric shape is intersected by a particular line segment. </summary>
+                /// <returns> A Boolean <c>true</c> if the line intersects the shape, or <c>false</c> otherwise. </returns>
+                /// <param name="line"> The line segment to test for intersection with the geometry. </param>
                 OpenGLAPI bool Intersects(const LineSegment3D& line) const;
 
             protected:
+
+                /** PROPERTIES **/
+                OpenGLAPI Geometry3D& Bounds(const Volume& value);
+
+
 
                 /** UTILITIES **/
                 /// <summary> Inserts a new vertex index at the end of the geometric data. </summary>
@@ -104,13 +103,17 @@ namespace Cyclone
                 /// <param name="mapping"> The (u, v, w) resource coordinates associated with the vertex. </param>
                 OpenGLAPI virtual void Append(const Vector3& position, const Vector3& normal, const Vector3& mapping);
 
+                OpenGLAPI virtual void Update() const;
+
             private:
 
                 /** PROPERTY DATA **/
-                GeometryData        _data;
+                mutable Volume      _bounds;
                 ArrayList<uint>     _indices;
+                mutable bool        _needsUpdate;
                 ArrayList<Vertex>   _vertices;
                 WindingOrders       _winding;
+                PointTopologies     _topology;
 
         };
     }
