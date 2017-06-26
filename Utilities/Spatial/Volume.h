@@ -18,7 +18,6 @@ namespace Cyclone
 {
     namespace Utilities
     {
-
         /// <summary> A data structure that describes a three-dimensional rectangular prism occupying a volume of space. </summary>
         /// <remarks> Documentation throughout this structure assumes usage of a right-handed 3D coordinate system. </remarks>
         struct UtilitiesAPI Volume
@@ -215,7 +214,25 @@ namespace Cyclone
             string Report() const;
 
             constexpr Array<float, 6> ToArray()             const { return { X, Y, Z, Width, Height, Depth }; }
-            
+            /// <summary> Creates a new volume large enough to contain both the previous volume and a 3D spatial point. </summary>
+            /// <returns> A larger volume that contains the given point. </returns>
+            /// <param name="point"> The (x, y, z) coordinates of some point in 3D space. </param>
+            constexpr Volume Union(const Vector3& point)    const
+            {
+                auto v = Rectify();
+                float x = Math::Min(v.Left(), point.X);
+                float y = Math::Min(v.Bottom(), point.Y);
+                float z = Math::Min(v.Back(), point.Z);
+
+                float w = Math::Max(v.Right(), point.X) - x;
+                float h = Math::Max(v.Top(), point.Y) - y;
+                float d = Math::Max(v.Front(), point.Z) - z;
+
+                return Volume(x, y, z, w, h, d);
+            }
+            /// <summary> Creates a new volume large enough to contain both the previous volume and another one. </summary>
+            /// <returns> A larger volume that contains the both of the inputted ones. </returns>
+            /// <param name="volume"> Another volume of 3D space. </param>
             constexpr Volume Union(const Volume& volume)    const
             {
                 auto v1 = Rectify(), v2 = volume.Rectify();
@@ -232,12 +249,19 @@ namespace Cyclone
 
 
             /** OPERATORS **/
+            /// <summary> Determines whether two volumes of space are equivalent to one another. </summary>
+            /// <param name="other"> Another volume of 3D space. </param>
+            /// <returns> A Boolean <c>true</c> if the two volumes are equal, or <c>false</c> otherwise. </returns>
             constexpr bool operator ==(const Volume& other) const
             {
                 return X == other.X && Y == other.Y && Z == other.Z &&
                     Width == other.Width && Height == other.Height && Depth == other.Depth;
             }
+            /// <summary> Determines whether two volumes of space are not equivalent to one another. </summary>
+            /// <param name="other"> Another volume of 3D space. </param>
+            /// <returns> A Boolean <c>true</c> if the two volumes are not equal, or <c>false</c> otherwise. </returns>
             constexpr bool operator !=(const Volume& other) const { return !(*this == other); }
+
         };
 
     }
