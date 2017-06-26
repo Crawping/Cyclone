@@ -5,22 +5,31 @@
 #version 450 core
 #include "Default.hsl"
 
-in vec2     TexUV;
-flat in int EntityIndex;
-
 out vec4 OutputColor;
+
+in PixelShaderInput
+{
+    flat int EntityIndex;
+    vec3 TexUVW;
+} Input;
+
 
 
 
 void main(void)
 {
-    EntityData ids = Entities[EntityIndex];
+    EntityData ids = Entities[Input.EntityIndex];
     MaterialData mat = Materials[ids.MaterialIndex];
 
+    float depth = (gl_FragCoord.z + 1.0) / 2.0;
+    OutputColor = vec4(0.125 * depth, 0.5 * depth, 0.75 * depth, 1.0);
+
+    //OutputColor = mix(mat.PrimaryColor, mat.SecondaryColor, (gl_FragCoord.z + 1.0) / 2.0);
+
     //OutputColor = mat.PrimaryColor - vec4((gl_FragDepth + 1.0) / 2.0);
-    OutputColor = mat.PrimaryColor * vec4(gl_FragCoord.z);
-    OutputColor.a = mat.PrimaryColor.a;
-    OutputColor = normalize(OutputColor);
+    //OutputColor = mat.PrimaryColor * vec4(gl_FragCoord.z);
+    //OutputColor.a = mat.PrimaryColor.a;
+    //OutputColor = normalize(OutputColor);
     //OutputColor = (OutputColor + 1.0) / 2.0;
     //OutputColor = normalize(OutputColor);
 }
