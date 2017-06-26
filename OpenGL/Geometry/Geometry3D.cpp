@@ -61,6 +61,11 @@ namespace Cyclone
             _vertices.Append(value);
             return *this;
         }
+        Geometry3D& Geometry3D::Winding(WindingOrders value)
+        {
+            _winding = value;
+            return *this;
+        }
 
 
 
@@ -73,11 +78,11 @@ namespace Cyclone
 
 
         /** PUBLIC UTILITIES **/
-        Geometry3D* Geometry3D::CreateView()                    const
+        Geometry3D* Geometry3D::CreateView()                        const
         {
             return nullptr;
         }
-        bool Geometry3D::Intersects(const LineSegment3D& line)    const
+        bool Geometry3D::Intersects(const LineSegment3D& line)      const
         {
             return false;
         }
