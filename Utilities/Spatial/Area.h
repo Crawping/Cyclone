@@ -56,9 +56,9 @@ namespace Cyclone
             constexpr float Top()           const { return Y + Height; }
 
             /// <summary> Determines whether this region has a total area of zero. </summary>
-            constexpr bool IsEmpty()                        const { return (Width == 0) || (Height == 0); }
+            constexpr bool IsEmpty()        const { return (Width == 0) || (Height == 0); }
             /// <summary> Determines whether this region represents a positive, non-zero area. </summary>
-            constexpr bool IsPositive()                     const { return (Width > 0) && (Height > 0); }
+            constexpr bool IsPositive()     const { return (Width > 0) && (Height > 0); }
 
             /// <summary> Gets the (x, y) coordinates for the center of the rectangular area. </summary>
             constexpr Vector2 Center()      const { return Vector2((Right() - Left()) / 2.0f, (Top() - Bottom()) / 2.0f); }
