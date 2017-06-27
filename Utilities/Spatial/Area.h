@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Math/Math.h"
 #include "Math/Vector2.h"
 
 
@@ -54,6 +55,11 @@ namespace Cyclone
             /// <remarks> The top edge of the area is calculated by adding the height of the area to its bottom edge coordinate. </remarks>
             constexpr float Top()           const { return Y + Height; }
 
+            /// <summary> Determines whether this region has a total area of zero. </summary>
+            constexpr bool IsEmpty()                        const { return (Width == 0) || (Height == 0); }
+            /// <summary> Determines whether this region represents a positive, non-zero area. </summary>
+            constexpr bool IsPositive()                     const { return (Width > 0) && (Height > 0); }
+
             /// <summary> Gets the (x, y) coordinates for the center of the rectangular area. </summary>
             constexpr Vector2 Center()      const { return Vector2((Right() - Left()) / 2.0f, (Top() - Bottom()) / 2.0f); }
             /// <summary> Gets the (x, y) coordinates for the lower-left corner of the rectangular area. </summary>
@@ -103,17 +109,27 @@ namespace Cyclone
 
             /** CONSTRUCTORS **/
             /// <summary> Constructs a default data structure describing a rectangle located at the origin and with zero area. </summary>
-            constexpr Area();
+            constexpr Area():                       Area(0, 0, 0, 0) { }
             /// <summary> Constructs an area data structure with a designated position and size. </summary>
             /// <param name="x"> The desired x-coordinate of the region's lower-left corner. </param>
             /// <param name="y"> The desired y-coordinate of the region's lower-left corner. </param>
             /// <param name="width"> The desired width of the region. </param>
             /// <param name="height"> The desired height of the region. </param>
-            constexpr Area(float x, float y, float width, float height);
+            constexpr Area(float x, float y, float width, float height):
+                X(x), Y(y),
+                Width(width),
+                Height(height)
+            {
+
+            }
             /// <summary> Constructs an area data structure with a designated position and size. </summary>
             /// <param name="position"> A two-element vector containing the (x, y) coordinates of the region's lower-left corner. </param>
             /// <param name="size"> A two-element vector containing the (x, y) sizes of the region. </param>
-            constexpr Area(const Vector2& position, const Vector2& size);
+            constexpr Area(const Vector2& position, const Vector2& size):
+                Area(position.X, position.Y, size.X, size.Y)
+            {
+
+            }
 
 
 
@@ -132,21 +148,23 @@ namespace Cyclone
             ///     contrast to the related method <see cref="Surrounds"/>, two equivalent areas here are considered contained 
             ///     and thus pass the inspection.
             /// </remarks>
-            constexpr bool Contains(const Area& other)      const;
+            constexpr bool Contains(const Area& other, bool inclusive = true)       const
+            {
+                return
+                    Math::IsBetween(other.Left(), Left(), Right(), inclusive)   &&
+                    Math::IsBetween(other.Right(), Left(), Right(), inclusive)  && 
+                    Math::IsBetween(other.Bottom(), Bottom(), Top(), inclusive) && 
+                    Math::IsBetween(other.Top(), Bottom(), Top(), inclusive);
+            }
             /// <summary> Determines whether a particular point lies within this area. </summary>
             /// <param name="point"> A two-element vector containing the (x, y) coordinates of the point to be tested. </param>
             /// <returns> A Boolean <c>true</c> if the point lies within or on the border of the area, or <c>false</c> otherwise. </returns>
-            constexpr bool Contains(const Vector2& point)   const;
-            /// <summary> Constrains an area such that its edge coordinates lie on or within another area. </summary>
-            /// <returns> A reference to the cropped (and the larger original) area. </returns>
-            /// <param name="keep"> A reference to the smaller area that will potentially be used to resize this one. </param>
-            /// <remarks>
-            ///     This method resizes a large area (the one on which this method is called) to fit within an inputted smaller area.
-            ///     It accomplishes this by comparing the edge coordinates of the two data structures, keeping the largest left and
-            ///     bottom values as well as the lowest right and top coordinates. These values are then used to replace the original
-            ///     ones in the larger area.
-            /// </remarks>
-            Area& Crop(const Area& keep);
+            constexpr bool Contains(const Vector2& point, bool inclusive = true)    const
+            {
+                return
+                    Math::IsBetween(point.X, Left(), Right(), inclusive) && 
+                    Math::IsBetween(point.Y, Bottom(), Top(), inclusive);
+            }
             /// <summary> Flips the rectangular area about one of its two dimensions. </summary>
             /// <returns> A reference to the flipped (and original) area. </returns>
             /// <param name="dim"> An unsigned integer specifying the dimension across which the rectangle will be flipped. </param>
@@ -158,42 +176,75 @@ namespace Cyclone
             ///     across the area's horizontal midline. Flipping always occurs across x- or y-axis-aligned midlines within the 
             ///     rectangular area; performing flips across arbitrary axes is not supported.
             /// </remarks>
-            Area& Flip(uint dim);
+            constexpr Area Flip(uint dim)                   const
+            {
+                return dim ? 
+                    Area(X, Top(), Width, -Height) : 
+                    Area(Right(), Y, -Width, Height);
+            }
+            /// <summary> Determines the region of space shared by both this and another volume. </summary>
+            /// <returns> An empty area, if no intersection exists, or the region of space where the two areas overlap. </returns>
+            /// <param name="other"> Another overlapping area of space. </param>
+            constexpr Area Intersection(const Area& other)  const
+            {
+                if (!Intersects(other)) { return Area(0, 0, 0, 0); }
+
+                auto a1 = Rectify(), a2 = other.Rectify();
+                float x = Math::Max(a1.Left(), a2.Left());
+                float y = Math::Max(a1.Bottom(), a2.Bottom());
+                float w = Math::Min(a1.Right(), a2.Right()) - x;
+                float h = Math::Min(a1.Top(), a2.Top()) - y;
+
+                return Area(x, y, w, h);
+            }
             /// <summary> Determines whether two separate areas share any overlapping regions. </summary>
-            bool Intersects(Area other)                     const;
-            /// <summary> Determines whether this region has a total area of zero. </summary>
-            constexpr bool IsEmpty()                        const { return (Width == 0) || (Height == 0); }
-            /// <summary> Determines whether this region represents a positive, non-zero area. </summary>
-            constexpr bool IsPositive()                     const { return (Width > 0) && (Height > 0); }
+            /// <returns> A Boolean <c>true</c> if the two areas have overlapping regions of space, or <c>false</c> otherwise. </returns>
+            constexpr bool Intersects(const Area& other)    const
+            {
+                auto a1 = Rectify(), a2 = other.Rectify();
+                return
+                    a1.Left() <= a2.Right() && a1.Right() >= a2.Left() && 
+                    a1.Bottom() <= a2.Top() && a1.Top() >= a2.Bottom();
+            }
 
             Area& Normalize();
             /// <summary> Corrects the area position to reflect the true lower-left corner of the rectangle. </summary>
-            Area& Rectify();
+            constexpr Area Rectify()                        const
+            {
+                return Area
+                (
+                    Math::Min(Left(), Right()),
+                    Math::Min(Bottom(), Top()),
+                    Math::Abs(Width),
+                    Math::Abs(Height)
+                );
+            }
             /// <summary> Returns a formatted string that describes the boundaries of this rectangular area. </summary>
             string Report()                                 const;
-            /// <summary> Determines whether or not another area fits inside of this one without overlapping their edges. </summary>
-            /// <returns> A Boolean <c>true</c> if inputted area is fully surrounded by this one, or <c>false</c> otherwise. </returns>
-            /// <param name="other"> Another <see cref="Area"/> data structure to be tested. </param>
-            /// <remarks>
-            ///     This method tests the edge locations of two area desciptions to determine if one fits within the other. Passing
-            ///     the test requires that one large area (on which this method is called) be positioned and such that it fully
-            ///     surrounds a smaller area (the input argument). Unlike the related method <see cref="Contains"/>, two identical 
-            ///     areas are not considered to surround one another and thus will fail the inspection.
-            /// </remarks>
-            constexpr bool Surrounds(const Area& other)     const;
             /// <summary> Sets the position of the lower left area corner relative to its current location. </summary>
-            Area& Translate(Vector2 t)                            { X += t.X; Y += t.Y; return *this; }
+            Area& Translate(const Vector2& t)               { X += t.X; Y += t.Y; return *this; }
             /// <summary> Sets the position of the lower left area corner relative to its current location. </summary>
-            Area& Translate(float x, float y)                     { X += x; Y += y; return *this; }
+            Area& Translate(float x, float y)               { return Translate(Vector2(x, y)); }
             /// <summary> Combines two separate areas into a single one that fully contains both of them. </summary>
-            Area& Union(const Area& other);
+            constexpr Area Union(const Area& other)         const
+            {
+                auto a1 = Rectify(), a2 = other.Rectify();
+                float x = Math::Min(a1.Left(), a2.Left());
+                float y = Math::Min(a1.Bottom(), a2.Bottom());
+                float w = Math::Max(a1.Right(), a2.Right()) - x;
+                float h = Math::Max(a1.Top(), a2.Top()) - y;
+                return Area(x, y, w, h);
+            }
 
 
 
             /** OPERATORS **/
             /// <summary> Determines whether two areas are equivalent to one another. </summary>
             /// <returns> A Boolean <c>true</c> if the two areas are identical, or <c>false</c> otherwise. </returns>
-            constexpr bool operator ==(const Area& other)   const;
+            constexpr bool operator ==(const Area& other)   const
+            {
+                return (X == other.X) && (Y == other.Y) && (Width == other.Width) && (Height == other.Height);
+            }
             /// <summary> Determines whether two areas are not equivalent to one another. </summary>
             /// <returns> A Boolean <c>true</c> if the two areas are not identical, or <c>false</c> otherwise. </returns>
             constexpr bool operator !=(const Area& other)   const { return !(*this == other); }

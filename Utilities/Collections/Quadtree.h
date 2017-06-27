@@ -88,8 +88,7 @@ namespace Cyclone
                 {
                     if (Root && Root->Insert(bounds, value)) { _count++; return; }
                     
-                    Area rootBounds(bounds);
-                    rootBounds.Union(Bounds());
+                    Area rootBounds = Area(bounds).Union(Bounds());
                     float size = nextpow2((uint)Math::Max(rootBounds.Width, rootBounds.Height, 1.0f));
                     rootBounds.Scale(size);
 

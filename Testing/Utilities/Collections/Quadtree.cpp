@@ -189,29 +189,18 @@ TEST_F(_Quadtree, ComplexInsertions)
 
     ASSERT_EQ(_q1.Count(), 8);
 
-    Area total(SmallNW);
-    total
+    Area total = SmallNW
         .Union(LargeNW)
         .Union(SmallNE)
         .Union(LargeNE)
         .Union(SmallSW)
         .Union(LargeSW)
         .Union(SmallSE)
-        .Union(LargeSE)
-        .Scale( nextpow2((uint)Math::Max(total.Width, total.Height, 1.0f)) );
+        .Union(LargeSE);
+
+    total.Scale( nextpow2((uint)Math::Max(total.Width, total.Height, 1.0f)) );
 
     ASSERT_EQ(_q1.Bounds(), total);
-
-    //List<int> treeContents = _q1.Values();
-    //ASSERT_EQ(treeContents.Count(), _q1.Count());
-
-
-    //List<int> treeContents = _q1.Index()
-
-    //uint idx = 0;
-    //for ()
-
-
 }
 
 
