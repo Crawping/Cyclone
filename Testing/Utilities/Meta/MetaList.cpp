@@ -39,3 +39,13 @@ TEST_F(_MetaList, Concatenation)
     ASSERT_TRUE(( Meta::IsEqual<L2::First::Type, L1::First::Type>() ));
     ASSERT_TRUE(( Meta::IsEqual<L2::Last::Type, ulong*>() ));
 }
+TEST_F(_MetaList, IsEqual)
+{
+    ASSERT_EQ(L2::IsEqual<uint>(0),     true);
+    ASSERT_EQ(L2::IsEqual<Color4>(1),   true);
+    ASSERT_EQ(L2::IsEqual<double>(2),   true);
+    ASSERT_EQ(L2::IsEqual<Vector4>(3),  true);
+    ASSERT_EQ(L2::IsEqual<char>(4),     true);
+    ASSERT_EQ(L2::IsEqual<int>(5),      true);
+    ASSERT_EQ(L2::IsEqual<ulong*>(6),   true);
+}
