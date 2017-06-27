@@ -147,14 +147,14 @@
     <ClInclude Include="Resources\ResourceLibrary.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Pipelines\RenderLayer3D.h">
-      <Filter>Pipelines</Filter>
-    </ClInclude>
-    <ClInclude Include="Pipelines\RenderLayer.h">
-      <Filter>Pipelines</Filter>
-    </ClInclude>
     <ClInclude Include="Buffers\GeometryBuffer.h">
       <Filter>Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\RenderLayer3D.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\RenderLayer.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,10 +236,12 @@
     <ClCompile Include="Geometry\Entity3D.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Pipelines\RenderLayer3D.cpp">
-      <Filter>Pipelines</Filter>
+    <ClCompile Include="Resources\RenderLayer.cpp">
+      <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Pipelines\RenderLayer.cpp" />
+    <ClCompile Include="Resources\RenderLayer3D.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">

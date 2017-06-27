@@ -6,7 +6,7 @@
 #include "Buffers/GeometryBuffer.h"
 #include "Buffers/IndexBuffer.h"
 #include "Buffers/VertexBuffer.h"
-#include "Pipelines/RenderLayer.h"
+#include "Resources/RenderLayer.h"
 
 
 
