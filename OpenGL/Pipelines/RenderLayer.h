@@ -22,10 +22,6 @@ namespace Cyclone
         {
             public:
 
-                template<typename T> using ResourceList = List< Resource<T> >;
-
-
-
                 /** CONSTRUCTOR **/
                 RenderLayer() { }
                 virtual ~RenderLayer() { }

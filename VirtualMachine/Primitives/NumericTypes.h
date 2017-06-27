@@ -70,7 +70,7 @@ namespace Cyclone
             template<typename T>
             constexpr static NumericTypes TypeOf(T value)
             {
-                using namespace Cyclone::Reflection;
+                //using namespace Cyclone::Reflection;
                 return 
                     Meta::TypeEquals<char>(value)   ? Character     :
                     Meta::TypeEquals<float>(value)  ? Float32       :
