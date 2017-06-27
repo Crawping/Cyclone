@@ -168,14 +168,16 @@ namespace Cyclone
                 /// <summary> Determines whether one transformation is not equivalent to another. </summary>
                 /// <returns> A Boolean <c>true</c> if the transformations are not identical, or <c>false</c> otherwise. </returns>
                 virtual bool operator !=(const Transform3D& other)                  const { return !(*this == other); }
-
+                /// <summary> Performs matrix multiplication between a 4x4 transformation matrix and a vector. </summary>
+                /// <returns> A three-element vector representing the spatially transformed input. </returns>
+                /// <param name="right"> A three-element vector that serves as the right operand of the multiplication. </param>
                 virtual Vector3 operator *(const Vector3& right)                    const { return Vector3(ToMatrix4x4() * Vector4(right, 1.0f)); }
                 /// <summary> Performs matrix multiplication between a 4x4 transformation matrix and a vector. </summary>
-                /// <returns> A four-element vector containing the results of the multiplication. </returns>
+                /// <returns> A four-element vector representing the spatially transformed input. </returns>
                 /// <param name="right"> A four-element vector that serves as the right operand of the multiplication. </param>
                 virtual Vector4 operator *(const Vector4& right)                    const { return ToMatrix4x4() * right; }
                 /// <summary> Performs matrix multiplication for two 4x4 transformation matrices. </summary>
-                /// <returns> A transformation object containing the results of the multiplication. </returns>
+                /// <returns> A transformation object representing the combined input transformations. </returns>
                 /// <param name="other"> Another 4x4 transformation matrix that serves as the right operand of the multiplication. </param>
                 UtilitiesAPI virtual Transform3D operator *(const Transform3D& other)   const;
 

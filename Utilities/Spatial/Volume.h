@@ -12,8 +12,6 @@
 
 
 
-//namespace Cyclone::Utilities
-//{
 namespace Cyclone
 {
     namespace Utilities
@@ -25,9 +23,9 @@ namespace Cyclone
 
             /** CONSTANT DATA **/
             /// <summary> A rectangular prism whose position and size are all equal to zero. </summary>
-            const static Volume Empty; //= Volume { 0, 0, 0, 0, 0, 0 };
+            const static Volume Empty;
             /// <summary> A rectangular prism with unit volume positioned at the origin (0, 0, 0). </summary>
-            const static Volume Unit;// = Volume { 0, 0, 0, 1, 1, 1 };
+            const static Volume Unit;
 
 
 
@@ -200,7 +198,7 @@ namespace Cyclone
             {
                 return false;
             }
-            /// <summary> Converts this volume into an equivalent one whose size consists only of positive values. </summary>
+            /// <summary> Converts the volume into an equivalent one whose size consists only of positive values. </summary>
             /// <returns> A positive volume whose position represents the back-lower-left corner of the prism. </returns>
             constexpr Volume Rectify() const
             {
@@ -212,7 +210,8 @@ namespace Cyclone
             }
             /// <summary> Generates a human-readable string detailing the current state of the data structure. </summary>
             string Report() const;
-
+            /// <summary> Converts the volume into an equivalent vector representation. </summary>
+            /// <returns> A six-element array consisting of the volume's (x, y, z, width, height, depth) values. </returns>
             constexpr Array<float, 6> ToArray()             const { return { X, Y, Z, Width, Height, Depth }; }
             /// <summary> Creates a new volume large enough to contain both the previous volume and a 3D spatial point. </summary>
             /// <returns> A larger volume that contains the given point. </returns>
@@ -264,7 +263,6 @@ namespace Cyclone
             constexpr bool operator !=(const Volume& other) const { return !(*this == other); }
 
         };
-
     }
 }
 
