@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Collections/Array.h"
+#include "IO/Property.h"
 #include "Meta/List.h"
 
 
@@ -49,14 +50,14 @@ namespace Cyclone
 
                 Array<byte, Size> _data;
 
-                template<typename U, typename V> 
-                static U Cast(V& value)
+                template<typename U, typename V> static U Cast(V& value)
                 {
                     return reinterpret_cast<U>( std::addressof(value) );
                 }
 
             public:
 
+                /** CONSTRUCTORS **/
                 /// <summary> Creates a new data structure instance whose fields are uninitialized. </summary>
                 Structure() { }
                 /// <summary> Constructs a new data structure whose fields are initialized with the given values. </summary>
@@ -69,12 +70,31 @@ namespace Cyclone
                         std::copy( v(a), v(a) + Types::Sizes[a], &_data(Offsets(a)) );
                 }
 
+
+
+                /** UTILITIES **/
+                template<uint N> auto Access()
+                {
+                    return Property< Structure, Types::Get<N> >
+                    (
+                        this, 
+                        &Structure::Get<N>, 
+                        &Structure::Set<N>
+                    );
+                }
+                template<typename U> auto Append(U value)
+                {
+                    Structure<T..., U> output;
+                    std::memcpy(&output, this, Size);
+                    output.Set<Count>(value);
+                    return output;
+                }
                 /// <summary> Gets the value of a particular structure field. </summary>
                 /// <returns> The value at the inputted field index. </returns>
                 /// <typeparam name="N"> The numeric index of the desired field. </typeparam>
-                template<uint N> auto Get()
+                template<uint N> auto Get() const
                 {
-                    return *Cast< Types::Get<N>* >(_data(Offsets(N)));
+                    return *Cast< const Types::Get<N>* >(_data(Offsets(N)));
                 }
                 /// <summary> Sets the value of a particular structure field. </summary>
                 /// <typeparam name="N"> The numeric index of the desired field. </typeparam>
@@ -86,24 +106,6 @@ namespace Cyclone
                     return *this;
                 }
 
-
-                template<typename U> auto Append(U value)
-                {
-                    Structure<T..., U> output;
-                    std::memcpy(&output, this, Size);
-                    output.Set<Count>(value);
-                    return output;
-                }
-
         };
-
-
-
-
-        template<typename ... T> struct Object
-        {
-
-        };
-
     }
 }

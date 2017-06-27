@@ -20,9 +20,17 @@ class _Structure: public testing::Test
         Structure<int, Transform3D>                     _s1;
         Structure<uint, Vector3, double, Transform3D>   _s2;
 
+        Structure
+        <
+            Array<int, 1, 3>, 
+            Array<double, 4, 4>, 
+            Array<ulong, 4, 5, 6>
+        > _s3;
+
         _Structure():
             _s1(10, Transform3D()),
-            _s2(10, Vector3::One, Constants::E<double>, Transform3D(1, 2, 3))
+            _s2(10, Vector3::One, Constants::E<double>, Transform3D(1, 2, 3)),
+            _s3({ 1, 2, 3 }, 8, 16)
         {
 
         }
@@ -54,10 +62,31 @@ TEST_F(_Structure, Construction)
     ASSERT_EQ(_s2.Offsets(4),   sizeof(uint) + sizeof(Vector3) + sizeof(double) + sizeof(Transform3D));
     ASSERT_EQ(_s2.Size,         sizeof(uint) + sizeof(Vector3) + sizeof(double) + sizeof(Transform3D));
     ASSERT_EQ(_s2.Size,         sizeof(_s2));
+
+    ASSERT_EQ(_s3.Count,        3);
+    ASSERT_EQ(_s3.Offsets(1),   sizeof(Array<int, 1, 3>));
+    ASSERT_EQ(_s3.Offsets(2),   sizeof(Array<int, 1, 3>) + sizeof(Array<double, 4, 4>));
+    ASSERT_EQ(_s3.Size,         sizeof(_s3));
 }
 
 
+TEST_F(_Structure, Access)
+{
+    auto p10 = _s1.Access<0>();
+    auto p11 = _s1.Access<1>();
 
+    ASSERT_EQ(p10,              10);
+    ASSERT_EQ(p11,              Transform3D());
+
+    p10 = 20;
+    p11 = Transform3D(1, 1, 1);
+
+    ASSERT_EQ(p10,              20);
+    ASSERT_EQ(p11,              Transform3D(1, 1, 1));
+
+    ASSERT_EQ(_s1.Get<0>(),     20);
+    ASSERT_EQ(_s1.Get<1>(),     Transform3D(1, 1, 1));
+}
 TEST_F(_Structure, Append)
 {
     auto s1 = _s1.Append(Vector4(1.0f));
@@ -89,6 +118,10 @@ TEST_F(_Structure, Get)
     ASSERT_EQ(_s2.Get<1>(),     Vector3::One);
     ASSERT_EQ(_s2.Get<2>(),     Constants::E<double>);
     ASSERT_EQ(_s2.Get<3>(),     Transform3D(1, 2, 3));
+
+    ASSERT_EQ(_s3.Get<0>()(2U),         3);
+    ASSERT_EQ(_s3.Get<1>()(3, 3),       8);
+    ASSERT_EQ(_s3.Get<2>()(2, 2, 2),    16);
 }
 TEST_F(_Structure, Set)
 {
