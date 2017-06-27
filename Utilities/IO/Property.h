@@ -108,7 +108,7 @@ namespace Cyclone
 
             public:
                 
-                PropertyBase(Accessor<T> get, Accessor<U> set): 
+                constexpr PropertyBase(Accessor<T> get, Accessor<U> set): 
                     _get(get), 
                     _set(set) 
                 {
