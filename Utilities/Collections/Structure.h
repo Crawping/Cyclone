@@ -50,6 +50,7 @@ namespace Cyclone
 
                 Array<byte, Size> _data;
 
+                /// <summary> Performs a reinterpret-cast operation. </summary>
                 template<typename U, typename V> static U Cast(V& value)
                 {
                     return reinterpret_cast<U>( std::addressof(value) );
@@ -73,7 +74,8 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                template<uint N> static auto Attribute()
+                template<uint N> 
+                constexpr static auto Attribute()
                 {
                     return Utilities::Attribute<Structure, Types::Get<N>>
                     (
@@ -95,6 +97,13 @@ namespace Cyclone
                 {
                     return *Cast< const Types::Get<N>* >(_data(Offsets(N)));
                 }
+                template<typename U> U Get(uint index)      const
+                {
+                    if (Types::IsEqual<U>(index))
+                        return *Cast<const U*>(_data(Offsets(index)));
+                    else
+                        throw std::exception("Invalid return type!");
+                }
                 template<uint N> auto Property()
                 {
                     return Utilities::Property<Structure, Types::Get<N>>
@@ -115,5 +124,6 @@ namespace Cyclone
                 }
 
         };
+
     }
 }

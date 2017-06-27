@@ -100,28 +100,30 @@ TEST_F(_Structure, Append)
     auto p1 = Property<Transform3D, const Vector3&>(&t1, &Transform3D::Position, &Transform3D::Position);
     auto s2 = s1.Append(p1);
 
-    ASSERT_EQ(s2.Count,         s1.Count + 1);
-    ASSERT_EQ(s2.Size,          s1.Size + sizeof(p1));
-
-    ASSERT_EQ(s2.Get<s1.Count>(),   Vector3(10));
+    ASSERT_EQ(s2.Count,                 s1.Count + 1);
+    ASSERT_EQ(s2.Size,                  s1.Size + sizeof(p1));
+    ASSERT_EQ(s2.Get<s1.Count>(),       Vector3(10));
 
     s2.Get<s1.Count>() = Vector3::One;
-    ASSERT_EQ(s2.Get<s1.Count>(),   Vector3::One);
-    ASSERT_EQ(t1.Position(),        Vector3::One);
+    ASSERT_EQ(s2.Get<s1.Count>(),       Vector3::One);
+    ASSERT_EQ(t1.Position(),            Vector3::One);
 }
 TEST_F(_Structure, Get)
 {
-    ASSERT_EQ(_s1.Get<0>(),     10);
-    ASSERT_EQ(_s1.Get<1>(),     Transform3D());
+    ASSERT_EQ(_s1.Get<0>(),             10);
+    ASSERT_EQ(_s1.Get<1>(),             Transform3D());
 
-    ASSERT_EQ(_s2.Get<0>(),     10);
-    ASSERT_EQ(_s2.Get<1>(),     Vector3::One);
-    ASSERT_EQ(_s2.Get<2>(),     Constants::E<double>);
-    ASSERT_EQ(_s2.Get<3>(),     Transform3D(1, 2, 3));
+    ASSERT_EQ(_s2.Get<0>(),             10);
+    ASSERT_EQ(_s2.Get<1>(),             Vector3::One);
+    ASSERT_EQ(_s2.Get<2>(),             Constants::E<double>);
+    ASSERT_EQ(_s2.Get<3>(),             Transform3D(1, 2, 3));
 
     ASSERT_EQ(_s3.Get<0>()(2U),         3);
     ASSERT_EQ(_s3.Get<1>()(3, 3),       8);
     ASSERT_EQ(_s3.Get<2>()(2, 2, 2),    16);
+
+    ASSERT_EQ(_s2.Get<Vector3>(1),      Vector3::One);
+    ASSERT_EQ(_s2.Get<double>(2),       Constants::E<double>);
 }
 TEST_F(_Structure, Set)
 {
