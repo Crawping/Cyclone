@@ -73,11 +73,10 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                template<uint N> auto Access()
+                template<uint N> static auto Attribute()
                 {
-                    return Property< Structure, Types::Get<N> >
+                    return Utilities::Attribute<Structure, Types::Get<N>>
                     (
-                        this, 
                         &Structure::Get<N>, 
                         &Structure::Set<N>
                     );
@@ -92,9 +91,18 @@ namespace Cyclone
                 /// <summary> Gets the value of a particular structure field. </summary>
                 /// <returns> The value at the inputted field index. </returns>
                 /// <typeparam name="N"> The numeric index of the desired field. </typeparam>
-                template<uint N> auto Get() const
+                template<uint N> auto Get()                 const
                 {
                     return *Cast< const Types::Get<N>* >(_data(Offsets(N)));
+                }
+                template<uint N> auto Property()
+                {
+                    return Utilities::Property<Structure, Types::Get<N>>
+                    (
+                        this,
+                        &Structure::Get<N>,
+                        &Structure::Set<N>
+                    );
                 }
                 /// <summary> Sets the value of a particular structure field. </summary>
                 /// <typeparam name="N"> The numeric index of the desired field. </typeparam>

@@ -72,8 +72,8 @@ TEST_F(_Structure, Construction)
 
 TEST_F(_Structure, Access)
 {
-    auto p10 = _s1.Access<0>();
-    auto p11 = _s1.Access<1>();
+    auto p10 = _s1.Property<0>();
+    auto p11 = _s1.Property<1>();
 
     ASSERT_EQ(p10,              10);
     ASSERT_EQ(p11,              Transform3D());
