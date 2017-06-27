@@ -12,29 +12,35 @@ namespace Cyclone
 {
     namespace OpenGL
     {
+        /// <summary> A class that combines a vertex and index buffer to serve as inputted geometry data on the GPU. </summary>
+        /// <remarks> This base declaration is completely empty and must be specialized in order to function. </remarks>
         template<typename ... T> class GeometryBuffer { };
 
+        /// <summary> A class that combines a vertex and index buffer to serve as inputted geometry data on the GPU. </summary>
         template<> class GeometryBuffer<Vertex>: 
             public virtual IGraphicsBuffer
         {
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the number of points to be rendered by the buffer. </summary>
                 uint Count()                const override { return Math::Max(IndexCount(), PointCount()); }
+                /// <summary> Gets the numeric identifier for the buffer on the GPU. </summary>
                 uint ID()                   const override { return _vertices.ID(); }
+                /// <summary> Gets the number of vertex indices stored within the buffer. </summary>
                 uint IndexCount()           const { return _indices.Count(); }
+                /// <summary> Gets whether the buffer contains any indexed vertices. </summary>
                 bool IsIndexed()            const { return !_indices.IsEmpty(); }
+                /// <summary> Gets whether the buffer has updates that need to be transferred to the GPU. </summary>
                 bool NeedsUpdate()          const override { return _needsUpdate; }
+                /// <summary> Gets the number of vertices stored within the buffer. </summary>
                 uint PointCount()           const { return _vertices.Count(); }
 
 
 
                 /** CONSTRUCTOR **/
-                GeometryBuffer():
-                    _needsUpdate(false)
-                {
-
-                }
+                /// <summary> Constructs an empty new geometry buffer that can be used to store 3D vertex data. </summary>
+                GeometryBuffer():           _needsUpdate(false) { }
 
 
 
