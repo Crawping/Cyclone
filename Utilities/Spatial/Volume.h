@@ -132,7 +132,7 @@ namespace Cyclone
             ///     means any point whose coordinates fall exactly on the bounds of the rectangular prism is considered contained and 
             ///     thus will pass the inspection.
             /// </remarks>
-            constexpr bool Contains(const Vector3& point, bool inclusive = true) const
+            constexpr bool Contains(const Vector3& point, bool inclusive = true)    const
             {
                 return
                     Math::IsBetween(point.X, Left(), Right(), inclusive) &&
@@ -152,7 +152,7 @@ namespace Cyclone
             ///     smaller or equivalently sized volume (the input argument). Note that this means two identical volumes are considered 
             ///     to contain one another and thus will pass the inspection.
             /// </remarks>
-            constexpr bool Contains(const Volume& volume, bool inclusive = true) const
+            constexpr bool Contains(const Volume& volume, bool inclusive = true)    const
             {
                 return 
                     Math::IsBetween(volume.Left(), Left(), Right(), inclusive)      &&
@@ -165,7 +165,7 @@ namespace Cyclone
             /// <summary> Determines the region of space shared by both this and another volume. </summary>
             /// <returns> An empty volume if no intersection exists, or the region of space where the two volumes overlap. </returns>
             /// <param name="volume"> Another overlapping volume of space. </param>
-            constexpr Volume Intersection(const Volume& volume) const
+            constexpr Volume Intersection(const Volume& volume)                     const
             {
                 if (!Intersects(volume)) return Volume(0, 0, 0, 0, 0, 0);
 
@@ -183,7 +183,7 @@ namespace Cyclone
             /// <summary> Determines whether this volume shares any space with another one. </summary>
             /// <param name="volume"> Another volume to be tested for overlap. </param>
             /// <returns> A Boolean <c>true</c> if the two volumes have overlapping regions of space, or <c>false</c> otherwise. </returns>
-            constexpr bool Intersects(const Volume& volume) const
+            constexpr bool Intersects(const Volume& volume)                         const
             {
                 auto v1 = Rectify(), v2 = volume.Rectify();
                 return
@@ -194,13 +194,13 @@ namespace Cyclone
             /// <summary> Determines whether this volume intersects a line segment. </summary>
             /// <returns> A Boolean <c>true</c> if the line segment intersects the volume, or <c>false</c> otherwise. </returns>
             /// <param name="line"> A line segment to be tested for intersection. </param>
-            constexpr bool Intersects(const LineSegment3D& line) const
+            constexpr bool Intersects(const LineSegment3D& line)                    const
             {
                 return false;
             }
             /// <summary> Converts the volume into an equivalent one whose size consists only of positive values. </summary>
             /// <returns> A positive volume whose position represents the back-lower-left corner of the prism. </returns>
-            constexpr Volume Rectify() const
+            constexpr Volume Rectify()                                              const
             {
                 return Volume
                 (
@@ -209,14 +209,14 @@ namespace Cyclone
                 );
             }
             /// <summary> Generates a human-readable string detailing the current state of the data structure. </summary>
-            string Report() const;
+            string Report()                                                         const;
             /// <summary> Converts the volume into an equivalent vector representation. </summary>
             /// <returns> A six-element array consisting of the volume's (x, y, z, width, height, depth) values. </returns>
-            constexpr Array<float, 6> ToArray()             const { return { X, Y, Z, Width, Height, Depth }; }
+            constexpr Array<float, 6> ToArray()                                     const { return { X, Y, Z, Width, Height, Depth }; }
             /// <summary> Creates a new volume large enough to contain both the previous volume and a 3D spatial point. </summary>
             /// <returns> A larger volume that contains the given point. </returns>
             /// <param name="point"> The (x, y, z) coordinates of some point in 3D space. </param>
-            constexpr Volume Union(const Vector3& point)    const
+            constexpr Volume Union(const Vector3& point)                            const
             {
                 auto v = Rectify();
                 float x = Math::Min(v.Left(), point.X);
@@ -232,7 +232,7 @@ namespace Cyclone
             /// <summary> Creates a new volume large enough to contain both the previous volume and another one. </summary>
             /// <returns> A larger volume that contains the both of the inputted ones. </returns>
             /// <param name="volume"> Another volume of 3D space. </param>
-            constexpr Volume Union(const Volume& volume)    const
+            constexpr Volume Union(const Volume& volume)                            const
             {
                 auto v1 = Rectify(), v2 = volume.Rectify();
                 float x = Math::Min(v1.Left(), v2.Left());
@@ -252,7 +252,7 @@ namespace Cyclone
             /// <summary> Determines whether two volumes of space are equivalent to one another. </summary>
             /// <param name="other"> Another volume of 3D space. </param>
             /// <returns> A Boolean <c>true</c> if the two volumes are equal, or <c>false</c> otherwise. </returns>
-            constexpr bool operator ==(const Volume& other) const
+            constexpr bool operator ==(const Volume& other)                         const
             {
                 return X == other.X && Y == other.Y && Z == other.Z &&
                     Width == other.Width && Height == other.Height && Depth == other.Depth;
@@ -260,7 +260,7 @@ namespace Cyclone
             /// <summary> Determines whether two volumes of space are not equivalent to one another. </summary>
             /// <param name="other"> Another volume of 3D space. </param>
             /// <returns> A Boolean <c>true</c> if the two volumes are not equal, or <c>false</c> otherwise. </returns>
-            constexpr bool operator !=(const Volume& other) const { return !(*this == other); }
+            constexpr bool operator !=(const Volume& other)                         const { return !(*this == other); }
 
         };
     }
