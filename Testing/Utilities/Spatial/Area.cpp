@@ -81,14 +81,6 @@ TEST_F(_Area, Containment)
     ASSERT_FALSE(_a2.Contains(_p1));
     ASSERT_FALSE(_a3.Contains(_p1));
 }
-//TEST_F(_Area, Cropping)
-//{
-//    _a2.Crop(_a3);
-//    ASSERT_EQ(_a2.Left(),               Math::Max(_a2.Left(), _a3.Left()));
-//    ASSERT_EQ(_a2.Bottom(),             Math::Max(_a2.Bottom(), _a3.Bottom()));
-//    ASSERT_EQ(_a2.Right(),              Math::Max(_a2.Right(), _a3.Right()));
-//    ASSERT_EQ(_a2.Top(),                Math::Max(_a2.Top(), _a3.Top()));
-//}
 TEST_F(_Area, Flipping)
 {
     Area _a2Copy = Area(_a2).Flip(0);
