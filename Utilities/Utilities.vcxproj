@@ -214,6 +214,8 @@
     <ClInclude Include="IO\Members.h" />
     <ClInclude Include="IO\Property.h" />
     <ClInclude Include="IO\Specializations\Accessors.h" />
+    <ClInclude Include="IO\Specializations\BaseAttribute.h" />
+    <ClInclude Include="IO\Specializations\BaseProperty.h" />
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="Math\Matrix4x4.h" />

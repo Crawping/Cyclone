@@ -221,6 +221,12 @@
     <ClInclude Include="Collections\Specializations\EmptyStructure.h">
       <Filter>Collections\Specializations</Filter>
     </ClInclude>
+    <ClInclude Include="IO\Specializations\BaseAttribute.h">
+      <Filter>IO\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Specializations\BaseProperty.h">
+      <Filter>IO\Specializations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
