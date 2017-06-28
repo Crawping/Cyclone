@@ -188,6 +188,7 @@
     <ClInclude Include="Collections\Set.h" />
     <ClInclude Include="Collections\Specializations\DynamicArray.h" />
     <ClInclude Include="Collections\Specializations\DynamicVector.h" />
+    <ClInclude Include="Collections\Specializations\EmptyStructure.h" />
     <ClInclude Include="Collections\Specializations\GenericArray.h" />
     <ClInclude Include="Collections\Specializations\Matrix.h" />
     <ClInclude Include="Collections\Specializations\NumericArray.h" />

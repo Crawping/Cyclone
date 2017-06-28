@@ -218,6 +218,9 @@
     <ClInclude Include="Collections\Specializations\DynamicVector.h">
       <Filter>Collections\Specializations</Filter>
     </ClInclude>
+    <ClInclude Include="Collections\Specializations\EmptyStructure.h">
+      <Filter>Collections\Specializations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
