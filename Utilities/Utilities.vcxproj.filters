@@ -227,6 +227,9 @@
     <ClInclude Include="IO\Specializations\BaseProperty.h">
       <Filter>IO\Specializations</Filter>
     </ClInclude>
+    <ClInclude Include="Meta\Specializations\EmptyList.h">
+      <Filter>Meta\Specializations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -255,6 +258,9 @@
     </Filter>
     <Filter Include="IO\Specializations">
       <UniqueIdentifier>{74eeebdb-e9fd-49c5-ae93-d1c70d59b52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meta\Specializations">
+      <UniqueIdentifier>{c6c1aaf8-b507-4a26-8dca-abbdd5fe7972}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
