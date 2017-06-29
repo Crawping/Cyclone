@@ -165,6 +165,7 @@
     <ClCompile Include="IO\Console.cpp" />
     <ClCompile Include="IO\InputControls.cpp" />
     <ClCompile Include="Math\Matrix4x4.cpp" />
+    <ClCompile Include="Math\RNG.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
     <ClCompile Include="Math\Vector4.cpp" />
@@ -219,6 +220,8 @@
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="Math\Matrix4x4.h" />
+    <ClInclude Include="Math\PDFs.h" />
+    <ClInclude Include="Math\RNG.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />

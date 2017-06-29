@@ -50,6 +50,9 @@
     <ClCompile Include="Spatial\LineSegment.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="Math\RNG.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TypeDefinitions.h" />
@@ -229,6 +232,12 @@
     </ClInclude>
     <ClInclude Include="Collections\Object.h">
       <Filter>Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\RNG.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\PDFs.h">
+      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Meta\Numerics.h">
       <Filter>Meta</Filter>
