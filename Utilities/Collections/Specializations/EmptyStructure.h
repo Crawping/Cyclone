@@ -72,5 +72,10 @@ namespace Cyclone
                     return *this;
                 }
         };
+
+
+
+        template<uint N> struct Substructure<N>: public Structure<> { };
+
     }
 }

@@ -5,6 +5,7 @@
 #pragma once
 #include "Collections/Array.h"
 #include "IO/Property.h"
+#include "Meta/Array.h"
 #include "Meta/List.h"
 
 
@@ -32,6 +33,12 @@ namespace Cyclone
 
 
         struct IStructure {  };
+        template<typename ... T> struct Structure;
+
+        template<uint N, typename ... T> struct Substructure { };
+        template<uint N, typename T, typename ... U> 
+        struct Substructure<N, T, U...>:                                public Substructure<N - 1, U...> { };
+        template<typename ... T> struct Substructure<0, T...>:          public Structure<T...> { };
 
         template<typename ... T> struct Structure: public IStructure
         {
@@ -83,6 +90,27 @@ namespace Cyclone
                         &Structure::Set<N>
                     );
                 }
+                template<typename U>
+                constexpr static auto GetAttribute(uint index)
+                {
+
+
+
+                    //if (index)
+                    //    return Substructure<1, T...>::GetAttribute<U>(index - 1);
+                    //else
+                    //    return Utilities::Attribute<Structure, U>
+                    //    (
+                    //        &Structure::Get<0U>,
+                    //        &Structure::Set<0U>
+                    //    );
+
+                    /*return index ? Substructure<1, T...>::GetAttribute<U>(index - 1) : Utilities::Attribute<Structure, U>
+                    (
+                        &Structure::Get<0U>,
+                        &Structure::Set<0U>
+                    );*/
+                }
                 template<typename U> auto Append(U value)
                 {
                     Structure<T..., U> output;
@@ -113,6 +141,10 @@ namespace Cyclone
                         &Structure::Set<N>
                     );
                 }
+                template<typename U> auto Property(uint index)
+                {
+                    return Attribute<U>(index).Bind(this);
+                }
                 /// <summary> Sets the value of a particular structure field. </summary>
                 /// <typeparam name="N"> The numeric index of the desired field. </typeparam>
                 /// <param name="value"> The value to be copied into the structure. </param>
@@ -124,6 +156,10 @@ namespace Cyclone
                 }
 
         };
-
     }
 }
+
+
+
+/** SPECIALIZATIONS **/
+#include "Collections/Specializations/EmptyStructure.h"
