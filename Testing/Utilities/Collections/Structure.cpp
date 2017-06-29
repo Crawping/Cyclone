@@ -70,23 +70,6 @@ TEST_F(_Structure, Construction)
 }
 
 
-TEST_F(_Structure, Access)
-{
-    auto p10 = _s1.Property<0>();
-    auto p11 = _s1.Property<1>();
-
-    ASSERT_EQ(p10,              10);
-    ASSERT_EQ(p11,              Transform3D());
-
-    p10 = 20;
-    p11 = Transform3D(1, 1, 1);
-
-    ASSERT_EQ(p10,              20);
-    ASSERT_EQ(p11,              Transform3D(1, 1, 1));
-
-    ASSERT_EQ(_s1.Get<0>(),     20);
-    ASSERT_EQ(_s1.Get<1>(),     Transform3D(1, 1, 1));
-}
 TEST_F(_Structure, Append)
 {
     auto s1 = _s1.Append(Vector4(1.0f));
@@ -124,6 +107,27 @@ TEST_F(_Structure, Get)
 
     ASSERT_EQ(_s2.Get<Vector3>(1),      Vector3::One);
     ASSERT_EQ(_s2.Get<double>(2),       Constants::E<double>);
+}
+TEST_F(_Structure, Property)
+{
+    auto p10 = _s1.Property<0>();
+    auto p11 = _s1.Property<1>();
+
+    ASSERT_EQ(p10,              10);
+    ASSERT_EQ(p11,              Transform3D());
+
+    p10 = 20;
+    p11 = Transform3D(1, 1, 1);
+
+    ASSERT_EQ(p10,              20);
+    ASSERT_EQ(p11,              Transform3D(1, 1, 1));
+
+    ASSERT_EQ(_s1.Get<0>(),     20);
+    ASSERT_EQ(_s1.Get<1>(),     Transform3D(1, 1, 1));
+
+    //auto a10 = _s1.GetAttribute<int>(0);
+    //auto p = _s1.Property<int>(0);
+    //ASSERT_EQ(p, p10);
 }
 TEST_F(_Structure, Set)
 {
