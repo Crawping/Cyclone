@@ -46,7 +46,12 @@ namespace Cyclone
             template<typename T> struct IsConstant<const T*>:   Boolean<true> { };
             template<typename T> struct IsConstant<const T&>:   Boolean<true> { };
 
+            /// <summary> Determines whether one type is derived from or equivalent to another. </summary>
+            /// <typeparam name="T"> The candidate child type. </typeparam>
+            /// <typeparam name="U"> The candidate parent type. </typeparam>
             template<typename T, typename U> struct IsA:        decltype(IsDerived<U>(Declare<T*>())) { };
+            template<typename T> struct IsA<T, void>:           IsEqual<T, void> { };
+            template<typename T> struct IsA<void, T>:           IsEqual<void, T> { };
             template<typename T> struct IsA<T, T>:              Boolean<true> { };
 
             /// <summary> Determines whether the input represents a pointer type. </summary>
@@ -71,9 +76,15 @@ namespace Cyclone
             template<typename T> struct SizeOf:                 Integer32U<sizeof(T)> { };
             template<> struct SizeOf<void>:                     Integer32U<0> { };
 
+            /// <summary> Determines whether two types are equivalent. </summary>
+            /// <param name="x"> An instance of the first type to be compared. </param>
+            /// <param name="y"> An instance of the second type to be compared. </param>
             template<typename T, typename U>
             constexpr bool TypeEquals(T x, U y)                 { return IsEqual<T, U>(); }
 
+            /// <summary> Determines whether two types are equivalent. </summary>
+            /// <typeparam name="T"> The first type to be compared. </typeparam>
+            /// <param name="x"> An instance of the second type to be compared. </param>
             template<typename T, typename U>
             constexpr bool TypeEquals(U x)                      { return IsEqual<T, U>(); }
 
