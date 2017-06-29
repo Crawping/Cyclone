@@ -230,6 +230,9 @@
     <ClInclude Include="Collections\Object.h">
       <Filter>Collections</Filter>
     </ClInclude>
+    <ClInclude Include="Meta\Numerics.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

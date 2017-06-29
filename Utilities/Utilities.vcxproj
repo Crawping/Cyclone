@@ -226,6 +226,7 @@
     <ClInclude Include="Meta\Class.h" />
     <ClInclude Include="Meta\Function.h" />
     <ClInclude Include="Meta\List.h" />
+    <ClInclude Include="Meta\Numerics.h" />
     <ClInclude Include="Meta\Primitives.h" />
     <ClInclude Include="Meta\Specializations\EmptyList.h" />
     <ClInclude Include="Meta\Utilities.h" />
