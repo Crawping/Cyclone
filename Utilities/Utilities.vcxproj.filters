@@ -209,9 +209,6 @@
     <ClInclude Include="Collections\Specializations\Matrix.h">
       <Filter>Collections\Specializations</Filter>
     </ClInclude>
-    <ClInclude Include="Collections\Specializations\GenericArray.h">
-      <Filter>Collections\Specializations</Filter>
-    </ClInclude>
     <ClInclude Include="Collections\Structure.h">
       <Filter>Collections</Filter>
     </ClInclude>
@@ -229,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="Meta\Specializations\EmptyList.h">
       <Filter>Meta\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="Collections\Object.h">
+      <Filter>Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

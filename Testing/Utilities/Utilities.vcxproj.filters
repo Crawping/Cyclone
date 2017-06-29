@@ -109,5 +109,8 @@
     <ClCompile Include="Spatial\LineSegment3D.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>
+    <ClCompile Include="Collections\Object.cpp">
+      <Filter>Collections</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

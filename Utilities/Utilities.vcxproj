@@ -182,6 +182,7 @@
     <ClInclude Include="Collections\List.h" />
     <ClInclude Include="Collections\ArrayList.h" />
     <ClInclude Include="Collections\Multiset.h" />
+    <ClInclude Include="Collections\Object.h" />
     <ClInclude Include="Collections\Octree.h" />
     <ClInclude Include="Collections\Quadtree.h" />
     <ClInclude Include="Collections\Registry.h" />
@@ -189,7 +190,6 @@
     <ClInclude Include="Collections\Specializations\DynamicArray.h" />
     <ClInclude Include="Collections\Specializations\DynamicVector.h" />
     <ClInclude Include="Collections\Specializations\EmptyStructure.h" />
-    <ClInclude Include="Collections\Specializations\GenericArray.h" />
     <ClInclude Include="Collections\Specializations\Matrix.h" />
     <ClInclude Include="Collections\Specializations\NumericArray.h" />
     <ClInclude Include="Collections\Stack.h" />
