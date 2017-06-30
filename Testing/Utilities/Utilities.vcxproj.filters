@@ -112,5 +112,8 @@
     <ClCompile Include="Collections\Object.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
+    <ClCompile Include="Collections\Specializations\DynamicArray.cpp">
+      <Filter>Collections\Specializations</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -150,6 +150,9 @@
     <ClCompile Include="Spatial\Transform3D.cpp" />
     <ClCompile Include="Spatial\Volume.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Collections\Specializations\DynamicArray.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
