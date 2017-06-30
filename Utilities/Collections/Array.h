@@ -159,6 +159,8 @@ namespace Cyclone
                 /** OPERATORS **/
                 /// <summary> Gets a pointer to the first element stored in the array. </summary>
                 constexpr const T* begin()                                          const { return &_values[0]; }
+
+                T* begin()                                                          { return &_values[0]; }
                 /// <summary> Gets a pointer to a non-existent element just beyond the end of the array. </summary>
                 /// <remarks> Like nearly all end-iterators, this value must never be dereferenced. </remarks>
                 constexpr const T* end()                                            const { return begin() + Count(); }
@@ -211,6 +213,6 @@ namespace Cyclone
 
 
 /** SPECIALIZATIONS **/
-//#include "Specializations/DynamicArray.h"
+#include "Specializations/DynamicArray.h"
 //#include "Specializations/NumericArray.h"
 #include "Specializations/Matrix.h"
