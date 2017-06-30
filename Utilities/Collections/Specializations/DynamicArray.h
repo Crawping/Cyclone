@@ -13,6 +13,8 @@ namespace Cyclone
     namespace Utilities
     {
 
+        /// <summary> A class that represents a multidimensional array of data elements. </summary>
+        /// <typeparam name="T"> The type of the elements stored in the array. </typeparam>
         template<typename T>
         class Array<T>: public IArray<T>
         {
@@ -32,6 +34,7 @@ namespace Cyclone
 
 
                  /** CONSTRUCTORS & DESTRUCTOR **/
+                 /// <summary> Constructs a new empty multidimensional array of values. </summary>
                 Array():
                     _count(0),
                     _rank(0),
@@ -40,6 +43,8 @@ namespace Cyclone
                 {
 
                 }
+                /// <summary> Constructs a new empty multidimensional array of values. </summary>
+                /// <param name="...dimensions"> Any number of integers defining the size of the array. </param>
                 template<typename ... U> Array(U ... dimensions):
                     _count(Math::Product(dimensions...)),
                     _rank(sizeof...(U)),
@@ -87,7 +92,8 @@ namespace Cyclone
                     for (uint a = index; a < index + count; a++)
                         _values[a - index] = other(a);
                 }
-                /// <summary> Constructs an array by copying values contained in an initializer list. </summary>
+                /// <summary> Constructs a new multidimensional array whose elements are initialized to specific values. </summary>
+                /// <param name="values"> An initial list of values to copied into the new array. </param>
 		        Array(const InitialList<T>& values):
 			        _count(values.size()),
                     _rank(1),
@@ -108,6 +114,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                /// <summary> Gets the total number of elements present in a specific dimension of the array. </summary>
+                /// <returns> The cumulative element count up through the inputted array dimension. </returns>
+                /// <param name="dimension"> The array dimension through which elements are to be counted. </param>
                 virtual uint Count(uint dimension)                      const
                 {
                     uint count = Size(0);
@@ -133,13 +142,13 @@ namespace Cyclone
                     for (uint a = 0; a < Count(); a++)
                         _values[a] = value;
                 }
-
-                virtual uint Size(uint dimension)                       const 
-                {
-                    if (_rank == 0) { return 0; }
-                    return (dimension >= _rank) ? 1 : _size[dimension];
-                }
-
+                /// <summary> Changes the dimensions of the array while preserving its element count. </summary>
+                /// <param name="dimensions"> Any number of integers defining the new size of the array. </param>
+                /// <remarks> 
+                ///     Note that reshaping operations require element counts to be preserved, and an exception 
+                ///     will be thrown if the given dimensions would not contain the same number of elements that 
+                ///     are stored in the existing array.
+                /// </remarks>
                 template<typename ... U>
                 Array& Reshape(U ... dimensions)
                 {
@@ -157,11 +166,19 @@ namespace Cyclone
 
                     return *this;
                 }
+                /// <summary> Calculates a linear index that is equivalent to a set of array subscripts. </summary>
+                /// <returns> A linear array index that references the same location as the inputted subscripts. </returns>
+                /// <param name="subscripts"> Any number of unsigned integers representing the array subscripts to convert. </param>
+                /// <remarks> Subscripts into dimensions higher than the rank of the array are ignored. </remarks>
                 template<typename ... U>
                 uint IndexOf(U ... subscripts)                          const 
                 { 
                     return IndexOf( Array<uint, sizeof...(U)>{ uint(subscripts)... } );
                 }
+                /// <summary> Calculates a linear index that is equivalent to a set of array subscripts. </summary>
+                /// <returns> A linear array index that references the same location as the inputted subscripts. </returns>
+                /// <param name="subscripts"> Any number of unsigned integers representing the array subscripts to convert. </param>
+                /// <remarks> Subscripts into dimensions higher than the rank of the array are ignored. </remarks>
                 template<uint N>
                 uint IndexOf(const Array<uint, N>& subscripts)          const
                 {
@@ -170,6 +187,14 @@ namespace Cyclone
                     for (uint a = 1; a < rank; a++)
                         idx += subscripts(a) * Count(a - 1);
                     return idx;
+                }
+                /// <summary> Gets the size of the array across a specific dimension. </summary>
+                /// <returns> The size of the array along the inputted dimension. </returns>
+                /// <param name="dimension"> A single array dimension. </param>
+                virtual uint Size(uint dimension)                       const 
+                {
+                    if (_rank == 0) { return 0; }
+                    return (dimension >= _rank) ? 1 : _size[dimension];
                 }
                 /// <summary> Exchanges the values of two separate vector elements. </summary>
                 /// <param name="idxFirst"> The position of the first element to be swapped. </param>
@@ -193,19 +218,24 @@ namespace Cyclone
                 ///     it points to an undefined array slot.
                 /// </remarks>
                 virtual Iterator end()                                  { return Iterator(Count(), this); }
-                /// <summary> Performs linear array-like indexing of the data elements stored within the array. </summary>
-                /// <returns> A reference to the data element stored at the inputted index. </returns>
-                /// <param name="idx"> The numeric position of the desired data element within the array. </param>
+                /// <summary> Gets the value stored at a particular linear index within the array. </summary>
+                /// <returns> A reference to the value found at the given index. </returns>
+                /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
 		        virtual T& operator ()(uint idx)			            { return _values[idx]; }
-                /// <summary> Performs linear array-like indexing of the data elements stored within the vector. </summary>
-                /// <returns> An immutable reference to the data element stored at the inputted index. </returns>
-                /// <param name="idx"> The numeric position of the desired data element within the vector. </param>
+                /// <summary> Gets the value stored at a particular linear index within the array. </summary>
+                /// <returns> A reference to the value found at the given index. </returns>
+                /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
 		        virtual const T& operator ()(uint idx)	                const override { return _values[idx]; }
-
+                /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
+                /// <returns> A reference to the value found at the given indices. </returns>
+                /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... U>
                 T& operator ()(U ... subscripts)                        { return _values[IndexOf(subscripts...)]; }
+                /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
+                /// <returns> A reference to the value found at the given indices. </returns>
+                /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... U>
                 const T& operator ()(U ... subscripts)                  const { return _values[IndexOf(subscripts...)]; }
 
@@ -228,10 +258,8 @@ namespace Cyclone
                     Reallocate(other.Count());
                     _rank = other._rank;
 
-                    for (uint a = 0; a < Rank(); a++)
-                        _size[a] = other._size[a];
-			        for (uint a = 0; a < Count(); a++)
-				        _values[a] = other._values[a];
+                    std::copy(other._size, other._size + _rank, _size);
+                    std::copy(other._values, other._values + _count, _values);
 
 			        return *this;
 		        }
@@ -240,13 +268,15 @@ namespace Cyclone
                 /// <param name="values"> An initialization list of data elements. </param>
                 virtual Array& operator =(const InitialList<T>& values)
                 {
+                    Reallocate(values.size()));
+                    
                     uint count = Math::Min(Count(), values.size());
                     for (uint a = 0; a < count; a++)
                         _values[a] = *(values.begin() + a);
                     return *this;
                 }
 
-
+                /// <summary> Determines if two arrays are equivalent. </summary>
                 virtual bool operator ==(const Array& other)            const
                 {
                     if (this == &other)                                             { return true; }
@@ -260,6 +290,7 @@ namespace Cyclone
 
                     return true;
                 }
+                /// <summary> Determines if two arrays are not equivalent. </summary>
                 virtual bool operator !=(const Array& other)            const { return !operator ==(other); }
 
             protected:
@@ -276,13 +307,13 @@ namespace Cyclone
                     if (n == 0)         { Clear(); return; }
 
                     T* newData = new T[n];
-                    for (uint a = 0; a < Count(); a++)
-                        newData[a] = _values[a];
+                    std::copy(_values, _values + _count, newData);
 
                     Clear();
                     _count  = n;
                     _values = newData;
                 }
+
 
             private:
 

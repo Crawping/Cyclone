@@ -92,8 +92,8 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 /// <summary> Gets the total number of elements present in a specific dimension of the array. </summary>
-                /// <param name="dimension"> The array dimension through which elements are to be counted. </param>
                 /// <returns> The cumulative element count up through the inputted array dimension. </returns>
+                /// <param name="dimension"> The array dimension through which elements are to be counted. </param>
                 constexpr static uint Count(uint dimension)
                 {
                     uint count = Size(0);
@@ -131,6 +131,12 @@ namespace Cyclone
                     return idx;
                 }
                 /// <summary> Copies the array into a new one with different dimensions. </summary>
+                /// <typeparam name="V"> Any number of integers defining the size of the new array. </typeparam>
+                /// <remarks> 
+                ///     Note that reshaping operations require element counts to be preserved, and an exception 
+                ///     will be thrown if the given dimensions would not contain the same number of elements that
+                ///     are stored in the existing array.
+                /// </remarks>
                 template<uint ... V> constexpr Array<T, V...> Reshape()             const
                 {
                     static_assert(Math::Product(V...) == _count,
@@ -186,7 +192,9 @@ namespace Cyclone
                 /// <returns> A reference to the value found at the given index. </returns>
                 /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 constexpr const T& operator ()(uint index)                          const { return _values[index]; }
-
+                /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
+                /// <returns> A reference to the value found at the given indices. </returns>
+                /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... V>
                 constexpr T& operator ()(V ... indices)                             { return _values[IndexOf(indices...)]; }
                 /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
