@@ -108,6 +108,18 @@ namespace Cyclone
 
                 return v;
             }
+            /// <summary> Finds the next value greater than or equal to the input that is also an integral power of two. </summary>
+            template<typename T> constexpr T NextPower2(T x)
+            {
+                int64_t y = Ceil(x) - 1;
+                y |= y >> 1;
+                y |= y >> 2;
+                y |= y >> 4;
+                y |= y >> 8;
+                y |= y >> 16;
+
+                return y + 1;
+            }
             /// <summary> Returns the cumulative product of a list of values. </summary>
             /// <returns> The result of multiplying all inputted values together. </returns>
             /// <param name="first"> The first value of the list being multiplied. </param>
