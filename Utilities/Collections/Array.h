@@ -104,10 +104,6 @@ namespace Cyclone
                 /// <summary> Converts the array into an equivalent one-dimensional vector of values. </summary>
                 /// <returns> A flattened array of values copied from the multidimensional array. </returns>
                 constexpr Array<T, _count> Flatten()                                const { return { _values }; }
-                /// <summary> Gets the size of the array across a specific dimension. </summary>
-                /// <returns> The size of the array along the inputted dimension. </returns>
-                /// <param name="dimension"> A single array dimension. </param>
-                constexpr static uint Size(uint dimension)                          { return (dimension >= _rank) ? 1 : _size[dimension]; }
                 /// <summary> Calculates a linear index that is equivalent to a set of array subscripts. </summary>
                 /// <returns> A linear array index that references the same location as the inputted subscripts. </returns>
                 /// <param name="subscripts"> Any number of unsigned integers representing the array subscripts to convert. </param>
@@ -143,6 +139,10 @@ namespace Cyclone
                         "The number of elements in an array must not change during reshaping operations.");
                     return { _values };
                 }
+                /// <summary> Gets the size of the array across a specific dimension. </summary>
+                /// <returns> The size of the array along the inputted dimension. </returns>
+                /// <param name="dimension"> A single array dimension. </param>
+                constexpr static uint Size(uint dimension)                          { return (dimension >= _rank) ? 1 : _size[dimension]; }
                 /// <summary> Calculates a set of subscripts that is equivalent to a given linear array index. </summary>
                 /// <returns> Array subscripts that reference the same location as the inputted linear index. </returns>
                 /// <param name="index"> A single linear index into the array. </param>
@@ -210,9 +210,11 @@ namespace Cyclone
                         if (_values[a] != other(a)) return false;
                     return true;
                 }
+                template<typename V, uint ... W>
+                constexpr bool operator ==(const Array<V, W...>& other)             const { return false; }
                 /// <summary> Determines if two identically dimensioned arrays are not equivalent. </summary>
-                constexpr bool operator !=(const Array& other)                      const { return !operator ==(other); }
-                
+                template<typename V, uint ... W>
+                constexpr bool operator !=(const Array<V, W...>& other)             const { return !operator ==(other); }
         };
 
     }
@@ -222,5 +224,6 @@ namespace Cyclone
 
 /** SPECIALIZATIONS **/
 #include "Specializations/DynamicArray.h"
+#include "Specializations/DynamicVector.h"
 //#include "Specializations/NumericArray.h"
 #include "Specializations/Matrix.h"
