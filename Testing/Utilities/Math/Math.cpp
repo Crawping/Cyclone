@@ -10,7 +10,7 @@ using namespace Cyclone::Utilities;
 
 
 
-TEST(_Math, Abs)
+TEST(MathTest, Abs)
 {
     constexpr double v1 = Math::Abs(-3.14159265);
     constexpr float v2 = Math::Abs(0.0f);
@@ -20,7 +20,7 @@ TEST(_Math, Abs)
     ASSERT_EQ(v2,    0.0f);
     ASSERT_EQ(v3,    123456789);
 }
-TEST(_Math, Ceiling)
+TEST(MathTest, Ceiling)
 {
     constexpr float v1  = Math::Ceil(0.0f);
     constexpr double v2 = Math::Ceil(1.0);
@@ -36,7 +36,7 @@ TEST(_Math, Ceiling)
     ASSERT_EQ(v5,    4.0f);
     ASSERT_EQ(v6,    3.0);
 }
-TEST(_Math, Clamping)
+TEST(MathTest, Clamping)
 {
     constexpr int x = -10;
     constexpr int y = 10;
@@ -46,7 +46,7 @@ TEST(_Math, Clamping)
     ASSERT_EQ(cx,   -5);
     ASSERT_EQ(cy,    5);
 }
-TEST(_Math, Comparing)
+TEST(MathTest, Comparing)
 {
     constexpr int c1 = Math::Compare(-10, 10);
     constexpr int c2 = Math::Compare(200, 2);
@@ -56,7 +56,7 @@ TEST(_Math, Comparing)
     ASSERT_EQ(c2,    1);
     ASSERT_EQ(c3,    0);
 }
-TEST(_Math, Extrema)
+TEST(MathTest, Extrema)
 {
     constexpr int m1 = Math::Max(10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
     constexpr int m2 = Math::Max(10, 20, 30, 40, 100, 60, 70, 80, 90, 50);
@@ -68,7 +68,7 @@ TEST(_Math, Extrema)
     ASSERT_EQ(m3,    10);
     ASSERT_EQ(m4,    m3);
 }
-TEST(_Math, Fix)
+TEST(MathTest, Fix)
 {
     constexpr float v1 = Math::Fix(Constants::Pi<float>);
     constexpr double v2 = Math::Fix(-Constants::E<double>);
@@ -76,7 +76,7 @@ TEST(_Math, Fix)
     ASSERT_EQ(v1,    3.0f);
     ASSERT_EQ(v2,   -2.0);
 }
-TEST(_Math, Floor)
+TEST(MathTest, Floor)
 {
     constexpr float v1  = Math::Floor(0.0f);
     constexpr double v2 = Math::Floor(1.0);
@@ -92,7 +92,7 @@ TEST(_Math, Floor)
     ASSERT_EQ(v5,    3.0f);
     ASSERT_EQ(v6,    2.0);
 }
-TEST(_Math, IsBetween)
+TEST(MathTest, IsBetween)
 {
     constexpr bool v1 = Math::IsBetween(1, 0, 10);
     constexpr bool v2 = Math::IsBetween(1000, 100, 1000000);
@@ -112,7 +112,31 @@ TEST(_Math, IsBetween)
     ASSERT_EQ(v6, false);
     ASSERT_EQ(v7, false);
 }
-TEST(_Math, Product)
+TEST(MathTest, NextPower2)
+{
+    constexpr int v1 = Math::NextPower2(2);
+    constexpr int v2 = Math::NextPower2(3);
+    constexpr int v3 = Math::NextPower2(4);
+    constexpr int v4 = Math::NextPower2(7);
+    constexpr int v5 = Math::NextPower2(99);
+
+    ASSERT_EQ(v1, 2);
+    ASSERT_EQ(v2, 4);
+    ASSERT_EQ(v3, 4);
+    ASSERT_EQ(v4, 8);
+    ASSERT_EQ(v5, 128);
+
+    constexpr int v6 = Math::NextPower2(2.0f);
+    constexpr int v7 = Math::NextPower2(Constants::Pi<double>);
+    constexpr int v8 = Math::NextPower2(951.876);
+    constexpr int v9 = Math::NextPower2(-36.124);
+
+    ASSERT_EQ(v6, 2);
+    ASSERT_EQ(v7, 4);
+    ASSERT_EQ(v8, 1024);
+    ASSERT_EQ(v9, 0);
+}
+TEST(MathTest, Product)
 {
     constexpr int v1 = Math::Product(1, 2, 3, 4);
     constexpr int v2 = Math::Product(10);
@@ -120,7 +144,7 @@ TEST(_Math, Product)
     ASSERT_EQ(v1, 24);
     ASSERT_EQ(v2, 10);
 }
-TEST(_Math, Round)
+TEST(MathTest, Round)
 {
     constexpr float v1  = Math::Round(0.0f);
     constexpr double v2 = Math::Round(1.0);
@@ -142,7 +166,7 @@ TEST(_Math, Round)
     ASSERT_EQ(v8,    11.0f);
     ASSERT_EQ(v9,   -11.0f);
 }
-TEST(_Math, Sign)
+TEST(MathTest, Sign)
 {
     constexpr int v1 = Math::Sign(-3.14159265);
     constexpr int v2 = Math::Sign(0.0f);
@@ -152,7 +176,7 @@ TEST(_Math, Sign)
     ASSERT_EQ(v2,  1);
     ASSERT_EQ(v3,  1);
 }
-TEST(_Math, Sqrt)
+TEST(MathTest, Sqrt)
 {
     /*constexpr*/ float v1 = Math::Sqrt(1.0f);
     /*constexpr*/ float v2 = Math::Sqrt(4.0f);
@@ -166,7 +190,7 @@ TEST(_Math, Sqrt)
 
     ASSERT_FLOAT_EQ(Math::Sqrt(64.0f),   8.0f);
 }
-TEST(_Math, Sum)
+TEST(MathTest, Sum)
 {
     constexpr int v1 = Math::Sum(1, 2, 3, 4, 5, 6, 7, 8, 9);
     constexpr int v2 = Math::Sum(-1, -2, -3, -4, -5, -6, -7, -8, -9);
@@ -177,7 +201,7 @@ TEST(_Math, Sum)
     constexpr int v3 = Math::Sum(1);
     ASSERT_EQ(v3, 1);
 }
-TEST(_Math, Unfix)
+TEST(MathTest, Unfix)
 {
     constexpr float v1  = Math::Unfix(0.0f);
     constexpr double v2 = Math::Unfix(1.0);
