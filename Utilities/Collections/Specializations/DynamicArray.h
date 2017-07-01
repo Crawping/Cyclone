@@ -114,16 +114,6 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                /// <summary> Gets the total number of elements present in a specific dimension of the array. </summary>
-                /// <returns> The cumulative element count up through the inputted array dimension. </returns>
-                /// <param name="dimension"> The array dimension through which elements are to be counted. </param>
-                virtual uint Count(uint dimension)                      const
-                {
-                    uint count = Size(0);
-                    for (uint a = 1; a <= dimension; a++)
-                        count *= Size(a);
-                    return count;
-                }
                 /// <summary> Removes all data elements from the vector and leaves it in an empty state. </summary>
                 virtual void Clear()
                 {
@@ -134,6 +124,16 @@ namespace Cyclone
                     _rank   = 0;
                     _size   = nullptr;
                     _values = nullptr;
+                }
+                /// <summary> Gets the total number of elements present in a specific dimension of the array. </summary>
+                /// <returns> The cumulative element count up through the inputted array dimension. </returns>
+                /// <param name="dimension"> The array dimension through which elements are to be counted. </param>
+                virtual uint Count(uint dimension)                      const
+                {
+                    uint count = Size(0);
+                    for (uint a = 1; a <= dimension; a++)
+                        count *= Size(a);
+                    return count;
                 }
                 /// <summary> Sets each element of the array to a single uniform value. </summary>
                 /// <param name="value"> The value to which each element of the array should be set. </param>
@@ -268,7 +268,7 @@ namespace Cyclone
                 /// <param name="values"> An initialization list of data elements. </param>
                 virtual Array& operator =(const InitialList<T>& values)
                 {
-                    Reallocate(values.size()));
+                    Reallocate(values.size());
                     
                     uint count = Math::Min(Count(), values.size());
                     for (uint a = 0; a < count; a++)
