@@ -297,9 +297,10 @@ namespace Cyclone
         Mesh3D Mesh3D::Point()
         {
             Mesh3D geometry;
-            Vector<Vertex, 1> vertices( Vertex({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }) );
+            //Vector<Vertex, 1> vertices( Vertex({ 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }) );
             geometry.Topology(PointTopologies::Points);
-            geometry.Vertices(vertices);
+            geometry.Append(Vector3::Zero, Vector3::UnitZ, Vector3::Zero);
+            //geometry.Vertices(vertices);
             return geometry;
         }
         Mesh3D Mesh3D::Quad(bool isIndexed)

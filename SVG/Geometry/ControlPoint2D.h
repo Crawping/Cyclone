@@ -5,7 +5,7 @@
 #pragma once
 #include "EnumerationsSVG.h"
 #include "SVGAPI.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Math/Vector2.h"
 
 

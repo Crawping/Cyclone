@@ -2,14 +2,14 @@
  * Written by Josh Grooms on 20160925
  */
 
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;
 
 
 
-class _Vector : public testing::Test
+class VectorTest : public testing::Test
 {
     protected:
 
@@ -22,52 +22,37 @@ class _Vector : public testing::Test
         Vector<char>        _v1;
         Vector<char>        _v2;
 
-        _Vector():
-            _sv1({ 'a', 'b', 'c', 'd', 'e' }),
-            _v1({ 'a', 'b', 'c', 'd', 'e' })
+        VectorTest():
+            _sv1{ 'a', 'b', 'c', 'd', 'e' },
+            _v1{ 'a', 'b', 'c', 'd', 'e' }
         {
             _v2 = { 'f', 'g', 'h', 'i', 'j' };
-            _sv2 = Vector<char, 5>(_v2, 0, _v2.Count());
-            _sv3 = Vector<char, 10>(_v1, 0, _v1.Count());
-
-            _sv3.Set(5, _v2, 0, _v2.Count());
         }
 };
 
 
 
 /** CONSTRUCTION TESTS **/
-TEST_F(_Vector, DefaultConstruction)
+TEST_F(VectorTest, Construction)
 {
     ASSERT_EQ(_sv0.Count(), 4);
     ASSERT_EQ(_sv0.Rank(),  1);
     ASSERT_EQ(_v0.Count(),  0);
-}
-TEST_F(_Vector, InitializerListConstruction)
-{
+
     ASSERT_EQ(_v1.Count(),  5);
     ASSERT_EQ(_v1.First(),  'a');
     ASSERT_EQ(_v1.Last(),   'e');
-}
-TEST_F(_Vector, AssignmentConstruction)
-{
-    for (uint a = 0; a < _sv2.Count(); a++)
-        ASSERT_EQ(_sv2(a),  _v2(a));
 
     ASSERT_EQ(_v2.Count(),  5);
     ASSERT_EQ(_v2.First(),  'f');
     ASSERT_EQ(_v2.Last(),   'j');
 }
-
-
-
-/** MANIPULATION TESTS **/
-TEST_F(_Vector, Clearing)
+TEST_F(VectorTest, Clear)
 {
     _v1.Clear();
     ASSERT_EQ(_v1.Count(), 0);
 }
-TEST_F(_Vector, ElementConcatenation)
+TEST_F(VectorTest, Concatenate)
 {
     _v0.Concatenate(256);
     ASSERT_EQ(_v0.Count(), 1);
@@ -77,60 +62,41 @@ TEST_F(_Vector, ElementConcatenation)
     ASSERT_EQ(_v1.Count(),    6);
     ASSERT_EQ(_v1.Last(),   'x');
     ASSERT_EQ(_v1(5),       'x');
-}
-TEST_F(_Vector, Slicing)
-{
-    for (uint a = 0; a < _v1.Count(); a++)
-        ASSERT_EQ(_sv3(a), _v1(a));
 
-    for (uint a = 0; a < _v2.Count(); a++)
-        ASSERT_EQ(_sv3(a + _v1.Count()), _v2(a));
-}
-TEST_F(_Vector, VectorConcatenation)
-{
-    Vector<char> _v1Copy = _v1;
-
-    _v1Copy.Concatenate(_v2);
-    ASSERT_EQ(_v1Copy.Count(), _v1.Count() + _v2.Count());
-
-    for (uint a = 0; a < _v1.Count(); a++)
-        ASSERT_EQ(_v1Copy(a), _v1(a));
-
-    for (uint a = _v1.Count(); a < _v1Copy.Count(); a++)
-        ASSERT_EQ(_v1Copy(a), _v2(a - _v1.Count()));
+    _v1.Concatenate(_v2);
+    ASSERT_EQ(_v1.Count(), _v2.Count() + 6);
+    for (uint a = 6; a < _v1.Count(); a++)
+        ASSERT_EQ(_v1(a), _v2(a - 6));
 
     // Test concatenating an empty vector
     Vector<char> empty;
-    Vector<char> _v2Copy = _v2;
-    
+    _v1.Concatenate(empty);
+    ASSERT_EQ(_v1.Count(), _v2.Count() + 6);
+
     // Test concatenating to an empty vector
     empty.Concatenate(_v2);
     for (uint a = 0; a < _v2.Count(); a++)
         ASSERT_EQ(_v2(a), empty(a));
 }
-TEST_F(_Vector, VectorFilling)
+TEST_F(VectorTest, Fill)
 {
-    Vector<char> _v1Copy(_v1);
-    _v1Copy.Fill('y');
-    ASSERT_EQ(_v1.Count(), _v1Copy.Count());
-
-    for (uint a = 0; a < _v1Copy.Count(); a++)
-        ASSERT_EQ(_v1Copy(a), 'y');
+    _v1.Fill('y');
+    ASSERT_EQ(_v1.Count(), 5);
+    for (uint a = 0; a < _v1.Count(); a++)
+        ASSERT_EQ(_v1(a), 'y');
 }
 
 
 
 /** OPERATORS **/
-TEST_F(_Vector, IndexingOperator)
+TEST_F(VectorTest, Indexing)
 {
     ASSERT_EQ(_v1(0), 'a');
     ASSERT_EQ(_v1(1), 'b');
     ASSERT_EQ(_v1(2), 'c');
     ASSERT_EQ(_v1(3), 'd');
     ASSERT_EQ(_v1(4), 'e');
-}
-TEST_F(_Vector, RangedForLoop)
-{
+
     uint idx = 0;
     for (const char& it : _v1)
         ASSERT_EQ(it, _v1(idx++));

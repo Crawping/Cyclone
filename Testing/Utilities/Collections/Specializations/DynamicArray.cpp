@@ -52,7 +52,7 @@ TEST_F(DynamicArrayTest, Count)
 
     uint count = 1;
     for (uint a = 0; a < _a2.Rank(); a++)
-        ASSERT_EQ(_a2.Count(a),     count *= _a2.Size(a));
+        ASSERT_EQ(_a2.Count(a), count *= _a2.Size(a));
 }
 TEST_F(DynamicArrayTest, Indexing)
 {

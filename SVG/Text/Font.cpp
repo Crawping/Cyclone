@@ -1,5 +1,5 @@
 #include "NVPR.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Spatial/Volume.h"
 #include "Text/Font.h"
 

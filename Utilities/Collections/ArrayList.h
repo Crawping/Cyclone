@@ -3,7 +3,8 @@
  */
 
 #pragma once
-#include "Collections/Vector.h"
+//#include "Utilities.h"
+#include "Collections/Array.h"
 #include "IO/Property.h"
 #include "Math/Math.h"
 
@@ -52,7 +53,7 @@ namespace Cyclone
                 ArrayList(const InitialList<T>& values):
                     _count(0),
                     _index(n / 4),
-                    Data(nextpow2(values.size()))
+                    Data(Math::NextPower2(values.size()))
                 {
                     uint idx = 0;
                     for (const T& v : values)
@@ -61,7 +62,7 @@ namespace Cyclone
                 /// <summary> Constructs a new array-like list that stores a copy another collection's elements. </summary>
                 /// <param name="values"> A generic collection of values to be copied and stored in the new list. </param>
                 explicit ArrayList(const ICollection<T>& values):
-                    ArrayList(nextpow2(values.Count()))
+                    ArrayList(Math::NextPower2(values.Count()))
                 {
                     Append(values);
                 }
@@ -282,7 +283,7 @@ namespace Cyclone
                 {
                     if (n <= Capacity()) { return; }
 
-                    uint newCap = nextpow2(n);
+                    uint newCap = Math::NextPower2(n);
                     Vector<T> newData(newCap);
                     uint idx = (newCap / 4);
 

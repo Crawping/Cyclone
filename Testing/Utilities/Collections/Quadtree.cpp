@@ -3,7 +3,7 @@
  */
 
 #include "Collections/Quadtree.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include <gtest/gtest.h>
 
 using namespace Cyclone::Utilities;
@@ -198,7 +198,7 @@ TEST_F(_Quadtree, ComplexInsertions)
         .Union(SmallSE)
         .Union(LargeSE);
 
-    total.Scale( nextpow2((uint)Math::Max(total.Width, total.Height, 1.0f)) );
+    total.Scale( Math::NextPower2(Math::Max(total.Width, total.Height, 1.0f)) );
 
     ASSERT_EQ(_q1.Bounds(), total);
 }

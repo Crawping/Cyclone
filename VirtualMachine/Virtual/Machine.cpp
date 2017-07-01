@@ -1,5 +1,5 @@
 #include "IO/Console.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Virtual/Class.h"
 #include "Virtual/Function.h"
 #include "Virtual/Machine.h"
@@ -94,7 +94,7 @@ namespace Cyclone
         {
             auto& ws = Workspace();
             _scopes.Push(StackFrame());
-                auto& nws = Workspace();
+                auto& nws = Workspace().Inputs(ws.Inputs());
                 Execute( Access<Function>(x).Logic() );
             _scopes.Pop();
         }

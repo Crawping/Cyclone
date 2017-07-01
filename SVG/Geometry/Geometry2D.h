@@ -4,7 +4,7 @@
 
 #pragma once
 #include "SVGAPI.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Geometry/Geometry3D.h"
 #include "Geometry/ControlPoint2D.h"
 #include "Interfaces/IGeometric2D.h"

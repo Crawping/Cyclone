@@ -59,7 +59,7 @@ TEST_F(_ArrayList, CollectionAppending)
 
     _l1.Append(_v2);
     ASSERT_EQ(_l1.Count(), _v1.Count() + _v2.Count());
-    ASSERT_EQ(_l1.Capacity(), nextpow2(_v1.Count() + _v2.Count()));
+    ASSERT_EQ(_l1.Capacity(), Math::NextPower2(_v1.Count() + _v2.Count()));
 
     for (uint a = 0; a < _v1.Count(); a++)
         ASSERT_EQ(_l1(a), _v1(a));
@@ -71,7 +71,7 @@ TEST_F(_ArrayList, CollectionInsertion)
     _l1.Append(_v2);
     _l1.Insert(256, _v1);
     ASSERT_EQ(_l1.Count(), _v1.Count() + _v2.Count());
-    ASSERT_EQ(_l1.Capacity(), nextpow2(_v1.Count() + _v2.Count()));
+    ASSERT_EQ(_l1.Capacity(), Math::NextPower2(_v1.Count() + _v2.Count()));
 
     for (uint a = 0; a < 256; a++)
         ASSERT_EQ(_l1(a), _v2(a));
@@ -91,7 +91,7 @@ TEST_F(_ArrayList, CollectionPrepending)
 
     _l1.Prepend(_v2);
     ASSERT_EQ(_l1.Count(), _v1.Count() + _v2.Count());
-    ASSERT_EQ(_l1.Capacity(), nextpow2(_v1.Count() + _v2.Count()));
+    ASSERT_EQ(_l1.Capacity(), Math::NextPower2(_v1.Count() + _v2.Count()));
 
     for (uint a = 0; a < _v2.Count(); a++)
         ASSERT_EQ(_l1(a), _v2(a));
@@ -167,7 +167,7 @@ TEST_F(_ArrayList, Reallocation)
     _l2.Insert(1, 20);
     ASSERT_EQ(_l2.Capacity(),       2);
 
-    _l2.Insert(2, Vector<ulong, 3> { 30, 40, 50 });
+    _l2.Insert(2, Vector<ulong> { 30, 40, 50 });
     ASSERT_EQ(_l2.Capacity(),       8);
 
     for (uint a = 0; a < _l2.Count(); a++)

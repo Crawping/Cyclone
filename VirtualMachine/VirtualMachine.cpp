@@ -11,7 +11,7 @@ namespace Cyclone
         {
 
             /** PROPERTIES **/
-            //VirtualMachine& VirtualMachine::Data(Memory* value)
+            //VirtualMachine& VirtualMachine::_values(Memory* value)
             //{
             //    _data = value;
             //    return *this;

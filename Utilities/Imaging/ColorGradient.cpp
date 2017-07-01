@@ -57,7 +57,7 @@ namespace Cyclone
                 return output;
             }
 
-            count = (uint)Math::Max(count, 2);
+            count = Math::Max(count, 2);
 
             uint idx = 0;
             float step = 1.0f / (float)(count - 1);

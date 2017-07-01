@@ -6,7 +6,7 @@
 #include "Enumerator.h"
 #include "UtilitiesAPI.h"
 #include "Collections/List.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Imaging/Color4.h"
 #include "Interfaces/IDataBuffer.h"
 #include "Math/Vector3.h"

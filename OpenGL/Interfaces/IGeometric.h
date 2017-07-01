@@ -4,7 +4,7 @@
 
 #pragma once
 #include "EnumerationsGL.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Geometry/Vertex.h"
 #include "Interfaces/IGraphicsResource.h"
 #include "Spatial/Volume.h"

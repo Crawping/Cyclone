@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Collections/Stack.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Execution/Instructions.h"
 #include "IO/Event.h"
 //#include "Storage/VirtualWorkspace.h"
@@ -24,9 +24,9 @@ namespace Cyclone
                 public:
 
                     /** PROPERTIES **/
-                //    const Memory* Data() const { return _data; }
+                //    const Memory* _values() const { return _data; }
 
-                //    VMAPI VirtualMachine& Data(Memory* value);
+                //    VMAPI VirtualMachine& _values(Memory* value);
 
 
 

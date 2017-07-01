@@ -5,7 +5,7 @@
 #pragma once
 #include "Utilities.h"
 #include "Collections/List.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Spatial/Area.h"
 
 
@@ -36,9 +36,9 @@ namespace Cyclone
                 List<Area> Keys()       const
                 {
                     List<Area> keys;
-                    List<KVP<T>> contents = Root->Contents();
+                    List<KVP> contents = Root->Contents();
 
-                    for (KVP<T> kvp : contents)
+                    for (const auto& kvp : contents)
                         keys.Append(kvp.Bounds);
 
                     return keys;
@@ -46,9 +46,9 @@ namespace Cyclone
                 List<T> Values()        const
                 {
                     List<T> values;
-                    List<KVP<T>> contents = Root->Contents();
+                    List<KVP> contents = Root->Contents();
 
-                    for (KVP<T> kvp : contents)
+                    for (const auto& kvp : contents)
                         values.Append(kvp.Value);
                     
                     return values;
@@ -77,7 +77,7 @@ namespace Cyclone
                 List<T> Index(const Area& bounds) const
                 {
                     List<T> contents;
-                    List<KVP<T>> nodeContents = Root->Index(bounds);
+                    List<KVP> nodeContents = Root->Index(bounds);
                     
                     for (uint a = 0; a < nodeContents.Count(); a++)
                         contents.Append(nodeContents(a).Value);
@@ -89,10 +89,10 @@ namespace Cyclone
                     if (Root && Root->Insert(bounds, value)) { _count++; return; }
                     
                     Area rootBounds = Area(bounds).Union(Bounds());
-                    float size = nextpow2((uint)Math::Max(rootBounds.Width, rootBounds.Height, 1.0f));
+                    float size = Math::NextPower2(Math::Max(rootBounds.Width, rootBounds.Height, 1.0f));
                     rootBounds.Scale(size);
 
-                    Node<T>* newRoot = new Node<T>(rootBounds);
+                    Node* newRoot = new Node(rootBounds);
 
                     newRoot->Insert(Root);
                     if (newRoot->Insert(bounds, value))
@@ -104,22 +104,23 @@ namespace Cyclone
 
 
             private:
-                template<typename T> struct Node;
+
+                struct Node;
 
                 uint        _count;
-                Node<T>*    Root;
+                Node*       Root;
 
 
 
 
                 /** NESTED STRUCTURES **/
-                template<typename T> struct KVP
+                struct KVP
                 {
                     Area    Bounds;
                     T       Value;
                 };
 
-                template<typename T> struct Node
+                struct Node
                 {
                     public:
 
@@ -127,11 +128,11 @@ namespace Cyclone
                         /// <summary> Gets the boundary region of the node. </summary>
                         const Area& Bounds()        const { return _bounds; }
                         /// <summary> Gets a list of all entities and their boundaries stored within the node and its subtrees. </summary>
-                        List<KVP<T>> Contents()     const
+                        List<KVP> Contents()        const
                         {
                             if (!Subtrees(0)) { return Values; }
 
-                            List<KVP<T>> contents = Values;
+                            List<KVP> contents = Values;
                             for (uint a = 0; a < Subtrees.Count(); a++)
                                 contents.Append(Subtrees(a)->Contents());
 
@@ -159,12 +160,12 @@ namespace Cyclone
                         /** UTILITIES **/
                         bool Contains(const Area& bounds) const { return Bounds().Contains(bounds); }
 
-                        List<KVP<T>> Index(const Area& bounds) const
+                        List<KVP> Index(const Area& bounds) const
                         {
-                            if (!Contains(bounds)) { return List<KVP<T>>(); }
+                            if (!Contains(bounds)) { return List<KVP>(); }
                             if (Bounds() == bounds) { return Contents(); }
 
-                            List<KVP<T>> intersections;
+                            List<KVP> intersections;
                             for (uint a = 0; a < Values.Count(); a++)
                                 if (bounds.Contains(Values(a).Bounds))
                                     intersections.Append(Values(a));
@@ -172,7 +173,7 @@ namespace Cyclone
                             intersections.Append(SubtreeIndex(bounds));
                             return intersections;
                         }
-                        bool Insert(Node<T>* node)
+                        bool Insert(Node* node)
                         {
                             if (!node)                              { return true; }
                             if (!Bounds().Contains(node->Bounds())) { return false; }
@@ -181,7 +182,7 @@ namespace Cyclone
                             if (Subtrees(0)) { return false; }
                             Subdivide();
 
-                            Node<T>** toReplace = nullptr;
+                            Node** toReplace = nullptr;
 
                             for (uint a = 0; a < Subtrees.Count(); a++)
                                 if (Subtrees(a)->Contains(node->Bounds()))
@@ -234,9 +235,9 @@ namespace Cyclone
                         Area                _bounds;
 
                         /// <summary> The (NE, NW, SW, SE) ordered subtrees of the node. </summary>
-                        Vector<Node<T>*, 4> Subtrees;
+                        Vector<Node*, 4>    Subtrees;
                         /// <summary> A list of entities and their associated boundary regions that are stored in the quadtree node. </summary>
-                        List<KVP<T>>        Values;
+                        List<KVP>           Values;
 
 
 
@@ -249,10 +250,10 @@ namespace Cyclone
                             Vector2 center = Bounds().Center();
                             Vector2 size = Bounds().Scale() / 2.0f;
 
-                            Subtrees(0) = new Node<T>(Area(Bounds().Position() + center, size));
-                            Subtrees(1) = new Node<T>(Area(Bounds().Position() + Vector2(0.0f, center.Y), size));
-                            Subtrees(2) = new Node<T>(Area(Bounds().Position(), size));
-                            Subtrees(3) = new Node<T>(Area(Bounds().Position() + Vector2(center.X, 0.0f), size));
+                            Subtrees(0) = new Node(Area(Bounds().Position() + center, size));
+                            Subtrees(1) = new Node(Area(Bounds().Position() + Vector2(0.0f, center.Y), size));
+                            Subtrees(2) = new Node(Area(Bounds().Position(), size));
+                            Subtrees(3) = new Node(Area(Bounds().Position() + Vector2(center.X, 0.0f), size));
 
                             List<uint> idsToRemove;
                             
@@ -262,17 +263,17 @@ namespace Cyclone
                                     Values.Remove(a);
                         }
 
-                        List<KVP<T>> SubtreeIndex(const Area& bounds) const
+                        List<KVP> SubtreeIndex(const Area& bounds) const
                         {
-                            if (!Subtrees(0)) { return List<KVP<T>>(); }
+                            if (!Subtrees(0)) { return List<KVP>(); }
 
                             for (uint a = 0; a < Subtrees.Count(); a++)
                                 if (Subtrees(a)->Bounds() == bounds)
                                     return Subtrees(a)->Contents();
 
-                            return List<KVP<T>>();
+                            return List<KVP>();
                         }
-                        bool SubtreeInsert(Node<T>* node)
+                        bool SubtreeInsert(Node* node)
                         {
                             if (!Subtrees(0)) { return false; }
 

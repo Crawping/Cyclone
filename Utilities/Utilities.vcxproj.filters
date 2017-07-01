@@ -32,9 +32,6 @@
     <ClCompile Include="Imaging\Color4.cpp">
       <Filter>Imaging</Filter>
     </ClCompile>
-    <ClCompile Include="Collections\Vector.h">
-      <Filter>Collections</Filter>
-    </ClCompile>
     <ClCompile Include="Spatial\Camera.cpp">
       <Filter>Spatial</Filter>
     </ClCompile>

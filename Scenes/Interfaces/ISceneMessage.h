@@ -4,7 +4,7 @@
 
 #pragma once
 #include "TypeDefinitions.h"
-#include "Collections/Vector.h"
+#include "Collections/Array.h"
 #include "Enumerator.h"
 
 
