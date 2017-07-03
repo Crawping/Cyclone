@@ -158,6 +158,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Graphs\Graph.h" />
+    <ClInclude Include="Graphs\Node.h" />
     <ClCompile Include="Imaging\Bitmap.cpp" />
     <ClCompile Include="Imaging\Color4.cpp" />
     <ClCompile Include="Imaging\ColorGradient.cpp" />
@@ -196,6 +198,8 @@
     <ClInclude Include="Collections\String.h" />
     <ClInclude Include="Collections\Structure.h" />
     <ClInclude Include="Enumerator.h" />
+    <ClInclude Include="Graphs\Specializations\DynamicGraph.h" />
+    <ClInclude Include="Graphs\Specializations\DynamicNode.h" />
     <ClInclude Include="Imaging\Bitmap.h" />
     <ClInclude Include="Imaging\Color4.h" />
     <ClInclude Include="Imaging\ColorGradient.h" />

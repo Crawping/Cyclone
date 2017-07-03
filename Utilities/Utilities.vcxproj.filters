@@ -239,6 +239,18 @@
     <ClInclude Include="Meta\Numerics.h">
       <Filter>Meta</Filter>
     </ClInclude>
+    <ClInclude Include="Graphs\Specializations\DynamicNode.h">
+      <Filter>Graphs\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphs\Node.h">
+      <Filter>Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphs\Graph.h">
+      <Filter>Graphs</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphs\Specializations\DynamicGraph.h">
+      <Filter>Graphs\Specializations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -270,6 +282,12 @@
     </Filter>
     <Filter Include="Meta\Specializations">
       <UniqueIdentifier>{c6c1aaf8-b507-4a26-8dca-abbdd5fe7972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphs">
+      <UniqueIdentifier>{92596262-8e67-4be6-98fc-bb00af7fede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphs\Specializations">
+      <UniqueIdentifier>{87326f91-0782-47ae-b166-849365f818dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

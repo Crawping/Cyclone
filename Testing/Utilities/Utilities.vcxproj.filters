@@ -22,6 +22,9 @@
     <Filter Include="Collections\Specializations">
       <UniqueIdentifier>{e7f22efb-8cc7-45eb-916b-20cf514d5b73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphs">
+      <UniqueIdentifier>{2aaffacc-534a-4987-8bc9-86103d2feca8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Spatial\Area.cpp">
@@ -112,8 +115,17 @@
     <ClCompile Include="Collections\Object.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
+    <ClCompile Include="Collections\Specializations\NumericArray.cpp">
+      <Filter>Collections\Specializations</Filter>
+    </ClCompile>
     <ClCompile Include="Collections\Specializations\DynamicArray.cpp">
       <Filter>Collections\Specializations</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphs\Graph.cpp">
+      <Filter>Graphs</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphs\Node.cpp">
+      <Filter>Graphs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

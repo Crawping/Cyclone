@@ -268,9 +268,6 @@
     <Filter Include="Libraries">
       <UniqueIdentifier>{9789cb84-c487-45ae-8eef-510390c6e0e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{f9bd0721-10e0-4621-8413-9203fa719a4b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Materials">
       <UniqueIdentifier>{99df7efd-b19e-4dcb-83bf-b944b8813af9}</UniqueIdentifier>
     </Filter>
@@ -282,6 +279,9 @@
     </Filter>
     <Filter Include="Resources\Specializations">
       <UniqueIdentifier>{a5f8a760-95c2-445e-af3d-db706e5afa59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{f9bd0721-10e0-4621-8413-9203fa719a4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
