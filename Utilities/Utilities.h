@@ -17,8 +17,6 @@ namespace Cyclone
         /** GENERAL UTILITIES **/
         /// <summary> Generates an unsigned 32-bit integer hash code for a given string. </summary>
         UtilitiesAPI uint hash(const string& string);
-        /// <summary> Finds the next number greater than <see cref="x"/> that is also an integer power of two. </summary>
-        UtilitiesAPI uint nextpow2(uint x);
         /// <summary> Converts 2D matrix subscripts into an equivalent 1D linear index for column-major arrays. </summary>
         UtilitiesAPI int sub2ind(int nrows, int ncols, int a, int b);
 
