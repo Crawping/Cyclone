@@ -81,7 +81,13 @@ namespace Cyclone
                 /// <param name="key"> The key for which a corresponding linear index is to be found. </param>
                 /// <returns> A linear index that corresponds with <paramref name="key"/>, or the <see cref="Count"/> if no such index exists. </returns>
                 virtual uint IndexOf(const T& key)          const { return Root ? Root->IndexOf(key) : 0; }
-
+                /// <summary> Inserts a new node into the BST and automatically rebalances the tree, if necessary. </summary>
+                /// <param name="key"> The key of the new node being inserted. </param>
+                /// <param name="value"> The value of the new node being inserted. </param>
+                /// <remarks>
+                ///     This method will either create a new node with the inputted key-value pair (if one does not exist within the
+                ///     BST) or overwrite the value of any node whose key matches the 'key' input argument.
+                /// </remarks>
                 template<typename V>
                 void Insert(const T& key, V&& value)
                 {
@@ -89,18 +95,6 @@ namespace Cyclone
                         Root->Insert(key, std::forward<V>(value)) : 
                         new Node<T, U>(key, std::forward<V>(value));
                 }
-                /// <summary> Inserts a new node into the BST and automatically rebalances the tree, if necessary. </summary>
-                /// <param name="key"> The key for the new node being inserted. </param>
-                /// <param name="value"> The value for the new node being inserted. </param>
-                /// <remarks>
-                ///     This method will either create a new node with the inputted key-value pair (if one does not exist within the
-                ///     BST) or overwrite the value of any node whose key matches the 'key' input argument.
-                /// </remarks>
-                //virtual void Insert(const T& key, const U& value)
-                //{
-                //    static_assert(std::is_copy_constructible<U>::value, "Inputted value must be copyable.");
-                //    Root = Root ? Root->Insert(key, value) : new Node<T, U>(key, value);
-                //}
                 /// <summary> Removes the specified node from the binary search tree. </summary>
                 /// <param name="key"> The key of the node to be removed. </param>
                 virtual void Remove(const T& key)
@@ -182,7 +176,7 @@ namespace Cyclone
                         U Value;
 
                         /// <summary> Gets a list containing all of the keys that index this tree. </summary>
-                        List<T> Keys() const
+                        List<T> Keys()      const
                         {
                             List<T> keys;
                             if (Left) { keys.Append(Left->Keys()); }
@@ -201,7 +195,7 @@ namespace Cyclone
                             return Left ? Left->Min() : this;
                         }
                         /// <summary> Gets a list containing all of the values held by the search tree. </summary>
-                        List<U> Values() const
+                        List<U> Values()    const
                         {
                             List<U> values;
                             if (Left) { values.Append(Left->Values()); }
@@ -284,7 +278,8 @@ namespace Cyclone
                         ///     liable to change. Thus, the node returned by this method is useful for tracking overall tree organization
                         ///     at higher levels.
                         /// </remarks>
-                        template<typename V> Node<T, U>* Insert(const T& key, V&& value)
+                        template<typename V> 
+                        Node<T, U>* Insert(const T& key, V&& value)
                         {
                             if (key < Key)
                                 Left = Left ? 
