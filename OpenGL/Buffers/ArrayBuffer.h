@@ -36,16 +36,15 @@ namespace Cyclone
                 virtual void Append(const T& value)
                 {
                     _data.Append(value);
-                    _updateRange = { Math::Min(_updateRange(0), Count() - 1), Count() };
-                    _needsUpdate = true;
+                    Invalidate(Count() - 1);
                 }
                 /// <summary> Inserts multiple values at the end of the buffer. </summary>
                 /// <param name="data"> A generic collection of data elements to be copied and inserted into the buffer. </param>
                 virtual void Append(const ICollection<T>& value)
                 {
+                    uint idx = Count();
                     _data.Append(value);
-                    _updateRange = { Math::Min(_updateRange(0), Count() - 1), Count() };
-                    _needsUpdate = true;
+                    Invalidate(idx, Count());
                 }
 		        /// <summary> Erases all of the data currently stored within this buffer. </summary>
 		        virtual void Clear()                        override
@@ -60,8 +59,7 @@ namespace Cyclone
                 virtual void Insert(uint index, const T& value)
                 {
                     _data.Insert(index, value);
-                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
-                    _needsUpdate = true;
+                    Invalidate(index, Count());
                 }
                 /// <summary> Inserts multiple data elements into the buffer at a specific location. </summary>
                 /// <param name="index"> The linear array index at which to begin inserting values into the buffer. </param>
@@ -69,8 +67,7 @@ namespace Cyclone
                 virtual void Insert(uint index, const ICollection<T>& values)
                 {
                     _data.Insert(index, values);
-                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
-                    _needsUpdate = true;
+                    Invalidate(index, Count());
                 }
                 /// <summary> Removes the data element at a specific array index from the GPU buffer. </summary>
                 /// <param name="index"> The array index of the data element to be removed from the buffer. </param>
@@ -78,8 +75,7 @@ namespace Cyclone
                 {
                     if (index >= Count()) { return; }
                     _data.Remove(index, count);
-                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
-                    _needsUpdate = true;
+                    Invalidate(index, Count());
                 }
                 /// <summary> Writes the contents of a single data element to the application-side memory held by this buffer. </summary>
 		        /// <param name="index">
@@ -105,8 +101,7 @@ namespace Cyclone
                         return Append(data);
 
                     _data.Set(index, data);
-                    _updateRange = { Math::Min(_updateRange(0), index), Math::Max(_updateRange(1), index + 1) };
-                    _needsUpdate = true;
+                    Invalidate(index);
                 }
                 /// <summary> Overwrites multiple data elements stored within the buffer. </summary>
                 /// <param name="index"> The linear array index at which to begin overwriting values in the buffer. </param>
@@ -116,8 +111,7 @@ namespace Cyclone
                     for (uint a = 0; a < data.Count(); a++)
                         _data.Set(index + a, data(a));
 
-                    _updateRange = { Math::Min(_updateRange(0), index), Math::Max(_updateRange(1), index + data.Count()) };
-                    _needsUpdate = true;
+                    Invalidate(index, data.Count());
                 }
 		        /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
 		        virtual void Update()                       override
@@ -128,7 +122,7 @@ namespace Cyclone
 
                     T* handles = (T*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
                     if (handles)
-                        for (uint a = 0; a < Count(); a++)
+                        for (uint a = _updateRange(0); a < _updateRange(1); a++)
                             handles[a] = _data(a);
 
                     GraphicsBuffer::Unmap();
@@ -155,6 +149,18 @@ namespace Cyclone
                 {
                     GraphicsBuffer::Reallocate(count);
                     _updateRange = { 0, Count() };
+                }
+                void Invalidate(uint index, uint count = 1)
+                {
+                    _needsUpdate = true;
+                    _updateRange = 
+                    {
+                        Math::Min(_updateRange(0), index),
+                        Math::Max(_updateRange(1), index + count),
+                    };
+
+                    _updateRange(0) = Math::Clamp(_updateRange(0), 0U, Count() - 1);
+                    _updateRange(1) = Math::Clamp(_updateRange(1), 0U, Count());
                 }
 
             private:
