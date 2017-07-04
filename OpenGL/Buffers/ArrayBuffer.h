@@ -51,7 +51,7 @@ namespace Cyclone
                 {
                     if (IsEmpty()) { return; }
                     _data.Clear();
-                    GraphicsBuffer::Clear();
+                    Invalidate(0);
                 }
                 /// <summary> Inserts a data element into the buffer at a specific location. </summary>
                 /// <param name="index"> The linear array index at which the value will be inserted into the buffer. </param>
@@ -116,18 +116,16 @@ namespace Cyclone
 		        /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
 		        virtual void Update()                       override
                 {
-                    if (NeedsReallocation()) { Reallocate(Capacity()); }
                     GraphicsBuffer::Update();
-                    if (!_needsUpdate) { return; }
+                    if (!NeedsUpdate()) { return; }
 
-                    T* handles = (T*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
-                    if (handles)
-                        for (uint a = _updateRange(0); a < _updateRange(1); a++)
-                            handles[a] = _data(a);
+                    const auto& range = UpdateRange();
+                    T* handles = (T*)Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
+                    for (uint a = range(0); a < range(1); a++)
+                        handles[a] = _data(a);
 
-                    GraphicsBuffer::Unmap();
-                    _needsUpdate = false;
-                    _updateRange = { Count(), 0 };
+                    Unmap();
+                    ClearUpdates();
                 }
 
 
@@ -145,22 +143,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                void Reallocate(uint count) override
+                void Allocate(BufferAccessIntents intent, uint count) override
                 {
-                    GraphicsBuffer::Reallocate(count);
-                    _updateRange = { 0, Count() };
-                }
-                void Invalidate(uint index, uint count = 1)
-                {
-                    _needsUpdate = true;
-                    _updateRange = 
-                    {
-                        Math::Min(_updateRange(0), index),
-                        Math::Max(_updateRange(1), index + count),
-                    };
-
-                    _updateRange(0) = Math::Clamp(_updateRange(0), 0U, Count() - 1);
-                    _updateRange(1) = Math::Clamp(_updateRange(1), 0U, Count());
+                    GraphicsBuffer::Allocate(intent, Math::Max(count, Capacity()));
                 }
 
             private:
@@ -168,8 +153,6 @@ namespace Cyclone
 		        /** PRIVATE DATA **/
 		        /// <summary> A copy of the data in the GPU buffer that is held in system memory. </summary>
 		        ArrayList<T>    _data;
-                bool            _needsUpdate;
-                Array<uint, 2>  _updateRange;
 
         };
     }

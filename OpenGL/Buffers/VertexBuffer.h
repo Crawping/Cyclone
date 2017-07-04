@@ -42,85 +42,71 @@ namespace Cyclone
                 virtual void Append(const T& value)
                 {
                     _data.Append(value);
-                    _updateRange = { Math::Min(_updateRange(0), Count() - 1), Count() };
-                    _needsUpdate = true;
+                    Invalidate(Count() - 1);
                 }
                 virtual void Append(const ICollection<T>& values)
                 {
+                    uint idx = Count();
                     _data.Append(values);
-                    _updateRange = { Math::Min(_updateRange(0), Count() - 1), Count() };
-                    _needsUpdate = true;
+                    Invalidate(idx, Count());
                 }
                 void Clear() override
                 {
                     if (IsEmpty()) { return; }
                     _data.Clear();
-                    _updateRange = { 0, 0 };
-                    GraphicsBuffer::Clear();
+                    Invalidate(0);
                 }
                 virtual void Insert(uint index, const T& value)
                 {
                     _data.Insert(index, value);
-                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
-                    _needsUpdate = true;
+                    Invalidate(index, Count());
                 }
                 virtual void Insert(uint index, const ICollection<T>& values)
                 {
                     _data.Insert(index, values);
-                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
-                    _needsUpdate = true;
-
+                    Invalidate(index, Count());
                 }
                 virtual void Remove(uint index, uint count = 1)
                 {
                     if (index >= Count()) { return; }
                     _data.Remove(index, count);
-                    _updateRange = { Math::Min(_updateRange(0), index), Count() };
-                    _needsUpdate = true;
+                    Invalidate(index, Count());
                 }
                 virtual void Set(uint index, const T& data)
                 {
                     _data.Set(index, data);
-                    _updateRange = { Math::Min(_updateRange(0), index), Math::Max(_updateRange(1), index + 1) };
-                    _needsUpdate = true;
+                    Invalidate(index);
                 }
                 virtual void Set(uint index, const ICollection<T>& values)
                 {
                     for (uint a = 0; a < values.Count(); a++)
                         _data.Set(index + a, values(a));
-
-                    _updateRange = { Math::Min(_updateRange(0), index), Math::Max(_updateRange(1), index + values.Count()) };
-                    _needsUpdate = true;
+                    Invalidate(index, index + values.Count());
                 }
                 virtual void Update() override
                 {
-                    if (NeedsReallocation())    { Reallocate(Capacity()); }
                     VertexArray::Update();
-                    if (!_needsUpdate)          { return; }
+                    if (!NeedsUpdate()) { return; }
 
-                    T* handles = (T*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
-                    if (handles)
-                        for (uint a = _updateRange(0); a < _updateRange(1); a++)
-                            handles[a] = _data(a);
+                    const auto& range = UpdateRange();
+                    T* handles = (T*)Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
+                    for (uint a = range(0); a < range(1); a++)
+                        handles[a] = _data(a);
 
-                    GraphicsBuffer::Unmap();
-                    _needsUpdate = false;
-                    _updateRange = { Count(), 0 };
+                    Unmap();
+                    ClearUpdates();
                 }
 
             protected:
 
-                void Reallocate(uint count) override
+                void Allocate(BufferAccessIntents intent, uint count) override
                 {
-                    VertexArray::Reallocate(count);
-                    _updateRange = { 0, Count() };
+                    VertexArray::Allocate(intent, Math::Max(count, Capacity()));
                 }
 
             private:
 
                 ArrayList<T>    _data;
-                bool            _needsUpdate;
-                Array<uint, 2>  _updateRange;
 
         };
     }

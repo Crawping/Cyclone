@@ -13,8 +13,8 @@ namespace Cyclone
         GraphicsBuffer::GraphicsBuffer(BufferTypes type) : 
             _gpuCount(0),
             _id(0),
-            _type(type),
-            _needsUpdate(false)
+            _type(type)
+            //_needsUpdate(false)
         {
 
         }
@@ -22,14 +22,6 @@ namespace Cyclone
         {
             if (_id)
                 glDeleteBuffers(1, &_id);
-        }
-
-
-
-        /** PUBLIC UTILITIES **/
-        void GraphicsBuffer::Clear()
-        {
-            NeedsUpdate(true);
         }
 
 
@@ -69,8 +61,8 @@ namespace Cyclone
         }
         void GraphicsBuffer::Update()
         {
-            if (NeedsReallocation()) { Reallocate(Count()); }
-            _needsUpdate = false;
+            if (NeedsReallocation())
+                Reallocate(Count());
         }
 
 
@@ -81,6 +73,10 @@ namespace Cyclone
             if (!IsEmpty())
                 glNamedBufferStorage(ID(), count * Stride(), NULL, intent);
             _gpuCount = count;
+        }
+        void GraphicsBuffer::ClearUpdates()
+        {
+            _updateRange = { Count(), 0 };
         }
         void GraphicsBuffer::Create()
         {
@@ -100,6 +96,15 @@ namespace Cyclone
                 _gpuCount = 0;
             }
         }
+        void GraphicsBuffer::Invalidate(uint index)             { Invalidate(index, index + 1); }
+        void GraphicsBuffer::Invalidate(uint idxA, uint idxB)
+        {
+            _updateRange =
+            {
+                Math::Clamp( Math::Min(_updateRange(0), idxA), 0U, Count() ),
+                Math::Clamp( Math::Max(_updateRange(1), idxB), 0U, Count() ),
+            };
+        }
         void* GraphicsBuffer::Map(BufferAccessIntents intent)
         {
             return glMapNamedBufferRange(ID(), 0, ByteSize(), intent);
@@ -114,5 +119,6 @@ namespace Cyclone
         {
             glUnmapNamedBuffer(ID());
         }
+
     }
 }

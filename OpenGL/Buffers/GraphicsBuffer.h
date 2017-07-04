@@ -5,6 +5,7 @@
 #pragma once
 #include "EnumerationsGL.h"
 #include "TypeDefinitions.h"
+#include "Collections/Array.h"
 #include "Interfaces/IGraphicsBuffer.h"
 
 
@@ -25,7 +26,7 @@ namespace Cyclone
 		        /// <summary> Determines whether this buffer contains any data. </summary>
 		        virtual bool IsEmpty()          const override { return Count() == 0; }
                 /// <summary> Gets whether this buffer has data updates queued for transfer to the GPU. </summary>
-                virtual bool NeedsUpdate()      const override { return _needsUpdate || NeedsReallocation(); }
+                virtual bool NeedsUpdate()      const override { return _updateRange(1) > _updateRange(0); }
 		        /// <summary> Gets the number of bytes occupied by one individual element of this buffer. </summary>
                 virtual ulong Stride()          const = 0;
 		        /// <summary> Gets an enumerator identifying how this buffer behaves on the GPU. </summary>
@@ -39,8 +40,6 @@ namespace Cyclone
 
 
                 /** BUFFER UTILITIES **/
-		        /// <summary> Removes all of the data currently stored within this buffer. </summary>
-                OpenGLAPI virtual void Clear();
 		        /// <summary> Transfers all application-side data fo und within this buffer over to its corresponding GPU storage. </summary>
                 OpenGLAPI virtual void Update();
 
@@ -67,8 +66,7 @@ namespace Cyclone
                 /// <summary> Gets whether this buffer needs to be reallocated on the GPU. </summary>
                 bool NeedsReallocation()                const { return Count() > _gpuCount; }
 
-                /// <summary> Sets whether this buffer needs any kind of update on the GPU side. </summary>
-                void NeedsUpdate(bool value)            { _needsUpdate = NeedsUpdate() ? true : value; }
+                const Array<uint, 2>& UpdateRange()     const { return _updateRange; }
 
 
 
@@ -82,10 +80,15 @@ namespace Cyclone
                 /** PROTECTED UTILITIES **/
 		        /// <summary> Reserves memory on the GPU for storing all of the data found within this buffer. </summary>
                 OpenGLAPI virtual void Allocate(BufferAccessIntents intent, uint count);
+
+                OpenGLAPI virtual void ClearUpdates();
 		        /// <summary> Generates a new buffer object on the GPU that can be used to store data. </summary>
                 OpenGLAPI virtual void Create();
 		        /// <summary> Deletes the buffer object on the GPU. </summary>
                 OpenGLAPI virtual void Destroy();
+
+                OpenGLAPI virtual void Invalidate(uint index);
+                OpenGLAPI virtual void Invalidate(uint idxA, uint idxB);
                 /// <summary> Generates an array of handles representing this buffer's resources on the GPU. </summary>
                 /// <returns> A pointer-to-void that can be freely cast to the type of data held by this buffer. </returns>
                 /// <remarks>
@@ -103,10 +106,11 @@ namespace Cyclone
             private:
 
                 /** PROPERTY DATA **/
-                uint        _gpuCount;
-                uint        _id;
-                bool        _needsUpdate;
-                BufferTypes _type;
+                uint            _gpuCount;
+                uint            _id;
+                //bool            _needsUpdate;
+                BufferTypes     _type;
+                Array<uint, 2>  _updateRange;
 
         };
     }

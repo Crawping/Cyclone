@@ -4,9 +4,7 @@
 
 #pragma once
 #include "Collections/BST.h"
-#include "Collections/List.h"
 #include "Buffers/GraphicsBuffer.h"
-//#include <map>
 
 
 
@@ -15,6 +13,8 @@ namespace Cyclone
     namespace OpenGL
     {
         /// <summary> A class that holds and maintains a binary search tree (BST) associated with a data buffer on the GPU. </summary>
+        /// <typeparam name="T"> The type of the key used to index into the tree. </typeparam>
+        /// <typeparam name="U"> The type of the values stored in the tree. </typeparam>
         template<typename T, typename U>
         class MapBuffer: public GraphicsBuffer
         {
@@ -42,45 +42,42 @@ namespace Cyclone
                 {
                     if (IsEmpty()) { return; }
                     _data.Clear();
-                    NeedsUpdate(true);
+                    Invalidate(0);
                 }
                 /// <summary> Retrieves the linear array index at which a particular key is stored. </summary>
                 /// <returns> An integer that represents the current linear array position of the given key in the buffer. </returns>
                 /// <param name="key"> The key whose linear index is to be found. </param>
-                virtual uint IndexOf(const T& key)              const
-                {
-                    return _data.IndexOf(key);
-                }
+                virtual uint IndexOf(const T& key)              const { return _data.IndexOf(key); }
                 /// <summary> Inserts or overwrites a specific value in the buffer. </summary>
                 /// <param name="key"> The key to be associated with the data element. </param>
                 /// <param name="value"> The data element to be stored within the buffer. </param>
                 virtual void Set(const T& key, const U& value)
                 {
                     _data.Insert(key, value);
-                    NeedsUpdate(true);
+                    Invalidate(_data.IndexOf(key), Count());
                 }
                 /// <summary> Erases the data element corresponding with a specific key from the buffer. </summary>
                 /// <param name="key"> The key associated with the value to be removed. </param>
                 virtual void Remove(const T& key)
                 {
-                    if (Contains(key))
-                    {
-                        _data.Remove(key);
-                        NeedsUpdate(true);
-                    }
+                    if (!Contains(key)) { return; }
+                    uint idx = _data.IndexOf(key);
+                    _data.Remove(key);
+                    Invalidate(idx, Count());
                 }
                 /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
                 virtual void Update()                           override
                 {
-                    if (!NeedsUpdate()) { return; }
                     GraphicsBuffer::Update();
+                    if (!NeedsUpdate()) { return; }
 
-                    uint idx = 0;
-                    U* handles = (U*)GraphicsBuffer::Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
-                    for (const U& d : _data.Values())
-                        handles[idx++] = d;
+                    const auto& range = UpdateRange();
+                    U* handles = (U*)Map(BufferAccessIntents::Write | BufferAccessIntents::Invalidate);
+                    for (uint a = range(0); a < range(1); a++)
+                        handles[a] = _data(a);
 
-                    GraphicsBuffer::Unmap();
+                    Unmap();
+                    ClearUpdates();
                 }
 
             protected:
@@ -91,7 +88,7 @@ namespace Cyclone
             private:
 
                 /** DATA **/
-                BST<T, U>   _data;
+                BST<T, U>       _data;
         };
     }
 }
