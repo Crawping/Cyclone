@@ -13,10 +13,6 @@
 
 namespace Cyclone
 {
-    namespace Utilities
-    {
-        struct Color4;
-    }
     using namespace Utilities;
 
     namespace OpenGL
