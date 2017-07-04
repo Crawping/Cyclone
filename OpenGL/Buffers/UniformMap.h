@@ -18,6 +18,13 @@ namespace Cyclone
             public:
                 UniformMap() : MapBuffer<T, U>(BufferTypes::Uniform) { }
                 ~UniformMap() { }
+
+            protected:
+
+                void Allocate(BufferAccessIntents intent, uint count) override
+                {
+                    MapBuffer::Allocate(BufferAccessIntents::Write | BufferAccessIntents::Dynamic, count);
+                }
         };
     }
 }

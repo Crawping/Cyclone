@@ -28,12 +28,16 @@ namespace Cyclone
 
             protected:
 
-                void Reallocate(uint count) override
+                void Allocate(BufferAccessIntents intent, uint count) override
                 {
-                    Destroy();
-                    Create();
-                    Allocate(BufferAccessIntents::Write | BufferAccessIntents::Dynamic, count);
+                    ArrayBuffer::Allocate(BufferAccessIntents::Write | BufferAccessIntents::Dynamic, count);
                 }
+                //void Reallocate(uint count) override
+                //{
+                //    Destroy();
+                //    Create();
+                //    Allocate(BufferAccessIntents::Write | BufferAccessIntents::Dynamic, count);
+                //}
 
         };
     }
