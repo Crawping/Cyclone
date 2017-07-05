@@ -14,7 +14,6 @@ namespace Cyclone
             _gpuCount(0),
             _id(0),
             _type(type)
-            //_needsUpdate(false)
         {
 
         }
@@ -107,7 +106,7 @@ namespace Cyclone
         }
         void* GraphicsBuffer::Map(BufferAccessIntents intent)
         {
-            return glMapNamedBufferRange(ID(), 0, ByteSize(), intent);
+            return glMapNamedBufferRange(ID(), 0, _gpuCount * Stride(), intent);
         }
         void GraphicsBuffer::Reallocate(uint count)
         {
