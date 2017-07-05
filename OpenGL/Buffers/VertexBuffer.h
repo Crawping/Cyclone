@@ -46,6 +46,7 @@ namespace Cyclone
                 }
                 virtual void Append(const ICollection<T>& values)
                 {
+                    if (values.IsEmpty()) { return; }
                     uint idx = Count();
                     _data.Append(values);
                     Invalidate(idx, Count());
@@ -63,6 +64,7 @@ namespace Cyclone
                 }
                 virtual void Insert(uint index, const ICollection<T>& values)
                 {
+                    if (values.IsEmpty()) { return; }
                     _data.Insert(index, values);
                     Invalidate(index, Count());
                 }
@@ -79,6 +81,7 @@ namespace Cyclone
                 }
                 virtual void Set(uint index, const ICollection<T>& values)
                 {
+                    if (values.IsEmpty()) { return; }
                     for (uint a = 0; a < values.Count(); a++)
                         _data.Set(index + a, values(a));
                     Invalidate(index, index + values.Count());

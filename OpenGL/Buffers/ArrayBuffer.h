@@ -7,6 +7,8 @@
 #include "Collections/ArrayList.h"
 #include "Buffers/GraphicsBuffer.h"
 #include "Collections/Array.h"
+#include "IO/Console.h"
+#include "Utilities.h"
 
 
 
@@ -66,6 +68,7 @@ namespace Cyclone
                 /// <param name="values"> A generic collection of values to be copied and inserted into the buffer. </param>
                 virtual void Insert(uint index, const ICollection<T>& values)
                 {
+                    if (values.IsEmpty()) { return; }
                     _data.Insert(index, values);
                     Invalidate(index, Count());
                 }
@@ -108,10 +111,11 @@ namespace Cyclone
                 /// <param name="data"> A generic collection of data elements to be copied into the buffer. </param>
                 virtual void Set(uint index, const ICollection<T>& data)
                 {
+                    if (data.IsEmpty()) { return; }
                     for (uint a = 0; a < data.Count(); a++)
                         _data.Set(index + a, data(a));
 
-                    Invalidate(index, data.Count());
+                    Invalidate(index, index + data.Count());
                 }
 		        /// <summary> Transfers all application-side data found within this buffer over to its corresponding GPU storage. </summary>
 		        virtual void Update()                       override
