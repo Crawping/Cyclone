@@ -196,12 +196,20 @@ namespace Cyclone
                 /// <returns> A reference to the value found at the given indices. </returns>
                 /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... V>
-                constexpr T& operator ()(V ... indices)                             { return _values[IndexOf(indices...)]; }
+                constexpr T& operator ()(V ... indices)
+                {
+                    static_assert(sizeof...(V) > 0, "Array indexing requires at least one integer input.");
+                    return _values[IndexOf(indices...)];
+                }
                 /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
                 /// <returns> A reference to the value found at the given indices. </returns>
                 /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... V>
-                constexpr const T& operator ()(V ... indices)                       const { return _values[IndexOf(indices...)]; }
+                constexpr const T& operator ()(V ... indices)                       const
+                {
+                    static_assert(sizeof...(V) > 0, "Array indexing requires at least one integer input.");
+                    return _values[IndexOf(indices...)];
+                }
 
                 /// <summary> Determines if two identically dimensioned arrays are equivalent. </summary>
                 constexpr bool operator ==(const Array& other)                      const
