@@ -24,9 +24,9 @@ namespace Cyclone
                 /// <summary> Gets the total number of elements present in the array. </summary>
                 virtual uint Count()        const override { return _count; }
                 /// <summary> Gets a reference to the first data element in the array. </summary>
-                virtual T& First()          { return _values[0]; }
+                virtual T& First()          { return _data[0]; }
                 /// <summary> Gets a reference to the last data element in the array. </summary>
-                virtual T& Last()           { return _values[Count() - 1]; }
+                virtual T& Last()           { return _data[Count() - 1]; }
                 /// <summary> Gets the number of dimensions occupied by the array. </summary>
                 /// <remarks> Vectors are always one-dimensional arrays. Thus, this method always returns a value of 1. </remarks>
                 virtual uint Rank()         const override { return _rank; }
@@ -39,7 +39,7 @@ namespace Cyclone
                     _count(0),
                     _rank(0),
                     _size(nullptr),
-                    _values(nullptr)
+                    _data(nullptr)
                 {
 
                 }
@@ -49,34 +49,34 @@ namespace Cyclone
                     _count(Math::Product(dimensions...)),
                     _rank(sizeof...(U)),
                     _size(nullptr),
-                    _values(nullptr)
+                    _data(nullptr)
                 {
                     _size   = (new Array<uint, sizeof...(U)>{ uint(dimensions)... })->begin();
-                    _values = new T[_count];
+                    _data = new T[_count];
                 }
                 /// <summary> Constructs an array by transferring the contents of another array object. </summary>
                 Array(Array&& other)     noexcept:
                     _count(other._count),
                     _rank(other._rank),
                     _size(other._size),
-                    _values(other._values)
+                    _data(other._data)
                 {
                     other._count    = 0;
                     other._rank     = 0;
                     other._size     = nullptr;
-                    other._values   = nullptr;
+                    other._data   = nullptr;
                 }
                 /// <summary> Constructs an array by copying the contents of another array object. </summary>
 		        Array(const Array& other):
 			        _count(other._count),
                     _rank(other._rank),
                     _size(new uint[other._rank]),
-			        _values(new T[other._count])
+			        _data(new T[other._count])
 		        {
                     for (uint a = 0; a < Rank(); a++)
                         _size[a] = other._size[a];
                     for (uint a = 0; a < Count(); a++)
-                        _values[a] = other(a);
+                        _data[a] = other(a);
 		        }
                 /// <summary> Constructs a new vector by copying a subset of another collection. </summary>
                 /// <param name="other"> The collection of data from which values will be copied. </param>
@@ -86,11 +86,11 @@ namespace Cyclone
                     _count(count),
                     _rank(1),
                     _size(new uint[1]),
-                    _values(new T[count])
+                    _data(new T[count])
                 {
                     _size[0] = _count;
                     for (uint a = index; a < index + count; a++)
-                        _values[a - index] = other(a);
+                        _data[a - index] = other(a);
                 }
                 /// <summary> Constructs a new multidimensional array whose elements are initialized to specific values. </summary>
                 /// <param name="values"> An initial list of values to copied into the new array. </param>
@@ -98,17 +98,17 @@ namespace Cyclone
 			        _count(values.size()),
                     _rank(1),
                     _size(new uint[1]),
-			        _values(new T[values.size()])
+			        _data(new T[values.size()])
 		        {
                     _size[0] = _count;
                     for (uint a = 0; a < _count; a++)
-                        _values[a] = *(values.begin() + a);
+                        _data[a] = *(values.begin() + a);
 		        }
                 /// <summary> Destroys the underlying native storage for this array. </summary>
 		        ~Array()
 		        {
                     if (_size)      { delete[] _size; }
-			        if (_values)    { delete[] _values; }
+			        if (_data)    { delete[] _data; }
 		        }
 
 
@@ -118,12 +118,12 @@ namespace Cyclone
                 virtual void Clear()
                 {
                     if (_size)      { delete[] _size; }
-                    if (_values)    { delete[] _values; }
+                    if (_data)    { delete[] _data; }
 
                     _count  = 0;
                     _rank   = 0;
                     _size   = nullptr;
-                    _values = nullptr;
+                    _data = nullptr;
                 }
                 /// <summary> Gets the total number of elements present in a specific dimension of the array. </summary>
                 /// <returns> The cumulative element count up through the inputted array dimension. </returns>
@@ -140,7 +140,7 @@ namespace Cyclone
                 virtual void Fill(const T& value)
                 {
                     for (uint a = 0; a < Count(); a++)
-                        _values[a] = value;
+                        _data[a] = value;
                 }
                 /// <summary> Changes the dimensions of the array while preserving its element count. </summary>
                 /// <param name="dimensions"> Any number of integers defining the new size of the array. </param>
@@ -202,7 +202,7 @@ namespace Cyclone
                 virtual void Swap(uint idxFirst, uint idxSecond)
                 {
                     //if (idxFirst >= Count() || idxSecond >= Count()) { return; }
-                    std::swap(_values[idxFirst], _values[idxSecond]);
+                    std::swap(_data[idxFirst], _data[idxSecond]);
                 }
 
 
@@ -222,22 +222,22 @@ namespace Cyclone
                 /// <returns> A reference to the value found at the given index. </returns>
                 /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
-		        virtual T& operator ()(uint idx)			            { return _values[idx]; }
+		        virtual T& operator ()(uint idx)			            { return _data[idx]; }
                 /// <summary> Gets the value stored at a particular linear index within the array. </summary>
                 /// <returns> A reference to the value found at the given index. </returns>
                 /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 /// <remarks> Array indexing is not checked and could result in exceptions if out-of-bounds indices are provided. </remarks>
-		        virtual const T& operator ()(uint idx)	                const override { return _values[idx]; }
+		        virtual const T& operator ()(uint idx)	                const override { return _data[idx]; }
                 /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
                 /// <returns> A reference to the value found at the given indices. </returns>
                 /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... U>
-                T& operator ()(U ... subscripts)                        { return _values[IndexOf(subscripts...)]; }
+                T& operator ()(U ... subscripts)                        { return _data[IndexOf(subscripts...)]; }
                 /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
                 /// <returns> A reference to the value found at the given indices. </returns>
                 /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<typename ... U>
-                const T& operator ()(U ... subscripts)                  const { return _values[IndexOf(subscripts...)]; }
+                const T& operator ()(U ... subscripts)                  const { return _data[IndexOf(subscripts...)]; }
 
                 /// <summary> Clears the vector of any stored data and transfers the contents of another vector into it. </summary>
                 /// <returns> A reference to the new data vector containing the tranferred contents of the old one. </returns>
@@ -247,7 +247,7 @@ namespace Cyclone
                     std::swap(_count,   other._count);
                     std::swap(_rank,    other._rank);
                     std::swap(_size,    other._size);
-                    std::swap(_values,  other._values);
+                    std::swap(_data,  other._data);
 			        return *this;
 		        }
                 /// <summary> Clears the vector of any stored data and copies the contents of another vector into it. </summary>
@@ -256,10 +256,13 @@ namespace Cyclone
 		        virtual Array& operator =(const Array& other)
 		        {
                     Reallocate(other.Count());
-                    _rank = other._rank;
+                    _rank = other.Rank();
 
-                    std::copy(other._size, other._size + _rank, _size);
-                    std::copy(other._values, other._values + _count, _values);
+                    for (uint a = 0; a < _rank; a++)
+                        _size[a] = other.Size(a);
+
+                    for (uint a = 0; a < _count; a++)
+                        _data[a] = other(a);
 
 			        return *this;
 		        }
@@ -272,7 +275,7 @@ namespace Cyclone
                     
                     uint count = Math::Min(Count(), values.size());
                     for (uint a = 0; a < count; a++)
-                        _values[a] = *(values.begin() + a);
+                        _data[a] = *(values.begin() + a);
                     return *this;
                 }
 
@@ -286,7 +289,7 @@ namespace Cyclone
                         if (_size[a] != other._size[a]) { return false; }
 
                     for (uint a = 0; a < _count; a++)
-                        if (_values[a] != other(a)) { return false; }
+                        if (_data[a] != other(a)) { return false; }
 
                     return true;
                 }
@@ -307,20 +310,21 @@ namespace Cyclone
                     if (n == 0)         { Clear(); return; }
 
                     T* newData = new T[n];
-                    std::copy(_values, _values + _count, newData);
+                    for (uint a = 0; a < _count; a++)
+                        newData[a] = _data[a];
 
                     Clear();
                     _count  = n;
-                    _values = newData;
+                    _data = newData;
                 }
 
 
             private:
 
                 uint    _count;
+                T*      _data;
                 uint    _rank;
                 uint*   _size;
-                T*      _values;
         };
     }
 }
