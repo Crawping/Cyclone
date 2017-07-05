@@ -9,6 +9,7 @@
 #include "Buffers/VertexBuffer.h"
 #include "GL/OpenGLAPI.h"
 #include "Interfaces/IRenderable.h"
+#include "Interfaces/IMaterial.h"
 #include "Interfaces/IGeometric.h"
 #include "Resources/Resource.h"
 
@@ -22,6 +23,10 @@ namespace Cyclone
         {
             public:
 
+                OpenGLAPI virtual List<BufferBinding> Buffers() const;
+                
+
+
                 /** CONSTRUCTOR **/
                 RenderLayer() { }
                 virtual ~RenderLayer() { }
@@ -29,8 +34,12 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                OpenGLAPI virtual uint IndexOf(const Resource<IMaterial>& material) const;
+                OpenGLAPI virtual uint IndexOf(const Resource<IRenderable>& entity) const;
+
                 OpenGLAPI virtual void Insert(const Resource<IMaterial>& material);
                 OpenGLAPI virtual void Insert(const Resource<IRenderable>& entity);
+                //OpenGLAPI virtual void MappingOf
 
                 OpenGLAPI virtual void Update();
                 OpenGLAPI virtual void Update(const Resource<IRenderable>& entity);
@@ -42,6 +51,7 @@ namespace Cyclone
                 UniformMap<uint, MaterialData>      _materials;
                 UniformMap<uint, TransformData>     _transforms;
                 
+
                 ArrayList<Resource<IRenderable>>    _entityUpdates;
                 ArrayList<Resource<IMaterial>>      _materialUpdates;
 

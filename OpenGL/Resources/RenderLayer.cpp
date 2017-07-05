@@ -10,7 +10,28 @@ namespace Cyclone
     namespace OpenGL
     {
 
+        /** PROPERTIES **/
+        List<BufferBinding> RenderLayer::Buffers() const
+        {
+            return
+            {
+                { _entities,    2 },
+                { _materials,   3 },
+                { _transforms,  4 },
+            };
+        }
+
+
+
         /** PUBLIC UTILITIES **/
+        uint RenderLayer::IndexOf(const Resource<IMaterial>& material) const
+        {
+            return _materials.IndexOf(material.ID());
+        }
+        uint RenderLayer::IndexOf(const Resource<IRenderable>& entity) const
+        {
+            return _entities.IndexOf(entity.ID());
+        }
         void RenderLayer::Insert(const Resource<IRenderable>& entity)
         {
             if (entity.IsNull() || Contains(entity)) { return; }
@@ -68,11 +89,16 @@ namespace Cyclone
 
         void RenderLayer::UpdateEntityData(const Resource<IRenderable>& entity)
         {
-            EntityData data = 
-            {
-                Contains(entity->Material()) ? _materials.IndexOf(entity->Material().ID()) : 0,
-                _transforms.IndexOf(entity.ID()),
-            };
+            EntityData data;
+            auto material = entity->Material();
+            data.MaterialIndex = Contains(material) ? _materials.IndexOf(material.ID()) : 0;
+            data.TransformIndex = _transforms.IndexOf(entity.ID());
+
+            //EntityData data = 
+            //{
+            //    Contains(entity->Material()) ? _materials.IndexOf(entity->Material().ID()) : 0,
+            //    _transforms.IndexOf(entity.ID()),
+            //};
 
             _entities.Set(entity.ID(), data);
         }

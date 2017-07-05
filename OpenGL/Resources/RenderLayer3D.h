@@ -18,11 +18,18 @@ namespace Cyclone
         {
             public:
 
+                struct GeometryData;
                 //template<typename T> using ResourceList = List< Resource<T> >;
 
 
                 /** PROPERTIES **/
                 //ResourceList<IRenderStage> Stages()                             const { return _stages.Values(); }
+                List<BufferBinding> Buffers() const override
+                {
+                    auto buffers = RenderLayer::Buffers();
+                    buffers.Prepend({ _vertices, 0 });
+                    return buffers;
+                }
 
 
 
@@ -32,6 +39,12 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
+                using RenderLayer::IndexOf;
+                using RenderLayer::Insert;
+                using RenderLayer::Update;
+
+                //uint IndexOf(const Resource<IRenderable>& entity) const override { return RenderLayer::IndexOf(entity); }
+                OpenGLAPI const GeometryData& IndexOf(const Resource<IGeometric>& geometry) const;
                 OpenGLAPI void Insert(const Resource<IRenderable>& entity)  override;
                 OpenGLAPI void Insert(const Resource<IGeometric>& geometry);
                 OpenGLAPI void Update()                                     override;
@@ -39,14 +52,14 @@ namespace Cyclone
 
             private:
 
-                struct BufferIndices 
+                struct GeometryData 
                 {
                     uint IndicesCount;
                     uint IndicesIndex;
                     uint VertexCount;
                     uint VertexIndex; 
 
-                    bool operator ==(const BufferIndices& other) const
+                    bool operator ==(const GeometryData& other) const
                     {
                         return 
                             (IndicesCount == other.IndicesCount)    &&
@@ -56,18 +69,19 @@ namespace Cyclone
                     }
                 };
 
+
                 GeometryBuffer<Vertex>              _vertices;
-                ArrayList<BufferIndices>            _keys;
-                ArrayList<Resource<IGeometric>>     _geometry;
-                Array<uint, 2>                      _invalidRange;
-                BST<uint, uint>                     _mapping;
+                ArrayList<GeometryData>             _mapping;
+                BST<uint, Resource<IGeometric>>     _geometry;
+                Array<uint, 2>                      _updateRange;
 
 
                 OpenGLAPI bool Contains(const Resource<IGeometric>& geometry)   const;
-                OpenGLAPI void Invalidate(uint geometry);
-                OpenGLAPI void InvalidateAll(uint geometry);
+                OpenGLAPI void Invalidate(const Resource<IGeometric>& geometry);
+                OpenGLAPI void Invalidate(uint index);
+                OpenGLAPI void Invalidate(uint idxA, uint idxB);
                 OpenGLAPI Vector<Vector2> UpdateCounts()                        const;
-                OpenGLAPI void UpdateGeometryData(const Resource<IGeometric>& geometry);
+                OpenGLAPI void UpdateGeometryData(uint index);
 
         };
     }

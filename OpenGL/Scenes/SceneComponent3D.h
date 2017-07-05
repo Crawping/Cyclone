@@ -18,7 +18,7 @@ namespace Cyclone
     namespace OpenGL
     {
 
-        struct StageGroup3D;
+        //struct StageGroup3D;
 
         class SceneComponent3D : public SceneComponent
         {
@@ -39,9 +39,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                OpenGLAPI void Insert(const Resource<IRenderable>& entity)  override;
+                //OpenGLAPI void Insert(const Resource<IRenderable>& entity)  override;
                 OpenGLAPI void Update()                                     override;
-                OpenGLAPI void Update(const Resource<IRenderable>& entity)  override;
+                //OpenGLAPI void Update(const Resource<IRenderable>& entity)  override;
 
             protected:
 
@@ -52,17 +52,19 @@ namespace Cyclone
                 bool NeedsUpdate;
 
                 /** COLLECTIONS **/
-                BST<PointTopologies, StageGroup3D*>     Staging;
+                //BST<PointTopologies, StageGroup3D*>     Staging;
 
-                GeometryBuffer<Vertex>                  _geometry;
-                UniformMap<uint, EntityData>            _resources;
+                //GeometryBuffer<Vertex>                  _geometry;
+                //UniformMap<uint, EntityData>            _resources;
                 BST<uint, Resource<IRenderable>>        _entities;
 
 
 
                 /** UTILITIES **/
                 void ClearCommands();
-                StageGroup3D* CreateStage(PointTopologies topology);
+                //StageGroup3D* CreateStage(PointTopologies topology);
+
+                //void Insert(const Resource<IGeometric>& geometry);
 
         };
     }

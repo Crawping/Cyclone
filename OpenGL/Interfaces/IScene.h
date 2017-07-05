@@ -59,7 +59,8 @@ namespace Cyclone
                 /** UTILITIES **/
                 virtual void Insert(const Resource<IRenderable>& entity)            = 0;
                 virtual void Update()                                               = 0;
-                virtual void Update(const Resource<IRenderable>& entity)            = 0;
+                //virtual void Update(const Resource<IRenderable>& entity)            = 0;
+                //virtual void Update(const Resource<IMaterial>& material)            = 0;
 
         };
 
@@ -76,10 +77,11 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 using ISceneComponent::Insert;
-                virtual uint IndexOf(const Resource<IRenderable>& entity)           const = 0;
-                virtual uint IndexOf(const Resource<IMaterial>& material)           const = 0;
+                //virtual uint IndexOf(const Resource<IRenderable>& entity)           const = 0;
+                //virtual uint IndexOf(const Resource<IMaterial>& material)           const = 0;
                 virtual void Insert(const string& name, ISceneComponent& component) = 0;
                 virtual void Remove(const string& name)                             = 0;
+
         };
 
         

@@ -9,6 +9,7 @@
 #include "Buffers/UniformData.h"
 #include "Buffers/VertexBuffer.h"
 #include "Collections/BST.h"
+#include "Resources/RenderLayer3D.h"
 #include "Scenes/SceneComponent3D.h"
 
 
@@ -24,7 +25,7 @@ namespace Cyclone
         class ITransformable;
         struct MaterialData;
         struct ResourceMapping;
-
+        struct StageGroup3D;
 
         class SceneLayer3D :
             public SceneComponent3D,
@@ -42,44 +43,50 @@ namespace Cyclone
 
                 /** CONSTRUCTOR & DESTRUCTOR **/
                 OpenGLAPI SceneLayer3D(const string& name, ISceneLayer& parent);
-                virtual ~SceneLayer3D() { }
+                OpenGLAPI ~SceneLayer3D();
 
 
 
                 /** UTILITIES **/
                 using SceneComponent3D::Insert;
-                OpenGLAPI uint IndexOf(const Resource<IRenderable>& entity)             const override;
-                OpenGLAPI uint IndexOf(const Resource<IMaterial>& material)             const override;
+                //OpenGLAPI auto GeometryIndices(const Resource<IGeometric>& geometry)            const;
+                //OpenGLAPI uint IndexOf(const Resource<IRenderable>& entity)             const override;
+                //OpenGLAPI uint IndexOf(const Resource<IMaterial>& material)             const override;
                 OpenGLAPI void Insert(const string& name, ISceneComponent& stage)       override;
                 OpenGLAPI void Insert(const Resource<IRenderable>& entity)              override;
                 OpenGLAPI void Remove(const string& name)                               override;
                 OpenGLAPI void Update()                                                 override;
-                OpenGLAPI void Update(const Resource<IRenderable>& entity)              override;;
+
+                //template<typename T> void Update(const Resource<T>& value) { }
+                void Update(const Resource<IMaterial>& material)      { _resources.Update(material); }
+                void Update(const Resource<IRenderable>& entity)    { _resources.Update(entity); }
 
             protected:
 
-                /** UTILITIES **/
-                OpenGLAPI virtual void UpdateMaterial(const Resource<IRenderable>& entity);
-                OpenGLAPI virtual void UpdateTransforms(const Resource<IRenderable>& entity);
+                ///** UTILITIES **/
+                //OpenGLAPI virtual void UpdateMaterial(const Resource<IRenderable>& entity);
+                //OpenGLAPI virtual void UpdateTransforms(const Resource<IRenderable>& entity);
 
             private:
 
                 /** BUFFERS **/
-                UniformMap<uint, MaterialData>      _materials;
-                UniformMap<uint, TransformData>     _transforms;
+                BST<PointTopologies, StageGroup3D*>     _staging;
+                RenderLayer3D                           _resources;
+                //UniformMap<uint, MaterialData>      _materials;
+                //UniformMap<uint, TransformData>     _transforms;
 
-                BST<uint, Resource<IRenderable>>    _entities;
-                ArrayList<Resource<IRenderable>>    _updates;
+                BST<uint, Resource<IRenderable>>        _entities;
+                //ArrayList<Resource<IRenderable>>    _updates;
 
 
 
                 /** COLLECTIONS **/
                 BST<string, ISceneComponent*>              _components;
-                BST<const IRenderable*, ResourceMapping>   Mappings;
+                //BST<const IRenderable*, ResourceMapping>   Mappings;
 
 
 
-
+                StageGroup3D* CreateStage(PointTopologies topology);
 
         };
     }

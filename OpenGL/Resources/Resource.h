@@ -8,6 +8,7 @@
 #include "IO/Members.h"
 #include "IO/Property.h"
 #include "Meta/Utilities.h"
+#include <type_traits>
 
 
 
@@ -78,7 +79,8 @@ namespace Cyclone
 
 
                 operator bool()                                             const { return !IsNull(); }
-                template<typename U> operator Resource<U>()                 const
+                template<typename U, typename = std::enable_if<std::is_base_of<U, T>::value>>
+                /*template<typename U> */operator Resource<U>()                 const
                 {
                     static_assert(Meta::IsA<T, U>() || Meta::IsA<U, T>(), "Invalid casting operation attempted.");
                     return Resource<U>(ID(), dynamic_cast<U*>(_value));

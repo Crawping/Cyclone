@@ -14,41 +14,42 @@ namespace Cyclone
     namespace OpenGL
     {
         /** INTERNAL CLASSES **/
-        struct StageGroup3D
-        {
-            RenderStage3D<IndexedDrawCommand>   Indexed;
-            RenderStage3D<DrawCommand>          NonIndexed;
-        };
+        //struct StageGroup3D
+        //{
+        //    RenderStage3D<IndexedDrawCommand>   Indexed;
+        //    RenderStage3D<DrawCommand>          NonIndexed;
+        //};
 
 
 
         /** PROPERTIES **/
         List<BufferBinding> SceneComponent3D::Buffers() const
         {
-            return
-            {
-                { _geometry,     0 },
-                { _resources,    2 },
-            };
+            return { };
+            //{
+            //    { _geometry,     0 },
+            //    { _resources,    2 },
+            //};
         }
         List<IRenderStage&> SceneComponent3D::Stages() const
         {
-            List<IRenderStage&> stages;
-            if (!IsVisible()) { return stages; }
+            return { };
+            //List<IRenderStage&> stages;
+            //if (!IsVisible()) { return stages; }
 
-            for (auto* group : Staging.Values())
-            {
-                stages.Append(group->Indexed);
-                stages.Append(group->NonIndexed);
-            }
+            //for (auto* group : Staging.Values())
+            //{
+            //    stages.Append(group->Indexed);
+            //    stages.Append(group->NonIndexed);
+            //}
 
-            return stages;
+            //return stages;
         }
 
 
 
         /** CONSTRUCTOR & DESTRUCTOR **/
-        SceneComponent3D::SceneComponent3D(const string& name, ISceneLayer& parent) :
+        SceneComponent3D::SceneComponent3D(const string& name, ISceneLayer& parent):
             SceneComponent(name, parent),
             NeedsUpdate(false)
         {
@@ -56,82 +57,104 @@ namespace Cyclone
         }
         SceneComponent3D::~SceneComponent3D()
         {
-            for (auto* stage : Staging.Values())
-                delete stage;
+            //for (auto* stage : Staging.Values())
+            //    delete stage;
         }
 
 
 
         /** UTILITIES **/
-        void SceneComponent3D::Insert(const Resource<IRenderable>& entity)
-        {
-            if (entity.IsNull() || _entities.Contains(entity.ID())) { return; }
-            _entities.Insert(entity.ID(), entity);
-            Parent().Insert(entity);
-            NeedsUpdate = true;
-        }
+        //void SceneComponent3D::Insert(const Resource<IRenderable>& entity)
+        //{
+        //    //if (entity.IsNull() || _entities.Contains(entity.ID())) { return; }
+        //    //_entities.Insert(entity.ID(), entity);
+        //    //Parent().Insert(entity);
+        //    //NeedsUpdate = true;
+        //}
         void SceneComponent3D::Update()
         {
-            if (!NeedsUpdate) { return; }
+            //ClearCommands();
+            //for (uint a = 0; a < _entities.Count(); a++)
+            //{
+            //    const auto& entity = _entities(a);
 
-            ClearCommands();
-            _geometry.Clear();
+            //    if (entity->Model().IsNull() || entity->Model()->Geometry().IsNull())
+            //        continue;
 
-            for (uint a = 0; a < _entities.Count(); a++)
-            {
-                const auto& entity = _entities(a);
-                uint idxEntity = Parent().IndexOf(entity);
+            //    const auto& geometry = entity->Model()->Geometry();
+            //    auto topology = geometry->Topology();
 
-                _resources.Set(entity.ID(), { Parent().IndexOf(entity->Material()), idxEntity });
+            //    StageGroup3D* stage =
+            //        Staging.Contains(topology) ? Staging[topology] :
+            //        CreateStage(topology);
 
-                const auto& model = entity->Model();
-                const auto& geometry = model->Geometry();
-                if (model.IsNull() || geometry.IsNull()) { continue; }
+            //    const auto& indices = Parent().IndexOf(geometry);
 
-                auto indices = geometry->Indices();
-                auto vertices = geometry->Vertices();
+            //    if (geometry->IndexCount())
+            //        stage->NonIndexed.Append()
+            //}
 
-                StageGroup3D* stage;
-                PointTopologies topology = geometry->Topology();
 
-                if (Staging.Contains(topology))
-                    stage = Staging[topology];
-                else
-                    stage = CreateStage(topology);
+            //if (!NeedsUpdate) { return; }
 
-                if (indices.IsEmpty())
-                    stage->NonIndexed.Append(DrawCommand(vertices.Count(), 1, 0, _geometry.PointCount(), idxEntity));
-                else
-                    stage->Indexed.Append(IndexedDrawCommand(indices.Count(), 1, _geometry.IndexCount(), _geometry.PointCount(), idxEntity));
+            //ClearCommands();
+            //_geometry.Clear();
 
-                _geometry.Append(indices);
-                _geometry.Append(vertices);
-            }
-            
-            for (auto* stage : Staging.Values())
-            {
-                stage->Indexed.Update();
-                stage->NonIndexed.Update();
-            }
+            //for (uint a = 0; a < _entities.Count(); a++)
+            //{
+            //    const auto& entity = _entities(a);
+            //    uint idxEntity = Parent().IndexOf(entity);
 
-            _geometry.Update();
-            _resources.Update();
+            //    _resources.Set(entity.ID(), { Parent().IndexOf(entity->Material()), idxEntity });
 
-            NeedsUpdate = false;
+            //    const auto& model = entity->Model();
+            //    const auto& geometry = model->Geometry();
+            //    if (model.IsNull() || geometry.IsNull()) { continue; }
+
+            //    auto indices = geometry->Indices();
+            //    auto vertices = geometry->Vertices();
+
+            //    StageGroup3D* stage;
+            //    PointTopologies topology = geometry->Topology();
+
+            //    if (Staging.Contains(topology))
+            //        stage = Staging[topology];
+            //    else
+            //        stage = CreateStage(topology);
+
+            //    if (indices.IsEmpty())
+            //        stage->NonIndexed.Append(DrawCommand(vertices.Count(), 1, 0, _geometry.PointCount(), idxEntity));
+            //    else
+            //        stage->Indexed.Append(IndexedDrawCommand(indices.Count(), 1, _geometry.IndexCount(), _geometry.PointCount(), idxEntity));
+
+            //    _geometry.Append(indices);
+            //    _geometry.Append(vertices);
+            //}
+            //
+            //for (auto* stage : Staging.Values())
+            //{
+            //    stage->Indexed.Update();
+            //    stage->NonIndexed.Update();
+            //}
+
+            //_geometry.Update();
+            //_resources.Update();
+
+            //NeedsUpdate = false;
         }
-        void SceneComponent3D::Update(const Resource<IRenderable>& entity)
-        {
-            if (!_entities.Contains(entity.ID())) { return; }
-            Parent().Update(entity);
-        }
+        //void SceneComponent3D::Update(const Resource<IRenderable>& entity)
+        //{
+        //    //if (!_entities.Contains(entity.ID())) { return; }
+        //    //Parent().Update(entity);
+        //}
 
 
 
         /** PROTECTED UTILITIES **/
         void SceneComponent3D::UpdateGeometry(const Resource<IRenderable>& entity)
         {
-            if ( entity.IsNull() || entity->Model().IsNull() || entity->Model()->Geometry().IsNull() )
-                return;
+            //if ( entity.IsNull() || entity->Model().IsNull() || entity->Model()->Geometry().IsNull() )
+            //    return;
 
 
         }
@@ -141,28 +164,35 @@ namespace Cyclone
         /** PRIVATE UTILITIES **/
         void SceneComponent3D::ClearCommands()
         {
-            for (auto* stage : Staging.Values())
-            {
-                stage->Indexed.ClearCommands();
-                stage->NonIndexed.ClearCommands();
-            }
+            //for (auto* stage : Staging.Values())
+            //{
+            //    stage->Indexed.ClearCommands();
+            //    stage->NonIndexed.ClearCommands();
+            //}
 
-            NeedsUpdate = true;
+            //NeedsUpdate = true;
         }
-        StageGroup3D* SceneComponent3D::CreateStage(PointTopologies topology)
-        {
-            StageGroup3D* stage = new StageGroup3D();
-            stage->Indexed
-                .Settings(Settings())
-                .Topology(topology);
+        //StageGroup3D* SceneComponent3D::CreateStage(PointTopologies topology)
+        //{
+        //    StageGroup3D* stage = new StageGroup3D();
+        //    stage->Indexed
+        //        .Settings(Settings())
+        //        .Topology(topology);
 
-            stage->NonIndexed
-                .Settings(Settings())
-                .Topology(topology);
+        //    stage->NonIndexed
+        //        .Settings(Settings())
+        //        .Topology(topology);
 
-            Staging.Insert(topology, stage);
-            return stage;
-        }
+        //    Staging.Insert(topology, stage);
+        //    return stage;
+        //}
+        //void SceneComponent3D::Insert(const Resource<IGeometric>& geometry)
+        //{
+        //    if (geometry.IsNull())                              { return; }
+        //    else if (!Staging.Contains(geometry->Topology()))   { CreateStage(geometry->Topology()); }
+
+
+        //}
         
     }
 }
