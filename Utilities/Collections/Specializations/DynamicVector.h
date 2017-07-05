@@ -75,6 +75,15 @@ namespace Cyclone
 			        for (const T& v : values)
 				        _data[idx++] = v;
 		        }
+
+                template<uint ... N>
+                explicit Array(const Array<T, N...>& other):
+                    _count(other.Count()),
+                    _data(new T[other.Count()])
+                {
+                    for (uint a = 0; a < _count; a++)
+                        _data[a] = other(a);
+                }
                 /// <summary> Destroys the underlying native storage for this array. </summary>
 		        ~Array()
 		        {
