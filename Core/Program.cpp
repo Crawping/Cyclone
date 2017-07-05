@@ -56,7 +56,7 @@ namespace Cyclone
         auto clArea = RenderWindow->ClientArea();
 
         auto gcube = Create("Cube", Function<Mesh3D, bool>(&Mesh3D::Cube), true);
-        auto gplane = Create("Plane", Function<Mesh3D, bool>(&Mesh3D::Quad), true);
+        auto gplane = Create("Plane", Function<Mesh3D, bool>(&Mesh3D::Quad), false);
         auto gicos = Create("Icosahedron", Function<Mesh3D, bool>(&Mesh3D::Icosahedron), false);
 
         PlaneXZ = Create<Entity3D>("PlaneXZ");
@@ -116,9 +116,11 @@ namespace Cyclone
         auto cube2 = Get<Entity3D>("Cube2");
         cube2->PrimaryColor(color);
 
+        RenderScene->Update(Icosahedron->Material());
         RenderScene->Update(Cube);
         RenderScene->Update(Icosahedron);
         RenderScene->Update(cube2);
+        RenderScene->Update(PlaneXZ);
         BasicRenderer::UpdateScene();
     }
 
