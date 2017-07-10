@@ -76,7 +76,8 @@ namespace Cyclone
                 constexpr Array(const InitialList<T>& values):
                     _values{ }
                 {
-                    for (uint a = 0; a < values.size(); a++)
+                    uint count = Math::Max(values.size(), Count());
+                    for (uint a = 0; a < count; a++)
                         _values[a] = *(values.begin() + a);
                 }
                 /// <summary> Constructs a new multidimensional array by copying a specific set of elements from another array. </summary>
@@ -104,6 +105,12 @@ namespace Cyclone
                 /// <summary> Converts the array into an equivalent one-dimensional vector of values. </summary>
                 /// <returns> A flattened array of values copied from the multidimensional array. </returns>
                 constexpr Array<T, _count> Flatten()                                const { return { _values }; }
+                constexpr Array& Fill(const T& value)
+                {
+                    for (uint a = 0; a < _count; a++)
+                        _values[a] = value;
+                    return *this;
+                }
                 /// <summary> Calculates a linear index that is equivalent to a set of array subscripts. </summary>
                 /// <returns> A linear array index that references the same location as the inputted subscripts. </returns>
                 /// <param name="subscripts"> Any number of unsigned integers representing the array subscripts to convert. </param>
