@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include "Meta/Expressions.h"
 
 
 
@@ -33,14 +34,14 @@ namespace Cyclone
                  /** CONSTRUCTORS & DESTRUCTOR **/
 		        /// <summary> Constructs a new one-dimensional array object with a designated number of elements. </summary>
                 /// <param name="n"> The desired number of elements to be stored within the new array. </param>
-                Array(uint n = 0) :
+                Array(uint n = 0):
 			        _count(0),
 			        _data(nullptr)
 		        {
                     Reallocate(n);
                 }
                 /// <summary> Constructs an array by transferring the contents of another array object. </summary>
-                Array(Array&& other) :
+                Array(Array&& other):
                     _count(other.Count()),
                     _data(other._data)
                 {
@@ -48,7 +49,7 @@ namespace Cyclone
                     other._data = nullptr;
                 }
                 /// <summary> Constructs an array by copying the contents of another array object. </summary>
-                Array(const Array& other) :
+                Array(const Array& other):
 			        _count(other.Count()),
 			        _data(new T[other.Count()])
 		        {
@@ -59,7 +60,7 @@ namespace Cyclone
                 /// <param name="other"> The collection of data from which values will be copied. </param>
                 /// <param name="index"> The index of the first element to be copied. </param>
                 /// <param name="count"> The number of data elements to copy. </param>
-                Array(const ICollection<T>& other, uint index, uint count) :
+                Array(const ICollection<T>& other, uint index, uint count):
                     _count(count),
                     _data(new T[count])
                 {
@@ -67,7 +68,7 @@ namespace Cyclone
                         _data[a - index] = other(a);
                 }
                 /// <summary> Constructs an array by copying values contained in an initializer list. </summary>
-                Array(const InitialList<T>& values) :
+                Array(const InitialList<T>& values):
 			        _count(values.size()),
 			        _data(new T[values.size()])
 		        {
@@ -94,49 +95,65 @@ namespace Cyclone
 
                 /** UTILITIES **/
                 /// <summary> Removes all data elements from the vector and leaves it in an empty state. </summary>
-                virtual void Clear()
+                virtual Array& Clear()
                 {
                     if (_data) { delete[] _data; }
                     _count = 0;
                     _data = nullptr;
+                    return *this;
                 }
                 /// <summary> Adds a new data element to the end of the vector. </summary>
                 /// <param name="value"> A single data element to be copied and appended to the vector. </param>
-                virtual void Concatenate(const T& value)
+                virtual Array& Concatenate(const T& value)
                 {
                     Reallocate(Count() + 1);
                     _data[Count() - 1] = value;
+                    return *this;
+                }
+                template<typename ... U, Meta::DisableRelatives<ICollection<T>, U...> = 0> 
+                Array& Concatenate(U&& ... values)
+                {
+                    constexpr uint N = sizeof...(U);
+                    Reallocate(Count() + N);
+
+                    uint idx = Count();
+                    Meta::Expand( Set(--idx, std::forward<U>(values))... );
+                    return *this;
                 }
                 /// <summary> Adds the contents of another collection to the end of the vector. </summary>
                 /// <param name="values"> A collection of data elements to be copied and appended to the vector. </param>
-                virtual void Concatenate(const ICollection<T>& values)
+                virtual Array& Concatenate(const ICollection<T>& values)
                 {
-                    if (values.IsEmpty()) { return; }
+                    if (values.IsEmpty()) { return *this; }
 
                     uint idx = Count();
                     Reallocate(idx + values.Count());
                     for (uint a = 0; a < values.Count(); a++)
                         _data[idx++] = values(a);
+                    return *this;
                 }
                 /// <summary> Sets each element of the array to a single uniform value. </summary>
                 /// <param name="value"> The value to which each element of the array should be set. </param>
-                virtual void Fill(const T& value)
+                virtual Array& Fill(const T& value)
                 {
                     for (uint a = 0; a < Count(); a++)
                         _data[a] = value;
+                    return *this;
                 }
 
-                virtual void Set(uint index, const T& value)
+                template<typename U> Array& Set(uint index, U&& value)
                 {
-                    _data[index] = value;
+                    _data[index] = std::forward<U>(value);
+                    return *this;
                 }
                 /// <summary> Exchanges the values of two separate vector elements. </summary>
-                /// <param name="idxFirst"> The position of the first element to be swapped. </param>
-                /// <param name="idxSecond"> The position of the second element to be swapped. </param>
-                virtual void Swap(uint idxFirst, uint idxSecond)
+                /// <param name="idxA"> The position of the first element to be swapped. </param>
+                /// <param name="idxB"> The position of the second element to be swapped. </param>
+                virtual Array& Swap(uint idxA, uint idxB)
                 {
-                    if (idxFirst >= Count() || idxSecond >= Count()) { return; }
-                    std::swap(_data[idxFirst], _data[idxSecond]);
+                    if (idxA >= Count() || idxB >= Count()) { return *this; }
+                    std::swap(_data[idxA], _data[idxB]);
+                    return *this;
                 }
                 /// <summary> Gets a pointer to the underlying native storage for the array. </summary>
                 /// <remarks> 
@@ -235,9 +252,22 @@ namespace Cyclone
                 uint    _count;
                 T*      _data;
                 
+
         };
 
         template<typename T, uint N = 0> using Vector = Array<T, N>;
+
+        template<uint N> constexpr Array<uint, N> Accumulate(const Array<uint, N>& values)
+        {
+            Array<uint, N> output(values);
+            for (uint a = 1; a < N; a++)
+                output(a) = (output(a - 1) + output(a));
+            return output;
+        }
+        template<typename ... T> constexpr auto Accumulate(T ... values)
+        {
+            return Accumulate(Array<uint, sizeof...(T)>({ values... }));
+        }
 
     }
 }
