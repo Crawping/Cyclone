@@ -104,12 +104,12 @@ namespace Cyclone
                 }
                 /// <summary> Adds a new data element to the end of the vector. </summary>
                 /// <param name="value"> A single data element to be copied and appended to the vector. </param>
-                virtual Array& Concatenate(const T& value)
-                {
-                    Reallocate(Count() + 1);
-                    _data[Count() - 1] = value;
-                    return *this;
-                }
+                //virtual Array& Concatenate(const T& value)
+                //{
+                //    Reallocate(Count() + 1);
+                //    _data[Count() - 1] = value;
+                //    return *this;
+                //}
                 template<typename ... U, Meta::DisableRelatives<ICollection<T>, U...> = 0> 
                 Array& Concatenate(U&& ... values)
                 {

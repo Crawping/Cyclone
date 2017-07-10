@@ -198,6 +198,7 @@
     <ClInclude Include="Collections\String.h" />
     <ClInclude Include="Collections\Structure.h" />
     <ClInclude Include="Enumerator.h" />
+    <ClInclude Include="Graphs\Specializations\BinaryNode.h" />
     <ClInclude Include="Graphs\Specializations\DynamicGraph.h" />
     <ClInclude Include="Graphs\Specializations\DynamicNode.h" />
     <ClInclude Include="Imaging\Bitmap.h" />
@@ -230,6 +231,7 @@
     <ClInclude Include="Math\Vector4.h" />
     <ClInclude Include="Meta\Array.h" />
     <ClInclude Include="Meta\Class.h" />
+    <ClInclude Include="Meta\Expressions.h" />
     <ClInclude Include="Meta\Function.h" />
     <ClInclude Include="Meta\List.h" />
     <ClInclude Include="Meta\Numerics.h" />

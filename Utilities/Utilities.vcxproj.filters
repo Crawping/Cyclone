@@ -251,6 +251,12 @@
     <ClInclude Include="Graphs\Specializations\DynamicGraph.h">
       <Filter>Graphs\Specializations</Filter>
     </ClInclude>
+    <ClInclude Include="Graphs\Specializations\BinaryNode.h">
+      <Filter>Graphs\Specializations</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta\Expressions.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
