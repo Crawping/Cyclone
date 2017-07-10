@@ -23,6 +23,7 @@ namespace Cyclone
             template<typename T, typename ... U> struct Sublist<0, T, U...>:            public List<T, U...> { };
 
             /// <summary> A metaclass that stores and manages a collection of heterogeneous types. </summary>
+            /// <typeparam name="T"> A list of types to be stored. </typeparam>
             template<typename ... T>
             struct List
             {
@@ -47,11 +48,21 @@ namespace Cyclone
                 /// <summary> Appends additional types to the list. </summary>
                 /// <typeparam name="U"> Any number of additional types to be added to the end of the list. </typeparam>
                 template<typename ... U> using Concatenate      = List<T..., U...>;
+                //template<typename U>
+                //constexpr const static bool Contains            = Math::Sum(Meta::IsEqual<T, U>::Value...);
+                //template<typename U> using Contains             = Boolean< Math::Sum(TypeEquals<U>(Declare<T>())...) >;
+                //template<typename U> using Contains             = Conditional< Math::Sum(Meta::IsEqual<U, T>...()), Boolean<true>, Boolean<false> >;
+                    //Boolean< Math::Sum(Meta::IsEqual<U, T>()...) >;
                 /// <summary> Removes the first type stored in the list. </summary>
                 using Discard                                   = Sublist<1, T...>;
                 /// <summary> Retrieves the type stored at a particular index in the list. </summary>
                 template<uint N> using Get                      = typename Node<N, T...>::Type;
 
+
+                template<typename U> constexpr static bool Contains() 
+                {
+                    return Math::Sum(Meta::IsEqual<T, U>::Value...) > 0; 
+                }
                 /// <summary> Determines whether a given type is related to a specific type stored in the list. </summary>
                 /// <returns> A Boolean <c>true</c> if the inputted type is related to the stored one, or <c>false</c> otherwise. </returns>
                 /// <typeparam name="U"> A type to be tested against the one stored at the inputted index. </typeparam>

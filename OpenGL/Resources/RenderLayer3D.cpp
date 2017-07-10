@@ -35,7 +35,7 @@ namespace Cyclone
             _vertices.Append(geometry->Vertices());
 
             uint gIDX = _geometry.IndexOf(gID);
-            _mapping.Insert(gIDX, { geometry->IndexCount(), 0U, geometry->PointCount(), 0U });
+            _mapping.Insert(gIDX, GeometryData{ geometry->IndexCount(), 0U, geometry->PointCount(), 0U });
             Invalidate(gIDX, _geometry.Count());
         }
         void RenderLayer3D::Update()
