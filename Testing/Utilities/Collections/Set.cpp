@@ -26,7 +26,7 @@ struct CanonicalSets
 };
 
 
-class _Set : public testing::Test 
+class SetTest : public testing::Test 
 {
     protected:
 
@@ -35,7 +35,7 @@ class _Set : public testing::Test
         Set<int>    _s0;
         Set<int>    _s1;
 
-        _Set() : 
+        SetTest() : 
             _s1(Canon.UnsortedIntegers)
         {
 
@@ -47,24 +47,20 @@ class _Set : public testing::Test
 
 
 /** CONSTRUCTION TESTS **/
-TEST_F(_Set, DefaultConstruction)
+TEST_F(SetTest, Construction)
 {
-    ASSERT_EQ(_s0.Count(), 0);
-    ASSERT_EQ(_s0.Order(), SortOrders::Ascending);
-}
-TEST_F(_Set, InitializedConstruction)
-{
-    ASSERT_EQ(_s1.Count(), Canon.SortedIntegers.Count());
-    for (uint a = 0; a < _s1.Count(); a++)
-        ASSERT_EQ(_s1(a), Canon.SortedIntegers(a));
+    ASSERT_EQ(_s0.Count(),  0);
+    ASSERT_EQ(_s0.Order(),  SortOrders::Ascending);
+
+    ASSERT_EQ(_s1.Count(),  Canon.SortedIntegers.Count());
+    ASSERT_EQ(_s1.Order(),  SortOrders::Ascending);
 }
 
 
 
 /** UTILITY TESTS **/
-TEST_F(_Set, SortingOrders)
+TEST_F(SetTest, Sort)
 {
-    ASSERT_EQ(_s1.Order(), SortOrders::Ascending);
     for (uint a = 0; a < _s1.Count(); a++)
         ASSERT_EQ(_s1(a), Canon.SortedIntegers(a));
 
@@ -72,7 +68,7 @@ TEST_F(_Set, SortingOrders)
     for (uint a = 0; a < _s1.Count(); a++)
         ASSERT_EQ(_s1(a), Canon.SortedIntegers(_s1.Count() - a - 1));
 }
-TEST_F(_Set, ValueInsertion)
+TEST_F(SetTest, Insert)
 {
     _s1.Insert(-1);
     ASSERT_EQ(_s1.Count(), Canon.SortedIntegers.Count() + 1);
@@ -93,7 +89,7 @@ TEST_F(_Set, ValueInsertion)
         ASSERT_EQ(_s1(idx + 1), 51);
     }
 }
-TEST_F(_Set, ValueRemoval)
+TEST_F(SetTest, Remove)
 {
     ASSERT_TRUE(_s1.Contains(52));
 
