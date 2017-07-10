@@ -197,12 +197,12 @@ namespace Cyclone
                     return (dimension >= _rank) ? 1 : _size[dimension];
                 }
                 /// <summary> Exchanges the values of two separate vector elements. </summary>
-                /// <param name="idxFirst"> The position of the first element to be swapped. </param>
-                /// <param name="idxSecond"> The position of the second element to be swapped. </param>
-                virtual void Swap(uint idxFirst, uint idxSecond)
+                /// <param name="idxA"> The position of the first element to be swapped. </param>
+                /// <param name="idxB"> The position of the second element to be swapped. </param>
+                virtual void Swap(uint idxA, uint idxB)
                 {
                     //if (idxFirst >= Count() || idxSecond >= Count()) { return; }
-                    std::swap(_data[idxFirst], _data[idxSecond]);
+                    std::swap(_data[idxA], _data[idxB]);
                 }
 
 

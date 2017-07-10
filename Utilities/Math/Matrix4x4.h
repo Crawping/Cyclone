@@ -91,17 +91,13 @@ namespace Cyclone
                 /** INDEXING OPERATORS **/
                 float& operator [](uint idx)                      { return Data[idx]; }
         
-        
                 float operator ()(uint idx)                 const;
                 float operator ()(uint a, uint b)           const;
 
                 float& operator ()(uint idx);
                 float& operator ()(uint a, uint b);
+
     
-                //Vector4 operator ()(char a, uint b)         const;
-                //Vector4 operator ()(uint a, char b)         const;
-
-
 
                 /** MATH OPERATORS **/
                 bool operator ==(const Matrix4x4& m)        const;
@@ -144,8 +140,10 @@ namespace Cyclone
                 Matrix4x4& operator -=(const Matrix4x4& m);
 
             private:
+
                 /// <summary> The raw native array of values held by this matrix. </summary>
                 float Data[16];
+
         };
 
 
