@@ -66,9 +66,6 @@
     <ClCompile Include="Collections\Set.cpp">
       <Filter>Collections</Filter>
     </ClCompile>
-    <ClCompile Include="Collections\Vector.cpp">
-      <Filter>Collections</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Collections\String.cpp">
       <Filter>Collections</Filter>
@@ -126,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="Graphs\Node.cpp">
       <Filter>Graphs</Filter>
+    </ClCompile>
+    <ClCompile Include="Collections\Specializations\DynamicVector.cpp">
+      <Filter>Collections\Specializations</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

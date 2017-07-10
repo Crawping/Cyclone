@@ -9,7 +9,7 @@ using namespace Cyclone::Utilities;
 
 
 
-class VectorTest : public testing::Test
+class DynamicVectorTest : public testing::Test
 {
     protected:
 
@@ -22,7 +22,7 @@ class VectorTest : public testing::Test
         Vector<char>        _v1;
         Vector<char>        _v2;
 
-        VectorTest():
+        DynamicVectorTest():
             _sv1{ 'a', 'b', 'c', 'd', 'e' },
             _v1{ 'a', 'b', 'c', 'd', 'e' }
         {
@@ -33,7 +33,12 @@ class VectorTest : public testing::Test
 
 
 /** CONSTRUCTION TESTS **/
-TEST_F(VectorTest, Construction)
+TEST_F(DynamicVectorTest, Clear)
+{
+    _v1.Clear();
+    ASSERT_EQ(_v1.Count(), 0);
+}
+TEST_F(DynamicVectorTest, Construction)
 {
     ASSERT_EQ(_sv0.Count(), 4);
     ASSERT_EQ(_sv0.Rank(),  1);
@@ -47,12 +52,7 @@ TEST_F(VectorTest, Construction)
     ASSERT_EQ(_v2.First(),  'f');
     ASSERT_EQ(_v2.Last(),   'j');
 }
-TEST_F(VectorTest, Clear)
-{
-    _v1.Clear();
-    ASSERT_EQ(_v1.Count(), 0);
-}
-TEST_F(VectorTest, Concatenate)
+TEST_F(DynamicVectorTest, Concatenate)
 {
     _v0.Concatenate(256);
     ASSERT_EQ(_v0.Count(), 1);
@@ -78,7 +78,7 @@ TEST_F(VectorTest, Concatenate)
     for (uint a = 0; a < _v2.Count(); a++)
         ASSERT_EQ(_v2(a), empty(a));
 }
-TEST_F(VectorTest, Fill)
+TEST_F(DynamicVectorTest, Fill)
 {
     _v1.Fill('y');
     ASSERT_EQ(_v1.Count(), 5);
@@ -89,7 +89,7 @@ TEST_F(VectorTest, Fill)
 
 
 /** OPERATORS **/
-TEST_F(VectorTest, Indexing)
+TEST_F(DynamicVectorTest, Indexing)
 {
     ASSERT_EQ(_v1(0), 'a');
     ASSERT_EQ(_v1(1), 'b');
