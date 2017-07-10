@@ -96,44 +96,11 @@ namespace Cyclone
                         if (Data(a) == value) { return a - _index; }
                     return -1;
                 }
-                /// <summary> Inserts multiple values into the list at the specified index. </summary>
-                /// <param name="index"> The numeric index at which the new values will be placed. </param>
-                /// <param name="values"> A list of data elements to be copied and inserted into the list. </param>
-                template<typename ... U> void Insert(uint index, U&& ... values)
-                {
-                    InsertBlock(index, Math::Sum(ElementCount(std::forward<U>(values))...));
-
-                    uint idx = sizeof...(U) - 1;
-                    auto offsets = Accumulate(0U, ElementCount(std::forward<U>(values))...);
-                    Meta::Expand( Set(index + offsets(idx--), std::forward<U>(values))... );
-                }
-                /// <summary> Inserts multiple values at the beginning of the list. </summary>
-                /// <param name="...values"> A list of data elements to be copied and inserted into the list. </param>
-                template<typename ... U> void Prepend(U&& ... values)           { Insert(0, std::forward<U>(values)...); }
-                /// <summary> Removes one or more values from the list. </summary>
-                /// <param name="idx"> The array index of the first element to be removed. </param>
-                /// <param name="n"> The number of elements to be removed. </param>
-                virtual void Remove(uint idx, uint n = 1)                       { RemoveBlock(idx, n); }
-
-                template<typename U, Meta::DisableRelatives<U, ICollection<T>> = 0>
-                ArrayList& Set(uint index, U&& value)
-                {
-                    if (Math::IsBetween(index, 0U, Count()))
-                        Data.Set(index + _index, std::forward<U>(value));
-                    else
-                        Insert(index, std::forward<U>(value));
-
-                    return *this;
-                }
-                ArrayList& Set(uint index, const ICollection<T>& values)
-                {
-                    for (uint a = 0; a < values.Count(); a++)
-                        Data.Set(_index + index + a, values(a));
-                    return *this;
-                }
-                virtual void Swap(uint idxA, uint idxB)                         { Data.Swap(_index + idxA, _index + idxB); }
-                virtual Vector<T> ToVector()                                    const { return Vector<T>(Data, _index, _count); }
-
+                /// <summary>
+                /// 
+                /// </summary>
+                /// <param name="property"></param>
+                /// <returns></returns>
                 template<typename U> Vector<U> Gather(Field<U, T> property)     const
                 {
                     Vector<U> output(Count());
@@ -148,6 +115,53 @@ namespace Cyclone
                         output(a) = property(Data(_index + a));
                     return output;
                 }
+                /// <summary> Inserts multiple values into the list at the specified index. </summary>
+                /// <param name="index"> The numeric index at which the new values will be placed. </param>
+                /// <param name="values"> A list of data elements to be copied and inserted into the list. </param>
+                template<typename ... U> void Insert(uint index, U&& ... values)
+                {
+                    InsertBlock(index, Math::Sum(ElementCount(std::forward<U>(values))...));
+
+                    uint idx = sizeof...(U) - 1;
+                    auto offsets = Accumulate(0U, ElementCount(std::forward<U>(values))...);
+                    Meta::Expand( Set(index + offsets(idx--), std::forward<U>(values))... );
+                }
+                /// <summary> Inserts multiple values at the beginning of the list. </summary>
+                /// <param name="...values"> A list of data elements to be copied and inserted into the list. </param>
+                template<typename ... U> void Prepend(U&& ... values)           { Insert(0, std::forward<U>(values)...); }
+                /// <summary> Removes one or more elements from the list. </summary>
+                /// <param name="idx"> The array index of the first element to be removed. </param>
+                /// <param name="n"> The number of elements to be removed. </param>
+                virtual void Remove(uint idx, uint n = 1)                       { RemoveBlock(idx, n); }
+                /// <summary> Sets the value of a particular element in the list. </summary>
+                /// <param name="index"> The linear array index of the element to be set. </param>
+                /// <param name="value"> The new value of the list element. </param>
+                template<typename U, Meta::DisableRelatives<U, ICollection<T>> = 0>
+                ArrayList& Set(uint index, U&& value)
+                {
+                    if (Math::IsBetween(index, 0U, Count()))
+                        Data.Set(index + _index, std::forward<U>(value));
+                    else
+                        Insert(index, std::forward<U>(value));
+
+                    return *this;
+                }
+                /// <summary> Sets the values of multiple sequential elements in the list. </summary>
+                /// <param name="index"> The linear array index of the first element of the sequence to be set. </param>
+                /// <param name="values"> A generic collection of new values to written into the list. </param>
+                ArrayList& Set(uint index, const ICollection<T>& values)
+                {
+                    for (uint a = 0; a < values.Count(); a++)
+                        Data.Set(_index + index + a, values(a));
+                    return *this;
+                }
+                /// <summary> Exchanges the values of two separate list elements. </summary>
+                /// <param name="idxA"> The position of the first element to be swapped. </param>
+                /// <param name="idxB"> The position of the second element to be swapped. </param>
+                virtual void Swap(uint idxA, uint idxB)                         { Data.Swap(_index + idxA, _index + idxB); }
+                /// <summary> Converts the list into an equivalent one-dimensional array. </summary>
+                virtual Vector<T> ToVector()                                    const { return Vector<T>(Data, _index, _count); }
+
 
 
 
