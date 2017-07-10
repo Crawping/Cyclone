@@ -11,12 +11,16 @@ namespace Cyclone
 {
     namespace Utilities
     {
-
+        /// <summary> A structure that represents a generic graph node. </summary>
+        /// <typeparam name="T"> The type of the data element held by the node. </typeparam>
+        /// <typeparam name="N"> A list of integers that define the dimensionality and degree of the node's adjacency array. </typeparam>
         template<typename T, uint ... N> struct Node
         {
 
             /** STATIC DATA **/
+            /// <summary> The number of connections that could be formed with other nodes. </summary>
             constexpr const static uint Degree  = Math::Product(N...);
+            /// <summary> The number of dimensions present in the array that holds adjacent nodes. </summary>
             constexpr const static uint Rank    = sizeof...(N);
 
             private:
@@ -27,7 +31,9 @@ namespace Cyclone
             public:
 
                 /** PROPERTIES **/
+                /// <summary> Gets the value of the data element stored within the node. </summary>
                 constexpr const T& Value()      const { return _value; }
+                /// <summary> Sets the value of the data element stored within the node. </summary>
                 template<typename U> Node& Value(U&& value)
                 {
                     _value = std::forward<U>(value);
@@ -37,35 +43,43 @@ namespace Cyclone
 
 
                 /** CONSTRUCTORS **/
+                /// <summary> Constructs a new empty graph node. </summary>
                 constexpr Node():
-                    _adjacencies { nullptr },
+                    _adjacencies(),
                     _value()
                 {
-
+                    _adjacencies.Fill(nullptr);
                 }
+                /// <summary> Constructs a new graph node containing a particular data value. </summary>
+                /// <param name="value"> The data value to be stored in the node. </param>
                 template<typename U> constexpr Node(U&& value):
-                    _adjacencies { nullptr },
+                    _adjacencies(),
                     _value(std::forward<U>(value))
                 {
-
-                }
-                ~Node()
-                {
-                    for (Node* n : _adjacencies)
-                        delete n;
+                    _adjacencies.Fill(nullptr);
                 }
 
+
+                template<typename ... U>
+                constexpr auto& Access(U ... subscripts)                { return _adjacencies(subscripts...); }
+                template<typename ... U>
+                constexpr const auto& Access(U ... subscripts)          const { return _adjacencies(subscripts...); }
 
 
                 /** OPERATORS **/
-                //constexpr T* operator ->()                              { return std::addressof(_value); }
-                //constexpr const T* operator ->()                        const { return std::addressof(_value); }
-
+                /// <summary> Gets the adjacent node stored at a particular index. </summary>
+                /// <typeparam name="U"> A list of unsigned 32-bit integers. </typeparam>
+                /// <param name="subscripts"> A single linear index, or a list of array subscripts. </param>
                 template<typename ... U>
-                constexpr auto& operator ()(U ... subscripts)           { return _adjacencies(subscripts...); }
+                constexpr auto& operator ()(U ... subscripts)           { return Access(subscripts...); }
+                /// <summary> Gets the adjacent node stored at a particular index. </summary>
+                /// <typeparam name="U"> A list of unsigned 32-bit integers. </typeparam>
+                /// <param name="subscripts"> A single linear index, or a list of array subscripts. </param>
                 template<typename ... U>
-                constexpr const auto& operator ()(U ... subscripts)     const { return _adjacencies(subscripts...); }
+                constexpr const auto& operator ()(U ... subscripts)     const { return Access(subscripts...); }
 
+                /// <summary> Gets the adjacent node stored at a particular multidimensional index. </summary>
+                /// <param name="subscripts"> An array of subscripts that index into the node. </param>
                 constexpr auto& operator ()(const Array<uint, Rank>& subscripts)
                 {
                     return _adjacencies( _adjacencies.IndexOf(subscripts) );
@@ -76,28 +90,11 @@ namespace Cyclone
                 }
 
         };
-
-
-        
-
-
-        template<typename T> struct BinaryNode:     public Node<T, 2>
-        {
-            using Node::Node;
-
-            constexpr Node*& Left()                     { return operator ()(0); }
-            constexpr const Node*& Left()               const { return operator ()(0); }
-            constexpr Node*& Right()                    { return operator ()(1); }
-            constexpr const Node*& Right()              const { return operator ()(1); }
-        };
-
-
-
-
     }
 }
 
 
 
 /** SPECIALIZATIONS **/
-#include "Graphs/Specializations/DynamicNode.h"
+#include "Graphs/Specializations/BinaryNode.h"
+//#include "Graphs/Specializations/DynamicNode.h"
