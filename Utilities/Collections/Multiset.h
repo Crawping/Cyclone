@@ -69,23 +69,23 @@ namespace Cyclone
 
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new empty set that can be populated with data elements. </summary>
-                Multiset() : 
+                Multiset(): 
                     _comparator(Multiset::LessThan)
                 {
 
                 }
                 /// <summary> Constructs a new set containing the values found within an initalizer list. </summary>
                 /// <param name="values"> An initialization list containing values to be to be inserted into the new set. </param>
-                Multiset(const InitialList<T>& values) : 
+                Multiset(const InitialList<T>& values): 
                     _comparator(Multiset::LessThan)
                 {
-                    for (const T& v : values)
+                    for (auto&& v : values)
                         Insert(v);
                 }
 
                 /// <summary> Constructs a new set by inserting data from another generic collection. </summary>
                 /// <param name="values"> An existing generic collection whose contents are to be copied into the new set. </param>
-                explicit Multiset(const ICollection<T>& values) : 
+                explicit Multiset(const ICollection<T>& values): 
                     _comparator(Multiset::LessThan)
                 {
                     for (uint a = 0; a < values.Count(); a++)
@@ -121,6 +121,7 @@ namespace Cyclone
                 /// <param name="value"> A unique data element to be inserted into the set. </param>
                 /// <remarks> This operation silently fails when attempting to insert multiple copies of elements. </remarks>
                 virtual void Insert(const T& value)             { Data.Insert(IndexOf(value), value); }
+
                 /// <summary> Removes a data element from the set, if it exists. </summary>
                 /// <param name="value"> The unique data element to be removed from the set. </param>
                 /// <remarks> This operation silently fails when attempting to remove elements that aren't in the set. </remarks>
