@@ -3,10 +3,10 @@
  */
 
 #pragma once
-//#include "Utilities.h"
 #include "Collections/Array.h"
 #include "IO/Property.h"
 #include "Math/Math.h"
+#include "Meta/Expressions.h"
 
 
 
@@ -41,7 +41,7 @@ namespace Cyclone
                 /** CONSTRUCTOR **/
                 /// <summary> Constructs a new empty array-like list that can be populated with data elements. </summary>
                 /// <param name="capacity"> The number of elements that can be initially stored in the list. </param>
-                ArrayList(uint capacity = 128): 
+                ArrayList(uint capacity = 32): 
                     _count(0),
                     _index(capacity / 4),
                     Data(capacity)
@@ -70,15 +70,9 @@ namespace Cyclone
 
 
                 /** UTILITIES **/
-                /// <summary> Inserts a new value at the end of the list. </summary>
-                /// <param name="value"> The data element to be copied and inserted into the list. </param>
-                virtual void Append(const T& value)                             { Insert(Count(), value); }
-                /// <summary> Inserts multiple values at the end of the list. </summary>
-                /// <param name="values"> A generic collection of data elements to be copied and inserted into the list. </param>
-                virtual void Append(const ICollection<T>& values)               { Insert(Count(), values); }
                 /// <summary> Inserts one or more values at the end the list. </summary>
                 /// <param name="...values"> A list of data elements to be copied and inserted into the list. </param>
-                template<typename ... U> void Append(U ... values)              { Insert(Count(), values...); }
+                template<typename ... U> void Append(U&& ... values)            { Insert(Count(), std::forward<U>(values)...); }
                 /// <summary> Resets the list to an empty state. </summary>
                 /// <remarks>
                 ///     Note that this method does not actually delete or modify any stored data. It simply resets the internal 
@@ -102,64 +96,43 @@ namespace Cyclone
                         if (Data(a) == value) { return a - _index; }
                     return -1;
                 }
-                /// <summary> Inserts a new value into the list at the specified index. </summary>
-                /// <param name="index"> The numeric index at which the new value will be placed. </param>
-                /// <param name="value"> The data element to be copied and inserted into the list. </param>
-                virtual void Insert(uint index, const T& value)
-                {
-                    InsertBlock(index, 1);
-                    Data(_index + index) = value;
-                }
                 /// <summary> Inserts multiple values into the list at the specified index. </summary>
                 /// <param name="index"> The numeric index at which the new values will be placed. </param>
-                /// <param name="values"> A generic collection of data elements to be copied and inserted into the list. </param>
-                virtual void Insert(uint index, const ICollection<T>& values)
+                /// <param name="values"> A list of data elements to be copied and inserted into the list. </param>
+                template<typename ... U> void Insert(uint index, U&& ... values)
                 {
-                    InsertBlock(index, values.Count());
-                    for (uint a = 0; a < values.Count(); a++)
-                        Data(_index + index++) = values(a);
+                    InsertBlock(index, Math::Sum(ElementCount(std::forward<U>(values))...));
+
+                    uint idx = sizeof...(U) - 1;
+                    auto offsets = Accumulate(0U, ElementCount(std::forward<U>(values))...);
+                    Meta::Expand( Set(index + offsets(idx--), std::forward<U>(values))... );
                 }
-                /// <summary> Inserts multiple values into the list at the specified index. </summary>
-                /// <param name="index"> The numeric index at which the new values will be placed. </param>
-                /// <param name="...values"> A list of data elements to be copied and inserted into the list. </param>
-                template<typename ... U> void Insert(uint index, const T& first, U ... values) 
-                {
-                    Insert(index, Vector<T, sizeof...(U)>{ first, static_cast<T>(values)... });
-                }
-                /// <summary> Inserts a new value at the beginning of the list. </summary>
-                /// <param name="value"> The data element to be copied and inserted into the list. </param>
-                virtual void Prepend(const T& value)                            { Insert(0, value); }
-                /// <summary> Inserts multiple values at the beginning of the list. </summary>
-                /// <param name="values"> A generic collection of data elements to be copied and inserted into the list. </param>
-                virtual void Prepend(const ICollection<T>& values)              { Insert(0, values); }
                 /// <summary> Inserts multiple values at the beginning of the list. </summary>
                 /// <param name="...values"> A list of data elements to be copied and inserted into the list. </param>
-                template<typename ... U> void Prepend(U ... values)             { Insert(0, values...); }
-                /// <summary> Destroys all stored data and resets the list to an empty state. </summary>
-                void Purge()
-                {
-                    Clear();
-                    Data = Vector<T>(Capacity());
-                }
+                template<typename ... U> void Prepend(U&& ... values)           { Insert(0, std::forward<U>(values)...); }
                 /// <summary> Removes one or more values from the list. </summary>
                 /// <param name="idx"> The array index of the first element to be removed. </param>
                 /// <param name="n"> The number of elements to be removed. </param>
                 virtual void Remove(uint idx, uint n = 1)                       { RemoveBlock(idx, n); }
-                virtual void Set(uint idx, const T& value)
+
+                template<typename U, Meta::DisableRelatives<U, ICollection<T>> = 0>
+                ArrayList& Set(uint index, U&& value)
                 {
-                    int idxData = _index + idx;
-                    if ( (idxData < 0) || (idxData >= Capacity()) )
-                        return Insert(idx, value);
-                    Data(idxData) = value;
+                    if (Math::IsBetween(index, 0U, Count()))
+                        Data.Set(index + _index, std::forward<U>(value));
+                    else
+                        Insert(index, std::forward<U>(value));
+
+                    return *this;
                 }
-                virtual void Swap(uint idxFirst, uint idxSecond)
+                ArrayList& Set(uint index, const ICollection<T>& values)
                 {
-                    Data.Swap(_index + idxFirst, _index + idxSecond);
+                    for (uint a = 0; a < values.Count(); a++)
+                        Data.Set(_index + index + a, values(a));
+                    return *this;
                 }
-                virtual Vector<T> ToVector()                                    const
-                {
-                    return Vector<T>(Data, _index, _count);
-                }
+                virtual void Swap(uint idxA, uint idxB)                         { Data.Swap(_index + idxA, _index + idxB); }
+                virtual Vector<T> ToVector()                                    const { return Vector<T>(Data, _index, _count); }
 
                 template<typename U> Vector<U> Gather(Field<U, T> property)     const
                 {
@@ -188,8 +161,8 @@ namespace Cyclone
             protected:
 
                 /** PROPERTIES **/
-                uint LeftMargin()       const { return _index; }
-                uint RightMargin()      const { return Capacity() - _index - Count(); }
+                uint LeftMargin()                           const { return _index; }
+                uint RightMargin()                          const { return Capacity() - _index - Count(); }
 
 
 
@@ -198,54 +171,45 @@ namespace Cyclone
                 {
                     if (n == 0) { return; }
 
-                    idx = Math::Clamp(idx, 0U, _count);
-                    uint newCount = Count() + n;
-                    Reallocate(Count() + n);
+                    uint newCount = Math::Max(Count() + n, idx + n);
+                    Reallocate(newCount);
 
-                    if (idx == 0)
+                    if (idx <= Count() / 2)
                     {
                         uint nmoved = Math::Min(n, LeftMargin());
-                        Move(idx, Count(), n - nmoved);
-                        _index -= nmoved;
-                        _count += nmoved;
-                    }
-                    else if (idx <= Count() / 2)
-                    {
-                        uint nmoved = Math::Min(n, LeftMargin());
-                        Move(0, idx, -(int)nmoved);
+                        Move(0, idx, -int(nmoved));
                         Move(idx, Count() - idx, n - nmoved);
+                        _index -= nmoved;
                     }
                     else
                     {
                         uint nmoved = Math::Min(n, RightMargin());
                         Move(idx, Count() - idx, nmoved);
-                        Move(0, idx, -(int)(n - nmoved));
+                        Move(0, idx, -int(n - nmoved));
+                        _index -= (n - nmoved);
                     }
+
+                    _count = newCount;
                 }
                 virtual void RemoveBlock(uint idx, uint n)
                 {
-                    if (n == 0) { return; }
+                    if (n == 0 || idx >= Count()) { return; }
 
-                    idx = Math::Clamp(idx, (uint)0, Count());
-                    if (idx == 0)
-                    {
-                        _index += n;
-                        _count -= n;
-                    }
-                    else if (idx == Count() - n)
-                        _count -= n;
-                    else if (idx <= Count() / 2)
+                    n = Math::Min(n, Count() - idx);
+                    if (idx <= Count() / 2)
                     {
                         Move(0, idx, n);
                         _index += n;
-                        _count -= 2 * n;
                     }
                     else
-                    {
-                        Move(idx, Count() - idx, -(int)n);
-                        _count -= 2 * n;
-                    }
+                        Move(idx + n, Count() - idx - n, -int(n));
+
+                    _count -= n;
                 }
+
+                static uint ElementCount(const T&)                      { return 1; }
+                static uint ElementCount(T&&)                           { return 1; }
+                static uint ElementCount(const ICollection<T>& values)  { return values.Count(); }
 
             private:
 
@@ -259,7 +223,7 @@ namespace Cyclone
                 /** UTILITIES **/
                 void Move(uint idx, uint count, int offset)
                 {
-                    if (!(offset && count && Count())) { _count += abs(offset); return; }
+                    if (!(offset && count && Count())) { return; }
 
                     uint idxStart = _index + idx;
                     uint idxEnd = idxStart + count - 1;
@@ -274,10 +238,7 @@ namespace Cyclone
                     {
                         for (uint a = idxStart; a <= idxEnd; a++)
                             Data(a + offset) = Data(a);
-                        _index += offset;
                     }
-
-                    _count += abs(offset);
                 }
                 void Reallocate(uint n)
                 {
