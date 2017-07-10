@@ -39,6 +39,7 @@ namespace Cyclone
             template<typename T> struct Dereference<T*>:        Dereference<T> { };
             template<typename T> struct Dereference<const T*>:  Dereference<T> { };
             template<typename T> struct Dereference<T&>:        Dereference<T> { };
+            template<typename T> struct Dereference<T&&>:       Dereference<T> { };
             template<typename T> struct Dereference<const T&>:  Dereference<T> { };
 
             /// <summary> Determines whether the input is constant qualified. </summary>
@@ -53,6 +54,17 @@ namespace Cyclone
             template<typename T> struct IsA<T, void>:           IsEqual<T, void> { };
             template<typename T> struct IsA<void, T>:           IsEqual<void, T> { };
             template<typename T> struct IsA<T, T>:              Boolean<true> { };
+
+            template<typename T, typename U, typename ... V>
+            struct IsMember:                                    Conditional< IsEqual<T, U>::Value, Boolean<true>, IsMember<T, V...> > { };
+            template<typename T, typename U> 
+            struct IsMember<T, U>:                              IsEqual<T, U> { };
+
+            template<typename T, typename U> using IsRelative   = Boolean
+            <
+                IsA<typename Dereference<T>::Type, typename Dereference<U>::Type>::Value || 
+                IsA<typename Dereference<U>::Type, typename Dereference<T>::Type>::Value
+            >;
 
             /// <summary> Determines whether the input represents a pointer type. </summary>
             template<typename T> struct IsPointer:              Boolean<false> { };
@@ -87,7 +99,7 @@ namespace Cyclone
             /// <param name="x"> An instance of the second type to be compared. </param>
             template<typename T, typename U>
             constexpr bool TypeEquals(U x)                      { return IsEqual<T, U>(); }
-
+            
         }
     }
 }
