@@ -5,6 +5,7 @@
 #pragma once
 #include "TypeDefinitions.h"
 #include "Collections/Array.h"
+#include "Graphs/Node.h"
 
 
 
@@ -15,10 +16,10 @@ namespace Cyclone
         /// <summary> A class that represents a doubly-linked list of generic data. </summary>
         /// <typeparam name="T"> The type name of the data elements held by the list. </typeparam>
         template<typename T>
-        class List : public ICollection<T>
+        class List: public ICollection<T>
         {
             public:
-                template<typename T> struct Node;
+                //template<typename T> struct Node;
                 struct Iterator;
 
 
@@ -26,13 +27,13 @@ namespace Cyclone
                 /// <summary> Gets the total number of elements present in the list. </summary>
                 virtual uint Count()        const override { return _count; }
                 /// <summary> Gets a reference to the first data element in the list. </summary>
-                virtual T& First()          { return _first->Value; }
+                virtual T& First()          { return _first->Value(); }
                 /// <summary> Gets a constant reference to the first data element in the list. </summary>
-                virtual const T& First()    const { return _first->Value; }
+                virtual const T& First()    const { return _first->Value(); }
                 /// <summary> Gets a reference to the last data element in the list. </summary>
-                virtual T& Last()           { return _last->Value; }
+                virtual T& Last()           { return _last->Value(); }
                 /// <summary> Gets a constant reference to the last data element in the list. </summary>
-                virtual const T& Last()     const { return _last->Value; }
+                virtual const T& Last()     const { return _last->Value(); }
 
 
 
@@ -65,14 +66,14 @@ namespace Cyclone
                 }
                 /// <summary> Constructs a new linked list that is an identical deep copy of another array-like collection of data elements. </summary>
                 /// <param name="other"> A pre-existing collection of data elements to be copied. </param>
-                List(const ICollection<T>& other) :
+                List(const ICollection<T>& other):
                     List()
                 {
                     Insert(0, other);
                 }
                 /// <summary> Constructs a new linked list that stores the values found within an initializer list. </summary>
                 /// <param name="values"> An initialization list containing the values to be stored within the new list. </param>
-                List(std::initializer_list<T> values) :
+                List(const InitialList<T>& values):
                     List()
                 {
                     for (const T& v : values)
@@ -104,18 +105,15 @@ namespace Cyclone
                 /// </remarks>
                 void Clear()
                 {
-                    if (!IsEmpty())
-                    {
-                        Node<T>* ctNode = _first;
-                        while (ctNode->Next)
-                        {
-                            ctNode = ctNode->Next;
-                            delete ctNode->Previous;
-                        }
-                        delete _last;
-                        _first = _last = nullptr;
-                        _count = 0;
-                    }
+                    if (IsEmpty()) { return; }
+
+                    auto* N = _first;
+                    while (N = N->Right())
+                        delete N->Left();
+
+                    delete _last;
+                    _first = _last = nullptr;
+                    _count = 0;
                 }
                 /// <summary> Inserts a new data value into the list at the specified index. </summary>
                 /// <param name="index"> The numeric index at which the new data element will be placed. </param>
@@ -128,20 +126,26 @@ namespace Cyclone
                 ///     for future use). After insertion, any element that previously occupied the index of the new data element will
                 ///     have been displaced one position to the right.
                 /// </remarks>
-                void Insert(uint index, const T& value)
+                template<typename U> void Insert(uint index, U&& value)
                 {
-                    index = (index > Count()) ? Count() : index;
-                    Node<T>* toShift = Index(index);
+                    index = Math::Clamp(index, 0U, Count());
+                    auto* N = Index(index);
+                    auto* newNode = new BinaryNode<T>(std::forward<U>(value));
+                    newNode->Right() = N;
 
-                    if (toShift)
-                        if (toShift->Previous)
-                            toShift->Previous = toShift->Previous->Next = new Node<T>(value, toShift->Previous, toShift);
-                        else
-                            _first = toShift->Previous = new Node<T>(value, toShift->Previous, toShift);
-                    else if (IsEmpty())
-                        _first = _last = new Node<T>(value);
+                    if (IsEmpty())
+                        _first = _last = newNode;
+                    else if (N)
+                    {
+                        newNode->Left() = N->Left();
+                        if (N->Left())  { N->Left() = N->Left()->Right() = newNode; }
+                        else            { N->Left() = _first = newNode; }
+                    }
                     else
-                        _last = _last->Next = new Node<T>(value, _last);
+                    {
+                        newNode->Left() = _last;
+                        _last = _last->Right() = newNode;
+                    }
 
                     _count++;
                 }
@@ -165,42 +169,31 @@ namespace Cyclone
                 {
                     if (index >= Count()) { return; }
 
-                    Node<T>* toRemove = Index(index);
-                    if (toRemove->Previous)
-                        toRemove->Previous->Next = toRemove->Next;
+                    auto* N = Index(index);
+                    if (N->Left())
+                        N->Left()->Right() = N->Right();
                     else
-                        _first = toRemove->Next;
+                        _first = N->Right();
 
-                    if (toRemove->Next)
-                        toRemove->Next->Previous = toRemove->Previous;
+                    if (N->Right())
+                        N->Right()->Left() = N->Left();
                     else
-                        _last = toRemove->Previous;
+                        _last = N->Left();
 
-                    delete toRemove;
+                    delete N;
                     _count--;
                 }
                 /// <summary> Swaps the values of two separate list elements. </summary>
                 /// <param name="idxFirst"> The position of the first list element to be swapped. </param>
                 /// <param name="idxSecond"> The position of the second list element to be swapped. </param>
-                void Swap(uint idxFirst, uint idxSecond)
+                void Swap(uint idxA, uint idxB)
                 {
-                    if (idxFirst >= Count() || idxSecond >= Count()) { return; }
-                    std::swap(Index(idxFirst)->Value, Index(idxSecond)->Value);
+                    if (idxA >= Count() || idxB >= Count()) { return; }
+                    std::swap(Index(idxA)->Value(), Index(idxB)->Value());
                 }
                 /// <summary> Converts the linked list into an equivalent vector of contiguous data elements. </summary>
                 /// <returns> A <see cref="Vector"/> containing copies of all data elements stored in the list. </returns>
-                Vector<T> ToVector() const
-                {
-                    Vector<T> output(Count());
-                    Node<T>* ctNode = _first;
-                    for (uint a = 0; a < Count(); a++)
-                    {
-                        output(a) = ctNode->Value;
-                        ctNode = ctNode->Next;
-                    }
-
-                    return output;
-                }
+                Vector<T> ToVector()                                    const { return Vector<T>(*this, 0, Count()); }
 
 
 
@@ -214,7 +207,7 @@ namespace Cyclone
                 ///     Attempting to index into the list at an invalid position (i.e. beyond the end of the list) is an error and
                 ///     will generate a runtime exception.
                 /// </remarks>
-                T& operator ()(uint index)                              { return Index(index)->Value; }
+                T& operator ()(uint index)                              { return Index(index)->Value(); }
                 /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
                 /// <param name="index"> The numeric position of the desired data element within the list. </param>
                 /// <returns> A constant reference to the data element stored at the inputted position. </returns>
@@ -222,34 +215,25 @@ namespace Cyclone
                 ///     Attempting to index into the list at an invalid position (i.e. beyond the end of the list) is an error and
                 ///     will generate a runtime exception.
                 /// </remarks>
-                const T& operator ()(uint index)                        const override { return Index(index)->Value; }
+                const T& operator ()(uint index)                        const override { return Index(index)->Value(); }
 
                 /// <summary> Clears the list of any stored data and transfers the contents of another list into it. </summary>
                 /// <returns> A reference to the new list object that contains the uncopied contents of the old one. </returns>
                 /// <param name="other"> A pre-existing list whose contents are to be moved. </param>
-                List& operator =(List<T>&& other)
+                List& operator =(List&& other)
                 {
-                    Clear();
-                    _count = other._count;
-                    _first = other._first;
-                    _last = other._last;
-
-                    other._count = 0;
-                    other._first = nullptr;
-                    other._last = nullptr;
-
+                    std::swap(_count, other._count);
+                    std::swap(_first, other._first);
+                    std::swap(_last, other._last);
                     return *this;
                 }
                 /// <summary> Clears the list of any stored data and copies the contents of another list into it. </summary>
                 /// <returns> A reference to the new list object that contains the copied contents of the other one. </returns>
                 /// <param name="values"> Another generic list of data elements. </param>
-                List& operator =(const List<T>& values)
+                List& operator =(const List& values)
                 {
                     Clear();
-                    Insert()
-                    for (const T& v : values)
-                        Insert(Count(), v);
-                    
+                    for (const T& v : values) { Append(v); }
                     return *this;
                 }
                 /// <summary> Clears the list of any stored data and copies the contents of another collection into it. </summary>
@@ -264,22 +248,19 @@ namespace Cyclone
                 /// <summary> Clears the list of any stored data and copies the contents of an initialization list into it. </summary>
                 /// <returns> A reference to the new list containing the copied contents of the initializer list. </returns>
                 /// <param name="values"> An initialization list that contains the values to be copied. </param>
-                List& operator =(std::initializer_list<T> values)
+                List& operator =(const InitialList<T>& values)
                 {
                     Clear();
-                    for (const T& v : values)
-                        Append(v);
+                    for (const T& v : values) { Append(v); }
                     return *this;
                 }
-
-
 
             private:
 
                 /** PROPERTY DATA **/
-                uint        _count;
-                Node<T>*    _first;
-                Node<T>*    _last;
+                uint            _count;
+                BinaryNode<T>*  _first;
+                BinaryNode<T>*  _last;
 
 
 
@@ -287,48 +268,25 @@ namespace Cyclone
                 /// <summary> Performs linear array-like indexing of the data elements stored within the list. </summary>
                 /// <param name="index"> The numeric position of the desired data element within the list. </param>
                 /// <returns> A pointer to the list node that resides at the inputted position or <c>nullptr</c> if the position is invalid. </returns>
-                Node<T>* Index(uint index) const
+                BinaryNode<T>* Index(uint index) const
                 {
-                    if (index >= Count()) { return nullptr; }
-
-                    Node<T>* node = nullptr;
-                    if ((Count() - index) > index)
+                    BinaryNode<T>* N = nullptr;
+                    if (index >= Count())
+                        return N;
+                    else if ((Count() - index) > index)
                     {
-                        node = _first;
-                        for (uint a = 0; a < index; a++)
-                            node = node->Next;
+                        N = _first;
+                        while (index--) { N = N->Right(); }
                     }
                     else
                     {
-                        node = _last;
+                        N = _last;
                         for (uint a = Count() - 1; a > index; a--)
-                            node = node->Previous;
+                            N = N->Left();
                     }
 
-                    return node;
+                    return N;
                 }
-
-
-
-
-                template<typename T>
-                struct Node
-                {
-                    Node<T>*    Next;
-                    Node<T>*    Previous;
-                    T           Value;
-
-                    /** CONSTRUCTOR **/
-                    template<typename U>
-                    Node(U&& value, Node<T>* previous = nullptr, Node<T>* next = nullptr) :
-                        Next(next),
-                        Previous(previous),
-                        Value(std::forward<U>(value))
-                    {
-
-                    }
-
-                };
 
 
                 struct Iterator
@@ -339,7 +297,7 @@ namespace Cyclone
                         uint Index()                const { return _index; }
 
                         /** CONSTRUCTOR **/
-                        Iterator(uint idx, Node<T>* element) :
+                        Iterator(uint idx, BinaryNode<T>* element) :
                             _index(idx),
                             Element(element)
                         {
@@ -347,9 +305,9 @@ namespace Cyclone
                         }
 
                         /** OPERATORS **/
-                        T& operator *()                         { return Element->Value; }
-                        Iterator& operator++()                  { Element = Element->Next; _index++; return *this; }
-                        Iterator& operator++(int)               { Element = Element->Next; _index++; return *this; }
+                        T& operator *()                         { return Element->Value(); }
+                        Iterator& operator++()                  { Element = Element->Right(); _index++; return *this; }
+                        Iterator& operator++(int)               { Element = Element->Right(); _index++; return *this; }
 
                         bool operator ==(const Iterator& other) const 
                         {
@@ -358,8 +316,8 @@ namespace Cyclone
                         bool operator !=(const Iterator& other) const { return !operator ==(other); }
 
                     private:
-                        uint        _index;
-                        Node<T>*    Element;
+                        uint            _index;
+                        BinaryNode<T>*  Element;
                 };
 
         };
