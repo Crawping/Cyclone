@@ -17,6 +17,8 @@ namespace Cyclone
 
             /// <summary> The smallest possible difference between two sequential numbers of the given type. </summary>
             template<typename T> constexpr T Epsilon            = std::numeric_limits<T>::epsilon();
+
+            template<typename T> constexpr bool IsIntegral      = std::numeric_limits<T>::is_integer;
             /// <summary> Determines whether a value is a native C++ numeric type. </summary>
             template<typename T> constexpr bool IsNative        = std::numeric_limits<T>::is_specialized;
             /// <summary> Determines whether a value is a signed numeric type. </summary>

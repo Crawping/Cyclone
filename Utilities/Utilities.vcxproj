@@ -208,6 +208,7 @@
     <ClInclude Include="Interfaces\ICallback.h" />
     <ClInclude Include="Interfaces\ICollection.h" />
     <ClInclude Include="Interfaces\IDataBuffer.h" />
+    <ClInclude Include="Interfaces\INumeric.h" />
     <ClInclude Include="Interfaces\IReportable.h" />
     <ClInclude Include="Interfaces\ISpatialTransform.h" />
     <ClInclude Include="Interfaces\ITransformable3D.h" />
