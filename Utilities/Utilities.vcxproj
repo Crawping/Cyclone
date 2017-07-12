@@ -225,6 +225,7 @@
     <ClInclude Include="Math\Constants.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="Math\Matrix4x4.h" />
+    <ClInclude Include="Math\NumericArray.h" />
     <ClInclude Include="Math\PDFs.h" />
     <ClInclude Include="Math\RNG.h" />
     <ClInclude Include="Math\Vector2.h" />

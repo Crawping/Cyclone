@@ -263,6 +263,9 @@
     <ClInclude Include="Meta\Queries.h">
       <Filter>Meta</Filter>
     </ClInclude>
+    <ClInclude Include="Math\NumericArray.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
