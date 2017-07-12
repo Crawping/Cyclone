@@ -260,6 +260,9 @@
     <ClInclude Include="Interfaces\INumeric.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Meta\Queries.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

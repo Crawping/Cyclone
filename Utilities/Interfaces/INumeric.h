@@ -6,49 +6,41 @@
 #include "Meta/Expressions.h"
 
 
+
 namespace Cyclone
 {
     namespace Utilities
     {
-
-
         
+        /** INTERFACES **/
+        struct IAddable         { };
+        struct IDivisible       { };
+        struct IEquatable       { };
+        struct INumeric         { };
+        struct IMultiplicable   { };
+        struct ISubtractable    { };
 
-        //template<typename T, Meta::EnableIf< M>
-        //class IAdd
-
-        struct IAddable { };
 
 
-
-
-
+        /** SPECIALIZATIONS **/
         namespace Meta
         {
+            template<typename T> struct IsA<T, IAddable>:         IsAddable<T> { };
+            template<typename T> struct IsA<T, IDivisible>:       IsDivisible<T> { };
+            template<typename T> struct IsA<T, IEquatable>:       IsEquatable<T> { };
+            template<typename T> struct IsA<T, IMultiplicable>:   IsMultiplicable<T> { };
+            template<typename T> struct IsA<T, ISubtractable>:    IsSubtractable<T> { };
 
-            struct Nothing { };
-            //template<typename T, typename U> Nothing operator +(const T&, const U&);
-            //template<typename T, typename U> Nothing operator ==(const T&, const U&);
-
-            //struct NaN { };
-
-
-            template<typename T, typename U> struct IsAddable:      IsEqual<decltype(Declare<T>() + Declare<U>()), Nothing> { };
-            template<typename T, typename U> struct IsEquatable:    IsEqual<decltype(Declare<T>() == Declare<U>()), Nothing> { };
-            
-
-
-            //template<typename T> struct IsA<T, IAddable>:   
+            template<typename T> struct IsA<T, INumeric>:         Conditional
+            <
+                IsAddable<T>::Value         && 
+                IsDivisible<T>::Value       &&
+                IsEquatable<T>::Value       &&
+                IsMultiplicable<T>::Value   &&
+                IsSubtractable<T>::Value,
+                Boolean<true>, Boolean<false>
+            > { };
         }
-
-        //class IAddable
-        //{
-        //    public:
-
-        //        
-        //        //virtual Meta::Disable<IAddable> operator +(const IAddable& other)          const = 0;
-
-        //};
 
     }
 }
