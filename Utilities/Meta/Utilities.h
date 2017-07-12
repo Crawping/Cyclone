@@ -29,10 +29,6 @@ namespace Cyclone
             template<bool S, typename T, typename U> struct Conditional:        T { };
             template<typename T, typename U> struct Conditional<false, T, U>:   U { };
 
-            /// <summary> Determines whether two types are equivalent. </summary>
-            template<typename T, typename U> struct IsEqual:    Boolean<false> { };
-            /// <summary> Determines whether two types are equivalent. </summary>
-            template<typename T> struct IsEqual<T, T>:          Boolean<true> { };
 
             /// <summary> Removes constant, pointer, and reference symbols from a type. </summary>
             template<typename T> struct Dereference:            Class<T> { };
@@ -47,6 +43,11 @@ namespace Cyclone
             template<typename T> struct IsConstant<const T*>:   Boolean<true> { };
             template<typename T> struct IsConstant<const T&>:   Boolean<true> { };
 
+            /// <summary> Determines whether two types are equivalent. </summary>
+            template<typename T, typename U> struct IsEqual:    Boolean<false> { };
+            /// <summary> Determines whether two types are equivalent. </summary>
+            template<typename T> struct IsEqual<T, T>:          Boolean<true> { };
+
             /// <summary> Determines whether one type is derived from or equivalent to another. </summary>
             /// <typeparam name="T"> The candidate child type. </typeparam>
             /// <typeparam name="U"> The candidate parent type. </typeparam>
@@ -59,6 +60,8 @@ namespace Cyclone
             struct IsMember:                                    Conditional< IsEqual<T, U>::Value, Boolean<true>, IsMember<T, V...> > { };
             template<typename T, typename U> 
             struct IsMember<T, U>:                              IsEqual<T, U> { };
+
+            template<typename T, typename U> struct IsNotEqual: Boolean<!IsEqual<T, U>::Value> { };
 
             template<typename T, typename U> using IsRelative   = Boolean
             <

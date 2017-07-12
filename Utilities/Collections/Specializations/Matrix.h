@@ -34,7 +34,7 @@ namespace Cyclone
                 /// <summary> Gets the number of dimensions present in the array. </summary>
                 constexpr static uint Rank()                    { return _rank; }
                 /// <summary> Gets the size of all array dimensions. </summary>
-                constexpr static Array<uint, _rank> Size()      { return Array<uint, _rank>(_size); }
+                constexpr static Array<uint, 2> Size()          { return Array<uint, 2>(_size); }
 
 
 
@@ -78,8 +78,8 @@ namespace Cyclone
                         _values[a] = *(values.begin() + a);
                 }
                 /// <summary> Constructs a new multidimensional array by copying a specific set of elements from another array. </summary>
-                template<uint ... V>
-                constexpr Array(const Array<T, V...>& values, const Array<T, _count>& indices):
+                template<uint ... W>
+                constexpr Array(const Array<T, W...>& values, const Array<T, _count>& indices):
                     _values{ }
                 {
                     for (uint a = 0; a < _count; a++)
@@ -110,10 +110,10 @@ namespace Cyclone
                 /// <returns> A linear array index that references the same location as the inputted subscripts. </returns>
                 /// <param name="subscripts"> Any number of unsigned integers representing the array subscripts to convert. </param>
                 /// <remarks> Subscripts into dimensions higher than the rank of the array are ignored. </remarks>
-                template<typename ... V>
-                constexpr static uint IndexOf(V ... subscripts)
+                template<typename ... W>
+                constexpr static uint IndexOf(W ... subscripts)
                 { 
-                    return IndexOf( Array<uint, sizeof...(V)>{ uint(subscripts)... } );
+                    return IndexOf( Array<uint, sizeof...(W)>{ uint(subscripts)... } );
                 }
                 /// <summary> Calculates a linear index that is equivalent to a set of array subscripts. </summary>
                 /// <returns> A linear array index that references the same location as the inputted subscripts. </returns>
@@ -129,19 +129,19 @@ namespace Cyclone
                     return idx;
                 }
                 /// <summary> Copies the array into a new one with different dimensions. </summary>
-                template<uint ... V>
-                constexpr Array<T, V...> Reshape()                              const
+                template<uint ... W>
+                constexpr Array<T, W...> Reshape()                              const
                 {
-                    static_assert(Math::Product(V...) == _count,
+                    static_assert(Math::Product(W...) == _count,
                         "The number of elements in an array must not change during reshaping operations.");
                     return { _values };
                 }
                 /// <summary> Calculates a set of subscripts that is equivalent to a given linear array index. </summary>
                 /// <returns> Array subscripts that reference the same location as the inputted linear index. </returns>
                 /// <param name="index"> A single linear index into the array. </param>
-                constexpr static Array<uint, _rank> SubscriptsOf(uint index)
+                constexpr static Array<uint, 2> SubscriptsOf(uint index)
                 {
-                    Array<uint, _rank> subs;
+                    Array<uint, 2> subs;
                     uint count = 0;
                     for (uint a = _rank - 1; a > 0; a--)
                     {
@@ -156,31 +156,55 @@ namespace Cyclone
 
 
                 /** OPERATORS **/
+                /// <summary> Gets a pointer to the first element stored in the array. </summary>
                 constexpr const T* begin()                                      const { return &_values[0]; }
+                /// <summary> Gets a pointer to the first element stored in the array. </summary>
                 constexpr const T* end()                                        const { return begin() + Count(); }
 
-                template<uint ... V>
-                constexpr auto operator [](const Array<uint, V...>& indices)    const
+                /// <summary> Creates a new array containing only the values found at the inputted indices. </summary>
+                /// <returns> An array containing copies of the values found at the provided indices. </returns>
+                /// <param name="indices"> An array containing the linear indices of the elements to be copied. </param>
+                /// <remarks> 
+                ///     The dimensions of the array returned by this method are the same as those of the provided 
+                ///     <paramref name="indices"/> array.
+                /// </remarks>
+                template<uint ... W>
+                constexpr auto operator [](const Array<uint, W...>& indices)    const
                 {
-                    return Array<T, V...>(*this, indices.Flatten());
+                    return Array<T, W...>(*this, indices.Flatten());
                 }
 
+                /// <summary> Gets the value stored at a particular linear index within the array. </summary>
+                /// <returns> A reference to the value found at the given index. </returns>
+                /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 constexpr T& operator ()(uint index)                            { return _values[index]; }
+                /// <summary> Gets the value stored at a particular linear index within the array. </summary>
+                /// <returns> A reference to the value found at the given index. </returns>
+                /// <param name="index"> The linear array index at which the desired element is stored. </param>
                 constexpr const T& operator ()(uint index)                      const { return _values[index]; }
-
-                template<typename ... V>
-                constexpr const T& operator ()(V ... indices)                   const { return _values[IndexOf(indices...)]; }
+                /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
+                /// <returns> A reference to the value found at the given indices. </returns>
+                /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
+                template<typename ... W>
+                constexpr const T& operator ()(W ... indices)                   const { return _values[IndexOf(indices...)]; }
+                /// <summary> Gets the value stored at a particular multidimensional index within the array. </summary>
+                /// <returns> A reference to the value found at the given indices. </returns>
+                /// <param name="indices"> A list of array subscripts at which the desired element is stored. </param>
                 template<uint N>
                 constexpr Array<T, N> operator ()(const Array<T, N>& indices)   const { return _values[IndexOf(indices)]; }
 
-
-                constexpr bool operator ==(const Array<T, U...>& other)         const
+                /// <summary> Determines if two identically dimensioned arrays are equivalent. </summary>
+                constexpr bool operator ==(const Array& other)                  const
                 {
                     for (uint a = 0; a < _count; a++)
                         if (_values[a] != other(a)) return false;
                     return true;
                 }
-                constexpr bool operator !=(const Array<T, U...>& other)         const { return !operator ==(other); }
+                template<typename W, uint ... X>
+                constexpr bool operator ==(const Array<W, X...>& other)         const { return false; }
+                /// <summary> Determines if two identically dimensioned arrays are not equivalent. </summary>
+                template<typename W, uint ... X>
+                constexpr bool operator !=(const Array<W, X...>& other)         const { return !operator ==(other); }
                 
         };
 
